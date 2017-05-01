@@ -14,7 +14,11 @@ using Bifrost.Diagnostics;
 using Bifrost.Events;
 using Bifrost.Execution;
 using Bifrost.Extensions;
+using Bifrost.Logging;
 using Bifrost.Tenancy;
+#if(!NET461)
+using Microsoft.Extensions.Logging;
+#endif
 
 namespace Bifrost.Configuration
 {
@@ -30,14 +34,13 @@ namespace Bifrost.Configuration
         /// </summary>
         public static Configure Instance { get; private set; }
 
-
-        Configure(IContainer container, BindingLifecycle defaultLifecycle,  IDefaultConventions defaultConventions, IDefaultBindings defaultBindings, AssembliesConfiguration assembliesConfiguration)
+        Configure(
+            IContainer container,
+            IDefaultConventions defaultConventions,
+            IDefaultBindings defaultBindings,
+            AssembliesConfiguration assembliesConfiguration)
         {
-            SystemName = "[Not Set]";
-
             AssembliesConfiguration = assembliesConfiguration;
-
-            container.DefaultLifecycle = defaultLifecycle;
             container.Bind<IConfigure>(this);
 
             Container = container;
@@ -52,24 +55,44 @@ namespace Bifrost.Configuration
         /// Configure by letting Bifrost discover anything that implements the discoverable configuration interfaces
         /// </summary>
         /// <returns></returns>
-        public static Configure DiscoverAndConfigure(Action<AssembliesConfigurationBuilder> assembliesConfigurationBuilderCallback = null, IEnumerable<ICanProvideAssemblies> additionalAssemblyProviders = null)
+        public static Configure DiscoverAndConfigure(
+#if(!NET461)
+            ILoggerFactory loggerFactory,
+#endif
+            Action<AssembliesConfigurationBuilder> assembliesConfigurationBuilderCallback = null, 
+            IEnumerable<ICanProvideAssemblies> additionalAssemblyProviders = null)
         {
+#if (NET461)
+            var logAppenders = LoggingConfigurator.DiscoverAndConfigure();
+#else
+            var logAppenders = LoggingConfigurator.DiscoverAndConfigure(loggerFactory);
+#endif
+            Logging.ILogger logger = new Logger(logAppenders);
+            logger.Information("Starting up");
+
             IContractToImplementorsMap contractToImplementorsMap;
+
+            
             var assembliesConfigurationBuilder = BuildAssembliesConfigurationIfCallbackDefined(assembliesConfigurationBuilderCallback);
+
+            logger.Trace("Settings up contract to implementors map");
 
             contractToImplementorsMap = new ContractToImplementorsMap();
             var executingAssembly = typeof(Configure).GetTypeInfo().Assembly;
             contractToImplementorsMap.Feed(executingAssembly.GetTypes());
+
+            logger.Trace("Specifying which assemblies to include");
             var assemblySpecifiers = new AssemblySpecifiers(contractToImplementorsMap, new TypeFinder(), assembliesConfigurationBuilder.RuleBuilder);
             assemblySpecifiers.SpecifyUsingSpecifiersFrom(executingAssembly);
 
             var assemblyProviders = new List<ICanProvideAssemblies>
             {
-#if(NET461)
-                new AppDomainAssemblyProvider(),
+#if (NET461)
+                new AppDomainAssemblyProvider(logger),
+#else
+                new DefaultAssemblyProvider(logger),
 #endif
-                new DefaultAssemblyProvider(),
-                new FileSystemAssemblyProvider(new FileSystem())
+                new FileSystemAssemblyProvider(new FileSystem(), logger)
             };
 
 
@@ -90,37 +113,40 @@ namespace Bifrost.Configuration
             ThrowIfCanCreateContainerDoesNotHaveDefaultConstructor(canCreateContainerType);
             var canCreateContainerInstance = Activator.CreateInstance(canCreateContainerType) as ICanCreateContainer;
             var container = canCreateContainerInstance.CreateContainer();
-            var configure = With(container, BindingLifecycle.Transient, assembliesConfiguration, assemblyProvider, contractToImplementorsMap);
+
+            container.Bind(logAppenders);
+            container.Bind(logger);
+
+            var configure = With(
+                container,
+                assembliesConfiguration,
+                assemblyProvider,
+                contractToImplementorsMap);
             configure.EntryAssembly = canCreateContainerType.GetTypeInfo().Assembly;
             configure.Initialize();
             return configure;
         }
 
         /// <summary>
-        /// Configure with a specific <see cref="IContainer"/> and the <see cref="BindingLifecycle">Lifecycle</see> of objects set to none
+        /// Configure with a specific <see cref="IContainer"/>.
         /// </summary>
-        /// <param name="container"><see cref="IContainer"/> to configure with</param>
-        /// <param name="assembliesConfiguration"><see cref="AssembliesConfiguration"/> to use</param>
-        /// <param name="assemblyProvider"><see cref="IAssemblyProvider"/> to use for providing assemblies</param>
-        /// <param name="contractToImplementorsMap"><see cref="IContractToImplementorsMap"/> for keeping track of the relationship between contracts and implementors</param>
-        /// <returns>Configuration object to continue configuration on</returns>
-        public static Configure With(IContainer container, AssembliesConfiguration assembliesConfiguration, IAssemblyProvider assemblyProvider, IContractToImplementorsMap contractToImplementorsMap)
+        /// <param name="container"><see cref="IContainer"/> to configure with.</param>
+        /// <param name="assembliesConfiguration"><see cref="AssembliesConfiguration"/> to use.</param>
+        /// <param name="assemblyProvider"><see cref="IAssemblyProvider"/> to use for providing assemblies.</param>
+        /// <param name="contractToImplementorsMap"><see cref="IContractToImplementorsMap"/> for keeping track of
+        /// the relationship between contracts and implementors.</param>
+        /// <returns>Configuration object to continue configuration on.</returns>
+        public static Configure With(
+            IContainer container,
+            AssembliesConfiguration assembliesConfiguration,
+            IAssemblyProvider assemblyProvider,
+            IContractToImplementorsMap contractToImplementorsMap)
         {
-            return With(container, BindingLifecycle.Transient, assembliesConfiguration, assemblyProvider, contractToImplementorsMap);
-        }
-
-        /// <summary>
-        /// Configure with a specific <see cref="IContainer"/>
-        /// </summary>
-        /// <param name="container"><see cref="IContainer"/> to configure with</param>
-        /// <param name="defaultObjectLifecycle">Default <see cref="BindingLifecycle"/> for object creation/management</param>
-        /// <param name="assembliesConfiguration"><see cref="AssembliesConfiguration"/> to use</param>
-        /// <param name="assemblyProvider"><see cref="IAssemblyProvider"/> to use for providing assemblies</param>
-        /// <param name="contractToImplementorsMap"><see cref="IContractToImplementorsMap"/> for keeping track of the relationship between contracts and implementors</param>
-        /// <returns>Configuration object to continue configuration on</returns>
-        public static Configure With(IContainer container, BindingLifecycle defaultObjectLifecycle, AssembliesConfiguration assembliesConfiguration, IAssemblyProvider assemblyProvider, IContractToImplementorsMap contractToImplementorsMap)
-        {
-            return With(container, defaultObjectLifecycle, new DefaultConventions(container), new DefaultBindings(assembliesConfiguration, assemblyProvider, contractToImplementorsMap), assembliesConfiguration);
+            return With(
+                container,
+                new DefaultConventions(container),
+                new DefaultBindings(assembliesConfiguration, assemblyProvider, contractToImplementorsMap),
+                assembliesConfiguration);
         }
 
         /// <summary>
@@ -131,7 +157,6 @@ namespace Bifrost.Configuration
             lock (InstanceLock) Instance = null;
         }
 
-
         /// <summary>
         /// Configure with a specific <see cref="IContainer"/>, <see cref="IDefaultConventions"/> and <see cref="IDefaultBindings"/>
         /// </summary>
@@ -140,28 +165,17 @@ namespace Bifrost.Configuration
         /// <param name="defaultBindings"><see cref="IDefaultBindings"/> to use</param>
         /// <param name="assembliesConfiguration"><see cref="AssembliesConfiguration"/> to use</param>
         /// <returns></returns>
-        public static Configure With(IContainer container, IDefaultConventions defaultConventions, IDefaultBindings defaultBindings, AssembliesConfiguration assembliesConfiguration)
-        {
-            return With(container, BindingLifecycle.Transient, defaultConventions, defaultBindings, assembliesConfiguration);
-        }
-
-
-        /// <summary>
-        /// Configure with a specific <see cref="IContainer"/>, <see cref="IDefaultConventions"/> and <see cref="IDefaultBindings"/>
-        /// </summary>
-        /// <param name="container"><see cref="IContainer"/> to configure with</param>
-        /// <param name="defaultObjectLifecycle">Default <see cref="BindingLifecycle"/> for object creation/management</param>
-        /// <param name="defaultConventions"><see cref="IDefaultConventions"/> to use</param>
-        /// <param name="defaultBindings"><see cref="IDefaultBindings"/> to use</param>
-        /// <param name="assembliesConfiguration"><see cref="AssembliesConfiguration"/> to use</param>
-        /// <returns></returns>
-        public static Configure With(IContainer container, BindingLifecycle defaultObjectLifecycle, IDefaultConventions defaultConventions, IDefaultBindings defaultBindings, AssembliesConfiguration assembliesConfiguration)
+        public static Configure With(
+            IContainer container,
+            IDefaultConventions defaultConventions,
+            IDefaultBindings defaultBindings,
+            AssembliesConfiguration assembliesConfiguration)
         {
             if (Instance == null)
             {
                 lock (InstanceLock)
                 {
-                    Instance = new Configure(container, defaultObjectLifecycle, defaultConventions, defaultBindings, assembliesConfiguration);
+                    Instance = new Configure(container, defaultConventions, defaultBindings, assembliesConfiguration);
                 }
             }
 
@@ -170,7 +184,6 @@ namespace Bifrost.Configuration
 
 #pragma warning disable 1591 // Xml Comments
         public IContainer Container { get; private set; }
-        public string SystemName { get; set; }
         public Assembly EntryAssembly { get; private set; }
         public AssembliesConfiguration AssembliesConfiguration { get; private set; }
         public IDefaultStorageConfiguration DefaultStorage { get; set; }
@@ -189,12 +202,6 @@ namespace Bifrost.Configuration
         public IQualityAssurance QualityAssurance { get; private set; }
         public CultureInfo Culture { get; set; }
         public CultureInfo UICulture { get; set; }
-
-        public BindingLifecycle DefaultLifecycle 
-        {
-            get { return Container.DefaultLifecycle; }
-            set { Container.DefaultLifecycle = value; }
-        }
 
         public void Initialize()
         {
@@ -215,11 +222,7 @@ namespace Bifrost.Configuration
                 () => DefaultStorage.Initialize(Container)
             };
 
-#if (SILVERLIGHT)
-            initializers.ForEach(initializer => initializer());
-#else
             Parallel.ForEach(initializers, initializator => initializator());
-#endif
             ConfigurationDone();
         }
 #pragma warning restore 1591 // Xml Comments
@@ -280,7 +283,7 @@ namespace Bifrost.Configuration
         static AssembliesConfigurationBuilder BuildAssembliesConfigurationIfCallbackDefined(Action<AssembliesConfigurationBuilder> assembliesConfigurationBuilderCallback)
         {
             var builder = new AssembliesConfigurationBuilder();
-            if (assembliesConfigurationBuilderCallback != null) assembliesConfigurationBuilderCallback(builder);
+            assembliesConfigurationBuilderCallback?.Invoke(builder);
             if (builder.RuleBuilder == null) builder.IncludeAll();
             return builder;
         }

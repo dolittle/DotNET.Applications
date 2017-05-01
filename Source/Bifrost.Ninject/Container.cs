@@ -29,10 +29,18 @@ namespace Bifrost.Ninject
             _boundServices = new List<Type>();
 
 #if (!NET461)
-            kernel.Components.Remove<global::Ninject.Planning.Strategies.IPlanningStrategy, global::Ninject.Planning.Strategies.ConstructorReflectionStrategy>();
-            kernel.Components.Add<global::Ninject.Planning.Strategies.IPlanningStrategy, ConstructorReflectionStrategy>();
+            lock (kernel)
+            {
+                kernel.Components.Remove<global::Ninject.Planning.Strategies.IPlanningStrategy, global::Ninject.Planning.Strategies.ConstructorReflectionStrategy>();
+                kernel.Components.Add<global::Ninject.Planning.Strategies.IPlanningStrategy, ConstructorReflectionStrategy>();
+            }
 #endif
         }
+
+        /// <summary>
+        /// Gets the default <see cref="BindingLifecycle"/>
+        /// </summary>
+        public virtual BindingLifecycle DefaultLifecycle => BindingLifecycle.Transient;
 
         /// <summary>
         /// Gets the <see cref="IKernel"/> used by the <see cref="Container"/>
@@ -60,26 +68,33 @@ namespace Bifrost.Ninject
         /// <inheritdoc/>
         public object Get(Type type, bool optional)
         {
-            var request = Kernel.CreateRequest(type, null, new IParameter[0], optional, true);
-            return Kernel.Resolve(request).SingleOrDefault();
+            lock (Kernel)
+            {
+                var request = Kernel.CreateRequest(type, null, new IParameter[0], optional, true);
+                return Kernel.Resolve(request).SingleOrDefault();
+            }
         }
 
         /// <inheritdoc/>
         public IEnumerable<T> GetAll<T>()
         {
-            return Kernel.GetAll<T>();
+            lock( Kernel )
+                return Kernel.GetAll<T>();
         }
 
         /// <inheritdoc/>
         public bool HasBindingFor(Type type)
         {
             IEnumerable<IBinding> bindings;
+            lock (Kernel)
+            {
 #if (NET461)
-            bindings = Kernel.GetBindings(type);
+                bindings = Kernel.GetBindings(type);
 #else
-            bindings = ((IKernelConfiguration)Kernel).GetBindings(type);
+                bindings = ((IKernelConfiguration)Kernel).GetBindings(type);
 #endif
-            return bindings.Count() != 0;
+                return bindings.Count() != 0;
+            }
         }
 
         /// <inheritdoc/>
@@ -91,7 +106,8 @@ namespace Bifrost.Ninject
         /// <inheritdoc/>
         public IEnumerable<object> GetAll(Type type)
         {
-            return Kernel.GetAll(type);
+            lock (Kernel)
+                return Kernel.GetAll(type);
         }
 
         /// <inheritdoc/>
@@ -128,74 +144,85 @@ namespace Bifrost.Ninject
         /// <inheritdoc/>
         public void Bind<T>(Type type)
         {
-            Kernel.Bind<T>().To(type);
-            _boundServices.Add(typeof(T));
+            Bind<T>(type, DefaultLifecycle);
         }
 
         /// <inheritdoc/>
         public void Bind(Type service, Type type)
         {
-            Kernel.Bind(service).To(type);
-            _boundServices.Add(service);
+            Bind(service, type, DefaultLifecycle);
         }
 
         /// <inheritdoc/>
         public void Bind<T>(Type type, BindingLifecycle lifecycle)
         {
-            Kernel.Bind<T>().To(type).WithLifecycle(lifecycle);
-            _boundServices.Add(typeof(T));
+            lock (Kernel)
+            {
+                Kernel.Bind<T>().To(type).WithLifecycle(lifecycle);
+                _boundServices.Add(typeof(T));
+            }
         }
 
         /// <inheritdoc/>
         public void Bind(Type service, Type type, BindingLifecycle lifecycle)
         {
-            Kernel.Bind(service).To(type).WithLifecycle(lifecycle);
-            _boundServices.Add(service);
+            lock (Kernel)
+            {
+                Kernel.Bind(service).To(type).WithLifecycle(lifecycle);
+                _boundServices.Add(service);
+            }
         }
 
         /// <inheritdoc/>
         public void Bind<T>(T instance)
         {
-            Kernel.Bind<T>().ToConstant(instance);
-            _boundServices.Add(typeof(T));
+            lock (Kernel)
+            {
+                Kernel.Bind<T>().ToConstant(instance);
+                _boundServices.Add(typeof(T));
+            }
         }
 
         /// <inheritdoc/>
         public void Bind(Type service, object instance)
         {
-            Kernel.Bind(service).ToConstant(instance);
-            _boundServices.Add(service);
+            lock (Kernel)
+            {
+                Kernel.Bind(service).ToConstant(instance);
+                _boundServices.Add(service);
+            }
         }
 
         /// <inheritdoc/>
         public void Bind<T>(Func<T> resolveCallback)
         {
-            Kernel.Bind<T>().ToMethod(c => resolveCallback());
-            _boundServices.Add(typeof(T));
+            Bind(resolveCallback, DefaultLifecycle);
         }
 
         /// <inheritdoc/>
         public void Bind(Type service, Func<Type, object> resolveCallback)
         {
-            Kernel.Bind(service).ToMethod(c => resolveCallback(c.Request.Service));
-            _boundServices.Add(service);
+            Bind(service, resolveCallback, DefaultLifecycle);
         }
 
         /// <inheritdoc/>
         public void Bind<T>(Func<T> resolveCallback, BindingLifecycle lifecycle)
         {
-            Kernel.Bind<T>().ToMethod(c => resolveCallback()).WithLifecycle(lifecycle);
-            _boundServices.Add(typeof(T));
+            lock (Kernel)
+            {
+                Kernel.Bind<T>().ToMethod(c => resolveCallback()).WithLifecycle(lifecycle);
+                _boundServices.Add(typeof(T));
+            }
         }
 
         /// <inheritdoc/>
         public void Bind(Type service, Func<Type, object> resolveCallback, BindingLifecycle lifecycle)
         {
-            Kernel.Bind(service).ToMethod(c => resolveCallback(c.Request.Service)).WithLifecycle(lifecycle);
-            _boundServices.Add(service);
+            lock (Kernel)
+            {
+                Kernel.Bind(service).ToMethod(c => resolveCallback(c.Request.Service)).WithLifecycle(lifecycle);
+                _boundServices.Add(service);
+            }
         }
-
-        /// <inheritdoc/>
-        public BindingLifecycle DefaultLifecycle { get; set; }
     }
 }
