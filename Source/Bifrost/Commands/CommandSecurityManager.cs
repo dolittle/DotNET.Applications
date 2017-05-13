@@ -23,7 +23,7 @@ namespace Bifrost.Commands
         }
 
 #pragma warning disable 1591 // Xml Comments
-        public AuthorizationResult Authorize(ICommand command)
+        public AuthorizationResult Authorize(CommandRequest command)
         {
             return _securityManager.Authorize<HandleCommand>(command);
         }

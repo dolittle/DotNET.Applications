@@ -13,7 +13,7 @@ namespace Bifrost.Commands
         /// Validate the command
         /// </summary>
         /// <param name="command">Instance to be validated</param>
-        /// <returns>Validation results for a <see cref="ICommand">Command</see></returns>
-        CommandValidationResult Validate(ICommand command);
+        /// <returns>Validation results for a <see cref="CommandRequest">Command</see></returns>
+        CommandValidationResult Validate(CommandRequest command);
     }
 }

@@ -86,7 +86,7 @@ namespace Bifrost.Commands
         }
 
 #pragma warning disable 1591 // Xml Comments
-        public bool TryHandle(ICommand command)
+        public bool TryHandle(CommandRequest command)
         {
             EnsureInitialized();
 

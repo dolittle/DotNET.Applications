@@ -27,12 +27,12 @@ namespace Bifrost.Commands
         /// Establish a <see cref="ICommandContext">command context</see> for a specific <see cref="ICommand">command</see>.
         /// This will be the current command context, unless something else establishes a new context
         /// </summary>
-        /// <param name="command"><see cref="ICommand">Command</see> to establish for</param>
+        /// <param name="command"><see cref="CommandRequest">Command</see> to establish for</param>
         /// <returns>Established context</returns>
         /// <remarks>
         /// The contexts are not stacked. So establishing two contexts after one another does not give you a chance to
         /// go back up the "stack".
         /// </remarks>
-        ICommandContext EstablishForCommand(ICommand command);
+        ICommandContext EstablishForCommand(CommandRequest command);
     }
 }

@@ -37,8 +37,8 @@ namespace Bifrost.Commands
             _invokers = _importer.ImportMany<ICommandHandlerInvoker>();
         }
 
-#pragma warning disable 1591 // Xml Comments
-        public void Handle(ICommand command)
+        /// <inheritdoc/>
+        public void Handle(CommandRequest command)
         {
             var handled = false;
 
@@ -52,10 +52,8 @@ namespace Bifrost.Commands
 
             if(!handled)
             {
-                throw new UnhandledCommandException(command);
+                throw new CommandWasNotHandled(command);
             }
         }
-#pragma warning restore 1591 // Xml Comments
-
     }
 }

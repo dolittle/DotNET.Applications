@@ -15,7 +15,7 @@ namespace Bifrost.Commands
         /// <summary>
         /// Handle a command
         /// </summary>
-        /// <param name="command"><see cref="ICommand">Command</see> to handle</param>
-        void Handle(ICommand command);
+        /// <param name="command"><see cref="CommandRequest">Command</see> to handle</param>
+        void Handle(CommandRequest command);
     }
 }

@@ -9,20 +9,14 @@ namespace Bifrost.Commands
     /// <summary>
     /// The exception that is thrown when a command is not handled by any <see cref="IHandleCommands"/>
     /// </summary>
-    public class UnhandledCommandException : ArgumentException
+    public class CommandWasNotHandled : ArgumentException
     {
         /// <summary>
-        /// Initializes a new instance <see cref="UnhandledCommandException"/>
+        /// Initializes a new instance <see cref="CommandWasNotHandled"/>
         /// </summary>
-        /// <param name="command"><see cref="ICommand"/> that wasn't handled</param>
-        public UnhandledCommandException(ICommand command) : base(string.Format("Command of type '{0}' was not handled",command.GetType()))
+        /// <param name="command"><see cref="CommandRequest"/> that wasn't handled</param>
+        public CommandWasNotHandled(CommandRequest command) : base(string.Format("Command of type '{0}' was not handled",command.Type))
         {
-            Command = command;
         }
-
-        /// <summary>
-        /// Gets the <see cref="ICommand"/> that wasn't handled
-        /// </summary>
-        public ICommand Command { get; private set; }
     }
 }

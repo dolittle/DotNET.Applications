@@ -25,16 +25,10 @@ namespace Bifrost.Commands
             SecurityMessages = new string[0];
         }
 
-
         /// <summary>
         /// Gets or sets the name of command that this result is related to
         /// </summary>
-        public string CommandName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Id of the command that this result is related to
-        /// </summary>
-        public Guid CommandId { get; set; }
+        public CommandRequest Command { get; set; }
 
         /// <summary>
         /// Gets or sets the ValidationResults generated during handling of a command
@@ -119,12 +113,11 @@ namespace Bifrost.Commands
         /// </summary>
         /// <param name="command"><see cref="ICommand"/> to create from</param>
         /// <returns>A <see cref="CommandResult"/> with <see cref="ICommand"/> details populated</returns>
-        public static CommandResult ForCommand(ICommand command)
+        public static CommandResult ForCommand(CommandRequest command)
         {
             return new CommandResult
             {
-                CommandId = command.Id,
-                CommandName = command.GetType().Name
+                Command = command
             };
         }
 

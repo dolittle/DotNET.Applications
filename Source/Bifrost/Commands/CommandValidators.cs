@@ -8,7 +8,6 @@ using Bifrost.Validation;
 
 namespace Bifrost.Commands
 {
-
     /// <summary>
     /// Represents an implementation of <see cref="ICommandValidators"/> 
     /// </summary>
@@ -25,8 +24,8 @@ namespace Bifrost.Commands
             _validators = validators;
         }
 
-#pragma warning disable 1591 // Xml Comments
-        public CommandValidationResult Validate(ICommand command)
+        /// <inheritdoc/>
+        public CommandValidationResult Validate(CommandRequest command)
         {
             var errorMessages = new List<string>();
             var validationResults = new List<ValidationResult>();
@@ -44,6 +43,5 @@ namespace Bifrost.Commands
             };
             return result;
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }
