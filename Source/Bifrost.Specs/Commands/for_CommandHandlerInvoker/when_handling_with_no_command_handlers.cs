@@ -1,5 +1,10 @@
-﻿using Bifrost.Commands;
+﻿using System.Dynamic;
+using Bifrost.Applications;
+using Bifrost.Commands;
+using Bifrost.Lifecycle;
 using Machine.Specifications;
+using Moq;
+using It = Machine.Specifications.It;
 
 namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker
 {
@@ -10,7 +15,7 @@ namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker
 
         Because of = () =>
                          {
-                             var command = new Command();
+                             var command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
                              result = invoker.TryHandle(command);
                          };
 

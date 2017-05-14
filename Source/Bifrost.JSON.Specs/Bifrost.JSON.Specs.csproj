@@ -20,7 +20,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bifrost.Testing\Bifrost.Testing.csproj" />
     <ProjectReference Include="..\Bifrost.JSON\Bifrost.JSON.csproj" />
   </ItemGroup>
 

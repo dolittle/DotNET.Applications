@@ -1,5 +1,10 @@
-﻿using Bifrost.Commands;
+﻿using System.Dynamic;
+using Bifrost.Applications;
+using Bifrost.Commands;
+using Bifrost.Lifecycle;
 using Machine.Specifications;
+using Moq;
+using It = Machine.Specifications.It;
 
 namespace Bifrost.Specs.Commands.for_CommandContextManager
 {
@@ -11,8 +16,10 @@ namespace Bifrost.Specs.Commands.for_CommandContextManager
 
         Because of = () =>
                          {
-                             firstCommandContext = Manager.EstablishForCommand(new SimpleCommand());
-                             secondCommandContext = Manager.EstablishForCommand(new SimpleCommand());
+                             var firstCommand = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
+                             var secondCommand = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
+                             firstCommandContext = Manager.EstablishForCommand(firstCommand);
+                             secondCommandContext = Manager.EstablishForCommand(secondCommand);
                          };
  
 

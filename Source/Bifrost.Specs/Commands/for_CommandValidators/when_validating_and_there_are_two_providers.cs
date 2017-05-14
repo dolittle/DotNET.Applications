@@ -1,4 +1,7 @@
-﻿using Bifrost.Commands;
+﻿using System.Dynamic;
+using Bifrost.Applications;
+using Bifrost.Commands;
+using Bifrost.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
@@ -7,12 +10,12 @@ namespace Bifrost.Specs.Commands.for_CommandValidators
 {
     public class when_validating_and_there_are_two_providers : given.command_validators_with_two_providers
     {
-        static Mock<ICommand>   command_mock;
+        static CommandRequest   command;
         static CommandValidationResult result;
 
-        Establish context = () => command_mock = new Mock<ICommand>();
+        Establish context = () => command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
 
-        Because of = () => result = validators.Validate(command_mock.Object);
+        Because of = () => result = validators.Validate(command);
 
         It should_return_a_result = () => result.ShouldNotBeNull();
 

@@ -144,10 +144,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bifrost.Testing\Bifrost.Testing.csproj">
-      <Project>{47835de6-fa79-4888-83b6-f6891891cbb0}</Project>
-      <Name>Bifrost.Testing</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bifrost.Web\Bifrost.Web.csproj">
       <Project>{0A748BD3-97DD-4C57-8069-4E36656C0A1A}</Project>
       <Name>Bifrost.Web</Name>

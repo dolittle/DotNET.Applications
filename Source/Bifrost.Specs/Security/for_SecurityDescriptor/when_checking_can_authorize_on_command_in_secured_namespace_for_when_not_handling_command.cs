@@ -1,5 +1,5 @@
-﻿using Bifrost.Security;
-using Bifrost.Testing.Fakes.Security;
+﻿using Biförost.Specs.Security.Fakes;
+using Bifrost.Security;
 using Machine.Specifications;
 
 namespace Bifrost.Specs.Security.for_SecurityDescriptor

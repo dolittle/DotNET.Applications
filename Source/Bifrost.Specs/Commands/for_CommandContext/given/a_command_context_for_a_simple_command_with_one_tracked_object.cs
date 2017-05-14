@@ -1,5 +1,4 @@
-﻿using Bifrost.Testing.Fakes.Domain;
-using Machine.Specifications;
+﻿using Machine.Specifications;
 using System;
 using Bifrost.Events;
 

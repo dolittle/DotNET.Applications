@@ -1,5 +1,4 @@
 ﻿using Bifrost.Extensions;
-using Bifrost.Testing.Fakes.Concepts;
 using Machine.Specifications;
 
 namespace Bifrost.Specs.Extensions.for_StringExtensions

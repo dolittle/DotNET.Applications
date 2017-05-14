@@ -23,7 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bifrost\Bifrost.csproj" />
-    <ProjectReference Include="..\Bifrost.Testing\Bifrost.Testing.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Machine.Specifications.Runner.VisualStudio" Version="2.2.2" />

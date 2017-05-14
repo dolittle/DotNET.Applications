@@ -1,5 +1,5 @@
 ﻿using System;
-using Bifrost.Testing.Fakes.Events.v2;
+using Bifrost.Specs.Events.Fakes.v2;
 using Machine.Specifications;
 
 namespace Bifrost.Specs.Events.for_EventMigrationHierarchy
@@ -14,7 +14,7 @@ namespace Bifrost.Specs.Events.for_EventMigrationHierarchy
         Because of = () =>
                          {
                              level_one_type = typeof(SimpleEvent);
-                             level_two_type = typeof(Testing.Fakes.Events.v3.SimpleEvent);
+                             level_two_type = typeof(Fakes.v3.SimpleEvent);
                              level_one = event_migration_hierarchy.GetLevelForConcreteType(level_one_type);
                              level_two = event_migration_hierarchy.GetLevelForConcreteType(level_two_type);
                          };

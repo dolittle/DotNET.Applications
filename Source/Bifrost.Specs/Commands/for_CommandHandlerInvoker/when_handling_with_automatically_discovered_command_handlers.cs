@@ -1,4 +1,7 @@
-﻿using Machine.Specifications;
+﻿using System.Dynamic;
+using Bifrost.Commands;
+using Bifrost.Lifecycle;
+using Machine.Specifications;
 
 namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker
 {
@@ -6,12 +9,17 @@ namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker
     public class when_handling_with_automatically_discovered_command_handlers : given.a_command_handler_invoker_with_one_command_handler
     {
         static bool result;
+        static CommandRequest command;
+        static ICommand command_instance;
 
-        Because of = () =>
-                         {
-                             var command = new Command();
-                             result = invoker.TryHandle(command);
-                         };
+        Establish context = () =>
+        {
+            command = new CommandRequest(TransactionCorrelationId.NotSet, command_type, new ExpandoObject());
+            command_instance = new Command();
+            command_request_converter.Setup(c => c.Convert(command)).Returns(command_instance);
+        };
+
+        Because of = () => result = invoker.TryHandle(command);
 
         It should_return_true_when_trying_to_handle = () => result.ShouldBeTrue();
     }

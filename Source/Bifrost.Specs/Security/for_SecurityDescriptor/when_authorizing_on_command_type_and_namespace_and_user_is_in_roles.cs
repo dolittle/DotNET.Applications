@@ -17,8 +17,8 @@ namespace Bifrost.Specs.Security.for_SecurityDescriptor
                     new GenericIdentity(""),
                     new[]
                     {
-                        Testing.Fakes.Security.SecurityDescriptor.NAMESPACE_ROLE,
-                        Testing.Fakes.Security.SecurityDescriptor.SIMPLE_COMMAND_ROLE
+                        Fakes.SecurityDescriptor.NAMESPACE_ROLE,
+                        Fakes.SecurityDescriptor.SIMPLE_COMMAND_ROLE
                     }));
         };
 

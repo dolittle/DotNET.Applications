@@ -1,14 +1,18 @@
-﻿using Bifrost.Commands;
-using Bifrost.Testing.Fakes.Commands;
+﻿using System.Dynamic;
+using Bifrost.Applications;
+using Bifrost.Commands;
+using Bifrost.Lifecycle;
 using Machine.Specifications;
+using Moq;
+using It = Machine.Specifications.It;
 
 namespace Bifrost.Specs.Commands.for_CommandSecurityManager
 {
     public class when_authorizing_a_command : given.a_command_security_manager
     {
-        static ICommand command;
+        static CommandRequest command;
 
-        Establish context = () => command = new SimpleCommand();
+        Establish context = () => command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
 
         Because of = () => command_security_manager.Authorize(command);
 

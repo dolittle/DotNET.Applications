@@ -1,9 +1,9 @@
-﻿using System;
-using Bifrost.Events;
+﻿using Bifrost.Events;
 using Bifrost.Execution;
-using Bifrost.Testing.Fakes.Events;
+using Bifrost.Specs.Events.Fakes;
 using Machine.Specifications;
 using Moq;
+using System;
 
 namespace Bifrost.Specs.Events.for_EventMigrationManager.given
 {

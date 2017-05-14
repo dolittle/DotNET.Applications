@@ -1,19 +1,22 @@
-﻿using System;
+﻿using Bifrost.Applications;
 using Bifrost.Commands;
-using Bifrost.Testing.Fakes.Commands;
+using Bifrost.Lifecycle;
 using Machine.Specifications;
+using Moq;
+using System.Dynamic;
+using It = Machine.Specifications.It;
 
 namespace Bifrost.Specs.Commands.for_CommandContextFactory
 {
     [Subject(typeof (CommandContextFactory))]
     public class when_building_for_a_command : given.a_command_context_factory
     {
-        static ICommand command;
+        static CommandRequest command;
         static ICommandContext command_context;
 
         Establish context = () =>
             {
-                command = new SimpleCommand();
+                command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
             };
 
         Because of = () => command_context = factory.Build(command);

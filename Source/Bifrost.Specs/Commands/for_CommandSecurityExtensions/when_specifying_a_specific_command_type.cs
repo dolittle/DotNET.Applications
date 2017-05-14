@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Bifrost.Commands;
 using Bifrost.Security;
-using Bifrost.Testing.Fakes.Commands;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
