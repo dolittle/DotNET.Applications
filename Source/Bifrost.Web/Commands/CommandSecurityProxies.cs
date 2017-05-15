@@ -3,14 +3,17 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Bifrost.Applications;
 using Bifrost.CodeGeneration;
 using Bifrost.CodeGeneration.JavaScript;
 using Bifrost.Commands;
 using Bifrost.Execution;
 using Bifrost.Extensions;
+using Bifrost.Lifecycle;
 using Bifrost.Web.Configuration;
 using Bifrost.Web.Proxies;
 
@@ -21,17 +24,20 @@ namespace Bifrost.Web.Commands
         readonly ITypeDiscoverer _typeDiscoverer;
         readonly ICodeGenerator _codeGenerator;
         readonly ICommandSecurityManager _commandSecurityManager;
+        readonly IApplicationResources _applicationResources;
         readonly WebConfiguration _configuration;
 
         public CommandSecurityProxies(
             ITypeDiscoverer typeDiscoverer,
             ICodeGenerator codeGenerator,
             ICommandSecurityManager commandSecurityManager,
+            IApplicationResources applicationResources,
             WebConfiguration configuration)
         {
             _typeDiscoverer = typeDiscoverer;
             _codeGenerator = codeGenerator;
             _configuration = configuration;
+            _applicationResources = applicationResources;
             _commandSecurityManager = commandSecurityManager;
         }
 
@@ -60,8 +66,10 @@ namespace Bifrost.Web.Commands
                 foreach (var type in @namespace)
                 {
                     if (type.GetTypeInfo().IsGenericType) continue;
+                    
+                    var identifier = _applicationResources.Identify(type);
+                    var command = new CommandRequest(TransactionCorrelationId.NotSet, identifier, new ExpandoObject());
 
-                    var command = Activator.CreateInstance(type) as ICommand;
                     var authorizationResult = _commandSecurityManager.Authorize(command);
                     var name = $"{type.Name.ToCamelCase()}SecurityContext";
                     currentNamespace.Content.Assign(name)

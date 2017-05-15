@@ -5,67 +5,43 @@
 using System;
 using System.Collections.Generic;
 using Bifrost.Commands;
-using Bifrost.Execution;
-using Bifrost.Serialization;
 
 namespace Bifrost.Web.Commands
 {
     public class CommandCoordinatorService
     {
         readonly ICommandCoordinator _commandCoordinator;
-        readonly ISerializer _serializer;
-        readonly ITypeDiscoverer _typeDiscoverer;
 
         public CommandCoordinatorService(
-            ICommandCoordinator commandCoordinator, 
-            ISerializer serializer,
-            ITypeDiscoverer typeDiscoverer)
+            ICommandCoordinator commandCoordinator)
         {
             _commandCoordinator = commandCoordinator;
-            _serializer = serializer;
-            _typeDiscoverer = typeDiscoverer;
         }
 
-        public CommandResult Handle(CommandDescriptor commandDescriptor)
+        public CommandResult Handle(CommandRequest command)
         {
-            var commandInstance = GetCommandFromDescriptor(commandDescriptor);
-            if (commandInstance == null)
-                return new CommandResult { Exception = new UnknownCommandException(commandDescriptor.Name) };
-
-            var result = _commandCoordinator.Handle(commandInstance);
+            var result = _commandCoordinator.Handle(command);
             return result;
         }
 
-        public IEnumerable<CommandResult> HandleMany(IEnumerable<CommandDescriptor> commandDescriptors)
+        public IEnumerable<CommandResult> HandleMany(IEnumerable<CommandRequest> commands)
         {
             var results = new List<CommandResult>();
-            foreach (var commandDescriptor in commandDescriptors)
+            foreach (var command in commands)
             {
-                ICommand commandInstance = null;
                 try
                 {
-                    commandInstance = GetCommandFromDescriptor(commandDescriptor);
-                    if (commandInstance == null)
-                        results.Add(new CommandResult { Exception = new UnknownCommandException(commandDescriptor.Name) });
-                    else 
-                        results.Add(_commandCoordinator.Handle(commandInstance));
+                    results.Add(_commandCoordinator.Handle(command));
                 }
                 catch (Exception ex)
                 {
-                    var commandResult = CommandResult.ForCommand(commandInstance);
+                    var commandResult = CommandResult.ForCommand(command);
                     commandResult.Exception = ex;
                     return new[] { commandResult };
                 }
             }
 
             return results.ToArray();
-        }
-
-        ICommand GetCommandFromDescriptor(CommandDescriptor commandDescriptor)
-        {
-            var commandType = _typeDiscoverer.GetCommandTypeByName(commandDescriptor.GeneratedFrom);
-            var commandInstance = _serializer.FromJson(commandType, commandDescriptor.Command) as ICommand;
-            return commandInstance;
         }
     }
 }

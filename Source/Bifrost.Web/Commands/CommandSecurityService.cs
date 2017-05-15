@@ -2,9 +2,10 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using System;
+using System.Dynamic;
+using Bifrost.Applications;
 using Bifrost.Commands;
-using Bifrost.Execution;
+using Bifrost.Lifecycle;
 using Bifrost.Security;
 
 namespace Bifrost.Web.Commands
@@ -12,19 +13,16 @@ namespace Bifrost.Web.Commands
     public class CommandSecurityService
     {
         readonly ICommandSecurityManager _commandSecurityManager;
-        readonly ITypeDiscoverer _typeDiscoverer;
 
-        public CommandSecurityService(ICommandSecurityManager commandSecurityManager, ITypeDiscoverer typeDiscoverer)
+        public CommandSecurityService(ICommandSecurityManager commandSecurityManager)
         {
-            _typeDiscoverer = typeDiscoverer;
             _commandSecurityManager = commandSecurityManager;
         }
 
-        public AuthorizationResult GetForCommand(string commandName)
+        public AuthorizationResult GetForCommand(IApplicationResourceIdentifier commandType)
         {
-            var commandType = _typeDiscoverer.GetCommandTypeByName(commandName);
-            var commandInstance = Activator.CreateInstance(commandType) as ICommand;
-            var result = _commandSecurityManager.Authorize(commandInstance);
+            var command = new CommandRequest(TransactionCorrelationId.NotSet, commandType, new ExpandoObject());
+            var result = _commandSecurityManager.Authorize(command);
             return result;
         }
     }

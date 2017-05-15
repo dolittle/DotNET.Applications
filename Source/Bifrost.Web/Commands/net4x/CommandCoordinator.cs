@@ -4,8 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using Bifrost.Commands;
-using Bifrost.Execution;
-using Bifrost.Serialization;
 #if(NET461)
 using Microsoft.AspNet.SignalR;
 #else
@@ -17,30 +15,21 @@ namespace Bifrost.Web.Commands
     public class CommandCoordinator : Hub
     {
         ICommandCoordinator _commandCoordinator;
-        ITypeDiscoverer _typeDiscoverer;
         ICommandContextConnectionManager _commandContextConnectionManager;
-        ISerializer _serializer;
 
         public CommandCoordinator(
             ICommandCoordinator commandCoordinator,
-            ITypeDiscoverer typeDiscoverer,
-            ICommandContextConnectionManager commandContextConnectionManager,
-            ISerializer serializer)
+            ICommandContextConnectionManager commandContextConnectionManager)
         {
             _commandCoordinator = commandCoordinator;
-            _typeDiscoverer = typeDiscoverer;
             _commandContextConnectionManager = commandContextConnectionManager;
-            _serializer = serializer;
         }
 
-        public CommandResult Handle(CommandDescriptor descriptor)
+        public CommandResult Handle(CommandRequest command)
         {
             try
             {
-                var commandType = _typeDiscoverer.GetCommandTypeByName(descriptor.GeneratedFrom);
-                var command = (ICommand)_serializer.FromJson(commandType, descriptor.Command);
-                command.Id = descriptor.Id;
-                _commandContextConnectionManager.Register(Context.ConnectionId, command.Id);
+                _commandContextConnectionManager.Register(Context.ConnectionId, command.CorrelationId);
                 var commandResult = _commandCoordinator.Handle(command);
                 return commandResult;
             }
