@@ -35,7 +35,7 @@ namespace Bifrost.FluentValidation.Specs.Commands.for_CommandValidator
             command_input_validator = new Mock<ICommandInputValidator>();
             command_business_validator = new Mock<ICommandBusinessValidator>();
 
-            command_input_validator.Setup(iv => iv.ValidateFor(command)).Returns(input_validation_errors);
+            command_input_validator.Setup(iv => iv.ValidateFor(command_instance)).Returns(input_validation_errors);
 
             command_validator_provider_mock.Setup(cvs => cvs.GetInputValidatorFor(command_instance)).Returns(command_input_validator.Object);
         };

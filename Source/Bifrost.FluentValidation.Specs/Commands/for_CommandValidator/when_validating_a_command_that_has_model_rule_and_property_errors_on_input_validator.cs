@@ -28,7 +28,7 @@ namespace Bifrost.FluentValidation.Specs.Commands.for_CommandValidator
             command_request_converter.Setup(c => c.Convert(command)).Returns(command_instance);
 
             command_input_validator = new Mock<ICommandInputValidator>();
-            command_input_validator.Setup(c => c.ValidateFor(command)).Returns(new[] {
+            command_input_validator.Setup(c => c.ValidateFor(command_instance)).Returns(new[] {
                 new ValidationResult(ErrorMessage,new[] { ModelRule<object>.ModelRulePropertyName }),
                 new ValidationResult(AnotherErrorMessage, new[] { "SomeProperty" })
             });
