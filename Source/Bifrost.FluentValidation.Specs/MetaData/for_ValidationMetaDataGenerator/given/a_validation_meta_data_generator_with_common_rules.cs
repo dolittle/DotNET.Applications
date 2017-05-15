@@ -1,6 +1,7 @@
-﻿using Bifrost.FluentValidation.Commands;
+﻿using System.Collections.Generic;
+using Bifrost.Execution;
+using Bifrost.FluentValidation.Commands;
 using Bifrost.FluentValidation.MetaData;
-using Bifrost.Testing;
 using Machine.Specifications;
 using Moq;
 
@@ -20,11 +21,13 @@ namespace Bifrost.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerato
                 new LessThanGenerator(),
                 new GreaterThanGenerator(),
                 new NotNullGenerator(),
-            }.AsInstancesOf();
+            };
+            var generatorInstances = new Mock<IInstancesOf<ICanGenerateRule>>();
+            generatorInstances.Setup(g => g.GetEnumerator()).Returns(new List<ICanGenerateRule>(generators).GetEnumerator());
 
             command_validator_provider_mock = new Mock<ICommandValidatorProvider>();
 
-            generator = new ValidationMetaDataGenerator(generators, command_validator_provider_mock.Object);
+            generator = new ValidationMetaDataGenerator(generatorInstances.Object, command_validator_provider_mock.Object);
         };
     }
 }

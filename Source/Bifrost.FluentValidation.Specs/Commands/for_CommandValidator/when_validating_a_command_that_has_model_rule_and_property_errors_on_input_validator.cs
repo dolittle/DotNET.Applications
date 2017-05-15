@@ -1,12 +1,15 @@
-﻿using System.Linq;
+﻿using System.Dynamic;
+using System.Linq;
+using Bifrost.Applications;
 using Bifrost.Commands;
 using Bifrost.FluentValidation.Commands;
+using Bifrost.Lifecycle;
 using Bifrost.Validation;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_CommandValidationService
+namespace Bifrost.FluentValidation.Specs.Commands.for_CommandValidator
 {
     public class when_validating_a_command_that_has_model_rule_and_property_errors_on_input_validator : given.a_command_validation_service
     {
@@ -14,22 +17,26 @@ namespace Bifrost.FluentValidation.Specs.Commands.for_CommandValidationService
         const string AnotherErrorMessage = "Something else went wrong";
 
         static CommandValidationResult result;
-        static Mock<ICommand>   command_mock;
-        static Mock<ICommandInputValidator> command_input_validator_mock;
+        static CommandRequest command;
+        static ICommand command_instance;
+        static Mock<ICommandInputValidator> command_input_validator;
 
         Establish context = () =>
         {
-            command_mock = new Mock<ICommand>();
-            command_input_validator_mock = new Mock<ICommandInputValidator>();
-            command_input_validator_mock.Setup(c => c.ValidateFor(command_mock.Object)).Returns(new[] {
+            command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
+            command_instance = Mock.Of<ICommand>();
+            command_request_converter.Setup(c => c.Convert(command)).Returns(command_instance);
+
+            command_input_validator = new Mock<ICommandInputValidator>();
+            command_input_validator.Setup(c => c.ValidateFor(command)).Returns(new[] {
                 new ValidationResult(ErrorMessage,new[] { ModelRule<object>.ModelRulePropertyName }),
                 new ValidationResult(AnotherErrorMessage, new[] { "SomeProperty" })
             });
 
-            command_validator_provider_mock.Setup(c => c.GetInputValidatorFor(command_mock.Object)).Returns(command_input_validator_mock.Object);
+            command_validator_provider_mock.Setup(c => c.GetInputValidatorFor(command_instance)).Returns(command_input_validator.Object);
         };
 
-        Because of = () => result = command_validation_service.Validate(command_mock.Object);
+        Because of = () => result = command_validator.Validate(command);
 
         It should_have_one_command_error_message = () => result.CommandErrorMessages.Count().ShouldEqual(1);
         It should_have_the_correct_command_error_message = () => result.CommandErrorMessages.First().ShouldEqual(ErrorMessage);

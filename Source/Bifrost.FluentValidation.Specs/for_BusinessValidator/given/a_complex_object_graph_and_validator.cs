@@ -1,5 +1,4 @@
-﻿using Bifrost.Testing.Fakes.Concepts;
-using FluentValidation;
+﻿using FluentValidation;
 using Machine.Specifications;
 
 namespace Bifrost.FluentValidation.Specs.for_BusinessValidator.given
