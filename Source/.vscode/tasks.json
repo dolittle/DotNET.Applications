@@ -8,7 +8,7 @@
     "tasks": [
         {
             "taskName": "build",
-            "args": ["Samples/SimpleWeb/", "-f", "netcoreapp1.1" ],
+            "args": ["Bifrost", "-f", "netstandard1.6" ],
             "isBuildCommand": true,
             "showOutput": "silent",
             "problemMatcher": "$msCompile"

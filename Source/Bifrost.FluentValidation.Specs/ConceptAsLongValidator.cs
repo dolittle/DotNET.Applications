@@ -1,5 +1,4 @@
-﻿using Bifrost.Testing.Fakes.Concepts;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Bifrost.FluentValidation.Specs
 {

@@ -1,4 +1,4 @@
-# EditorConfig helps create consistency for formatting of all 
+﻿# EditorConfig helps create consistency for formatting of all 
 # the code in Bifrost
 #
 # http://EditorConfig.org
@@ -6,7 +6,7 @@
 root = true
 
 [*]
-end_of_line = LF
+end_of_line = lf
 indent_style = space
 indent_size = 4
 charset = utf-8

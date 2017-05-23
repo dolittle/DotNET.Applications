@@ -6,10 +6,10 @@ namespace Bifrost.Specs.Security.for_NamespaceSecurable
     [Subject(typeof(NamespaceSecurable))]
     public class when_checking_can_authorize_for_action_with_no_namespace_match : given.a_namespace_securable
     {
-        static bool can_authorize;
+        static bool authorized;
 
-        Because of = () => can_authorize = namespace_securable.CanAuthorize(action_within_another_namespace);
+        Because of = () => authorized = namespace_securable.CanAuthorize(action_within_another_namespace);
 
-        It should_not_be_authorizable = () => can_authorize.ShouldBeFalse();
+        It should_not_be_authorized = () => authorized.ShouldBeFalse();
     }
 }

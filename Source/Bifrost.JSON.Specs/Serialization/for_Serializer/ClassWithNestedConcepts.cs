@@ -1,6 +1,4 @@
-using Bifrost.Testing.Fakes.Concepts;
-
-namespace Bifrost.JSON.Specs.Serialization.for_Serializer
+﻿namespace Bifrost.JSON.Specs.Serialization.for_Serializer
 {
     public class ClassWithNestedConcepts
     {

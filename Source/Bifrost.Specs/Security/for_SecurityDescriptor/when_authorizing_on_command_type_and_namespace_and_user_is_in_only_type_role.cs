@@ -20,7 +20,7 @@ namespace Bifrost.Specs.Security.for_SecurityDescriptor
                     new GenericIdentity(""),
                     new[]
                     {
-                        Testing.Fakes.Security.SecurityDescriptor.SIMPLE_COMMAND_ROLE
+                        Fakes.SecurityDescriptor.SIMPLE_COMMAND_ROLE
                     }));
         };
 
@@ -31,7 +31,7 @@ namespace Bifrost.Specs.Security.for_SecurityDescriptor
             };
 
         It should_not_be_authorized = () => authorize_descriptor_result.IsAuthorized.ShouldBeFalse();
-        It should_indicate_that_the_user_is_not_in_the_required_role = () => authorization_messages.First().IndexOf(Testing.Fakes.Security.SecurityDescriptor.NAMESPACE_ROLE).ShouldBeGreaterThan(0);
-        It should_indicate_the_secured_namespace = () => authorization_messages.First().IndexOf(Testing.Fakes.Security.SecurityDescriptor.SECURED_NAMESPACE).ShouldBeGreaterThan(0);
+        It should_indicate_that_the_user_is_not_in_the_required_role = () => authorization_messages.First().IndexOf(Fakes.SecurityDescriptor.NAMESPACE_ROLE).ShouldBeGreaterThan(0);
+        It should_indicate_the_secured_namespace = () => authorization_messages.First().IndexOf(Fakes.SecurityDescriptor.SECURED_NAMESPACE).ShouldBeGreaterThan(0);
     }
 }

@@ -39,7 +39,7 @@ namespace Bifrost.Commands
             _factory = factory;
         }
 
-        private static bool IsInContext(ICommand command)
+        private static bool IsInContext(CommandRequest command)
         {
             var inContext = null != CurrentContext && CurrentContext.Command.Equals(command);
             return inContext;
@@ -62,7 +62,7 @@ namespace Bifrost.Commands
         }
 
         /// <inheritdoc/>
-        public ICommandContext EstablishForCommand(ICommand command)
+        public ICommandContext EstablishForCommand(CommandRequest command)
         {
             if (!IsInContext(command))
             {

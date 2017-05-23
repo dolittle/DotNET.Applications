@@ -4,8 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bifrost.Commands;
-using Bifrost.Execution;
+using Bifrost.Extensions;
 using Bifrost.Serialization;
 
 namespace Bifrost.Web.Commands
@@ -14,58 +15,44 @@ namespace Bifrost.Web.Commands
     {
         readonly ICommandCoordinator _commandCoordinator;
         readonly ISerializer _serializer;
-        readonly ITypeDiscoverer _typeDiscoverer;
 
         public CommandCoordinatorService(
-            ICommandCoordinator commandCoordinator, 
-            ISerializer serializer,
-            ITypeDiscoverer typeDiscoverer)
+            ICommandCoordinator commandCoordinator,
+            ISerializer serializer)
         {
             _commandCoordinator = commandCoordinator;
             _serializer = serializer;
-            _typeDiscoverer = typeDiscoverer;
         }
 
-        public CommandResult Handle(CommandDescriptor commandDescriptor)
+        public CommandResult Handle(JsonCommandRequest command)
         {
-            var commandInstance = GetCommandFromDescriptor(commandDescriptor);
-            if (commandInstance == null)
-                return new CommandResult { Exception = new UnknownCommandException(commandDescriptor.Name) };
+            var contentAsKeyValues = _serializer.GetKeyValuesFromJson(command.Content).ToDictionary(k => k.Key.ToPascalCase(), k => k.Value);
+            var commandRequest = new CommandRequest(command.CorrelationId, command.Type, contentAsKeyValues);
 
-            var result = _commandCoordinator.Handle(commandInstance);
+            var result = _commandCoordinator.Handle(commandRequest);
             return result;
         }
 
-        public IEnumerable<CommandResult> HandleMany(IEnumerable<CommandDescriptor> commandDescriptors)
+        public IEnumerable<CommandResult> HandleMany(IEnumerable<JsonCommandRequest> commands)
         {
             var results = new List<CommandResult>();
-            foreach (var commandDescriptor in commandDescriptors)
+            foreach (var command in commands)
             {
-                ICommand commandInstance = null;
+                var contentAsKeyValues = _serializer.GetKeyValuesFromJson(command.Content).ToDictionary(k => k.Key.ToPascalCase(), k => k.Value);
+                var commandRequest = new CommandRequest(command.CorrelationId, command.Type, contentAsKeyValues);
                 try
                 {
-                    commandInstance = GetCommandFromDescriptor(commandDescriptor);
-                    if (commandInstance == null)
-                        results.Add(new CommandResult { Exception = new UnknownCommandException(commandDescriptor.Name) });
-                    else 
-                        results.Add(_commandCoordinator.Handle(commandInstance));
+                    results.Add(_commandCoordinator.Handle(commandRequest));
                 }
                 catch (Exception ex)
                 {
-                    var commandResult = CommandResult.ForCommand(commandInstance);
+                    var commandResult = CommandResult.ForCommand(commandRequest);
                     commandResult.Exception = ex;
                     return new[] { commandResult };
                 }
             }
 
             return results.ToArray();
-        }
-
-        ICommand GetCommandFromDescriptor(CommandDescriptor commandDescriptor)
-        {
-            var commandType = _typeDiscoverer.GetCommandTypeByName(commandDescriptor.GeneratedFrom);
-            var commandInstance = _serializer.FromJson(commandType, commandDescriptor.Command) as ICommand;
-            return commandInstance;
         }
     }
 }

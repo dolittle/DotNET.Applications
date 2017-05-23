@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Web;
@@ -30,7 +30,7 @@ namespace Bifrost.Web.Specs.Services.for_RequestParamsFactory.given
         protected static Mock<ISerializer> serializer_mock;
         protected static IRequestParamsFactory request_params_factory;
         protected static IDictionary<string, string> input_stream_params;
-        protected static Mock<HttpRequestBase> http_request_base_mock;
+        protected static Mock<IHttpRequest> http_request_base_mock;
         
         Establish context = () =>
                                 {
@@ -77,12 +77,10 @@ namespace Bifrost.Web.Specs.Services.for_RequestParamsFactory.given
                                     serializer_mock.Setup(s => s.FromJson(typeof(Dictionary<string,string>), Moq.It.IsAny<string>(), null)).Returns(inputStreamParams);
 
                                     var input_stream = System.Text.Encoding.GetEncoding("iso-8859-1").GetBytes("mystring");
-                                    http_request_base_mock = new Mock<HttpRequestBase>();
+                                    http_request_base_mock = new Mock<IHttpRequest>();
                                     http_request_base_mock.Setup(r => r.QueryString).Returns(querystringParams);
                                     http_request_base_mock.Setup(r => r.Form).Returns(formParams);
                                     http_request_base_mock.Setup(r => r.InputStream).Returns(new MemoryStream(input_stream));
-                                    http_request_base_mock.Setup(r => r.Cookies).Returns(cookiesParams);
-                                    http_request_base_mock.Setup(r => r.ServerVariables).Returns(serverVariablesParams);
                                     
                                     request_params_factory = new RequestParamsFactory(serializer_mock.Object);
                                 };

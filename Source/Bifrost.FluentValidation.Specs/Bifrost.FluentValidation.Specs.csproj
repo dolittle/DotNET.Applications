@@ -21,7 +21,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bifrost.Testing\Bifrost.Testing.csproj" />
     <ProjectReference Include="..\Bifrost.FluentValidation\Bifrost.FluentValidation.csproj" />
   </ItemGroup>
 

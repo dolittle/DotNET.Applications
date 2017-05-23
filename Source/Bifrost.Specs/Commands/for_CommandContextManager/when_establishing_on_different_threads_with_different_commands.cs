@@ -1,23 +1,30 @@
-﻿using System.Threading;
+﻿using System.Dynamic;
+using System.Threading;
+using Bifrost.Applications;
 using Bifrost.Commands;
+using Bifrost.Lifecycle;
 using Machine.Specifications;
+using Moq;
+using It = Machine.Specifications.It;
 
 namespace Bifrost.Specs.Commands.for_CommandContextManager
 {
     [Subject(Subjects.establishing_context)]
     public class when_establishing_on_different_threads_with_different_commands : given.a_command_context_manager
     {
+        static CommandRequest command;
         static ICommandContext firstCommandContext;
         static ICommandContext secondCommandContext;
 
         Establish context = () =>
                                 {
+                                    command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
                                     var resetEvent = new ManualResetEvent(false);
-                                    firstCommandContext = Manager.EstablishForCommand(new SimpleCommand());
+                                    firstCommandContext = Manager.EstablishForCommand(command);
                                     var thread = new Thread(
                                         () =>
                                             {
-                                                secondCommandContext = Manager.EstablishForCommand(new SimpleCommand());
+                                                secondCommandContext = Manager.EstablishForCommand(command);
                                                 resetEvent.Reset();
                                             }
                                         );

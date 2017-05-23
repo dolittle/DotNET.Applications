@@ -45,6 +45,7 @@ namespace Bifrost.JSON.Serialization
             return properties;
         }
 
+
         public override JsonContract ResolveContract(Type type)
         {
             var contract = base.ResolveContract(type);
@@ -58,7 +59,8 @@ namespace Bifrost.JSON.Serialization
                                               {
                                                   try
                                                   {
-                                                    // Todo: Structs without default constructor will fail with this and that will then try using the defaultCreator in the catch
+                                                      if (type.HasDefaultConstructor()) return Activator.CreateInstance(type);
+                                                      // Todo: Structs without default constructor will fail with this and that will then try using the defaultCreator in the catch
                                                       return _container.Get(type);
                                                   }
                                                   catch
@@ -77,10 +79,9 @@ namespace Bifrost.JSON.Serialization
         protected override string ResolvePropertyName(string propertyName)
         {
             var result = base.ResolvePropertyName(propertyName);
-            if (_options != null && _options.Flags.HasFlag(SerializationOptionsFlags.UseCamelCase))
-            {
+            if (_options != null && 
+                _options.Flags.HasFlag(SerializationOptionsFlags.UseCamelCase))
                 result = result.ToCamelCase();
-            }
 
             return result;
         }

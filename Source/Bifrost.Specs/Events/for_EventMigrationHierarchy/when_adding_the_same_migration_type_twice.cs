@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 using Bifrost.Events;
-using Bifrost.Testing.Fakes.Events.v2;
+using Bifrost.Specs.Events.Fakes.v2;
 using Machine.Specifications;
 
 namespace Bifrost.Specs.Events.for_EventMigrationHierarchy

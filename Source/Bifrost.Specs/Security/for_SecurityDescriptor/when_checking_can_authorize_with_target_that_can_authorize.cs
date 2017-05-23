@@ -1,5 +1,5 @@
+﻿using Biförost.Specs.Security.Fakes;
 using Bifrost.Security;
-using Bifrost.Testing.Fakes.Security;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 

@@ -1,8 +1,8 @@
+﻿using Bifrost.Events;
+using Bifrost.Specs.Events.Fakes;
+using Machine.Specifications;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Events;
-using Bifrost.Testing.Fakes.Events;
-using Machine.Specifications;
 
 namespace Bifrost.Specs.Events.for_EventMigrationLevelDiscoverer
 {
@@ -25,8 +25,8 @@ namespace Bifrost.Specs.Events.for_EventMigrationLevelDiscoverer
         It should_order_the_event_generations_correctly_for_the_migrated_event = () =>
                                             {
                                                 migrated_event_hierarchy.GetConcreteTypeForLevel(0).ShouldEqual(typeof(SimpleEvent));
-                                                migrated_event_hierarchy.GetConcreteTypeForLevel(1).ShouldEqual(typeof(Testing.Fakes.Events.v2.SimpleEvent));
-                                                migrated_event_hierarchy.GetConcreteTypeForLevel(2).ShouldEqual(typeof(Testing.Fakes.Events.v3.SimpleEvent));
+                                                migrated_event_hierarchy.GetConcreteTypeForLevel(1).ShouldEqual(typeof(Fakes.v2.SimpleEvent));
+                                                migrated_event_hierarchy.GetConcreteTypeForLevel(2).ShouldEqual(typeof(Fakes.v3.SimpleEvent));
                                             };
     }
 }

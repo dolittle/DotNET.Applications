@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Bifrost.Testing.Fakes.Entities;
-using Machine.Specifications;
-using It = Machine.Specifications.It;
-using Bifrost.Configuration;
-using Moq;
-using Bifrost.Execution;
+﻿using Bifrost.Configuration;
 using Bifrost.Entities;
-using System.Collections;
+using Machine.Specifications;
+using Moq;
+using System;
+using System.Collections.Generic;
+using It = Machine.Specifications.It;
 
 namespace Bifrost.Specs.Configuration.for_ConfigurationExtensions
 {
@@ -28,9 +23,6 @@ namespace Bifrost.Specs.Configuration.for_ConfigurationExtensions
         It should_bind_the_specific_connection_only_once = () => container_mock.Verify(c => c.Bind(typeof(EntityContextConnection), connection), Times.Once());
         It should_bind_specific_storage_for_type = () => container_mock.Verify(c => c.Bind(typeof(IEntityContext<SomeType>), typeof(EntityContext<SomeType>)), Times.Once());
         It should_bind_specific_storage_for_other_type = () => container_mock.Verify(c => c.Bind(typeof(IEntityContext<SomeOtherType>), typeof(EntityContext<SomeOtherType>)), Times.Once());
-
         It should_not_set_the_default_storage = () => container_mock.Verify(c => c.Bind(typeof(IEntityContext<>),Moq.It.IsAny<Type>()),Times.Never());
-
     }
-
 }

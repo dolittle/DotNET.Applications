@@ -22,9 +22,9 @@ namespace Bifrost.Commands
         TransactionCorrelationId TransactionCorrelationId { get; }
 
         /// <summary>
-        /// Gets the <see cref="ICommand">command</see> the context is for
+        /// Gets the <see cref="CommandRequest">command</see> the context is for
         /// </summary>
-        ICommand Command { get; }
+        CommandRequest Command { get; }
 
         /// <summary>
         /// Gets the <see cref="IExecutionContext"/> for the command

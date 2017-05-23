@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Bifrost.Testing.Fakes.Entities;
-using Machine.Specifications;
-using It = Machine.Specifications.It;
-using Bifrost.Configuration;
-using Moq;
-using Bifrost.Execution;
+﻿using Bifrost.Configuration;
 using Bifrost.Entities;
+using Machine.Specifications;
+using System;
+using It = Machine.Specifications.It;
 
 namespace Bifrost.Specs.Configuration.for_ConfigurationExtensions
 {
