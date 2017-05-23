@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Bifrost.Applications;
 using Bifrost.CodeGeneration;
 using Bifrost.CodeGeneration.JavaScript;
 using Bifrost.Commands;
@@ -20,18 +21,33 @@ namespace Bifrost.Web.Commands
     {
         internal static List<string> _namespacesToExclude = new List<string>();
 
+        IApplicationResources _applicationResources;
+        IApplicationResourceIdentifierConverter _applicationResourceIdentifierConverter;
         ITypeDiscoverer _typeDiscoverer;
         ITypeImporter _typeImporter;
         ICodeGenerator _codeGenerator;
         WebConfiguration _configuration;
+
+        static CommandProxies()
+        {
+            ExcludeCommandsStartingWithNamespace("Bifrost");
+        }
 
         public static void ExcludeCommandsStartingWithNamespace(string @namespace)
         {
             _namespacesToExclude.Add(@namespace);
         }
 
-        public CommandProxies(ITypeDiscoverer typeDiscoverer, ITypeImporter typeImporter, ICodeGenerator codeGenerator, WebConfiguration configuration)
+        public CommandProxies(
+            IApplicationResources applicationResources,
+            IApplicationResourceIdentifierConverter applicationResourceIdentifierConverter, 
+            ITypeDiscoverer typeDiscoverer, 
+            ITypeImporter typeImporter, 
+            ICodeGenerator codeGenerator, 
+            WebConfiguration configuration)
         {
+            _applicationResources = applicationResources;
+            _applicationResourceIdentifierConverter = applicationResourceIdentifierConverter;
             _typeDiscoverer = typeDiscoverer;
             _typeImporter = typeImporter;
             _codeGenerator = codeGenerator;
@@ -59,16 +75,18 @@ namespace Bifrost.Web.Commands
                 foreach (var type in @namespace)
                 {
                     if (type.GetTypeInfo().IsGenericType) continue;
-                    
-                    var name = type.Name.ToCamelCase();
+
+                    var identifier = _applicationResources.Identify(type);
+                    var identifierAsString = _applicationResourceIdentifierConverter.AsString(identifier);
+
+                    var name = ((string)identifier.Resource.Name).ToCamelCase();
                     currentNamespace.Content.Assign(name)
                         .WithType(t =>
                             t.WithSuper("Bifrost.commands.Command")
                                 .Function
                                     .Body
                                         .Variant("self", v => v.WithThis())
-                                        .Property("_name", p => p.WithString(name))
-                                        .Property("_generatedFrom", p => p.WithString(type.FullName))
+                                        .Property("_commandType", p => p.WithString(identifierAsString))
 
                                         .WithObservablePropertiesFrom(type, excludePropertiesFrom: typeof(ICommand), observableVisitor: (propertyName, observable) =>
                                         {

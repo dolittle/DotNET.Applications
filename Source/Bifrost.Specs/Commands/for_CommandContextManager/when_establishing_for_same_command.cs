@@ -1,23 +1,22 @@
-﻿using System;
+﻿using System.Dynamic;
+using Bifrost.Applications;
 using Bifrost.Commands;
+using Bifrost.Lifecycle;
 using Machine.Specifications;
+using Moq;
+using It = Machine.Specifications.It;
 
 namespace Bifrost.Specs.Commands.for_CommandContextManager
 {
-    public class SimpleCommand : ICommand
-    {
-        public Guid Id { get; set; }
-    }
-
     [Subject(Subjects.establishing_context)]
     public class when_establishing_for_same_command : given.a_command_context_manager
     {
         static ICommandContext commandContext;
-        static ICommand command;
+        static CommandRequest command;
 
         Because of = () =>
                          {
-                             command = new SimpleCommand();
+                             command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
                              commandContext = Manager.EstablishForCommand(command);
                          };
 

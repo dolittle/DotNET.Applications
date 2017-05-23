@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Bifrost.Applications;
 using Bifrost.Execution;
 using Bifrost.Extensions;
 
@@ -23,7 +24,9 @@ namespace Bifrost.Commands
 
         readonly ITypeDiscoverer _discoverer;
         readonly IContainer _container;
-        readonly Dictionary<Type, MethodInfo> _commandHandlers = new Dictionary<Type, MethodInfo>();
+        readonly IApplicationResources _applicationResources;
+        readonly ICommandRequestConverter _converter;
+        readonly Dictionary<IApplicationResourceIdentifier, MethodInfo> _commandHandlers = new Dictionary<IApplicationResourceIdentifier, MethodInfo>();
         readonly object _initializationLock = new object();
         bool _initialized;
 
@@ -32,34 +35,19 @@ namespace Bifrost.Commands
         /// </summary>
         /// <param name="discoverer">A <see cref="ITypeDiscoverer"/> to use for discovering <see cref="IHandleCommands">command handlers</see></param>
         /// <param name="container">A <see cref="IContainer"/> to use for getting instances of objects</param>
-        public CommandHandlerInvoker(ITypeDiscoverer discoverer, IContainer container)
+        /// <param name="applicationResources"><see cref="IApplicationResources"/> for identifying resources</param>
+        /// <param name="converter"><see cref="ICommandRequestConverter"/> for converting to actual <see cref="ICommand"/> instances</param>
+        public CommandHandlerInvoker(
+            ITypeDiscoverer discoverer, 
+            IContainer container, 
+            IApplicationResources applicationResources,
+            ICommandRequestConverter converter)
         {
             _discoverer = discoverer;
             _container = container;
+            _applicationResources = applicationResources;
+            _converter = converter;
             _initialized = false;
-        }
-
-        void EnsureInitialized()
-        {
-            if (_initialized)
-            {
-                return;
-            }
-
-            lock (_initializationLock)
-            {
-                if (!_initialized)
-                {
-                    Initialize();
-                    _initialized = true;
-                }
-            }
-        }
-
-        void Initialize()
-        {
-            var handlers = _discoverer.FindMultiple<IHandleCommands>();
-            handlers.ForEach(Register);
         }
 
         /// <summary>
@@ -79,29 +67,47 @@ namespace Bifrost.Commands
                 .Where(m => m.GetParameters().Length == 1)
                 .Where(m => typeof(ICommand).GetTypeInfo().IsAssignableFrom(m.GetParameters()[0].ParameterType));
 
-            foreach (var method in handleMethods)
+            handleMethods.ForEach(method =>
             {
-                _commandHandlers[method.GetParameters()[0].ParameterType] = method;
-            }
+                var commandType = method.GetParameters()[0].ParameterType;
+                var identifier = _applicationResources.Identify(commandType);
+                _commandHandlers[identifier] = method;
+            });
         }
 
-#pragma warning disable 1591 // Xml Comments
-        public bool TryHandle(ICommand command)
+        /// <inheritdoc/>
+        public bool TryHandle(CommandRequest command)
         {
             EnsureInitialized();
 
-            var commandType = command.GetType();
-            if (_commandHandlers.ContainsKey(commandType))
+            if (_commandHandlers.ContainsKey(command.Type))
             {
-                var commandHandlerType = _commandHandlers[commandType].DeclaringType;
+                var commandHandlerType = _commandHandlers[command.Type].DeclaringType;
                 var commandHandler = _container.Get(commandHandlerType);
-                var method = _commandHandlers[commandType];
-                method.Invoke(commandHandler, new[] { command });
+                var method = _commandHandlers[command.Type];
+                var commandInstance = _converter.Convert(command);
+                method.Invoke(commandHandler, new[] { commandInstance });
                 return true;
             }
 
             return false;
         }
-#pragma warning restore 1591 // Xml Comments
+
+        void EnsureInitialized()
+        {
+            if (_initialized) return;
+
+            lock (_initializationLock)
+            {
+                if( !_initialized) Initialize();
+                _initialized = true;
+            }
+        }
+
+        void Initialize()
+        {
+            var handlers = _discoverer.FindMultiple<IHandleCommands>();
+            handlers.ForEach(Register);
+        }
     }
 }

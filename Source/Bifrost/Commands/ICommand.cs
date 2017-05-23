@@ -18,9 +18,5 @@ namespace Bifrost.Commands
     /// </remarks>
     public interface ICommand : IConvention
     {
-        /// <summary>
-        /// Gets or sets the Id of the object the command will apply to
-        /// </summary>
-        Guid Id { get; set; }
     }
 }

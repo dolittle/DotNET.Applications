@@ -4140,12 +4140,12 @@ Bifrost.namespace("Bifrost.commands", {
         this.execute = function () {
             var promise = Bifrost.execution.Promise.create();
 
-            var commandDescriptor = Bifrost.commands.CommandDescriptor.createFrom(command);
+            var commandRequest = Bifrost.commands.CommandRequest.createFrom(command);
             var parameters = {
-                commandDescriptor: commandDescriptor
+                command: commandRequest
             };
 
-            var url = "/Bifrost/CommandCoordinator/Handle?_cmd=" + command._generatedFrom;
+            var url = "/Bifrost/CommandCoordinator/Handle?_cmd=" + encodeURIComponent(command._commandType);
 
             server.post(url, parameters).continueWith(function (result) {
                 var commandResult = Bifrost.commands.CommandResult.createFrom(result);
@@ -4183,16 +4183,16 @@ Bifrost.namespace("Bifrost.commands", {
         this.execute = function () {
             var promise = Bifrost.execution.Promise.create();
 
-            var commandDescriptors = [];
+            var commandRequests = [];
 
             commands.forEach(function (command) {
                 command.isBusy(true);
-                var commandDescriptor = Bifrost.commands.CommandDescriptor.createFrom(command);
-                commandDescriptors.push(commandDescriptor);
+                var commandRequest= Bifrost.commands.CommandRequest.createFrom(command);
+                commandRequests.push(commandRequest);
             });
 
             var parameters = {
-                commandDescriptors: commandDescriptors
+                commands: commandRequests
             };
 
             var url = "/Bifrost/CommandCoordinator/HandleMany";
@@ -4433,8 +4433,7 @@ Bifrost.namespace("Bifrost.commands", {
         var hasChangesObservables = ko.observableArray();
 
         this.region = region;
-        this._name = "";
-        this._generatedFrom = "";
+        this._commandType = "";
         this.targetCommand = this;
         this.validators = ko.observableArray();
         this.validationMessages = ko.observableArray();
@@ -4732,7 +4731,7 @@ Bifrost.namespace("Bifrost.commands", {
     })
 });
 Bifrost.namespace("Bifrost.commands");
-Bifrost.commands.CommandDescriptor = function(command) {
+Bifrost.commands.CommandRequest = function(command) {
     var self = this;
 
     var builtInCommand = {};
@@ -4763,6 +4762,9 @@ Bifrost.commands.CommandDescriptor = function(command) {
         if (property === "_type") {
             return true;
         }
+        if (property === "_commandType") {
+            return true;
+        }
         if (property === "_namespace") {
             return true;
         }
@@ -4781,23 +4783,19 @@ Bifrost.commands.CommandDescriptor = function(command) {
         return properties;
     }
 
-    this.name = command._name;
-    this.generatedFrom = command._generatedFrom;
-    this.id = Bifrost.Guid.create();
+    this.type = command._commandType;
+    this.correlationId = Bifrost.Guid.create();
 
     var properties = getPropertiesFromCommand(command);
     var commandContent = ko.toJS(properties);
-    commandContent.Id = Bifrost.Guid.create();
-    this.command = ko.toJSON(commandContent);
+    this.content = ko.toJSON(commandContent);
 };
 
 
-Bifrost.commands.CommandDescriptor.createFrom = function (command) {
-    var commandDescriptor = new Bifrost.commands.CommandDescriptor(command);
+Bifrost.commands.CommandRequest.createFrom = function (command) {
+    var commandDescriptor = new Bifrost.commands.CommandRequest(command);
     return commandDescriptor;
 };
-
-
 Bifrost.namespace("Bifrost.commands");
 Bifrost.commands.CommandResult = (function () {
     function CommandResult(existing) {

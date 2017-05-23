@@ -1,4 +1,4 @@
-﻿using Bifrost.Testing.Fakes.Events;
+﻿using Bifrost.Specs.Events.Fakes;
 using Machine.Specifications;
 
 namespace Bifrost.Specs.Events.for_EventSource.given

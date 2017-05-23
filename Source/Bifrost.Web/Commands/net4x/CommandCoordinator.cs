@@ -3,10 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
+using System.Linq;
 using Bifrost.Commands;
-using Bifrost.Execution;
+using Bifrost.Extensions;
 using Bifrost.Serialization;
-#if(NET461)
+#if (NET461)
 using Microsoft.AspNet.SignalR;
 #else
 using Microsoft.AspNetCore.SignalR;
@@ -16,32 +17,29 @@ namespace Bifrost.Web.Commands
 {
     public class CommandCoordinator : Hub
     {
-        ICommandCoordinator _commandCoordinator;
-        ITypeDiscoverer _typeDiscoverer;
-        ICommandContextConnectionManager _commandContextConnectionManager;
-        ISerializer _serializer;
+        readonly ICommandCoordinator _commandCoordinator;
+        readonly ICommandContextConnectionManager _commandContextConnectionManager;
+        readonly ISerializer _serializer;
 
         public CommandCoordinator(
             ICommandCoordinator commandCoordinator,
-            ITypeDiscoverer typeDiscoverer,
             ICommandContextConnectionManager commandContextConnectionManager,
             ISerializer serializer)
         {
             _commandCoordinator = commandCoordinator;
-            _typeDiscoverer = typeDiscoverer;
             _commandContextConnectionManager = commandContextConnectionManager;
             _serializer = serializer;
         }
 
-        public CommandResult Handle(CommandDescriptor descriptor)
+        public CommandResult Handle(JsonCommandRequest command)
         {
             try
             {
-                var commandType = _typeDiscoverer.GetCommandTypeByName(descriptor.GeneratedFrom);
-                var command = (ICommand)_serializer.FromJson(commandType, descriptor.Command);
-                command.Id = descriptor.Id;
-                _commandContextConnectionManager.Register(Context.ConnectionId, command.Id);
-                var commandResult = _commandCoordinator.Handle(command);
+                var contentAsKeyValues = _serializer.GetKeyValuesFromJson(command.Content).ToDictionary(k => k.Key.ToPascalCase(), k => k.Value);
+                var commandRequest = new CommandRequest(command.CorrelationId, command.Type, contentAsKeyValues);
+
+                _commandContextConnectionManager.Register(Context.ConnectionId, command.CorrelationId);
+                var commandResult = _commandCoordinator.Handle(commandRequest);
                 return commandResult;
             }
             catch (Exception ex)

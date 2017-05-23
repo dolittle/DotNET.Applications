@@ -226,7 +226,7 @@
     <Content Include="commands\Command.js" />
     <Content Include="commands\commandCoordinator.js" />
     <Content Include="commands\commandDependencyResolver.js" />
-    <Content Include="commands\CommandDescriptor.js" />
+    <Content Include="commands\CommandRequest.js" />
     <Content Include="commands\CommandResult.js" />
     <Content Include="navigation\NavigationFrame.js" />
     <Content Include="read\Query.js" />
@@ -358,6 +358,6 @@
   </ItemGroup>
   <UsingTask AssemblyFile="$(ProjectDir)..\..\Tools\JsLintNet\JsLintNet.dll" TaskName="JSLintTask" Condition=" '$(OS)' == 'Windows_NT' " />
   <Target Name="BeforeBuild">
-    <JSLintTask SourceDirectory="$(ProjectDir)" SettingsFile="$(ProjectDir)jshint.conf" UseHint="true" Condition=" '$(OS)' == 'Windows_NT' "/>
+    <JSLintTask SourceDirectory="$(ProjectDir)" SettingsFile="$(ProjectDir)jshint.conf" UseHint="true" Condition=" '$(OS)' == 'Windows_NT' " />
   </Target>
 </Project>

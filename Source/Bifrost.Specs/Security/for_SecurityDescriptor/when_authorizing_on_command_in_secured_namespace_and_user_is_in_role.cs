@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 using Bifrost.Security;
-using Bifrost.Testing.Fakes.Security;
+using Bifrost.Specs.Security.Fakes;
 using Machine.Specifications;
 
 namespace Bifrost.Specs.Security.for_SecurityDescriptor

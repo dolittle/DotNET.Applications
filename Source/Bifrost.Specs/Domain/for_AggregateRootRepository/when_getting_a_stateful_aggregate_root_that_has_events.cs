@@ -1,9 +1,8 @@
-﻿using System;
-using Bifrost.Domain;
+﻿using Bifrost.Domain;
 using Bifrost.Events;
-using Bifrost.Testing.Fakes.Events;
 using Machine.Specifications;
 using Moq;
+using System;
 using It = Machine.Specifications.It;
 
 namespace Bifrost.Specs.Domain.for_AggregateRootRepository

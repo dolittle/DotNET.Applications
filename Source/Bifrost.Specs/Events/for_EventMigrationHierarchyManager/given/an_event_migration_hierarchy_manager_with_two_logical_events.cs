@@ -1,8 +1,8 @@
-using System;
-using Bifrost.Events;
-using Bifrost.Testing.Fakes.Events;
+﻿using Bifrost.Events;
+using Bifrost.Specs.Events.Fakes;
 using Bifrost.Specs.Events.for_EventMigrationLevelDiscoverer.given;
 using Machine.Specifications;
+using System;
 
 namespace Bifrost.Specs.Events.for_EventMigrationHierarchyManager.given
 {

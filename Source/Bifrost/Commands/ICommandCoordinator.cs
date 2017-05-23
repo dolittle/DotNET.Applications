@@ -12,11 +12,11 @@ namespace Bifrost.Commands
         /// <summary>
         /// Handle a command
         /// </summary>
-        /// <param name="command"><see cref="ICommand">command</see> to handle</param>
+        /// <param name="command"><see cref="CommandRequest">command</see> to handle</param>
         /// <returns>
         /// Result from the handle.
         /// Within the result one can check if the handling was success or not
         /// </returns>
-        CommandResult Handle(ICommand command);
+        CommandResult Handle(CommandRequest command);
     }
 }

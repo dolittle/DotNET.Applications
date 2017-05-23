@@ -1,5 +1,10 @@
-﻿using Bifrost.Commands;
+﻿using System.Dynamic;
+using Bifrost.Applications;
+using Bifrost.Commands;
+using Bifrost.Lifecycle;
 using Machine.Specifications;
+using Moq;
+using It = Machine.Specifications.It;
 
 namespace Bifrost.Specs.Commands.for_CommandContextManager
 {
@@ -8,11 +13,11 @@ namespace Bifrost.Specs.Commands.for_CommandContextManager
     {
         static ICommandContext commandContext;
         static ICommandContext currentContext;
-        static ICommand command;
+        static CommandRequest command;
 
         Establish context = () =>
                                 {
-                                    command = new SimpleCommand();
+                                    command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
                                     commandContext = Manager.EstablishForCommand(command);
                                 };
 

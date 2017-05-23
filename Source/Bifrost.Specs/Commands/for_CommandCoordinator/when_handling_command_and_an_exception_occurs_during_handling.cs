@@ -1,6 +1,5 @@
 ﻿using System;
 using Bifrost.Commands;
-using Bifrost.Exceptions;
 using Bifrost.Validation;
 using Machine.Specifications;
 
@@ -17,7 +16,7 @@ namespace Bifrost.Specs.Commands.for_CommandCoordinator
             exception = new Exception();
             var validationResults = new CommandValidationResult {ValidationResults = new ValidationResult[0]};
             command_validators_mock.Setup(cvs => cvs.Validate(command)).Returns(validationResults);
-            command_handler_manager_mock.Setup(c => c.Handle(Moq.It.IsAny<ICommand>())).Throws(exception);
+            command_handler_manager_mock.Setup(c => c.Handle(Moq.It.IsAny<CommandRequest>())).Throws(exception);
         };
 
         Because of = () => result = coordinator.Handle(command);

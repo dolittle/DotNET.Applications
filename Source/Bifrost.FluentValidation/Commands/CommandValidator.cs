@@ -16,27 +16,34 @@ namespace Bifrost.FluentValidation.Commands
     [Singleton]
     public class CommandValidator : ICommandValidator
     {
-        private readonly ICommandValidatorProvider _commandValidatorProvider;
+        readonly ICommandValidatorProvider _commandValidatorProvider;
+        readonly ICommandRequestConverter _commandRequestConverter;
 
         /// <summary>
         /// Initializes an instance of <see cref="CommandValidator"/> CommandValidationService
         /// </summary>
-        /// <param name="commandValidatorProvider"></param>
-        public CommandValidator(ICommandValidatorProvider commandValidatorProvider)
+        /// <param name="commandValidatorProvider"><see cref="ICommandValidatorProvider"/> for providing command validators</param>
+        /// <param name="commandRequestConverter"><see cref="ICommandRequestConverter"/> for converting to command instances</param>
+        public CommandValidator(
+            ICommandValidatorProvider commandValidatorProvider,
+            ICommandRequestConverter commandRequestConverter)
         {
             _commandValidatorProvider = commandValidatorProvider;
+            _commandRequestConverter = commandRequestConverter;
         }
 
-#pragma warning disable 1591 // Xml Comments
-        public CommandValidationResult Validate(ICommand command)
+        /// <inheritdoc/>
+        public CommandValidationResult Validate(CommandRequest command)
         {
             var result = new CommandValidationResult();
-            var validationResults = ValidateInternal(command);
+            var commandInstance = _commandRequestConverter.Convert(command);
+
+            var validationResults = ValidateInternal(commandInstance);
             result.ValidationResults = validationResults.Where(v => v.MemberNames.First() != ModelRule<object>.ModelRulePropertyName);
             result.CommandErrorMessages = validationResults.Where(v => v.MemberNames.First() == ModelRule<object>.ModelRulePropertyName).Select(v => v.ErrorMessage);
             return result;   
         }
-#pragma warning restore 1591 // Xml Comments
+
 
         IEnumerable<ValidationResult> ValidateInternal(ICommand command)
         {

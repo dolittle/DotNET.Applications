@@ -33,7 +33,7 @@ namespace Bifrost.Commands
         }
 
         /// <inheritdoc/>
-        public ICommandContext Build(ICommand command)
+        public ICommandContext Build(CommandRequest command)
         {
             return new CommandContext(
                 command,

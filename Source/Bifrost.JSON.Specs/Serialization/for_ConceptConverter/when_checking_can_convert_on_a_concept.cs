@@ -1,6 +1,4 @@
-using Bifrost.JSON.Concepts;
-using Bifrost.JSON.Serialization;
-using Bifrost.Testing.Fakes.Concepts;
+﻿using Bifrost.JSON.Concepts;
 using Machine.Specifications;
 
 namespace Bifrost.JSON.Specs.Serialization.for_ConceptConverter

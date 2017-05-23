@@ -12,10 +12,10 @@ namespace Bifrost.Commands
     public interface ICommandSecurityManager
     {
         /// <summary>
-        /// Authorizes a <see cref="ICommand"/> 
+        /// Authorizes a <see cref="CommandRequest"/> 
         /// </summary>
-        /// <param name="command"><see cref="ICommand"/> to ask for</param>
-        /// <returns><see cref="AuthorizationResult"/> that details how the <see cref="ICommand"/> was authorized</returns>
-        AuthorizationResult Authorize(ICommand command);
+        /// <param name="command"><see cref="CommandRequest"/> to ask for</param>
+        /// <returns><see cref="AuthorizationResult"/> that details how the <see cref="CommandRequest"/> was authorized</returns>
+        AuthorizationResult Authorize(CommandRequest command);
     }
 }

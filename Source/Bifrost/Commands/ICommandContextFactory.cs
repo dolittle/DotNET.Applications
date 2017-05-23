@@ -12,8 +12,8 @@ namespace Bifrost.Commands
         /// <summary>
         /// Creates an <see cref="ICommandContext"/> for a specific <see cref="ICommand" />
         /// </summary>
-        /// <param name="command"><see cref="ICommand" /> to create a context for.</param>
-        /// <returns>An <see cref="ICommandContext"/> for the specified <see cref="ICommand"/></returns>
-        ICommandContext Build(ICommand command);
+        /// <param name="command"><see cref="CommandRequest" /> to create a context for.</param>
+        /// <returns>An <see cref="ICommandContext"/> for the specified <see cref="CommandRequest"/></returns>
+        ICommandContext Build(CommandRequest command);
     }
 }

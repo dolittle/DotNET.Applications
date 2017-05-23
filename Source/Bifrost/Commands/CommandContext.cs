@@ -22,11 +22,11 @@ namespace Bifrost.Commands
         /// <summary>
         /// Initializes a new <see cref="CommandContext">CommandContext</see>
         /// </summary>
-        /// <param name="command">The <see cref="ICommand">command</see> the context is for</param>
+        /// <param name="command">The <see cref="CommandRequest">command</see> the context is for</param>
         /// <param name="executionContext">The <see cref="IExecutionContext"/> for the command</param>
         /// <param name="uncommittedEventStreamCoordinator">The <see cref="IUncommittedEventStreamCoordinator"/> to use for coordinating the committing of events</param>
         public CommandContext(
-            ICommand command,
+            CommandRequest command,
             IExecutionContext executionContext,
             IUncommittedEventStreamCoordinator uncommittedEventStreamCoordinator)
         {
@@ -43,7 +43,7 @@ namespace Bifrost.Commands
         public TransactionCorrelationId TransactionCorrelationId { get; }
 
         /// <inheritdoc/>
-        public ICommand Command { get; }
+        public CommandRequest Command { get; }
 
         /// <inheritdoc/>
         public IExecutionContext ExecutionContext { get; }

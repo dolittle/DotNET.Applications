@@ -53,12 +53,12 @@ namespace Bifrost.Commands
         }
 
         /// <inheritdoc/>
-        public CommandResult Handle(ICommand command)
+        public CommandResult Handle(CommandRequest command)
         {
             return Handle(_commandContextManager.EstablishForCommand(command), command);
         }
 
-        CommandResult Handle(ITransaction transaction, ICommand command)
+        CommandResult Handle(ITransaction transaction, CommandRequest command)
         {
             var commandResult = new CommandResult();
             try

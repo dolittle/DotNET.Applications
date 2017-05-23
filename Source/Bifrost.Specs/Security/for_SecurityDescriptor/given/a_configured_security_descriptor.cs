@@ -3,8 +3,7 @@ using Bifrost.Configuration.Defaults;
 using Bifrost.Execution;
 using Bifrost.Security;
 using Bifrost.SomeRandomNamespace;
-using Bifrost.Testing.Fakes.Commands;
-using Bifrost.Testing.Fakes.Security;
+using Bifrost.Specs.Security.Fakes;
 using Machine.Specifications;
 using Moq;
 

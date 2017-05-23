@@ -1,10 +1,8 @@
-﻿using System;
-using Bifrost.Configuration;
+﻿using Bifrost.Configuration;
 using Bifrost.Entities;
 using Bifrost.Events;
-using Bifrost.Testing.Fakes.Configuration;
-using Bifrost.Testing.Fakes.Entities;
 using Machine.Specifications;
+using System;
 
 namespace Bifrost.Specs.Configuration.for_EventsConfiguration
 {
