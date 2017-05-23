@@ -3,8 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
+using System.Linq;
 using Bifrost.Commands;
-#if(NET461)
+using Bifrost.Extensions;
+using Bifrost.Serialization;
+#if (NET461)
 using Microsoft.AspNet.SignalR;
 #else
 using Microsoft.AspNetCore.SignalR;
@@ -14,23 +17,29 @@ namespace Bifrost.Web.Commands
 {
     public class CommandCoordinator : Hub
     {
-        ICommandCoordinator _commandCoordinator;
-        ICommandContextConnectionManager _commandContextConnectionManager;
+        readonly ICommandCoordinator _commandCoordinator;
+        readonly ICommandContextConnectionManager _commandContextConnectionManager;
+        readonly ISerializer _serializer;
 
         public CommandCoordinator(
             ICommandCoordinator commandCoordinator,
-            ICommandContextConnectionManager commandContextConnectionManager)
+            ICommandContextConnectionManager commandContextConnectionManager,
+            ISerializer serializer)
         {
             _commandCoordinator = commandCoordinator;
             _commandContextConnectionManager = commandContextConnectionManager;
+            _serializer = serializer;
         }
 
-        public CommandResult Handle(CommandRequest command)
+        public CommandResult Handle(JsonCommandRequest command)
         {
             try
             {
+                var contentAsKeyValues = _serializer.GetKeyValuesFromJson(command.Content).ToDictionary(k => k.Key.ToPascalCase(), k => k.Value);
+                var commandRequest = new CommandRequest(command.CorrelationId, command.Type, contentAsKeyValues);
+
                 _commandContextConnectionManager.Register(Context.ConnectionId, command.CorrelationId);
-                var commandResult = _commandCoordinator.Handle(command);
+                var commandResult = _commandCoordinator.Handle(commandRequest);
                 return commandResult;
             }
             catch (Exception ex)

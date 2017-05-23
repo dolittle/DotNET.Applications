@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
@@ -68,7 +69,7 @@ namespace Bifrost.Web.Commands
                     if (type.GetTypeInfo().IsGenericType) continue;
                     
                     var identifier = _applicationResources.Identify(type);
-                    var command = new CommandRequest(TransactionCorrelationId.NotSet, identifier, new ExpandoObject());
+                    var command = new CommandRequest(TransactionCorrelationId.NotSet, identifier, new Dictionary<string,object>());
 
                     var authorizationResult = _commandSecurityManager.Authorize(command);
                     var name = $"{type.Name.ToCamelCase()}SecurityContext";

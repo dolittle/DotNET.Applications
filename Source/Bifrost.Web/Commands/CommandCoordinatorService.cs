@@ -4,38 +4,49 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bifrost.Commands;
+using Bifrost.Extensions;
+using Bifrost.Serialization;
 
 namespace Bifrost.Web.Commands
 {
     public class CommandCoordinatorService
     {
         readonly ICommandCoordinator _commandCoordinator;
+        readonly ISerializer _serializer;
 
         public CommandCoordinatorService(
-            ICommandCoordinator commandCoordinator)
+            ICommandCoordinator commandCoordinator,
+            ISerializer serializer)
         {
             _commandCoordinator = commandCoordinator;
+            _serializer = serializer;
         }
 
-        public CommandResult Handle(CommandRequest command)
+        public CommandResult Handle(JsonCommandRequest command)
         {
-            var result = _commandCoordinator.Handle(command);
+            var contentAsKeyValues = _serializer.GetKeyValuesFromJson(command.Content).ToDictionary(k => k.Key.ToPascalCase(), k => k.Value);
+            var commandRequest = new CommandRequest(command.CorrelationId, command.Type, contentAsKeyValues);
+
+            var result = _commandCoordinator.Handle(commandRequest);
             return result;
         }
 
-        public IEnumerable<CommandResult> HandleMany(IEnumerable<CommandRequest> commands)
+        public IEnumerable<CommandResult> HandleMany(IEnumerable<JsonCommandRequest> commands)
         {
             var results = new List<CommandResult>();
             foreach (var command in commands)
             {
+                var contentAsKeyValues = _serializer.GetKeyValuesFromJson(command.Content).ToDictionary(k => k.Key.ToPascalCase(), k => k.Value);
+                var commandRequest = new CommandRequest(command.CorrelationId, command.Type, contentAsKeyValues);
                 try
                 {
-                    results.Add(_commandCoordinator.Handle(command));
+                    results.Add(_commandCoordinator.Handle(commandRequest));
                 }
                 catch (Exception ex)
                 {
-                    var commandResult = CommandResult.ForCommand(command);
+                    var commandResult = CommandResult.ForCommand(commandRequest);
                     commandResult.Exception = ex;
                     return new[] { commandResult };
                 }

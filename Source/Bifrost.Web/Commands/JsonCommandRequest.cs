@@ -2,24 +2,20 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using System.Collections.Generic;
 using Bifrost.Applications;
 using Bifrost.Lifecycle;
 
-namespace Bifrost.Commands
+namespace Bifrost.Web.Commands
 {
-    /// <summary>
-    /// Represents a request for executing a command
-    /// </summary>
-    public class CommandRequest
+    public class JsonCommandRequest
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="CommandRequest"/>
+        /// Initializes a new instance of <see cref="JsonCommandRequest"/>
         /// </summary>
         /// <param name="correlationId"><see cref="TransactionCorrelationId"/> for the transaction</param>
         /// <param name="type"><see cref="IApplicationResourceIdentifier">Identifier</see> of the command</param>
-        /// <param name="content">Content of the command</param>
-        public CommandRequest(TransactionCorrelationId correlationId, IApplicationResourceIdentifier type, IDictionary<string, object> content)
+        /// <param name="content">Content of the command as Json</param>
+        public JsonCommandRequest(TransactionCorrelationId correlationId, IApplicationResourceIdentifier type, string content)
         {
             CorrelationId = correlationId;
             Type = type;
@@ -38,14 +34,14 @@ namespace Bifrost.Commands
         /// <returns>
         /// <see cref="IApplicationResourceIdentifier"/> representing the type of the Command
         /// </returns>
-        public IApplicationResourceIdentifier   Type { get; }
+        public IApplicationResourceIdentifier Type { get; }
 
         /// <summary>
         /// Gets the content of the command
         /// </summary>
         /// <returns>
-        /// <see cref="IDictionary{TKey, TValue}">Content</see> of the command
+        /// <see cref="string">Content</see> as Json
         /// </returns>
-        public IDictionary<string, object> Content { get; }
+        public string Content { get; }
     }
 }

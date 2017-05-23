@@ -1,6 +1,6 @@
 ﻿using Bifrost.Commands;
 
-namespace Domain
+namespace Domain.Awesome
 {
     public class MyCommand : Command
     {

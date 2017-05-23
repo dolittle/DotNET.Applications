@@ -1,11 +1,10 @@
-Bifrost.namespace("Bifrost.commands", {
+﻿Bifrost.namespace("Bifrost.commands", {
     Command: Bifrost.Type.extend(function (commandCoordinator, commandValidationService, commandSecurityService, mapper, options, region) {
         var self = this;
         var hasChangesObservables = ko.observableArray();
 
         this.region = region;
-        this._name = "";
-        this._generatedFrom = "";
+        this._commandType = "";
         this.targetCommand = this;
         this.validators = ko.observableArray();
         this.validationMessages = ko.observableArray();

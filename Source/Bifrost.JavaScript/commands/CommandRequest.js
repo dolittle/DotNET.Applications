@@ -1,5 +1,5 @@
-Bifrost.namespace("Bifrost.commands");
-Bifrost.commands.CommandDescriptor = function(command) {
+﻿Bifrost.namespace("Bifrost.commands");
+Bifrost.commands.CommandRequest = function(command) {
     var self = this;
 
     var builtInCommand = {};
@@ -30,6 +30,9 @@ Bifrost.commands.CommandDescriptor = function(command) {
         if (property === "_type") {
             return true;
         }
+        if (property === "_commandType") {
+            return true;
+        }
         if (property === "_namespace") {
             return true;
         }
@@ -48,19 +51,16 @@ Bifrost.commands.CommandDescriptor = function(command) {
         return properties;
     }
 
-    this.name = command._name;
-    this.generatedFrom = command._generatedFrom;
-    this.id = Bifrost.Guid.create();
+    this.type = command._commandType;
+    this.correlationId = Bifrost.Guid.create();
 
     var properties = getPropertiesFromCommand(command);
     var commandContent = ko.toJS(properties);
-    commandContent.Id = Bifrost.Guid.create();
-    this.command = ko.toJSON(commandContent);
+    this.content = ko.toJSON(commandContent);
 };
 
 
-Bifrost.commands.CommandDescriptor.createFrom = function (command) {
-    var commandDescriptor = new Bifrost.commands.CommandDescriptor(command);
+Bifrost.commands.CommandRequest.createFrom = function (command) {
+    var commandDescriptor = new Bifrost.commands.CommandRequest(command);
     return commandDescriptor;
 };
-

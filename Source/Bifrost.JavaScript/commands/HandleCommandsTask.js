@@ -11,16 +11,16 @@
         this.execute = function () {
             var promise = Bifrost.execution.Promise.create();
 
-            var commandDescriptors = [];
+            var commandRequests = [];
 
             commands.forEach(function (command) {
                 command.isBusy(true);
-                var commandDescriptor = Bifrost.commands.CommandDescriptor.createFrom(command);
-                commandDescriptors.push(commandDescriptor);
+                var commandRequest= Bifrost.commands.CommandRequest.createFrom(command);
+                commandRequests.push(commandRequest);
             });
 
             var parameters = {
-                commandDescriptors: commandDescriptors
+                commands: commandRequests
             };
 
             var url = "/Bifrost/CommandCoordinator/HandleMany";
