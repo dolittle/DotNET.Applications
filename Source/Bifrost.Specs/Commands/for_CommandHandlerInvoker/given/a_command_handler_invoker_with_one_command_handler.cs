@@ -1,20 +1,28 @@
-﻿using Bifrost.Commands;
+﻿using Bifrost.Applications;
+using Bifrost.Commands;
 using Machine.Specifications;
-using It = Moq.It;
+using Moq;
 
 namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker.given
 {
     public class a_command_handler_invoker_with_one_command_handler : a_command_handler_invoker_with_no_command_handlers
     {
         protected static CommandHandler handler;
+        protected static ApplicationResourceIdentifier command_type;
 
         Establish context = () =>
                                 {
+                                    var application = new Mock<IApplication>();
+                                    application.SetupGet(a => a.Name).Returns("An Application");
+                                    var applicationResource = new Mock<IApplicationResource>();
+                                    applicationResource.SetupGet(a => a.Name).Returns("A Resource");
+                                    command_type = new ApplicationResourceIdentifier(application.Object, new IApplicationLocation[0], applicationResource.Object);
+                                    application_resources.Setup(a => a.Identify(typeof(Command))).Returns(command_type);
                                     handler = new CommandHandler();
-                                    type_discoverer_mock.Setup(t => t.FindMultiple<IHandleCommands>()).Returns(new[]
+                                    type_discoverer.Setup(t => t.FindMultiple<IHandleCommands>()).Returns(new[]
                                                                                                               {typeof(CommandHandler)});
 
-                                    container_mock.Setup(c => c.Get(typeof (CommandHandler))).Returns(handler);
+                                    container.Setup(c => c.Get(typeof (CommandHandler))).Returns(handler);
                                 };
     }
 }

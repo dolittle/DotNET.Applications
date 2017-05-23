@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 using Bifrost.Commands;
 using Bifrost.Execution;
 using Bifrost.FluentValidation.Commands;
-using Bifrost.Testing.Fakes.Commands;
 using Machine.Specifications;
 using Moq;
 

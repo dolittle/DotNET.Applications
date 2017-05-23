@@ -1,5 +1,5 @@
 ﻿using System;
-using Bifrost.Testing.Fakes.Events;
+using Bifrost.Specs.Events.Fakes;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 

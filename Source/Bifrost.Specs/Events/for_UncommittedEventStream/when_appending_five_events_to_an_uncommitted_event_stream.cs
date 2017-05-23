@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Bifrost.Events;
-using Bifrost.Testing.Fakes.Events;
+using Bifrost.Specs.Events.Fakes;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
@@ -9,7 +9,6 @@ namespace Bifrost.Specs.Events.for_UncommittedEventStream
     public class when_appending_five_events_to_an_uncommitted_event_stream : given.an_empty_uncommitted_event_stream
     {
         static List<EventAndVersion> events_and_envelopes;
-        static List<IEventEnvelope> event_envelops;
 
         Establish context =
             () =>

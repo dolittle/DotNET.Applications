@@ -1,4 +1,4 @@
-using Bifrost.Testing.Fakes.Events;
+﻿using Bifrost.Specs.Events.Fakes;
 using Bifrost.Specs.Events.for_EventMigrationManager.given;
 using Machine.Specifications;
 

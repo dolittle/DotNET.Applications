@@ -6,9 +6,9 @@ namespace Bifrost.Specs.Commands.for_CommandValidators
     {
         public CommandValidationResult result_to_return;
         public bool validate_called;
-        public ICommand command_passed_to_validate;
+        public CommandRequest command_passed_to_validate;
 
-        public CommandValidationResult Validate(ICommand command)
+        public CommandValidationResult Validate(CommandRequest command)
         {
             validate_called = true;
             command_passed_to_validate = command;

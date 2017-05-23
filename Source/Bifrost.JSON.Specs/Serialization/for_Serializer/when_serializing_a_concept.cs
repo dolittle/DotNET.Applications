@@ -1,6 +1,5 @@
-using System;
+﻿using System;
 using Bifrost.JSON.Serialization;
-using Bifrost.Testing.Fakes.Concepts;
 using Machine.Specifications;
 
 namespace Bifrost.JSON.Specs.Serialization.for_Serializer

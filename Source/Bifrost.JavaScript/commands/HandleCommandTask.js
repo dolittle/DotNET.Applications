@@ -6,12 +6,12 @@
         this.execute = function () {
             var promise = Bifrost.execution.Promise.create();
 
-            var commandDescriptor = Bifrost.commands.CommandDescriptor.createFrom(command);
+            var commandRequest = Bifrost.commands.CommandRequest.createFrom(command);
             var parameters = {
-                commandDescriptor: commandDescriptor
+                command: commandRequest
             };
 
-            var url = "/Bifrost/CommandCoordinator/Handle?_cmd=" + command._generatedFrom;
+            var url = "/Bifrost/CommandCoordinator/Handle?_cmd=" + encodeURIComponent(command._commandType);
 
             server.post(url, parameters).continueWith(function (result) {
                 var commandResult = Bifrost.commands.CommandResult.createFrom(result);

@@ -115,7 +115,7 @@ namespace Bifrost.Events
 
         }
 
-        static Type GetMigrationFromType(Type migrationType)
+        Type GetMigrationFromType(Type migrationType)
         {
             var @interface = migrationType.GetTypeInfo().ImplementedInterfaces.Where(i => 
                 i.GetTypeInfo().IsGenericType &&
@@ -126,7 +126,7 @@ namespace Bifrost.Events
             return type;
         }
 
-        static bool ImplementsMigrationInterface(Type migrationType)
+        bool ImplementsMigrationInterface(Type migrationType)
         {
             return migrationType.GetTypeInfo().ImplementedInterfaces.Where(i => 
                 i.GetTypeInfo().IsGenericType &&
@@ -134,10 +134,10 @@ namespace Bifrost.Events
             ).FirstOrDefault() != null;
         }
 
-        static void ThrowInvalidMigrationTypeException(Type expected, Type actual)
+        void ThrowInvalidMigrationTypeException(Type expected, Type actual)
         {
             throw new InvalidMigrationTypeException(
-                    string.Format("Expected migration for type {0} but got migration for type {1} instead.", expected, actual)
+                    string.Format($"Expected migration for type {expected} but got migration for type {actual} instead.")
                 );
         }
     }

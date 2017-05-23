@@ -1,5 +1,5 @@
-using Bifrost.Events;
-using Bifrost.Testing.Fakes.Events;
+﻿using Bifrost.Events;
+using Bifrost.Specs.Events.Fakes;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;

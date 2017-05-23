@@ -1,6 +1,6 @@
 ﻿using Bifrost.Security;
 using Bifrost.SomeRandomNamespace;
-using Bifrost.Testing.Fakes.Commands;
+using Bifrost.Specs.Security.Fakes;
 
 namespace Bifrost.Specs.Security.for_TypeSecurable.given
 {

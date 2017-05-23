@@ -1,12 +1,12 @@
-﻿using System;
-using Bifrost.Events;
-using Bifrost.Testing.Fakes.Domain;
+﻿using Bifrost.Events;
 using Machine.Specifications;
 using Moq;
+using System;
+using Bifrost.Specs.Events.Fakes;
 
 namespace Bifrost.Specs.Events.for_EventSource.given
 {
-	public class a_stateful_event_source : all_dependencies
+    public class a_stateful_event_source : all_dependencies
 	{
 		protected static StatefulAggregatedRoot event_source;
 		protected static EventSourceId event_source_id;

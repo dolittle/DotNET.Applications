@@ -1,4 +1,4 @@
-/*
+﻿/*
 @depends extensions/ArrayExtensions.js
 @depends extensions/stringExtensions.js
 @depends extensions/NodeListExtensions.js
@@ -100,7 +100,7 @@
 @depends commands/CommandCoordinator.js
 @depends commands/commandValidationService.js
 @depends commands/Command.js
-@depends commands/CommandDescriptor.js
+@depends commands/CommandRequest.js
 @depends commands/CommandResult.js
 @depends commands/commandDependencyResolver.js
 @depends commands/CommandSecurityContext.js

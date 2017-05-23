@@ -1,5 +1,4 @@
-using Bifrost.FluentValidation.Commands;
-using Bifrost.Testing.Fakes.Commands;
+﻿using Bifrost.FluentValidation.Commands;
 using Bifrost.Validation;
 using Machine.Specifications;
 

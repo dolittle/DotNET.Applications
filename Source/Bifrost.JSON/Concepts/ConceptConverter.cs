@@ -23,15 +23,6 @@ namespace Bifrost.JSON.Concepts
         /// <inheritdoc/>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            //var instance = Activator.CreateInstance(objectType);
-            //var genericArgumentType = objectType.BaseType.GetGenericArguments()[0];
-            //var value = reader.Value;
-            //if (genericArgumentType == typeof(Guid))
-            //    value = Guid.Parse(reader.Value.ToString());
-
-            //objectType.GetProperty("Value").SetValue(instance, value, null);
-            //return instance;
-
             return ConceptFactory.CreateConceptInstance(objectType, reader.Value);
         }
 

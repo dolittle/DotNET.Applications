@@ -1,5 +1,4 @@
 ﻿using Bifrost.Commands;
-using Bifrost.Testing.Fakes.Concepts;
 
 namespace Bifrost.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
 {

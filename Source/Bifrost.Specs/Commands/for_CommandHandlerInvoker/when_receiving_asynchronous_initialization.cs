@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Dynamic;
 using System.Threading;
+using Bifrost.Applications;
 using Bifrost.Commands;
+using Bifrost.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
@@ -14,10 +17,10 @@ namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker
 
         Because of = () =>
         {
-            var command = new Command();
+            var command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
             var thread = new Thread(() => invoker.TryHandle(command));
 
-            type_discoverer_mock
+            type_discoverer
                 .Setup(t => t.FindMultiple<IHandleCommands>())
                 .Callback(
                     () =>
@@ -30,7 +33,6 @@ namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker
             thread.Join();
         };
 
-        It should_initialize_only_once = () =>
-            type_discoverer_mock.Verify(m => m.FindMultiple<IHandleCommands>(), Times.Once);
+        It should_initialize_only_once = () => type_discoverer.Verify(m => m.FindMultiple<IHandleCommands>(), Times.Once);
     }
 }

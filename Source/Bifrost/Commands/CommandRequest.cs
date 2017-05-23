@@ -1,7 +1,8 @@
-/*---------------------------------------------------------------------------------------------
+﻿/*---------------------------------------------------------------------------------------------
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System.Collections.Generic;
 using Bifrost.Applications;
 using Bifrost.Lifecycle;
 
@@ -18,8 +19,9 @@ namespace Bifrost.Commands
         /// <param name="correlationId"><see cref="TransactionCorrelationId"/> for the transaction</param>
         /// <param name="type"><see cref="IApplicationResourceIdentifier">Identifier</see> of the command</param>
         /// <param name="content">Content of the command</param>
-        public CommandRequest(TransactionCorrelationId correlationId, IApplicationResourceIdentifier type, dynamic content)
+        public CommandRequest(TransactionCorrelationId correlationId, IApplicationResourceIdentifier type, IDictionary<string, object> content)
         {
+            CorrelationId = correlationId;
             Type = type;
             Content = content;
         }
@@ -41,7 +43,9 @@ namespace Bifrost.Commands
         /// <summary>
         /// Gets the content of the command
         /// </summary>
-        /// <returns></returns>
-        public dynamic Content { get; set; }
+        /// <returns>
+        /// <see cref="IDictionary{TKey, TValue}">Content</see> of the command
+        /// </returns>
+        public IDictionary<string, object> Content { get; }
     }
 }
