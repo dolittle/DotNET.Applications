@@ -7,7 +7,7 @@ using System.Reflection;
 using Bifrost.Applications;
 using Newtonsoft.Json;
 
-namespace Bifrost.JSON.Serialization
+namespace Bifrost.JSON.Application
 {
     /// <summary>
     /// Represents a <see cref="JsonConverter"/> that can serialize and deserialize <see cref="IApplicationResourceIdentifier"/>
@@ -37,7 +37,7 @@ namespace Bifrost.JSON.Serialization
         /// <inheritdoc/>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            var identifierAsString = reader.ReadAsString();
+            var identifierAsString = reader.Value.ToString();
             var identifier = _converter.FromString(identifierAsString);
             return identifier;
         }

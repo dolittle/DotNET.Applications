@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -13,6 +14,7 @@ using Bifrost.Applications;
 using Bifrost.Concepts;
 using Bifrost.Execution;
 using Bifrost.Extensions;
+using Bifrost.JSON.Application;
 using Bifrost.JSON.Concepts;
 using Bifrost.JSON.Events;
 using Bifrost.Serialization;
@@ -45,12 +47,13 @@ namespace Bifrost.JSON.Serialization
             _cacheNoneTypeName = new ConcurrentDictionary<ISerializationOptions, JsonSerializer>();
         }
 
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public T FromJson<T>(string json, ISerializationOptions options = null)
         {
             return (T)FromJson(typeof(T), json, options);
         }
 
+        /// <inheritdoc/>
         public object FromJson(Type type, string json, ISerializationOptions options = null)
         {
             var serializer = CreateSerializerForDeserialization(options);
@@ -59,27 +62,30 @@ namespace Bifrost.JSON.Serialization
                 using (var reader = new JsonTextReader(textReader))
                 {
                     object instance;
-                    
-                    if(type.IsConcept())
+
+                    if (type.IsConcept())
                     {
-                        var genericArgumentType = type.GetTypeInfo().BaseType.GetTypeInfo().GetGenericArguments()[0];
+                        var genericArgumentType = type.GetConceptValueType();
                         var value = serializer.Deserialize(reader, genericArgumentType);
                         return ConceptFactory.CreateConceptInstance(type, value);
-                    } 
+                    }
 
                     if (type.GetTypeInfo().IsValueType ||
                         type.HasInterface<IEnumerable>())
                         instance = serializer.Deserialize(reader, type);
                     else
                     {
-                        instance = CreateInstanceOf(type, json);
-                        serializer.Populate(reader, instance);
+                        IEnumerable<string> propertiesMatched;
+                        instance = CreateInstanceOf(type, json, out propertiesMatched);
+
+                        DeserializeRemaindingProperties(type, serializer, reader, instance, propertiesMatched);
                     }
                     return instance;
                 }
             }
         }
 
+        /// <inheritdoc/>
         public void FromJson(object instance, string json, ISerializationOptions options = null)
         {
             var serializer = CreateSerializerForDeserialization(options);
@@ -92,6 +98,7 @@ namespace Bifrost.JSON.Serialization
             }
         }
 
+        /// <inheritdoc/>
         public string ToJson(object instance, ISerializationOptions options = null)
         {
             using (var stringWriter = new StringWriter())
@@ -103,6 +110,7 @@ namespace Bifrost.JSON.Serialization
             }
         }
 
+        /// <inheritdoc/>
         public Stream ToJsonStream(object instance, ISerializationOptions options = null)
         {
             var serialized = ToJson(instance, options);
@@ -116,22 +124,23 @@ namespace Bifrost.JSON.Serialization
             return stream;
         }
 
-
+        /// <inheritdoc/>
         public IDictionary<string, object> GetKeyValuesFromJson(string json)
         {
             return JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
         }
-#pragma warning restore 1591 // Xml Comments
 
 
-        object CreateInstanceOf(Type type, string json)
+
+        object CreateInstanceOf(Type type, string json, out IEnumerable<string> propertiesMatched)
         {
+            propertiesMatched = new string[0];
             if (type.HasDefaultConstructor())
                 return Activator.CreateInstance(type);
             else
             {
-                if( DoesPropertiesMatchConstructor(type, json) ) 
-                    return CreateInstanceByPropertiesMatchingConstructor(type, json);
+                if (DoesPropertiesMatchConstructor(type, json))
+                    return CreateInstanceByPropertiesMatchingConstructor(type, json, out propertiesMatched);
                 else
                     return _container.Get(type);
             }
@@ -140,16 +149,17 @@ namespace Bifrost.JSON.Serialization
 
         bool DoesPropertiesMatchConstructor(Type type, string json)
         {
-                var hash = JObject.Load(new JsonTextReader(new StringReader(json)));
-                var constructor = type.GetNonDefaultConstructor();
-                var parameters = constructor.GetParameters();
-                var properties = hash.Properties();
-                var matchingParameters = parameters.Where(cp => properties.Select(p=>p.Name.ToCamelCase()).Contains(cp.Name.ToCamelCase()));
-                return matchingParameters.Count() == parameters.Length;
+            var hash = JObject.Load(new JsonTextReader(new StringReader(json)));
+            var constructor = type.GetNonDefaultConstructor();
+            var parameters = constructor.GetParameters();
+            var properties = hash.Properties();
+            var matchingParameters = parameters.Where(cp => properties.Select(p => p.Name.ToCamelCase()).Contains(cp.Name.ToCamelCase()));
+            return matchingParameters.Count() == parameters.Length;
         }
 
-        object CreateInstanceByPropertiesMatchingConstructor(Type type, string json)
+        object CreateInstanceByPropertiesMatchingConstructor(Type type, string json, out IEnumerable<string> propertiesMatched)
         {
+            var propertiesFound = new List<string>();
             var hash = JObject.Load(new JsonTextReader(new StringReader(json)));
             var properties = hash.Properties();
 
@@ -158,38 +168,70 @@ namespace Bifrost.JSON.Serialization
             var parameters = constructor.GetParameters();
             var parameterInstances = new List<object>();
 
-            var toObjectMethod = typeof(JToken).GetTypeInfo().GetMethod("ToObject", new Type[0]);
+            var toObjectMethod = typeof(JToken).GetTypeInfo().GetMethod("ToObject", new Type[] { typeof(JsonSerializer) });
+            var serializer = CreateSerializerForDeserialization(SerializationOptions.CamelCase);
 
             foreach (var parameter in parameters)
             {
                 var property = properties.Single(p => p.Name.ToCamelCase() == parameter.Name.ToCamelCase());
-                var genericToObjectMethod = toObjectMethod.MakeGenericMethod(parameter.ParameterType);
-                var parameterInstance = genericToObjectMethod.Invoke(property.Value, null);
+                propertiesFound.Add(property.Name);
+
+                object parameterInstance = null;                
+                if (parameter.ParameterType == typeof(object))
+                {
+                    parameterInstance = serializer.Deserialize(new JsonTextReader(new StringReader(property.Value.ToString())), typeof(ExpandoObject));
+                }
+                else
+                {
+                    var genericToObjectMethod = toObjectMethod.MakeGenericMethod(parameter.ParameterType);
+                    parameterInstance = genericToObjectMethod.Invoke(property.Value, new[] { serializer });
+                }
+
                 parameterInstances.Add(parameterInstance);
             }
-
+            propertiesMatched = propertiesFound;
             var instance = constructor.Invoke(parameterInstances.ToArray());
             return instance;
         }
 
-        JsonSerializer CreateSerializerForDeserialization(ISerializationOptions options)
-        {
-            return RetrieveSerializer(options ?? SerializationOptions.Default, true);
-        }
 
-        JsonSerializer CreateSerializerForSerialization(ISerializationOptions options)
+        void DeserializeRemaindingProperties(Type type, JsonSerializer serializer, JsonTextReader reader, object instance, IEnumerable<string> propertiesMatched)
         {
-            if (options == null)
+            while (reader.Read())
             {
-                options = SerializationOptions.Default;
-            }
+                if (reader.TokenType == JsonToken.PropertyName)
+                {
+                    var propertyName = (string)reader.Value;
 
-            return RetrieveSerializer(options, options.Flags.HasFlag(SerializationOptionsFlags.IncludeTypeNames));
+                    reader.Read();
+
+                    if (!propertiesMatched.Contains(propertyName))
+                    {
+                        var property = type.GetTypeInfo().GetProperty(propertyName);
+                        if (property != null)
+                        {
+                            var deserialized = serializer.Deserialize(reader, property.PropertyType);
+                            property.SetValue(instance, deserialized);
+                        }
+                    }
+                }
+            }
         }
 
-        JsonSerializer RetrieveSerializer(ISerializationOptions options, bool includeTypeNames)
+
+        JsonSerializer CreateSerializerForDeserialization(ISerializationOptions options = null)
         {
-            if (includeTypeNames)
+            return RetrieveSerializer(options ?? SerializationOptions.Default);
+        }
+
+        JsonSerializer CreateSerializerForSerialization(ISerializationOptions options = null)
+        {
+            return RetrieveSerializer(options ?? SerializationOptions.Default);
+        }
+
+        JsonSerializer RetrieveSerializer(ISerializationOptions options)
+        {
+            if (options.Flags.HasFlag(SerializationOptionsFlags.IncludeTypeNames))
             {
                 return _cacheAutoTypeName.GetOrAdd(options, _ => CreateSerializer(options, TypeNameHandling.Auto));
             }
@@ -204,16 +246,17 @@ namespace Bifrost.JSON.Serialization
             var contractResolver = new SerializerContractResolver(_container, options);
 
             var serializer = new JsonSerializer
-                                 {
-                                     TypeNameHandling = typeNameHandling,
-                                     ContractResolver = contractResolver,
-                                 };
+            {
+                TypeNameHandling = typeNameHandling,
+                ContractResolver = contractResolver,
+            };
             serializer.Converters.Add(new ApplicationResourceIdentifierJsonConverter(_applicationResourceIdentifierConverter));
             serializer.Converters.Add(new ExceptionConverter());
             serializer.Converters.Add(new ConceptConverter());
             serializer.Converters.Add(new ConceptDictionaryConverter());
             serializer.Converters.Add(new EventSourceVersionConverter());
-            
+            serializer.Converters.Add(new CamelCaseToPascalCaseExpandoObjectConverter());
+
             return serializer;
         }
     }
