@@ -18,5 +18,10 @@ namespace Bifrost.Commands
     /// </remarks>
     public interface ICommand : IConvention
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Guid Id { get; set; }
     }
 }
