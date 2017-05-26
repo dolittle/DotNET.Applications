@@ -20,5 +20,4 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
-  <Import Project="..\Common.proj" />
 </Project>
