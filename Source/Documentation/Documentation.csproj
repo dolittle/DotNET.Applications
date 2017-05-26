@@ -20,11 +20,11 @@
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bifrost.FluentValidation\Bifrost.FluentValidation.csproj" />
-    <ProjectReference Include="..\Bifrost.JSON\Bifrost.JSON.csproj" />
-    <ProjectReference Include="..\Bifrost.Ninject\Bifrost.Ninject.csproj" />
-    <ProjectReference Include="..\Bifrost.Web\Bifrost.Web.csproj" />
-    <ProjectReference Include="..\Bifrost\Bifrost.csproj" />
+    <ProjectReference Include="..\doLittle.FluentValidation\doLittle.FluentValidation.csproj" />
+    <ProjectReference Include="..\doLittle.JSON\doLittle.JSON.csproj" />
+    <ProjectReference Include="..\doLittle.Ninject\doLittle.Ninject.csproj" />
+    <ProjectReference Include="..\doLittle.Web\doLittle.Web.csproj" />
+    <ProjectReference Include="..\doLittle\doLittle.csproj" />
   </ItemGroup>
   <Import Project="..\Solutions\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\Solutions\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\Solutions\packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\Solutions\packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props')" />

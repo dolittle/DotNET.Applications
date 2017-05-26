@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard1.6</TargetFrameworks>
-    <AssemblyName>Bifrost.SimpleInjector</AssemblyName>
-    <PackageId>Bifrost.SimpleInjector</PackageId>
-    <DocumentationFile>bin\Debug\net461\Bifrost.SimpleInjector.xml</DocumentationFile>
+    <AssemblyName>doLittle.SimpleInjector</AssemblyName>
+    <PackageId>doLittle.SimpleInjector</PackageId>
+    <DocumentationFile>bin\Debug\net461\doLittle.SimpleInjector.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bifrost\Bifrost.csproj" />
+    <ProjectReference Include="..\doLittle\doLittle.csproj" />
   </ItemGroup>
 
   <ItemGroup>

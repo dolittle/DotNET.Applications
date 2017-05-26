@@ -4,77 +4,74 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{1663A5F5-14BA-4FDD-8D0D-B80996A32623}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost", "Source\Bifrost\Bifrost.csproj", "{FB310720-CD89-44B6-BD54-7861F65D8466}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle", "Source\doLittle\doLittle.csproj", "{FB310720-CD89-44B6-BD54-7861F65D8466}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Specs", "Source\Bifrost.Specs\Bifrost.Specs.csproj", "{CDAA9409-34B1-4B02-B079-19427E77A3B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.Specs", "Source\doLittle.Specs\doLittle.Specs.csproj", "{CDAA9409-34B1-4B02-B079-19427E77A3B0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{2B61FCED-42AC-48B3-B2E9-6F0EE50E0674}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.JSON", "Source\Bifrost.JSON\Bifrost.JSON.csproj", "{DB77EB6A-DB79-4839-AB30-90593BCE470F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.JSON", "Source\doLittle.JSON\doLittle.JSON.csproj", "{DB77EB6A-DB79-4839-AB30-90593BCE470F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Ninject", "Source\Bifrost.Ninject\Bifrost.Ninject.csproj", "{3EE03158-1BE0-470C-85FB-E673CD5FC9E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.Ninject", "Source\doLittle.Ninject\doLittle.Ninject.csproj", "{3EE03158-1BE0-470C-85FB-E673CD5FC9E1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Ninject.Specs", "Source\Bifrost.Ninject.Specs\Bifrost.Ninject.Specs.csproj", "{0F449F28-D18B-4D52-B444-A18546F82FE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.Ninject.Specs", "Source\doLittle.Ninject.Specs\doLittle.Ninject.Specs.csproj", "{0F449F28-D18B-4D52-B444-A18546F82FE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bifrost.JavaScript", "Source\Bifrost.JavaScript\Bifrost.JavaScript.csproj", "{15567D0A-4DAF-49CD-9F8F-4FA94AD889D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.JavaScript", "Source\doLittle.JavaScript\doLittle.JavaScript.csproj", "{15567D0A-4DAF-49CD-9F8F-4FA94AD889D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bifrost.JavaScript.Specs", "Source\Bifrost.JavaScript.Specs\Bifrost.JavaScript.Specs.csproj", "{F3E029DC-EBEB-492F-9CA0-D26DB9F82064}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.JavaScript.Specs", "Source\doLittle.JavaScript.Specs\doLittle.JavaScript.Specs.csproj", "{F3E029DC-EBEB-492F-9CA0-D26DB9F82064}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Web", "Source\Bifrost.Web\Bifrost.Web.csproj", "{0A748BD3-97DD-4C57-8069-4E36656C0A1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.Web", "Source\doLittle.Web\doLittle.Web.csproj", "{0A748BD3-97DD-4C57-8069-4E36656C0A1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.JSON.Specs", "Source\Bifrost.JSON.Specs\Bifrost.JSON.Specs.csproj", "{E066FF5C-A61E-48CD-AAF5-5A490F5C6F3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.JSON.Specs", "Source\doLittle.JSON.Specs\doLittle.JSON.Specs.csproj", "{E066FF5C-A61E-48CD-AAF5-5A490F5C6F3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bifrost.Web.Specs", "Source\Bifrost.Web.Specs\Bifrost.Web.Specs.csproj", "{C2C2138E-2617-43D6-B552-E0D57FDA7CEA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.StructureMap", "Source\Bifrost.StructureMap\Bifrost.StructureMap.csproj", "{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.Web.Specs", "Source\doLittle.Web.Specs\doLittle.Web.Specs.csproj", "{C2C2138E-2617-43D6-B552-E0D57FDA7CEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BCCAEC2C-A560-4850-A317-B7E1EF25E15D}"
 	ProjectSection(SolutionItems) = preProject
-		Source\Source\.editorconfig = Source\Source\.editorconfig
-		Source\Source\appveyor.yml = Source\Source\appveyor.yml
-		Source\Source\build.cmd = Source\Source\build.cmd
-		Source\Source\build.fsx = Source\Source\build.fsx
-		Source\Source\build.sh = Source\Source\build.sh
-		Source\Source\CHANGELOG.md = Source\Source\CHANGELOG.md
-		Source\Source\CODE_OF_CONDUCT.md = Source\Source\CODE_OF_CONDUCT.md
+		.editorconfig = .editorconfig
+		appveyor.yml = appveyor.yml
+		build.cmd = build.cmd
+		build.fsx = build.fsx
+		build.sh = build.sh
+		CHANGELOG.md = CHANGELOG.md
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		Source\Common\CommonAssemblyInfo.cs = Source\Common\CommonAssemblyInfo.cs
-		Source\Source\global.json = Source\Source\global.json
-		Source\Source\LICENSE = Source\Source\LICENSE
-		Source\Source\readme.md = Source\Source\readme.md
+		global.json = global.json
+		LICENSE = LICENSE
+		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Autofac", "Source\Bifrost.Autofac\Bifrost.Autofac.csproj", "{26ECC23C-4139-4167-9DED-00002E5D9570}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.Autofac", "Source\doLittle.Autofac\doLittle.Autofac.csproj", "{26ECC23C-4139-4167-9DED-00002E5D9570}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.FluentValidation", "Source\Bifrost.FluentValidation\Bifrost.FluentValidation.csproj", "{E7507338-7499-4046-8A9E-76D100974E82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.FluentValidation", "Source\doLittle.FluentValidation\doLittle.FluentValidation.csproj", "{E7507338-7499-4046-8A9E-76D100974E82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.FluentValidation.Specs", "Source\Bifrost.FluentValidation.Specs\Bifrost.FluentValidation.Specs.csproj", "{53CDDC70-4541-4E9E-A2F4-95AFD556AC40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.FluentValidation.Specs", "Source\doLittle.FluentValidation.Specs\doLittle.FluentValidation.Specs.csproj", "{53CDDC70-4541-4E9E-A2F4-95AFD556AC40}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.SimpleInjector", "Source\Bifrost.SimpleInjector\Bifrost.SimpleInjector.csproj", "{AF3E39EB-5A28-46D7-8ECA-A5BD2D692D2F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.SimpleInjector", "Source\doLittle.SimpleInjector\doLittle.SimpleInjector.csproj", "{AF3E39EB-5A28-46D7-8ECA-A5BD2D692D2F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{C639794D-C022-4118-902C-5F003DFA0B31}"
-	ProjectSection(SolutionItems) = preProject
-		Source\Bifrost.Client.nuspec = Source\Bifrost.Client.nuspec
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IOC", "IOC", "{1287AD93-5279-46B3-AE57-1CCC468CB2B1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Events", "Events", "{6B7FCD5E-7B6C-44AA-A370-6EEE78D9EBAA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Events.Azure.Tables", "Source\Bifrost.Events.Azure.Tables\Bifrost.Events.Azure.Tables.csproj", "{97E7EBED-1F31-44F7-9AA2-C1049BD74A7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.Events.Azure.Tables", "Source\doLittle.Events.Azure.Tables\doLittle.Events.Azure.Tables.csproj", "{97E7EBED-1F31-44F7-9AA2-C1049BD74A7F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Events.MongoDB", "Source\Bifrost.Events.MongoDB\Bifrost.Events.MongoDB.csproj", "{D184DA7F-505F-45F5-A192-728705639715}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Events.RabbitMQ", "Source\Bifrost.Events.RabbitMQ\Bifrost.Events.RabbitMQ.csproj", "{E004883F-E9B8-4660-B213-C764DAC7B8F3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Events.Redis", "Source\Bifrost.Events.Redis\Bifrost.Events.Redis.csproj", "{589A0F70-A043-45B3-B97E-34698A029EDB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.Events.MongoDB", "Source\doLittle.Events.MongoDB\doLittle.Events.MongoDB.csproj", "{D184DA7F-505F-45F5-A192-728705639715}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Read", "Read", "{5097934F-C4DE-4FC3-A0CD-57B43E834E61}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Read.MongoDB", "Source\Bifrost.Read.MongoDb\Bifrost.Read.MongoDB.csproj", "{63BBC1F3-E5E0-4902-BADF-1589F91C0BEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.Read.MongoDB", "Source\doLittle.Read.MongoDb\doLittle.Read.MongoDB.csproj", "{63BBC1F3-E5E0-4902-BADF-1589F91C0BEA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Events.Azure.DocumentDB", "Source\Bifrost.Events.Azure.DocumentDB\Bifrost.Events.Azure.DocumentDB.csproj", "{16E407CC-209C-443B-AE61-CD2D211D8D34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.Events.Azure.DocumentDB", "Source\doLittle.Events.Azure.DocumentDB\doLittle.Events.Azure.DocumentDB.csproj", "{16E407CC-209C-443B-AE61-CD2D211D8D34}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bifrost.Read.DocumentDB", "Source\Bifrost.Read.DocumentDB\Bifrost.Read.DocumentDB.csproj", "{5BD1D447-9E42-4BBC-8CA9-D768FF3F210D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "doLittle.Read.DocumentDB", "Source\doLittle.Read.DocumentDB\doLittle.Read.DocumentDB.csproj", "{5BD1D447-9E42-4BBC-8CA9-D768FF3F210D}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "doLittle.StructureMap", "Source\doLittle.StructureMap\doLittle.StructureMap.csproj", "{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "doLittle.Events.RabbitMQ", "Source\doLittle.Events.RabbitMQ\doLittle.Events.RabbitMQ.csproj", "{61D1738A-AB88-4426-B7C7-5EA99982A346}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "doLittle.Events.Redis", "Source\doLittle.Events.Redis\doLittle.Events.Redis.csproj", "{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -253,20 +250,6 @@ Global
 		{C2C2138E-2617-43D6-B552-E0D57FDA7CEA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C2C2138E-2617-43D6-B552-E0D57FDA7CEA}.Release|x64.ActiveCfg = Release|Any CPU
 		{C2C2138E-2617-43D6-B552-E0D57FDA7CEA}.Release|x86.ActiveCfg = Release|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Release|ARM.ActiveCfg = Release|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Release|x64.ActiveCfg = Release|Any CPU
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D}.Release|x86.ActiveCfg = Release|Any CPU
 		{D8A3E244-AC49-4372-8C03-F5AA3107BD80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8A3E244-AC49-4372-8C03-F5AA3107BD80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8A3E244-AC49-4372-8C03-F5AA3107BD80}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -377,46 +360,6 @@ Global
 		{D184DA7F-505F-45F5-A192-728705639715}.Release|x64.Build.0 = Release|Any CPU
 		{D184DA7F-505F-45F5-A192-728705639715}.Release|x86.ActiveCfg = Release|Any CPU
 		{D184DA7F-505F-45F5-A192-728705639715}.Release|x86.Build.0 = Release|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Debug|ARM.Build.0 = Debug|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Debug|x64.Build.0 = Debug|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Debug|x86.Build.0 = Debug|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Release|ARM.ActiveCfg = Release|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Release|ARM.Build.0 = Release|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Release|x64.ActiveCfg = Release|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Release|x64.Build.0 = Release|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Release|x86.ActiveCfg = Release|Any CPU
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3}.Release|x86.Build.0 = Release|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Debug|ARM.Build.0 = Debug|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Debug|x64.Build.0 = Debug|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Debug|x86.Build.0 = Debug|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Release|ARM.ActiveCfg = Release|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Release|ARM.Build.0 = Release|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Release|x64.ActiveCfg = Release|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Release|x64.Build.0 = Release|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Release|x86.ActiveCfg = Release|Any CPU
-		{589A0F70-A043-45B3-B97E-34698A029EDB}.Release|x86.Build.0 = Release|Any CPU
 		{63BBC1F3-E5E0-4902-BADF-1589F91C0BEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{63BBC1F3-E5E0-4902-BADF-1589F91C0BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63BBC1F3-E5E0-4902-BADF-1589F91C0BEA}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -517,6 +460,60 @@ Global
 		{AB9E9F37-42A8-4D18-A0F2-02E5677A17E2}.Release|x64.Build.0 = Release|Any CPU
 		{AB9E9F37-42A8-4D18-A0F2-02E5677A17E2}.Release|x86.ActiveCfg = Release|Any CPU
 		{AB9E9F37-42A8-4D18-A0F2-02E5677A17E2}.Release|x86.Build.0 = Release|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Release|x64.ActiveCfg = Release|Any CPU
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E}.Release|x86.ActiveCfg = Release|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Debug|ARM.Build.0 = Debug|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Debug|x64.Build.0 = Debug|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Debug|x86.Build.0 = Debug|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Release|ARM.ActiveCfg = Release|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Release|ARM.Build.0 = Release|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Release|x64.ActiveCfg = Release|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Release|x64.Build.0 = Release|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Release|x86.ActiveCfg = Release|Any CPU
+		{61D1738A-AB88-4426-B7C7-5EA99982A346}.Release|x86.Build.0 = Release|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Debug|ARM.Build.0 = Debug|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Debug|x64.Build.0 = Debug|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Debug|x86.Build.0 = Debug|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Release|ARM.ActiveCfg = Release|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Release|ARM.Build.0 = Release|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Release|x64.ActiveCfg = Release|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Release|x64.Build.0 = Release|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Release|x86.ActiveCfg = Release|Any CPU
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -534,7 +531,6 @@ Global
 		{ACFBFE97-27FE-4D3C-B5F6-B5CBC24F9EF3} = {2B61FCED-42AC-48B3-B2E9-6F0EE50E0674}
 		{314E5D80-C9B6-41CD-96AD-E9166D953763} = {2B61FCED-42AC-48B3-B2E9-6F0EE50E0674}
 		{C2C2138E-2617-43D6-B552-E0D57FDA7CEA} = {C639794D-C022-4118-902C-5F003DFA0B31}
-		{AF8CCD5B-E42A-41A7-B98B-3CE11188A54D} = {1287AD93-5279-46B3-AE57-1CCC468CB2B1}
 		{D8A3E244-AC49-4372-8C03-F5AA3107BD80} = {ADBBEFA5-7DC6-43B7-8DE3-D66F529AAE1C}
 		{26ECC23C-4139-4167-9DED-00002E5D9570} = {1287AD93-5279-46B3-AE57-1CCC468CB2B1}
 		{E7507338-7499-4046-8A9E-76D100974E82} = {2B61FCED-42AC-48B3-B2E9-6F0EE50E0674}
@@ -544,19 +540,20 @@ Global
 		{6B7FCD5E-7B6C-44AA-A370-6EEE78D9EBAA} = {2B61FCED-42AC-48B3-B2E9-6F0EE50E0674}
 		{97E7EBED-1F31-44F7-9AA2-C1049BD74A7F} = {6B7FCD5E-7B6C-44AA-A370-6EEE78D9EBAA}
 		{D184DA7F-505F-45F5-A192-728705639715} = {6B7FCD5E-7B6C-44AA-A370-6EEE78D9EBAA}
-		{E004883F-E9B8-4660-B213-C764DAC7B8F3} = {6B7FCD5E-7B6C-44AA-A370-6EEE78D9EBAA}
-		{589A0F70-A043-45B3-B97E-34698A029EDB} = {6B7FCD5E-7B6C-44AA-A370-6EEE78D9EBAA}
 		{5097934F-C4DE-4FC3-A0CD-57B43E834E61} = {2B61FCED-42AC-48B3-B2E9-6F0EE50E0674}
 		{63BBC1F3-E5E0-4902-BADF-1589F91C0BEA} = {5097934F-C4DE-4FC3-A0CD-57B43E834E61}
 		{16E407CC-209C-443B-AE61-CD2D211D8D34} = {6B7FCD5E-7B6C-44AA-A370-6EEE78D9EBAA}
 		{939DC032-0331-4453-930F-D12836879607} = {ADBBEFA5-7DC6-43B7-8DE3-D66F529AAE1C}
 		{5BD1D447-9E42-4BBC-8CA9-D768FF3F210D} = {5097934F-C4DE-4FC3-A0CD-57B43E834E61}
 		{AB9E9F37-42A8-4D18-A0F2-02E5677A17E2} = {ADBBEFA5-7DC6-43B7-8DE3-D66F529AAE1C}
+		{7CFF13D2-68FA-4D35-B0DA-BD0A8CFB4D2E} = {1287AD93-5279-46B3-AE57-1CCC468CB2B1}
+		{61D1738A-AB88-4426-B7C7-5EA99982A346} = {6B7FCD5E-7B6C-44AA-A370-6EEE78D9EBAA}
+		{EA121F8B-07CB-4DB9-913A-F8D2AA43CBF4} = {6B7FCD5E-7B6C-44AA-A370-6EEE78D9EBAA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Source\Bifrost\Bifrost.csproj
+		StartupItem = Source\doLittle\doLittle.csproj
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 	EndGlobalSection

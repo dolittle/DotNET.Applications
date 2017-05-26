@@ -7,8 +7,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C2C2138E-2617-43D6-B552-E0D57FDA7CEA}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Bifrost.Web.Specs</RootNamespace>
-    <AssemblyName>Bifrost.Web.Specs</AssemblyName>
+    <RootNamespace>doLittle.Web.Specs</RootNamespace>
+    <AssemblyName>doLittle.Web.Specs</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\Solutions\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -144,13 +144,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bifrost.Web\Bifrost.Web.csproj">
+    <ProjectReference Include="..\doLittle.Web\doLittle.Web.csproj">
       <Project>{0A748BD3-97DD-4C57-8069-4E36656C0A1A}</Project>
-      <Name>Bifrost.Web</Name>
+      <Name>doLittle.Web</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bifrost\Bifrost.csproj">
+    <ProjectReference Include="..\doLittle\doLittle.csproj">
       <Project>{FB310720-CD89-44B6-BD54-7861F65D8466}</Project>
-      <Name>Bifrost</Name>
+      <Name>doLittle</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

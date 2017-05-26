@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net461;netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>net20;netcoreapp1.1</TargetFrameworks>
     <DebugType>portable</DebugType>
-    <AssemblyName>Bifrost.Specs</AssemblyName>
+    <AssemblyName>doLittle.Specs</AssemblyName>
     <OutputType>Library</OutputType>
-    <PackageId>Bifrost.Specs</PackageId>
+    <PackageId>doLittle.Specs</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
@@ -22,7 +22,7 @@
     <Compile Remove="Execution\for_TypeImporter\**\*;Events\MethodEventArgumentsSpecs.cs;Events\MethodEventFactorySpecs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bifrost\Bifrost.csproj" />
+    <ProjectReference Include="..\doLittle\doLittle.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Machine.Specifications.Runner.VisualStudio" Version="2.2.2" />

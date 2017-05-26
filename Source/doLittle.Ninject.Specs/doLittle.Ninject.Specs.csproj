@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFrameworks>net461;netcoreapp1.1</TargetFrameworks>
     <DebugType>portable</DebugType>
-    <AssemblyName>Bifrost.Ninject.Specs</AssemblyName>
+    <AssemblyName>doLittle.Ninject.Specs</AssemblyName>
     <OutputType>Library</OutputType>
-    <PackageId>Bifrost.Ninject.Specs</PackageId>
+    <PackageId>doLittle.Ninject.Specs</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bifrost.Ninject\Bifrost.Ninject.csproj" />
+    <ProjectReference Include="..\doLittle.Ninject\doLittle.Ninject.csproj" />
   </ItemGroup>
 
   <ItemGroup>
