@@ -1,5 +1,8 @@
 # Release Notes
 
+> [!Note]
+> Every version below is [Bifrost](https://github.com/dolittle/bifrost) - kept here for reference
+
 ## Version 1.2.0
 
 * Added guidance for issues [#698](https://github.com/dolittle/Bifrost/issues/698)
