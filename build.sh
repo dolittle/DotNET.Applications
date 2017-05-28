@@ -11,8 +11,8 @@ cd `dirname ${SCRIPT_PATH}` > /dev/null
 SCRIPT_PATH=`pwd`;
 popd  > /dev/null
 
-NUGET_PATH="$SCRIPT_PATH/Source/Solutions/.nuget";
-PACKAGES_PATH="$SCRIPT_PATH/Source/Solutions/packages";
+NUGET_PATH="$SCRIPT_PATH/.nuget";
+PACKAGES_PATH="$SCRIPT_PATH/packages";
 
 if ! [ -f $NUGET_PATH/.nuget/nuget.exe ] 
     then

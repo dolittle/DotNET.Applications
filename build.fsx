@@ -1,5 +1,5 @@
-﻿#I "Source/Solutions/packages/FAKE/tools/"
-#I "Source/Solutions/packages/FAKE/FSharp.Data/lib/net40"
+﻿#I "packages/FAKE/tools/"
+#I "packages/FAKE/FSharp.Data/lib/net40"
 #r "FakeLib.dll"
 #r "FSharp.Data.dll" 
 open Fake
@@ -19,6 +19,7 @@ open Fake.FileSystemHelper
 open Fake.ProcessHelper
 open Fake.MSBuildHelper
 open AssemblyInfoFile
+
 
 // https://github.com/krauthaufen/DevILSharp/blob/master/build.fsx
 // http://blog.2mas.xyz/take-control-of-your-build-ci-and-deployment-with-fsharp-fake/
@@ -139,7 +140,7 @@ let getVersionFromGitTag(buildNumber:int) =
 let getLatestNuGetVersion =
     trace "Get latest NuGet version"
 
-    let jsonAsString = Http.RequestString("https://api.nuget.org/v3/registration1/bifrost/index.json", headers = [ Accept HttpContentTypes.Json ])
+    let jsonAsString = Http.RequestString("https://api.nuget.org/v3/registration1/dolittle/index.json", headers = [ Accept HttpContentTypes.Json ])
     let json = JsonValue.Parse(jsonAsString)
 
     let items = json?items.AsArray().[0]?items.AsArray()
@@ -172,11 +173,11 @@ let getMsBuildEnginePath() =
 //* Globals
 //*****************************************************************************
 
-let company = "Dolittle"
-let copyright = "(C) 2008 - 2017 Dolittle"
+let company = "doLittle"
+let copyright = "(C) 2008 - 2017 doLittle"
 let trademark = ""
 
-let solutionFile = "./Source/Solutions/Bifrost_All.sln"
+let solutionFile = "./doLittle.sln"
 
 let sourceDirectory = sprintf "%s/Source" __SOURCE_DIRECTORY__
 let artifactsDirectory = sprintf "%s/artifacts" __SOURCE_DIRECTORY__
@@ -216,7 +217,7 @@ let mygetKey = System.Environment.GetEnvironmentVariable("MYGET_KEY")
 // Documentation related
 let documentationUser = System.Environment.GetEnvironmentVariable("DOCS_USER")
 let documentationUserToken = System.Environment.GetEnvironmentVariable("DOCS_TOKEN")
-let documentationSolutionFile = "Source/Solutions/Bifrost_Documentation.sln"
+let documentationSolutionFile = "./Documentation.sln"
 
 printfn "<----------------------- BUILD DETAILS ----------------------->"
 printfn "Git Branch : %s" currentBranch
@@ -414,29 +415,6 @@ Target "DeployNugetPackages" (fun _ ->
         trace "Not deploying to NuGet - no key set"
 )
 
-//*****************************************************************************
-//* Deploy to NuGet if release mode
-//*****************************************************************************
-Target "PackageSamples" (fun _ ->
-    let sampleProjects = ["Bifrost.QuickStart"]
-    // "Source/Bifrost.Default/Bifrost.Default.nuspec"
-
-    trace "*** Package Sample Projects ***"
-    
-    for sampleProject in sampleProjects do
-        let specFile = sprintf "Source/%s/%s.nuspec" sampleProject sampleProject
-        let projFile = sprintf "Source/%s/%s.csproj" sampleProject sampleProject
-
-        tracef "Build %s" projFile
-        spawnProcess(msbuild, projFile) |> ignore
-
-        tracef "Packaging %s %s" specFile
-        let allArgs = sprintf "pack %s -Version %s -OutputDirectory %s" specFile (buildVersion.AsString()) nugetDirectory
-        spawnProcess(nugetPath, allArgs) |> ignore
-
-    trace "*** Package Sample Projects DONE ***"
-)
-
 // ******** Pre Info 
 // Get Build Number from BuildServer
 // Get Version from Git Tag
@@ -478,7 +456,6 @@ Target "Deploy" DoNothing
 Target "PackageAndDeploy" DoNothing
 "GenerateAndPublishDocumentation" ==> "PackageAndDeploy"
 "Package" ==> "PackageAndDeploy"
-"PackageSamples" ==> "PackageAndDeploy"
 "Deploy" ==> "PackageAndDeploy"
 
 Target "All" DoNothing
