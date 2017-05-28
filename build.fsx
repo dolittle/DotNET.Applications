@@ -181,6 +181,8 @@ printfn "<----------------------- BUILD DETAILS ----------------------->"
 printfn "Git Branch : %s" currentBranch
 printfn "Build version : %s" (buildVersion.AsString())
 printfn "Build version - preRelease : %b" (buildVersion.IsPreRelease)
+printfn "Artifacts Directory : %s" artifactsDirectory
+printfn "NuGet Artifacts Directory : %s" nugetDirectory
 printfn "Release Build : %b" isReleaseBuild
 printfn "Documentation User : %s" documentationUser
 printfn "MSBuild location : %s" msbuild
@@ -359,7 +361,7 @@ Target "DeployNugetPackages" (fun _ ->
     let source = if( isReleaseBuild && String.IsNullOrEmpty(nugetKey) = false ) then nugetUrl else mygetUrl
 
     if( String.IsNullOrEmpty(key) = false ) then
-        let packages = !! ("artifacts/nuget/*.nupkg")
+        let packages = !! (sprintfn "%s/*.nupkg" nugetDirectory)
                         |> Seq.toArray
                         
         for package in packages do
