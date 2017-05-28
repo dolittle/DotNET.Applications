@@ -20,7 +20,6 @@ open Fake.ProcessHelper
 open Fake.MSBuildHelper
 open AssemblyInfoFile
 
-
 // https://github.com/krauthaufen/DevILSharp/blob/master/build.fsx
 // http://blog.2mas.xyz/take-control-of-your-build-ci-and-deployment-with-fsharp-fake/
 
@@ -113,43 +112,9 @@ let spawnProcess (processName:string, arguments:string) =
 let performGitCommand arguments:string =
     spawnProcess("git", arguments)
 
-let gitVersion repositoryDir = 
-    let arguments = sprintf "%s /output json /showvariable SemVer" repositoryDir
-    let gitVersionExecutable = "Source/Solutions/packages/GitVersion.CommandLine/tools/GitVersion.exe"
-    let processName = if isWindows then gitVersionExecutable else "mono"
-    let fullArguments = if isWindows then arguments else sprintf "%s %s" gitVersionExecutable arguments
-
-    spawnProcess(processName, fullArguments)
-
 let getCurrentBranch =
-    performGitCommand("rev-parse --abbrev-ref HEAD").Trim()
-
-let getLatestTag repositoryDir =
-    //let commitSha = performGitCommand "rev-list --tags --max-count=1"
-    performGitCommand (sprintf "describe --tag --abbrev=0")
-    
-let getVersionFromGitTag(buildNumber:int) =
-    trace "Get version from Git tag"
-    if appveyor then
-        let gitVersionTag = gitVersion "./"
-        tracef "Git tag version : %s" gitVersionTag
-        new BuildVersion(gitVersionTag, buildNumber, true)
-    else 
-        new BuildVersion("1.0.0", 0, false)
-
-let getLatestNuGetVersion =
-    trace "Get latest NuGet version"
-
-    let jsonAsString = Http.RequestString("https://api.nuget.org/v3/registration1/bifrost/index.json", headers = [ Accept HttpContentTypes.Json ])
-    let json = JsonValue.Parse(jsonAsString)
-
-    let items = json?items.AsArray().[0]?items.AsArray()
-    let item = items.[items.Length-1]
-    let catalogEntry = item?catalogEntry
-    let version = (catalogEntry?version.AsString())
-    
-    new BuildVersion(version)
-       
+    performGitCommand("rev-parse --abbrev-ref HEAD").Trim()    
+           
 let updateVersionOnProjectFile(file:string, version:BuildVersion) =
     let projectFile = File.ReadAllText(file)
     let newVersionString = sprintf "<Version>%s</Version>" (version.AsString())
@@ -185,7 +150,6 @@ let nugetDirectory = sprintf "%s/nuget" artifactsDirectory
 
 let msbuild = getMsBuildEnginePath()
 
-
 let projectsDirectories = File.ReadAllLines "projects.txt" |> Array.map(fun f -> new DirectoryInfo(sprintf "./Source/%s" f))
 
 let specDirectories = File.ReadAllLines "specs.txt" |> Array.map(fun f -> new DirectoryInfo(sprintf "./Source/%s" f))
@@ -196,16 +160,10 @@ let currentBranch = getCurrentBranch
 let envBuildNumber = System.Environment.GetEnvironmentVariable("APPVEYOR_BUILD_NUMBER")
 let buildNumber = if String.IsNullOrWhiteSpace(envBuildNumber) then 0 else envBuildNumber |> int
 
-let versionFromGitTag = getVersionFromGitTag buildNumber 
-let lastNuGetVersion = getLatestNuGetVersion
-let sameVersion = versionFromGitTag.DoesMajorMinorPatchMatch lastNuGetVersion
-// Determine if it is a release build - check if the latest NuGet deployment is a release build matching version number or not.
 let isReleaseBuild = false 
-// not versionFromGitTag.IsPreRelease
-// sameVersion && (not versionFromGitTag.IsPreRelease && lastNuGetVersion.IsPreRelease)
 System.Environment.SetEnvironmentVariable("RELEASE_BUILD",if isReleaseBuild then "true" else "false")
 
-let buildVersion = BuildVersion(versionFromGitTag.Major, versionFromGitTag.Minor, versionFromGitTag.Patch, buildNumber, versionFromGitTag.PreReleaseString,isReleaseBuild)
+let buildVersion = new BuildVersion(2,0,0, buildNumber, "alpha", false)
 
 // Package related
 let nugetPath = "./Source/Solutions/.nuget/NuGet.exe"
@@ -221,12 +179,8 @@ let documentationSolutionFile = "./Documentation.sln"
 
 printfn "<----------------------- BUILD DETAILS ----------------------->"
 printfn "Git Branch : %s" currentBranch
-printfn "Git Version : %s" (versionFromGitTag.AsString())
-printfn "Last NuGet version : %s" (lastNuGetVersion.AsString())
-printfn "Last NuGet version - preRelease : %b" (lastNuGetVersion.IsPreRelease)
 printfn "Build version : %s" (buildVersion.AsString())
 printfn "Build version - preRelease : %b" (buildVersion.IsPreRelease)
-printfn "Version Same : %b" sameVersion
 printfn "Release Build : %b" isReleaseBuild
 printfn "Documentation User : %s" documentationUser
 printfn "MSBuild location : %s" msbuild
