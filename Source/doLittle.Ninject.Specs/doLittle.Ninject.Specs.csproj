@@ -21,10 +21,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\doLittle.Ninject\doLittle.Ninject.csproj" />
   </ItemGroup>
 
