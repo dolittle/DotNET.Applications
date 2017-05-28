@@ -16,7 +16,7 @@
 
 ![dolittle Logo](Media/Logo/logo_128x128.png)
 
-## Documentation can be found [here](https://docs.dolittle.io)
+## Documentation can be found [here](http://www.dolittle.io)
 
 ## You can find the CI package feed [here](https://www.myget.org/gallery/dolittle)
 
