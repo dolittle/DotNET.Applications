@@ -166,7 +166,7 @@ System.Environment.SetEnvironmentVariable("RELEASE_BUILD",if isReleaseBuild then
 let buildVersion = new BuildVersion(2,0,0, buildNumber, "alpha", false)
 
 // Package related
-let nugetPath = "./Source/Solutions/.nuget/NuGet.exe"
+let nugetPath = "./.nuget/NuGet.exe"
 let nugetUrl = "https://www.nuget.org/api/v2/package"
 let mygetUrl = "https://www.myget.org/F/dolittle/api/v2/package"
 let nugetKey = System.Environment.GetEnvironmentVariable("NUGET_KEY")
