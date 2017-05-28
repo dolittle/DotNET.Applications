@@ -360,7 +360,10 @@ Target "DeployNugetPackages" (fun _ ->
     let key = if( isReleaseBuild && String.IsNullOrEmpty(nugetKey) = false ) then nugetKey else mygetKey
     let source = if( isReleaseBuild && String.IsNullOrEmpty(nugetKey) = false ) then nugetUrl else mygetUrl
 
+    trace "*** Deploy all NuGet Packages ***"
+
     if( String.IsNullOrEmpty(key) = false ) then
+        tracef "Get all packages from %s" nugetDirectory
         let packagesPath = sprintf "%s/*.nupkg" nugetDirectory
         let packages = !! (packagesPath)
                         |> Seq.toArray
@@ -371,6 +374,9 @@ Target "DeployNugetPackages" (fun _ ->
             spawnProcess(nugetPath, allArgs) |> ignore
     else
         trace "Not deploying to NuGet - no key set"
+
+
+    trace "*** Deploy all NuGet Packages DONE ***"
 )
 
 // ******** Pre Info 
