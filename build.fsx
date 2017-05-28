@@ -140,7 +140,7 @@ let getVersionFromGitTag(buildNumber:int) =
 let getLatestNuGetVersion =
     trace "Get latest NuGet version"
 
-    let jsonAsString = Http.RequestString("https://api.nuget.org/v3/registration1/dolittle/index.json", headers = [ Accept HttpContentTypes.Json ])
+    let jsonAsString = Http.RequestString("https://api.nuget.org/v3/registration1/bifrost/index.json", headers = [ Accept HttpContentTypes.Json ])
     let json = JsonValue.Parse(jsonAsString)
 
     let items = json?items.AsArray().[0]?items.AsArray()
@@ -149,7 +149,7 @@ let getLatestNuGetVersion =
     let version = (catalogEntry?version.AsString())
     
     new BuildVersion(version)
-    
+       
 let updateVersionOnProjectFile(file:string, version:BuildVersion) =
     let projectFile = File.ReadAllText(file)
     let newVersionString = sprintf "<Version>%s</Version>" (version.AsString())
@@ -461,7 +461,6 @@ Target "PackageAndDeploy" DoNothing
 Target "All" DoNothing
 "BuildRelease" ==> "All"
 "DotNetTest" ==> "All"
-"JavaScriptSpecs" ==> "All"
 "PackageAndDeploy" =?> ("All",  currentBranch.Equals("master") or currentBranch.Equals("HEAD"))
 
 Target "Travis" DoNothing

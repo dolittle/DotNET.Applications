@@ -1,2 +1,4 @@
-Bifrost.Specs
-Bifrost.JSON.Specs
+doLittle.Specs
+doLittle.Ninject.Specs
+doLittle.FluentValidation.Specs
+doLittle.JSON.Specs
