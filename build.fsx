@@ -366,6 +366,7 @@ Target "DeployNugetPackages" (fun _ ->
                         |> Seq.toArray
                         
         for package in packages do
+            tracef "Pushing %s" package
             let allArgs = sprintf "push %s %s -Source %s" package key source
             spawnProcess(nugetPath, allArgs) |> ignore
     else
