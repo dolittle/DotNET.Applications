@@ -9,7 +9,7 @@ author: einari
 During execution sometimes one needs information that are cross cutting the application.
 Such as who is the currently logged in user, current culture, what is the current tenant and other custom meta
 data you want is relative to the environment.
-In Bifrost this is formalized through something called ``IExecutionContext``.
+In doLittle this is formalized through something called ``IExecutionContext``.
 
 ## Taking it as a dependency
 
@@ -17,7 +17,7 @@ You can take a dependency directly to the ``IExecutionContext`` on the construct
 resolved by the IOC.
 
 ```csharp
-using Bifrost.Execution;
+using doLittle.Execution;
 
 public class MySystem
 {
@@ -36,7 +36,7 @@ that is valid at the first creation time. Any changes after that would not be re
 If you have a singleton, you can take a dependency to something called IExecutionContextManager
 
 ```csharp
-using Bifrost.Execution;
+using doLittle.Execution;
 
 public class MySystem
 {
@@ -72,7 +72,7 @@ Culture is the culture that is currently set on the thread.
 ### System
 
 System represents a string that just gives a name of your application - the currently running system.
-It exists as a property on the configure object of Bifrost, also called System. During configuration
+It exists as a property on the configure object of doLittle, also called System. During configuration
 you simply set that property.
 
 ### Tenant
@@ -87,7 +87,7 @@ Bifrot will discover all your implementations and call the `Populate()` method w
 execution context needs to be populated.
 
 ```csharp
-using Bifrost.Execution;
+using doLittle.Execution;
 
 public class MyPopulator : ICanPopulateExecutionContextDetails
 {

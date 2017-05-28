@@ -1,17 +1,16 @@
 ---
 title: About C# coding styles
-description: Learn about how to write C# in Bifrost
+description: Learn about how to write C# in doLittle
 keywords: Contributing
 author: einari
 ---
-
 # C# Coding Styles
 
 The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”,
 “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in
 [RFC 2119](https://tools.ietf.org/html/rfc2119).
 
-This is the to be considered the coding standard for Bifrost and is subject to automated
+This is the to be considered the coding standard for doLittle and is subject to automated
 verification during automated builds and also part of codereviews such as those done for
 pull requests.
 
@@ -183,7 +182,7 @@ In C# the *async* / *await* keywords should be used with utmost care. It is a th
 without really thinking it through can bleed throughout your codebase without necessarily
 a good reason. Alongside *async* / *await* comes the `Task` type that needs to be there.
 The places where threading is necessary, it *MUST* be dealt with internally to the
-implementation and not bleed throughout its APIs. Bifrost has a very good handle on its
+implementation and not bleed throughout its APIs. doLittle has a very good handle on its
 entrypoints and from these entrypoints, the need for scaling out across multiple threads
 are rarely needed. With the underlying infrastructure being relied on, web requests are
 already threaded. Since we enter the system and returns back as soon possible, we have a

@@ -4,7 +4,6 @@ description: Learn about event stores
 keywords: Events
 author: einari
 ---
-
 # Event Store
 
 All [events](introduction.md) being applied to the system can be stored in the sequence
@@ -18,6 +17,6 @@ event it is capable of processing automatically replayed - making it possible fo
 
 When resuming an [EventSource](event_source.md), all relevant events can be applied to
 the *EventSource* to resume state. There are more mechanisms as well, but it proves the
-importance of events as being the source of truth in Bifrost.
+importance of events as being the source of truth in doLittle.
 
 

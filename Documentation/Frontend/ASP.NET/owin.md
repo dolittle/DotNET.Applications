@@ -1,17 +1,16 @@
 ---
 title: About Http Modules
-description: Learn how Bifrost works with HTTP modules
+description: Learn how doLittle works with HTTP modules
 keywords: ASP.NET
 author: einari
 ---
-
 # OWIN
 
-Bifrost hooks into the [OWIN](http://owin.org) way of starting up and taking over the main initialization.
-The [BootStrapper](../../api/Bifrost.Web.BootStrapper.html) in Bifrost uses the [WebActivatorEx](https://github.com/davidebbo/WebActivator)
-to hook up the `PreApplicationStart` and `Start` methods. With this, the pipeline is configured and Bifrost uses
+doLittle hooks into the [OWIN](http://owin.org) way of starting up and taking over the main initialization.
+The [BootStrapper](../../api/doLittle.Web.BootStrapper.html) in doLittle uses the [WebActivatorEx](https://github.com/davidebbo/WebActivator)
+to hook up the `PreApplicationStart` and `Start` methods. With this, the pipeline is configured and doLittle uses
 its different conventions to discover and configure your application. The two most important being the
-[ICanConfigure](../../api/Bifrost.Configuration.ICanConfigure.html) and [ICanCreateContainer](../../api/Bifrost.Configuration.ICanCreateContainer.html)
+[ICanConfigure](../../api/doLittle.Configuration.ICanConfigure.html) and [ICanCreateContainer](../../api/doLittle.Configuration.ICanCreateContainer.html)
 interfaces. Read more about configuration [here](../Backend/configuration.md) and containers [here](../Backend/container.md).
 
 ## Web.config

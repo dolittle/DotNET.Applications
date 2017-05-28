@@ -4,24 +4,20 @@ description: Learn about how to get started - building and all
 keywords: Building
 author: einari
 ---
-
 # Getting Started
 
-Getting started with Bifrost is very simple.
+Getting started with doLittle is very simple.
 
 ## Visual Studio
 
 The main Visual Studio solution file that is being used and maintained sits inside the
-`Source\Solutions`folder and is called `Bifrost_All.sln`.
+root folder of the project and is called `doLittle.sln`.
 It holds all the projects and you should be able to run this directly.
 Minimum requirement is Visual Studio 2015.
 
 Remember that if you have turned off automatic restore of NuGet packages in Visual Studio.
 You will have to right click the solution in **Solution Explorer** and chose to explicitly
 restore packages.
-
-To run the QuickStart once you've got it compiling is simply setting the `Bifrost.QuickStart`
-project as the startup project in Visual Studio.
 
 ## Visual Studio Code
 

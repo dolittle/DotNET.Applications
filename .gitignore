@@ -4,7 +4,6 @@ obj
 *.ldf
 *.LDF
 *.user
-Source/Documentation/DocumentX/*
 Documentation/build/**/*
 current_version.txt
 lastbuild.txt
@@ -18,17 +17,10 @@ packages
 *.idb
 *.vspscc
 *.xap
-*.fbl7
-*.fb7lck
-*.fbpinf
 *.test-cache
-*.ncrunch*
-*.sublime-workspace
 *.nupkg
-Source/Bifrost.QuickStart/App_Data
 *.cache
 TestResults/*
-NDependOut
 _site
 
 *.lock.json
@@ -44,12 +36,6 @@ artifacts
 log.txt
 
 *.trx
-
-Source/Console/Events
-Source/Console/Entities
-
-App_Data
-
 
 # OS generated files #
 ######################

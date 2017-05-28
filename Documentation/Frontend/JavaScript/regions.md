@@ -4,12 +4,11 @@ description: Learn about how regions work
 keywords: MVVM, Frontend, JavaScript
 author: einari
 ---
-
 # Regions
 
 Regions are at the center of the visual composition of the application.
 A region is a logical grouping of a [view](views.md) and a [view model](view_models.md).
-All regions are implicitly created during compositions, Bifrost manages creation and
+All regions are implicitly created during compositions, doLittle manages creation and
 lifecycle of them.
 
 ![Region Overview](images/region_overview.png)
@@ -40,8 +39,8 @@ Expanding a region with properties or functionality is done through what is know
 region descriptor. This makes it possible to separate out this into its own concept.
 
 ```javascript
-Bifrost.namespace("BoundedContext.Feature", {
-    RegionDescriptor: Bifrost.views.RegionDescriptor.extend(function() {
+doLittle.namespace("BoundedContext.Feature", {
+    RegionDescriptor: doLittle.views.RegionDescriptor.extend(function() {
         this.describe = function(region) {
             region.aCommonProperty = "Something";
         }
@@ -51,7 +50,7 @@ Bifrost.namespace("BoundedContext.Feature", {
 
 ## Operations
 
-Bifrost has the concept of [operations](Interaction/operations.md). Basically an encapsulation
+doLittle has the concept of [operations](Interaction/operations.md). Basically an encapsulation
 of work that the user wants performed. The operations are aggregated into the region they belong
 to and when not executed represents a possible change.
 

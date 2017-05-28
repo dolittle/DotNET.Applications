@@ -4,7 +4,6 @@ description: Take a full roundtrip of Bifrost
 keywords: .NET, JavaScript
 author: einari
 ---
-
 # End To End
 
 The purpose of this tutorial is to take you through the entire stack of Bifrost, all the steps you need

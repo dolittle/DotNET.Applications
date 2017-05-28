@@ -48,13 +48,13 @@ Sometimes you need to highlight something with a note. You **MUST** use the foll
 
 ```markdown
 > [!Note]
-> Notes can have [links](https://github.com/dolittle/bifrost) and **formatting**
+> Notes can have [links](https://github.com/dolittle/DotNET.Core) and **formatting**
 ```
 
 this results in:
 
 > [!Note]
-> Notes can have [links](https://github.com/dolittle/bifrost) and **formatting**
+> Notes can have [links](https://github.com/dolittle/DotNET.Core) and **formatting**
 
 
 ### Metadata

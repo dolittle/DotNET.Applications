@@ -4,7 +4,6 @@ description: Learn about how to write C# specifications
 keywords: Contributing
 author: einari
 ---
-
 # CSharp Specifications
 
 The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”,
@@ -28,7 +27,7 @@ The basic folder structure we have is:
 
 A concrete sample of this would be:
 
-    Bifrost.Specs
+    doLittle.Specs
         Commands
             for_CommandContext
                 given

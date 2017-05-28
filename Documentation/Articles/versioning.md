@@ -1,13 +1,12 @@
 ---
 title: About versioning
-description: Learn about how Bifrost is versioned
+description: Learn about how doLittle is versioned
 keywords: General
 author: einari
 ---
-
 # Versioning
 
-Bifrost follows the [Semantic Versioning](https://semver.org) versioning scheme.
+doLittle follows the [Semantic Versioning](https://semver.org) versioning scheme.
 
 Deviation from the standard; due to filesystem limitations, the **+** for build numbers is a **-**.
 

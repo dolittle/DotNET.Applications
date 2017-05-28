@@ -1,18 +1,17 @@
 ---
 title: About Debugging
-description: Learn how to debug into the Bifrost source code
+description: Learn how to debug into the doLittle source code
 keywords: .NET
 author: einari
 ---
-
 # Debugging
 
-If you want to debug into the Bifrost source code from Visual Studio you need the symbols downloaded locally
+If you want to debug into the doLittle source code from Visual Studio you need the symbols downloaded locally
 In most situations, you'd typically want to just grab the debug-symbols, step into the code and figure out whatever it is you're interested in.
 
 ## Using debug symbols
 
-All official releases of Bifrost after v1.0.0.8 have the symbols available on [SymbolSource](http://www.symbolsource.org).
+All official releases of doLittle after v1.0.0.8 have the symbols available on [SymbolSource](http://www.symbolsource.org).
 
 ## Enable source server
 
@@ -39,5 +38,5 @@ PDB files in addition. For some tooling, like [ReSharper](https://www.jetbrains.
 
 ## Get the source code
 
-If you may want to get a bit more involved, and actually head over to the [Bifrost GitHub repository](http://github.com/dolittle/Bifrost)
+If you may want to get a bit more involved, and actually head over to the [doLittle GitHub repository](http://github.com/dolittle/DotNET.Core)
 to get a given version of the code. The differnt versions are marked with tags, which should allow you to navigate between releases.

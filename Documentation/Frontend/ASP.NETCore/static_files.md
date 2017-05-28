@@ -9,7 +9,7 @@ author: einari
 > [!Note]
 > Upcoming feature will make this system better, so you don't have to think about this: [#727](https://github.com/dolittle/Bifrost/issues/727)
 
-When doing development, you're not bundling the files in your project and Bifrost will load everything dynamically as it needs
+When doing development, you're not bundling the files in your project and doLittle will load everything dynamically as it needs
 to. When refreshing the browser, content can get cached by the browser and your changes aren't showing up.
 One way to deal with this is to turn off caching while in debug mode - not release.
 

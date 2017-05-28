@@ -4,11 +4,10 @@ description: Learn about how type discovery works
 keywords: Types
 author: einari
 ---
-
 # Type Discovery
 
-Bifrost is very focused around [convention over configuration](../Articles/convention_over_configuration.md).
-In order for Bifrost to be able to do all its conventions, it needs to be able to know about
+doLittle is very focused around [convention over configuration](../Articles/convention_over_configuration.md).
+In order for doLittle to be able to do all its conventions, it needs to be able to know about
 the types in the system. The type discovery is built on top of the [assembly discovery](assembly_discovery.md).
 
 ## IInstancesOf
