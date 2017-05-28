@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Tenancy
+namespace doLittle.Tenancy
 {
     /// <summary>
     /// Represents a <see cref="ITenant"/> in the system

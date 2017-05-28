@@ -1,6 +1,6 @@
 ﻿describe("when populating command on changes", function () {
 
-    var readModelOf = Bifrost.read.ReadModelOf.create({
+    var readModelOf = doLittle.read.ReadModelOf.create({
         mapper: {},
         region: {},
         taskFactory: {},

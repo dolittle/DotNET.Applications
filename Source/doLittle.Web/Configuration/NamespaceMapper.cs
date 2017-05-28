@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Execution;
-using Bifrost.Utils;
+using doLittle.Execution;
+using doLittle.Utils;
 
-namespace Bifrost.Web.Configuration
+namespace doLittle.Web.Configuration
 {
     public class NamespaceMapper
     {

@@ -1,7 +1,7 @@
-﻿using Bifrost.Tenancy;
+﻿using doLittle.Tenancy;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Tenancy.for_TenancyConfiguration
+namespace doLittle.Specs.Tenancy.for_TenancyConfiguration
 {
     public class when_configuring_with_one_custom_tenant_id_resolver : given.no_tenant_id_resolvers
     {

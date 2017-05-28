@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Views;
+using doLittle.Views;
 
-namespace Bifrost.Specs.Views
+namespace doLittle.Specs.Views
 {
     public class SimpleObjectWithId : IHaveId
     {

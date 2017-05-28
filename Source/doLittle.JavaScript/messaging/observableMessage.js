@@ -7,10 +7,10 @@
             if (internal === true) {
                 return;
             }
-            Bifrost.messaging.Messenger.global.publish(message, newValue);
+            doLittle.messaging.Messenger.global.publish(message, newValue);
         });
 
-        Bifrost.messaging.Messenger.global.subscribeTo(message, function (value) {
+        doLittle.messaging.Messenger.global.subscribeTo(message, function (value) {
             internal = true;
             observable(value);
             internal = false;

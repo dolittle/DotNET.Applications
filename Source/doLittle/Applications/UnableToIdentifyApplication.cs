@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Applications
+namespace doLittle.Applications
 {
     /// <summary>
     /// The exception that gets thrown when parsing an <see cref="IApplicationResourceIdentifier"/>

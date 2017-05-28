@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 
-namespace Bifrost.FluentValidation.Specs
+namespace doLittle.FluentValidation.Specs
 {
     public class ConceptAsString : ConceptAs<String>
     {

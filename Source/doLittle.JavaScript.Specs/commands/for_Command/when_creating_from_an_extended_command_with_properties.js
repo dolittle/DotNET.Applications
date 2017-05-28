@@ -26,7 +26,7 @@
         mapper: {}
     }
 
-    var commandType = Bifrost.commands.Command.extend(function () {
+    var commandType = doLittle.commands.Command.extend(function () {
         this.integer = 0;
         this.number = 0.1;
         this.string = "";

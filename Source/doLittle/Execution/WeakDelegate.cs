@@ -5,7 +5,7 @@
 using System;
 using System.Reflection;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Represents a delegate that is weakly referenced - non obtrusive for the

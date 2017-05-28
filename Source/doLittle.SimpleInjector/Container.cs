@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Execution;
-using IContainer = Bifrost.Execution.IContainer;
+using doLittle.Execution;
+using IContainer = doLittle.Execution.IContainer;
 
-namespace Bifrost.SimpleInjector
+namespace doLittle.SimpleInjector
 {
     /// <summary>
     /// Represents an implementation of <see cref="IContainer"/> for SimpleInjector

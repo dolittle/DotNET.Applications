@@ -1,8 +1,8 @@
-﻿using Bifrost.Applications;
+﻿using doLittle.Applications;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResourceResolver.given
+namespace doLittle.Specs.Applications.for_ApplicationResourceResolver.given
 {
     public class an_identifier : all_dependencies
     {

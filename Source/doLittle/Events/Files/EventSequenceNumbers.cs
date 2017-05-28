@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
-using Bifrost.Applications;
-using Bifrost.Execution;
-using Bifrost.Logging;
+using doLittle.Applications;
+using doLittle.Execution;
+using doLittle.Logging;
 
-namespace Bifrost.Events.Files
+namespace doLittle.Events.Files
 {
     /// <summary>
     /// Represents a simple and naïve implementation of <see cref="IEventSequenceNumbers"/>

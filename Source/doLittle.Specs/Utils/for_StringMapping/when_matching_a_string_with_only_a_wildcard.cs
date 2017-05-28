@@ -1,7 +1,7 @@
-﻿using Bifrost.Utils;
+﻿using doLittle.Utils;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Utils.for_StringMapping
+namespace doLittle.Specs.Utils.for_StringMapping
 {
     public class when_matching_a_string_with_only_a_wildcard
     {

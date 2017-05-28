@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bifrost.Security
+namespace doLittle.Security
 {
     /// <summary>
     /// Contains the result of an attempt to authorize an action.

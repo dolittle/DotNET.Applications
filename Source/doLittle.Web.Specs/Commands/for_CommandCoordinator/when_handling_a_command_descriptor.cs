@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Dynamic;
-using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Lifecycle;
-using Bifrost.Web.Commands;
+using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Lifecycle;
+using doLittle.Web.Commands;
 using Machine.Specifications;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Web.Specs.Commands.for_CommandCoordinator
+namespace doLittle.Web.Specs.Commands.for_CommandCoordinator
 {
     public class when_handling_a_command_descriptor
     {

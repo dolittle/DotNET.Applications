@@ -1,10 +1,10 @@
-﻿using Bifrost.Execution;
+﻿using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 using System;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Execution.for_DefaultConvention
+namespace doLittle.Specs.Execution.for_DefaultConvention
 {
     [Subject(typeof(DefaultConvention))]
     public class when_asking_to_resolve_an_interface_that_has_a_binding_for_the_implementation

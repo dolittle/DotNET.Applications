@@ -2,10 +2,10 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Security;
+using doLittle.Security;
 using System;
 
-namespace Bifrost.Commands
+namespace doLittle.Commands
 {
     /// <summary>
     /// Extensions for building a security descriptor specific for <see cref="ICommand">commands</see>

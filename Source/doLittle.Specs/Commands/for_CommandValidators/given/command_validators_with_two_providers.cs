@@ -1,9 +1,9 @@
-﻿using Bifrost.Commands;
+﻿using doLittle.Commands;
 using System.Linq;
-using Bifrost.Validation;
+using doLittle.Validation;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Commands.for_CommandValidators.given
+namespace doLittle.Specs.Commands.for_CommandValidators.given
 {
     public class command_validators_with_two_providers : all_dependencies
     {

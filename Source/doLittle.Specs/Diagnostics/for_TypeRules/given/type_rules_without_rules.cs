@@ -1,7 +1,7 @@
-﻿using Bifrost.Diagnostics;
+﻿using doLittle.Diagnostics;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Diagnostics.for_TypeRules.given
+namespace doLittle.Specs.Diagnostics.for_TypeRules.given
 {
     public class type_rules_without_rules : all_dependencies
     {

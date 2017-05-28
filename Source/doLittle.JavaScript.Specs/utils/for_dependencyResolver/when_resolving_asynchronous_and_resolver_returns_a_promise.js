@@ -1,6 +1,6 @@
 describe("when resolving asynchronous and resolver returns a promise", function() {
 	var ns = {};
-	var innerPromise = Bifrost.execution.Promise.create();
+	var innerPromise = doLittle.execution.Promise.create();
 	var result = null;
 
 	var readyCallback;
@@ -8,15 +8,15 @@ describe("when resolving asynchronous and resolver returns a promise", function(
 	var dependencyResolvers;
 
 	beforeEach(function () {
-	    configure = Bifrost.configure;
-	    Bifrost.configure = {
+	    configure = doLittle.configure;
+	    doLittle.configure = {
 	        ready: function (callback) {
 	            readyCallback = callback;
 	        }
 	    };
 
-	    dependencyResolvers = Bifrost.dependencyResolvers;
-	    Bifrost.dependencyResolvers = {
+	    dependencyResolvers = doLittle.dependencyResolvers;
+	    doLittle.dependencyResolvers = {
 	        getAll: function () {
 	            return [{
 	                canResolve: function () {
@@ -30,7 +30,7 @@ describe("when resolving asynchronous and resolver returns a promise", function(
 	    };
 
 	    
-	    Bifrost.dependencyResolver
+	    doLittle.dependencyResolver
             .beginResolve(ns, "something")
             .continueWith(function (arg, nextPromise) {
                 result = arg;
@@ -42,8 +42,8 @@ describe("when resolving asynchronous and resolver returns a promise", function(
 	});
 
 	afterEach(function () {
-	    Bifrost.dependencyResolvers = dependencyResolvers;
-	    Bifrost.configure = configure;
+	    doLittle.dependencyResolvers = dependencyResolvers;
+	    doLittle.configure = configure;
 	});
 
 

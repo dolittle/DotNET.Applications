@@ -7,12 +7,12 @@
         getExtendersIn = function (namespace) { return [Test.extender]; };
 
     beforeEach(function () {
-        Bifrost.namespace("Test", { extender: Bifrost.Type.extend(function () { }) });
+        doLittle.namespace("Test", { extender: doLittle.Type.extend(function () { }) });
         namespace = Test.extender._namespace;
 
-        Bifrost.commands.Command = { getExtendersIn: getExtendersIn };
+        doLittle.commands.Command = { getExtendersIn: getExtendersIn };
 
-        resolver = new Bifrost.KnownArtifactTypesDependencyResolver();
+        resolver = new doLittle.KnownArtifactTypesDependencyResolver();
         propertyToResolve = "commandTypes";
         namespace = {};
         

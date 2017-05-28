@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 
-namespace Bifrost.Events.MongoDB
+namespace doLittle.Events.MongoDB
 {
     /// <summary>
     /// Represents an implementation of <see cref="IBsonSerializer"/> that knows how to 

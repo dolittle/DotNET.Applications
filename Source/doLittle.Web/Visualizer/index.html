@@ -5,28 +5,28 @@
     <title></title>
 </head>
 <body>
-    <link href="css/bifrost.css" rel="stylesheet" />
+    <link href="css/doLittle.css" rel="stylesheet" />
     <link href="Visualizer/styles.css" rel="stylesheet" />
     
-    <div id="sidebar" class="bifrost bifrostSidebar" data-bind="sidebar: {}">
+    <div id="sidebar" class="doLittle doLittleSidebar" data-bind="sidebar: {}">
         <div>
-            <img src="Visualizer/BifrostIcon.png" style="margin: 0px" />
+            <img src="Visualizer/doLittleIcon.png" style="margin: 0px" />
         </div>
-        <table id="icons" class="bifrostSidebarIcons">
+        <table id="icons" class="doLittleSidebarIcons">
             <tr>
                 <td style="background-color:#bbbbbb;">
                     <ul data-bind="foreach: categories">
                         <li data-bind="click: $root.selectCategory.bind($data,$data)">
-                            <div class="bifrostSidebarIconAndText" data-bind="attr: {title: description}">
-                                <img data-bind="attr: { src: '/Bifrost/Visualizer/'+name+'/icon.png' }" />
-                                <span class="bifrostSidebarText" data-bind="text: displayName"></span>
-                                <!--<span class="bifrostCounter bifrostCounterRed">1</span>-->
+                            <div class="doLittleSidebarIconAndText" data-bind="attr: {title: description}">
+                                <img data-bind="attr: { src: '/doLittle/Visualizer/'+name+'/icon.png' }" />
+                                <span class="doLittleSidebarText" data-bind="text: displayName"></span>
+                                <!--<span class="doLittleCounter doLittleCounterRed">1</span>-->
 
                             </div>
                         </li>
                     </ul>
                 </td>
-                <td class="bifrostSidebarContent">
+                <td class="doLittleSidebarContent">
                     <div data-bind="view: currentCategory">
                     </div>
                 </td>

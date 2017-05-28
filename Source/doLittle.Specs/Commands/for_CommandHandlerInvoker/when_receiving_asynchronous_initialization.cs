@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Dynamic;
 using System.Threading;
-using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker
+namespace doLittle.Specs.Commands.for_CommandHandlerInvoker
 {
     [Subject(Subjects.handling_commands)]
     public class when_receiving_asynchronous_initialization : given.a_command_handler_invoker_with_no_command_handlers

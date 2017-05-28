@@ -1,4 +1,4 @@
-Bifrost.namespace("Bifrost.navigation", {
+doLittle.namespace("doLittle.navigation", {
     navigateTo: function (featureName, queryString) {
         var url = featureName;
 
@@ -17,7 +17,7 @@ Bifrost.namespace("Bifrost.navigation", {
     },
     navigationManager: {
         getCurrentLocation: function() {
-            var uri = Bifrost.Uri.create(window.location.toString());
+            var uri = doLittle.Uri.create(window.location.toString());
             return uri;
         },
 
@@ -39,7 +39,7 @@ Bifrost.namespace("Bifrost.navigation", {
                     if (href.length === 0) {
                         href = "/";
                     }
-                    var targetUri = Bifrost.Uri.create(href);
+                    var targetUri = doLittle.Uri.create(href);
                     if (targetUri.isSameAsOrigin &&
                         targetUri.queryString.indexOf("postback")<0) {
                         var target = targetUri.path;

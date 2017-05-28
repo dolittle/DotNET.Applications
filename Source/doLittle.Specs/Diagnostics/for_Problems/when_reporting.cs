@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Bifrost.Diagnostics;
+using doLittle.Diagnostics;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Diagnostics.for_Problems
+namespace doLittle.Specs.Diagnostics.for_Problems
 {
     public class when_reporting
     {

@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Commands;
-using Bifrost.Validation;
+using doLittle.Commands;
+using doLittle.Validation;
 using FluentValidation;
 
-namespace Bifrost.FluentValidation.Commands
+namespace doLittle.FluentValidation.Commands
 {
     /// <summary>
     /// Base class to inherit from for basic input validation of a command.

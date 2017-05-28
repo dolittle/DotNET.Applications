@@ -2,18 +2,18 @@ describe("when initializing", function () {
     var extension = "";
 
     beforeEach(function () {
-        Bifrost.namespaces = Bifrost.namespaces || {};
-        Bifrost.namespaces.initialize = sinon.stub();
+        doLittle.namespaces = doLittle.namespaces || {};
+        doLittle.namespaces.initialize = sinon.stub();
         sinon.stub($, "get", function (url, parameters, callback) {
             extension = parameters.extension;
         });
 
-        Bifrost.assetsManager.initialize();
+        doLittle.assetsManager.initialize();
     });
 
     afterEach(function () {
         $.get.restore();
-        Bifrost.assetsManager.scripts = [];
+        doLittle.assetsManager.scripts = [];
     });
 
     it("should call server to get assets", function () {

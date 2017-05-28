@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Exceptions
+namespace doLittle.Exceptions
 {
     /// <summary>
     /// Publishes exceptions to all <see cref="IExceptionSubscriber"/>s.

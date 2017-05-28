@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Globalization;
-using Bifrost.Configuration;
+using doLittle.Configuration;
 
-namespace Bifrost.Globalization
+namespace doLittle.Globalization
 {
     /// <summary>
     /// Represents a <see cref="ILocalizer"/>

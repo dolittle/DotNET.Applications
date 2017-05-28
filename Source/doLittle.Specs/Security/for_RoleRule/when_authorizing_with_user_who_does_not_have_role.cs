@@ -1,7 +1,7 @@
-﻿using Bifrost.Security;
+﻿using doLittle.Security;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Security.for_RoleRule
+namespace doLittle.Specs.Security.for_RoleRule
 {
     [Subject(typeof (RoleRule))]
     public class when_authorizing_with_user_who_does_not_have_role : given.a_rule_role

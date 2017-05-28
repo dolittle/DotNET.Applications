@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.navigation", {
-    observableQueryParameterFactory: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.navigation", {
+    observableQueryParameterFactory: doLittle.Singleton(function () {
         var self = this;
 
         var historyEnabled = typeof History !== "undefined" && typeof History.Adapter !== "undefined";
@@ -38,14 +38,14 @@
             observable = ko.observable(state || defaultValue);
 
             function getQueryStringParametersWithValueForParameter(url, parameterValue) {
-                var parameters = Bifrost.hashString.decode(url);
+                var parameters = doLittle.hashString.decode(url);
                 parameters[parameterName] = parameterValue;
 
                 var queryString = "";
                 var parameterIndex = 0;
                 for (var parameter in parameters) {
                     var value = parameters[parameter];
-                    if (!Bifrost.isNullOrUndefined(value)) {
+                    if (!doLittle.isNullOrUndefined(value)) {
                         if (parameterIndex > 0) {
                             queryString += "&";
                         }
@@ -83,7 +83,7 @@
 });
 
 ko.observableQueryParameter = function (parameterName, defaultValue) {
-    var navigationManager = Bifrost.navigation.navigationManager;
-    var observable = Bifrost.navigation.observableQueryParameterFactory.create().create(parameterName, defaultValue, navigationManager);
+    var navigationManager = doLittle.navigation.navigationManager;
+    var observable = doLittle.navigation.observableQueryParameterFactory.create().create(parameterName, defaultValue, navigationManager);
     return observable;
 };

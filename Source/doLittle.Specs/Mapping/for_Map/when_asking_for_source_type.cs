@@ -1,7 +1,7 @@
 ﻿using System;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Mapping.for_Map
+namespace doLittle.Specs.Mapping.for_Map
 {
     public class when_asking_for_source_type
     {

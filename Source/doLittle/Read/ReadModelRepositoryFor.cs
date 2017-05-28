@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
-using Bifrost.Entities;
+using doLittle.Entities;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// Represents an implementation of <see cref="IReadModelRepositoryFor{T}"/>

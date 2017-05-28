@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Web.Commands
+namespace doLittle.Web.Commands
 {
     public interface ICommandContextConnectionManager
     {

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Defines something that can discover types and give instance of these types

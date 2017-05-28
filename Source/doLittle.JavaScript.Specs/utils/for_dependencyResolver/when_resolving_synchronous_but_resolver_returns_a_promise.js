@@ -7,15 +7,15 @@ describe("when resolving synchronous but resolver returns a promise", function()
 	var dependencyResolvers;
 
 	beforeEach(function () {
-	    dependencyResolvers = Bifrost.dependencyResolvers;
-	    Bifrost.dependencyResolvers = {
+	    dependencyResolvers = doLittle.dependencyResolvers;
+	    doLittle.dependencyResolvers = {
 	        getAll: function () {
 	            return [{
 	                canResolve: function () {
 	                    return true;
 	                },
 	                resolve: function () {
-	                    return Bifrost.execution.Promise.create();
+	                    return doLittle.execution.Promise.create();
 	                }
 	            }
 	            ];
@@ -23,18 +23,18 @@ describe("when resolving synchronous but resolver returns a promise", function()
 	    };
 
 	    try {
-	        Bifrost.dependencyResolver.resolve(ns, "something");
+	        doLittle.dependencyResolver.resolve(ns, "something");
 	    } catch (e) {
 	        exception = e;
 	    }
 	});
 
 	afterEach(function () {
-	    Bifrost.dependencyResolvers = dependencyResolvers;
+	    doLittle.dependencyResolvers = dependencyResolvers;
 	});
     
 
 	it("should throw an exception", function() {
-		expect(exception instanceof Bifrost.AsynchronousDependenciesDetected).toBe(true);
+		expect(exception instanceof doLittle.AsynchronousDependenciesDetected).toBe(true);
 	});
 });

@@ -1,5 +1,5 @@
-Bifrost.namespace("Bifrost.views", {
-    viewBindingHandler: Bifrost.Type.extend(function (ViewBindingHandlerTemplateEngine, UIManager, viewFactory, viewManager, viewModelManager, documentService, regionManager, pathResolvers) {
+doLittle.namespace("doLittle.views", {
+    viewBindingHandler: doLittle.Type.extend(function (ViewBindingHandlerTemplateEngine, UIManager, viewFactory, viewManager, viewModelManager, documentService, regionManager, pathResolvers) {
         function makeTemplateValueAccessor(element, valueAccessor, allBindingsAccessor, bindingContext) {
             return function () {
                 var viewUri = ko.utils.unwrapObservable(valueAccessor());
@@ -22,7 +22,7 @@ Bifrost.namespace("Bifrost.views", {
                 var view = null;
                 var region = null;
 
-                if (Bifrost.isNullOrUndefined(viewUri) || viewUri === "") {
+                if (doLittle.isNullOrUndefined(viewUri) || viewUri === "") {
                     templateEngine = new ko.nativeTemplateEngine();
                 } else {
                     templateEngine = ViewBindingHandlerTemplateEngine;
@@ -54,8 +54,8 @@ Bifrost.namespace("Bifrost.views", {
         };
     })
 });
-Bifrost.views.viewBindingHandler.initialize = function () {
-    ko.bindingHandlers.view = Bifrost.views.viewBindingHandler.create();
+doLittle.views.viewBindingHandler.initialize = function () {
+    ko.bindingHandlers.view = doLittle.views.viewBindingHandler.create();
     ko.jsonExpressionRewriting.bindingRewriteValidators.view = false; // Can't rewrite control flow bindings
     ko.virtualElements.allowedBindings.view = true;
 };

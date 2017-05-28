@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Conventions;
+using doLittle.Conventions;
 
-namespace Bifrost.Diagnostics
+namespace doLittle.Diagnostics
 {
     /// <summary>
     /// Defines a rule that runs diagnostics on a specific type.

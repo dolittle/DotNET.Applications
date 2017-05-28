@@ -1,13 +1,13 @@
 ﻿using System.Dynamic;
-using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.FluentValidation.Commands;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.FluentValidation.Commands;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_CommandValidator
+namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidator
 {
     public class when_validating_a_command_with_no_validators : given.a_command_validation_service
     {

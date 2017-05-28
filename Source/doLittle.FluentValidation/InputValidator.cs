@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace Bifrost.FluentValidation
+namespace doLittle.FluentValidation
 {
     /// <summary>
     /// Base class to inherit from for basic input validation rules

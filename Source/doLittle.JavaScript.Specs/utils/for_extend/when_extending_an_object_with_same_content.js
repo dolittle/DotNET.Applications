@@ -8,7 +8,7 @@ describe("when extending an object with same content", function () {
         property: "sheep",
         func: function () { }
     };
-    Bifrost.extend(contentObject, extension);
+    doLittle.extend(contentObject, extension);
     it("should add property", function () {
         expect(contentObject.property).toEqual(extension.property);
     });

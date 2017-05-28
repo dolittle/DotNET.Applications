@@ -6,15 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Concepts;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.FluentValidation.Commands;
-using Bifrost.Validation.MetaData;
+using doLittle.Concepts;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.FluentValidation.Commands;
+using doLittle.Validation.MetaData;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Bifrost.FluentValidation.MetaData
+namespace doLittle.FluentValidation.MetaData
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICanGenerateValidationMetaData"/>

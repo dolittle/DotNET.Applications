@@ -1,6 +1,6 @@
 ﻿describe("when asking if all parameters are set and they are not all set", function () {
 
-    var queryType = Bifrost.read.Query.extend(function () {
+    var queryType = doLittle.read.Query.extend(function () {
         var self = this;
 
         this.firstParameter = ko.observable(1);

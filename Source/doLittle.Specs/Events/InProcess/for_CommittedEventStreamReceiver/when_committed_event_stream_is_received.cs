@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Events;
+using doLittle.Events;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.InProcess.for_CommittedEventStreamReceiver
+namespace doLittle.Specs.Events.InProcess.for_CommittedEventStreamReceiver
 {
     public class when_committed_event_stream_is_received : given.a_committed_event_stream_receiver
     {

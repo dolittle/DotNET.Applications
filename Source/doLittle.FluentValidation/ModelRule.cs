@@ -11,7 +11,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using FluentValidation.Validators;
 
-namespace Bifrost.FluentValidation
+namespace doLittle.FluentValidation
 {
     /// <summary>
     /// Represents the rule for a model of any type

@@ -1,7 +1,7 @@
-using Bifrost.FluentValidation.Commands;
+using doLittle.FluentValidation.Commands;
 using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_ComposedCommandBusinessValidator
+namespace doLittle.FluentValidation.Specs.Commands.for_ComposedCommandBusinessValidator
 {
     [Subject(typeof(ComposedCommandBusinessValidator<>))]
     public class when_composing_a_validator : given.a_composed_command_business_validator

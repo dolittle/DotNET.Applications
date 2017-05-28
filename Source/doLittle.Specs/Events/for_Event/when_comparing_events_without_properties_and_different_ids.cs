@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Specs.Events.Fakes;
+using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_Event
+namespace doLittle.Specs.Events.for_Event
 {
     public class when_comparing_events_without_properties_and_different_ids
     {

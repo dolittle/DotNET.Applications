@@ -1,7 +1,7 @@
-﻿using Bifrost.Commands;
+﻿using doLittle.Commands;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Commands.for_CommandCoordinator
+namespace doLittle.Specs.Commands.for_CommandCoordinator
 {
     [Subject(typeof(CommandCoordinator))]
     public class when_handling_command_with_success : given.a_command_coordinator

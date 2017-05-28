@@ -1,7 +1,7 @@
 ﻿using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResourceIdentifier
+namespace doLittle.Specs.Applications.for_ApplicationResourceIdentifier
 {
     public class when_comparing_two_instances_using_equals_representing_different_resource : given.different_identifiers
     {

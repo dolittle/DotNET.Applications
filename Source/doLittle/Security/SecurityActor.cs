@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Bifrost.Security
+namespace doLittle.Security
 {
     /// <summary>
     /// Represents an implementation of <see cref="ISecurityActor"/>

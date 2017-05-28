@@ -2,9 +2,9 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Events;
+using doLittle.Events;
 
-namespace Bifrost.Domain
+namespace doLittle.Domain
 {
     /// <summary>
     /// Represents the base class used for aggregated roots in your domain

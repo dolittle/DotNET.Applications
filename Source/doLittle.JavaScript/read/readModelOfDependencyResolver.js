@@ -1,4 +1,4 @@
-﻿Bifrost.dependencyResolvers.readModelOf = {
+﻿doLittle.dependencyResolvers.readModelOf = {
     canResolve: function (namespace, name) {
         if (typeof read !== "undefined") {
             return name in read;

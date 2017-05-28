@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Specs.Events.Fakes;
+using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_ProcessMethodInvoker
+namespace doLittle.Specs.Events.for_ProcessMethodInvoker
 {
     public class when_invoking_on_an_instance_that_can_not_handle_a_given_event : given.a_process_method_invoker
     {

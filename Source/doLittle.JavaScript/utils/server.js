@@ -1,11 +1,11 @@
-﻿Bifrost.namespace("Bifrost", {
-    server: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle., {
+    server: doLittle.Singleton(function () {
         var self = this;
 
         this.target = "";
 
         function deserialize(data) {
-            if (Bifrost.isArray(data)) {
+            if (doLittle.isArray(data)) {
                 var items = [];
                 data.forEach(function (item) {
                     items.push(deserialize(item));
@@ -13,12 +13,12 @@
                 return items;
             } else {
                 for (var property in data) {
-                    if (Bifrost.isArray(data[property])) {
+                    if (doLittle.isArray(data[property])) {
                         data[property] = deserialize(data[property]);
                     } else {
                         var value = data[property];
 
-                        if (Bifrost.isNumber(value)) {
+                        if (doLittle.isNumber(value)) {
                             data[property] = parseFloat(value);
                         } else {
                             data[property] = data[property];
@@ -31,9 +31,9 @@
 
 
         this.post = function (url, parameters) {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
 
-            if (!Bifrost.Uri.isAbsolute(url)) {
+            if (!doLittle.Uri.isAbsolute(url)) {
                 url = self.target + url;
             }
 
@@ -63,15 +63,15 @@
         };
 
         this.get = function (url, parameters) {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
 
-            if (!Bifrost.Uri.isAbsolute(url)) {
+            if (!doLittle.Uri.isAbsolute(url)) {
                 url = self.target + url;
             }
 
-            if (Bifrost.isObject(parameters)) {
+            if (doLittle.isObject(parameters)) {
                 for (var parameterName in parameters) {
-                    if (Bifrost.isArray(parameters[parameterName])) {
+                    if (doLittle.isArray(parameters[parameterName])) {
                         parameters[parameterName] = JSON.stringify(parameters[parameterName]);
                     }
                 }
@@ -97,4 +97,4 @@
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.server = Bifrost.server;
+doLittle.WellKnownTypesDependencyResolver.types.server = doLittle.server;

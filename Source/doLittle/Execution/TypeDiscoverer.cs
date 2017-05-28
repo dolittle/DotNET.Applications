@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Represents a <see cref="ITypeDiscoverer">ITypeDiscoverer</see>

@@ -4,18 +4,18 @@ describe("when creating instance", function () {
 
     var instance = null;
     beforeEach(function () {
-        Bifrost.dependencyResolver = {
+        doLittle.dependencyResolver = {
             getDependenciesFor: sinon.stub()
         };
 
-        type = Bifrost.Type.extend(function () {
+        type = doLittle.Type.extend(function () {
         });
 
         instance = type.create();
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolver = {};
+        doLittle.dependencyResolver = {};
     });
 
     it("should return an instance", function () {

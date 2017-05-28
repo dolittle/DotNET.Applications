@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.Visualizer", {
-    index: Bifrost.views.ViewModel.extend(function () {
+﻿doLittle.namespace("doLittle.Visualizer", {
+    index: doLittle.views.ViewModel.extend(function () {
         var self = this;
 
         this.categories = [
@@ -20,33 +20,33 @@ ko.bindingHandlers.sidebar = {
     },
     update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
         $("body").mouseover(function (e) {
-            if ($(e.target).closest("table.bifrostSidebarIcons").length != 1) {
-                $("#icons").removeClass("bifrostSidebarWithContent");
-                $("#icons").removeClass("bifrostSidebarFullSize");
+            if ($(e.target).closest("table.doLittleSidebarIcons").length != 1) {
+                $("#icons").removeClass("doLittleSidebarWithContent");
+                $("#icons").removeClass("doLittleSidebarFullSize");
             }
 
         });
 
         $("#sidebar").mouseover(function () {
-            $("#icons").addClass("bifrostSidebarIconsVisible");
+            $("#icons").addClass("doLittleSidebarIconsVisible");
         });
 
         $("#sidebar").mouseout(function (e) {
-            $("#icons").removeClass("bifrostSidebarIconsVisible");
+            $("#icons").removeClass("doLittleSidebarIconsVisible");
 
         });
 
         $("#icons").mouseover(function () {
-            //$("#sidebar").addClass("bifrostSidebarFullSize");
+            //$("#sidebar").addClass("doLittleSidebarFullSize");
         });
 
         $("#icons").mouseout(function (e) {
-            $("#icons").addClass("bifrostSidebarFullSize");
+            $("#icons").addClass("doLittleSidebarFullSize");
         });
 
 
         $("#icons").click(function () {
-            $("#icons").addClass("bifrostSidebarWithContent");
+            $("#icons").addClass("doLittleSidebarWithContent");
         });
     }
 }

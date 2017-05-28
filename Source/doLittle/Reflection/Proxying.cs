@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Bifrost.Reflection
+namespace doLittle.Reflection
 {
     /// <summary>
     /// Represents an implementation of <see cref="IProxying"/>

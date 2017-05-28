@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bifrost.Web.Specs.Services.for_RestServiceMethodInvoker
+namespace doLittle.Web.Specs.Services.for_RestServiceMethodInvoker
 {
     public class ComplexType
     {

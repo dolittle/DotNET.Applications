@@ -2,18 +2,18 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-namespace Bifrost.CodeGeneration.JavaScript
+namespace doLittle.CodeGeneration.JavaScript
 {
     /// <summary>
-    /// Represents a Bifrost specific Type extension
+    /// Represents a doLittle specific Type extension
     /// </summary>
     public class TypeExtension : Container
     {
         /// <summary>
         /// Initializes a new instance of <see cref="TypeExtension"/>
         /// </summary>
-        /// <param name="superType">Super type that is being extended, default is "Bifrost.Type"</param>
-        public TypeExtension(string superType="Bifrost.Type")
+        /// <param name="superType">Super type that is being extended, default is "doLittle.Type"</param>
+        public TypeExtension(string superType="doLittle.Type")
         {
             SuperType = superType;
             Function = new Function();

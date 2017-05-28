@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Web.Commands
+namespace doLittle.Web.Commands
 {
     [Singleton]
     public class CommandContextConnectionManager : ICommandContextConnectionManager

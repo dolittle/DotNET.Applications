@@ -6,10 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 using Newtonsoft.Json;
 
-namespace Bifrost.JSON.Serialization
+namespace doLittle.JSON.Serialization
 {
     /// <summary>
     /// Represents a <see cref="JsonConverter"/> capable of producing an ExpandoObject with properties

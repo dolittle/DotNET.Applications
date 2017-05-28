@@ -6,11 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using Bifrost.Concepts;
-using Bifrost.Extensions;
+using doLittle.Concepts;
+using doLittle.Extensions;
 using FluentValidation.Internal;
 
-namespace Bifrost.FluentValidation
+namespace doLittle.FluentValidation
 {
     /// <summary>
     /// Resolves property names and display names, taking into account concepts and model rules

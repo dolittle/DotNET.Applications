@@ -1,10 +1,10 @@
-﻿using Bifrost.Applications;
-using Bifrost.Execution;
-using Bifrost.Logging;
+﻿using doLittle.Applications;
+using doLittle.Execution;
+using doLittle.Logging;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResourceResolver.given
+namespace doLittle.Specs.Applications.for_ApplicationResourceResolver.given
 {
     public class all_dependencies
     {

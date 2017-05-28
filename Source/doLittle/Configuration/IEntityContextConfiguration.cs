@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Entities;
+using doLittle.Entities;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
     /// Defines a configuration set for an <see cref="IEntityContext{T}">EntityContext</see> implementation

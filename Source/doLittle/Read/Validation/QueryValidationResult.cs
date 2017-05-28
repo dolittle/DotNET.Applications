@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Rules;
+using doLittle.Rules;
 
-namespace Bifrost.Read.Validation
+namespace doLittle.Read.Validation
 {
     /// <summary>
     /// Represents the result of query validation, typically done by <see cref="IQueryValidator"/>

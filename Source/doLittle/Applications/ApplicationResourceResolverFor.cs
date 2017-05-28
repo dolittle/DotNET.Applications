@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Applications
+namespace doLittle.Applications
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICanResolveApplicationResources"/>

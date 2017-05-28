@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.commands", {
-    commandSecurityService: Bifrost.Singleton(function (commandSecurityContextFactory) {
+﻿doLittle.namespace("doLittle.commands", {
+    commandSecurityService: doLittle.Singleton(function (commandSecurityContextFactory) {
         var self = this;
 
         this.commandSecurityContextFactory = commandSecurityContextFactory;
@@ -15,8 +15,8 @@
 
         function hasSecurityContextInNamespaceFor(type, namespace) {
             var securityContextName = getSecurityContextNameFor(type);
-            return !Bifrost.isNullOrUndefined(securityContextName) &&
-                !Bifrost.isNullOrUndefined(namespace) &&
+            return !doLittle.isNullOrUndefined(securityContextName) &&
+                !doLittle.isNullOrUndefined(namespace) &&
                 namespace.hasOwnProperty(securityContextName);
         }
 
@@ -26,7 +26,7 @@
         }
 
         this.getContextFor = function (command) {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
             var context;
 
             var type = getTypeNameFor(command);
@@ -36,10 +36,10 @@
                 promise.signal(context);
             } else {
                 context = self.commandSecurityContextFactory.create();
-                if (Bifrost.isNullOrUndefined(command._generatedFrom) || command._generatedFrom === "") {
+                if (doLittle.isNullOrUndefined(command._generatedFrom) || command._generatedFrom === "") {
                     promise.signal(context);
                 } else {
-                    var url = "/Bifrost/CommandSecurity/GetForCommand?commandName=" + command._generatedFrom;
+                    var url = "/doLittle/CommandSecurity/GetForCommand?commandName=" + command._generatedFrom;
                     $.getJSON(url, function (e) {
                         context.isAuthorized(e.isAuthorized);
                         promise.signal(context);
@@ -51,7 +51,7 @@
         };
 
         this.getContextForType = function (commandType) {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
             var context;
 
             if (hasSecurityContextInNamespaceFor(commandType._name, commandType._namespace)) {
@@ -59,7 +59,7 @@
                 context = contextType.create();
                 promise.signal(context);
             } else {
-                context = Bifrost.commands.CommandSecurityContext.create();
+                context = doLittle.commands.CommandSecurityContext.create();
                 context.isAuthorized(true);
                 promise.signal(context);
             }
@@ -68,4 +68,4 @@
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.commandSecurityService = Bifrost.commands.commandSecurityService;
+doLittle.WellKnownTypesDependencyResolver.types.commandSecurityService = doLittle.commands.commandSecurityService;

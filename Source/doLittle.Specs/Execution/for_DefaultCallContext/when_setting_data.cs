@@ -1,7 +1,7 @@
-﻿using Bifrost.Execution;
+﻿using doLittle.Execution;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Execution.for_DefaultCallContext
+namespace doLittle.Specs.Execution.for_DefaultCallContext
 {
     public class when_setting_data
     {

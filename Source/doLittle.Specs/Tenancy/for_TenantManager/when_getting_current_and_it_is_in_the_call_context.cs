@@ -1,9 +1,9 @@
-﻿using Bifrost.Tenancy;
+﻿using doLittle.Tenancy;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Tenancy.for_TenantManager
+namespace doLittle.Specs.Tenancy.for_TenantManager
 {
     public class when_getting_current_and_it_is_in_the_call_context : given.a_tenant_manager
     {

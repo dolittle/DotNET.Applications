@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
-using Bifrost.Execution;
-using Bifrost.Validation;
+using doLittle.Execution;
+using doLittle.Validation;
 
-namespace Bifrost.Concepts
+namespace doLittle.Concepts
 {
     /// <summary>
     /// Expresses a Concept as a another type, usually a primitive such as Guid, Int or String

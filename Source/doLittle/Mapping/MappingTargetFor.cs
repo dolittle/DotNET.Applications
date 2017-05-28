@@ -5,7 +5,7 @@
 using System;
 using System.Reflection;
 
-namespace Bifrost.Mapping
+namespace doLittle.Mapping
 {
     /// <summary>
     /// Represents an abstract implementation of <see cref="IMappingTargetFor{T}"/>

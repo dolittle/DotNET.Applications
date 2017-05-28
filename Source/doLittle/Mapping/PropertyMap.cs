@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Reflection;
 
-namespace Bifrost.Mapping
+namespace doLittle.Mapping
 {
     /// <summary>
     /// Represents a mapping for a specific property on a type

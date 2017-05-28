@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Represents an implementation of <see cref="IProcessMethodInvoker"/>

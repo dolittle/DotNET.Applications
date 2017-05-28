@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace Bifrost.Specs.Concepts.for_Value
+namespace doLittle.Specs.Concepts.for_Value
 {
     public class when_getting_hashcode_for_values_and_inherited_type_with_identical_values : given.value_objects
     {

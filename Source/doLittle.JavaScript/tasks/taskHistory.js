@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.tasks", {
-    taskHistory: Bifrost.Singleton(function (systemClock) {
+﻿doLittle.namespace("doLittle.tasks", {
+    taskHistory: doLittle.Singleton(function (systemClock) {
         /// <summary>Represents the history of tasks that has been executed since the start of the application</summary>
         var self = this;
 
@@ -9,10 +9,10 @@
         this.entries = ko.observableArray();
 
         this.begin = function (task) {
-            var id = Bifrost.Guid.create();
+            var id = doLittle.Guid.create();
 
             try {
-                var entry = Bifrost.tasks.TaskHistoryEntry.create();
+                var entry = doLittle.tasks.TaskHistoryEntry.create();
 
                 entry.type = task._type._name;
 
@@ -52,4 +52,4 @@
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.taskHistory = Bifrost.tasks.taskHistory;
+doLittle.WellKnownTypesDependencyResolver.types.taskHistory = doLittle.tasks.taskHistory;

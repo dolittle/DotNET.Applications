@@ -34,7 +34,7 @@
         memberNames: [""]
     }];
 
-    var commandValidationService = Bifrost.commands.commandValidationService.create(parameters);
+    var commandValidationService = doLittle.commands.commandValidationService.create(parameters);
     commandValidationService.applyValidationResultToProperties(command, validationResults);
 
     it("should invalidate the top level property", function () {

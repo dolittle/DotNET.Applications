@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
-using Bifrost.Conventions;
-using Bifrost.Validation;
+using doLittle.Conventions;
+using doLittle.Validation;
 
-namespace Bifrost.Read.Validation
+namespace doLittle.Read.Validation
 {
     /// <summary>
     /// Defines a descriptor for describing the validation rules for a query.

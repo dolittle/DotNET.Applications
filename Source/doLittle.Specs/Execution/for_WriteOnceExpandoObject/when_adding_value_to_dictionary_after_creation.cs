@@ -1,8 +1,8 @@
 ﻿using System;
 using Machine.Specifications;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Specs.Execution.for_WriteOnceExpandoObject
+namespace doLittle.Specs.Execution.for_WriteOnceExpandoObject
 {
     [Subject(typeof(WriteOnceExpandoObject))]
     public class when_adding_value_to_dictionary_after_creation : given.a_write_once_expando_object_without_values

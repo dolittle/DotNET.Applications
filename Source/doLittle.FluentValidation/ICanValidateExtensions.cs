@@ -8,9 +8,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Bifrost.Validation;
+using doLittle.Validation;
 
-namespace Bifrost.FluentValidation
+namespace doLittle.FluentValidation
 {
     /// <summary>
     /// Extensions to the <see cref="ICanValidate"/> interface to support the FluentValidation concept of RuleSets.

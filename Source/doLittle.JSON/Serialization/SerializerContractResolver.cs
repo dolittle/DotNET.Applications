@@ -6,13 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.Serialization;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Bifrost.JSON.Serialization
+namespace doLittle.JSON.Serialization
 {
     /// <summary>
     /// Represents a <see cref="IContractResolver"/> based on the <see cref="DefaultContractResolver"/> for resolving contracts for serialization

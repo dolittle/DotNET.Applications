@@ -1,9 +1,9 @@
-﻿using Bifrost.CodeGeneration;
+﻿using doLittle.CodeGeneration;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.CodeGeneration.for_CodeGenerator
+namespace doLittle.Specs.CodeGeneration.for_CodeGenerator
 {
     public class when_generating_from_a_language_element
     {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Machine.Specifications;
-using Bifrost.Validation;
+using doLittle.Validation;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_CommandBusinessValidator
+namespace doLittle.FluentValidation.Specs.Commands.for_CommandBusinessValidator
 {
     public class when_validating_a_valid_command : given.a_command_business_validator
     {

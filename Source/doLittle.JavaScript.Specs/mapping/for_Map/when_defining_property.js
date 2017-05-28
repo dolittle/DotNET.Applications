@@ -3,22 +3,22 @@
     var propertyMapInstance = { something: 42 };
     var propertyMap = null;
     beforeEach(function () {
-        propertyMapType = Bifrost.mapping.PropertyMap;
-        Bifrost.mapping.PropertyMap = {
+        propertyMapType = doLittle.mapping.PropertyMap;
+        doLittle.mapping.PropertyMap = {
             create: sinon.stub().returns(propertyMapInstance)
         };
 
-        var map = Bifrost.mapping.Map.create();
+        var map = doLittle.mapping.Map.create();
         propertyMap = map.property("SomeProperty");
     });
 
 
     afterEach(function () {
-        Bifrost.mapping.PropertyMap = propertyMapType;
+        doLittle.mapping.PropertyMap = propertyMapType;
     });
 
     it("should create a new property map", function () {
-        expect(Bifrost.mapping.PropertyMap.create.calledWith({ sourceProperty: "SomeProperty"})).toBe(true)
+        expect(doLittle.mapping.PropertyMap.create.calledWith({ sourceProperty: "SomeProperty"})).toBe(true)
     });
 
     it("should return the created property map", function () {

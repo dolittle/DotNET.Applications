@@ -1,6 +1,6 @@
-﻿Bifrost.namespace("Bifrost.read", {
-    QueryTask: Bifrost.tasks.LoadTask.extend(function (query, paging, taskFactory) {
-        var url = "/Bifrost/Query/Execute?_q=" + query._generatedFrom;
+﻿doLittle.namespace("doLittle.read", {
+    QueryTask: doLittle.tasks.LoadTask.extend(function (query, paging, taskFactory) {
+        var url = "/doLittle/Query/Execute?_q=" + query._generatedFrom;
         var payload = {
             descriptor: {
                 nameOfQuery: query._name,

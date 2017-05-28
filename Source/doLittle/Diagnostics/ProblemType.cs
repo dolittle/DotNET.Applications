@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Diagnostics
+namespace doLittle.Diagnostics
 {
     /// <summary>
     /// Represents a type of problem, its underlying type is an identifier that should be unique per <see cref="ProblemType">problem type</see>

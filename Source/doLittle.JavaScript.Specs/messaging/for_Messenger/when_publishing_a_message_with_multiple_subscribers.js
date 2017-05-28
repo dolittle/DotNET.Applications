@@ -12,7 +12,7 @@ describe("when publishing a message with multiple subscribers", function () {
         thirdSubscriberCalled = true;
     }
 
-    var messenger = Bifrost.messaging.Messenger.create();
+    var messenger = doLittle.messaging.Messenger.create();
     messenger.subscribeTo("SimpleMessage", firstSubscriber);
     messenger.subscribeTo("SimpleMessage", secondSubscriber);
     messenger.subscribeTo("SimpleMessage", thirdSubscriber);

@@ -1,8 +1,8 @@
-Bifrost.namespace("Bifrost.views", {
-    viewModelBindingHandler: Bifrost.Type.extend(function(documentService, viewFactory, viewModelLoader, viewModelManager, viewModelTypes, regionManager) {
+doLittle.namespace("doLittle.views", {
+    viewModelBindingHandler: doLittle.Type.extend(function(documentService, viewFactory, viewModelLoader, viewModelManager, viewModelTypes, regionManager) {
         this.init = function (element, valueAccessor, allBindingsAccessor, parentViewModel, bindingContext) {
             var path = ko.utils.unwrapObservable(valueAccessor());
-            if (element._isLoading === true || (element._viewModelPath === path && !Bifrost.isNullOrUndefined(element._viewModel))) {
+            if (element._isLoading === true || (element._viewModelPath === path && !doLittle.isNullOrUndefined(element._viewModel))) {
                 return;
             }
 
@@ -29,8 +29,8 @@ Bifrost.namespace("Bifrost.views", {
                 if (viewModelTypes.isLoaded(path)) {
                     var viewModelType = viewModelTypes.getViewModelTypeForPath(path);
 
-                    var lastRegion = Bifrost.views.Region.current;
-                    Bifrost.views.Region.current = region;
+                    var lastRegion = doLittle.views.Region.current;
+                    doLittle.views.Region.current = region;
 
                     viewModelType.beginCreate(viewModelParameters).continueWith(function (viewModel) {
                         var childBindingContext = bindingContext.createChildContext(viewModel);
@@ -38,7 +38,7 @@ Bifrost.namespace("Bifrost.views", {
                         element._viewModel = viewModel;
 
                         viewModelInstance(viewModel);
-                        Bifrost.views.Region.current = lastRegion;
+                        doLittle.views.Region.current = lastRegion;
 
                         element._isLoading = false;
                     }).onFail(function(e) {
@@ -61,7 +61,7 @@ Bifrost.namespace("Bifrost.views", {
         };
     })
 });
-Bifrost.views.viewModelBindingHandler.initialize = function () {
-    ko.bindingHandlers.viewModel = Bifrost.views.viewModelBindingHandler.create();
+doLittle.views.viewModelBindingHandler.initialize = function () {
+    ko.bindingHandlers.viewModel = doLittle.views.viewModelBindingHandler.create();
 };
 

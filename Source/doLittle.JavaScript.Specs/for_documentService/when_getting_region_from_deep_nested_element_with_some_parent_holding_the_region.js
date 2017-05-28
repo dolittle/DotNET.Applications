@@ -1,5 +1,5 @@
 ﻿describe("when getting region from deep nested element with some parent holding the region", function () {
-    var service = Bifrost.documentService.createWithoutScope({
+    var service = doLittle.documentService.createWithoutScope({
         DOMRoot: {}
     });
 

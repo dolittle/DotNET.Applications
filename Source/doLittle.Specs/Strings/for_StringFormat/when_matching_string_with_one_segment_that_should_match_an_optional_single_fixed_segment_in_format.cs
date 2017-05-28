@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Strings.for_StringFormat
+namespace doLittle.Specs.Strings.for_StringFormat
 {
     public class when_matching_string_with_one_segment_that_should_match_an_optional_single_fixed_segment_in_format
     {

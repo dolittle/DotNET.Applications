@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Entities;
+using doLittle.Entities;
 
-namespace Bifrost.Specs.Configuration
+namespace doLittle.Specs.Configuration
 {
     public class EntityContext<T> : IEntityContext<T>
     {

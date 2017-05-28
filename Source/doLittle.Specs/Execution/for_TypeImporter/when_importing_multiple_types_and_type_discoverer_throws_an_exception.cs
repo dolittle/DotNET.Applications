@@ -1,7 +1,7 @@
 ﻿using System;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Execution.for_TypeImporter
+namespace doLittle.Specs.Execution.for_TypeImporter
 {
     public class when_importing_multiple_types_and_type_discoverer_throws_an_exception : given.a_type_importer
     {

@@ -1,5 +1,5 @@
 describe("when signalling without parameter", function () {
-    var promise = Bifrost.execution.Promise.create();
+    var promise = doLittle.execution.Promise.create();
     var nextPromise;
 
     promise.continueWith(function (p) {
@@ -9,6 +9,6 @@ describe("when signalling without parameter", function () {
     promise.signal();
 
     it("should pass along next promise", function () {
-        expect(nextPromise instanceof Bifrost.execution.Promise).toBe(true);
+        expect(nextPromise instanceof doLittle.execution.Promise).toBe(true);
     });
 });

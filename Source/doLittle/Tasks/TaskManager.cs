@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Bifrost.Execution;
-using Bifrost.Extensions;
+using doLittle.Execution;
+using doLittle.Extensions;
 
-namespace Bifrost.Tasks
+namespace doLittle.Tasks
 {
     /// <summary>
     /// Represents a <see cref="ITaskManager"/>

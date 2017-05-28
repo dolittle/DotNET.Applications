@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Specialized;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     /// <summary>
     /// Encapsulates a collection of parameters from the Http Request

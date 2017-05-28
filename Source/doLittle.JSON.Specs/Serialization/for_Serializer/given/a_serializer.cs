@@ -1,10 +1,10 @@
-﻿using Bifrost.Applications;
-using Bifrost.Execution;
-using Bifrost.JSON.Serialization;
+﻿using doLittle.Applications;
+using doLittle.Execution;
+using doLittle.JSON.Serialization;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.JSON.Specs.Serialization.for_Serializer.given
+namespace doLittle.JSON.Specs.Serialization.for_Serializer.given
 {
     public class a_serializer
     {

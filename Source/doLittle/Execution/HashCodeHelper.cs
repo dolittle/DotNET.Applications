@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Provides useful methods for dealing with HashCodes

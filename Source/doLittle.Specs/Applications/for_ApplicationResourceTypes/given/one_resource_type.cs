@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bifrost.Applications;
-using Bifrost.Execution;
+using doLittle.Applications;
+using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResourceTypes.given
+namespace doLittle.Specs.Applications.for_ApplicationResourceTypes.given
 {
     public class one_resource_type
     {

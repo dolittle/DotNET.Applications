@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using Bifrost.Extensions;
-using Bifrost.FluentValidation.MetaData;
-using Bifrost.Validation.MetaData;
+using doLittle.Extensions;
+using doLittle.FluentValidation.MetaData;
+using doLittle.Validation.MetaData;
 using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
+namespace doLittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
 {
     [Subject(typeof(ValidationMetaDataGenerator))]
     public class when_generating_for_a_command_with_concept_on_it_and_a_model_rule : given.a_validation_meta_data_generator_with_common_rules

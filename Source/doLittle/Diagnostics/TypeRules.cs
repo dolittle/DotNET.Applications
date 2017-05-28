@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Reflection;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Diagnostics
+namespace doLittle.Diagnostics
 {
     /// <summary>
     /// Represents an implementation of <see cref="ITypeRules"/>

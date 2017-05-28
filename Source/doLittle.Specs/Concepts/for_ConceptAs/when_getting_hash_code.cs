@@ -1,7 +1,7 @@
-using Bifrost.Concepts;
+using doLittle.Concepts;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Concepts.for_ConceptAs
+namespace doLittle.Specs.Concepts.for_ConceptAs
 {
     [Subject(typeof(ConceptAs<>))]
     public class when_getting_hash_code : given.concepts

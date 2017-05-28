@@ -1,8 +1,8 @@
-﻿using Bifrost.Events;
-using Bifrost.Lifecycle;
+﻿using doLittle.Events;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Commands.for_CommandContext
+namespace doLittle.Specs.Commands.for_CommandContext
 {
     public class when_committing : given.a_command_context_for_a_simple_command_with_one_tracked_object_with_one_uncommitted_event
     {

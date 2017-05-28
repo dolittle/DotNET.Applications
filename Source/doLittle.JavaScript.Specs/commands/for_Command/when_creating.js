@@ -31,7 +31,7 @@
     }
     var command = null;
 
-    command = Bifrost.commands.Command.create(parameters);
+    command = doLittle.commands.Command.create(parameters);
 
     it("should extend properties without validation with validator", function () {
         expect(parameters.commandValidationService.extendPropertiesWithoutValidation.called).toBe(true);

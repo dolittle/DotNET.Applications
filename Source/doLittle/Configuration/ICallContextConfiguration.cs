@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
     /// Defines the configuration for call context

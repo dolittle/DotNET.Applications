@@ -8,8 +8,8 @@
         queryService: {},
     };
     
-    var instance = Bifrost.read.Queryable.new(options, region);
-    var queryable = Bifrost.read.Queryable.create(options);
+    var instance = doLittle.read.Queryable.new(options, region);
+    var queryable = doLittle.read.Queryable.create(options);
 
 
     it("should return an instance", function () {

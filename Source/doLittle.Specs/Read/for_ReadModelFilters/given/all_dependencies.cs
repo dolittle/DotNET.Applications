@@ -1,8 +1,8 @@
-﻿using Bifrost.Execution;
+﻿using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Read.for_ReadModelFilters.given
+namespace doLittle.Specs.Read.for_ReadModelFilters.given
 {
     public class all_dependencies
     {

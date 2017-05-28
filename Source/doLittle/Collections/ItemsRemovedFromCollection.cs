@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Collections
+namespace doLittle.Collections
 {
     /// <summary>
     /// Represents the delegate that gets called when items are removed from a collection

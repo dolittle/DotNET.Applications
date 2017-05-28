@@ -1,7 +1,7 @@
-﻿using Bifrost.Execution;
+﻿using doLittle.Execution;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Execution.for_ContractToImplementorsMap.given
+namespace doLittle.Specs.Execution.for_ContractToImplementorsMap.given
 {
     public class an_empty_map
     {

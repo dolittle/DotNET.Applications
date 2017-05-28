@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Applications.for_ApplicationResourceResolver
+﻿namespace doLittle.Specs.Applications.for_ApplicationResourceResolver
 {
     public interface IInterface
     {

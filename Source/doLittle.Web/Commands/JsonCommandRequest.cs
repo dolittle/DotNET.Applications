@@ -2,10 +2,10 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Applications;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Lifecycle;
 
-namespace Bifrost.Web.Commands
+namespace doLittle.Web.Commands
 {
     public class JsonCommandRequest
     {

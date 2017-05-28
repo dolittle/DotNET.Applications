@@ -15,7 +15,7 @@
 
         command.property_with_validator.validator = "Existing";
 
-        var commandValidationService = Bifrost.commands.commandValidationService.create();
+        var commandValidationService = doLittle.commands.commandValidationService.create();
         commandValidationService.extendPropertiesWithoutValidation(command);
     });
 

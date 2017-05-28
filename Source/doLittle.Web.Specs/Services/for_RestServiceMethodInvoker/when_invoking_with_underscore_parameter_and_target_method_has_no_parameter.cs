@@ -1,9 +1,9 @@
-﻿using Bifrost.Web.Services;
+﻿using doLittle.Web.Services;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 using System;
 
-namespace Bifrost.Web.Specs.Services.for_RestServiceMethodInvoker
+namespace doLittle.Web.Specs.Services.for_RestServiceMethodInvoker
 {
     public class when_invoking_with_underscore_parameter_and_target_method_has_no_parameter : given.a_rest_service_method_invoker_and_a_service_call
     {

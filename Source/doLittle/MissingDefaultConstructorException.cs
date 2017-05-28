@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost
+namespace doLittle
 {
     /// <summary>
     /// The exception that is thrown when a type is missing a default constructor and one is required

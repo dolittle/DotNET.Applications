@@ -15,13 +15,13 @@
             }
         };
 
-        Bifrost.validation.Rule = {
+        doLittle.validation.Rule = {
             getExtenders: function () {
                 return [knownRule];
             }
         };
 
-        validator = Bifrost.validation.Validator.create({ ruleName: "", options: {} });
+        validator = doLittle.validation.Validator.create({ ruleName: "", options: {} });
         validator.setOptions(rules);
         validator.validate("something");
     });

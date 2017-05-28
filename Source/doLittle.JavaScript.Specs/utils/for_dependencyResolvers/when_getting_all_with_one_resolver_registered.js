@@ -1,31 +1,31 @@
 ﻿describe("when getting all with one resolver registered", function () {
 
-    var wellKnownTypesDependencyResolver = Bifrost.WellKnownTypesDependencyResolver;
-    var defaultDependencyResolver = Bifrost.DefaultDependencyResolver;
-    var knownArtifactTypesDependencyResolver = Bifrost.KnownArtifactTypesDependencyResolver;
-    var knownArtifactInstancesDependencyResolver = Bifrost.KnownArtifactInstancesDependencyResolver;
+    var wellKnownTypesDependencyResolver = doLittle.WellKnownTypesDependencyResolver;
+    var defaultDependencyResolver = doLittle.DefaultDependencyResolver;
+    var knownArtifactTypesDependencyResolver = doLittle.KnownArtifactTypesDependencyResolver;
+    var knownArtifactInstancesDependencyResolver = doLittle.KnownArtifactInstancesDependencyResolver;
 
-    Bifrost.WellKnownTypesDependencyResolver = function () {
+    doLittle.WellKnownTypesDependencyResolver = function () {
         this.isWellKnown = true;
     };
 
-    Bifrost.DefaultDependencyResolver = function () {
+    doLittle.DefaultDependencyResolver = function () {
         this.isDefault = true;
     };
 
-    Bifrost.KnownArtifactTypesDependencyResolver = function () { };
-    Bifrost.KnownArtifactInstancesDependencyResolver = function () { };
+    doLittle.KnownArtifactTypesDependencyResolver = function () { };
+    doLittle.KnownArtifactInstancesDependencyResolver = function () { };
 
-    Bifrost.dependencyResolvers.myResolver = {
+    doLittle.dependencyResolvers.myResolver = {
         identifier: "Hello"
     };
 
-    var resolvers = Bifrost.dependencyResolvers.getAll();
+    var resolvers = doLittle.dependencyResolvers.getAll();
 
-    Bifrost.WellKnownTypesDependencyResolver = wellKnownTypesDependencyResolver;
-    Bifrost.DefaultDependencyResolver = defaultDependencyResolver;
-    Bifrost.KnownArtifactTypesDependencyResolver = knownArtifactTypesDependencyResolver;
-    Bifrost.KnownArtifactInstancesDependencyResolver = knownArtifactInstancesDependencyResolver;
+    doLittle.WellKnownTypesDependencyResolver = wellKnownTypesDependencyResolver;
+    doLittle.DefaultDependencyResolver = defaultDependencyResolver;
+    doLittle.KnownArtifactTypesDependencyResolver = knownArtifactTypesDependencyResolver;
+    doLittle.KnownArtifactInstancesDependencyResolver = knownArtifactInstancesDependencyResolver;
 
     it("should not get any functions resolvers", function () {
         var hasFunction = false;

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Strings
+namespace doLittle.Strings
 {
     /// <summary>
     /// Gets thrown when separators are not specified

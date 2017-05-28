@@ -6,7 +6,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Bifrost.Extensions
+namespace doLittle.Extensions
 {
 #pragma warning disable 1591 // Xml Comments
     public static class MethodCalls

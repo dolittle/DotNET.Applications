@@ -6,12 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.FluentValidation.Commands;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.FluentValidation.Commands;
 using FluentValidation;
 
-namespace Bifrost.FluentValidation
+namespace doLittle.FluentValidation
 {
     /// <summary>
     /// Represents the default <see cref="IValidatorFactory"/> implementation used for validators

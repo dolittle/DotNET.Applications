@@ -1,7 +1,7 @@
-using Bifrost.FluentValidation.Commands;
+using doLittle.FluentValidation.Commands;
 using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_CommandValidatorProvider
+namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider
 {
     [Subject(typeof(CommandValidatorProvider))]
     public class when_created : given.a_command_validator_provider_with_input_and_business_validators

@@ -1,9 +1,9 @@
 ﻿using System;
-using Bifrost.Diagnostics;
+using doLittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Diagnostics.for_TypeRules.given
+namespace doLittle.Specs.Diagnostics.for_TypeRules.given
 {
     public class type_rules_with_one_rule : all_dependencies
     {

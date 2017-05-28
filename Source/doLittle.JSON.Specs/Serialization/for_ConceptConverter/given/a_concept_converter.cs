@@ -1,7 +1,7 @@
-﻿using Bifrost.JSON.Concepts;
-using Bifrost.JSON.Serialization;
+﻿using doLittle.JSON.Concepts;
+using doLittle.JSON.Serialization;
 
-namespace Bifrost.JSON.Specs.Serialization.for_ConceptConverter.given
+namespace doLittle.JSON.Specs.Serialization.for_ConceptConverter.given
 {
     public class a_concept_converter
     {

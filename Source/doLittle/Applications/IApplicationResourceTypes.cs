@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Applications
+namespace doLittle.Applications
 {
     /// <summary>
     /// Defines a system that knows about all <see cref="IApplicationResourceTypes"/>

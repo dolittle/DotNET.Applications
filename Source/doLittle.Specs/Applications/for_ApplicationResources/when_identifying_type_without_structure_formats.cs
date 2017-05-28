@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Applications;
+using doLittle.Applications;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResources
+namespace doLittle.Specs.Applications.for_ApplicationResources
 {
     public class when_identifying_type_without_structure_formats : given.application_resources_without_structure_formats
     {

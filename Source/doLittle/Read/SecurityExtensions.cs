@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Security;
+using doLittle.Security;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// Extensions for building a security descriptor specific for dealing with <see cref="IReadModel">read models</see>

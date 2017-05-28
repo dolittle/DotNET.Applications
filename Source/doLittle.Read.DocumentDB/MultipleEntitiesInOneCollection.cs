@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using Microsoft.Azure.Documents;
 
-namespace Bifrost.DocumentDB
+namespace doLittle.DocumentDB
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICollectionStrategy"/> that 

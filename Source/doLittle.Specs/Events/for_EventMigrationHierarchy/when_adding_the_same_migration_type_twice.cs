@@ -1,9 +1,9 @@
 ﻿using System;
-using Bifrost.Events;
-using Bifrost.Specs.Events.Fakes.v2;
+using doLittle.Events;
+using doLittle.Specs.Events.Fakes.v2;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventMigrationHierarchy
+namespace doLittle.Specs.Events.for_EventMigrationHierarchy
 {
     public class when_adding_the_same_migration_type_twice : given.an_initialized_event_migration_hierarchy
     {

@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.mapping", {
-    MissingPropertyStrategy: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.mapping", {
+    MissingPropertyStrategy: doLittle.Type.extend(function () {
 
     })
 });

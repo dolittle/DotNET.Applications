@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace Bifrost.Specs.Logging.for_LogAppenders
+namespace doLittle.Specs.Logging.for_LogAppenders
 {
     public class when_clearing_log_appenders : given.one_appender
     {

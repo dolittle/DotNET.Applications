@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 
-namespace Bifrost.Web.Applications
+namespace doLittle.Web.Applications
 {
     public class ApplicationRouteHttpHandler : IHttpHandler
     {

@@ -1,9 +1,9 @@
-﻿using Bifrost.Serialization;
-using Bifrost.Web.Services;
+﻿using doLittle.Serialization;
+using doLittle.Web.Services;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Web.Specs.Services.for_RestServiceMethodInvoker.given
+namespace doLittle.Web.Specs.Services.for_RestServiceMethodInvoker.given
 {
     public class a_rest_service_method_invoker
     {

@@ -1,6 +1,6 @@
 ﻿describe("when copying to", function () {
 
-    var readModelType = Bifrost.read.ReadModel.extend(function () {
+    var readModelType = doLittle.read.ReadModel.extend(function () {
         var self = this;
         this.nonObservablePropertyOnlyFoundInSource = 42;
         this.observablePropertyOnlyFoundInSource = ko.observable(43);

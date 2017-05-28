@@ -6,11 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Exceptions;
-using Bifrost.Execution;
-using Bifrost.Read.Validation;
+using doLittle.Exceptions;
+using doLittle.Execution;
+using doLittle.Read.Validation;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// Represents an implementation of <see cref="IQueryProvider"/>

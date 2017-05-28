@@ -1,4 +1,4 @@
-Bifrost.namespace("Bifrost", {
+doLittle.namespace("doLittle", {
     Type: function () {
     }
 });
@@ -6,26 +6,26 @@ Bifrost.namespace("Bifrost", {
 (function () {
     function throwIfMissingTypeDefinition(typeDefinition) {
         if (typeDefinition == null || typeof typeDefinition === "undefined") {
-            throw new Bifrost.MissingTypeDefinition();
+            throw new doLittle.MissingTypeDefinition();
         }
     }
 
     function throwIfTypeDefinitionIsObjectLiteral(typeDefinition) {
         if (typeof typeDefinition === "object") {
-            throw new Bifrost.ObjectLiteralNotAllowed();
+            throw new doLittle.ObjectLiteralNotAllowed();
         }
     }
 
     function addStaticProperties(typeDefinition) {
-        for (var property in Bifrost.Type) {
-            if (Bifrost.Type.hasOwnProperty(property) && property !== "_extenders") {
-                typeDefinition[property] = Bifrost.Type[property];
+        for (var property in doLittle.Type) {
+            if (doLittle.Type.hasOwnProperty(property) && property !== "_extenders") {
+                typeDefinition[property] = doLittle.Type[property];
             }
         }
     }
 
     function setupDependencies(typeDefinition) {
-        typeDefinition._dependencies = Bifrost.dependencyResolver.getDependenciesFor(typeDefinition);
+        typeDefinition._dependencies = doLittle.dependencyResolver.getDependenciesFor(typeDefinition);
 
         var firstParameter = true;
         var createFunctionString = "Function('definition', 'dependencies','return new definition(";
@@ -48,7 +48,7 @@ Bifrost.namespace("Bifrost", {
         var dependencyInstances = [];
         if( typeof typeDefinition._dependencies !== "undefined" ) {
             typeDefinition._dependencies.forEach(function(dependency) {
-                var dependencyInstance = Bifrost.dependencyResolver.resolve(namespace, dependency);
+                var dependencyInstance = doLittle.dependencyResolver.resolve(namespace, dependency);
                 dependencyInstances.push(dependencyInstance);
             });
         }
@@ -57,7 +57,7 @@ Bifrost.namespace("Bifrost", {
 
     function resolve(namespace, dependency, index, instances, typeDefinition, resolvedCallback) {
         var promise = 
-            Bifrost.dependencyResolver
+            doLittle.dependencyResolver
                 .beginResolve(namespace, dependency)
                 .continueWith(function(result, nextPromise) {
                     instances[index] = result;
@@ -75,7 +75,7 @@ Bifrost.namespace("Bifrost", {
             }
         }
 
-        var promise = Bifrost.execution.Promise.create();
+        var promise = doLittle.execution.Promise.create();
         var dependencyInstances = [];
         var solvedDependencies = 0;
         if( typeof typeDefinition._dependencies !== "undefined" ) {
@@ -123,7 +123,7 @@ Bifrost.namespace("Bifrost", {
         dependencyInstances.forEach(function(dependencyInstance, index) {
             if( dependencyInstance == null || typeof dependencyInstance === "undefined" ) {
                 var dependency = typeDefinition._dependencies[index];
-                dependencyInstances[index] = Bifrost.dependencyResolver.resolve(typeDefinition._namespace, dependency);
+                dependencyInstances[index] = doLittle.dependencyResolver.resolve(typeDefinition._namespace, dependency);
             }
         });
     }
@@ -172,15 +172,15 @@ Bifrost.namespace("Bifrost", {
         }
     }
 
-    Bifrost.Type._extenders = [];
+    doLittle.Type._extenders = [];
 
-    Bifrost.Type.scope = {
+    doLittle.Type.scope = {
         getFor : function(namespace, name) {
             return null;
         }
     };
 
-    Bifrost.Type.typeOf = function (type) {
+    doLittle.Type.typeOf = function (type) {
 
         if (typeof this._super === "undefined" ||
             typeof this._super._typeId === "undefined") {
@@ -202,11 +202,11 @@ Bifrost.namespace("Bifrost", {
         return false;
     };
 
-    Bifrost.Type.getExtenders = function () {
+    doLittle.Type.getExtenders = function () {
         return this._extenders;
     };
 
-    Bifrost.Type.getExtendersIn = function (namespace) {
+    doLittle.Type.getExtendersIn = function (namespace) {
         var inNamespace = [];
         
         this._extenders.forEach(function (extender) {
@@ -217,7 +217,7 @@ Bifrost.namespace("Bifrost", {
                     break;
                 }
 
-                if (Bifrost.isUndefined(current.parent)) {
+                if (doLittle.isUndefined(current.parent)) {
                     break;
                 }
 
@@ -230,20 +230,20 @@ Bifrost.namespace("Bifrost", {
 
   
 
-    Bifrost.Type.extend = function (typeDefinition) {     
+    doLittle.Type.extend = function (typeDefinition) {     
         throwIfMissingTypeDefinition(typeDefinition);
         throwIfTypeDefinitionIsObjectLiteral(typeDefinition);
 
         addStaticProperties(typeDefinition);
         setupDependencies(typeDefinition);
         typeDefinition._super = this;
-        typeDefinition._typeId = Bifrost.Guid.create();
+        typeDefinition._typeId = doLittle.Guid.create();
         typeDefinition._extenders = [];
-        Bifrost.Type.registerExtender(this, typeDefinition);
+        doLittle.Type.registerExtender(this, typeDefinition);
         return typeDefinition;
     };
 
-    Bifrost.Type.registerExtender = function (typeExtended, typeDefined) {
+    doLittle.Type.registerExtender = function (typeExtended, typeDefined) {
         var superType = typeExtended;
 
         while (superType != null) {
@@ -254,7 +254,7 @@ Bifrost.namespace("Bifrost", {
         }
     };
 
-    Bifrost.Type.scopeTo = function(scope) {
+    doLittle.Type.scopeTo = function(scope) {
         if( typeof scope === "function" ) {
             this.scope = {
                 getFor: scope
@@ -273,7 +273,7 @@ Bifrost.namespace("Bifrost", {
         return this;
     };
 
-    Bifrost.Type.defaultScope = function() {
+    doLittle.Type.defaultScope = function() {
         this.scope = {
             getFor: function() {
                 return null;
@@ -282,7 +282,7 @@ Bifrost.namespace("Bifrost", {
         return this;
     };
 
-    Bifrost.Type.requires = function () {
+    doLittle.Type.requires = function () {
         for (var argumentIndex = 0; argumentIndex < arguments.length; argumentIndex++) {
             this._dependencies.push(arguments[argumentIndex]);
         }
@@ -290,14 +290,14 @@ Bifrost.namespace("Bifrost", {
         return this;
     };
 
-    Bifrost.Type.create = function (instanceHash, isSuper) {
+    doLittle.Type.create = function (instanceHash, isSuper) {
         var actualType = this;
         if( this._super != null ) {
             actualType.prototype = this._super.create(instanceHash, true);
         }
         addMissingDependenciesAsNullFromTypeDefinition(instanceHash, this);
         var scope = null;
-        if( this !== Bifrost.Type ) {
+        if( this !== doLittle.Type ) {
             this.instancesPerScope = this.instancesPerScope || {};
 
             scope = this.scope.getFor(this._namespace, this._name, this._typeId);
@@ -327,7 +327,7 @@ Bifrost.namespace("Bifrost", {
         return instance;
     };
 
-    Bifrost.Type.createWithoutScope = function (instanceHash, isSuper) {
+    doLittle.Type.createWithoutScope = function (instanceHash, isSuper) {
         var scope = this.scope;
         this.defaultScope();
         var instance = this.create(instanceHash, isSuper);
@@ -335,13 +335,13 @@ Bifrost.namespace("Bifrost", {
         return instance;
     };
 
-    Bifrost.Type.ensure = function () {
-        var promise = Bifrost.execution.Promise.create();
+    doLittle.Type.ensure = function () {
+        var promise = doLittle.execution.Promise.create();
 
         var loadedDependencies = 0;
         var dependenciesToResolve = this._dependencies.length;
         var namespace = this._namespace;
-        var resolver = Bifrost.dependencyResolver;
+        var resolver = doLittle.dependencyResolver;
         if (dependenciesToResolve > 0) {
             this._dependencies.forEach(function (dependency) {
 
@@ -368,11 +368,11 @@ Bifrost.namespace("Bifrost", {
         return promise;
     };
 
-    Bifrost.Type.beginCreate = function(instanceHash) {
+    doLittle.Type.beginCreate = function(instanceHash) {
         var self = this;
 
-        var promise = Bifrost.execution.Promise.create();
-        var superPromise = Bifrost.execution.Promise.create();
+        var promise = doLittle.execution.Promise.create();
+        var superPromise = doLittle.execution.Promise.create();
         superPromise.onFail(function (e) {
             promise.fail(e);
         });

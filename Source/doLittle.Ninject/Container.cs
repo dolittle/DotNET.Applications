@@ -5,12 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Execution;
+using doLittle.Execution;
 using Ninject;
 using Ninject.Parameters;
 using Ninject.Planning.Bindings;
 
-namespace Bifrost.Ninject
+namespace doLittle.Ninject
 {
     /// <summary>
     /// Represents an implementation of <see cref="IContainer"/> for Ninject

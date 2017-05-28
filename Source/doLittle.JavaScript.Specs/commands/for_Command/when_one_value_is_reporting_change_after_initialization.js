@@ -23,7 +23,7 @@
         mapper: {}
     }
 
-    var commandType = Bifrost.commands.Command.extend(function () {
+    var commandType = doLittle.commands.Command.extend(function () {
         this.someValue = ko.observable(43);
         this.someArray = ko.observableArray();
     });

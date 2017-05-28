@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Bifrost.FluentValidation.Commands;
-using Bifrost.FluentValidation.Specs.Concepts.given;
+using doLittle.FluentValidation.Commands;
+using doLittle.FluentValidation.Specs.Concepts.given;
 using FluentValidation;
 using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_ComposedCommandInputValidator.given
+namespace doLittle.FluentValidation.Specs.Commands.for_ComposedCommandInputValidator.given
 {
     public class a_composed_command_input_validator : commands
     {

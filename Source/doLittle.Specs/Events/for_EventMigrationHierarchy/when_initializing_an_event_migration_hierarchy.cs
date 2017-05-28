@@ -1,7 +1,7 @@
-﻿using Bifrost.Specs.Events.Fakes;
+﻿using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventMigrationHierarchy
+namespace doLittle.Specs.Events.for_EventMigrationHierarchy
 {
     public class when_initializing_an_event_migration_hierarchy : given.an_initialized_event_migration_hierarchy
     {

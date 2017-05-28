@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Commands;
+using doLittle.Commands;
 
-namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker
+namespace doLittle.Specs.Commands.for_CommandHandlerInvoker
 {
     public class Command : ICommand
     {

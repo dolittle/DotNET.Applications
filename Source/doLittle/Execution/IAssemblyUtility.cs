@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Reflection;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Defines a utility to work with <see cref="Assembly"/>

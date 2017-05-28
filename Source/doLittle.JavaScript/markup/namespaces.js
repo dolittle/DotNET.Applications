@@ -1,12 +1,12 @@
-﻿Bifrost.namespace("Bifrost.markup", {
-    namespaces: Bifrost.Singleton(function (namespaceDefinitions, elementNaming) {
+﻿doLittle.namespace("doLittle.markup", {
+    namespaces: doLittle.Singleton(function (namespaceDefinitions, elementNaming) {
         var self = this;
         var ns = "ns:";
 
         this.global = namespaceDefinitions.create("__global");
 
         function findNamespaceDefinitionInElementOrParent(prefix, element) {
-            if (!Bifrost.isNullOrUndefined(element.__namespaces)) {
+            if (!doLittle.isNullOrUndefined(element.__namespaces)) {
                 var found = null;
                 element.__namespaces.forEach(function (definition) {
                     if (definition.prefix === prefix) {
@@ -19,7 +19,7 @@
                     return found;
                 }
             }
-            if (Bifrost.isNullOrUndefined(element.parentElement) ||
+            if (doLittle.isNullOrUndefined(element.parentElement) ||
                 element.parentElement.constructor === HTMLHtmlElement) {
                 
                 return null;
@@ -42,8 +42,8 @@
                     var target = attribute.value;
 
                     var namespaceDefinition = findNamespaceDefinitionInElementOrParent(prefix, element);
-                    if (Bifrost.isNullOrUndefined(namespaceDefinition)) {
-                        if (Bifrost.isNullOrUndefined(element.__namespaces)) {
+                    if (doLittle.isNullOrUndefined(namespaceDefinition)) {
+                        if (doLittle.isNullOrUndefined(element.__namespaces)) {
                             element.__namespaces = [];
                         }
                         namespaceDefinition = namespaceDefinitions.create(prefix);
@@ -57,7 +57,7 @@
 
         this.resolveFor = function (element) {
             var prefix = elementNaming.getNamespacePrefixFor(element);
-            if (Bifrost.isNullOrUndefined(prefix) || prefix === "") {
+            if (doLittle.isNullOrUndefined(prefix) || prefix === "") {
                 return self.global;
             }
             var definition = findNamespaceDefinitionInElementOrParent(prefix, element);

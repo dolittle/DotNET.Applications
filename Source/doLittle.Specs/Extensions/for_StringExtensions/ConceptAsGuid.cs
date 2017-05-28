@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 
-namespace Bifrost.Specs.Extensions.for_StringExtensions
+namespace doLittle.Specs.Extensions.for_StringExtensions
 {
     public class ConceptAsGuid : ConceptAs<Guid>
     {

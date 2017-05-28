@@ -1,6 +1,6 @@
-﻿using Bifrost.Specs.Events.Fakes;
+﻿using doLittle.Specs.Events.Fakes;
 
-namespace Bifrost.Specs.Events.for_ProcessMethodInvoker
+namespace doLittle.Specs.Events.for_ProcessMethodInvoker
 {
     public class TypeWithSimpleEventProcessMethod
     {

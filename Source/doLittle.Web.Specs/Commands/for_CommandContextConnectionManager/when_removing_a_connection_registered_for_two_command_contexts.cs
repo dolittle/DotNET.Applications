@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Web.Commands;
+using doLittle.Web.Commands;
 using Machine.Specifications;
 
-namespace Bifrost.Web.Specs.Commands.for_CommandContextConnectionManager
+namespace doLittle.Web.Specs.Commands.for_CommandContextConnectionManager
 {
     public class when_removing_a_connection_registered_for_two_command_contexts
     {

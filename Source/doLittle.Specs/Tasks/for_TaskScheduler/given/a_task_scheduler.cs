@@ -1,9 +1,9 @@
-﻿using Bifrost.Concurrency;
-using Bifrost.Tasks;
+﻿using doLittle.Concurrency;
+using doLittle.Tasks;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Tasks.for_TaskScheduler.given
+namespace doLittle.Specs.Tasks.for_TaskScheduler.given
 {
     public class a_task_scheduler
     {

@@ -1,9 +1,9 @@
-﻿using Bifrost.Logging;
+﻿using doLittle.Logging;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Logging.for_LogAppenders
+namespace doLittle.Specs.Logging.for_LogAppenders
 {
     public class when_constructing_with_two_instances_of_log_appenders_configurators : given.no_log_appenders
     {

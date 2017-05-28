@@ -1,31 +1,31 @@
-Bifrost.namespace("Bifrost.validation", {
-    minLength: Bifrost.validation.Rule.extend(function () {
+doLittle.namespace("doLittle.validation", {
+    minLength: doLittle.validation.Rule.extend(function () {
         var self = this;
 
         function notSet(value) {
-            return Bifrost.isUndefined(value) || Bifrost.isNull(value);
+            return doLittle.isUndefined(value) || doLittle.isNull(value);
         }
 
         function throwIfValueIsNotANumber(value) {
-            if (!Bifrost.isNumber(value)) {
-                throw new Bifrost.validation.NotANumber("Value " + value + " is not a number");
+            if (!doLittle.isNumber(value)) {
+                throw new doLittle.validation.NotANumber("Value " + value + " is not a number");
             }
         }
 
         function throwIfOptionsInvalid(options) {
             if (notSet(options)) {
-                throw new Bifrost.validation.OptionsNotDefined();
+                throw new doLittle.validation.OptionsNotDefined();
             }
             if (notSet(options.length)) {
-                throw new Bifrost.validation.MaxNotSpecified();
+                throw new doLittle.validation.MaxNotSpecified();
             }
             throwIfValueIsNotANumber(options.length);
         }
 
 
         function throwIfValueIsNotAString(string) {
-            if (!Bifrost.isString(string)) {
-                throw new Bifrost.validation.NotAString("Value " + string + " is not a string");
+            if (!doLittle.isString(string)) {
+                throw new doLittle.validation.NotAString("Value " + string + " is not a string");
             }
         }
 

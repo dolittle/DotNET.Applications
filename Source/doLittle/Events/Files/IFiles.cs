@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Events.Files
+namespace doLittle.Events.Files
 {
     /// <summary>
     /// Defines a system for working with files on the filesystem

@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
-using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.FluentValidation.Commands;
-using Bifrost.Lifecycle;
-using Bifrost.Validation;
+using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.FluentValidation.Commands;
+using doLittle.Lifecycle;
+using doLittle.Validation;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_CommandValidator
+namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidator
 {
     public class when_validating_a_command_that_has_incorrect_inputs : given.a_command_validation_service
     {

@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using Bifrost.Security;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_SecurityAction
+namespace doLittle.Specs.Security.for_SecurityAction
 {
     [Subject(typeof(SecurityAction))]
     public class when_authorizing_with_targets_that_all_authorize

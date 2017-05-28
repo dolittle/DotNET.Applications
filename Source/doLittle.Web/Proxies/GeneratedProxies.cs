@@ -4,16 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
 using System.Text;
-using Bifrost.Execution;
-using Bifrost.Web.Commands;
-using Bifrost.Web.Configuration;
+using doLittle.Execution;
+using doLittle.Web.Commands;
+using doLittle.Web.Configuration;
 #if(NET461)
-using Bifrost.Web.Hubs;
+using doLittle.Web.Hubs;
 #endif
-using Bifrost.Web.Read;
-using Bifrost.Web.Services;
+using doLittle.Web.Read;
+using doLittle.Web.Services;
 
-namespace Bifrost.Web.Proxies
+namespace doLittle.Web.Proxies
 {
     [Singleton]
     public class GeneratedProxies
@@ -42,7 +42,7 @@ namespace Bifrost.Web.Proxies
             builder.Append(hubProxies.Generate());
 #endif
 
-            var generatorTypes = typeDiscoverer.FindMultiple<IProxyGenerator>().Where(t => !t.Namespace.StartsWith("Bifrost"));
+            var generatorTypes = typeDiscoverer.FindMultiple<IProxyGenerator>().Where(t => !t.Namespace.StartsWith("doLittle"));
             foreach (var generatorType in generatorTypes)
             {
                 var generator = container.Get(generatorType) as IProxyGenerator;

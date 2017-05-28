@@ -1,13 +1,13 @@
-﻿using Bifrost.Configuration;
-using Bifrost.Configuration.Defaults;
-using Bifrost.Execution;
-using Bifrost.Security;
-using Bifrost.SomeRandomNamespace;
-using Bifrost.Specs.Security.Fakes;
+﻿using doLittle.Configuration;
+using doLittle.Configuration.Defaults;
+using doLittle.Execution;
+using doLittle.Security;
+using doLittle.SomeRandomNamespace;
+using doLittle.Specs.Security.Fakes;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Security.for_SecurityDescriptor.given
+namespace doLittle.Specs.Security.for_SecurityDescriptor.given
 {
     public class a_configured_security_descriptor
     {

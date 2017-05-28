@@ -1,7 +1,7 @@
-﻿using Bifrost.Entities;
-using Bifrost.Execution;
+﻿using doLittle.Entities;
+using doLittle.Execution;
 
-namespace Bifrost.Specs.Configuration
+namespace doLittle.Specs.Configuration
 {
     public class EntityContextConnection : IEntityContextConnection
     {

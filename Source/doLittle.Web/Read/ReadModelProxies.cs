@@ -4,15 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
 using System.Text;
-using Bifrost.CodeGeneration;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.Read;
-using Bifrost.Web.Configuration;
-using Bifrost.Web.Proxies;
+using doLittle.CodeGeneration;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.Read;
+using doLittle.Web.Configuration;
+using doLittle.Web.Proxies;
 
-namespace Bifrost.Web.Read
+namespace doLittle.Web.Read
 {
     public class ReadModelProxies : IProxyGenerator
     {
@@ -50,7 +50,7 @@ namespace Bifrost.Web.Read
                     var name = type.Name.ToCamelCase();
                     currentNamespace.Content.Assign(name)
                         .WithType(t =>
-                            t.WithSuper("Bifrost.read.ReadModel")
+                            t.WithSuper("doLittle.read.ReadModel")
                                 .Function
                                     .Body
                                         .Variant("self", v => v.WithThis())
@@ -59,7 +59,7 @@ namespace Bifrost.Web.Read
 
                     currentNamespace.Content.Assign("readModelOf" + name.ToPascalCase())
                         .WithType(t =>
-                            t.WithSuper("Bifrost.read.ReadModelOf")
+                            t.WithSuper("doLittle.read.ReadModelOf")
                                 .Function
                                     .Body
                                         .Variant("self", v => v.WithThis())

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Commands.for_CommandRequestConverter
+namespace doLittle.Specs.Commands.for_CommandRequestConverter
 {
     public class when_converting_for_known_type_with_properties : given.all_dependencies
     {

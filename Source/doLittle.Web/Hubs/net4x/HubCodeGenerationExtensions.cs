@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.CodeGeneration;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Extensions;
+using doLittle.CodeGeneration;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Extensions;
 
-namespace Bifrost.Web.Hubs
+namespace doLittle.Web.Hubs
 {
     public static class HubCodeGenerationExtensions
     {

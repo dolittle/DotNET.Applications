@@ -1,6 +1,6 @@
-﻿using Bifrost.Events;
+﻿using doLittle.Events;
 
-namespace Bifrost.Specs.Events.Fakes.v2
+namespace doLittle.Specs.Events.Fakes.v2
 {
     public class SimpleEvent : Fakes.SimpleEvent, IAmNextGenerationOf<Fakes.SimpleEvent>
     {

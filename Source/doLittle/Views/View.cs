@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq;
-using Bifrost.Entities;
-using Bifrost.Extensions;
+using doLittle.Entities;
+using doLittle.Extensions;
 
-namespace Bifrost.Views
+namespace doLittle.Views
 {
     /// <summary>
     /// Represents a <see cref="IView{T}"/>

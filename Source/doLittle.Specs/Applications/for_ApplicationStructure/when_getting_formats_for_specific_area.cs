@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Applications.for_ApplicationStructure
+namespace doLittle.Specs.Applications.for_ApplicationStructure
 {
     public class when_getting_formats_for_specific_area : given.two_areas_with_one_format_in_each
     {

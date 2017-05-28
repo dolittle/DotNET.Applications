@@ -1,7 +1,7 @@
 ﻿using Machine.Specifications;
-using Bifrost.Dynamic;
+using doLittle.Dynamic;
 
-namespace Bifrost.Specs.Dynamic.for_DynamicExtensions
+namespace doLittle.Specs.Dynamic.for_DynamicExtensions
 {
     public class when_converting_to_expando_object
     {

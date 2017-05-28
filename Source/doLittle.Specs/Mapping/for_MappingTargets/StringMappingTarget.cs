@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using Bifrost.Mapping;
+using doLittle.Mapping;
 
-namespace Bifrost.Specs.Mapping.for_MappingTargets
+namespace doLittle.Specs.Mapping.for_MappingTargets
 {
     public class StringMappingTarget : MappingTargetFor<string>
     {

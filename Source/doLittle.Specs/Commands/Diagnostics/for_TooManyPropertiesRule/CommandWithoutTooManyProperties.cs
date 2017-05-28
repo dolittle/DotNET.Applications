@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Commands.Diagnostics.for_TooManyPropertiesRule
+﻿namespace doLittle.Specs.Commands.Diagnostics.for_TooManyPropertiesRule
 {
     public class CommandWithoutTooManyProperties
     {

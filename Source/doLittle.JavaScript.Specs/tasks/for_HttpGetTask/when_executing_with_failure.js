@@ -19,7 +19,7 @@
 
     var error = null;
     
-    var task = Bifrost.tasks.HttpGetTask.create({
+    var task = doLittle.tasks.HttpGetTask.create({
         url: url,
         payload: payload,
         server: server

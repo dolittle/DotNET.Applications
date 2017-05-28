@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.Validation.for_QueryArgumentValidationResult
+namespace doLittle.Specs.Read.Validation.for_QueryArgumentValidationResult
 {
     public class when_asking_for_success_on_result_with_one_broken_rule : given.a_query_argument_validation_result_with_one_broken_rule
     {

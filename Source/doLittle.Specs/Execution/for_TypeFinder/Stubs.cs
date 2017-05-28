@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Execution.for_TypeFinder
+﻿namespace doLittle.Specs.Execution.for_TypeFinder
 {
     public interface ISingle
     {

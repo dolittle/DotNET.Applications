@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Mapping;
+using doLittle.Mapping;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Mapping.for_MappingTargets
+namespace doLittle.Specs.Mapping.for_MappingTargets
 {
     public class when_getting_for_type_without_known_target : given.no_mapping_targets
     {

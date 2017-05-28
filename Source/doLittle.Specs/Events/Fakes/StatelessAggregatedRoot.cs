@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Domain;
+using doLittle.Domain;
 
-namespace Bifrost.Specs.Events.Fakes
+namespace doLittle.Specs.Events.Fakes
 {
     public class StatelessAggregatedRoot : AggregateRoot
     {

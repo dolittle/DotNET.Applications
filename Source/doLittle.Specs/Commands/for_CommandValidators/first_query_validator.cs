@@ -1,7 +1,7 @@
-﻿using Bifrost.Read;
-using Bifrost.Read.Validation;
+﻿using doLittle.Read;
+using doLittle.Read.Validation;
 
-namespace Bifrost.Specs.Commands.for_CommandValidators
+namespace doLittle.Specs.Commands.for_CommandValidators
 {
     public class first_query_validator : IQueryValidator
     {

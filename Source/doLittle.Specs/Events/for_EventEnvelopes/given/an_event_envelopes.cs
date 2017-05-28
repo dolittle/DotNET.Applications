@@ -1,7 +1,7 @@
-﻿using Bifrost.Events;
+﻿using doLittle.Events;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventEnvelopes.given
+namespace doLittle.Specs.Events.for_EventEnvelopes.given
 {
     public class an_event_envelopes : all_dependencies
     {

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Mapping;
+using doLittle.Mapping;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Mapping.for_MappingTargets.given
+namespace doLittle.Specs.Mapping.for_MappingTargets.given
 {
     public class mapping_target_for_string : all_dependencies
     {

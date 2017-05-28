@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Defines a container for resolving types

@@ -2,18 +2,18 @@
     var command = {
         _name: "DoSomething",
         _generatedFrom: "Somewhere",
-        id: Bifrost.Guid.create(),
+        id: doLittle.Guid.create(),
         parameters: {},
         someFunction: function () { },
         someObservable: ko.observable(1)
     };
     var commandDescriptor = null;
 
-    var oldCommand = Bifrost.commands.Command;
+    var oldCommand = doLittle.commands.Command;
 
     beforeEach(function () {
 
-        Bifrost.commands.Command = {
+        doLittle.commands.Command = {
             create: function () {
                 return {
                     _name: "",
@@ -22,12 +22,12 @@
             }
         };
 
-        commandDescriptor = Bifrost.commands.CommandDescriptor.createFrom(command);
+        commandDescriptor = doLittle.commands.CommandDescriptor.createFrom(command);
 
     });
 
     afterEach(function () {
-        Bifrost.commands.Command = oldCommand;
+        doLittle.commands.Command = oldCommand;
     });
 
     it("should return an instance", function () {

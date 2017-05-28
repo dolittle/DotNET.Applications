@@ -1,10 +1,10 @@
-﻿using Bifrost.Events;
-using Bifrost.Specs.Events.Fakes;
+﻿using doLittle.Events;
+using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Events.for_CommittedEventStream
+namespace doLittle.Specs.Events.for_CommittedEventStream
 {
     public class when_creating_a_stream_with_one_event : given.an_empty_committed_event_stream
     {

@@ -1,13 +1,13 @@
-Bifrost.namespace("Bifrost.commands");
-Bifrost.commands.CommandResult = (function () {
+doLittle.namespace("doLittle.commands");
+doLittle.commands.CommandResult = (function () {
     function CommandResult(existing) {
         var self = this;
         this.isEmpty = function () {
-            return self.commandId === Bifrost.Guid.empty;
+            return self.commandId === doLittle.Guid.empty;
         };
 
         this.commandName = "";
-        this.commandId = Bifrost.Guid.empty;
+        this.commandId = doLittle.Guid.empty;
         this.validationResults = [];
         this.success = true;
         this.invalid = false;
@@ -20,7 +20,7 @@ Bifrost.commands.CommandResult = (function () {
         this.details = "";
 
         if (typeof existing !== "undefined") {
-            Bifrost.extend(this, existing);
+            doLittle.extend(this, existing);
         }
     }
 

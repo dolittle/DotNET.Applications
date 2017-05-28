@@ -1,6 +1,6 @@
-Bifrost.namespace("Bifrost.sagas");
-Bifrost.sagas.sagaNarrator = (function () {
-    var baseUrl = "/Bifrost/SagaNarrator";
+doLittle.namespace("doLittle.sagas");
+doLittle.sagas.sagaNarrator = (function () {
+    var baseUrl = "/doLittle/SagaNarrator";
     // Todo : abstract away into general Service code - look at CommandCoordinator.js for the other copy of this!s
     function post(url, data, completeHandler) {
         $.ajax({
@@ -31,7 +31,7 @@ Bifrost.sagas.sagaNarrator = (function () {
                 sagaId: saga.Id
             };
             post(baseUrl + "/Conclude", JSON.stringify(methodParameters), function (jqXHR) {
-                var commandResult = Bifrost.commands.CommandResult.createFrom(jqXHR.responseText);
+                var commandResult = doLittle.commands.CommandResult.createFrom(jqXHR.responseText);
                 var isSuccess = isRequestSuccess(jqXHR, commandResult);
                 if (isSuccess === true && typeof success === "function") {
                     success(saga);

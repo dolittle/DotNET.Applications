@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Events;
-using Bifrost.Events.InProcess;
-using Bifrost.Execution;
+using doLittle.Events;
+using doLittle.Events.InProcess;
+using doLittle.Execution;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEventsConfiguration"/>

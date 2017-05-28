@@ -1,5 +1,5 @@
 ---
-uid: Bifrost
+uid: doLittle
 example: '*You can override summary for the API here using *MARKDOWN* syntax'
 ---
 

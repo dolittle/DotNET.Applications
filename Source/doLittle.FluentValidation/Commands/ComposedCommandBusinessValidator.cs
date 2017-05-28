@@ -5,12 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Commands;
-using Bifrost.Validation;
+using doLittle.Commands;
+using doLittle.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Bifrost.FluentValidation.Commands
+namespace doLittle.FluentValidation.Commands
 {
     /// <summary>
     /// Represents a command business validator that is constructed from discovered rules.

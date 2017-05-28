@@ -1,7 +1,7 @@
-﻿using Bifrost.Strings;
+﻿using doLittle.Strings;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Strings.for_StringFormatParser.given
+namespace doLittle.Specs.Strings.for_StringFormatParser.given
 {
     public class a_string_format_parser
     {

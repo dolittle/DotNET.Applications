@@ -10,19 +10,19 @@
     var converted = null;
     beforeEach(function () {
        
-        typeConverterBefore = Bifrost.values.TypeConverter;
-        Bifrost.values.TypeConverter = {
+        typeConverterBefore = doLittle.values.TypeConverter;
+        doLittle.values.TypeConverter = {
             getExtenders: function () {
                 return [typeConverterType]
             }
         };
 
-        var typeConverters = Bifrost.values.typeConverters.createWithoutScope();
+        var typeConverters = doLittle.values.typeConverters.createWithoutScope();
         converted = typeConverters.convertTo(42);
     });
 
     afterEach(function () {
-        Bifrost.views.TypeConverter = typeConverterBefore;
+        doLittle.views.TypeConverter = typeConverterBefore;
     });
 
     it("should return the converted value from the converter", function () {

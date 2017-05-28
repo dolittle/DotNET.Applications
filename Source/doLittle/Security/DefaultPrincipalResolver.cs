@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Security.Claims;
 
-namespace Bifrost.Security
+namespace doLittle.Security
 {
     /// <summary>
     /// Represents a principal resolver that resolves from current thread;

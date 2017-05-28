@@ -54,7 +54,7 @@
         mapper: {}
     };
 
-    var descendant = Bifrost.commands.Command.extend(function () {
+    var descendant = doLittle.commands.Command.extend(function () {
         this._name = "descendant";
         this.firstProperty = ko.observable(42);
         this.secondProperty = ko.observable("43");

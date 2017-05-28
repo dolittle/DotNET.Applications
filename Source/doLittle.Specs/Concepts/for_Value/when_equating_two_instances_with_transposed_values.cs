@@ -1,7 +1,7 @@
-﻿using Bifrost.Concepts;
+﻿using doLittle.Concepts;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Concepts.for_Value
+namespace doLittle.Specs.Concepts.for_Value
 {
     [Subject(typeof(Value<>))]
     public class when_equating_two_instances_with_transposed_values : given.value_objects

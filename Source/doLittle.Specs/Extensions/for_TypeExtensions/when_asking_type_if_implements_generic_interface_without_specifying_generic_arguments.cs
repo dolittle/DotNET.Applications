@@ -1,7 +1,7 @@
-﻿using Bifrost.Extensions;
+﻿using doLittle.Extensions;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Extensions.for_TypeExtensions
+namespace doLittle.Specs.Extensions.for_TypeExtensions
 {
 
     public class when_asking_type_if_implements_generic_interface_without_specifying_generic_arguments

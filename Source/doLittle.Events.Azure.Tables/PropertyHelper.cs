@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.Concepts;
-using Bifrost.Extensions;
+using doLittle.Concepts;
+using doLittle.Extensions;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace Bifrost.Events.Azure.Tables
+namespace doLittle.Events.Azure.Tables
 {
     /// <summary>
     /// Represents a helper for working with properties

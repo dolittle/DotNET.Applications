@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Security
+namespace doLittle.Security
 {
     /// <summary>
     /// Defines something that can be secured

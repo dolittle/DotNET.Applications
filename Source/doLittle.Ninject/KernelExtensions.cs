@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
-using Bifrost.Execution;
+using doLittle.Execution;
 using Ninject;
 using Ninject.Modules;
 
-namespace Bifrost.Ninject
+namespace doLittle.Ninject
 {
     /// <summary>
     /// Extensions for working with <see cref="IKernel"/>

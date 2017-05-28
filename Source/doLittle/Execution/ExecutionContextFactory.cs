@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Globalization;
-using Bifrost.Applications;
-using Bifrost.Security;
-using Bifrost.Tenancy;
+using doLittle.Applications;
+using doLittle.Security;
+using doLittle.Tenancy;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Represents a <see cref="IExecutionContextFactory"/>

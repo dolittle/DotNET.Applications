@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using Bifrost.Applications;
+using doLittle.Applications;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Applications.for_ApplicationStructureConfigurationBuilder
+namespace doLittle.Specs.Applications.for_ApplicationStructureConfigurationBuilder
 {
     public class when_building_with_two_added_structure_format_with_different_identifiers
     {

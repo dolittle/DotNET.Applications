@@ -8,13 +8,13 @@
             _name: "knownRule",
             create: sinon.mock().withArgs({ options: options }).once()
         };
-        Bifrost.validation.Rule = {
+        doLittle.validation.Rule = {
             getExtenders: function () {
                 return [knownRule];
             }
         }
 
-        validator = Bifrost.validation.Validator.create({
+        validator = doLittle.validation.Validator.create({
             knownRule: options
         });
     });

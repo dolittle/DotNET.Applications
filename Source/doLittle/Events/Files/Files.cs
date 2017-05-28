@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.IO;
-using Bifrost.Logging;
-using Bifrost.Serialization;
+using doLittle.Logging;
+using doLittle.Serialization;
 
-namespace Bifrost.Events.Files
+namespace doLittle.Events.Files
 {
     /// <summary>
     /// Represents an implementation of <see cref="IFiles"/>

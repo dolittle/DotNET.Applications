@@ -1,6 +1,6 @@
-﻿using Bifrost.Commands;
+﻿using doLittle.Commands;
 
-namespace Bifrost.Specs.Commands.for_CommandValidators
+namespace doLittle.Specs.Commands.for_CommandValidators
 {
     public class first_command_validator : ICommandValidator
     {

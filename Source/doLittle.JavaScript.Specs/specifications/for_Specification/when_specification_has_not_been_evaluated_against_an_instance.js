@@ -1,7 +1,7 @@
 ﻿describe("when specification has not been evaluated against an instance", function () {
 
     var evaluator = sinon.stub();
-    var rule = Bifrost.specifications.Specification.create();
+    var rule = doLittle.specifications.Specification.create();
     rule.evaluator = evaluator;
     var isSatisfied = rule.isSatisfied();
 

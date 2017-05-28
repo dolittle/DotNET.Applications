@@ -1,11 +1,11 @@
-﻿using Bifrost.Events;
-using Bifrost.Execution;
-using Bifrost.Specs.Events.Fakes;
+﻿using doLittle.Events;
+using doLittle.Execution;
+using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 using Moq;
 using System;
 
-namespace Bifrost.Specs.Events.for_EventMigrationManager.given
+namespace doLittle.Specs.Events.for_EventMigrationManager.given
 {
     public abstract class an_event_migrator_service_with_no_registered_migrators
     {

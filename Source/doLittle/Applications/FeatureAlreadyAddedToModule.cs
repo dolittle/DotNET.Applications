@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Applications
+namespace doLittle.Applications
 {
     /// <summary>
     /// Exception tat

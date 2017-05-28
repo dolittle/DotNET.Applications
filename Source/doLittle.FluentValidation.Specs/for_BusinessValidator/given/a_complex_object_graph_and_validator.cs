@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.for_BusinessValidator.given
+namespace doLittle.FluentValidation.Specs.for_BusinessValidator.given
 {
     public class a_complex_object_graph_and_validator
     {

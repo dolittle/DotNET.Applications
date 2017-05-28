@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Logging
+namespace doLittle.Logging
 {
     /// <summary>
     /// Represents an implementation of <see cref="ILogger"/>

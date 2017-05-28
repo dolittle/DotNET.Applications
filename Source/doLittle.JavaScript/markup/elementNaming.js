@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.markup", {
-    elementNaming: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.markup", {
+    elementNaming: doLittle.Singleton(function () {
 
         function getNameAndNamespace(element) {
             var namespace;
@@ -7,7 +7,7 @@
 
             var namespaceSplit = name.split(":");
             if (namespaceSplit.length > 2) {
-                throw Bifrost.markup.MultipleNamespacesInNameNotAllowed.create({ tagName: name });
+                throw doLittle.markup.MultipleNamespacesInNameNotAllowed.create({ tagName: name });
             }
             if (namespaceSplit.length === 2) {
                 name = namespaceSplit[1];
@@ -23,7 +23,7 @@
 
         this.getNamespacePrefixFor = function (element) {
             var nameAndNamespace = getNameAndNamespace(element);
-            if (Bifrost.isNullOrUndefined(nameAndNamespace.namespace)) {
+            if (doLittle.isNullOrUndefined(nameAndNamespace.namespace)) {
                 return "";
             }
             return nameAndNamespace.namespace;

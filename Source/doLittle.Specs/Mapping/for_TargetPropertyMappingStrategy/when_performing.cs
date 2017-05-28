@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
-using Bifrost.Mapping;
+using doLittle.Mapping;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Mapping.for_TargetPropertyMappingStrategy
+namespace doLittle.Specs.Mapping.for_TargetPropertyMappingStrategy
 {
     public class when_performing
     {

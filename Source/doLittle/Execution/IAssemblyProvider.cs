@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Reflection;
-using Bifrost.Collections;
+using doLittle.Collections;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Defines a system that can provide <see cref="Assembly">assemblies</see>

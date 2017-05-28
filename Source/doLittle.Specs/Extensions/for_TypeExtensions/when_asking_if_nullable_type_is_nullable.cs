@@ -1,7 +1,7 @@
-﻿using Bifrost.Extensions;
+﻿using doLittle.Extensions;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Extensions.for_TypeExtensions
+namespace doLittle.Specs.Extensions.for_TypeExtensions
 {
     public class when_asking_if_nullable_type_is_nullable
     {

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Represents the configuration for <see cref="IEventSequenceNumbers"/>

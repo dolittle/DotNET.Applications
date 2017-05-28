@@ -1,11 +1,11 @@
 ﻿using System;
-using Bifrost.Applications;
-using Bifrost.Events;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Events;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Events.for_EventEnvelope.given
+namespace doLittle.Specs.Events.for_EventEnvelope.given
 {
     public class an_event_envelope
     {

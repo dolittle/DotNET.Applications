@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Execution;
-using Bifrost.Extensions;
+using doLittle.Execution;
+using doLittle.Extensions;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// Extension methods for <see cref="ITypeDiscoverer"/> for dealing with ReadModels and Queries

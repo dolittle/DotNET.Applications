@@ -10,7 +10,7 @@ describe("when creating with dependencies", function() {
 	var instance = null;
 
 	beforeEach(function() {
-		Bifrost.dependencyResolver = {
+		doLittle.dependencyResolver = {
 			getDependenciesFor: function() {
 				return ["something"];
 			},
@@ -19,7 +19,7 @@ describe("when creating with dependencies", function() {
 			}
 		};
 
-		type = Bifrost.Type.extend(function(something) {
+		type = doLittle.Type.extend(function(something) {
 			somethingDependency = something;
 		});		
 
@@ -27,7 +27,7 @@ describe("when creating with dependencies", function() {
 	});
 
 	afterEach(function() {
-		Bifrost.functionParser = {};
+		doLittle.functionParser = {};
 	});
 
 	it("should create with resolved dependencies", function() {

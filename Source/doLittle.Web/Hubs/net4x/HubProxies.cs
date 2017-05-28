@@ -5,19 +5,19 @@
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Bifrost.CodeGeneration;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.Web.Configuration;
-using Bifrost.Web.Proxies;
+using doLittle.CodeGeneration;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.Web.Configuration;
+using doLittle.Web.Proxies;
 #if(NET461)
 using Microsoft.AspNet.SignalR;
 #else
 using Microsoft.AspNetCore.SignalR;
 #endif
 
-namespace Bifrost.Web.Hubs
+namespace doLittle.Web.Hubs
 {
     public class HubProxies : IProxyGenerator
     {
@@ -56,7 +56,7 @@ namespace Bifrost.Web.Hubs
 
                     currentNamespace.Content.Assign(name)
                         .WithType(t =>
-                            t.WithSuper("Bifrost.hubs.Hub")
+                            t.WithSuper("doLittle.hubs.Hub")
                                 .Function
                                     .Body
                                         .Variant("self", v => v.WithThis())

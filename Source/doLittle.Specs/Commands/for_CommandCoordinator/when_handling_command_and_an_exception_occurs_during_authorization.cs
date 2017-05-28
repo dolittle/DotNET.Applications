@@ -1,9 +1,9 @@
 ﻿using System;
-using Bifrost.Commands;
-using Bifrost.Exceptions;
+using doLittle.Commands;
+using doLittle.Exceptions;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Commands.for_CommandCoordinator
+namespace doLittle.Specs.Commands.for_CommandCoordinator
 {
     [Subject(typeof(CommandCoordinator))]
     public class when_handling_command_and_an_exception_occurs_during_authorization : given.a_command_coordinator

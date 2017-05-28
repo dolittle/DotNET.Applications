@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Validation.MetaData;
+using doLittle.Validation.MetaData;
 using FluentValidation.Validators;
 
-namespace Bifrost.FluentValidation.MetaData
+namespace doLittle.FluentValidation.MetaData
 {
     /// <summary>
     /// Represents the generater that can generate a <see cref="Required"/> rule from

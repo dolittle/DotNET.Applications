@@ -1,5 +1,5 @@
-Bifrost.namespace("Bifrost", {
-    namespaces: Bifrost.Singleton(function() {
+doLittle.namespace("doLittle", {
+    namespaces: doLittle.Singleton(function() {
         var self = this;
 
         this.stripPath = function (path) {
@@ -13,20 +13,20 @@ Bifrost.namespace("Bifrost", {
         };
 
         this.initialize = function () {
-            var scripts = Bifrost.assetsManager.getScripts();
+            var scripts = doLittle.assetsManager.getScripts();
             if (typeof scripts === "undefined") {
                 return;
             }
 
             scripts.forEach(function (fullPath) {
-                var path = Bifrost.Path.getPathWithoutFilename(fullPath);
+                var path = doLittle.Path.getPathWithoutFilename(fullPath);
                 path = self.stripPath(path);
 
-                for (var mapperKey in Bifrost.namespaceMappers) {
-                    var mapper = Bifrost.namespaceMappers[mapperKey];
+                for (var mapperKey in doLittle.namespaceMappers) {
+                    var mapper = doLittle.namespaceMappers[mapperKey];
                     if (typeof mapper.hasMappingFor === "function" && mapper.hasMappingFor(path)) {
                         var namespacePath = mapper.resolve(path);
-                        var namespace = Bifrost.namespace(namespacePath);
+                        var namespace = doLittle.namespace(namespacePath);
 
                         var root = "/" + path + "/";
                         namespace._path = root;

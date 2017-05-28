@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
-using Bifrost.DocumentDB.Entities;
-using Bifrost.Read;
+using doLittle.DocumentDB.Entities;
+using doLittle.Read;
 using Microsoft.Azure.Documents.Linq;
 
-namespace Bifrost.DocumentDB.Read
+namespace doLittle.DocumentDB.Read
 {
     /// <summary>
     /// Represents an implementation of <see cref="IQueryProviderFor{T}"/>

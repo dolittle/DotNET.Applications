@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 
-namespace Bifrost.Web.Specs.Services.for_RestServiceMethodInvoker
+namespace doLittle.Web.Specs.Services.for_RestServiceMethodInvoker
 {
     public class GuidConcept : ConceptAs<Guid>
     {

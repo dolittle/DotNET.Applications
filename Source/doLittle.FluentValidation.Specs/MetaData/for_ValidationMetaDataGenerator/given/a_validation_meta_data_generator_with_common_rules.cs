@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Bifrost.Execution;
-using Bifrost.FluentValidation.Commands;
-using Bifrost.FluentValidation.MetaData;
+using doLittle.Execution;
+using doLittle.FluentValidation.Commands;
+using doLittle.FluentValidation.MetaData;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator.given
+namespace doLittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator.given
 {
     public class a_validation_meta_data_generator_with_common_rules
     {

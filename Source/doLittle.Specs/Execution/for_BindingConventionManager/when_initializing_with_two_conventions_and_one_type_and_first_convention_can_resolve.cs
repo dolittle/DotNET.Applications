@@ -1,10 +1,10 @@
 ﻿using System;
-using Bifrost.Execution;
+using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Execution.for_BindingConventionManager
+namespace doLittle.Specs.Execution.for_BindingConventionManager
 {
     public class when_initializing_with_two_conventions_and_one_type_and_first_convention_can_resolve : given.a_binding_convention_manager_with_one_type
     {

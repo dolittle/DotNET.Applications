@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.Conventions;
+using doLittle.Conventions;
 
-namespace Bifrost.Mapping
+namespace doLittle.Mapping
 {
     /// <summary>
     /// Defines a mapping target - more specifically you should look at <see cref="IMappingTargetFor{T}"/>.

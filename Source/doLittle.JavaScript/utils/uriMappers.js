@@ -1,4 +1,4 @@
-﻿Bifrost.namespace("Bifrost", {
+﻿doLittle.namespace("doLittle., {
     uriMappers: {
     }
 });

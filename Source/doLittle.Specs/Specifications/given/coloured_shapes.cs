@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Specifications.given
+namespace doLittle.Specs.Specifications.given
 {
     public class coloured_shapes
     {

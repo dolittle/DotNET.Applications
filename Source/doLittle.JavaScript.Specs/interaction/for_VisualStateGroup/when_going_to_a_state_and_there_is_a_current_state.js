@@ -4,7 +4,7 @@ describe("when going to a state and there is a current state", function() {
 	var stateAfter = null;
 
 	var dispatcher = {};
-	var group = Bifrost.interaction.VisualStateGroup.create({dispatcher: dispatcher});
+	var group = doLittle.interaction.VisualStateGroup.create({dispatcher: dispatcher});
 
 	dispatcher.schedule = function(milliseconds, callback) {
 		stateBefore = group.currentState();
@@ -25,7 +25,7 @@ describe("when going to a state and there is a current state", function() {
 
 	var namingRoot = { some: "namingRoot" };
 
-	group.defaultDuration = Bifrost.TimeSpan.fromMilliseconds(100);
+	group.defaultDuration = doLittle.TimeSpan.fromMilliseconds(100);
 	group.states.push(firstState);
 	group.states.push(secondState);
 

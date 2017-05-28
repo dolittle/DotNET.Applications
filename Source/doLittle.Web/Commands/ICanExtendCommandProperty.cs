@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Conventions;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Conventions;
 
-namespace Bifrost.Web.Commands
+namespace doLittle.Web.Commands
 {
     /// <summary>
     /// Defines the extender for properties on commands - a visitor that can take part of the proxy generation of properties on commands.

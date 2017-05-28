@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Serialization
+namespace doLittle.Serialization
 {
     /// <summary>
     /// Represents the options for serialization

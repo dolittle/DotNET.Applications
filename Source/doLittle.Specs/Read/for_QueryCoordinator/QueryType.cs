@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Read.for_QueryCoordinator
+﻿namespace doLittle.Specs.Read.for_QueryCoordinator
 {
     public class QueryType
     {

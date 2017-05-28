@@ -2,7 +2,7 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-namespace Bifrost.Applications
+namespace doLittle.Applications
 {
     /// <summary>
     /// Represents an implemenation of <see cref="IApplicationResource"/>

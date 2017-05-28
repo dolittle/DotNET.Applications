@@ -1,6 +1,6 @@
-﻿using Bifrost.Tenancy;
+﻿using doLittle.Tenancy;
 
-namespace Bifrost.Specs.Tenancy.for_TenancyConfiguration
+namespace doLittle.Specs.Tenancy.for_TenancyConfiguration
 {
     public class SecondTenantIdResolver : ICanResolveTenantId
     {

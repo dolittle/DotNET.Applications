@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-namespace Bifrost.CodeGeneration.JavaScript
+namespace doLittle.CodeGeneration.JavaScript
 {
     /// <summary>
     /// Provides methods for working with accessors

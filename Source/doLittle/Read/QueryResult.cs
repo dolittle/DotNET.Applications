@@ -6,10 +6,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Read.Validation;
-using Bifrost.Rules;
+using doLittle.Read.Validation;
+using doLittle.Rules;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// Represents the result of a query

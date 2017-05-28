@@ -1,9 +1,9 @@
-﻿Bifrost.namespace("Bifrost.io", {
-    fileManager: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.io", {
+    fileManager: doLittle.Singleton(function () {
         /// <summary>Represents a manager for files, providing capabilities of loading and more</summary>
         var self = this;
 
-        var uri = Bifrost.Uri.create(window.location.href);
+        var uri = doLittle.Uri.create(window.location.href);
         if (window.location.protocol === "file:") {
             this.origin = window.location.href;
             this.origin = this.origin.substr(0, this.origin.lastIndexOf("/"));
@@ -13,7 +13,7 @@
             }
         } else {
             var port = uri.port || "";
-            if (!Bifrost.isUndefined(port) && port !== "" && port !== 80) {
+            if (!doLittle.isUndefined(port) && port !== "" && port !== 80) {
                 port = ":" + port;
             }
 
@@ -33,15 +33,15 @@
 
         this.load = function (files) {
             /// <summary>Load files</summary>
-            /// <param parameterArray="true" elementType="Bifrost.io.File">Files to load</param>
-            /// <returns type="Bifrost.execution.Promise">A promise that can be continued with the actual files coming in as an array</returns>
+            /// <param parameterArray="true" elementType="doLittle.io.File">Files to load</param>
+            /// <returns type="doLittle.execution.Promise">A promise that can be continued with the actual files coming in as an array</returns>
             var filesToLoad = [];
 
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
 
             files.forEach(function (file) {
                 var path = getActualFilename(file.path.fullPath);
-                if (file.fileType === Bifrost.io.fileType.html) {
+                if (file.fileType === doLittle.io.fileType.html) {
                     path = "text!" + path + "!strip";
                     if (!file.path.hasExtension()) {
                         path = "noext!" + path;
@@ -59,4 +59,4 @@
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.fileManager = Bifrost.io.fileManager;
+doLittle.WellKnownTypesDependencyResolver.types.fileManager = doLittle.io.fileManager;

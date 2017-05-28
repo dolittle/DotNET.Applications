@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq.Expressions;
-using Bifrost.Conventions;
+using doLittle.Conventions;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// Defines a way of retrieving a single <see cref="IReadModel"/>.

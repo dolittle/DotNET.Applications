@@ -1,6 +1,6 @@
 describe("when resolving and system has multiple levels of inheritance but top level is a type", function () {
 
-    var topLevelType = Bifrost.Type.extend(function() {
+    var topLevelType = doLittle.Type.extend(function() {
     });
 
     var secondLevelType = topLevelType.extend(function() {
@@ -10,7 +10,7 @@ describe("when resolving and system has multiple levels of inheritance but top l
         this.hello = "world";
     });
 
-	var type = Bifrost.Type.extend(function(dependency) {
+	var type = doLittle.Type.extend(function(dependency) {
 		this.something = "Hello";
 		this.dependency = dependency;
 	});
@@ -21,8 +21,8 @@ describe("when resolving and system has multiple levels of inheritance but top l
 	var dependencyResolvers;
 
 	beforeEach(function () {
-	    dependencyResolvers = Bifrost.dependencyResolvers;
-	    Bifrost.dependencyResolvers = {
+	    dependencyResolvers = doLittle.dependencyResolvers;
+	    doLittle.dependencyResolvers = {
 	        getAll: function () {
 	            return [{
 	                canResolve: function () {
@@ -38,11 +38,11 @@ describe("when resolving and system has multiple levels of inheritance but top l
 	        }
 	    };
 
-	    result = Bifrost.dependencyResolver.resolve(ns, "something");
+	    result = doLittle.dependencyResolver.resolve(ns, "something");
 	});
 
 	afterEach(function () {
-	    Bifrost.dependencyResolvers = dependencyResolvers;
+	    doLittle.dependencyResolvers = dependencyResolvers;
 	});
 	
 

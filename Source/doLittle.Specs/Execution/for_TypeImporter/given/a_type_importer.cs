@@ -1,8 +1,8 @@
-﻿using Bifrost.Execution;
+﻿using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Execution.for_TypeImporter.given
+namespace doLittle.Specs.Execution.for_TypeImporter.given
 {
     public class a_type_importer
     {

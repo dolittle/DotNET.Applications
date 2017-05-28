@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq;
-using Bifrost.Entities;
-using Bifrost.Execution;
+using doLittle.Entities;
+using doLittle.Execution;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 
-namespace Bifrost.DocumentDB.Entities
+namespace doLittle.DocumentDB.Entities
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEntityContextConnection"/>

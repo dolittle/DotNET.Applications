@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     public class HttpStatus
     {

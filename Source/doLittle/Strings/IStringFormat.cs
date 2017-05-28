@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Strings
+namespace doLittle.Strings
 {
     /// <summary>
     /// Defines a string format for matching and extracting values from other strings 

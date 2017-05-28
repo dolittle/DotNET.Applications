@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Events;
+using doLittle.Events;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_CommittedEventStream.given
+namespace doLittle.Specs.Events.for_CommittedEventStream.given
 {
     public abstract class an_empty_committed_event_stream
     {

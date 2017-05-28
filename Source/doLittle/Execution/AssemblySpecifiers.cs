@@ -5,10 +5,10 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Configuration.Assemblies;
-using Bifrost.Extensions;
+using doLittle.Configuration.Assemblies;
+using doLittle.Extensions;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Represents an implementation of <see cref="IAssemblySpecifiers"/>

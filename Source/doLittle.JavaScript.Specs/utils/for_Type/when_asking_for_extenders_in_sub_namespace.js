@@ -4,13 +4,13 @@
     var extenders = null;
 
     beforeEach(function () {
-        Bifrost.dependencyResolver = {
+        doLittle.dependencyResolver = {
             getDependenciesFor: sinon.stub()
         };
-        initialType = Bifrost.Type.extend(initialType);
-        Bifrost.namespace("Root", { RootExtendedType: initialType.extend(function () { }) });
-        Bifrost.namespace("Root.Sub", { SubExtendedType: initialType.extend(function (foo) { }) });
-        Bifrost.namespace("Root.AnotherSub", { ASecondExtendedType: initialType.extend(function (bar) { }) });
+        initialType = doLittle.Type.extend(initialType);
+        doLittle.namespace("Root", { RootExtendedType: initialType.extend(function () { }) });
+        doLittle.namespace("Root.Sub", { SubExtendedType: initialType.extend(function (foo) { }) });
+        doLittle.namespace("Root.AnotherSub", { ASecondExtendedType: initialType.extend(function (bar) { }) });
 
         namespace = Root.Sub.SubExtendedType._namespace;
 
@@ -18,7 +18,7 @@
     });
 
     afterEach(function () {
-        Bifrost.functionParser = {};
+        doLittle.functionParser = {};
         extenders = null;
     });
 

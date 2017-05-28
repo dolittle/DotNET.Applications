@@ -1,8 +1,8 @@
-﻿using Bifrost.Events.InProcess;
+﻿using doLittle.Events.InProcess;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Events.InProcess.for_CommittedEventStreamSender.given
+namespace doLittle.Specs.Events.InProcess.for_CommittedEventStreamSender.given
 {
     public class all_dependencies 
     {

@@ -1,6 +1,6 @@
-﻿using Bifrost.Commands;
+﻿using doLittle.Commands;
 
-namespace Bifrost.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
+namespace doLittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
 {
     public class NestedCommandForValidation : Command
     {

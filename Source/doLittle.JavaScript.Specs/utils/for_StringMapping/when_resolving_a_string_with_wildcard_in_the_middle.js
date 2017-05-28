@@ -1,6 +1,6 @@
 ﻿describe("when resolving a string with wildcard in the middle", function () {
     var expectedResult = "this.is.a.wildcard.string.for_things";
-    var mapping = Bifrost.StringMapping.create({
+    var mapping = doLittle.StringMapping.create({
         format: "{something}/**/for_{else}",
         mappedFormat: "{something}.**.for_{else}"
     });

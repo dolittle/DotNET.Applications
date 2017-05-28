@@ -1,10 +1,10 @@
-﻿Bifrost.namespace("Bifrost.values", {
-    DateTypeConverter: Bifrost.values.TypeConverter.extend(function () {
+﻿doLittle.namespace("doLittle.values", {
+    DateTypeConverter: doLittle.values.TypeConverter.extend(function () {
         this.supportedType = Date;
 
         function isNull(time) {
             // Treat serialization of default(DateTime) from server as null.
-            return Bifrost.isNullOrUndefined(time) ||
+            return doLittle.isNullOrUndefined(time) ||
                 // ISO 8601 formats for default(DateTime):
                 time === "0001-01-01T00:00:00" ||
                 time === "0001-01-01T00:00:00Z" ||

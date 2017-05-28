@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
-using Bifrost.Configuration;
-using Bifrost.Configuration.Assemblies;
-using Bifrost.Configuration.Defaults;
-using Bifrost.Events;
-using Bifrost.Execution;
-using Bifrost.Tenancy;
+using doLittle.Configuration;
+using doLittle.Configuration.Assemblies;
+using doLittle.Configuration.Defaults;
+using doLittle.Events;
+using doLittle.Execution;
+using doLittle.Tenancy;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Configuration.for_Configure.given
+namespace doLittle.Specs.Configuration.for_Configure.given
 {
     public class a_configure_instance
     {

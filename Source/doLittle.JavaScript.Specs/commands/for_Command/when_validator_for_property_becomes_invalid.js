@@ -38,7 +38,7 @@
             return target;
         };
 
-        var commandType = Bifrost.commands.Command.extend(function () {
+        var commandType = doLittle.commands.Command.extend(function () {
             var self = this;
             this.something = ko.observable(1);
         });

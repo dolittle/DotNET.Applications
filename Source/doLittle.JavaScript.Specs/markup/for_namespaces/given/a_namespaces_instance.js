@@ -23,7 +23,7 @@
         }
     };
 
-    this.namespaces = Bifrost.markup.namespaces.createWithoutScope({
+    this.namespaces = doLittle.markup.namespaces.createWithoutScope({
         namespaceDefinitions: context.namespaceDefinitions,
         elementNaming: context.elementNaming
     });

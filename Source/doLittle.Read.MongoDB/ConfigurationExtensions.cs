@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Read.MongoDB;
+using doLittle.Read.MongoDB;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
     /// Configuration extensions for configuring MongoDB storage

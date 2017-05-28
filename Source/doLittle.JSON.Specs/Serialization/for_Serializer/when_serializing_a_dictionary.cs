@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Bifrost.JSON.Serialization;
-using Bifrost.Serialization;
+using doLittle.JSON.Serialization;
+using doLittle.Serialization;
 using Machine.Specifications;
 
-namespace Bifrost.JSON.Specs.Serialization.for_Serializer
+namespace doLittle.JSON.Specs.Serialization.for_Serializer
 {
     [Subject(typeof(Serializer))]
     public class when_serializing_a_dictionary : given.a_serializer

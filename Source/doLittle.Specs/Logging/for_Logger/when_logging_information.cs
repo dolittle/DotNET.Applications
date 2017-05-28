@@ -1,7 +1,7 @@
-﻿using Bifrost.Logging;
+﻿using doLittle.Logging;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Logging.for_Logger
+namespace doLittle.Specs.Logging.for_Logger
 {
     public class when_logging_information : given.a_logger_and_reusable_details
     {

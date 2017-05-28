@@ -1,7 +1,7 @@
-﻿using Bifrost.Events;
+﻿using doLittle.Events;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventEnvelope
+namespace doLittle.Specs.Events.for_EventEnvelope
 {
     public class when_building_with_new_sequence_number_for_event_type : given.an_event_envelope
     {

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Applications;
-using Bifrost.Strings;
+using doLittle.Applications;
+using doLittle.Strings;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResources
+namespace doLittle.Specs.Applications.for_ApplicationResources
 {
     public class when_identifying_resource_that_matches_bounded_context_module_and_feature : given.application_resources_with_one_structure_format
     {

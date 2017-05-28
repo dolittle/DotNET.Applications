@@ -1,7 +1,7 @@
-﻿using Bifrost.Diagnostics;
+﻿using doLittle.Diagnostics;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Diagnostics.for_ProblemType
+namespace doLittle.Specs.Diagnostics.for_ProblemType
 {
     public class when_creating
     {

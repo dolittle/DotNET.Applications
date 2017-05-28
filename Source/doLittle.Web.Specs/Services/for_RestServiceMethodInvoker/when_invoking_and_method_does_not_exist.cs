@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Specialized;
 
-namespace Bifrost.Web.Specs.Services.for_RestServiceMethodInvoker
+namespace doLittle.Web.Specs.Services.for_RestServiceMethodInvoker
 {
     public class when_invoking_and_method_does_not_exist : given.a_rest_service_method_invoker
     {

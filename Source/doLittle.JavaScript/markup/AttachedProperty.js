@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.markup", {
-    AttachedProperty: Bifrost.values.ValueConsumer.extend(function () {
+﻿doLittle.namespace("doLittle.markup", {
+    AttachedProperty: doLittle.values.ValueConsumer.extend(function () {
         this.canNotifyChanges = function () {
             return false;
         };

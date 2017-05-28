@@ -1,9 +1,9 @@
-﻿Bifrost.namespace("Bifrost.values", {
-    valueProviders: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.values", {
+    valueProviders: doLittle.Singleton(function () {
 
         this.isKnown = function (name) {
             var found = false;
-            var valueProviders = Bifrost.values.ValueProvider.getExtenders();
+            var valueProviders = doLittle.values.ValueProvider.getExtenders();
             valueProviders.forEach(function (valueProviderType) {
                 if (valueProviderType._name.toLowerCase() === name) {
                     found = true;
@@ -15,7 +15,7 @@
 
         this.getInstanceOf = function (name) {
             var instance = null;
-            var valueProviders = Bifrost.values.ValueProvider.getExtenders();
+            var valueProviders = doLittle.values.ValueProvider.getExtenders();
             valueProviders.forEach(function (valueProviderType) {
                 if (valueProviderType._name.toLowerCase() === name) {
                     instance = valueProviderType.create();
@@ -27,4 +27,4 @@
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.valueProviders = Bifrost.values.valueProviders;
+doLittle.WellKnownTypesDependencyResolver.types.valueProviders = doLittle.values.valueProviders;

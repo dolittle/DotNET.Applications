@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// Represents an implementation of <see cref="IReadModelFilters"/>

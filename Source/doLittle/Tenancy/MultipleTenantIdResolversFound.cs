@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Tenancy
+namespace doLittle.Tenancy
 {
     /// <summary>
     /// The exception that is thrown if there are multiple implementations of <see cref="ICanResolveTenantId"/>

@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Domain;
+using doLittle.Domain;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Domain.for_AggregateRootRepository
+namespace doLittle.Specs.Domain.for_AggregateRootRepository
 {
     public class when_getting_a_stateless_aggregate_root_with_event_source_id_in_constructor : given.a_command_context
     {

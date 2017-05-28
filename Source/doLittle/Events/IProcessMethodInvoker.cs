@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
 	/// <summary>
 	/// Defines an invoker for handle methods - it should recognize methods called Handle and be able to 

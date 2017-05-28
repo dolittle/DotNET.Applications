@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.mapping", {
-    Map: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.mapping", {
+    Map: doLittle.Type.extend(function () {
         var self = this;
 
         var properties = {};
@@ -16,7 +16,7 @@
         };
 
         this.property = function (property) {
-            var propertyMap = Bifrost.mapping.PropertyMap.create({ sourceProperty: property });
+            var propertyMap = doLittle.mapping.PropertyMap.create({ sourceProperty: property });
             properties[property] = propertyMap;
             return propertyMap;
         };

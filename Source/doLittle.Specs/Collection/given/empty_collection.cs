@@ -1,7 +1,7 @@
-﻿using Bifrost.Collections;
+﻿using doLittle.Collections;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Collection.given
+namespace doLittle.Specs.Collection.given
 {
     public class empty_collection
     {

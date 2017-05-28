@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Extensions.for_CollectionExtensions
+namespace doLittle.Specs.Extensions.for_CollectionExtensions
 {
     [Subject(typeof(CollectionsExtensions))]
     public class when_combining_many_lookups

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.CodeGeneration.JavaScript;
+using doLittle.CodeGeneration.JavaScript;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.CodeGeneration.JavaScript.for_ObservableExtension
+namespace doLittle.Specs.CodeGeneration.JavaScript.for_ObservableExtension
 {
     public class when_extending : given.an_observable_without_default_value
     {

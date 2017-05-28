@@ -1,7 +1,7 @@
-﻿using Bifrost.JSON.Concepts;
+﻿using doLittle.JSON.Concepts;
 using Machine.Specifications;
 
-namespace Bifrost.JSON.Specs.Serialization.for_ConceptConverter
+namespace doLittle.JSON.Specs.Serialization.for_ConceptConverter
 {
     [Subject(typeof(ConceptConverter))]
     public class when_checking_can_convert_on_a_concept : given.a_concept_converter

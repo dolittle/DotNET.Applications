@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.interaction", {
-    Action: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.interaction", {
+    Action: doLittle.Type.extend(function () {
         this.perform = function () {
         };
     })

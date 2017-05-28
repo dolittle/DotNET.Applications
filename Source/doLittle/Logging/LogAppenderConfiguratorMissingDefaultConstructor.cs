@@ -4,14 +4,14 @@
 *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Logging
+namespace doLittle.Logging
 {
     /// <summary>
     /// Exception that gets thrown when a <see cref="ICanConfigureLogAppenders"/> implementation does not
     /// provide a default constructor.
     /// </summary>
     /// <remarks>
-    /// Due to the fact that we want logging to be enabled as the first step of the configuring Bifrost.
+    /// Due to the fact that we want logging to be enabled as the first step of the configuring doLittle.
     /// We don't have the IOC container ready and can't therefor provide any dependencies
     /// </remarks>
     public class LogAppenderConfiguratorMissingDefaultConstructor : Exception

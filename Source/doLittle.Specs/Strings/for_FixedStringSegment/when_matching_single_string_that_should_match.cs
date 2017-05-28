@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Strings.for_FixedStringSegment
+namespace doLittle.Specs.Strings.for_FixedStringSegment
 {
     public class when_matching_single_string_that_should_match
     {

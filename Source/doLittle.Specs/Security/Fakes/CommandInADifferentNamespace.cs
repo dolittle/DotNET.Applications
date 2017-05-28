@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Commands;
+using doLittle.Commands;
 
-namespace Bifrost.SomeRandomNamespace
+namespace doLittle.SomeRandomNamespace
 {
     public class CommandInADifferentNamespace : ICommand
     {

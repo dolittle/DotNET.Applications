@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Defines a set of <see cref="IEventProcessingResult">results</see> from processing <see cref="IEvent">events</see>

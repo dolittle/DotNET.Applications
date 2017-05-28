@@ -1,6 +1,6 @@
-﻿using Bifrost.Read;
+﻿using doLittle.Read;
 
-namespace Bifrost.Specs.Read.Validation.for_QueryValidationDescriptorFor
+namespace doLittle.Specs.Read.Validation.for_QueryValidationDescriptorFor
 {
     public class SomeReadModel : IReadModel
     {

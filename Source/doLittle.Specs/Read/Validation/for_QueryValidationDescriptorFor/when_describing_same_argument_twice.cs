@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.Validation.for_QueryValidationDescriptorFor
+namespace doLittle.Specs.Read.Validation.for_QueryValidationDescriptorFor
 {
     public class when_describing_same_argument_twice : given.an_empty_query_validation_descriptor
     {

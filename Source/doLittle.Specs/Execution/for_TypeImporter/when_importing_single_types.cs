@@ -1,7 +1,7 @@
-﻿using Bifrost.Execution;
+﻿using doLittle.Execution;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Execution.for_TypeImporter
+namespace doLittle.Specs.Execution.for_TypeImporter
 {
     [Subject(typeof(TypeImporter))]
     public class when_importing_single_types : given.a_type_importer

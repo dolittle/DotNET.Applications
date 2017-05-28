@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.Rules;
+using doLittle.Rules;
 
-namespace Bifrost.Validation.Rules
+namespace doLittle.Validation.Rules
 {
     /// <summary>
     /// Represents the <see cref="ValueRule"/> for greater than - any value must be greater than a given value

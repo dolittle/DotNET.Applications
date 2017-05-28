@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Views.for_View
+﻿namespace doLittle.Specs.Views.for_View
 {
     public class Subjects
     {

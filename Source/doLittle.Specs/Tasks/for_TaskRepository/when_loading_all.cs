@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Tasks;
-using Bifrost.Extensions;
+using doLittle.Tasks;
+using doLittle.Extensions;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Tasks.for_TaskRepository
+namespace doLittle.Specs.Tasks.for_TaskRepository
 {
     public class when_loading_all : given.a_task_repository
     {

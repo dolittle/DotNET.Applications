@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Applications;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Lifecycle;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEventEnvelope"/>; the envelope for the event with all the metadata related to the event

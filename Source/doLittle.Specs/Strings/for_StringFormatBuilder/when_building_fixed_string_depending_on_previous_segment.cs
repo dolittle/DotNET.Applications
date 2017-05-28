@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Strings.for_StringFormatBuilder
+namespace doLittle.Specs.Strings.for_StringFormatBuilder
 {
     public class when_building_fixed_string_depending_on_previous_segment : given.an_empty_string_format_builder
     {

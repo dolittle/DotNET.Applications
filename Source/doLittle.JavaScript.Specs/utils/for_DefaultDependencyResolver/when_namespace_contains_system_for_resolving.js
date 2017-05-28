@@ -4,7 +4,7 @@
 
 
     beforeEach(function () {
-        var resolver = new Bifrost.DefaultDependencyResolver();
+        var resolver = new doLittle.DefaultDependencyResolver();
         var ns = {
             something: "Hello"
         }

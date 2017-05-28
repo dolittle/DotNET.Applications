@@ -1,9 +1,9 @@
-﻿using Bifrost.Read.Validation;
-using Bifrost.Rules;
+﻿using doLittle.Read.Validation;
+using doLittle.Rules;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Read.Validation.for_QueryValidationResult.given
+namespace doLittle.Specs.Read.Validation.for_QueryValidationResult.given
 {
     public class a_query_validation_result_with_one_broken_rule : all_dependencies
     {

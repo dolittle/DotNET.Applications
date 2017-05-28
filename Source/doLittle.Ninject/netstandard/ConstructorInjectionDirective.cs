@@ -7,7 +7,7 @@ using System.Reflection;
 using Ninject.Injection;
 using Ninject.Planning.Targets;
 
-namespace Bifrost.Ninject
+namespace doLittle.Ninject
 {
     /// <summary>
     /// Represents an implementation of <see cref="global::Ninject.Planning.Directives.ConstructorInjectionDirective"/> for

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Bifrost.FluentValidation.Commands;
-using Bifrost.Validation;
+using doLittle.FluentValidation.Commands;
+using doLittle.Validation;
 using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_ComposedCommandBusinessValidator
+namespace doLittle.FluentValidation.Specs.Commands.for_ComposedCommandBusinessValidator
 {
     [Subject(typeof(ComposedCommandBusinessValidator<>))]
     public class when_validating_a_valid_command_with_a_composed_validator : given.a_composed_command_business_validator

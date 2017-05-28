@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// The exception that is thrown when a well known query does not have the query property on it

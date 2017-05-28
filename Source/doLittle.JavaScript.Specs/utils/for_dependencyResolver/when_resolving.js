@@ -9,21 +9,21 @@
     var dependencyResolvers;
 
     beforeEach(function () {
-        dependencyResolvers = Bifrost.dependencyResolvers;
+        dependencyResolvers = doLittle.dependencyResolvers;
 
-        Bifrost.dependencyResolvers = {
+        doLittle.dependencyResolvers = {
             getAll: function () {
                 return [firstResolver, secondResolver];
             }
         };
         try {
-            Bifrost.dependencyResolver.resolve("Something");
+            doLittle.dependencyResolver.resolve("Something");
         } catch (e) {
         }
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolvers = dependencyResolvers;
+        doLittle.dependencyResolvers = dependencyResolvers;
     });
 
     it("should ask first resolver", function () {

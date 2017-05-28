@@ -1,7 +1,7 @@
 ﻿describe("when specification is evaluated against an instance", function () {
 
     var evaluator = sinon.stub().returns(true);
-    var rule = Bifrost.specifications.Specification.create();
+    var rule = doLittle.specifications.Specification.create();
     rule.evaluator = evaluator;
     var instance = { something: 42 };
     rule.evaluate(instance);

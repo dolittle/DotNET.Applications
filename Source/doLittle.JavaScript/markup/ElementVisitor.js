@@ -1,5 +1,5 @@
-Bifrost.namespace("Bifrost.markup", {
-    ElementVisitor: Bifrost.Type.extend(function() {
+doLittle.namespace("doLittle.markup", {
+    ElementVisitor: doLittle.Type.extend(function() {
         this.visit = function (element, resultActions) {
 
         };

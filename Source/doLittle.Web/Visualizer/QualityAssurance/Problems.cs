@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
-using Bifrost.Diagnostics;
-using Bifrost.Read;
+using doLittle.Diagnostics;
+using doLittle.Read;
 
-namespace Bifrost.Web.Visualizer.QualityAssurance
+namespace doLittle.Web.Visualizer.QualityAssurance
 {
     public class Problems : IReadModel
     {

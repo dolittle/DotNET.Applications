@@ -22,7 +22,7 @@
 * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-Bifrost.namespace("Bifrost", {
+doLittle.namespace("doLittle", {
     // Constructor function, all parameters are optional
     TimeSpan : function (milliseconds, seconds, minutes, hours, days) {
         var version = "1.2",
@@ -202,28 +202,28 @@ Bifrost.namespace("Bifrost", {
 });
 
 // "Static Constructors"
-Bifrost.TimeSpan.zero = function() {
-    return new Bifrost.TimeSpan(0, 0, 0, 0, 0);
+doLittle.TimeSpan.zero = function() {
+    return new doLittle.TimeSpan(0, 0, 0, 0, 0);
 };
-Bifrost.TimeSpan.fromMilliseconds = function (milliseconds) {
-    return new Bifrost.TimeSpan(milliseconds, 0, 0, 0, 0);
+doLittle.TimeSpan.fromMilliseconds = function (milliseconds) {
+    return new doLittle.TimeSpan(milliseconds, 0, 0, 0, 0);
 };
-Bifrost.TimeSpan.fromSeconds = function (seconds) {
-    return new Bifrost.TimeSpan(0, seconds, 0, 0, 0);
+doLittle.TimeSpan.fromSeconds = function (seconds) {
+    return new doLittle.TimeSpan(0, seconds, 0, 0, 0);
 };
-Bifrost.TimeSpan.fromMinutes = function (minutes) {
-    return new Bifrost.TimeSpan(0, 0, minutes, 0, 0);
+doLittle.TimeSpan.fromMinutes = function (minutes) {
+    return new doLittle.TimeSpan(0, 0, minutes, 0, 0);
 };
-Bifrost.TimeSpan.fromHours = function (hours) {
-    return new Bifrost.TimeSpan(0, 0, 0, hours, 0);
+doLittle.TimeSpan.fromHours = function (hours) {
+    return new doLittle.TimeSpan(0, 0, 0, hours, 0);
 };
-Bifrost.TimeSpan.fromDays = function (days) {
-    return new Bifrost.TimeSpan(0, 0, 0, 0, days);
+doLittle.TimeSpan.fromDays = function (days) {
+    return new doLittle.TimeSpan(0, 0, 0, 0, days);
 };
-Bifrost.TimeSpan.fromDates = function (firstDate, secondDate, forcePositive) {
+doLittle.TimeSpan.fromDates = function (firstDate, secondDate, forcePositive) {
     var differenceMsecs = secondDate.valueOf() - firstDate.valueOf();
     if (forcePositive === true) {
         differenceMsecs = Math.abs(differenceMsecs);
     }
-    return new Bifrost.TimeSpan(differenceMsecs, 0, 0, 0, 0);
+    return new doLittle.TimeSpan(differenceMsecs, 0, 0, 0, 0);
 };

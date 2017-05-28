@@ -1,5 +1,5 @@
 describe("when resolving asynchronously and system is type", function () {
-    var type = Bifrost.Type.extend(function (dependency) {
+    var type = doLittle.Type.extend(function (dependency) {
         this.something = "Hello";
         this.dependency = dependency;
     });
@@ -13,22 +13,22 @@ describe("when resolving asynchronously and system is type", function () {
     var dependencyResolvers;
 
     beforeEach(function () {
-        configure = Bifrost.configure;
-        Bifrost.configure = {
+        configure = doLittle.configure;
+        doLittle.configure = {
             ready: function (callback) {
                 readyCallback = callback;
             }
         };
 
-        dependencyResolvers = Bifrost.dependencyResolvers;
-        Bifrost.dependencyResolvers = {
+        dependencyResolvers = doLittle.dependencyResolvers;
+        doLittle.dependencyResolvers = {
             getAll: function () {
                 return [{
                     canResolve: function (namespace, name) {
                         return true;
                     },
                     resolve: function (namespace, name) {
-                        var promise = Bifrost.execution.Promise.create();
+                        var promise = doLittle.execution.Promise.create();
                         var system = type;
                         if (name === "dependency") {
                             system = name;
@@ -40,7 +40,7 @@ describe("when resolving asynchronously and system is type", function () {
             }
         };
         
-        Bifrost.dependencyResolver
+        doLittle.dependencyResolver
 				.beginResolve(ns, "something")
 				.continueWith(function (param, next) {
 				    result = param;
@@ -50,8 +50,8 @@ describe("when resolving asynchronously and system is type", function () {
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolvers = dependencyResolvers;
-        Bifrost.configure = configure;
+        doLittle.dependencyResolvers = dependencyResolvers;
+        doLittle.configure = configure;
     });
 
 

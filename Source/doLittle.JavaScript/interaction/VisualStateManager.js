@@ -1,17 +1,17 @@
-Bifrost.namespace("Bifrost.interaction", {
-    VisualStateManager: Bifrost.Type.extend(function () {
+doLittle.namespace("doLittle.interaction", {
+    VisualStateManager: doLittle.Type.extend(function () {
         /// <summary>Represents a state manager for dealing with visual states, typically related to a control or other element on a page</summary>
         var self = this;
 
-        /// <field name="namingRoot" type="Bifrost.views.NamingRoot">A root for named objects</field>
+        /// <field name="namingRoot" type="doLittle.views.NamingRoot">A root for named objects</field>
         this.namingRoot = null;
 
-        /// <field name="groups" type="Array" elementType="Bifrost.interaction.VisualStateGroup">Holds all groups in the state manager</field>
+        /// <field name="groups" type="Array" elementType="doLittle.interaction.VisualStateGroup">Holds all groups in the state manager</field>
         this.groups = ko.observableArray();
 
         this.addGroup = function (group) {
             /// <summary>Adds a VisualStateGroup to the manager</summary>
-            /// <param name="group" type="Bifrost.interaction.VisualStateGroup">Group to add</param>
+            /// <param name="group" type="doLittle.interaction.VisualStateGroup">Group to add</param>
             self.groups.push(group);
         };
 

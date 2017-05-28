@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Strings.for_StringFormatBuilder
+namespace doLittle.Specs.Strings.for_StringFormatBuilder
 {
     public class when_creating_with_segments_without_separators
     {

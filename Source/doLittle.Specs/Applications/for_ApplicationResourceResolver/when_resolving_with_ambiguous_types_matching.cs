@@ -1,9 +1,9 @@
 ﻿using System;
-using Bifrost.Applications;
+using doLittle.Applications;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResourceResolver
+namespace doLittle.Specs.Applications.for_ApplicationResourceResolver
 {
     public class when_resolving_with_ambiguous_types_matching : given.no_resolvers
     {

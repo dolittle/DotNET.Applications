@@ -1,6 +1,6 @@
 describe("when asking if can perform with custom clause that returns false after creation", function() {
 
-	var operation = Bifrost.interaction.Operation.create({
+	var operation = doLittle.interaction.Operation.create({
 		region: {},
 		context: {}
 	});

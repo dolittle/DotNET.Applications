@@ -5,7 +5,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Bifrost.Security
+namespace doLittle.Security
 {
     /// <summary>
     /// Represents a <see cref="ISecurityDescriptor"/>

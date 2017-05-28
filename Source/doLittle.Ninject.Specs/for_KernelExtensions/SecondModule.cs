@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Ninject.Modules;
 
-namespace Bifrost.Ninject.Specs.for_KernelExtensions
+namespace doLittle.Ninject.Specs.for_KernelExtensions
 {
     public class SecondModule : NinjectModule
     {

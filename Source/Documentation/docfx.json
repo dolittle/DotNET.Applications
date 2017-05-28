@@ -4,11 +4,10 @@
       "src": [
         {
           "files": [
-            "Bifrost/*.csproj",
-            "Bifrost.Client/*.csproj",
-            "Bifrost.Content/*.csproj",
-            "Bifrost.FluentValidation/*.csproj",
-            "Bifrost.Web/*.csproj"
+            "doLittle/*.csproj",
+            "doLittle.Client/*.csproj",
+            "doLittle.FluentValidation/*.csproj",
+            "doLittle.Web/*.csproj"
           ],
           "src": "../"
         }
@@ -63,7 +62,7 @@
     "dest": "_site",
     "globalMetadata": {
       "_gitContribute": {
-        "repo": "https://github.com/dolittle/bifrost",
+        "repo": "https://github.com/dolittle/doLittle",
         "branch": "master"
       },
       "_appFooter": "Copyright &#169; 2008-2017 Dolittle"

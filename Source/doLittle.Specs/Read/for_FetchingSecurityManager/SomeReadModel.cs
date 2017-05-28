@@ -1,6 +1,6 @@
-﻿using Bifrost.Read;
+﻿using doLittle.Read;
 
-namespace Bifrost.Specs.Read.for_FetchingSecurityManager
+namespace doLittle.Specs.Read.for_FetchingSecurityManager
 {
     public class SomeReadModel : IReadModel
     {

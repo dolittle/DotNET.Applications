@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Defines a locator for locating assemblies for current application

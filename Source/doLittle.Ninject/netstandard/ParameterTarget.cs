@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using Ninject.Planning.Targets;
 
-namespace Bifrost.Ninject
+namespace doLittle.Ninject
 {
     /// <summary>
     /// Represents an implementation of <see cref="Target{T}"/> for working around a bug in

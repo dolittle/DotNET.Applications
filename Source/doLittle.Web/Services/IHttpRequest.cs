@@ -5,7 +5,7 @@
 using System.Collections.Specialized;
 using System.IO;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
  {
      /// <summary>
      /// Defines a HTTP request

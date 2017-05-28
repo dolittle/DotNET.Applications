@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Represents an exceptional situation where an <see cref="IEvent">Event</see> in an <see cref="EventMigrationHierarchy">EventMigrationHierarchy</see>
-    /// has not implemented the correct <see cref="Bifrost.Events.IAmNextGenerationOf{T}">interface</see>.
+    /// has not implemented the correct <see cref="doLittle.Events.IAmNextGenerationOf{T}">interface</see>.
     /// </summary>
     public class NotAMigratedEventTypeException : Exception
     {

@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Concurrency;
+using doLittle.Concurrency;
 
-namespace Bifrost.Tasks
+namespace doLittle.Tasks
 {
     /// <summary>
     /// Represents a <see cref="ITaskScheduler"/>

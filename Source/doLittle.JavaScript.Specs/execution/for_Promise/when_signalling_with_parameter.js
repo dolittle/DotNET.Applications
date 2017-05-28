@@ -1,5 +1,5 @@
 describe("when signalling with parameter", function() {
-	var promise = Bifrost.execution.Promise.create();
+	var promise = doLittle.execution.Promise.create();
 	var parameter;
 
 	promise.continueWith(function(p) {

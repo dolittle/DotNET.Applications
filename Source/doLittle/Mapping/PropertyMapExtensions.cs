@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq.Expressions;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 
-namespace Bifrost.Mapping
+namespace doLittle.Mapping
 {
     /// <summary>
     /// Extends <see cref="PropertyMap{T1,T2}"/> with mapping utilities

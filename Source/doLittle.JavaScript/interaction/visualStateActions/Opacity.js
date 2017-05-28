@@ -1,6 +1,6 @@
 var globalId = 0;
-Bifrost.namespace("Bifrost.interaction.visualStateActions", {
-    Opacity: Bifrost.interaction.VisualStateAction.extend(function (documentService) {
+doLittle.namespace("doLittle.interaction.visualStateActions", {
+    Opacity: doLittle.interaction.VisualStateAction.extend(function (documentService) {
         var self = this;
         var element = null;
         var id = documentService.getUniqueStyleName("opacity");

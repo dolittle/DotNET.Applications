@@ -1,12 +1,12 @@
 ﻿using System.Dynamic;
-using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Commands.for_CommandSecurityManager
+namespace doLittle.Specs.Commands.for_CommandSecurityManager
 {
     public class when_authorizing_a_command : given.a_command_security_manager
     {

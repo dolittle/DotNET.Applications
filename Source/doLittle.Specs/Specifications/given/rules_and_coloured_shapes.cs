@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Specifications;
+using doLittle.Specifications;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Specifications.given
+namespace doLittle.Specs.Specifications.given
 {
     public class rules_and_coloured_shapes : coloured_shapes
     {

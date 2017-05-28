@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Bifrost.Mapping;
+using doLittle.Mapping;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Mapping.for_Maps.given
+namespace doLittle.Specs.Mapping.for_Maps.given
 {
     public class map_for_source_and_target_in_system : all_dependencies
     {

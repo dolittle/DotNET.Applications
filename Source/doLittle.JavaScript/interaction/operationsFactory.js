@@ -1,9 +1,9 @@
-﻿Bifrost.namespace("Bifrost.interaction", {
-    operationsFactory: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.interaction", {
+    operationsFactory: doLittle.Singleton(function () {
         this.create = function () {
-            var operations = Bifrost.interaction.Operations.create();
+            var operations = doLittle.interaction.Operations.create();
             return operations;
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.operationsFactory = Bifrost.interaction.operationsFactory;
+doLittle.WellKnownTypesDependencyResolver.types.operationsFactory = doLittle.interaction.operationsFactory;

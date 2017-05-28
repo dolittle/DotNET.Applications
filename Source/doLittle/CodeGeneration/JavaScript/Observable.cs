@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
-namespace Bifrost.CodeGeneration.JavaScript
+namespace doLittle.CodeGeneration.JavaScript
 {
     /// <summary>
     /// Represents an observable property and the assignment of this

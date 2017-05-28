@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Read;
+using doLittle.Read;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.for_ReadModelFilters.given
+namespace doLittle.Specs.Read.for_ReadModelFilters.given
 {
     public class read_model_filters_with_one_filter_that_filters_and_one_that_does_not : all_dependencies
     {

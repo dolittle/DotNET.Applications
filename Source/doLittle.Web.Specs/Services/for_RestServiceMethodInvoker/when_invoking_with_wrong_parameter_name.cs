@@ -2,9 +2,9 @@
 using System.Collections.Specialized;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
-using Bifrost.Web.Services;
+using doLittle.Web.Services;
 
-namespace Bifrost.Web.Specs.Services.for_RestServiceMethodInvoker
+namespace doLittle.Web.Specs.Services.for_RestServiceMethodInvoker
 {
     public class when_invoking_with_wrong_parameter_name : given.a_rest_service_method_invoker_and_a_service_call_for_complex_input_and_no_output
     {

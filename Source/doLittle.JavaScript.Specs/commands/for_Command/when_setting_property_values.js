@@ -24,7 +24,7 @@
         }
     }
 
-    var commandType = Bifrost.commands.Command.extend(function () {
+    var commandType = doLittle.commands.Command.extend(function () {
         this.someValue = ko.observable(42);
         this.someArray = ko.observableArray();
         this.someInternalValue = ko.observable();

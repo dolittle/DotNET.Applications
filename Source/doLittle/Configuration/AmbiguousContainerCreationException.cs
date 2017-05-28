@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
     /// The exception that is thrown when a ambiguous match is found when discovering implementations of <see cref="ICanCreateContainer"/>

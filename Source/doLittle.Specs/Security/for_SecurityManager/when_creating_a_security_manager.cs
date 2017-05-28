@@ -1,10 +1,10 @@
 ﻿using System;
-using Bifrost.Security;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_SecurityManager
+namespace doLittle.Specs.Security.for_SecurityManager
 {
     [Subject(typeof(SecurityManager))]
     public class when_creating_a_security_manager : given.a_security_manager_with_discovered_descriptors

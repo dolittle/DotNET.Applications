@@ -4,18 +4,18 @@
     var result = null;
 
     beforeEach(function () {
-        mapType = Bifrost.mapping.Map;
-        Bifrost.mapping.Map = Bifrost.Type.extend(function () { });
+        mapType = doLittle.mapping.Map;
+        doLittle.mapping.Map = doLittle.Type.extend(function () { });
 
-        var maps = Bifrost.mapping.maps.createWithoutScope();
+        var maps = doLittle.mapping.maps.createWithoutScope();
         var sourceType = undefined;
-        var targetType = Bifrost.Type.extend(function () { });
+        var targetType = doLittle.Type.extend(function () { });
 
         result = maps.hasMapFor(sourceType, targetType);
     });
 
     afterEach(function () {
-        Bifrost.mapping.Map = mapType;
+        doLittle.mapping.Map = mapType;
     });
 
     it("should not have map", function () {

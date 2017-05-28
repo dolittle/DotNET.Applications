@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Reflection;
-using Bifrost.Mapping;
+using doLittle.Mapping;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Mapping.for_Map
+namespace doLittle.Specs.Mapping.for_Map
 {
     public class when_map_has_not_mapped_any_properties
     {

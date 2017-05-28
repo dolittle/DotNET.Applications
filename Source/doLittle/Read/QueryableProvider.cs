@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// Represents an implementation of a <see cref="IQueryProviderFor{T}"/> for <see cref="IQueryable"/>

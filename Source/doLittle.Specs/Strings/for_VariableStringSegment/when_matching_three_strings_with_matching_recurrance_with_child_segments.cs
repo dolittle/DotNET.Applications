@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Strings.for_VariableStringSegment
+namespace doLittle.Specs.Strings.for_VariableStringSegment
 {
     public class when_matching_three_strings_with_matching_recurrance_with_child_segments
     {

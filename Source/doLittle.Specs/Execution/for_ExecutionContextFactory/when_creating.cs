@@ -1,15 +1,15 @@
 ﻿using System.Dynamic;
 using System.Globalization;
 using System.Security.Claims;
-using Bifrost.Applications;
-using Bifrost.Execution;
-using Bifrost.Security;
-using Bifrost.Tenancy;
+using doLittle.Applications;
+using doLittle.Execution;
+using doLittle.Security;
+using doLittle.Tenancy;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Execution.for_ExecutionContextFactory
+namespace doLittle.Specs.Execution.for_ExecutionContextFactory
 {
     public class when_creating
     {

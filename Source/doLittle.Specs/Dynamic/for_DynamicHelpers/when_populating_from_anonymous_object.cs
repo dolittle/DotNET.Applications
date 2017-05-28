@@ -1,8 +1,8 @@
 ﻿using System.Dynamic;
 using Machine.Specifications;
-using Bifrost.Dynamic;
+using doLittle.Dynamic;
 
-namespace Bifrost.Specs.Extensions.for_DynamicHelpers
+namespace doLittle.Specs.Extensions.for_DynamicHelpers
 {
     public class when_populating_from_anonymous_object
     {

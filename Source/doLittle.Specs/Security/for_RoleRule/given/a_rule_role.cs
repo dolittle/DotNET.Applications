@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Security;
+using doLittle.Security;
 using Moq;
 
-namespace Bifrost.Specs.Security.for_RoleRule.given
+namespace doLittle.Specs.Security.for_RoleRule.given
 {
     public class a_rule_role
     {

@@ -1,7 +1,7 @@
-﻿using Bifrost.Tenancy;
+﻿using doLittle.Tenancy;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Tenancy.for_TenantManager.given
+namespace doLittle.Specs.Tenancy.for_TenantManager.given
 {
     public class a_tenant_manager : all_dependencies
     {

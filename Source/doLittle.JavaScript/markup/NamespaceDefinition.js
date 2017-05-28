@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.markup", {
-    NamespaceDefinition: Bifrost.Type.extend(function (prefix) {
+﻿doLittle.namespace("doLittle.markup", {
+    NamespaceDefinition: doLittle.Type.extend(function (prefix) {
         var self = this;
         this.prefix = prefix;
 

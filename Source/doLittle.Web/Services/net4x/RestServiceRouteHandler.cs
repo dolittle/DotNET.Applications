@@ -6,7 +6,7 @@ using System;
 using System.Web;
 using System.Web.Routing;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     public class RestServiceRouteHandler : IRouteHandler
     {

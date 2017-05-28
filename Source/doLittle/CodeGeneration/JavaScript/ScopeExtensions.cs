@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.CodeGeneration.JavaScript
+namespace doLittle.CodeGeneration.JavaScript
 {
     /// <summary>
     /// Provide methods for working with <see cref="Scope"/>

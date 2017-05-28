@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 
-namespace Bifrost.Mapping
+namespace doLittle.Mapping
 {
     /// <summary>
     /// Represents an implementation of <see cref="IMapper"/>

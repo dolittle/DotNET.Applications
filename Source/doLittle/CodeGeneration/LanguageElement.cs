@@ -7,7 +7,7 @@
 // You may not use this file except in compliance with the License.
 // You may obtain a copy of the license at 
 //
-//   http://github.com/dolittle/Bifrost/blob/master/MIT-LICENSE.txt
+//   http://github.com/dolittle/doLittle/blob/master/MIT-LICENSE.txt
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Bifrost.CodeGeneration
+namespace doLittle.CodeGeneration
 {
     /// <summary>
     /// Represents an abstract of a <see cref="ILanguageElement"/>

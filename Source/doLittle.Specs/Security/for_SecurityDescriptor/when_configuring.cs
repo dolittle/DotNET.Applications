@@ -1,7 +1,7 @@
-﻿using Bifrost.Security;
+﻿using doLittle.Security;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Security.for_SecurityDescriptor
+namespace doLittle.Specs.Security.for_SecurityDescriptor
 {
     public class when_configuring
     {

@@ -1,9 +1,9 @@
-﻿using Bifrost.Diagnostics;
+﻿using doLittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Commands.Diagnostics.for_TooManyPropertiesRule
+namespace doLittle.Specs.Commands.Diagnostics.for_TooManyPropertiesRule
 {
     public class when_validating_type_with_too_many_properties : given.a_too_many_properties_rule
     {

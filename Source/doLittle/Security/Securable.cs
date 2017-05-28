@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Security
+namespace doLittle.Security
 {
     /// <summary>
     /// Represents a base implementation of<see cref="ISecurable"/>

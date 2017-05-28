@@ -1,8 +1,8 @@
-﻿using Bifrost.Applications;
+﻿using doLittle.Applications;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResources.given
+namespace doLittle.Specs.Applications.for_ApplicationResources.given
 {
     public class all_dependencies
     {

@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Security
+namespace doLittle.Security
 {
     /// <summary>
     /// Represents an implementation of <see cref="ISecurityManager"/>

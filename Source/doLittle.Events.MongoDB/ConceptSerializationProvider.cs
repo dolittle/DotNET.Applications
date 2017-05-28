@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 using MongoDB.Bson.Serialization;
 
-namespace Bifrost.Events.MongoDB
+namespace doLittle.Events.MongoDB
 {
     /// <summary>
     /// Represents a <see cref="IBsonSerializationProvider"/> that is capable of getting the correct

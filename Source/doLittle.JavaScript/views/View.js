@@ -1,5 +1,5 @@
-Bifrost.namespace("Bifrost.views", {
-    View: Bifrost.Type.extend(function (viewLoader, viewModelTypes, viewModelManager, path) {
+doLittle.namespace("doLittle.views", {
+    View: doLittle.Type.extend(function (viewLoader, viewModelTypes, viewModelManager, path) {
         var self = this;
 
         this.path = path;
@@ -11,7 +11,7 @@ Bifrost.namespace("Bifrost.views", {
 
         this.load = function (region) {
             self.region = region;
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
             self.viewModelPath = viewModelManager.getViewModelPathForView(path);
             viewLoader.load(self.path, region).continueWith(function (html) {
                 self.content = html;

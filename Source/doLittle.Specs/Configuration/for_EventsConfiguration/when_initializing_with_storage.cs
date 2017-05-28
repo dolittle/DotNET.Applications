@@ -1,10 +1,10 @@
-﻿using Bifrost.Configuration;
-using Bifrost.Entities;
-using Bifrost.Events;
+﻿using doLittle.Configuration;
+using doLittle.Entities;
+using doLittle.Events;
 using Machine.Specifications;
 using System;
 
-namespace Bifrost.Specs.Configuration.for_EventsConfiguration
+namespace doLittle.Specs.Configuration.for_EventsConfiguration
 {
     [Subject(typeof(EventsConfiguration))]
     public class when_initializing_with_storage: given.an_events_configuration_and_container_object

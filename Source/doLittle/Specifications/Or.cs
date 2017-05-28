@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Linq.Expressions;
 
-namespace Bifrost.Specifications
+namespace doLittle.Specifications
 {
     /// <summary>
     /// Composes a rule that will be satisfied if either the first rule or second rule is satisfied

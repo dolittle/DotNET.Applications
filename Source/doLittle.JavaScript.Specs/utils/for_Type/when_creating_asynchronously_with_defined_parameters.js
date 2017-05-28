@@ -1,8 +1,8 @@
 describe("when creating asynchronously with defined parameters", function () {
 
-    Bifrost.dependencyResolver = {
+    doLittle.dependencyResolver = {
         beginResolve: function (namespace, name) {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
             promise.signal(name);
             return promise;
         },
@@ -11,7 +11,7 @@ describe("when creating asynchronously with defined parameters", function () {
         }
     }
 
-    var type = Bifrost.Type.extend(function (options) {
+    var type = doLittle.Type.extend(function (options) {
         this.options = options;
     });
 

@@ -1,4 +1,4 @@
-﻿Bifrost.namespace("Bifrost", {
+﻿doLittle.namespace("doLittle., {
     areEqual: function (source, target) {
         function isReservedMemberName(member) {
             return member.indexOf("_") >= 0 || member === "model" || member === "commons" || member === "targetViewModel" || member === "region";
@@ -11,24 +11,24 @@
             target = target();
         }
 
-        if (Bifrost.isNullOrUndefined(source) && Bifrost.isNullOrUndefined(target)) {
+        if (doLittle.isNullOrUndefined(source) && doLittle.isNullOrUndefined(target)) {
             return true;
         }
 
-        if (Bifrost.isNullOrUndefined(source)) {
+        if (doLittle.isNullOrUndefined(source)) {
             return false;
         }
-        if (Bifrost.isNullOrUndefined(target)) {
+        if (doLittle.isNullOrUndefined(target)) {
             return false;
         }
 
-        if (Bifrost.isArray(source) && Bifrost.isArray(target)) {
+        if (doLittle.isArray(source) && doLittle.isArray(target)) {
             if (source.length !== target.length) {
                 return false;
             }
 
             for (var index = 0; index < source.length; index++) {
-                if (Bifrost.areEqual(source[index], target[index]) === false) {
+                if (doLittle.areEqual(source[index], target[index]) === false) {
                     return false;
                 }
             }
@@ -41,11 +41,11 @@
                     var sourceValue = source[member];
                     var targetValue = target[member];
 
-                    if (Bifrost.isObject(sourceValue) ||
-                        Bifrost.isArray(sourceValue) ||
+                    if (doLittle.isObject(sourceValue) ||
+                        doLittle.isArray(sourceValue) ||
                         ko.isObservable(sourceValue)) {
 
-                        if (!Bifrost.areEqual(sourceValue, targetValue)) {
+                        if (!doLittle.areEqual(sourceValue, targetValue)) {
                             return false;
                         }
                     } else {

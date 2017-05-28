@@ -1,6 +1,6 @@
-﻿using Bifrost.Concepts;
+﻿using doLittle.Concepts;
 
-namespace Bifrost.Specs.Concepts.for_ConceptFactory
+namespace doLittle.Specs.Concepts.for_ConceptFactory
 {
     public class LongConcept : ConceptAs<long>
     {

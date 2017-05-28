@@ -5,12 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Entities;
-using Bifrost.Execution;
-using Bifrost.Extensions;
+using doLittle.Entities;
+using doLittle.Execution;
+using doLittle.Extensions;
 using System.Reflection;
 
-namespace Bifrost.Tasks
+namespace doLittle.Tasks
 {
     /// <summary>
     /// Represents a <see cref="ITaskRepository"/>

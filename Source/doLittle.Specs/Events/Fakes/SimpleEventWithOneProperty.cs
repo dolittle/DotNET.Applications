@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Events;
+using doLittle.Events;
 
-namespace Bifrost.Specs.Events.Fakes
+namespace doLittle.Specs.Events.Fakes
 {
     public class SimpleEventWithOneProperty : Event
     {

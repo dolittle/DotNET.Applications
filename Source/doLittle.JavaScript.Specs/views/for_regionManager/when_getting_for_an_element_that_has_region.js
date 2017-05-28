@@ -27,7 +27,7 @@
     var operationsFactory = { operations: "factory" };
     var tasksFactory = { tasks: "factory" };
 
-    var instance = Bifrost.views.regionManager.createWithoutScope({
+    var instance = doLittle.views.regionManager.createWithoutScope({
         documentService: documentService,
         regionDescriptorManager: regionDescriptorManager,
         messengerFactory: messengerFactory,

@@ -27,7 +27,7 @@
         create: sinon.stub().returns(tasks)
     };
     
-    var instance = new Bifrost.views.Region(
+    var instance = new doLittle.views.Region(
         messengerFactory,
         operationsFactory,
         tasksFactory

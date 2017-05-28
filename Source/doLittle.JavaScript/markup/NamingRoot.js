@@ -1,11 +1,11 @@
-Bifrost.namespace("Bifrost.markup", {
-    NamingRoot: Bifrost.Type.extend(function() {
+doLittle.namespace("doLittle.markup", {
+    NamingRoot: doLittle.Type.extend(function() {
         var self = this;
         this.target = null;
 
         this.find = function (name, element) {
-            if (Bifrost.isNullOrUndefined(element)) {
-                if (Bifrost.isNullOrUndefined(self.target)) {
+            if (doLittle.isNullOrUndefined(element)) {
+                if (doLittle.isNullOrUndefined(self.target)) {
                     return null;
                 }
                 element = self.target;

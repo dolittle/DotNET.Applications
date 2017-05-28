@@ -1,8 +1,8 @@
 ﻿using Machine.Specifications;
-using Bifrost.Concepts;
-using Bifrost.Extensions;
+using doLittle.Concepts;
+using doLittle.Extensions;
 
-namespace Bifrost.Specs.Extensions.for_TypeExtensions
+namespace doLittle.Specs.Extensions.for_TypeExtensions
 {
     public class when_asking_a_type_that_is_not_a_concept_if_is_a_concept
     {

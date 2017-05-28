@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Views.for_View
+namespace doLittle.Specs.Views.for_View
 {
     [Subject(Subjects.getting_single_instance)]
     public class when_getting_a_single_instance_of_object_with_id : given.a_view_for<SimpleObjectWithId>

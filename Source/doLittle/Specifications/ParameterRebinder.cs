@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Bifrost.Specifications
+namespace doLittle.Specifications
 {
     /// <summary>
     /// Helper for combining Lambdas.

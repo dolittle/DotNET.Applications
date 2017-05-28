@@ -1,11 +1,11 @@
 ﻿using System;
-using Bifrost.Rules;
-using Bifrost.Validation.Rules;
+using doLittle.Rules;
+using doLittle.Validation.Rules;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Validation.Rules.for_NotNull
+namespace doLittle.Specs.Validation.Rules.for_NotNull
 {
     public class when_evaluating_empty_string
     {

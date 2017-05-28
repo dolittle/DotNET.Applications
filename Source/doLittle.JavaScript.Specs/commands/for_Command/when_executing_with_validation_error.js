@@ -31,17 +31,17 @@
     }
 
     var commandResult = null;
-    commandResult = Bifrost.commands.CommandResult;
-    Bifrost.commands.CommandResult = {
+    commandResult = doLittle.commands.CommandResult;
+    doLittle.commands.CommandResult = {
         create: function () {
             return {
 
             };
         }
     };
-    var command = Bifrost.commands.Command.create(parameters);
+    var command = doLittle.commands.Command.create(parameters);
     command.execute();
-    Bifrost.commands.CommandResult = commandResult;
+    doLittle.commands.CommandResult = commandResult;
 
 
     it("should call error", function () {

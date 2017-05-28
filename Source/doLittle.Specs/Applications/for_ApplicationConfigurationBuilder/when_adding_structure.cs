@@ -1,7 +1,7 @@
-﻿using Bifrost.Applications;
+﻿using doLittle.Applications;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Applications.for_ApplicationConfigurationBuilder
+namespace doLittle.Specs.Applications.for_ApplicationConfigurationBuilder
 {
     public class when_adding_structure
     {

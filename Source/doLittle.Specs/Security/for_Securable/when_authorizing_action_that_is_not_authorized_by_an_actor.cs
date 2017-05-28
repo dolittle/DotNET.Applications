@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using Bifrost.Security;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_Securable
+namespace doLittle.Specs.Security.for_Securable
 {
     [Subject(typeof(Securable))]
     public class when_authorizing_action_that_is_not_authorized_by_an_actor

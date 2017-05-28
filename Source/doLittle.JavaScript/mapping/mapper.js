@@ -1,20 +1,20 @@
-Bifrost.namespace("Bifrost.mapping", {
-    mapper: Bifrost.Type.extend(function (typeConverters, maps) {
+doLittle.namespace("doLittle.mapping", {
+    mapper: doLittle.Type.extend(function (typeConverters, maps) {
         "use strict";
         var self = this;
 
         function getTypeAsString(to, property, value, toValue) {
             var typeAsString = null;
-            if (!Bifrost.isNullOrUndefined(value) &&
-                !Bifrost.isNullOrUndefined(toValue)) {
+            if (!doLittle.isNullOrUndefined(value) &&
+                !doLittle.isNullOrUndefined(toValue)) {
 
                 if (value.constructor !== toValue.constructor) {
                     typeAsString = toValue.constructor.toString().match(/function\040+(\w*)/)[1];
                 }
             }
 
-            if (!Bifrost.isNullOrUndefined(to[property]) &&
-                !Bifrost.isNullOrUndefined(to[property]._typeAsString)) {
+            if (!doLittle.isNullOrUndefined(to[property]) &&
+                !doLittle.isNullOrUndefined(to[property]._typeAsString)) {
                 typeAsString = to[property]._typeAsString;
             }
             return typeAsString;
@@ -28,12 +28,12 @@ Bifrost.namespace("Bifrost.mapping", {
                     continue;
                 }
 
-                if (!Bifrost.isUndefined(from[property])) {
+                if (!doLittle.isUndefined(from[property])) {
                     
-                    if (Bifrost.isObject(from[property]) && Bifrost.isObject(to[property])) {
+                    if (doLittle.isObject(from[property]) && doLittle.isObject(to[property])) {
                         copyProperties(mappedProperties, from[property], to[property]);
                     } else {
-                        if (!Bifrost.isNullOrUndefined(map)) {
+                        if (!doLittle.isNullOrUndefined(map)) {
                             if (map.canMapProperty(property)) {
                                 map.mapProperty(property, from, to);
 
@@ -45,13 +45,13 @@ Bifrost.namespace("Bifrost.mapping", {
                             }
                         }
 
-                        if (!Bifrost.isUndefined(to[property])) {
+                        if (!doLittle.isUndefined(to[property])) {
                             var value = ko.unwrap(from[property]);
                             var toValue = ko.unwrap(to[property]);
 
                             var typeAsString = getTypeAsString(to, property, value, toValue);
 
-                            if (!Bifrost.isNullOrUndefined(typeAsString) && !Bifrost.isNullOrUndefined(value)) {
+                            if (!doLittle.isNullOrUndefined(typeAsString) && !doLittle.isNullOrUndefined(value)) {
                                 value = typeConverters.convertFrom(value.toString(), typeAsString);
                             }
 
@@ -77,7 +77,7 @@ Bifrost.namespace("Bifrost.mapping", {
 
         function mapSingleInstance(type, data, mappedProperties) {
             if (data) {
-                if (!Bifrost.isNullOrUndefined(data._sourceType)) {
+                if (!doLittle.isNullOrUndefined(data._sourceType)) {
                     type = eval(data._sourceType);
                 }
             }
@@ -106,7 +106,7 @@ Bifrost.namespace("Bifrost.mapping", {
 
         this.map = function (type, data) {
             var mappedProperties = [];
-            if (Bifrost.isArray(data)) {
+            if (doLittle.isArray(data)) {
                 return mapMultipleInstances(type, data, mappedProperties);
             } else {
                 return mapSingleInstance(type, data, mappedProperties);
@@ -126,4 +126,4 @@ Bifrost.namespace("Bifrost.mapping", {
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.mapper = Bifrost.mapping.mapper;
+doLittle.WellKnownTypesDependencyResolver.types.mapper = doLittle.mapping.mapper;

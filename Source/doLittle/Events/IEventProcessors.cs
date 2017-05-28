@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Defines a system that knows about <see cref="IEventProcessor">event processors</see>

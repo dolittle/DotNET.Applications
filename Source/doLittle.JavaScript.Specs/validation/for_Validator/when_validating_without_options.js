@@ -6,13 +6,13 @@
             _name: "someRule",
             create: sinon.mock().withArgs({ options: {} }).once().returns({})
         };
-        Bifrost.validation.Rule = {
+        doLittle.validation.Rule = {
             getExtenders: function () {
                 return [someRule];
             }
         };
 
-        Bifrost.validation.Validator.create({ someRule: null });
+        doLittle.validation.Validator.create({ someRule: null });
     });
 
     it("should pass empty options rule creation", function () {

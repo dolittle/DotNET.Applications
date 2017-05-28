@@ -1,6 +1,6 @@
-﻿using Bifrost.Execution;
+﻿using doLittle.Execution;
 
-namespace Bifrost.Specs.Execution.for_DefaultConvention
+namespace doLittle.Specs.Execution.for_DefaultConvention
 {
     [Singleton]
     public class Something : ISomething

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Bifrost.Applications;
-using Bifrost.Strings;
+using doLittle.Applications;
+using doLittle.Strings;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Applications.for_ApplicationStructure
+namespace doLittle.Specs.Applications.for_ApplicationStructure
 {
     public class when_initializing_with_two_structure_formats_with_different_areas : given.two_areas_with_one_format_in_each
     {

@@ -5,9 +5,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 
-namespace Bifrost.Applications
+namespace doLittle.Applications
 {
     /// <summary>
     /// Represents an implementation of <see cref="IApplicationResourceIdentifierConverter"/>

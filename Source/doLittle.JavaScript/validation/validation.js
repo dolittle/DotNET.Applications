@@ -1,6 +1,6 @@
 if (typeof ko !== 'undefined') {
     ko.extenders.validation = function (target, options) {
-        Bifrost.validation.Validator.applyTo(target, options);
+        doLittle.validation.Validator.applyTo(target, options);
         target.subscribe(function (newValue) {
             target.validator.validate(newValue);
         });

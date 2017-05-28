@@ -1,4 +1,4 @@
-﻿namespace Bifrost.JSON.Specs.Serialization.for_Serializer
+﻿namespace doLittle.JSON.Specs.Serialization.for_Serializer
 {
     public class ClassToSerialize
     {

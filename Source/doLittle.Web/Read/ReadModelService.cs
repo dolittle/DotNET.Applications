@@ -5,14 +5,14 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.Read;
-using Bifrost.Concepts;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.Read;
+using doLittle.Concepts;
 using System.Reflection;
-using Bifrost.Security;
+using doLittle.Security;
 
-namespace Bifrost.Web.Read
+namespace doLittle.Web.Read
 {
     public class ReadModelService
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Domain;
+using doLittle.Domain;
 
-namespace Bifrost.Specs.Domain.for_AggregateRootRepository
+namespace doLittle.Specs.Domain.for_AggregateRootRepository
 {
     public class AggregateRootWithInvalidConstructorParameter : AggregateRoot
     {

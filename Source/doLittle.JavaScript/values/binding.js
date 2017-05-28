@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.values", {
-    Binding: Bifrost.values.ValueProvider.extend(function (bindingContextManager) {
+﻿doLittle.namespace("doLittle.values", {
+    Binding: doLittle.values.ValueProvider.extend(function (bindingContextManager) {
 
         this.defaultProperty = "path";
 

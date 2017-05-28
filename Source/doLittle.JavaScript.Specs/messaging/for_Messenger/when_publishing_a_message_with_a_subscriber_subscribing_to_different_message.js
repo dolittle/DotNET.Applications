@@ -5,7 +5,7 @@ describe("when publishing a message with a subscriber subscribing to different m
         subscriberCalled = true;
     }
 
-    var messenger = Bifrost.messaging.Messenger.create();
+    var messenger = doLittle.messaging.Messenger.create();
     messenger.subscribeTo("SecondMessage", subscriber);
     messenger.publish("FirstMessage", "Hello");
 

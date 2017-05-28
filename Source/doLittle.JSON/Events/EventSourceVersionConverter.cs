@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.Events;
+using doLittle.Events;
 using Newtonsoft.Json;
 
-namespace Bifrost.JSON.Events
+namespace doLittle.JSON.Events
 {
     /// <summary>
     /// Represents a <see cref="JsonConverter"/> that can serialize and deserialize <see cref="EventSourceVersion"/>

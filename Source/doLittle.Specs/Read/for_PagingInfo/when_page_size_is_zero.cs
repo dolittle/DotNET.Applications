@@ -1,7 +1,7 @@
-﻿using Bifrost.Read;
+﻿using doLittle.Read;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.for_PagingInfo
+namespace doLittle.Specs.Read.for_PagingInfo
 {
     public class when_page_size_is_zero
     {

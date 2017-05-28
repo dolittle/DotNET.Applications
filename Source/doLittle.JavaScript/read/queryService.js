@@ -1,9 +1,9 @@
-Bifrost.namespace("Bifrost.read", {
-    queryService: Bifrost.Singleton(function (mapper, taskFactory) {
+doLittle.namespace("doLittle.read", {
+    queryService: doLittle.Singleton(function (mapper, taskFactory) {
         var self = this;
 
         this.execute = function (query, paging) {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
             var region = query.region;
 
             var task = taskFactory.createQuery(query, paging);

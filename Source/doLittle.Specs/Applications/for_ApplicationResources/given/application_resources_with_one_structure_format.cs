@@ -1,9 +1,9 @@
-﻿using Bifrost.Applications;
-using Bifrost.Strings;
+﻿using doLittle.Applications;
+using doLittle.Strings;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResources.given
+namespace doLittle.Specs.Applications.for_ApplicationResources.given
 {
     public class application_resources_with_one_structure_format : application_resources_without_structure_formats
     {

@@ -22,7 +22,7 @@
         }
     };
 
-    var region = new Bifrost.views.Region(
+    var region = new doLittle.views.Region(
         messengerFactory,
         operationsFactory,
         tasksFactory
@@ -32,7 +32,7 @@
         isReadyToExecute = newValue;
     });
 
-    var childRegion = new Bifrost.views.Region( 
+    var childRegion = new doLittle.views.Region( 
         messengerFactory,
         operationsFactory,
         tasksFactory

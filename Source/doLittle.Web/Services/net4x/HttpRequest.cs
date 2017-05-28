@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Web;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     /// <summary>
     /// Represents an implementation of <see cref="IHttpRequest"/> for System.Web

@@ -1,6 +1,6 @@
 using System;
 
-namespace Bifrost.JavaScript
+namespace doLittle.JavaScript
 {
     public class DummyClass
     {

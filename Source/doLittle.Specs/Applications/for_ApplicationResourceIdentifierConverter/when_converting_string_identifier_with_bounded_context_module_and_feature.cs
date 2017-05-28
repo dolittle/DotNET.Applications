@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Bifrost.Applications;
+using doLittle.Applications;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResourceIdentifierConverter
+namespace doLittle.Specs.Applications.for_ApplicationResourceIdentifierConverter
 {
     public class when_converting_string_identifier_with_bounded_context_module_and_feature : given.an_application_resource_identifier_converter
     {

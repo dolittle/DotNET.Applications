@@ -4,7 +4,7 @@
     var firstParameter = ko.observable(1);
     var secondParameter = ko.observable(1);
 
-    var queryType = Bifrost.read.Query.extend(function () {
+    var queryType = doLittle.read.Query.extend(function () {
         var self = this;
 
         this.firstParameter = firstParameter;

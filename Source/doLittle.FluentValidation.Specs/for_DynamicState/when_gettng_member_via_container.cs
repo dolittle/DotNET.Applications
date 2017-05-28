@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.for_DynamicState
+namespace doLittle.FluentValidation.Specs.for_DynamicState
 {
     public class when_gettng_member_via_container
     {

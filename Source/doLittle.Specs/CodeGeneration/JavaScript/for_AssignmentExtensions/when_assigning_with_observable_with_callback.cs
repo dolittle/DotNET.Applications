@@ -1,7 +1,7 @@
 ﻿using Machine.Specifications;
-using Bifrost.CodeGeneration.JavaScript;
+using doLittle.CodeGeneration.JavaScript;
 
-namespace Bifrost.Specs.CodeGeneration.JavaScript.for_AssignmentExtensions
+namespace doLittle.Specs.CodeGeneration.JavaScript.for_AssignmentExtensions
 {
     public class when_assigning_with_observable_with_callback : given.an_assignment
     {

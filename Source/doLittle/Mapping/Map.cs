@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 
-namespace Bifrost.Mapping
+namespace doLittle.Mapping
 {
     /// <summary>
     /// Represents a mapping description used by <see cref="IMapper"/>

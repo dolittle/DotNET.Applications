@@ -1,10 +1,10 @@
-Bifrost.namespace("Bifrost.markup", {
-    objectModelFactory: Bifrost.Singleton(function (dependencyResolver, documentService) {
+doLittle.namespace("doLittle.markup", {
+    objectModelFactory: doLittle.Singleton(function (dependencyResolver, documentService) {
         
         function tryResolveTargetNamespaces(localName, targets, success, error) {
             function tryResolve(queue) {
                 if (queue.length) {
-                    var namespace = Bifrost.namespace(targets.shift());
+                    var namespace = doLittle.namespace(targets.shift());
 
                     var found = false;
                     namespace._scripts.forEach(function (script) {

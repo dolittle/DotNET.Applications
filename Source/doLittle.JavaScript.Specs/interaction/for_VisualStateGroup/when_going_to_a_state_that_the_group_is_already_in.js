@@ -1,7 +1,7 @@
 describe("when going to a state that the group is already in", function() {
 
 	var dispatcher = { schedule: sinon.stub() };
-	var group = Bifrost.interaction.VisualStateGroup.create({dispatcher: dispatcher});
+	var group = doLittle.interaction.VisualStateGroup.create({dispatcher: dispatcher});
 
 	var firstState = {
 		name: "something Else"
@@ -14,7 +14,7 @@ describe("when going to a state that the group is already in", function() {
 
 	var namingRoot = { some: "namingRoot" };
 
-	group.defaultDuration = Bifrost.TimeSpan.fromMilliseconds(100);
+	group.defaultDuration = doLittle.TimeSpan.fromMilliseconds(100);
 	group.states.push(firstState);
 	group.states.push(secondState);
 	group.currentState(secondState);

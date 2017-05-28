@@ -1,5 +1,5 @@
-Bifrost.namespace("Bifrost.markup", {
-    ObjectModelElementVisitor: Bifrost.markup.ElementVisitor.extend(function (elementNaming, namespaces, objectModelFactory, propertyExpander, UIElementPreparer, attributeValues, bindingContextManager) {
+doLittle.namespace("doLittle.markup", {
+    ObjectModelElementVisitor: doLittle.markup.ElementVisitor.extend(function (elementNaming, namespaces, objectModelFactory, propertyExpander, UIElementPreparer, attributeValues, bindingContextManager) {
         this.visit = function(element, actions) {
             // Tags : 
             //  - tag names automatically match type names

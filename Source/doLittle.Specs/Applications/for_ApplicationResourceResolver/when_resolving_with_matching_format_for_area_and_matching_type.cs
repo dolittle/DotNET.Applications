@@ -1,11 +1,11 @@
 ﻿using System;
-using Bifrost.Applications;
-using Bifrost.Strings;
+using doLittle.Applications;
+using doLittle.Strings;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResourceResolver
+namespace doLittle.Specs.Applications.for_ApplicationResourceResolver
 {
     public class when_resolving_with_matching_format_for_area_and_matching_type : given.no_resolvers
     {

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Reflection;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Gets called when an assembly is added

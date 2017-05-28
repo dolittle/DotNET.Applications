@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Diagnostics
+namespace doLittle.Diagnostics
 {
     /// <summary>
     /// Defines a reporter for reporting any <see cref="IProblems">problems</see>

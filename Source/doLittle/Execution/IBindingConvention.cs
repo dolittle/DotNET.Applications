@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Conventions;
+using doLittle.Conventions;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Defines the basic functionality for a convention that can be applied
@@ -14,7 +14,7 @@ namespace Bifrost.Execution
     /// <remarks>
     /// Types inheriting from this interface will be automatically registered.
     /// An application can implement any number of these conventions, in addition to
-    /// the <see cref="DefaultConvention"/> supplied by Bifrost.
+    /// the <see cref="DefaultConvention"/> supplied by doLittle.
     /// </remarks>
     public interface IBindingConvention : IConvention
     {

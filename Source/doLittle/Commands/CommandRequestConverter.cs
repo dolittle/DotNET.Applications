@@ -5,10 +5,10 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Applications;
-using Bifrost.Extensions;
+using doLittle.Applications;
+using doLittle.Extensions;
 
-namespace Bifrost.Commands
+namespace doLittle.Commands
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICommandRequestConverter"/>

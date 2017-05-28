@@ -1,8 +1,8 @@
 ﻿using System.Threading;
-using Bifrost.Security;
+using doLittle.Security;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Security.for_ClaimTypeRule
+namespace doLittle.Specs.Security.for_ClaimTypeRule
 {
     [Subject(typeof (ClaimTypeRule))]
     public class when_authorizing_with_user_who_has_role : given.a_claim_type_rule

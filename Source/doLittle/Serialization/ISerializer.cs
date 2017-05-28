@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Bifrost.Serialization
+namespace doLittle.Serialization
 {
     /// <summary>
     /// Defines a serializer

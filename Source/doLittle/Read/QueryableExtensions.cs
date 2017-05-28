@@ -7,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// Provides a set of methods for working with <see cref="IQueryable"/>

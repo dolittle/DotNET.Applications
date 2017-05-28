@@ -1,9 +1,9 @@
-﻿using Bifrost.Read;
-using Bifrost.Read.Validation;
-using Bifrost.Rules;
+﻿using doLittle.Read;
+using doLittle.Read.Validation;
+using doLittle.Rules;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.for_QueryResult
+namespace doLittle.Specs.Read.for_QueryResult
 {
     public class when_validation_has_broken_rules
     {

@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
 using System.Threading.Tasks;
-using Bifrost.Execution;
-using Bifrost.Extensions;
+using doLittle.Execution;
+using doLittle.Extensions;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICommittedEventStreamCoordinator"/>

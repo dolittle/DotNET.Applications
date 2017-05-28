@@ -3,7 +3,7 @@
     var data = { something: 42 };
 
     var target = "http://www.vg.no";
-    var server = Bifrost.server.create();
+    var server = doLittle.server.create();
     server.target = target;
     
     beforeEach(function() {

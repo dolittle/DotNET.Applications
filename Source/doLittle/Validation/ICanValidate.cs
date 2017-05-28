@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Validation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Defines the behavior of being able to do validation

@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
-using Bifrost.Configuration;
-using Bifrost.Diagnostics;
-using Bifrost.Read;
+using doLittle.Configuration;
+using doLittle.Diagnostics;
+using doLittle.Read;
 
-namespace Bifrost.Web.Visualizer.QualityAssurance
+namespace doLittle.Web.Visualizer.QualityAssurance
 {
 
 

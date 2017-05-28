@@ -1,11 +1,11 @@
-﻿using Bifrost.Domain;
-using Bifrost.Events;
+﻿using doLittle.Domain;
+using doLittle.Events;
 using Machine.Specifications;
 using Moq;
 using System;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Domain.for_AggregateRootRepository
+namespace doLittle.Specs.Domain.for_AggregateRootRepository
 {
     [Subject(typeof(AggregateRootRepository<>))]
     public class when_getting_a_stateful_aggregate_root_that_has_events : given.a_repository_for_a_stateful_aggregate_root

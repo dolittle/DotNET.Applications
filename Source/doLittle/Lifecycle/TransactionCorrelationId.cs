@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 
-namespace Bifrost.Lifecycle
+namespace doLittle.Lifecycle
 {
     /// <summary>
     /// Represents a uniquely identifiable correlation id associated with typically <see cref="ITransaction"/>

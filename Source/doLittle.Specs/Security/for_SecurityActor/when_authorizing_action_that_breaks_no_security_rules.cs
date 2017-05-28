@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using Bifrost.Security;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_SecurityActor
+namespace doLittle.Specs.Security.for_SecurityActor
 {
     [Subject(typeof(SecurityActor))]
     public class when_authorizing_action_that_breaks_no_security_rules

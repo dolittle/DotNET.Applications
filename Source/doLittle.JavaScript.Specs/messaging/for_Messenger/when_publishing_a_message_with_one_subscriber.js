@@ -7,7 +7,7 @@ describe("when publishing a message with one subscriber", function () {
         messageReceived = message;
     }
 
-    var messenger = Bifrost.messaging.Messenger.create();
+    var messenger = doLittle.messaging.Messenger.create();
     messenger.subscribeTo("SimpleMessage", received);
     messenger.publish("SimpleMessage", "Hello")
 

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
-using Bifrost.Reflection;
+using doLittle.Reflection;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Reflection.for_Proxying
+namespace doLittle.Specs.Reflection.for_Proxying
 {
     public class when_building_interface_with_properties_from_other_type
     {

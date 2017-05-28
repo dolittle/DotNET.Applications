@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 
-namespace Bifrost.Concepts
+namespace doLittle.Concepts
 {
     /// <summary>
     /// Provides extensions related to <see cref="Type">types</see> and others related to <see cref="ConceptAs{T}"/>

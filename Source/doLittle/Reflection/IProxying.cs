@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Reflection
+namespace doLittle.Reflection
 {
     /// <summary>
     /// Defines something can deal with creating proxy types

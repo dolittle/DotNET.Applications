@@ -1,6 +1,6 @@
-﻿using Bifrost.Mapping;
+﻿using doLittle.Mapping;
 
-namespace Bifrost.Specs.Mapping.for_Map
+namespace doLittle.Specs.Mapping.for_Map
 {
     public class MyMap : Map<Source, Target>
     {

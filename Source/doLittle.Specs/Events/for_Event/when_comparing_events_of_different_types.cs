@@ -1,9 +1,9 @@
 ﻿using System;
-using Bifrost.Specs.Events.Fakes;
+using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Events.for_Event
+namespace doLittle.Specs.Events.for_Event
 {
     public class when_comparing_events_of_different_types
     {

@@ -1,25 +1,25 @@
-Bifrost.namespace("Bifrost.validation", {
-    lessThan: Bifrost.validation.Rule.extend(function () {
+doLittle.namespace("doLittle.validation", {
+    lessThan: doLittle.validation.Rule.extend(function () {
         var self = this;
 
         function notSet(value) {
-            return Bifrost.isUndefined(value) || Bifrost.isNull(value);
+            return doLittle.isUndefined(value) || doLittle.isNull(value);
         }
 
         function throwIfOptionsInvalid(options) {
             if (notSet(options)) {
-                throw new Bifrost.validation.OptionsNotDefined();
+                throw new doLittle.validation.OptionsNotDefined();
             }
             if (notSet(options.value)) {
-                var exception = new Bifrost.validation.OptionsValueNotSpecified();
+                var exception = new doLittle.validation.OptionsValueNotSpecified();
                 exception.message = exception.message + " 'value' is not set.";
                 throw exception;
             }
         }
 
         function throwIsValueToCheckIsNotANumber(value) {
-            if (!Bifrost.isNumber(value)) {
-                throw new Bifrost.validation.NotANumber("Value " + value + " is not a number");
+            if (!doLittle.isNumber(value)) {
+                throw new doLittle.validation.NotANumber("Value " + value + " is not a number");
             }
         }
 

@@ -9,21 +9,21 @@
     var dependencyResolvers;
 
     beforeEach(function () {
-        configure = Bifrost.configure;
-        Bifrost.configure = {
+        configure = doLittle.configure;
+        doLittle.configure = {
             ready: function (callback) {
                 readyCallback = callback;
             }
         };
-        dependencyResolvers = Bifrost.dependencyResolvers;
-        Bifrost.dependencyResolvers = {
+        dependencyResolvers = doLittle.dependencyResolvers;
+        doLittle.dependencyResolvers = {
             getAll: function () {
                 return [resolver];
             }
         };
 
         try {
-            Bifrost.dependencyResolver.beginResolve("Something").onFail(function (e) {
+            doLittle.dependencyResolver.beginResolve("Something").onFail(function (e) {
                 exception = e;
             });
 
@@ -34,13 +34,13 @@
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolvers = dependencyResolvers;
-        Bifrost.configure = configure;
+        doLittle.dependencyResolvers = dependencyResolvers;
+        doLittle.configure = configure;
     });
 
 
     it("should throw unresolved dependencies exception", function () {
-        expect(exception instanceof Bifrost.UnresolvedDependencies).toBeTruthy();
+        expect(exception instanceof doLittle.UnresolvedDependencies).toBeTruthy();
     });
 
 });

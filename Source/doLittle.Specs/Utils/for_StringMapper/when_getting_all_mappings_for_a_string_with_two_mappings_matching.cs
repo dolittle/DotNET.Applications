@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Utils;
+using doLittle.Utils;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Utils.for_StringMapper
+namespace doLittle.Specs.Utils.for_StringMapper
 {
     [Subject(typeof(StringMapper))]
     public class when_getting_all_mappings_for_a_string_with_two_mappings_matching

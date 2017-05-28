@@ -6,26 +6,26 @@
 
     var dependencyResolvers;
     beforeEach(function () {
-        dependencyResolvers = Bifrost.dependencyResolvers;
+        dependencyResolvers = doLittle.dependencyResolvers;
 
-        Bifrost.dependencyResolvers = {
+        doLittle.dependencyResolvers = {
             getAll: function () {
                 return [resolver];
             }
         };
         try {
-            Bifrost.dependencyResolver.resolve("Something");
+            doLittle.dependencyResolver.resolve("Something");
         } catch (e) {
             exception = e;
         }
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolvers = dependencyResolvers;
+        doLittle.dependencyResolvers = dependencyResolvers;
     });
 
     it("should throw unresolved dependencies exception", function () {
-        expect(exception instanceof Bifrost.UnresolvedDependencies).toBeTruthy();
+        expect(exception instanceof doLittle.UnresolvedDependencies).toBeTruthy();
     });
 
 });

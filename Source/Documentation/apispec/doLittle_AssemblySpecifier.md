@@ -1,5 +1,5 @@
 ---
-uid: Bifrost.AssemblySpecifier
+uid: doLittle.AssemblySpecifier
 summary: '*You can override summary for the API here using *MARKDOWN* syntax'
 ---
 

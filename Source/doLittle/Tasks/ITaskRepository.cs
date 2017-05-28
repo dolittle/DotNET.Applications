@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Tasks
+namespace doLittle.Tasks
 {
     /// <summary>
     /// Defines a repository for working with <see cref="Task">tasks</see>

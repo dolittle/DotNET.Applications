@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Domain
+namespace doLittle.Domain
 {
     /// <summary>
     /// The exception that is thrown when an AggregatedRoot is missing

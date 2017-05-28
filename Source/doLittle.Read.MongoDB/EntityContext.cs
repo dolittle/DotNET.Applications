@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
-using Bifrost.Entities;
-using Bifrost.Concepts;
+using doLittle.Entities;
+using doLittle.Concepts;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Reflection;
 
-namespace Bifrost.Read.MongoDB
+namespace doLittle.Read.MongoDB
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEntityContext{T}"/> for MongoDB

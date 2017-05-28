@@ -8,11 +8,11 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Concepts;
-using Bifrost.Extensions;
-using Bifrost.Serialization;
+using doLittle.Concepts;
+using doLittle.Extensions;
+using doLittle.Serialization;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     public class RestServiceMethodInvoker : IRestServiceMethodInvoker
     {

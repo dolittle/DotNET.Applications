@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Web;
-using Bifrost.Configuration;
+using doLittle.Configuration;
 
-namespace Bifrost.Web.Configuration
+namespace doLittle.Web.Configuration
 {
     public class ConfigurationRouteHttpHandler : IHttpHandler
     {

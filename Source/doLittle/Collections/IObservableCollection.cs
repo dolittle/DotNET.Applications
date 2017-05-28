@@ -5,7 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Bifrost.Collections
+namespace doLittle.Collections
 {
     /// <summary>
     /// Defines a collection that enables observing 

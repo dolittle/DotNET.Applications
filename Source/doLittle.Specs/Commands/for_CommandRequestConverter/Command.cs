@@ -1,6 +1,6 @@
-﻿using Bifrost.Commands;
+﻿using doLittle.Commands;
 
-namespace Bifrost.Specs.Commands.for_CommandRequestConverter
+namespace doLittle.Specs.Commands.for_CommandRequestConverter
 {
     public class Command : ICommand
     {

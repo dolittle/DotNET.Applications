@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.read", {
-    Query: Bifrost.Type.extend(function (queryableFactory, region) {
+﻿doLittle.namespace("doLittle.read", {
+    Query: doLittle.Type.extend(function (queryableFactory, region) {
         var self = this;
         this.target = this;
 

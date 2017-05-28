@@ -2,10 +2,10 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Configuration.Assemblies;
-using Bifrost.Execution;
+using doLittle.Configuration.Assemblies;
+using doLittle.Execution;
 
-namespace Bifrost.Configuration.Defaults
+namespace doLittle.Configuration.Defaults
 {
     /// <summary>
     /// Represents a <see cref="IDefaultBindings"/>
@@ -33,7 +33,7 @@ namespace Bifrost.Configuration.Defaults
             container.Bind<IContractToImplementorsMap>(_contractToImplentorsMap);
             container.Bind<AssembliesConfiguration>(_assembliesConfiguration);
             container.Bind<IAssemblyProvider>(_assemblyProvider);
-            container.Bind<IAssemblies>(typeof(global::Bifrost.Execution.Assemblies), BindingLifecycle.Singleton);
+            container.Bind<IAssemblies>(typeof(global::doLittle.Execution.Assemblies), BindingLifecycle.Singleton);
             container.Bind<ITypeDiscoverer>(typeof(TypeDiscoverer), BindingLifecycle.Singleton);
             container.Bind<ITypeFinder>(typeof(TypeFinder), BindingLifecycle.Singleton);
         }

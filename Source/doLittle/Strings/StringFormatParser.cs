@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Text.RegularExpressions;
 
-namespace Bifrost.Strings
+namespace doLittle.Strings
 {
     /// <summary>
     /// Represents an implementation of <see cref="IStringFormatParser"/>

@@ -5,7 +5,7 @@
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Bifrost.FluentValidation
+namespace doLittle.FluentValidation
 {
     /// <summary>
     /// 

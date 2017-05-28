@@ -1,11 +1,11 @@
 ﻿using System;
-using Bifrost.Commands;
-using Bifrost.Execution;
-using Bifrost.FluentValidation.Commands;
+using doLittle.Commands;
+using doLittle.Execution;
+using doLittle.FluentValidation.Commands;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_CommandValidatorProvider.given
+namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.given
 {
     public class a_command_validator_provider_with_input_and_business_validators : commands
     {

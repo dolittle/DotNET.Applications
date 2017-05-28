@@ -3,8 +3,8 @@
     var observable = null;
     beforeEach(function () {
         var observablesCallback;
-        Bifrost.messaging = Bifrost.messaging || {};
-        Bifrost.messaging.Messenger = {
+        doLittle.messaging = doLittle.messaging || {};
+        doLittle.messaging.Messenger = {
             global: {
                 publish: sinon.stub(),
                 subscribeTo: function (message, callback) {
@@ -22,6 +22,6 @@
     });
 
     it("should not call publish after it has changed the observable", function () {
-        expect(Bifrost.messaging.Messenger.global.publish.called).toBe(false);
+        expect(doLittle.messaging.Messenger.global.publish.called).toBe(false);
     });
 });

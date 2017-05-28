@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Commands;
+using doLittle.Commands;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Commands.for_CommandResult
+namespace doLittle.Specs.Commands.for_CommandResult
 {
     public class when_containing_one_command_validation_message 
     {

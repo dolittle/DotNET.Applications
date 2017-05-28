@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 
-namespace Bifrost.Entities.Files
+namespace doLittle.Entities.Files
 {
     /// <summary>
     /// Represents an object that acts as the "document" that gets saved to disk

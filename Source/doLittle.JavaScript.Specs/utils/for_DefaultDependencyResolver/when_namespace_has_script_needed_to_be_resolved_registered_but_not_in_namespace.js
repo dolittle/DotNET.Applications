@@ -1,5 +1,5 @@
-﻿describe("when requested dependency is a valid script in namespace, but not registered in Bifrost namespace", function () {
-    var resolver = new Bifrost.DefaultDependencyResolver();
+﻿describe("when requested dependency is a valid script in namespace, but not registered in doLittle.namespace", function () {
+    var resolver = new doLittle.DefaultDependencyResolver();
     var ns;
     var resolved = null;
     var actualResolved = null;
@@ -17,7 +17,7 @@
     };
     
     var fileFactoryMock = {
-        create: sinon.mock().withArgs("/Someplace/On/Server/something.js", Bifrost.io.fileType.javaScript).returns(file)
+        create: sinon.mock().withArgs("/Someplace/On/Server/something.js", doLittle.io.fileType.javaScript).returns(file)
     };
     var fileManagerMock = {
         load: sinon.mock().withArgs([file]).returns({
@@ -33,14 +33,14 @@
             _scripts: ["something"]
         };
 
-        fileFactory = Bifrost.io.fileFactory;
-        fileManager = Bifrost.io.fileManager;
+        fileFactory = doLittle.io.fileFactory;
+        fileManager = doLittle.io.fileManager;
 
-        Bifrost.io.fileFactory = {
+        doLittle.io.fileFactory = {
             create: sinon.stub().returns(fileFactoryMock)
         };
 
-        Bifrost.io.fileManager = {
+        doLittle.io.fileManager = {
             create: sinon.stub().returns(fileManagerMock)
         }
         
@@ -52,8 +52,8 @@
     });
 
     afterEach(function () {
-        Bifrost.io.fileFactory = fileFactory;
-        Bifrost.io.fileManager = fileManager;
+        doLittle.io.fileFactory = fileFactory;
+        doLittle.io.fileManager = fileManager;
     });
 
     it("should be able to resolve", function () {
@@ -65,7 +65,7 @@
     });
 
     it("should return a promise", function () {
-        expect(resolved instanceof Bifrost.execution.Promise).toBe(true);
+        expect(resolved instanceof doLittle.execution.Promise).toBe(true);
     });
 
     it("should resolve system loaded into namespace", function () {

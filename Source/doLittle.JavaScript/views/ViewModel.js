@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    ViewModel: Bifrost.Type.extend(function (region) {
+﻿doLittle.namespace("doLittle.views", {
+    ViewModel: doLittle.Type.extend(function (region) {
         var self = this;
         this.targetViewModel = this;
         this.region = region;

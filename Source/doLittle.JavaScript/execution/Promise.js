@@ -1,8 +1,8 @@
-Bifrost.namespace("Bifrost.execution", {
+doLittle.namespace("doLittle.execution", {
     Promise: function () {
         var self = this;
 
-        this.id = Bifrost.Guid.create();
+        this.id = doLittle.Guid.create();
 
         this.signalled = false;
         this.callback = null;
@@ -13,9 +13,9 @@ Bifrost.namespace("Bifrost.execution", {
         function onSignal() {
             if (self.callback != null && typeof self.callback !== "undefined") {
                 if (typeof self.signalParameter !== "undefined") {
-                    self.callback(self.signalParameter, Bifrost.execution.Promise.create());
+                    self.callback(self.signalParameter, doLittle.execution.Promise.create());
                 } else {
-                    self.callback(Bifrost.execution.Promise.create());
+                    self.callback(doLittle.execution.Promise.create());
                 }
             }
         }
@@ -54,7 +54,7 @@ Bifrost.namespace("Bifrost.execution", {
     }
 });
 
-Bifrost.execution.Promise.create = function() {
-	var promise = new Bifrost.execution.Promise();
+doLittle.execution.Promise.create = function() {
+	var promise = new doLittle.execution.Promise();
 	return promise;
 };

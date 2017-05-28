@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Strings.for_FixedStringSegment
+namespace doLittle.Specs.Strings.for_FixedStringSegment
 {
     public class when_matching_multiple_strings_where_first_string_is_not_matched_but_strings_are_matched_by_children
     {

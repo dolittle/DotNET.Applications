@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Bifrost.Configuration;
-using Bifrost.Web;
-using Bifrost.Web.Assets;
-using Bifrost.Web.Commands;
-using Bifrost.Web.Configuration;
-using Bifrost.Web.Proxies;
-using Bifrost.Web.Read;
-using Bifrost.Web.Services;
+using doLittle.Configuration;
+using doLittle.Web;
+using doLittle.Web.Assets;
+using doLittle.Web.Commands;
+using doLittle.Web.Configuration;
+using doLittle.Web.Proxies;
+using doLittle.Web.Read;
+using doLittle.Web.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -23,26 +23,26 @@ namespace Microsoft.AspNetCore.Builder
 {
     public static class ApplicationBuilderExtensions
     {
-        public static void AddBifrost(this IServiceCollection serviceCollection)
+        public static void AdddoLittle(this IServiceCollection serviceCollection)
         {
         }
 
-        public static IApplicationBuilder UseBifrost(this IApplicationBuilder builder, IHostingEnvironment hostingEnvironment)
+        public static IApplicationBuilder UsedoLittle(this IApplicationBuilder builder, IHostingEnvironment hostingEnvironment)
         {            
             Configure.DiscoverAndConfigure(builder.ApplicationServices.GetService<ILoggerFactory>());
 
             builder.Use(WebCallContext.Middleware);
 
-            builder.Map("/Bifrost/Application", a => a.Run(Application));
-            builder.Map("/Bifrost/Proxies", a => a.Run(Proxies));
-            builder.Map("/Bifrost/Security", a => a.Run(SecurityProxies));
-            builder.Map("/Bifrost/AssetsManager", a => a.Run(AssetsManager));
+            builder.Map("/doLittle/Application", a => a.Run(Application));
+            builder.Map("/doLittle/Proxies", a => a.Run(Proxies));
+            builder.Map("/doLittle/Security", a => a.Run(SecurityProxies));
+            builder.Map("/doLittle/AssetsManager", a => a.Run(AssetsManager));
 
             var routeBuilder = new RouteBuilder(builder);
-            routeBuilder.MapService<CommandCoordinatorService>("Bifrost/CommandCoordinator");
-            routeBuilder.MapService<CommandSecurityService>("Bifrost/CommandSecurity");
-            routeBuilder.MapService<QueryService>("Bifrost/Query");
-            routeBuilder.MapService<ReadModelService>("Bifrost/ReadModel");
+            routeBuilder.MapService<CommandCoordinatorService>("doLittle/CommandCoordinator");
+            routeBuilder.MapService<CommandSecurityService>("doLittle/CommandSecurity");
+            routeBuilder.MapService<QueryService>("doLittle/Query");
+            routeBuilder.MapService<ReadModelService>("doLittle/ReadModel");
 
             var routes = routeBuilder.Build();
             builder.UseRouter(routes);

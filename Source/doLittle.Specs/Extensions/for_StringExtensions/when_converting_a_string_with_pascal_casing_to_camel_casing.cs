@@ -1,7 +1,7 @@
-﻿using Bifrost.Extensions;
+﻿using doLittle.Extensions;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Extensions.for_StringExtensions
+namespace doLittle.Specs.Extensions.for_StringExtensions
 {
     public class when_converting_a_string_with_pascal_casing_to_camel_casing
     {

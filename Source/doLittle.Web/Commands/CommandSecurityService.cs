@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
-using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Lifecycle;
-using Bifrost.Security;
+using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Lifecycle;
+using doLittle.Security;
 
-namespace Bifrost.Web.Commands
+namespace doLittle.Web.Commands
 {
     public class CommandSecurityService
     {

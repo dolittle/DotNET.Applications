@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Represents an implementation of <see cref="IContractToImplementorsMap"/>

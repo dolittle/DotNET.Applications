@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.values", {
-    dependencyProperty: Bifrost.Type.extend(function (propertyName) {
+﻿doLittle.namespace("doLittle.values", {
+    dependencyProperty: doLittle.Type.extend(function (propertyName) {
         this.initialize = function (UIElement) { };
         this.dispose = function (UIElement) {};
 
@@ -13,14 +13,14 @@
     })
 });
 
-Bifrost.values.DependencyProperty.register = function (owningType, name, dependencyPropertyType) {
+doLittle.values.DependencyProperty.register = function (owningType, name, dependencyPropertyType) {
 };
 
-Bifrost.namespace("Bifrost.DOM", {
-    inputValueDependencyProperty: Bifrost.values.dependencyProperty.extend(function() {
+doLittle.namespace("doLittle.DOM", {
+    inputValueDependencyProperty: doLittle.values.dependencyProperty.extend(function() {
 
         function inputChanged(e) {
-            if( Bifrost.isFunction(e.target._changed) ) {
+            if( doLittle.isFunction(e.target._changed) ) {
                 e.target._changed(e.value);
             }
         }
@@ -37,4 +37,4 @@ Bifrost.namespace("Bifrost.DOM", {
 });
 
 
-Bifrost.values.DependencyProperty.register(HTMLInputElement, "value", Bifrost.DOM.inputValueDependencyProperty);
+doLittle.values.DependencyProperty.register(HTMLInputElement, "value", doLittle.DOM.inputValueDependencyProperty);

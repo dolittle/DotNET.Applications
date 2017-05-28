@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Strings.for_StringFormat
+namespace doLittle.Specs.Strings.for_StringFormat
 {
     public class when_matching_string_with_two_segments_that_should_match_an_optional_recurring_variable_segment_in_format
     {

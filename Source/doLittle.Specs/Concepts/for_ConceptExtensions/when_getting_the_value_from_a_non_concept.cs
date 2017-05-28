@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Concepts.for_ConceptExtensions
+namespace doLittle.Specs.Concepts.for_ConceptExtensions
 {
     [Subject(typeof(ConceptExtensions))]
     public class when_getting_the_value_from_a_non_concept : given.concepts

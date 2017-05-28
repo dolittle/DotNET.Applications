@@ -1,9 +1,9 @@
-﻿using Bifrost.Applications;
+﻿using doLittle.Applications;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResourceIdentifierConverter
+namespace doLittle.Specs.Applications.for_ApplicationResourceIdentifierConverter
 {
     public class when_converting_identifier_with_five_segments_for_a_resource_to_string : given.an_application_resource_identifier_converter
     {

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Bifrost.Applications;
-using Bifrost.Strings;
+using doLittle.Applications;
+using doLittle.Strings;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Applications.for_ApplicationStructure.given
+namespace doLittle.Specs.Applications.for_ApplicationStructure.given
 {
     public class two_areas_with_one_format_in_each
     {

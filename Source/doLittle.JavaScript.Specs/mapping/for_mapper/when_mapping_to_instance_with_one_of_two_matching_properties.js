@@ -7,7 +7,7 @@ describe("when mapping to instance with one of two matching properties", functio
 	};
 
 	
-	var type = Bifrost.Type.extend(function () {
+	var type = doLittle.Type.extend(function () {
         var self = this;
 
         this.integer = 0;
@@ -17,7 +17,7 @@ describe("when mapping to instance with one of two matching properties", functio
 	var mappedProperties = null;
 
 	(function becauseOf(){
-	    var mapper = Bifrost.mapping.mapper.create(parameters);
+	    var mapper = doLittle.mapping.mapper.create(parameters);
 	    mappedProperties = mapper.mapToInstance(type, data, mappedInstance);
 	})();
 

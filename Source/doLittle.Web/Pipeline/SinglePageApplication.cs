@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.IO;
 
-namespace Bifrost.Web.Pipeline
+namespace doLittle.Web.Pipeline
 {
     public class SinglePageApplication : IPipe
     {

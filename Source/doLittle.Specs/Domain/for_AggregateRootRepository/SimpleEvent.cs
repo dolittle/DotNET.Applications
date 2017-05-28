@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Events;
+using doLittle.Events;
 
-namespace Bifrost.Specs.Domain.for_AggregateRootRepository
+namespace doLittle.Specs.Domain.for_AggregateRootRepository
 {
     public class SimpleEvent : Event
     {

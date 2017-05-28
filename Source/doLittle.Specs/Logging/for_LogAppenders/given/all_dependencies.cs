@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Bifrost.Execution;
-using Bifrost.Logging;
+using doLittle.Execution;
+using doLittle.Logging;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Logging.for_LogAppenders.given
+namespace doLittle.Specs.Logging.for_LogAppenders.given
 {
     public class all_dependencies
     {

@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Configuration;
+using doLittle.Configuration;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Defines the configuration for events

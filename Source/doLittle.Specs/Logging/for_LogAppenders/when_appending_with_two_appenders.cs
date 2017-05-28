@@ -1,8 +1,8 @@
 ﻿using System;
 using Machine.Specifications;
-using Bifrost.Logging;
+using doLittle.Logging;
 
-namespace Bifrost.Specs.Logging.for_LogAppenders
+namespace doLittle.Specs.Logging.for_LogAppenders
 {
     public class when_appending_with_two_appenders : given.two_appenders
     {

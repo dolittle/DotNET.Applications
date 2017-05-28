@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
-using Bifrost.Lifecycle;
+using doLittle.Lifecycle;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Defines the result from an <see cref="IEventProcessor"/>

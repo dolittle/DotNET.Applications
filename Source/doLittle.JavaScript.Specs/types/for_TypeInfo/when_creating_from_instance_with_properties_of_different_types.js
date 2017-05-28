@@ -1,5 +1,5 @@
 ﻿describe("when creating from instance with no properties", function () {
-    var sometype = Bifrost.Type.extend(function () { });
+    var sometype = doLittle.Type.extend(function () { });
 
     var instance = {
         numberProperty: 42,
@@ -9,7 +9,7 @@
         sometypeProperty: sometype.create(),
     };
 
-    var typeInfo = Bifrost.types.TypeInfo.createFrom(instance);
+    var typeInfo = doLittle.types.TypeInfo.createFrom(instance);
     function getPropertyInfoByName(name) {
         var found = null;
         typeInfo.properties.forEach(function (property) {

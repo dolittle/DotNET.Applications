@@ -1,10 +1,10 @@
-﻿using Bifrost.Security;
+﻿using doLittle.Security;
 using Machine.Specifications;
 using Moq;
-using Bifrost.Commands;
+using doLittle.Commands;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Commands.for_CommandSecurityExtensions
+namespace doLittle.Specs.Commands.for_CommandSecurityExtensions
 {
     public class when_handling
     {

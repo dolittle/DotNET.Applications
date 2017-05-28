@@ -1,9 +1,9 @@
-﻿using Bifrost.Execution;
-using Bifrost.Tenancy;
+﻿using doLittle.Execution;
+using doLittle.Tenancy;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Tenancy.for_TenantManager.given
+namespace doLittle.Specs.Tenancy.for_TenantManager.given
 {
     public class all_dependencies
     {

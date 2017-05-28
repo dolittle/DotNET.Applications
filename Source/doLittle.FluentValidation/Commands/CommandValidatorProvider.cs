@@ -6,13 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Commands;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.Validation;
+using doLittle.Commands;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.Validation;
 using FluentValidation;
 
-namespace Bifrost.FluentValidation.Commands
+namespace doLittle.FluentValidation.Commands
 {
     /// <summary>
     /// Represents an instance of an <see cref="ICommandValidatorProvider">ICommandValidatorProvider.</see>

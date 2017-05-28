@@ -1,9 +1,9 @@
-﻿using Bifrost.Events;
-using Bifrost.Specs.Events.Fakes.v2;
-using Bifrost.Specs.Events.for_EventMigrationService.given;
+﻿using doLittle.Events;
+using doLittle.Specs.Events.Fakes.v2;
+using doLittle.Specs.Events.for_EventMigrationService.given;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventMigrationService
+namespace doLittle.Specs.Events.for_EventMigrationService
 {
     public class when_migrating_a_second_generation_event_that_has_a_single_migrator_registered : an_event_with_a_migrator
     {

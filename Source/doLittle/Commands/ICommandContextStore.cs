@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Commands
+namespace doLittle.Commands
 {
     /// <summary>
     /// Defines the store for getting and saving <see cref="CommandContext">CommandContext</see> from its persistent data store

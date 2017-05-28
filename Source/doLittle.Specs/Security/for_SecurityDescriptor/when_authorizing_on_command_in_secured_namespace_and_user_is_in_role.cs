@@ -1,9 +1,9 @@
 ﻿using System.Security.Principal;
-using Bifrost.Security;
-using Bifrost.Specs.Security.Fakes;
+using doLittle.Security;
+using doLittle.Specs.Security.Fakes;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Security.for_SecurityDescriptor
+namespace doLittle.Specs.Security.for_SecurityDescriptor
 {
     [Subject(typeof(BaseSecurityDescriptor))]
     public class when_authorizing_on_command_in_secured_namespace_and_user_is_in_role : given.a_configured_security_descriptor

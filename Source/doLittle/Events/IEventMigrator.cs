@@ -2,9 +2,9 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Conventions;
+using doLittle.Conventions;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Defines the functionality for a migrator that migrates from an older generation of <see cref="IEvent">Event</see> to a newer generation

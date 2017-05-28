@@ -24,7 +24,7 @@
         mapper: {}
     }
 
-    var command = Bifrost.commands.Command.create(parameters);
+    var command = doLittle.commands.Command.create(parameters);
 
     it("should return true for can execute", function () {
         expect(command.canExecute()).toBe(false);

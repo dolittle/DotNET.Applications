@@ -7,10 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Bifrost.Execution;
-using Bifrost.Validation;
+using doLittle.Execution;
+using doLittle.Validation;
 
-namespace Bifrost.Concepts
+namespace doLittle.Concepts
 {
     /// <summary>
     /// A base class for providing value object equality semantics.  A Value Object does not have an identity and its value comes from its properties.

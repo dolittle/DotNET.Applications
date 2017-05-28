@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Commands;
-using Bifrost.Execution;
-using Bifrost.Validation;
+using doLittle.Commands;
+using doLittle.Execution;
+using doLittle.Validation;
 
-namespace Bifrost.FluentValidation.Commands
+namespace doLittle.FluentValidation.Commands
 {
     /// <summary>
     /// Represents a <see cref="ICommandValidator">ICommandValidationService</see>

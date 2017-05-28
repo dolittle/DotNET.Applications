@@ -10,16 +10,16 @@ describe("when handling post binding with one element", function() {
 
 	var visitStub = sinon.stub();
 
-	var visitorType = Bifrost.views.PostBindingVisitor.extend(function () {
+	var visitorType = doLittle.views.PostBindingVisitor.extend(function () {
 		this.visit = visitStub;
 	});
 
 	beforeEach(function () {
-	    sinon.stub(Bifrost.markup.ElementVisitor, "getExtenders").returns([]);
+	    sinon.stub(doLittle.markup.ElementVisitor, "getExtenders").returns([]);
 
-	    sinon.stub(Bifrost.views.PostBindingVisitor, "getExtenders").returns([visitorType]);
+	    sinon.stub(doLittle.views.PostBindingVisitor, "getExtenders").returns([visitorType]);
 
-		var instance = Bifrost.views.UIManager.createWithoutScope({
+		var instance = doLittle.views.UIManager.createWithoutScope({
 			documentService: documentService
 		})
 
@@ -27,8 +27,8 @@ describe("when handling post binding with one element", function() {
 	});
 
 	afterEach(function () {
-	    Bifrost.markup.ElementVisitor.getExtenders.restore();
-		Bifrost.views.PostBindingVisitor.getExtenders.restore();
+	    doLittle.markup.ElementVisitor.getExtenders.restore();
+		doLittle.views.PostBindingVisitor.getExtenders.restore();
 	});
 
 	it("should call the visit function of the visitor", function() {

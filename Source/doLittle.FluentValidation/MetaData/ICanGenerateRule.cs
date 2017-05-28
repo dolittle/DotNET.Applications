@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Conventions;
-using Bifrost.Validation.MetaData;
+using doLittle.Conventions;
+using doLittle.Validation.MetaData;
 using FluentValidation.Validators;
 
-namespace Bifrost.FluentValidation.MetaData
+namespace doLittle.FluentValidation.MetaData
 {
     /// <summary>
     /// Defines a system that can generate rule from a Fluent Validation property validator.

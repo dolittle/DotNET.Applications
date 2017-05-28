@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Bifrost.Specifications
+namespace doLittle.Specifications
 {
     /// <summary>
     /// Base class for expressing a complex rule in code.  Utilising the Specification pattern. 

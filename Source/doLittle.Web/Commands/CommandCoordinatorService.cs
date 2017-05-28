@@ -5,11 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Commands;
-using Bifrost.Extensions;
-using Bifrost.Serialization;
+using doLittle.Commands;
+using doLittle.Extensions;
+using doLittle.Serialization;
 
-namespace Bifrost.Web.Commands
+namespace doLittle.Web.Commands
 {
     public class CommandCoordinatorService
     {

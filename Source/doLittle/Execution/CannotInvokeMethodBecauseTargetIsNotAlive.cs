@@ -5,7 +5,7 @@
 using System;
 using System.Reflection;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Exception that is thrown when a target is not alive in a weak reference

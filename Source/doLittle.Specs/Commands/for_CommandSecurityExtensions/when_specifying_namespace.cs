@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using Bifrost.Commands;
-using Bifrost.Security;
+using doLittle.Commands;
+using doLittle.Security;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Commands.for_CommandSecurityExtensions
+namespace doLittle.Specs.Commands.for_CommandSecurityExtensions
 {
     public class when_specifying_namespace
     {

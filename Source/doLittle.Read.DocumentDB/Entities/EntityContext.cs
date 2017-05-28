@@ -5,13 +5,13 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Concepts;
-using Bifrost.Entities;
-using Bifrost.Extensions;
-using Bifrost.Mapping;
+using doLittle.Concepts;
+using doLittle.Entities;
+using doLittle.Extensions;
+using doLittle.Mapping;
 using Microsoft.Azure.Documents;
 
-namespace Bifrost.DocumentDB.Entities
+namespace doLittle.DocumentDB.Entities
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEntityContext{T}"/> specifically for DocumentDB

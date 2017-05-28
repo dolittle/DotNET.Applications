@@ -1,9 +1,9 @@
-﻿using Bifrost.Execution;
-using Bifrost.Mapping;
+﻿using doLittle.Execution;
+using doLittle.Mapping;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Mapping.for_MappingTargets.given
+namespace doLittle.Specs.Mapping.for_MappingTargets.given
 {
     public class all_dependencies
     {

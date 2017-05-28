@@ -1,7 +1,7 @@
-﻿using Bifrost.Concepts;
+﻿using doLittle.Concepts;
 using FluentValidation;
 
-namespace Bifrost.FluentValidation.Specs
+namespace doLittle.FluentValidation.Specs
 {
     public class LongValidator : BusinessValidator<ConceptAs<long>>
     {

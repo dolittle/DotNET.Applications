@@ -1,10 +1,10 @@
 ﻿using System;
-using Bifrost.Read;
+using doLittle.Read;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Read.for_QueryCoordinator
+namespace doLittle.Specs.Read.for_QueryCoordinator
 {
     public class when_executing_a_query_with_using_a_generic_type_inheriting_a_non_generic_known_provider : given.a_query_coordinator_with_non_generic_known_provider
     {

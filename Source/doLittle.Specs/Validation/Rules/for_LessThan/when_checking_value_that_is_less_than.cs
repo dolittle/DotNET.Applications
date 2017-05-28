@@ -1,10 +1,10 @@
-﻿using Bifrost.Rules;
-using Bifrost.Validation.Rules;
+﻿using doLittle.Rules;
+using doLittle.Validation.Rules;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Validation.Rules.for_LessThan
+namespace doLittle.Specs.Validation.Rules.for_LessThan
 {
     public class when_checking_value_that_is_less_than
     {

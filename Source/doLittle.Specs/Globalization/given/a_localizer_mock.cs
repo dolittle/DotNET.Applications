@@ -1,8 +1,8 @@
-﻿using Bifrost.Globalization;
+﻿using doLittle.Globalization;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Globalization.given
+namespace doLittle.Specs.Globalization.given
 {
     public class a_localizer_mock
     {

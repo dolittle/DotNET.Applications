@@ -1,9 +1,9 @@
 ﻿using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Specs.Execution.for_DefaultConvention
+namespace doLittle.Specs.Execution.for_DefaultConvention
 {
     [Subject(typeof(DefaultConvention))]
     public class when_asking_to_resolve_an_interface_with_a_default_implementation_and_a_second_implementation

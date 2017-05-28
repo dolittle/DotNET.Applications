@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Validation.MetaData;
+using doLittle.Validation.MetaData;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Validation.for_ValidationMetaData.given
+namespace doLittle.Specs.Validation.for_ValidationMetaData.given
 {
     public class two_generators : all_dependencies
     {

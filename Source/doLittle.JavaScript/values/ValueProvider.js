@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.values", {
-    ValueProvider: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.values", {
+    ValueProvider: doLittle.Type.extend(function () {
 
         this.defaultProperty = null;
 

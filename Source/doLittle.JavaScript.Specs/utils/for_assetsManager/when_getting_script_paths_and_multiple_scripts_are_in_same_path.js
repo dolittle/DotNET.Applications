@@ -3,8 +3,8 @@
     var paths = [];
 
     beforeEach(function () {
-        Bifrost.namespaces = Bifrost.namespaces || {};
-        Bifrost.namespaces.initialize = sinon.stub();
+        doLittle.namespaces = doLittle.namespaces || {};
+        doLittle.namespaces.initialize = sinon.stub();
         sinon.stub($, "get", function (url, options, callback, type) {
             callback([
                 "Something/cool.js",
@@ -14,7 +14,7 @@
             ]);
         });
 
-        Bifrost.path = {
+        doLittle.path = {
             getPathWithoutFilename: function (path) {
                 if (path.indexOf("Something") == 0) {
                     return "Something";
@@ -26,13 +26,13 @@
             }
         }
 
-        Bifrost.assetsManager.initialize();
-        paths = Bifrost.assetsManager.getScriptPaths();
+        doLittle.assetsManager.initialize();
+        paths = doLittle.assetsManager.getScriptPaths();
     });
 
     afterEach(function () {
         $.get.restore();
-        Bifrost.assetsManager.scripts = [];
+        doLittle.assetsManager.scripts = [];
     });
 
 

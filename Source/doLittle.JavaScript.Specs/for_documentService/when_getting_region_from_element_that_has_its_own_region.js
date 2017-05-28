@@ -1,5 +1,5 @@
 ﻿describe("when getting region from element that has its own region", function () {
-    var service = Bifrost.documentService.createWithoutScope({
+    var service = doLittle.documentService.createWithoutScope({
         DOMRoot: {}
     });
 

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
-using Bifrost.Execution;
-using Bifrost.Tenancy;
+using doLittle.Execution;
+using doLittle.Tenancy;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Tenancy.for_TenantPopulator
+namespace doLittle.Specs.Tenancy.for_TenantPopulator
 {
     public class when_populating_and_there_are_two_populators
     {

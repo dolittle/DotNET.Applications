@@ -1,7 +1,7 @@
-﻿using Bifrost.Tasks;
+﻿using doLittle.Tasks;
 using System;
 
-namespace Bifrost.Specs.Tasks.for_TaskScheduler
+namespace doLittle.Specs.Tasks.for_TaskScheduler
 {
     public class TaskWithTwoOperations : Task
     {

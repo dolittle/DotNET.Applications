@@ -5,10 +5,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Bifrost.Execution;
-using Bifrost.Web.Configuration;
+using doLittle.Execution;
+using doLittle.Web.Configuration;
 
-namespace Bifrost.Web.Assets
+namespace doLittle.Web.Assets
 {
     [Singleton]
     public class AssetsManager : IAssetsManager

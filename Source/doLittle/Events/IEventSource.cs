@@ -2,7 +2,7 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// An EventSource is a domain object that is capable of generating and applying events.  It is an AggregateRoot in the context

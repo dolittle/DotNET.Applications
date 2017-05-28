@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Execution;
-using Bifrost.Logging;
+using doLittle.Execution;
+using doLittle.Logging;
 
-namespace Bifrost.Applications
+namespace doLittle.Applications
 {
     /// <summary>
     /// Represents an implementation of <see cref="IApplicationResourceResolver"/>

@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Machine.Specifications;
-using Bifrost.Commands;
-using Bifrost.Validation;
+using doLittle.Commands;
+using doLittle.Validation;
 
-namespace Bifrost.Specs.Commands.for_CommandResult
+namespace doLittle.Specs.Commands.for_CommandResult
 {
     public class when_containing_one_validation_result
     {

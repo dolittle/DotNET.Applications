@@ -2,11 +2,11 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Applications;
-using Bifrost.Execution;
+using doLittle.Applications;
+using doLittle.Execution;
 using StackExchange.Redis;
 
-namespace Bifrost.Events.Redis
+namespace doLittle.Events.Redis
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEventSourceVersions"/>

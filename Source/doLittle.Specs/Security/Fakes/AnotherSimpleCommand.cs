@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Commands;
+using doLittle.Commands;
 
-namespace Bifrost.Specs.Security.Fakes
+namespace doLittle.Specs.Security.Fakes
 {
     public class AnotherSimpleCommand : ICommand
     {

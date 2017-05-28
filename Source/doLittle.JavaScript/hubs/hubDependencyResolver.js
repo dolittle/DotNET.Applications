@@ -1,4 +1,4 @@
-﻿Bifrost.dependencyResolvers.hub = {
+﻿doLittle.dependencyResolvers.hub = {
     canResolve: function (namespace, name) {
         if (typeof hubs !== "undefined") {
             return name in hubs;

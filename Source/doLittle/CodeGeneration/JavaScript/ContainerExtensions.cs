@@ -7,10 +7,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Concepts;
-using Bifrost.Extensions;
+using doLittle.Concepts;
+using doLittle.Extensions;
 
-namespace Bifrost.CodeGeneration.JavaScript
+namespace doLittle.CodeGeneration.JavaScript
 {
     /// <summary>
     /// Provides methods for working with <see cref="Container"/>

@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.values", {
-    StringTypeConverter: Bifrost.values.TypeConverter.extend(function () {
+﻿doLittle.namespace("doLittle.values", {
+    StringTypeConverter: doLittle.values.TypeConverter.extend(function () {
         this.supportedType = String;
 
         this.convertFrom = function (value) {

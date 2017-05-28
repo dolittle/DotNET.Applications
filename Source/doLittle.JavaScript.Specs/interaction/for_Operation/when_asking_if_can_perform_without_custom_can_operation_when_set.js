@@ -1,6 +1,6 @@
 describe("when asking if can perform without custom can operation when set", function() {
 
-	var operation = Bifrost.interaction.Operation.create({
+	var operation = doLittle.interaction.Operation.create({
 		region: {},
 		context: {}
 	});

@@ -1,9 +1,9 @@
-﻿using Bifrost.Execution;
-using Bifrost.Validation.MetaData;
+﻿using doLittle.Execution;
+using doLittle.Validation.MetaData;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Validation.for_ValidationMetaData.given
+namespace doLittle.Specs.Validation.for_ValidationMetaData.given
 {
     public class all_dependencies
     {

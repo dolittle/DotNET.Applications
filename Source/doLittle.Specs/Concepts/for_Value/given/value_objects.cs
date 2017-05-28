@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Concepts.for_Value.given
+namespace doLittle.Specs.Concepts.for_Value.given
 {
     public class value_objects
     {

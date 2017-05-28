@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Validation.MetaData
+namespace doLittle.Validation.MetaData
 {
     /// <summary>
     /// Defines the generator that generates metadata for a validator

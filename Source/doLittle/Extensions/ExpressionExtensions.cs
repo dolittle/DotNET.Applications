@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace Bifrost.Extensions
+namespace doLittle.Extensions
 {
     /// <summary>
     /// Provides methods for working with expressions

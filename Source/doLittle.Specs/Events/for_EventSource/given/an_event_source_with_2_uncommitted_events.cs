@@ -1,7 +1,7 @@
-﻿using Bifrost.Specs.Events.Fakes;
+﻿using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventSource.given
+namespace doLittle.Specs.Events.for_EventSource.given
 {
 	public class an_event_source_with_2_uncommitted_events : a_stateful_event_source
 	{

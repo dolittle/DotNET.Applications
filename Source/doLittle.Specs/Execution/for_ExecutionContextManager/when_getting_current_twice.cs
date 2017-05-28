@@ -1,9 +1,9 @@
-﻿using Bifrost.Execution;
+﻿using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Execution.for_ExecutionContextManager
+namespace doLittle.Specs.Execution.for_ExecutionContextManager
 {
     public class when_getting_current_twice : given.an_execution_context_manager
     {

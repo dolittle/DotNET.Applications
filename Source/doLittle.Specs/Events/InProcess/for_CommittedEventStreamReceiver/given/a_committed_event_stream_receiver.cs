@@ -1,7 +1,7 @@
-﻿using Bifrost.Events.InProcess;
+﻿using doLittle.Events.InProcess;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.InProcess.for_CommittedEventStreamReceiver.given
+namespace doLittle.Specs.Events.InProcess.for_CommittedEventStreamReceiver.given
 {
     public class a_committed_event_stream_receiver : all_dependencies
     {

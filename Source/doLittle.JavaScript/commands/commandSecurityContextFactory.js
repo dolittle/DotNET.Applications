@@ -1,7 +1,7 @@
-﻿Bifrost.namespace("Bifrost.commands", {
-    commandSecurityContextFactory: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.commands", {
+    commandSecurityContextFactory: doLittle.Singleton(function () {
         this.create = function () {
-            var context = Bifrost.commands.CommandSecurityContext.create();
+            var context = doLittle.commands.CommandSecurityContext.create();
             return context;
         };
     })

@@ -1,6 +1,6 @@
 ﻿describe("when creating with values", function () {
 
-    var instance = Bifrost.read.PagingInfo.create({
+    var instance = doLittle.read.PagingInfo.create({
         size: 42,
         number: 43
     });

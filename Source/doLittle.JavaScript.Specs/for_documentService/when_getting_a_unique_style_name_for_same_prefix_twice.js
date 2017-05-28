@@ -1,6 +1,6 @@
 describe("when getting a unique style name for same prefix twice", function() {
 	
-	var service = Bifrost.documentService.createWithoutScope({DOMRoot: {}});
+	var service = doLittle.documentService.createWithoutScope({DOMRoot: {}});
 
 	var first = service.getUniqueStyleName("Something");
 	var second = service.getUniqueStyleName("Something");

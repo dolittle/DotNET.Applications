@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Bifrost.Read;
+using doLittle.Read;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.for_ReadModelFilters
+namespace doLittle.Specs.Read.for_ReadModelFilters
 {
     public class when_filtering_with_one_filter_that_does_not_filter : given.read_model_filters_with_one_filter_that_does_not_filter
     {

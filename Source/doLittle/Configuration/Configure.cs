@@ -8,19 +8,19 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Bifrost.Configuration.Assemblies;
-using Bifrost.Configuration.Defaults;
-using Bifrost.Diagnostics;
-using Bifrost.Events;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.Logging;
-using Bifrost.Tenancy;
+using doLittle.Configuration.Assemblies;
+using doLittle.Configuration.Defaults;
+using doLittle.Diagnostics;
+using doLittle.Events;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.Logging;
+using doLittle.Tenancy;
 #if(!NET461)
 using Microsoft.Extensions.Logging;
 #endif
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
     /// Represents the default <see cref="IConfigure"/> type
@@ -52,7 +52,7 @@ namespace Bifrost.Configuration
         }
 
         /// <summary>
-        /// Configure by letting Bifrost discover anything that implements the discoverable configuration interfaces
+        /// Configure by letting doLittle discover anything that implements the discoverable configuration interfaces
         /// </summary>
         /// <returns></returns>
         public static Configure DiscoverAndConfigure(

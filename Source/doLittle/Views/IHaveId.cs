@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Views
+namespace doLittle.Views
 {
     /// <summary>
     /// Defines the behavior of having an Id - typically used by objects during querying

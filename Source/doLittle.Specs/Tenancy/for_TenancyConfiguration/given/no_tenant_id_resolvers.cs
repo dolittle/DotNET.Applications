@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bifrost.Execution;
-using Bifrost.Tenancy;
+using doLittle.Execution;
+using doLittle.Tenancy;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Tenancy.for_TenancyConfiguration.given
+namespace doLittle.Specs.Tenancy.for_TenancyConfiguration.given
 {
     public class no_tenant_id_resolvers
     {

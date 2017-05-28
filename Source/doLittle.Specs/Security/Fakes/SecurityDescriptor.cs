@@ -1,9 +1,9 @@
-﻿using Bifrost.Commands;
-using Bifrost.Security;
+﻿using doLittle.Commands;
+using doLittle.Security;
 
-namespace Bifrost.Specs.Security.Fakes
+namespace doLittle.Specs.Security.Fakes
 {
-    public class SecurityDescriptor : Bifrost.Security.BaseSecurityDescriptor
+    public class SecurityDescriptor : doLittle.Security.BaseSecurityDescriptor
     {
         public static string SECURED_NAMESPACE = typeof(SimpleCommand).Namespace;
         public const string NAMESPACE_ROLE = "CanExecuteCommandsInNamespace";

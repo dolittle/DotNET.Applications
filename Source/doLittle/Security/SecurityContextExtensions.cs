@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq.Expressions;
-using Bifrost.Execution;
-using Bifrost.Tenancy;
+using doLittle.Execution;
+using doLittle.Tenancy;
 
-namespace Bifrost.Security
+namespace doLittle.Security
 {
     /// <summary>
     /// Extensions for a <see cref="ISecurityContext"/>

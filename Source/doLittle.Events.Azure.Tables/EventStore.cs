@@ -6,14 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Applications;
-using Bifrost.Concepts;
-using Bifrost.Extensions;
+using doLittle.Applications;
+using doLittle.Concepts;
+using doLittle.Extensions;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace Bifrost.Events.Azure.Tables
+namespace doLittle.Events.Azure.Tables
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEventStore"/> for Azure Tables

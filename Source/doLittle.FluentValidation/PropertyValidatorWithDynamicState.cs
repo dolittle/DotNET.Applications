@@ -6,11 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 using FluentValidation.Results;
 using FluentValidation.Validators;
 
-namespace Bifrost.FluentValidation
+namespace doLittle.FluentValidation
 {
     /// <summary>
     /// Represents a <see cref="PropertyValidator"/> that can hold dynamic state

@@ -1,5 +1,5 @@
 describe("when resolving and system is type", function() {
-	var type = Bifrost.Type.extend(function(dependency) {
+	var type = doLittle.Type.extend(function(dependency) {
 		this.something = "Hello";
 		this.dependency = dependency;
 	});
@@ -8,9 +8,9 @@ describe("when resolving and system is type", function() {
 	var dependencyResolvers;
 
 	beforeEach(function () {
-	    dependencyResolvers = Bifrost.dependencyResolvers;
+	    dependencyResolvers = doLittle.dependencyResolvers;
 
-	    Bifrost.dependencyResolvers = {
+	    doLittle.dependencyResolvers = {
 	        getAll: function () {
 	            return [{
 	                canResolve: function () {
@@ -27,11 +27,11 @@ describe("when resolving and system is type", function() {
 	    };
 
 	    var ns = {};
-	    result = Bifrost.dependencyResolver.resolve(ns, "something");
+	    result = doLittle.dependencyResolver.resolve(ns, "something");
 	});
 
 	afterEach(function () {
-	    Bifrost.dependencyResolvers = dependencyResolvers;
+	    doLittle.dependencyResolvers = dependencyResolvers;
 	});
     
 

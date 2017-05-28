@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bifrost.Execution;
+using doLittle.Execution;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Execution.for_TypeDiscoverer
+namespace doLittle.Specs.Execution.for_TypeDiscoverer
 {
     [Subject(typeof(TypeDiscoverer))]
     public class when_finding_types_with_multiple_implementations : given.a_type_discoverer

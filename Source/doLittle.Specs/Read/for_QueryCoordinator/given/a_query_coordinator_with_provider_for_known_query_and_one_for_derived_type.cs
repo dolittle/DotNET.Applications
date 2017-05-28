@@ -1,10 +1,10 @@
 ﻿using System;
-using Bifrost.Read;
-using Bifrost.Security;
+using doLittle.Read;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Read.for_QueryCoordinator.given
+namespace doLittle.Specs.Read.for_QueryCoordinator.given
 {
     public class a_query_coordinator_with_provider_for_known_query_and_one_for_derived_type : a_query_coordinator
     {

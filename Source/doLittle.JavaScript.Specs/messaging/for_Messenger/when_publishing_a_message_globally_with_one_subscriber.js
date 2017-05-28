@@ -7,7 +7,7 @@ describe("when publishing a message globally with one subscriber", function () {
         messageReceived = message;
     }
 
-    var messenger = Bifrost.messaging.Messenger.global;
+    var messenger = doLittle.messaging.Messenger.global;
     messenger.subscribeTo("SimpleMessage", received);
     messenger.publish("SimpleMessage", "Hello")
 

@@ -1,24 +1,24 @@
-Bifrost.namespace("Bifrost.validation.ruleHandlers");
-Bifrost.validation.ruleHandlers.lessThanOrEqual = {
+doLittle.namespace("doLittle.validation.ruleHandlers");
+doLittle.validation.ruleHandlers.lessThanOrEqual = {
     throwIfOptionsInvalid: function (options) {
         if (this.notSet(options)) {
-            throw new Bifrost.validation.OptionsNotDefined();
+            throw new doLittle.validation.OptionsNotDefined();
         }
         if (this.notSet(options.value)) {
-            var exception = new Bifrost.validation.OptionsValueNotSpecified();
+            var exception = new doLittle.validation.OptionsValueNotSpecified();
             exception.message = exception.message + " 'value' is not set.";
             throw exception;
         }
     },
 
     throwIsValueToCheckIsNotANumber: function (value) {
-        if (!Bifrost.isNumber(value)) {
-            throw new Bifrost.validation.NotANumber("Value " + value + " is not a number");
+        if (!doLittle.isNumber(value)) {
+            throw new doLittle.validation.NotANumber("Value " + value + " is not a number");
         }
     },
 
     notSet: function (value) {
-        return Bifrost.isUndefined(value) || Bifrost.isNull(value);
+        return doLittle.isUndefined(value) || doLittle.isNull(value);
     },
 
     validate: function (value, options) {

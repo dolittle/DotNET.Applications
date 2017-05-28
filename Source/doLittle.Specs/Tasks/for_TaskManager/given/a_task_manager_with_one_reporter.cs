@@ -1,9 +1,9 @@
-﻿using Bifrost.Tasks;
+﻿using doLittle.Tasks;
 using Machine.Specifications;
 using Moq;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Specs.Tasks.for_TaskManager.given
+namespace doLittle.Specs.Tasks.for_TaskManager.given
 {
     public class a_task_manager_with_one_reporter
     {

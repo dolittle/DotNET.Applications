@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Execution;
+using doLittle.Execution;
 using SimpleInjector;
 
-namespace Bifrost.SimpleInjector
+namespace doLittle.SimpleInjector
 {
     /// <summary>
     /// Extensions for <see cref="global::SimpleInjector.Container"/>

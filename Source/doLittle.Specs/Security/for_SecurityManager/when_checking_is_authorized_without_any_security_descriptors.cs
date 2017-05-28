@@ -1,9 +1,9 @@
-﻿using Bifrost.Security;
+﻿using doLittle.Security;
 using Machine.Specifications;
-using Bifrost.Commands;
+using doLittle.Commands;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_SecurityManager
+namespace doLittle.Specs.Security.for_SecurityManager
 {
     [Subject(typeof(SecurityManager))]
     public class when_checking_is_authorized_without_any_security_descriptors : given.a_security_manager_with_no_descriptors

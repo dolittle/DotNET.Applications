@@ -6,29 +6,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using Bifrost.Commands;
+using doLittle.Commands;
 using FluentValidation;
 using FluentValidation.Internal;
 using FluentValidation.Results;
 using FluentValidation.Validators;
 
-namespace Bifrost.FluentValidation.Commands
+namespace doLittle.FluentValidation.Commands
 {
     /// <summary>
     /// Represents the rule for a predicate in the form of a Func that will be called for validation
     /// </summary>
     /// <typeparam name="T">Type of command the validation applies to</typeparam>
     public class CommandPredicateRule<T> : PropertyRule
-        where T:ICommand
+        where T : ICommand
     {
-        static MemberInfo IdProperty = typeof(ICommand).GetTypeInfo().GetProperty("Id");
+        interface IHiddenCommand { Guid Id { get; set; } }
+
+        static MemberInfo IdProperty = typeof(IHiddenCommand).GetTypeInfo().GetProperty("Id");
         static Func<object, object> IdFunc;
-        static Expression<Func<ICommand, Guid>> IdFuncExpression;
+        static Expression<Func<IHiddenCommand, Guid>> IdFuncExpression;
 
         static CommandPredicateRule()
         {
-            Func<ICommand, Guid> idFunc = cmd => cmd.Id;
-            IdFuncExpression = (ICommand cmd) => cmd.Id;
+            Func<IHiddenCommand, Guid> idFunc = cmd => cmd.Id;
+            IdFuncExpression = (IHiddenCommand cmd) => cmd.Id;
 
             IdFunc = idFunc.CoerceToNonGeneric();
         }

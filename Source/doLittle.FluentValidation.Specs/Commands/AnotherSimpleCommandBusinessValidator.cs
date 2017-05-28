@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bifrost.FluentValidation.Commands;
-using Bifrost.Validation;
+using doLittle.FluentValidation.Commands;
+using doLittle.Validation;
 
-namespace Bifrost.FluentValidation.Specs.Commands
+namespace doLittle.FluentValidation.Specs.Commands
 {
     public class AnotherSimpleCommandBusinessValidator : CommandBusinessValidator<AnotherSimpleCommand>
     {

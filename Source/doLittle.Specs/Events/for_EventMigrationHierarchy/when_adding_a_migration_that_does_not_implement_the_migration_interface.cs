@@ -1,8 +1,8 @@
 using System;
-using Bifrost.Events;
+using doLittle.Events;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventMigrationHierarchy
+namespace doLittle.Specs.Events.for_EventMigrationHierarchy
 {
     public class when_adding_a_migration_that_does_not_implement_the_migration_interface : given.an_initialized_event_migration_hierarchy
     {

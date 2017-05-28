@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Bifrost.Execution;
+using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Execution.for_InstancesOf
+namespace doLittle.Specs.Execution.for_InstancesOf
 {
     public class when_having_multiple_implementations
     {

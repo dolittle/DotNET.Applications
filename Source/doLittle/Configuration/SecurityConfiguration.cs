@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
 using System.Reflection;
-using Bifrost.Execution;
-using Bifrost.Security;
+using doLittle.Execution;
+using doLittle.Security;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
     /// Represents the configuration for security

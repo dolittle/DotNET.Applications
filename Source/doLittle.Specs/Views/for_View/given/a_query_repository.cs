@@ -1,9 +1,9 @@
-﻿using Bifrost.Entities;
-using Bifrost.Views;
+﻿using doLittle.Entities;
+using doLittle.Views;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Views.for_View.given
+namespace doLittle.Specs.Views.for_View.given
 {
     public class a_view_for<T>
     {

@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 using Newtonsoft.Json;
 
-namespace Bifrost.JSON.Concepts
+namespace doLittle.JSON.Concepts
 {
     /// <summary>
     /// Implements a <see cref="JsonConverter"/> that deals with serializing and deserializing of <see cref="ConceptAs{T}"/>

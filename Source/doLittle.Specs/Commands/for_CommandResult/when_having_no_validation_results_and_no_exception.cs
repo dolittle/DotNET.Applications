@@ -1,7 +1,7 @@
-﻿using Bifrost.Commands;
+﻿using doLittle.Commands;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Commands.for_CommandResult
+namespace doLittle.Specs.Commands.for_CommandResult
 {
     public class when_having_no_validation_results_and_no_exception
     {

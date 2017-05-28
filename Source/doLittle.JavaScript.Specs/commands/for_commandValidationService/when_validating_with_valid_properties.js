@@ -23,7 +23,7 @@
         }
     };
 
-    var commandValidationService = Bifrost.commands.commandValidationService.create(parameters);
+    var commandValidationService = doLittle.commands.commandValidationService.create(parameters);
     var result = commandValidationService.validate(command);
 
     it("should return a result with valid set to true", function () {

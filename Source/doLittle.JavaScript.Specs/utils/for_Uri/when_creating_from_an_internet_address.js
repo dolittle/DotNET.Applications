@@ -1,6 +1,6 @@
 describe("when creating from an internet address", function() {
 	var location = "http://www.vg.no:8081/some/route#!some/anchor?firstParameter=5&secondParameter=horse";
-	var uri = Bifrost.Uri.create(location);
+	var uri = doLittle.Uri.create(location);
 	
 	it("should have scheme set", function() {
 		expect(uri.scheme).toBe("http");

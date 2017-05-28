@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Commands.for_CommandContextManager
+﻿namespace doLittle.Specs.Commands.for_CommandContextManager
 {
     public class Subjects
     {

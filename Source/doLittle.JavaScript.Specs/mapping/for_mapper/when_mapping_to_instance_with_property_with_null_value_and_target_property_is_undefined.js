@@ -9,13 +9,13 @@ describe("when mapping to instance with property with null value and target prop
 	    maps: { hasMapFor: sinon.stub().returns(false) }
 	};
 
-	var type = Bifrost.Type.extend(function () {
+	var type = doLittle.Type.extend(function () {
     });
 
 	var mappedInstance = type.create();
 
 	(function becauseOf(){
-	    var mapper = Bifrost.mapping.mapper.create(parameters);
+	    var mapper = doLittle.mapping.mapper.create(parameters);
 		mapper.mapToInstance(type, data, mappedInstance);
 	})();
 

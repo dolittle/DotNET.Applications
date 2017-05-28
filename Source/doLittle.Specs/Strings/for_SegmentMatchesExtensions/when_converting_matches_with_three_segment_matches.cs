@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Strings.for_SegmentMatchesExtensions
+namespace doLittle.Specs.Strings.for_SegmentMatchesExtensions
 {
     public class when_converting_matches_with_three_segment_matches
     {

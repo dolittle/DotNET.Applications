@@ -11,19 +11,19 @@
     var input = "42";
     beforeEach(function () {
        
-        typeConverterBefore = Bifrost.values.TypeConverter;
-        Bifrost.values.TypeConverter = {
+        typeConverterBefore = doLittle.values.TypeConverter;
+        doLittle.values.TypeConverter = {
             getExtenders: function () {
                 return [typeConverterType]
             }
         };
 
-        var typeConverters = Bifrost.values.typeConverters.createWithoutScope();
+        var typeConverters = doLittle.values.typeConverters.createWithoutScope();
         converted = typeConverters.convertFrom(input, Number);
     });
 
     afterEach(function () {
-        Bifrost.views.TypeConverter = typeConverterBefore;
+        doLittle.views.TypeConverter = typeConverterBefore;
     });
 
     it("should return the same value as input", function () {

@@ -1,7 +1,7 @@
-using Bifrost.Concepts;
+using doLittle.Concepts;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Concepts.for_ConceptFactory
+namespace doLittle.Specs.Concepts.for_ConceptFactory
 {
     [Subject(typeof(ConceptFactory))]
     public class when_creating_instance_of_double_concept_with_coming_in_as_double

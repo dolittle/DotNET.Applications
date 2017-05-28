@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Logging;
+using doLittle.Logging;
 
-namespace Bifrost.Strings
+namespace doLittle.Strings
 {
     /// <summary>
     /// Represents an implementation of <see cref="IStringFormat"/>

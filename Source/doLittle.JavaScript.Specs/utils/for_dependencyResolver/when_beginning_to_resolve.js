@@ -6,35 +6,35 @@ describe("when beginning to resolve", function () {
     var dependencyResolvers;
 
     beforeEach(function () {
-        configure = Bifrost.configure;
-        Bifrost.configure = {
+        configure = doLittle.configure;
+        doLittle.configure = {
             ready: sinon.stub()
         };
 
-        dependencyResolvers = Bifrost.dependencyResolvers;
+        dependencyResolvers = doLittle.dependencyResolvers;
 
-        Bifrost.dependencyResolvers = {
+        doLittle.dependencyResolvers = {
             getAll: function () {
                 return [{
                     canResolve: function () { return true; },
                     resolve: function () {
 
-                        var promise = Bifrost.execution.Promise.create();
+                        var promise = doLittle.execution.Promise.create();
                         return promise;
                     }
                 }];
             }
         };
-        result = Bifrost.dependencyResolver.beginResolve(ns, "something");
+        result = doLittle.dependencyResolver.beginResolve(ns, "something");
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolvers = dependencyResolvers;
-        Bifrost.configure = configure;
+        doLittle.dependencyResolvers = dependencyResolvers;
+        doLittle.configure = configure;
     });
 
 
 	it("should return a promise", function() {
-		expect(result instanceof Bifrost.execution.Promise).toBe(true);
+		expect(result instanceof doLittle.execution.Promise).toBe(true);
 	});
 });

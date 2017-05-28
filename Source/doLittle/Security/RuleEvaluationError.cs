@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Security
+namespace doLittle.Security
 {
     /// <summary>
     /// Encapsulates a <see cref="ISecurityRule"/> that encountered an Exception when evaluating

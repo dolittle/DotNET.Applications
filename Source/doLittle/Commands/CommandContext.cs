@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
-using Bifrost.Domain;
-using Bifrost.Events;
-using Bifrost.Execution;
-using Bifrost.Lifecycle;
+using doLittle.Domain;
+using doLittle.Events;
+using doLittle.Execution;
+using doLittle.Lifecycle;
 
-namespace Bifrost.Commands
+namespace doLittle.Commands
 {
     /// <summary>
     /// Represents a <see cref="ICommandContext">ICommandContext</see>

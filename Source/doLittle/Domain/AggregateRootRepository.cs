@@ -5,11 +5,11 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Events;
+using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Events;
 
-namespace Bifrost.Domain
+namespace doLittle.Domain
 {
     /// <summary>
     /// Defines a concrete implementation of <see cref="IAggregateRootRepository{T}">IAggregatedRootRepository</see>

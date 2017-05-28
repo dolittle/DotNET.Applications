@@ -5,7 +5,7 @@
 using System;
 using System.Linq;
 
-namespace Bifrost.CodeGeneration.JavaScript
+namespace doLittle.CodeGeneration.JavaScript
 {
     /// <summary>
     /// Provides methods for working with <see cref="Function"/> and related objects

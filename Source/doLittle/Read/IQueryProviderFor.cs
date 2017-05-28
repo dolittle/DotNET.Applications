@@ -2,9 +2,9 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Conventions;
+using doLittle.Conventions;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// Defines a provider that can deal with a query for <typeparamref name="T"/>.

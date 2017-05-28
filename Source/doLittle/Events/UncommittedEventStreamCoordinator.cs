@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Execution;
-using Bifrost.Lifecycle;
+using doLittle.Execution;
+using doLittle.Lifecycle;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Represents a <see cref="IUncommittedEventStreamCoordinator"/>

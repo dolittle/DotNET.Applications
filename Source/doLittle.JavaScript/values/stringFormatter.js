@@ -1,6 +1,6 @@
-﻿Bifrost.namespace("Bifrost.values", {
-    stringFormatter: Bifrost.Singleton(function () {
-        var formatterTypes = Bifrost.values.Formatter.getExtenders();
+﻿doLittle.namespace("doLittle.values", {
+    stringFormatter: doLittle.Singleton(function () {
+        var formatterTypes = doLittle.values.Formatter.getExtenders();
         var formattersByType = {};
 
         formatterTypes.forEach(function (type) {
@@ -9,11 +9,11 @@
         });
 
         function getFormat(element) {
-            if (element.nodeType !== 1 || Bifrost.isNullOrUndefined(element.attributes)) {
+            if (element.nodeType !== 1 || doLittle.isNullOrUndefined(element.attributes)) {
                 return null;
             }
             var stringFormatAttribute = element.attributes.getNamedItem("data-stringformat");
-            if (!Bifrost.isNullOrUndefined(stringFormatAttribute)) {
+            if (!doLittle.isNullOrUndefined(stringFormatAttribute)) {
                 return stringFormatAttribute.value;
             }
 

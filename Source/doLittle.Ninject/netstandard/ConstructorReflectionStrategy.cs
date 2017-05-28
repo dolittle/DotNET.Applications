@@ -10,7 +10,7 @@ using Ninject.Planning;
 using Ninject.Planning.Strategies;
 using Ninject.Selection;
 
-namespace Bifrost.Ninject
+namespace doLittle.Ninject
 {
     /// <summary>
     /// Represents an implementation of <see cref="IPlanningStrategy"/> to work around a bug related

@@ -43,7 +43,7 @@
         },
         mapper: {}
     }
-    var command = Bifrost.commands.Command.create(parameters);
+    var command = doLittle.commands.Command.create(parameters);
 
     command.execute();
 

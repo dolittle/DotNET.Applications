@@ -2,10 +2,10 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Configuration.Assemblies;
-using Bifrost.Execution;
+using doLittle.Configuration.Assemblies;
+using doLittle.Execution;
 
-namespace Bifrost.JSON
+namespace doLittle.JSON
 {
     /// <summary>
     /// Reperesents an <see cref="ICanSpecifyAssemblies">assembly specifier</see> for client aspects

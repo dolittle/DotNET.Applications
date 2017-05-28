@@ -1,6 +1,6 @@
 ﻿describe("when triggering event with two subscribers", function () {
 
-    var event = Bifrost.Event.create();
+    var event = doLittle.Event.create();
 
     var firstSubscriber = sinon.stub();
     var secondSubscriber = sinon.stub();

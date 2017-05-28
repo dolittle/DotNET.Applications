@@ -1,10 +1,10 @@
-﻿using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Events;
+﻿using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Events;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Domain.for_AggregateRootRepository.given
+namespace doLittle.Specs.Domain.for_AggregateRootRepository.given
 {
     public class all_dependencies
     {

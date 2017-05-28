@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.read", {
-    Queryable: Bifrost.Type.extend(function (query, queryService, region, targetObservable) {
+﻿doLittle.namespace("doLittle.read", {
+    Queryable: doLittle.Type.extend(function (query, queryService, region, targetObservable) {
         var self = this;
 
         this.canExecute = true;
@@ -51,7 +51,7 @@
             }
             self.query._previousAreAllParametersSet = true;
 
-            var paging = Bifrost.read.PagingInfo.create({
+            var paging = doLittle.read.PagingInfo.create({
                 size: self.pageSize(),
                 number: self.pageNumber()
             });
@@ -85,12 +85,12 @@
       
     })
 });
-Bifrost.read.Queryable.new = function (options, region) {
+doLittle.read.Queryable.new = function (options, region) {
     var observable = ko.observableArray();
     options.targetObservable = observable;
     options.region = region;
-    var queryable = Bifrost.read.Queryable.create(options);
-    Bifrost.extend(observable, queryable);
+    var queryable = doLittle.read.Queryable.create(options);
+    doLittle.extend(observable, queryable);
     observable.isQueryable = true;
     return observable;
 };

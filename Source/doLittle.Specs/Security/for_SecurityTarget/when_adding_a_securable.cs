@@ -1,9 +1,9 @@
-﻿using Bifrost.Security;
+﻿using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_SecurityTarget
+namespace doLittle.Specs.Security.for_SecurityTarget
 {
     public class when_adding_a_securable
     {

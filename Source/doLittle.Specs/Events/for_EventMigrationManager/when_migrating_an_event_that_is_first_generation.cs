@@ -1,10 +1,10 @@
-using Bifrost.Events;
-using Bifrost.Specs.Events.for_EventMigrationManager.given;
-using Bifrost.Specs.Events.for_EventMigrationService.given;
+using doLittle.Events;
+using doLittle.Specs.Events.for_EventMigrationManager.given;
+using doLittle.Specs.Events.for_EventMigrationService.given;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Events.for_EventMigrationService
+namespace doLittle.Specs.Events.for_EventMigrationService
 {
     class when_migrating_an_event_that_is_first_generation : an_event_migrator_service_with_no_registered_migrators
     {

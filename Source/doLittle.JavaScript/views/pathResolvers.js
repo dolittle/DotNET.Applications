@@ -1,11 +1,11 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    pathResolvers: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.views", {
+    pathResolvers: doLittle.Singleton(function () {
 
         function getResolvers() {
             var resolvers = [];
-            for (var property in Bifrost.views.pathResolvers) {
-                if (Bifrost.views.pathResolvers.hasOwnProperty(property)) {
-                    var value = Bifrost.views.pathResolvers[property];
+            for (var property in doLittle.views.pathResolvers) {
+                if (doLittle.views.pathResolvers.hasOwnProperty(property)) {
+                    var value = doLittle.views.pathResolvers[property];
                     if( typeof value === "function" &&
                         typeof value.create === "function") {
 

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-using Bifrost.Security;
+using doLittle.Security;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_SecurityDescriptor
+namespace doLittle.Specs.Security.for_SecurityDescriptor
 {
     [Subject(typeof(BaseSecurityDescriptor))]
     public class when_authorizing_on_command_type_and_namespace_and_user_is_in_only_type_role : given.a_configured_security_descriptor

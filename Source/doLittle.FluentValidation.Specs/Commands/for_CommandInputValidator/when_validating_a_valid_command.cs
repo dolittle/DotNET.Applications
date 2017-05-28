@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Bifrost.FluentValidation.Commands;
-using Bifrost.Validation;
+using doLittle.FluentValidation.Commands;
+using doLittle.Validation;
 using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_CommandInputValidator
+namespace doLittle.FluentValidation.Specs.Commands.for_CommandInputValidator
 {
     [Subject(typeof(CommandInputValidator<>))]
     public class when_validating_a_valid_command : given.a_command_input_validator

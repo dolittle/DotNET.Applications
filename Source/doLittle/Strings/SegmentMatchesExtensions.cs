@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bifrost.Strings
+namespace doLittle.Strings
 {
     /// <summary>
     /// Extensions for <see cref="ISegmentMatches"/>

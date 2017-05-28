@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Commands
+namespace doLittle.Commands
 {
     /// <summary>
     /// Represents a <see cref="ICommand"/>

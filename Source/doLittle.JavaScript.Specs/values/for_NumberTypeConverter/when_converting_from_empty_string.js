@@ -1,6 +1,6 @@
 ﻿describe("when converting from empty string", function () {
 
-    var converter = Bifrost.values.NumberTypeConverter.create();
+    var converter = doLittle.values.NumberTypeConverter.create();
 
     var result = converter.convertFrom("");
 

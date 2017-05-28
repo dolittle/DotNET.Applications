@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Web;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Web
+namespace doLittle.Web
 {
     [Singleton]
     public class WebCallContext : ICallContext

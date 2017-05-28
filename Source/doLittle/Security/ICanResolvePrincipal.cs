@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Security.Claims;
-using Bifrost.Conventions;
+using doLittle.Conventions;
 
-namespace Bifrost.Security
+namespace doLittle.Security
 {
     /// <summary>
     /// Defines a resolver for <see cref="ClaimsPrincipal"/>.

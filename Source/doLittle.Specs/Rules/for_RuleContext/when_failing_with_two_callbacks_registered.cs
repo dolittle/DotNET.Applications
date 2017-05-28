@@ -1,10 +1,10 @@
 ﻿using System;
-using Bifrost.Rules;
+using doLittle.Rules;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Rules.for_RuleContext
+namespace doLittle.Specs.Rules.for_RuleContext
 {
     public class when_failing_with_two_callbacks_registered 
     {

@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.navigation", {
-    navigationBindingHandler: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.navigation", {
+    navigationBindingHandler: doLittle.Type.extend(function () {
         function getNavigationFrameFor(valueAccessor) {
             var configurationString = ko.utils.unwrapObservable(valueAccessor());
             var configurationItems = ko.expressionRewriting.parseObjectLiteral(configurationString);
@@ -11,12 +11,12 @@
             }
 
             var uriMapperName = configuration.uriMapper;
-            if (Bifrost.isNullOrUndefined(uriMapperName)) {
+            if (doLittle.isNullOrUndefined(uriMapperName)) {
                 uriMapperName = "default";
             }
 
-            var mapper = Bifrost.uriMappers[uriMapperName];
-            var frame = Bifrost.navigation.NavigationFrame.create({
+            var mapper = doLittle.uriMappers[uriMapperName];
+            var frame = doLittle.navigation.NavigationFrame.create({
                 locationAware: false,
                 uriMapper: mapper,
                 home: configuration.home || ''
@@ -43,8 +43,8 @@
         };
     })
 });
-Bifrost.navigation.navigationBindingHandler.initialize = function () {
-    ko.bindingHandlers.navigation = Bifrost.navigation.navigationBindingHandler.create();
+doLittle.navigation.navigationBindingHandler.initialize = function () {
+    ko.bindingHandlers.navigation = doLittle.navigation.navigationBindingHandler.create();
     ko.jsonExpressionRewriting.bindingRewriteValidators.navigation = false; // Can't rewrite control flow bindings
     ko.virtualElements.allowedBindings.navigation = true;
 };

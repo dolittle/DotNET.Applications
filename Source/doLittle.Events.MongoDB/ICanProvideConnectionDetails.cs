@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Events.MongoDB
+namespace doLittle.Events.MongoDB
 {
     /// <summary>
     /// Delegate for providing connection string for <see cref="EventStore"/>

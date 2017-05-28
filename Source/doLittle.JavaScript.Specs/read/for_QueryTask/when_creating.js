@@ -26,13 +26,13 @@
         }
     };
 
-    var task = Bifrost.read.QueryTask.create({
+    var task = doLittle.read.QueryTask.create({
         taskFactory: taskFactory,
         query: query,
         paging: paging
     });
 
-    var expectedUrl = "/Bifrost/Query/Execute?_q=" + query._generatedFrom;
+    var expectedUrl = "/doLittle/Query/Execute?_q=" + query._generatedFrom;
 
     it("should create an inner task with correct url", function () {
         expect(urlForTask).toBe(expectedUrl);

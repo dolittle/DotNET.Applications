@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.tasks", {
-    TaskHistoryEntry: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.tasks", {
+    TaskHistoryEntry: doLittle.Type.extend(function () {
         var self = this;
 
         this.type = "";
@@ -8,8 +8,8 @@
         this.begin = ko.observable();
         this.end = ko.observable();
         this.total = ko.computed(function () {
-            if (!Bifrost.isNullOrUndefined(self.end()) &&
-                !Bifrost.isNullOrUndefined(self.begin())) {
+            if (!doLittle.isNullOrUndefined(self.end()) &&
+                !doLittle.isNullOrUndefined(self.begin())) {
                 return self.end() - self.begin();
             }
             return 0;
@@ -18,10 +18,10 @@
         this.error = ko.observable();
 
         this.isFinished = ko.computed(function () {
-            return !Bifrost.isNullOrUndefined(self.end());
+            return !doLittle.isNullOrUndefined(self.end());
         });
         this.hasFailed = ko.computed(function () {
-            return !Bifrost.isNullOrUndefined(self.error());
+            return !doLittle.isNullOrUndefined(self.error());
         });
 
         this.isSuccess = ko.computed(function () {

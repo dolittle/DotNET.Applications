@@ -1,8 +1,8 @@
-﻿using Bifrost.Security;
-using Bifrost.SomeRandomNamespace;
-using Bifrost.Specs.Security.Fakes;
+﻿using doLittle.Security;
+using doLittle.SomeRandomNamespace;
+using doLittle.Specs.Security.Fakes;
 
-namespace Bifrost.Specs.Security.for_TypeSecurable.given
+namespace doLittle.Specs.Security.for_TypeSecurable.given
 {
     public class a_type_securable
     {

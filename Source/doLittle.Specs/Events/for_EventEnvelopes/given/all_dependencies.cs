@@ -1,11 +1,11 @@
-﻿using Bifrost.Applications;
-using Bifrost.Events;
-using Bifrost.Execution;
-using Bifrost.Time;
+﻿using doLittle.Applications;
+using doLittle.Events;
+using doLittle.Execution;
+using doLittle.Time;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Events.for_EventEnvelopes.given
+namespace doLittle.Specs.Events.for_EventEnvelopes.given
 {
     public class all_dependencies
     {

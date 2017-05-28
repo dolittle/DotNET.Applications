@@ -1,7 +1,7 @@
-﻿using Bifrost.Read.Validation;
+﻿using doLittle.Read.Validation;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.Validation.for_QueryValidator.given
+namespace doLittle.Specs.Read.Validation.for_QueryValidator.given
 {
     public class a_query_validator : all_dependencies
     {

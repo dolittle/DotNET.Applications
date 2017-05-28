@@ -1,9 +1,9 @@
-﻿using Bifrost.Execution;
-using Bifrost.Web.Configuration;
+﻿using doLittle.Execution;
+using doLittle.Web.Configuration;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Web.Specs.Configuration.given
+namespace doLittle.Web.Specs.Configuration.given
 {
     public class a_namespace_mapper
     {
@@ -29,7 +29,7 @@ namespace Bifrost.Web.Specs.Configuration.given
                 namespace_mapper = new NamespaceMapper(type_discoverer.Object);
                 base_client_side_format = "DefaultClient";
                 client_side_namespace_format = Formatize(base_client_side_format);
-                base_server_side_format = "Bifrost.Web.Specs";
+                base_server_side_format = "doLittle.Web.Specs";
                 server_type_namespace_format = Formatize(base_server_side_format);
 
                 namespace_mapper.Add(client_side_namespace_format,server_type_namespace_format);

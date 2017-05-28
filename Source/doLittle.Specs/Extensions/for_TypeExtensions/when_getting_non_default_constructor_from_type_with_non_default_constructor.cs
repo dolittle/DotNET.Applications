@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Extensions.for_TypeExtensions
+namespace doLittle.Specs.Extensions.for_TypeExtensions
 {
     public class when_getting_non_default_constructor_from_type_with_non_default_constructor
     {

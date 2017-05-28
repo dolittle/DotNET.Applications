@@ -1,12 +1,12 @@
-﻿Bifrost.namespace("Bifrost.mapping", {
-    PropertyMap: Bifrost.Type.extend(function (sourceProperty, typeConverters) {
+﻿doLittle.namespace("doLittle.mapping", {
+    PropertyMap: doLittle.Type.extend(function (sourceProperty, typeConverters) {
         var self = this;
 
         this.strategy = null;
 
         function throwIfMissingPropertyStrategy() {
-            if (Bifrost.isNullOrUndefined(self.strategy)) {
-                throw Bifrost.mapping.MissingPropertyStrategy.create();
+            if (doLittle.isNullOrUndefined(self.strategy)) {
+                throw doLittle.mapping.MissingPropertyStrategy.create();
             }
         }
 
@@ -16,18 +16,18 @@
                 var targetValue = ko.unwrap(target[targetProperty]);
 
                 var typeAsString = null;
-                if (!Bifrost.isNullOrUndefined(value)) {
-                    if (!Bifrost.isNullOrUndefined(targetValue)) {
+                if (!doLittle.isNullOrUndefined(value)) {
+                    if (!doLittle.isNullOrUndefined(targetValue)) {
                         if (value.constructor !== targetValue.constructor) {
                             typeAsString = targetValue.constructor.name.toString();
                         }
 
-                        if (!Bifrost.isNullOrUndefined(target[targetProperty]._typeAsString)) {
+                        if (!doLittle.isNullOrUndefined(target[targetProperty]._typeAsString)) {
                             typeAsString = target[targetProperty]._typeAsString;
                         }
                     }
 
-                    if (!Bifrost.isNullOrUndefined(typeAsString)) {
+                    if (!doLittle.isNullOrUndefined(typeAsString)) {
                         value = typeConverters.convertFrom(value.toString(), typeAsString);
                     }
                 }

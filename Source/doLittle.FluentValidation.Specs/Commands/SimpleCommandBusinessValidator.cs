@@ -1,7 +1,7 @@
-﻿using Bifrost.FluentValidation.Commands;
+﻿using doLittle.FluentValidation.Commands;
 using FluentValidation;
 
-namespace Bifrost.FluentValidation.Specs.Commands
+namespace doLittle.FluentValidation.Specs.Commands
 {
     public class SimpleCommandBusinessValidator : CommandBusinessValidator<SimpleCommand>
     {

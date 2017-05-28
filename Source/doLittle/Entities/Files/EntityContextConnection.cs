@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Entities.Files
+namespace doLittle.Entities.Files
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEntityContextConnection"/> for the simple file based <see cref="EntityContext{T}"/>

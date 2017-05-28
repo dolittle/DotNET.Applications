@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using FluentValidation;
 using FluentValidation.Internal;
 
-namespace Bifrost.FluentValidation
+namespace doLittle.FluentValidation
 {
     /// <summary>
     /// Validation extensions for building validation rules

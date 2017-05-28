@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-namespace Bifrost.Diagnostics
+namespace doLittle.Diagnostics
 {
     /// <summary>
     /// Severity of a <see cref="Problem"/>

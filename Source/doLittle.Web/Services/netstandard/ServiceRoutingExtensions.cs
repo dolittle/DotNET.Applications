@@ -5,7 +5,7 @@
 using System;
 using Microsoft.AspNetCore.Routing;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     public static class ServiceRoutingExtensions
     {

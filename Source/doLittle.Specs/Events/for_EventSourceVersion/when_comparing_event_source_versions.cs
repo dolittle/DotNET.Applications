@@ -1,7 +1,7 @@
-﻿using Bifrost.Events;
+﻿using doLittle.Events;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventSourceVersion
+namespace doLittle.Specs.Events.for_EventSourceVersion
 {
     [Subject(typeof (EventSourceVersion))]
     public class when_comparing_event_source_versions: given.a_range_of_event_source_versions

@@ -1,10 +1,10 @@
-using Bifrost.Commands;
-using Bifrost.Validation;
+using doLittle.Commands;
+using doLittle.Validation;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Commands.for_CommandCoordinator
+namespace doLittle.Specs.Commands.for_CommandCoordinator
 {
     [Subject(typeof(CommandCoordinator))]
     public class when_handling_an_invalid_command : given.a_command_coordinator

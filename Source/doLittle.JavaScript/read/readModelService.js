@@ -1,4 +1,4 @@
-﻿Bifrost.namespace("Bifrost.read", {
-    readModelService: Bifrost.Singleton(function() {
+﻿doLittle.namespace("doLittle.read", {
+    readModelService: doLittle.Singleton(function() {
     })
 });

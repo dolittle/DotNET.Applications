@@ -1,6 +1,6 @@
-Bifrost.namespace("Bifrost", {
+doLittle.namespace("doLittle", {
     isType: function (o) {
-        if (Bifrost.isNullOrUndefined(o)) {
+        if (doLittle.isNullOrUndefined(o)) {
             return false;
         }
 		return typeof o._typeId !== "undefined";

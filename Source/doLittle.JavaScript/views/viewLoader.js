@@ -1,11 +1,11 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    viewLoader: Bifrost.Singleton(function (viewModelManager, taskFactory, fileFactory, regionManager) {
+﻿doLittle.namespace("doLittle.views", {
+    viewLoader: doLittle.Singleton(function (viewModelManager, taskFactory, fileFactory, regionManager) {
         this.load = function (path,region) {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
 
             var files = [];
 
-            var viewFile = fileFactory.create(path, Bifrost.io.fileType.html);
+            var viewFile = fileFactory.create(path, doLittle.io.fileType.html);
             if (path.indexOf("?") > 0) {
                 viewFile.path.fullPath = viewFile.path.fullPath + path.substr(path.indexOf("?"));
             }
@@ -15,7 +15,7 @@
             if (viewModelManager.hasForView(path)) {
                 viewModelPath = viewModelManager.getViewModelPathForView(path);
                 if (!viewModelManager.isLoaded(viewModelPath)) {
-                    var viewModelFile = fileFactory.create(viewModelPath, Bifrost.io.fileType.javaScript);
+                    var viewModelFile = fileFactory.create(viewModelPath, doLittle.io.fileType.javaScript);
                     files.push(viewModelFile);
                 }
             }

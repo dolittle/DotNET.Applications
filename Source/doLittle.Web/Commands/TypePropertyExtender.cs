@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Concepts;
-using Bifrost.Extensions;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Concepts;
+using doLittle.Extensions;
 
-namespace Bifrost.Web.Commands
+namespace doLittle.Web.Commands
 {
     public class TypePropertyExtender : ICanExtendCommandProperty
     {

@@ -25,7 +25,7 @@
             return task;
         }
     };
-    var instance = Bifrost.read.queryService.createWithoutScope({
+    var instance = doLittle.read.queryService.createWithoutScope({
         taskFactory: taskFactory,
         mapper: mapper
     });

@@ -1,8 +1,8 @@
 using System;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.Concepts.given
+namespace doLittle.FluentValidation.Specs.Concepts.given
 {
     public class concepts
     {

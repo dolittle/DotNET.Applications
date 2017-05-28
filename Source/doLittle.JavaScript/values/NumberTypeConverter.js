@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.values", {
-    NumberTypeConverter: Bifrost.values.TypeConverter.extend(function () {
+﻿doLittle.namespace("doLittle.values", {
+    NumberTypeConverter: doLittle.values.TypeConverter.extend(function () {
         var allowedCharacters = "0123456789.,";
 
         this.supportedType = Number;

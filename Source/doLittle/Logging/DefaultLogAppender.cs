@@ -11,7 +11,7 @@ using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 #endif
 
-namespace Bifrost.Logging
+namespace doLittle.Logging
 {
 #if (NET461)
     /// <summary>

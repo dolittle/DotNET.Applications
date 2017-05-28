@@ -1,10 +1,10 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    ViewBindingHandlerTemplateEngine: Bifrost.Type.extend(function (viewModelManager, regionManager, UIManager) {
+﻿doLittle.namespace("doLittle.views", {
+    ViewBindingHandlerTemplateEngine: doLittle.Type.extend(function (viewModelManager, regionManager, UIManager) {
         var self = this;
         this.renderTemplate = function (template, bindingContext, options) {
             var templateSource;
-            if (Bifrost.isNullOrUndefined(options.element.templateSource)) {
-                templateSource = Bifrost.views.ViewBindingHandlerTemplateSource.create({
+            if (doLittle.isNullOrUndefined(options.element.templateSource)) {
+                templateSource = doLittle.views.ViewBindingHandlerTemplateSource.create({
                     viewUri: options.viewUri,
                     region: options.region
                 });
@@ -13,7 +13,7 @@
                 templateSource = options.element.templateSource;
             }
 
-            if (Bifrost.isNullOrUndefined(options.element.view)) {
+            if (doLittle.isNullOrUndefined(options.element.view)) {
                 templateSource.loadFor(options.element, options.view, options.region).continueWith(function (view) {
                     options.element.view = view;
                     regionManager.describe(options.view, options.region).continueWith(function () {
@@ -24,7 +24,7 @@
 
                             var instance;
 
-                            if (!Bifrost.isNullOrUndefined(view.viewModelType)) {
+                            if (!doLittle.isNullOrUndefined(view.viewModelType)) {
                                 var viewModelParameters = options.viewModelParameters;
                                 viewModelParameters.region = options.region;
 
@@ -62,9 +62,9 @@
 
 (function () {
     var nativeTemplateEngine = new ko.nativeTemplateEngine();
-    var baseCreate = Bifrost.views.ViewBindingHandlerTemplateEngine.create;
-    Bifrost.views.ViewBindingHandlerTemplateEngine.create = function () {
-        var instance = baseCreate.call(Bifrost.views.ViewBindingHandlerTemplateEngine, arguments);
+    var baseCreate = doLittle.views.ViewBindingHandlerTemplateEngine.create;
+    doLittle.views.ViewBindingHandlerTemplateEngine.create = function () {
+        var instance = baseCreate.call(doLittle.views.ViewBindingHandlerTemplateEngine, arguments);
 
         for (var property in nativeTemplateEngine) {
             if (!instance.hasOwnProperty(property)) {

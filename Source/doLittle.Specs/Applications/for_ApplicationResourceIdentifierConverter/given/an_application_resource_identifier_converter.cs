@@ -1,8 +1,8 @@
-﻿using Bifrost.Applications;
+﻿using doLittle.Applications;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResourceIdentifierConverter.given
+namespace doLittle.Specs.Applications.for_ApplicationResourceIdentifierConverter.given
 {
     public class an_application_resource_identifier_converter : all_dependencies
     {

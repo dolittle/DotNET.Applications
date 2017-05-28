@@ -1,5 +1,5 @@
 ﻿
-namespace Bifrost.Specs.Mapping.for_PropertyMapExtensions
+namespace doLittle.Specs.Mapping.for_PropertyMapExtensions
 {
     public class Target
     {

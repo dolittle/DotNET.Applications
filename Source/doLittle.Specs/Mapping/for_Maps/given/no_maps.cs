@@ -1,8 +1,8 @@
-﻿using Bifrost.Mapping;
+﻿using doLittle.Mapping;
 using Machine.Specifications;
 using System.Linq;
 
-namespace Bifrost.Specs.Mapping.for_Maps.given
+namespace doLittle.Specs.Mapping.for_Maps.given
 {
     public class no_maps : all_dependencies
     {

@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Domain;
+using doLittle.Domain;
 
 
-namespace Bifrost.Specs.Commands
+namespace doLittle.Specs.Commands
 {
     public class StatefulAggregatedRoot : AggregateRoot
     {

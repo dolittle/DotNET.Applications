@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Execution;
+using doLittle.Execution;
 using StructureMap.Pipeline;
 
-namespace Bifrost.StructureMap
+namespace doLittle.StructureMap
 {
     /// <summary>
     /// Represents an implementation of <see cref="IContainer"/> for StructureMap

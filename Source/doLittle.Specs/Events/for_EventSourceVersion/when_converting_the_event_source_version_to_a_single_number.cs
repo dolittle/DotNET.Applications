@@ -1,9 +1,9 @@
 ﻿using System;
 
 using Machine.Specifications;
-using Bifrost.Events;
+using doLittle.Events;
 
-namespace Bifrost.Specs.Events.for_EventSourceVersion
+namespace doLittle.Specs.Events.for_EventSourceVersion
 {
     [Subject(typeof (EventSourceVersion))]
     public class when_converting_the_event_source_version_to_a_single_number : given.a_range_of_event_source_versions

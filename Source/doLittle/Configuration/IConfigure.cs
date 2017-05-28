@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Globalization;
 using System.Reflection;
-using Bifrost.Configuration.Assemblies;
-using Bifrost.Execution;
-using Bifrost.Tenancy;
+using doLittle.Configuration.Assemblies;
+using doLittle.Execution;
+using doLittle.Tenancy;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
-    /// Defines the configuration for Bifrost
+    /// Defines the configuration for doLittle
     /// </summary>
     public interface IConfigure 
     {
@@ -31,7 +31,7 @@ namespace Bifrost.Configuration
         ICommandsConfiguration Commands { get; }
 
         /// <summary>
-        /// Gets the configuration for <see cref="Bifrost.Tasks.Task">Tasks</see>
+        /// Gets the configuration for <see cref="doLittle.Tasks.Task">Tasks</see>
         /// Supports specific storage
         /// </summary>
         ITasksConfiguration Tasks { get; }
@@ -87,17 +87,17 @@ namespace Bifrost.Configuration
         AssembliesConfiguration Assemblies { get; }
         
         /// <summary>
-        /// Gets or sets the <see cref="CultureInfo">culture</see> to use in Bifrost
+        /// Gets or sets the <see cref="CultureInfo">culture</see> to use in doLittle
         /// </summary>
         CultureInfo Culture { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="CultureInfo">UI culture</see> to use in Bifrost
+        /// Gets or sets the <see cref="CultureInfo">UI culture</see> to use in doLittle
         /// </summary>
         CultureInfo UICulture { get; set; }
 
         /// <summary>
-        /// Initializes Bifrost after configuration
+        /// Initializes doLittle after configuration
         /// </summary>
         void Initialize();
     }

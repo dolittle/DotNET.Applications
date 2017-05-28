@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
-using Bifrost.Execution;
-using Bifrost.Extensions;
+using doLittle.Execution;
+using doLittle.Extensions;
 
-namespace Bifrost.Mapping
+namespace doLittle.Mapping
 {
     /// <summary>
     /// Represents an implementation of <see cref="IMappingTargets"/>

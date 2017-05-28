@@ -1,8 +1,8 @@
-﻿using Bifrost.Security;
+﻿using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Security.for_ClaimTypeRule.given
+namespace doLittle.Specs.Security.for_ClaimTypeRule.given
 {
     public class a_claim_type_rule
     {

@@ -1,5 +1,5 @@
 describe("when signalling and callback gets defined after singalling", function () {
-    var promise = Bifrost.execution.Promise.create();
+    var promise = doLittle.execution.Promise.create();
     var continued = false;
     var parameter = null;
     var nextPromise = null;
@@ -26,6 +26,6 @@ describe("when signalling and callback gets defined after singalling", function 
 
 
     it("should have the next promise", function () {
-        expect(nextPromise instanceof Bifrost.execution.Promise).toBe(true);
+        expect(nextPromise instanceof doLittle.execution.Promise).toBe(true);
     });
 });

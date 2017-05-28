@@ -6,12 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 #if(!NET461)
 using Microsoft.Extensions.Logging;
 #endif
 
-namespace Bifrost.Logging
+namespace doLittle.Logging
 {
     /// <summary>
     /// Represents the entrypoint for configuring logging and the <see cref="ILogAppenders"/>
@@ -35,7 +35,7 @@ namespace Bifrost.Logging
 #endif
         {
 #if (NET461)
-            var assembliesToSkip = new[] { "Bifrost", "System", "Microsoft", "mscorlib" };
+            var assembliesToSkip = new[] { "doLittle", "System", "Microsoft", "mscorlib" };
             var types = new List<Type>();
             var availableAssemblies = AppDomain.CurrentDomain.GetAssemblies();
             var assemblies = availableAssemblies.Where(a => !assembliesToSkip.Any(aa => a.FullName.StartsWith(aa)));

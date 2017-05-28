@@ -9,7 +9,7 @@ describe("when extending an object with overlapping content", function () {
         property: "sheep",
         func: function () { }
     };
-    Bifrost.extend(overlappingObject, extension);
+    doLittle.extend(overlappingObject, extension);
     it("should add property", function () {
         expect(overlappingObject.property).toEqual(extension.property);
     });

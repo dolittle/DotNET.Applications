@@ -1,14 +1,14 @@
-﻿using Bifrost.Commands;
-using Bifrost.Exceptions;
-using Bifrost.Security;
-using Bifrost.Logging;
+﻿using doLittle.Commands;
+using doLittle.Exceptions;
+using doLittle.Security;
+using doLittle.Logging;
 using Machine.Specifications;
 using Moq;
-using Bifrost.Lifecycle;
-using Bifrost.Applications;
+using doLittle.Lifecycle;
+using doLittle.Applications;
 using System.Dynamic;
 
-namespace Bifrost.Specs.Commands.for_CommandCoordinator.given
+namespace doLittle.Specs.Commands.for_CommandCoordinator.given
 {
     public abstract class a_command_coordinator : Globalization.given.a_localizer_mock
     {

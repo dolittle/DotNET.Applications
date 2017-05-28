@@ -5,7 +5,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace Bifrost.Extensions
+namespace doLittle.Extensions
 {
     /// <summary>
     /// Represents an implementation of <see cref="ITypeInfo"/>

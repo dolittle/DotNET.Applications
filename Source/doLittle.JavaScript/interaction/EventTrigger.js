@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.interaction", {
-    EventTrigger: Bifrost.interaction.Trigger.extend(function () {
+﻿doLittle.namespace("doLittle.interaction", {
+    EventTrigger: doLittle.interaction.Trigger.extend(function () {
         var self = this;
 
         this.eventName = null;

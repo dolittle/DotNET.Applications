@@ -1,9 +1,9 @@
 ﻿using System;
-using Bifrost.Concepts;
-using Bifrost.Specs.Concepts.given;
+using doLittle.Concepts;
+using doLittle.Specs.Concepts.given;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Concepts.for_ConceptMap
+namespace doLittle.Specs.Concepts.for_ConceptMap
 {
     [Subject(typeof(ConceptMap))]
     public class when_getting_the_primitive_type_from_a_long_concept

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Dynamic;
-using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
 
-namespace Bifrost.Specs.Commands.for_CommandHandlerManager
+namespace doLittle.Specs.Commands.for_CommandHandlerManager
 {
     public class when_handling_a_command_without_a_command_handler : given.a_command_handler_manager
     {

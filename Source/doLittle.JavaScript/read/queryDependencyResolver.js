@@ -1,4 +1,4 @@
-﻿Bifrost.dependencyResolvers.query = {
+﻿doLittle.dependencyResolvers.query = {
     canResolve: function (namespace, name) {
         if (typeof read !== "undefined") {
             return name in read;

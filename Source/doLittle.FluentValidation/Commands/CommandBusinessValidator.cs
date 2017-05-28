@@ -5,12 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Commands;
-using Bifrost.Validation;
+using doLittle.Commands;
+using doLittle.Validation;
 using FluentValidation;
 using FluentValidation.Internal;
 
-namespace Bifrost.FluentValidation.Commands
+namespace doLittle.FluentValidation.Commands
 {
     /// <summary>
     /// Base class to inherit from for basic business-rule validation of a command.

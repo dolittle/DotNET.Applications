@@ -1,9 +1,9 @@
-﻿using Bifrost.Configuration;
-using Bifrost.Execution;
+﻿using doLittle.Configuration;
+using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Configuration.for_EventsConfiguration.given
+namespace doLittle.Specs.Configuration.for_EventsConfiguration.given
 {
     public class an_events_configuration_and_container_object : an_events_configuration
     {

@@ -11,19 +11,19 @@
             }
         }
 
-        formatterBefore = Bifrost.values.Formatter;
-        Bifrost.values.Formatter = {
+        formatterBefore = doLittle.values.Formatter;
+        doLittle.values.Formatter = {
             getExtenders: sinon.stub().returns([])
         };
 
-        formatter = Bifrost.values.stringFormatter.createWithoutScope();
+        formatter = doLittle.values.stringFormatter.createWithoutScope();
         result = formatter.hasFormat(element);
 
 
     });
 
     afterEach(function () {
-        Bifrost.values.Formatter = formatterBefore;
+        doLittle.values.Formatter = formatterBefore;
     });
 
     

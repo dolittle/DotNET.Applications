@@ -6,11 +6,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Applications;
-using Bifrost.Execution;
-using Bifrost.Time;
+using doLittle.Applications;
+using doLittle.Execution;
+using doLittle.Time;
 
-namespace Bifrost.Events.InProcess
+namespace doLittle.Events.InProcess
 {
     /// <summary>
     /// Represents an implementation of <see cref="IKnowAboutEventProcessors"/> for 

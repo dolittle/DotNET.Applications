@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Specs.Execution.for_any_conventions
+namespace doLittle.Specs.Execution.for_any_conventions
 {
     public class SelfBindingConvention : BaseConvention
     {

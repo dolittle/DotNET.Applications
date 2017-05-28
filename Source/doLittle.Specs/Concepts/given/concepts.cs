@@ -1,8 +1,8 @@
 using System;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Concepts.given
+namespace doLittle.Specs.Concepts.given
 {
     public class concepts
     {

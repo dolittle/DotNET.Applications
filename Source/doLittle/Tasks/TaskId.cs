@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Tasks
+namespace doLittle.Tasks
 {
     /// <summary>
     /// Defines an identifier for <see cref="Task">Tasks</see>

@@ -2,12 +2,12 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.CodeGeneration;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Extensions;
-using Bifrost.Web.Proxies;
+using doLittle.CodeGeneration;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Extensions;
+using doLittle.Web.Proxies;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     public class ServiceProxies : IProxyGenerator
     {
@@ -33,7 +33,7 @@ namespace Bifrost.Web.Services
                         var name = serviceRegistration.Key.Name.ToCamelCase();
                         o.Assign(name)
                             .WithType(t =>
-                                t.WithSuper("Bifrost.services.Service")
+                                t.WithSuper("doLittle.services.Service")
                                     .Function
                                         .Body
                                             .Variant("self", v => v.WithThis())

@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Threading.Tasks;
-using Bifrost.Configuration;
-using Bifrost.Exceptions;
-using Bifrost.Execution;
-using Bifrost.Security;
-using Bifrost.Services;
+using doLittle.Configuration;
+using doLittle.Exceptions;
+using doLittle.Execution;
+using doLittle.Security;
+using doLittle.Services;
 using Microsoft.AspNetCore.Http;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     public class RestServiceRouteHttpHandler
     {

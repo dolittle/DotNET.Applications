@@ -3,7 +3,7 @@ using System.Linq;
 using Machine.Specifications;
 using Ninject.Modules;
 
-namespace Bifrost.Ninject.Specs.for_KernelExtensions
+namespace doLittle.Ninject.Specs.for_KernelExtensions
 {
     public class when_loading_all_modules_and_there_are_two_modules_in_the_assembly : given.a_kernel_and_a_type_importer
     {

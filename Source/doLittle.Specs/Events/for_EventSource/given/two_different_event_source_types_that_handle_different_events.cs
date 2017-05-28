@@ -1,9 +1,9 @@
 ﻿using System;
-using Bifrost.Events;
-using Bifrost.Specs.Events.Fakes;
+using doLittle.Events;
+using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventSource.given
+namespace doLittle.Specs.Events.for_EventSource.given
 {
     [Subject(typeof(EventSourceExtensions))]
     public class two_different_event_source_types_that_handle_different_events : all_dependencies

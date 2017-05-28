@@ -1,5 +1,5 @@
 ﻿
-namespace Bifrost.Specs.Mapping.for_TargetPropertyMappingStrategy
+namespace doLittle.Specs.Mapping.for_TargetPropertyMappingStrategy
 {
     public class Target
     {

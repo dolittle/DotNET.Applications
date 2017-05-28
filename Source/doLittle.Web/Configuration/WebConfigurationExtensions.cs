@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Web.Configuration;
-using Bifrost.Web.Pipeline;
+using doLittle.Web.Configuration;
+using doLittle.Web.Pipeline;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     public static class WebConfigurationExtensions
     {

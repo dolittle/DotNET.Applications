@@ -1,10 +1,10 @@
-﻿using Bifrost.Commands;
-using Bifrost.Events;
+﻿using doLittle.Commands;
+using doLittle.Events;
 using Machine.Specifications;
 using Moq;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Specs.Commands.for_CommandContextFactory.given
+namespace doLittle.Specs.Commands.for_CommandContextFactory.given
 {
     public class a_command_context_factory
     {

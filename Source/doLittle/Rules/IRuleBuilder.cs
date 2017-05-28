@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Rules
+namespace doLittle.Rules
 {
     /// <summary>
     /// Defines the basis for a rule builder

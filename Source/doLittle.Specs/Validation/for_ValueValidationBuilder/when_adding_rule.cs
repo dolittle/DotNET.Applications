@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
-using Bifrost.Rules;
-using Bifrost.Validation;
+using doLittle.Rules;
+using doLittle.Validation;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Validation.for_ValueValidationBuilder
+namespace doLittle.Specs.Validation.for_ValueValidationBuilder
 {
     public class when_adding_rule
     {

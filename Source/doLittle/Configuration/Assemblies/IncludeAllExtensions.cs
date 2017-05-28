@@ -2,10 +2,10 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Extensions;
-using Bifrost.Specifications;
+using doLittle.Extensions;
+using doLittle.Specifications;
 
-namespace Bifrost.Configuration.Assemblies
+namespace doLittle.Configuration.Assemblies
 {
     /// <summary>
     /// Extensions for <see cref="IncludeAll"/>

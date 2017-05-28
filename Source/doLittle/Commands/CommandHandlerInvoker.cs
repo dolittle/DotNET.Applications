@@ -6,11 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Applications;
-using Bifrost.Execution;
-using Bifrost.Extensions;
+using doLittle.Applications;
+using doLittle.Execution;
+using doLittle.Extensions;
 
-namespace Bifrost.Commands
+namespace doLittle.Commands
 {
     /// <summary>
     /// Represents a <see cref="ICommandHandlerInvoker">ICommandHandlerInvoker</see> for handling

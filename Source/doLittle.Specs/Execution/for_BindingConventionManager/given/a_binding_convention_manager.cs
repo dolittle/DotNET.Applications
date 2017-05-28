@@ -1,8 +1,8 @@
-﻿using Bifrost.Execution;
+﻿using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Execution.for_BindingConventionManager.given
+namespace doLittle.Specs.Execution.for_BindingConventionManager.given
 {
 
     public class a_binding_convention_manager

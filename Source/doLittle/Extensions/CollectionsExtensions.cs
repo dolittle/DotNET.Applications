@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bifrost.Extensions
+namespace doLittle.Extensions
 {
     /// <summary>
     /// Provides a set of extension methods for different collection and enumerable types

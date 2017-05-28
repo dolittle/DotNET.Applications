@@ -20,7 +20,7 @@
         },
         mapper: {}
     }
-    var command = Bifrost.commands.Command.create(parameters);
+    var command = doLittle.commands.Command.create(parameters);
 
     it("should not get validation rules", function () {
         expect(parameters.commandValidationService.applyRulesTo.called).toBe(false);

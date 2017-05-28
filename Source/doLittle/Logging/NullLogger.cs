@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Logging
+namespace doLittle.Logging
 {
     /// <summary>
     /// Represents a null implementation of <see cref="ILogger"/> - it does not do anything

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Reflection;
 
-namespace Bifrost.Mapping
+namespace doLittle.Mapping
 {
     /// <summary>
     /// Represents an implementation of <see cref="IPropertyMappingStrategy"/> that supports mapping to 

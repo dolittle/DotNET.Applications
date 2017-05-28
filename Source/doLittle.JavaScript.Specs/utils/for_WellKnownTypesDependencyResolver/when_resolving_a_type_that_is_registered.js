@@ -1,7 +1,7 @@
 ﻿describe("when resolving a type that is registered", function () {
-    Bifrost.WellKnownTypesDependencyResolver.types.something = "Hello";
+    doLittle.WellKnownTypesDependencyResolver.types.something = "Hello";
 
-    var resolver = new Bifrost.WellKnownTypesDependencyResolver();
+    var resolver = new doLittle.WellKnownTypesDependencyResolver();
 
     var result = resolver.resolve(null, "something");
 

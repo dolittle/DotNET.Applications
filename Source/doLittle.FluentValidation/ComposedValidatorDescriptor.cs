@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Bifrost.FluentValidation
+namespace doLittle.FluentValidation
 {
     /// <summary>
     /// Combines multiples validator descriptors into a single validator descriptor.

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Validation.MetaData
+namespace doLittle.Validation.MetaData
 {
     /// <summary>
     /// Represents the validation metadata for a type

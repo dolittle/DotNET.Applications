@@ -1,7 +1,7 @@
-﻿using Bifrost.Security;
+﻿using doLittle.Security;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Security.for_ClaimTypeRule
+namespace doLittle.Specs.Security.for_ClaimTypeRule
 {
     [Subject(typeof (ClaimTypeRule))]
     public class when_getting_the_rule_description : given.a_claim_type_rule

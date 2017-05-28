@@ -1,6 +1,6 @@
 ﻿describe("when getting values from placeholders", function () {
     var expectedResult = "Say/hello/to/mr.potatohead";
-    var mapping = Bifrost.StringMapping.create({
+    var mapping = doLittle.StringMapping.create({
         format: "{something}/{else}",
         mappedFormat: "Say/{else}/to/{something}"
     });

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Web.Read
+namespace doLittle.Web.Read
 {
     public class ReadModelQueryDescriptor
     {

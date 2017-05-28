@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Bifrost.Strings
+namespace doLittle.Strings
 {
     /// <summary>
     /// Represents a base class for <see cref="ISegment"/> 

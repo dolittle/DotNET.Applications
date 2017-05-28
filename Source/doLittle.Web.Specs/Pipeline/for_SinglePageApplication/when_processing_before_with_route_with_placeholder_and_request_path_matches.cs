@@ -3,7 +3,7 @@ using Moq;
 using It = Machine.Specifications.It;
 using System.Web.Routing;
 
-namespace Bifrost.Web.Specs.Pipeline.for_SinglePageApplication
+namespace doLittle.Web.Specs.Pipeline.for_SinglePageApplication
 {
     public class when_processing_before_with_route_with_placeholder_and_request_path_matches : given.a_single_page_application_and_a_web_context_with_default_routes
     {

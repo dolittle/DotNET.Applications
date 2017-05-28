@@ -4,7 +4,7 @@
         property: "sau",
         func: function () { }
     };
-    Bifrost.extend(emptyObject, extension);
+    doLittle.extend(emptyObject, extension);
     it("should add property", function () {
         expect(emptyObject.property).toEqual(extension.property);
     });

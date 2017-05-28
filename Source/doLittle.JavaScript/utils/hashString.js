@@ -1,5 +1,5 @@
-Bifrost.namespace("Bifrost");
-Bifrost.hashString = (function() {
+doLittle.namespace("doLittle");
+doLittle.hashString = (function() {
     return {
         decode: function (a) {
             if (a === "") {

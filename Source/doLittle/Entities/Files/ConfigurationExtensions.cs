@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.IO;
-using Bifrost.Entities.Files;
-namespace Bifrost.Configuration
+using doLittle.Entities.Files;
+namespace doLittle.Configuration
 {
     /// <summary>
     /// Extensions for configuration

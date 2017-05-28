@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Mapping;
+using doLittle.Mapping;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Mapping.for_Maps
+namespace doLittle.Specs.Mapping.for_Maps
 {
     public class when_asking_for_map_for_unknown_combination : given.no_maps
     {

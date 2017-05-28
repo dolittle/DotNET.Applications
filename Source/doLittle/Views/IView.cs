@@ -5,7 +5,7 @@
 using System;
 using System.Linq;
 
-namespace Bifrost.Views
+namespace doLittle.Views
 {
     /// <summary>
     /// Defines a repository that can be queried against

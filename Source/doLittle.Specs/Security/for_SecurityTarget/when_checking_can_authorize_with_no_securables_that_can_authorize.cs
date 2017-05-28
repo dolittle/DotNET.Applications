@@ -1,9 +1,9 @@
-﻿using Bifrost.Security;
+﻿using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_SecurityTarget
+namespace doLittle.Specs.Security.for_SecurityTarget
 {
     [Subject(typeof(SecurityTarget))]
     public class when_checking_can_authorize_with_no_securables_that_can_authorize

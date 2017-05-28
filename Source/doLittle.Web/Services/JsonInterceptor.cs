@@ -2,7 +2,7 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Execution;
+using doLittle.Execution;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     [Singleton]
     public class JsonInterceptor : IJsonInterceptor

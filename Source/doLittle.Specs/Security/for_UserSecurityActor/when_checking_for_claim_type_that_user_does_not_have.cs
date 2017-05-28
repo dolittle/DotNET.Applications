@@ -1,10 +1,10 @@
 ﻿using System.Security.Claims;
-using Bifrost.Security;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_UserSecurityActor
+namespace doLittle.Specs.Security.for_UserSecurityActor
 {
     public class when_checking_for_claim_type_that_user_does_not_have
     {

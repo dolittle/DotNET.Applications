@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Represents an implementation of <see cref="IFileSystem"/>

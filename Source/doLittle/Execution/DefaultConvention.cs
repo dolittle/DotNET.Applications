@@ -5,9 +5,9 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Represents a <see cref="IBindingConvention">IBindingConvention</see>

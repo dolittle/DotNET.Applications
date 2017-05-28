@@ -1,5 +1,5 @@
-Bifrost.namespace("Bifrost.interaction", {
-    VisualStateAction: Bifrost.Type.extend(function () {
+doLittle.namespace("doLittle.interaction", {
+    VisualStateAction: doLittle.Type.extend(function () {
 
         this.initialize = function (namingRoot) {
 

@@ -1,5 +1,5 @@
-Bifrost.namespace("Bifrost.views", {
-    Content: Bifrost.Type.extend(function () {
+doLittle.namespace("doLittle.views", {
+    Content: doLittle.Type.extend(function () {
 
     })
 });

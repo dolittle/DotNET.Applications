@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.CodeGeneration.JavaScript
+namespace doLittle.CodeGeneration.JavaScript
 {
     /// <summary>
     /// Provides methods for working with the <see cref="ICodeGenerator"/>
@@ -12,12 +12,12 @@ namespace Bifrost.CodeGeneration.JavaScript
     public static class CodeGeneratorExtensions
     {
         /// <summary>
-        /// Start a Bifrost namespace
+        /// Start a doLittle namespace
         /// </summary>
         /// <param name="generator"><see cref="ICodeGenerator"/> to create from</param>
         /// <param name="name">Name of namespace</param>
         /// <param name="callback"><see cref="Action{ObjectLiteral}"/> that gets called to build the object literal for the namespace</param>
-        /// <returns><see cref="Bifrost.CodeGeneration.JavaScript.Namespace"/> that is built</returns>
+        /// <returns><see cref="doLittle.CodeGeneration.JavaScript.Namespace"/> that is built</returns>
         public static Namespace Namespace(this ICodeGenerator generator, string name, Action<ObjectLiteral> callback)
         {
             var ns = generator.Namespace(name);
@@ -26,11 +26,11 @@ namespace Bifrost.CodeGeneration.JavaScript
         }
 
         /// <summary>
-        /// Start a Bifrost namespace
+        /// Start a doLittle namespace
         /// </summary>
         /// <param name="generator"><see cref="ICodeGenerator"/> to create from</param>
         /// <param name="name">Name of namespace</param>
-        /// <returns><see cref="Bifrost.CodeGeneration.JavaScript.Namespace"/> that is built</returns>
+        /// <returns><see cref="doLittle.CodeGeneration.JavaScript.Namespace"/> that is built</returns>
         public static Namespace Namespace(this ICodeGenerator generator, string name)
         {
             var ns = new Namespace(name);

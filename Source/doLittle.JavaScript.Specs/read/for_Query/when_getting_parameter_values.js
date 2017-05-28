@@ -1,5 +1,5 @@
 ﻿describe("when getting parameter values", function () {
-    var queryType = Bifrost.read.Query.extend(function () {
+    var queryType = doLittle.read.Query.extend(function () {
         this.firstObservable = ko.observable(42);
         this.secondObservable = ko.observable(43);
         this.nonObservable = "";

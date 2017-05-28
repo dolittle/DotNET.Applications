@@ -1,12 +1,12 @@
-﻿using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Lifecycle;
+﻿using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using System.Dynamic;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Commands.for_CommandContextFactory
+namespace doLittle.Specs.Commands.for_CommandContextFactory
 {
     [Subject(typeof (CommandContextFactory))]
     public class when_building_for_a_command : given.a_command_context_factory

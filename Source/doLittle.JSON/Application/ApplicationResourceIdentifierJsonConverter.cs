@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.Applications;
+using doLittle.Applications;
 using Newtonsoft.Json;
 
-namespace Bifrost.JSON.Application
+namespace doLittle.JSON.Application
 {
     /// <summary>
     /// Represents a <see cref="JsonConverter"/> that can serialize and deserialize <see cref="IApplicationResourceIdentifier"/>

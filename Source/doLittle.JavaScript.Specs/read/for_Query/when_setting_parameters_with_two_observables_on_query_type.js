@@ -3,7 +3,7 @@
     var someParameter = ko.observable();
     var someOtherParameter = ko.observable();
 
-    var queryType = Bifrost.read.Query.extend(function () {
+    var queryType = doLittle.read.Query.extend(function () {
         this.someParameter = someParameter;
         this.someOtherParameter = someOtherParameter;
     });

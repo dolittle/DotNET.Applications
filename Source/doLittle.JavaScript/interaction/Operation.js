@@ -1,17 +1,17 @@
-﻿Bifrost.namespace("Bifrost.interaction", {
-    Operation: Bifrost.Type.extend(function (region, context) {
+﻿doLittle.namespace("doLittle.interaction", {
+    Operation: doLittle.Type.extend(function (region, context) {
         /// <summary>Defines an operation that be performed</summary>
         var self = this;
         var canPerformObservables = ko.observableArray();
         var internalCanPerform = ko.observable(true);
 
-        /// <field name="context" type="Bifrost.interaction.Operation">Context in which the operation exists in</field>
+        /// <field name="context" type="doLittle.interaction.Operation">Context in which the operation exists in</field>
         this.context = context;
 
-        /// <field name="identifier" type="Bifrost.Guid">Unique identifier for the operation instance<field>
-        this.identifier = Bifrost.Guid.empty;
+        /// <field name="identifier" type="doLittle.Guid">Unique identifier for the operation instance<field>
+        this.identifier = doLittle.Guid.empty;
 
-        /// <field name="region" type="Bifrost.views.Region">Region that the operation was created in</field>
+        /// <field name="region" type="doLittle.views.Region">Region that the operation was created in</field>
         this.region = region;
 
         /// <field name="canPerform" type="observable">Set to true if the operation can be performed, false if not</field>

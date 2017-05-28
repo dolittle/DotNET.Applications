@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.FluentValidation.Commands;
-using Bifrost.Validation;
+using doLittle.FluentValidation.Commands;
+using doLittle.Validation;
 using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_CommandBusinessValidator
+namespace doLittle.FluentValidation.Specs.Commands.for_CommandBusinessValidator
 {
     [Subject(typeof(CommandInputValidator<>))]
     public class when_validating_an_invalid_command : given.a_command_business_validator

@@ -2,7 +2,7 @@
 using System.Linq;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Execution.for_TypeImporter
+namespace doLittle.Specs.Execution.for_TypeImporter
 {
     public class when_importing_multiple_types_with_only_one_implementation : given.a_type_importer
     {

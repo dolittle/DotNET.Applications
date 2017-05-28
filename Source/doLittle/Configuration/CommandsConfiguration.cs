@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Commands;
-using Bifrost.Execution;
+using doLittle.Commands;
+using doLittle.Execution;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICommandsConfiguration"/>

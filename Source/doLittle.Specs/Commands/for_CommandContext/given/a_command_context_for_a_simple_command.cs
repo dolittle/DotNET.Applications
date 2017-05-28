@@ -1,12 +1,12 @@
-﻿using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Events;
-using Bifrost.Lifecycle;
+﻿using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Events;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using System.Dynamic;
 
-namespace Bifrost.Specs.Commands.for_CommandContext.given
+namespace doLittle.Specs.Commands.for_CommandContext.given
 {
     public class a_command_context_for_a_simple_command
     {

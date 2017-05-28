@@ -1,8 +1,8 @@
-﻿using Bifrost.Commands;
-using Bifrost.FluentValidation.Specs.Concepts.given;
+﻿using doLittle.Commands;
+using doLittle.FluentValidation.Specs.Concepts.given;
 using FluentValidation;
 
-namespace Bifrost.FluentValidation.Specs.Commands
+namespace doLittle.FluentValidation.Specs.Commands
 {
     public class commands
     {

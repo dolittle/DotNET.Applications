@@ -15,6 +15,6 @@
     });
 
     it("should throw multiple namespaces in name not allowed", function () {
-        expect(exception instanceof Bifrost.markup.MultipleNamespacesInNameNotAllowed).toBe(true);
+        expect(exception instanceof doLittle.markup.MultipleNamespacesInNameNotAllowed).toBe(true);
     });
 }));

@@ -1,8 +1,8 @@
-﻿Bifrost.namespace("Bifrost.markup", {
-    BindingContext: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.markup", {
+    BindingContext: doLittle.Type.extend(function () {
         this.parent = null;
         this.current = null;
 
-        this.changed = Bifrost.Event.create();
+        this.changed = doLittle.Event.create();
     })
 });

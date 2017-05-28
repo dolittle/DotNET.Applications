@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Bifrost.Commands;
-using Bifrost.Validation;
+using doLittle.Commands;
+using doLittle.Validation;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Commands.for_CommandResult
+namespace doLittle.Specs.Commands.for_CommandResult
 {
     public class when_containing_exception_and_one_validation_results
     {

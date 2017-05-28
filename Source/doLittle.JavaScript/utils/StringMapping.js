@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost", {
-    StringMapping: Bifrost.Type.extend(function (format, mappedFormat) {
+﻿doLittle.namespace("doLittle., {
+    StringMapping: doLittle.Type.extend(function (format, mappedFormat) {
         var self = this;
 
         this.format = format;

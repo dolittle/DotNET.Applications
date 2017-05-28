@@ -1,6 +1,6 @@
-﻿using Bifrost.Read;
+﻿using doLittle.Read;
 
-namespace Bifrost.Specs.Read.for_QueryCoordinator
+namespace doLittle.Specs.Read.for_QueryCoordinator
 {
     public class QueryForGenericKnownType : IQuery
     {

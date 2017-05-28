@@ -6,7 +6,7 @@
         perform: sinon.stub()
     };
 
-    var trigger = Bifrost.interaction.Trigger.create();
+    var trigger = doLittle.interaction.Trigger.create();
     trigger.addAction(firstAction);
     trigger.addAction(secondAction);
 

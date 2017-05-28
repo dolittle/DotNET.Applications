@@ -1,7 +1,7 @@
-﻿using Bifrost.Tasks;
+﻿using doLittle.Tasks;
 using System.Collections.Generic;
 
-namespace Bifrost.Specs.Tasks.for_TaskManager
+namespace doLittle.Specs.Tasks.for_TaskManager
 {
     public class OurTask : Task
     {

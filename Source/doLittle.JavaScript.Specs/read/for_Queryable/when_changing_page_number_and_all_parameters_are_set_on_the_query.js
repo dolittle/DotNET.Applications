@@ -18,9 +18,9 @@
     var region = {};
 
     beforeEach(function () {
-        pagingInfoType = Bifrost.read.PagingInfo;
+        pagingInfoType = doLittle.read.PagingInfo;
 
-        Bifrost.read.PagingInfo = {
+        doLittle.read.PagingInfo = {
             create: function () {
                 return paging;
             }
@@ -30,7 +30,7 @@
             execute: sinon.mock().withArgs(query, paging).once()
         };
 
-        var instance = Bifrost.read.Queryable.create({
+        var instance = doLittle.read.Queryable.create({
             query: query,
             region: region,
             queryService: queryService,
@@ -41,7 +41,7 @@
     });
 
     afterEach(function () {
-        Bifrost.read.PagingInfo = pagingInfoType;
+        doLittle.read.PagingInfo = pagingInfoType;
     });
 
 

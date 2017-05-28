@@ -1,7 +1,7 @@
-﻿using Bifrost.Events;
+﻿using doLittle.Events;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_UncommittedEventStreamCoordinator.given
+namespace doLittle.Specs.Events.for_UncommittedEventStreamCoordinator.given
 {
     public class an_uncommitted_event_stream_coordinator : all_dependencies
     {

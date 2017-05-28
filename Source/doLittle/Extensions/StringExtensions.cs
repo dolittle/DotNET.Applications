@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 
-namespace Bifrost.Extensions
+namespace doLittle.Extensions
 {
     /// <summary>
     /// Provides a set of extension methods to <see cref="string"/>

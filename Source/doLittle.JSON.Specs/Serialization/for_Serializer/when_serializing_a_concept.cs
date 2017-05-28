@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.JSON.Serialization;
+using doLittle.JSON.Serialization;
 using Machine.Specifications;
 
-namespace Bifrost.JSON.Specs.Serialization.for_Serializer
+namespace doLittle.JSON.Specs.Serialization.for_Serializer
 {
     [Subject(typeof(Serializer))]
     public class when_serializing_a_concept : given.a_serializer

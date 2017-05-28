@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bifrost.Security;
+using doLittle.Security;
 
 namespace Biförost.Specs.Security.Fakes
 {

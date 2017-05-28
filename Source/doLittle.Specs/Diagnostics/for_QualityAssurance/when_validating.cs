@@ -1,9 +1,9 @@
-﻿using Bifrost.Diagnostics;
+﻿using doLittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Diagnostics.for_QualityAssurance
+namespace doLittle.Specs.Diagnostics.for_QualityAssurance
 {
     public class when_validating
     {

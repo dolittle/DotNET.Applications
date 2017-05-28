@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Configuration;
-using Bifrost.Events.MongoDB;
+using doLittle.Configuration;
+using doLittle.Events.MongoDB;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Extensions for configuring <see cref="EventStoreConfiguration"/>

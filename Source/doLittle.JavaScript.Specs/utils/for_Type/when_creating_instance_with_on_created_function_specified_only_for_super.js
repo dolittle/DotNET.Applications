@@ -9,11 +9,11 @@ describe("when creating instance with on created function specified only for sup
         _superOnCreatedCallCount = 0;
         onCreatedCallCount = 0;
 
-        Bifrost.dependencyResolver = {
+        doLittle.dependencyResolver = {
             getDependenciesFor: sinon.stub()
         };
 
-        _super = Bifrost.Type.extend(function () {
+        _super = doLittle.Type.extend(function () {
             this.someValue = "Hello";
 
             this.onCreated = function (lastDescendant) {
@@ -29,7 +29,7 @@ describe("when creating instance with on created function specified only for sup
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolver = {};
+        doLittle.dependencyResolver = {};
     });
 
     it("should call the on created function once for the super", function () {

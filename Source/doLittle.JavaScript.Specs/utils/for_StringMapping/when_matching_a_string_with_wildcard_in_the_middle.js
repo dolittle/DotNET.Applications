@@ -1,5 +1,5 @@
 ﻿describe("when matching a string with wildcard in the middle", function () {
-    var mapping = Bifrost.StringMapping.create({
+    var mapping = doLittle.StringMapping.create({
         format: "{something}/**/for_{else}",
         mappedFormat: "{something}.**.for_{else}"
     });

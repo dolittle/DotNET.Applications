@@ -1,10 +1,10 @@
-﻿using Bifrost.Commands;
-using Bifrost.Validation;
+﻿using doLittle.Commands;
+using doLittle.Validation;
 using Machine.Specifications;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bifrost.Specs.Commands.for_CommandResult
+namespace doLittle.Specs.Commands.for_CommandResult
 {
     public class when_merging_with_another_command_result
     {

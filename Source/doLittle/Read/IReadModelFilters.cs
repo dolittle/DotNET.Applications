@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Read
+namespace doLittle.Read
 {
     /// <summary>
     /// Defines the filtering system for <see cref="IReadModel">ReadModels</see>

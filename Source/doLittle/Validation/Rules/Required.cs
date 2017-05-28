@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Rules;
-using Bifrost.Extensions;
+using doLittle.Rules;
+using doLittle.Extensions;
 using System.Reflection;
 
-namespace Bifrost.Validation.Rules
+namespace doLittle.Validation.Rules
 {
     /// <summary>
     /// Represents the <see cref="ValueRule"/> for requiring the value

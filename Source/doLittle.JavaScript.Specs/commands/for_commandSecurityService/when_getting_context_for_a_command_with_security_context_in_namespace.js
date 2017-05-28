@@ -25,7 +25,7 @@
             }
         }
     };
-    var service = Bifrost.commands.commandSecurityService.create(parameters);
+    var service = doLittle.commands.commandSecurityService.create(parameters);
     service.getContextFor(command).continueWith(function (context) {
         securityContextReceived = context;
     });

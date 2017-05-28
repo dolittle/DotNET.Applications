@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost", {
-    Event: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle., {
+    Event: doLittle.Type.extend(function () {
         var subscribers = [];
 
         this.subscribe = function (subscriber) {

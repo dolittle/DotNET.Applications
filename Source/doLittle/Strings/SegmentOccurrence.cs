@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Strings
+﻿namespace doLittle.Strings
 {
     /// <summary>
     /// Defines number of <see cref="ISegment"/> instances

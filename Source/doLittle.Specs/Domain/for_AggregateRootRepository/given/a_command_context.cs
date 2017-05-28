@@ -1,9 +1,9 @@
-﻿using Bifrost.Commands;
-using Bifrost.Domain;
+﻿using doLittle.Commands;
+using doLittle.Domain;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Domain.for_AggregateRootRepository.given
+namespace doLittle.Specs.Domain.for_AggregateRootRepository.given
 {
     public class a_command_context : all_dependencies
 	{

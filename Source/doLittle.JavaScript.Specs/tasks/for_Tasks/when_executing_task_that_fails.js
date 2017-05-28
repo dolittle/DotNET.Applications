@@ -23,7 +23,7 @@
         failed: sinon.mock().withArgs(taskHistoryId, error)
     };
 
-    var tasks = Bifrost.tasks.Tasks.create({ taskHistory: taskHistory });
+    var tasks = doLittle.tasks.Tasks.create({ taskHistory: taskHistory });
 
     var isBusyTimeline = [];
     var taskWasAdded = false;

@@ -20,7 +20,7 @@
         }
     };
 
-    var frame = Bifrost.navigation.NavigationFrame.create({
+    var frame = doLittle.navigation.NavigationFrame.create({
         uriMapper: uriMapper,
         home: home,
         history: history

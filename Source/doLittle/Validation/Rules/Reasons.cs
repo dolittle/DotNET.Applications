@@ -2,9 +2,9 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Rules;
+using doLittle.Rules;
 
-namespace Bifrost.Validation.Rules
+namespace doLittle.Validation.Rules
 {
     /// <summary>
     /// Contains common <see cref="BrokenRuleReason">reasons</see> for broken validation rules

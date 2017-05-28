@@ -1,10 +1,10 @@
 ﻿using System;
-using Bifrost.Events;
+using doLittle.Events;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Events.InProcess.for_CommittedEventStreamSender
+namespace doLittle.Specs.Events.InProcess.for_CommittedEventStreamSender
 {
     public class when_sending_comitted_event_stream : given.a_committed_event_stream_sender
     {

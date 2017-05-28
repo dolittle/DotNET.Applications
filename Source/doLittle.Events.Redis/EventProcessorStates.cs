@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Dynamic;
-using Bifrost.Serialization;
-using Bifrost.Time;
+using doLittle.Serialization;
+using doLittle.Time;
 using StackExchange.Redis;
 
-namespace Bifrost.Events.Redis
+namespace doLittle.Events.Redis
 {
     /// <summary>
     /// Represents an implementation of <see cref="EventProcessorStates"/> for Redis

@@ -3,19 +3,19 @@
     var propertyMapInstance = { something: 42 };
     var result = null;
     beforeEach(function () {
-        propertyMapType = Bifrost.mapping.PropertyMap;
-        Bifrost.mapping.PropertyMap = {
+        propertyMapType = doLittle.mapping.PropertyMap;
+        doLittle.mapping.PropertyMap = {
             create: sinon.stub().returns(propertyMapInstance)
         };
 
-        var map = Bifrost.mapping.Map.create();
+        var map = doLittle.mapping.Map.create();
         result = map.canMapProperty("SomeProperty");
         
     });
 
 
     afterEach(function () {
-        Bifrost.mapping.PropertyMap = propertyMapType;
+        doLittle.mapping.PropertyMap = propertyMapType;
     });
 
     it("should not be able to map property", function () {

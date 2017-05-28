@@ -1,9 +1,9 @@
-﻿using Bifrost.Utils;
+﻿using doLittle.Utils;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Utils.for_StringMapper
+namespace doLittle.Specs.Utils.for_StringMapper
 {
     public class when_asking_if_has_mapping_for_and_no_one_can_resolve
     {

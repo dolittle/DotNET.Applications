@@ -1,7 +1,7 @@
-﻿using Bifrost.Validation;
+﻿using doLittle.Validation;
 using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.Commands.for_CommandInputValidator.given
+namespace doLittle.FluentValidation.Specs.Commands.for_CommandInputValidator.given
 {
     public class a_command_input_validator
     {

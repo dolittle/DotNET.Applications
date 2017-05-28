@@ -1,7 +1,7 @@
-﻿using Bifrost.Read;
+﻿using doLittle.Read;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.for_FetchingSecurityManager
+namespace doLittle.Specs.Read.for_FetchingSecurityManager
 {
     public class when_authorizing_a_query_for : given.a_fetching_security_manager
     {

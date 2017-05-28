@@ -1,10 +1,10 @@
-﻿using Bifrost.Execution;
+﻿using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 using System;
 
-namespace Bifrost.Specs.Execution.for_any_conventions
+namespace doLittle.Specs.Execution.for_any_conventions
 {
     public class when_resolving_a_type_that_has_singleton_attribute
     {

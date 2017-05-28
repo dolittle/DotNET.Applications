@@ -7,7 +7,7 @@
     });
 
     it("should extend with existsing js object", function () {
-		var commandResult = Bifrost.commands.CommandResult.createFrom(jsObject);
+		var commandResult = doLittle.commands.CommandResult.createFrom(jsObject);
         expect(commandResult.newProperty).toBeDefined();
     });
 });

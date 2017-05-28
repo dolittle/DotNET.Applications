@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Lifecycle
+namespace doLittle.Lifecycle
 {
     /// <summary>
     /// Defines a logical transaction

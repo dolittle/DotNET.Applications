@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Globalization;
 using System.Security.Claims;
-using Bifrost.Applications;
-using Bifrost.Tenancy;
+using doLittle.Applications;
+using doLittle.Tenancy;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Defines the execution context in which things are within

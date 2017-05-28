@@ -1,12 +1,12 @@
 ﻿describe("when creating a list of parameters", function () {
     var command = {
         _name: "DoSomething",
-        id: Bifrost.Guid.create(),
+        id: doLittle.Guid.create(),
         plainString: "plainString",
         koString: ko.observable("test"),
         observableWithObservableAsValue: ko.observable(ko.observable(42))
     };
-    var commandDescriptor = Bifrost.commands.CommandDescriptor.createFrom(command);
+    var commandDescriptor = doLittle.commands.CommandDescriptor.createFrom(command);
     var result = JSON.parse(commandDescriptor.command);
 
     it("should include the plainString", function () {

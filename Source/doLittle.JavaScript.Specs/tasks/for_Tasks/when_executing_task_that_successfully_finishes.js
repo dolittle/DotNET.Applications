@@ -21,7 +21,7 @@
         end: sinon.mock().withArgs(taskHistoryId, result)
     };
 
-    var tasks = Bifrost.tasks.Tasks.create({ taskHistory: taskHistory });
+    var tasks = doLittle.tasks.Tasks.create({ taskHistory: taskHistory });
 
     var isBusyTimeline = [];
     var taskWasAdded = false;

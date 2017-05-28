@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Rules
+namespace doLittle.Rules
 {
     /// <summary>
     /// Represents an implementation of <see cref="IRuleContext"/>

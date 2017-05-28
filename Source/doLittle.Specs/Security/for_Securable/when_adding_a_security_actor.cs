@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Bifrost.Security;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_Securable
+namespace doLittle.Specs.Security.for_Securable
 {
     [Subject(typeof(SecurityActor))]
     public class when_adding_a_security_actor
@@ -14,7 +14,7 @@ namespace Bifrost.Specs.Security.for_Securable
 
         Establish context = () => 
         {
-            security_target = new NamespaceSecurable("Bifrost.Security");
+            security_target = new NamespaceSecurable("doLittle.Security");
             security_actor_mock = new Mock<ISecurityActor>();
         };
 
@@ -33,7 +33,7 @@ namespace Bifrost.Specs.Security.for_Securable
 
     //    Establish context = () =>
     //    {
-    //        security_target = new NamespaceSecurable("Bifrost.Security");
+    //        security_target = new NamespaceSecurable("doLittle.Security");
     //        first_security_actor = new Mock<ISecurityActor>();
     //        second_security_actor = new Mock<ISecurityActor>();
 

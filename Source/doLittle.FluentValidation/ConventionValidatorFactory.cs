@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.Execution;
+using doLittle.Execution;
 using FluentValidation;
 
-namespace Bifrost.FluentValidation
+namespace doLittle.FluentValidation
 {
     /// <summary>
     /// Represents a <see cref="IValidatorFactory"/> that is based on conventions

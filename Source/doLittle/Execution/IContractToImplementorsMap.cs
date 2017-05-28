@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Defines a system that handles the relationship between contracts and their implementors

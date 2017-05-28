@@ -1,8 +1,8 @@
-﻿using Bifrost.Rules;
+﻿using doLittle.Rules;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Read.Validation.for_QueryValidationResult.given
+namespace doLittle.Specs.Read.Validation.for_QueryValidationResult.given
 {
     public class all_dependencies
     {

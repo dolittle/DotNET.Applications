@@ -5,7 +5,7 @@
 using System;
 using System.Globalization;
 
-namespace Bifrost.Globalization
+namespace doLittle.Globalization
 {
     /// <summary>
     /// Represents a scope for localization, when exiting the scope, cultures will be reset back to the cultures given at construction.

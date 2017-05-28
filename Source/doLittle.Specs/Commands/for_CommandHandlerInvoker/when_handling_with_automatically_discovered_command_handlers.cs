@@ -1,9 +1,9 @@
 ﻿using System.Dynamic;
-using Bifrost.Commands;
-using Bifrost.Lifecycle;
+using doLittle.Commands;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker
+namespace doLittle.Specs.Commands.for_CommandHandlerInvoker
 {
     [Subject(Subjects.handling_commands)]
     public class when_handling_with_automatically_discovered_command_handlers : given.a_command_handler_invoker_with_one_command_handler

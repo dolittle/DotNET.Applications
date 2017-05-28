@@ -1,7 +1,7 @@
 ﻿using Machine.Specifications;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Specs.Execution.for_WriteOnceExpandoObject
+namespace doLittle.Specs.Execution.for_WriteOnceExpandoObject
 {
     [Subject(typeof(WriteOnceExpandoObject))]
     public class when_creating

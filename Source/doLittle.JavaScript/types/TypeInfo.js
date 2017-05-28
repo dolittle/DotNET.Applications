@@ -1,22 +1,22 @@
-﻿Bifrost.namespace("Bifrost.types", {
-    TypeInfo: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.types", {
+    TypeInfo: doLittle.Type.extend(function () {
         this.properties = [];
     })
 });
-Bifrost.types.TypeInfo.createFrom = function (instance) {
-    var typeInfo = Bifrost.types.TypeInfo.create();
+doLittle.types.TypeInfo.createFrom = function (instance) {
+    var typeInfo = doLittle.types.TypeInfo.create();
     var propertyInfo;
     for (var property in instance) {
         var value = instance[property];
-        if (!Bifrost.isNullOrUndefined(value)) {
+        if (!doLittle.isNullOrUndefined(value)) {
 
             var type = value.constructor;
 
-            if (!Bifrost.isNullOrUndefined(instance[property]._type)) {
+            if (!doLittle.isNullOrUndefined(instance[property]._type)) {
                 type = instance[property]._type;
             }
 
-            propertyInfo = Bifrost.types.PropertyInfo.create({
+            propertyInfo = doLittle.types.PropertyInfo.create({
                 name: property,
                 type: type
             });

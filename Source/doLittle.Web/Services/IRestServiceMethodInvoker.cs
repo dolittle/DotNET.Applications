@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Specialized;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     public interface IRestServiceMethodInvoker
     {

@@ -1,7 +1,7 @@
-﻿using Bifrost.Diagnostics;
+﻿using doLittle.Diagnostics;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Diagnostics.for_Problems
+namespace doLittle.Specs.Diagnostics.for_Problems
 {
     public class when_asking_if_has_any_problems_with_one_problem
     {

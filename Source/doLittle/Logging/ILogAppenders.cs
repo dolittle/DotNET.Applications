@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Bifrost.Logging
+namespace doLittle.Logging
 {
     /// <summary>
     /// Defines the configuration for logging - see <see cref="ILogger"/>

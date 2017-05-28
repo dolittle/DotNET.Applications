@@ -1,10 +1,10 @@
-﻿using Bifrost.Read;
-using Bifrost.Security;
+﻿using doLittle.Read;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Read.for_QueryCoordinator
+namespace doLittle.Specs.Read.for_QueryCoordinator
 {
     public class when_executing_a_query_that_does_not_pass_authorization : given.a_query_coordinator
     {

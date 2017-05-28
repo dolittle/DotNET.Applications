@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 
-namespace Bifrost.Web
+namespace doLittle.Web
 {
     public class HttpModule : IHttpModule
     {

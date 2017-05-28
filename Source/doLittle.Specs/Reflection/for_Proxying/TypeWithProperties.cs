@@ -1,5 +1,5 @@
 ﻿
-namespace Bifrost.Specs.Reflection.for_Proxying
+namespace doLittle.Specs.Reflection.for_Proxying
 {
     public class TypeWithProperties
     {

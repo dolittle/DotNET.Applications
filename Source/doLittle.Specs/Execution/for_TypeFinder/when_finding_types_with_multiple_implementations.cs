@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Execution;
+using doLittle.Execution;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Execution.for_TypeFinder
+namespace doLittle.Specs.Execution.for_TypeFinder
 {
     [Subject(typeof(TypeFinder))]
     public class when_finding_types_with_multiple_implementations : given.a_type_finder

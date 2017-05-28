@@ -5,11 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 using FluentValidation;
 using FluentValidation.Internal;
 
-namespace Bifrost.FluentValidation
+namespace doLittle.FluentValidation
 {
     /// <summary>
     /// Validation extensions for building validation rules

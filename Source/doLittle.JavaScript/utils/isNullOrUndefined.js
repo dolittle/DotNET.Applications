@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost", {
+﻿doLittle.namespace("doLittle., {
     isNullOrUndefined: function (value) {
-        return Bifrost.isUndefined(value) || Bifrost.isNull(value);
+        return doLittle.isUndefined(value) || doLittle.isNull(value);
     }
 });

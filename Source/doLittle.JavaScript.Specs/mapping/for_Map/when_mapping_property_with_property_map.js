@@ -9,19 +9,19 @@
     };
 
     beforeEach(function () {
-        propertyMapType = Bifrost.mapping.PropertyMap;
-        Bifrost.mapping.PropertyMap = {
+        propertyMapType = doLittle.mapping.PropertyMap;
+        doLittle.mapping.PropertyMap = {
             create: sinon.stub().returns(propertyMap)
         };
 
-        var map = Bifrost.mapping.Map.create();
+        var map = doLittle.mapping.Map.create();
         map.property("SomeProperty");
 
         map.mapProperty("SomeProperty", source, target);
     });
 
     afterEach(function () {
-        Bifrost.mapping.PropertyMap = propertyMapType;
+        doLittle.mapping.PropertyMap = propertyMapType;
     });
 
     it("should forward mapping to the property map", function () {

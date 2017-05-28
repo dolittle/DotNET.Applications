@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Web.Routing;
 
-namespace Bifrost.Web.Proxies
+namespace doLittle.Web.Proxies
 {
     public class ProxyRoute : Route
     {
-        const string ProxyUrl = "Bifrost/Proxies";
+        const string ProxyUrl = "doLittle/Proxies";
 
         public ProxyRoute()
             : base(ProxyUrl, new ProxyRouteHandler())

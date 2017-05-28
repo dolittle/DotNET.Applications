@@ -1,11 +1,11 @@
-﻿Bifrost.namespace("Bifrost.navigation", {
-    DataNavigationFrameAttributeElementVisitor: Bifrost.markup.ElementVisitor.extend(function (documentService) {
+﻿doLittle.namespace("doLittle.navigation", {
+    DataNavigationFrameAttributeElementVisitor: doLittle.markup.ElementVisitor.extend(function (documentService) {
         this.visit = function (element, actions) {
             var dataNavigationFrame = element.attributes.getNamedItem("data-navigation-frame");
-            if (!Bifrost.isNullOrUndefined(dataNavigationFrame)) {
+            if (!doLittle.isNullOrUndefined(dataNavigationFrame)) {
                 var dataBindString = "";
                 var dataBind = element.attributes.getNamedItem("data-bind");
-                if (!Bifrost.isNullOrUndefined(dataBind)) {
+                if (!doLittle.isNullOrUndefined(dataBind)) {
                     dataBindString = dataBind.value + ", ";
                 } else {
                     dataBind = document.createAttribute("data-bind");

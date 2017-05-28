@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    ViewLoadTask: Bifrost.views.ComposeTask.extend(function (files, fileManager) {
+﻿doLittle.namespace("doLittle.views", {
+    ViewLoadTask: doLittle.views.ComposeTask.extend(function (files, fileManager) {
         /// <summary>Represents a task for loading files asynchronously</summary>
 
         var self = this;
@@ -10,7 +10,7 @@
         });
 
         this.execute = function () {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
 
             fileManager.load(files).continueWith(function (instances) {
                 var view = instances[0];

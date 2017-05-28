@@ -1,4 +1,4 @@
-﻿Bifrost.namespace("Bifrost", {
+﻿doLittle.namespace("doLittle., {
     deepClone: function (source, target) {
         function isReservedMemberName(member) {
             return member.indexOf("_") >= 0 || member === "model" || member === "commons" || member === "targetViewModel" || member === "region";
@@ -9,7 +9,7 @@
         }
 
         if (target == null) {
-            if (Bifrost.isArray(source)) {
+            if (doLittle.isArray(source)) {
                 target = [];
             } else {
                 target = {};
@@ -17,10 +17,10 @@
         }
 
         var sourceValue;
-        if (Bifrost.isArray(source)) {
+        if (doLittle.isArray(source)) {
             for (var index = 0; index < source.length; index++) {
                 sourceValue = source[index];
-                var clonedValue = Bifrost.deepClone(sourceValue);
+                var clonedValue = doLittle.deepClone(sourceValue);
                 target.push(clonedValue);
             }
         } else {
@@ -35,14 +35,14 @@
                     sourceValue = sourceValue();
                 }
 
-                if (Bifrost.isFunction(sourceValue)) {
+                if (doLittle.isFunction(sourceValue)) {
                     continue;
                 }
 
                 var targetValue = null;
-                if (Bifrost.isObject(sourceValue)) {
+                if (doLittle.isObject(sourceValue)) {
                     targetValue = {};
-                } else if (Bifrost.isArray(sourceValue)) {
+                } else if (doLittle.isArray(sourceValue)) {
                     targetValue = [];
                 } else {
                     target[member] = sourceValue;
@@ -50,7 +50,7 @@
 
                 if (targetValue != null) {
                     target[member] = targetValue;
-                    Bifrost.deepClone(sourceValue, targetValue);
+                    doLittle.deepClone(sourceValue, targetValue);
                 }
             }
         }

@@ -1,26 +1,26 @@
-﻿Bifrost.namespace("Bifrost.validation", {
-    length: Bifrost.validation.Rule.extend(function () {
+﻿doLittle.namespace("doLittle.validation", {
+    length: doLittle.validation.Rule.extend(function () {
         var self = this;
 
         function notSet(value) {
-            return Bifrost.isUndefined(value) || Bifrost.isNull(value);
+            return doLittle.isUndefined(value) || doLittle.isNull(value);
         }
 
         function throwIfValueIsNotANumber(value) {
-            if (!Bifrost.isNumber(value)) {
-                throw new Bifrost.validation.NotANumber("Value " + value + " is not a number");
+            if (!doLittle.isNumber(value)) {
+                throw new doLittle.validation.NotANumber("Value " + value + " is not a number");
             }
         }
 
         function throwIfOptionsInvalid(options) {
             if (notSet(options)) {
-                throw new Bifrost.validation.OptionsNotDefined();
+                throw new doLittle.validation.OptionsNotDefined();
             }
             if (notSet(options.max)) {
-                throw new Bifrost.validation.MaxLengthNotSpecified();
+                throw new doLittle.validation.MaxLengthNotSpecified();
             }
             if (notSet(options.min)) {
-                throw new Bifrost.validation.MinLengthNotSpecified();
+                throw new doLittle.validation.MinLengthNotSpecified();
             }
             throwIfValueIsNotANumber(options.min);
             throwIfValueIsNotANumber(options.max);
@@ -31,7 +31,7 @@
             if (notSet(value)) {
                 value = "";
             }
-            if (!Bifrost.isString(value)) {
+            if (!doLittle.isString(value)) {
                 value = value.toString();
             }
             return self.options.min <= value.length && value.length <= self.options.max;

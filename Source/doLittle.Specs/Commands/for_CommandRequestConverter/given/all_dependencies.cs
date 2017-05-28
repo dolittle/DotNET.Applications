@@ -1,8 +1,8 @@
-﻿using Bifrost.Applications;
+﻿using doLittle.Applications;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Commands.for_CommandRequestConverter.given
+namespace doLittle.Specs.Commands.for_CommandRequestConverter.given
 {
     public class all_dependencies
     {

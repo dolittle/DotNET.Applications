@@ -1,11 +1,11 @@
-﻿using Bifrost.Configuration;
-using Bifrost.Entities;
+﻿using doLittle.Configuration;
+using doLittle.Entities;
 using Machine.Specifications;
 using Moq;
 using System;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Configuration.for_ConfigurationExtensions
+namespace doLittle.Specs.Configuration.for_ConfigurationExtensions
 {
     [Subject(typeof(ConfigurationStorageElement))]
     public class when_initializing_for_specific_storage : given.a_configuration_element_with_storage

@@ -1,7 +1,7 @@
-﻿using Bifrost.Read;
+﻿using doLittle.Read;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.for_QueryResult
+namespace doLittle.Specs.Read.for_QueryResult
 {
     public class when_exception_is_null_and_it_has_items
     {

@@ -1,5 +1,5 @@
-Bifrost.namespace("Bifrost.messaging", {
-    Messenger: Bifrost.Type.extend(function () {
+doLittle.namespace("doLittle.messaging", {
+    Messenger: doLittle.Type.extend(function () {
         var subscribers = [];
 
         this.publish = function (topic, message) {
@@ -29,5 +29,5 @@ Bifrost.namespace("Bifrost.messaging", {
         };
     })
 });
-Bifrost.messaging.Messenger.global = Bifrost.messaging.Messenger.create();
-Bifrost.WellKnownTypesDependencyResolver.types.globalMessenger = Bifrost.messaging.Messenger.global;
+doLittle.messaging.Messenger.global = doLittle.messaging.Messenger.create();
+doLittle.WellKnownTypesDependencyResolver.types.globalMessenger = doLittle.messaging.Messenger.global;

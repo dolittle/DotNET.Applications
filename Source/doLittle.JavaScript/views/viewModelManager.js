@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    viewModelManager: Bifrost.Singleton(function(assetsManager, documentService, viewModelLoader, regionManager, taskFactory, viewFactory, MasterViewModel) {
+﻿doLittle.namespace("doLittle.views", {
+    viewModelManager: doLittle.Singleton(function(assetsManager, documentService, viewModelLoader, regionManager, taskFactory, viewFactory, MasterViewModel) {
         var self = this;
         this.assetsManager = assetsManager;
         this.viewModelLoader = viewModelLoader;
@@ -8,23 +8,23 @@
         this.masterViewModel = MasterViewModel;
 
         this.hasForView = function (viewPath) {
-            var scriptFile = Bifrost.Path.changeExtension(viewPath, "js");
-            scriptFile = Bifrost.Path.makeRelative(scriptFile);
+            var scriptFile = doLittle.Path.changeExtension(viewPath, "js");
+            scriptFile = doLittle.Path.makeRelative(scriptFile);
             var hasViewModel = self.assetsManager.hasScript(scriptFile);
             return hasViewModel;
         };
 
         this.getViewModelPathForView = function (viewPath) {
-            var scriptFile = Bifrost.Path.changeExtension(viewPath, "js");
+            var scriptFile = doLittle.Path.changeExtension(viewPath, "js");
             return scriptFile;
         };
 
         this.isLoaded = function (path) {
-            var localPath = Bifrost.Path.getPathWithoutFilename(path);
-            var filename = Bifrost.Path.getFilenameWithoutExtension(path);
-            var namespacePath = Bifrost.namespaceMappers.mapPathToNamespace(localPath);
+            var localPath = doLittle.Path.getPathWithoutFilename(path);
+            var filename = doLittle.Path.getFilenameWithoutExtension(path);
+            var namespacePath = doLittle.namespaceMappers.mapPathToNamespace(localPath);
             if (namespacePath != null) {
-                var namespace = Bifrost.namespace(namespacePath);
+                var namespace = doLittle.namespace(namespacePath);
 
                 if (filename in namespace) {
                     return true;

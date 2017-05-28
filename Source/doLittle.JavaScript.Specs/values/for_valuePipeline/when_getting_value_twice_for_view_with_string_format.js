@@ -9,7 +9,7 @@
         format: sinon.stub().returns(formattedValue)
     };
 
-    var pipeline = Bifrost.values.valuePipeline.createWithoutScope({
+    var pipeline = doLittle.values.valuePipeline.createWithoutScope({
         typeConverters: typeConverters,
         stringFormatter: stringFormatter
     });

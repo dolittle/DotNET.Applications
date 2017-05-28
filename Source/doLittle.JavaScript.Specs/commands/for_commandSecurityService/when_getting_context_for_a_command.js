@@ -18,7 +18,7 @@
 
     var server = sinon.fakeServer.create();
 
-    server.respondWith("GET", "/Bifrost/CommandSecurity/GetForCommand?commandName=SomeCommand",
+    server.respondWith("GET", "/doLittle/CommandSecurity/GetForCommand?commandName=SomeCommand",
         [
             200,
             { "Content-Type": "application/json" },
@@ -33,7 +33,7 @@
             _namespace: {}
         }
     };
-    var service = Bifrost.commands.commandSecurityService.create(parameters);
+    var service = doLittle.commands.commandSecurityService.create(parameters);
     service.getContextFor(command).continueWith(function (context) {
         securityContextReceived = context;
     });

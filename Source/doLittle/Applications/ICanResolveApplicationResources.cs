@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Applications
+namespace doLittle.Applications
 {
     /// <summary>
     /// Defines a resolver that can resolve <see cref="Type">types</see> from <see cref="IApplicationResourceIdentifier"/>

@@ -5,11 +5,11 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Text;
-using Bifrost.Dynamic;
-using Bifrost.Serialization;
+using doLittle.Dynamic;
+using doLittle.Serialization;
 using RabbitMQ.Client;
 
-namespace Bifrost.Events.RabbitMQ
+namespace doLittle.Events.RabbitMQ
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICanSendCommittedEventStream"/>

@@ -2,11 +2,11 @@
 
     if (window.First) delete window.First;
 
-    Bifrost.namespace("First", {
+    doLittle.namespace("First", {
         something: "Hello"
     });
 
-    Bifrost.namespace("First.Second", {
+    doLittle.namespace("First.Second", {
     });
 
     it("should point to first in the second part of the namespace", function () {

@@ -1,5 +1,5 @@
 ﻿if (typeof ko !== 'undefined') {
-    Bifrost.namespace("Bifrost.validation", {
+    doLittle.namespace("doLittle.validation", {
         ValidationSummary: function (commands, containerElement) {
             var self = this;
             this.commands = ko.observable(commands);
@@ -35,7 +35,7 @@
     ko.bindingHandlers.validationSummaryFor = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
             var target = ko.bindingHandlers.validationSummaryFor.getValueAsArray(valueAccessor);
-            var validationSummary = new Bifrost.validation.ValidationSummary(target);
+            var validationSummary = new doLittle.validation.ValidationSummary(target);
             var ul = document.createElement("ul");
             element.appendChild(ul);
             ul.innerHTML = "<li><span data-bind='text: $data'></span></li>";
@@ -51,7 +51,7 @@
         },
         getValueAsArray: function (valueAccessor) {
             var target = ko.utils.unwrapObservable(valueAccessor());
-            if (!(Bifrost.isArray(target))) { target = [target]; }
+            if (!(doLittle.isArray(target))) { target = [target]; }
             return target;
         }
     };

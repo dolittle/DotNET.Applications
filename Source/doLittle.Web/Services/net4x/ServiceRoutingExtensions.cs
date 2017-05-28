@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Web.Routing;
-using Bifrost.Configuration;
+using doLittle.Configuration;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     public static class ServiceRoutingExtensions
     {

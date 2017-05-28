@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Applications;
-using Bifrost.Events;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Events;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Events.for_UncommittedEventStreamCoordinator
+namespace doLittle.Specs.Events.for_UncommittedEventStreamCoordinator
 {
     [Subject(typeof(UncommittedEventStreamCoordinator))]
     public class when_committing_two_uncommitted_events : given.an_uncommitted_event_stream_coordinator

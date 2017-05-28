@@ -4,7 +4,7 @@
         perform: sinon.stub()
     };
 
-    var operations = Bifrost.interaction.Operations.create({
+    var operations = doLittle.interaction.Operations.create({
         operationEntryFactory: {}
     });
 

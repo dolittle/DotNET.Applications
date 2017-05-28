@@ -1,12 +1,12 @@
-﻿using Bifrost.Configuration;
+﻿using doLittle.Configuration;
 using System;
 
-namespace Bifrost.Specs.Configuration
+namespace doLittle.Specs.Configuration
 {
     public class EntityContextConfiguration : IEntityContextConfiguration
     {
         public Type EntityContextType { get; set; }
 
-        public Bifrost.Entities.IEntityContextConnection Connection { get; set; }
+        public doLittle.Entities.IEntityContextConnection Connection { get; set; }
     }
 }

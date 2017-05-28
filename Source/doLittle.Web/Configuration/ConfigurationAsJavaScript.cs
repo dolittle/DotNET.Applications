@@ -5,12 +5,12 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
-using Bifrost.Configuration;
-using Bifrost.Web.Assets;
-using Bifrost.Web.Proxies;
+using doLittle.Configuration;
+using doLittle.Web.Assets;
+using doLittle.Web.Proxies;
 using Newtonsoft.Json;
 
-namespace Bifrost.Web.Configuration
+namespace doLittle.Web.Configuration
 {
     public class ConfigurationAsJavaScript
     {
@@ -62,34 +62,34 @@ namespace Bifrost.Web.Configuration
             var builder = new StringBuilder();
 
             if (_webConfiguration.ScriptsToInclude.JQuery)
-                builder.Append(GetResource("Bifrost.Web.Scripts.jquery-2.1.3.min.js"));
+                builder.Append(GetResource("doLittle.Web.Scripts.jquery-2.1.3.min.js"));
 
             if (_webConfiguration.ScriptsToInclude.Knockout)
-                builder.Append(GetResource("Bifrost.Web.Scripts.knockout-3.2.0.debug.js"));
+                builder.Append(GetResource("doLittle.Web.Scripts.knockout-3.2.0.debug.js"));
 
             if (_webConfiguration.ScriptsToInclude.SignalR)
-                builder.Append(GetResource("Bifrost.Web.Scripts.jquery.signalR-2.2.0.js"));
+                builder.Append(GetResource("doLittle.Web.Scripts.jquery.signalR-2.2.0.js"));
 
             if (_webConfiguration.ScriptsToInclude.JQueryHistory)
-                builder.Append(GetResource("Bifrost.Web.Scripts.jquery.history.js"));
+                builder.Append(GetResource("doLittle.Web.Scripts.jquery.history.js"));
 
             if (_webConfiguration.ScriptsToInclude.Require)
             {
-                builder.Append(GetResource("Bifrost.Web.Scripts.require.js"));
-                builder.Append(GetResource("Bifrost.Web.Scripts.order.js"));
-                builder.Append(GetResource("Bifrost.Web.Scripts.text.js"));
-                builder.Append(GetResource("Bifrost.Web.Scripts.domReady.js"));
-                builder.Append(GetResource("Bifrost.Web.Scripts.noext.js"));
+                builder.Append(GetResource("doLittle.Web.Scripts.require.js"));
+                builder.Append(GetResource("doLittle.Web.Scripts.order.js"));
+                builder.Append(GetResource("doLittle.Web.Scripts.text.js"));
+                builder.Append(GetResource("doLittle.Web.Scripts.domReady.js"));
+                builder.Append(GetResource("doLittle.Web.Scripts.noext.js"));
             }
 
-            if (_webConfiguration.ScriptsToInclude.Bifrost)
-                builder.Append(GetResource("Bifrost.Web.Scripts.Bifrost.debug.js"));
+            if (_webConfiguration.ScriptsToInclude.doLittle)
+                builder.Append(GetResource("doLittle.Web.Scripts.doLittle.debug.js"));
 
             builder.Append(proxies.All);
 
             var files = assetsManager.GetFilesForExtension("js");
             var serialized = JsonConvert.SerializeObject(files);
-            builder.AppendFormat("Bifrost.assetsManager.initializeFromAssets({0});", serialized);
+            builder.AppendFormat("doLittle.assetsManager.initializeFromAssets({0});", serialized);
             _configurationAsString = builder.ToString();
         }
 

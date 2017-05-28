@@ -6,13 +6,13 @@
         namespace;
 
     beforeEach(function () {
-        Bifrost.commands = sinon.stub().returns({ Command: function () { } });
-        Bifrost.read = sinon.stub().returns({
+        doLittle.commands = sinon.stub().returns({ Command: function () { } });
+        doLittle.read = sinon.stub().returns({
             ReadModelOf: function () { },
             Query: function () { }
         });
 
-        resolver = new Bifrost.KnownArtifactTypesDependencyResolver();
+        resolver = new doLittle.KnownArtifactTypesDependencyResolver();
         canResolve = false;
         propertyToResolve = "someOtherType";
         namespace = {};

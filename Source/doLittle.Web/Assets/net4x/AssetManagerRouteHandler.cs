@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Routing;
 
-namespace Bifrost.Web.Assets
+namespace doLittle.Web.Assets
 {
     public class AssetManagerRouteHandler : IRouteHandler
     {

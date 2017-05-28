@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Specifications;
-using Bifrost.Specs.Specifications.given;
+using doLittle.Specifications;
+using doLittle.Specs.Specifications.given;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Specifications
+namespace doLittle.Specs.Specifications
 {
     [Subject(typeof (Specification<>))]
     public class when_applying_a_simple_rule_against_a_satisfying_instance : given.rules_and_coloured_shapes

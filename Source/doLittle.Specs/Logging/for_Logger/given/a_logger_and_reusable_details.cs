@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Logging;
+using doLittle.Logging;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Logging.for_Logger.given
+namespace doLittle.Specs.Logging.for_Logger.given
 {
     public class a_logger_and_reusable_details : all_dependencies
     {

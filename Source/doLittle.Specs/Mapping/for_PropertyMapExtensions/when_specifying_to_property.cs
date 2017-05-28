@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using Bifrost.Mapping;
+using doLittle.Mapping;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Mapping.for_PropertyMapExtensions
+namespace doLittle.Specs.Mapping.for_PropertyMapExtensions
 {
     public class when_specifying_to_property
     {

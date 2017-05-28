@@ -1,6 +1,6 @@
-﻿using Bifrost.Read;
+﻿using doLittle.Read;
 
-namespace Bifrost.Specs.Read.for_ReadModelFilters
+namespace doLittle.Specs.Read.for_ReadModelFilters
 {
     public class ReadModelWithString : IReadModel
     {

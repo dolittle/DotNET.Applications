@@ -1,8 +1,8 @@
-﻿using Bifrost.Logging;
+﻿using doLittle.Logging;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Logging.for_Logger.given
+namespace doLittle.Specs.Logging.for_Logger.given
 {
     public class all_dependencies
     {

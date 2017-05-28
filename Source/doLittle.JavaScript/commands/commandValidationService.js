@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.commands", {
-    commandValidationService: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.commands", {
+    commandValidationService: doLittle.Singleton(function () {
         var self = this;
 
         function shouldSkipProperty(target, property) {
@@ -32,7 +32,7 @@
             }
             if ((typeof target[property].prototype !== "undefined") &&
                 (target[property].prototype !== null) &&
-                (target[property] instanceof Bifrost.Type)) {
+                (target[property] instanceof doLittle.Type)) {
                 return true;
             }
 
@@ -139,7 +139,7 @@
                     continue;
                 }
 
-                if (!Bifrost.isNullOrUndefined(target[property].validator)) {
+                if (!doLittle.isNullOrUndefined(target[property].validator)) {
                     target[property].validator.message("");
                 }
             }
@@ -160,7 +160,7 @@
 
                 if (ko.isObservable(value) && typeof value.validator !== "undefined") {
                     validators.push(value.validator);
-                } else if (Bifrost.isObject(value)) {
+                } else if (doLittle.isObject(value)) {
                     collectValidators(value, validators);
                 }
             }

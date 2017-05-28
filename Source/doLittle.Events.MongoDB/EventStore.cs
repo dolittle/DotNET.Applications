@@ -5,12 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Applications;
+using doLittle.Applications;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace Bifrost.Events.MongoDB
+namespace doLittle.Events.MongoDB
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEventStore"/> for MongoDB

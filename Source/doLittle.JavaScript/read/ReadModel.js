@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.read", {
-    ReadModel: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.read", {
+    ReadModel: doLittle.Type.extend(function () {
         var self = this;
         var actualReadModel = this;
 

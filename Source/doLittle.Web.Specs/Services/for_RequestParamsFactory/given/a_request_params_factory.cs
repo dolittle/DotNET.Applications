@@ -2,12 +2,12 @@
 using System.Collections.Specialized;
 using System.IO;
 using System.Web;
-using Bifrost.Serialization;
-using Bifrost.Web.Services;
+using doLittle.Serialization;
+using doLittle.Web.Services;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Web.Specs.Services.for_RequestParamsFactory.given
+namespace doLittle.Web.Specs.Services.for_RequestParamsFactory.given
 {
     public class a_request_params_factory
     {

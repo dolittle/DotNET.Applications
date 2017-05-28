@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Security;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_AuthorizationDescriptorResult
+namespace doLittle.Specs.Security.for_AuthorizationDescriptorResult
 {
     [Subject(typeof(AuthorizeDescriptorResult))]
     public class when_building_the_failed_authorization_messages

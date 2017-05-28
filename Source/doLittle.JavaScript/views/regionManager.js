@@ -1,10 +1,10 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    regionManager: Bifrost.Singleton(function (documentService, regionDescriptorManager, messengerFactory, operationsFactory, tasksFactory) {
+﻿doLittle.namespace("doLittle.views", {
+    regionManager: doLittle.Singleton(function (documentService, regionDescriptorManager, messengerFactory, operationsFactory, tasksFactory) {
         /// <summary>Represents a manager that knows how to deal with Regions on the page</summary>
         var self = this;
 
         function createRegionInstance() {
-            var instance = new Bifrost.views.Region(messengerFactory, operationsFactory, tasksFactory);
+            var instance = new doLittle.views.Region(messengerFactory, operationsFactory, tasksFactory);
             return instance;
         }
 
@@ -12,11 +12,11 @@
         function manageInheritance(element) {
             var parentRegion = documentService.getParentRegionFor(element);
             if (parentRegion) {
-                Bifrost.views.Region.prototype = parentRegion;
+                doLittle.views.Region.prototype = parentRegion;
             } else {
                 var topLevel = createRegionInstance();
                 regionDescriptorManager.describeTopLevel(topLevel);
-                Bifrost.views.Region.prototype = topLevel;
+                doLittle.views.Region.prototype = topLevel;
             }
             return parentRegion;
         }
@@ -56,7 +56,7 @@
             /// <param name="view" type="View">View to describe region for</param>
             /// <param name="region" type="Region">Region to describe for</param>
             /// <returns>A promise that can be continued for when the description is done</returns>
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
             var element = view.element;
 
             regionDescriptorManager.describe(view, region).continueWith(function () {
@@ -67,12 +67,12 @@
 
         this.getCurrent = function () {
             /// <summary>Gets the current region</summary>
-            return Bifrost.views.Region.current;
+            return doLittle.views.Region.current;
         };
 
         this.evict = function (region) {
             /// <summary>Evict a region from the page</summary>
-            /// <param name="region" type="Bifrost.views.Region">Region to evict</param>
+            /// <param name="region" type="doLittle.views.Region">Region to evict</param>
 
             if (region.parentRegion) {
                 region.parentRegion.children.remove(region);
@@ -81,4 +81,4 @@
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.regionManager = Bifrost.views.regionManage;
+doLittle.WellKnownTypesDependencyResolver.types.regionManager = doLittle.views.regionManage;

@@ -5,16 +5,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Execution;
+using doLittle.Execution;
 using Microsoft.AspNet.SignalR;
 
-namespace Bifrost.Web.SignalR
+namespace doLittle.Web.SignalR
 {
-    public class BifrostDependencyResolver : DefaultDependencyResolver
+    public class doLittleDependencyResolver : DefaultDependencyResolver
     {
         IContainer _container;
 
-        public BifrostDependencyResolver(IContainer container)
+        public doLittleDependencyResolver(IContainer container)
         {
             _container = container;
         }

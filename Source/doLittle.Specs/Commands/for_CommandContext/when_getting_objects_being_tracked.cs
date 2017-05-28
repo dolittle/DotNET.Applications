@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Domain;
+using doLittle.Domain;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Commands.for_CommandContext
+namespace doLittle.Specs.Commands.for_CommandContext
 {
     public class when_getting_objects_being_tracked : given.a_command_context_for_a_simple_command_with_one_tracked_object
     {

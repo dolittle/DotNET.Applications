@@ -1,8 +1,8 @@
 ﻿describe("when creating instance of two definition", function () {
-    var firstSingleton = Bifrost.Singleton(function () {
+    var firstSingleton = doLittle.Singleton(function () {
         this.something = "Hello";
     });
-    var secondSingleton = Bifrost.Singleton(function () {
+    var secondSingleton = doLittle.Singleton(function () {
         this.something = "World";
     });
 

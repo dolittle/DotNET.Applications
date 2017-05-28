@@ -1,4 +1,4 @@
-Bifrost.namespace("Bifrost", {
+doLittle.namespace("doLittle", {
     Guid : {
         create: function() {
             function S4() {

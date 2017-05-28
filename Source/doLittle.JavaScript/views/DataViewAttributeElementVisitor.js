@@ -1,12 +1,12 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    DataViewAttributeElementVisitor: Bifrost.markup.ElementVisitor.extend(function () {
+﻿doLittle.namespace("doLittle.views", {
+    DataViewAttributeElementVisitor: doLittle.markup.ElementVisitor.extend(function () {
         this.visit = function (element, actions) {
 
             var dataView = element.attributes.getNamedItem("data-view");
-            if (!Bifrost.isNullOrUndefined(dataView)) {
+            if (!doLittle.isNullOrUndefined(dataView)) {
                 var dataBindString = "";
                 var dataBind = element.attributes.getNamedItem("data-bind");
-                if (!Bifrost.isNullOrUndefined(dataBind)) {
+                if (!doLittle.isNullOrUndefined(dataBind)) {
                     dataBindString = dataBind.value + ", ";
                 } else {
                     dataBind = document.createAttribute("data-bind");

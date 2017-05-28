@@ -4,16 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Text;
 using System.Linq;
-using Bifrost.CodeGeneration;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.Read;
-using Bifrost.Web.Configuration;
-using Bifrost.Web.Proxies;
+using doLittle.CodeGeneration;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.Read;
+using doLittle.Web.Configuration;
+using doLittle.Web.Proxies;
 using System.Reflection;
 
-namespace Bifrost.Web.Read
+namespace doLittle.Web.Read
 {
     public class QueryProxies : IProxyGenerator
     {
@@ -50,7 +50,7 @@ namespace Bifrost.Web.Read
                     var queryForTypeName = type.GetTypeInfo().GetInterface(typeof(IQueryFor<>).Name).GetGenericArguments()[0].Name.ToCamelCase();
                     currentNamespace.Content.Assign(name)
                         .WithType(t =>
-                            t.WithSuper("Bifrost.read.Query")
+                            t.WithSuper("doLittle.read.Query")
                                 .Function
                                     .Body
                                         .Variant("self", v => v.WithThis())

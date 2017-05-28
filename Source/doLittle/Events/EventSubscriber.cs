@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq;
-using Bifrost.Configuration;
-using Bifrost.Entities;
-using Bifrost.Views;
+using doLittle.Configuration;
+using doLittle.Entities;
+using doLittle.Views;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Represents a base class implementation of an <see cref="IProcessEvents"/>

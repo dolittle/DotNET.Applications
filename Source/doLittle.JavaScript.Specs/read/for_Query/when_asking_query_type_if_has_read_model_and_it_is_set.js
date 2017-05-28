@@ -1,6 +1,6 @@
 ﻿describe("when asking query type if has read model and it is set", function () {
     
-    var queryType = Bifrost.read.Query.extend(function () {
+    var queryType = doLittle.read.Query.extend(function () {
         this._readModel = "Something";
     });
 

@@ -1,7 +1,7 @@
-﻿using Bifrost.Read.Validation;
+﻿using doLittle.Read.Validation;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.Validation.for_QueryValidationDescriptors
+namespace doLittle.Specs.Read.Validation.for_QueryValidationDescriptors
 {
     public class when_getting_descriptor_and_one_descriptor_exist : given.one_query_validation_descriptor_for_query
     {

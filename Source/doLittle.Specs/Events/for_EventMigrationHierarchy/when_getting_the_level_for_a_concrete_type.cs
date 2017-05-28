@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Specs.Events.Fakes.v2;
+using doLittle.Specs.Events.Fakes.v2;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventMigrationHierarchy
+namespace doLittle.Specs.Events.for_EventMigrationHierarchy
 {
     public class when_getting_the_level_for_a_concrete_type : given.an_event_migration_hierarchy_with_two_levels
     {

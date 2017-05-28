@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using Machine.Specifications;
-using Bifrost.Security;
+using doLittle.Security;
 using Moq;
 using It = Machine.Specifications.It;
 
 
-namespace Bifrost.Specs.Security.for_UserSecurityActorExtensions
+namespace doLittle.Specs.Security.for_UserSecurityActorExtensions
 {
     public class when_user_must_have_claim_type
     {

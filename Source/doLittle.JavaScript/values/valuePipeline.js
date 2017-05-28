@@ -1,11 +1,11 @@
-﻿Bifrost.namespace("Bifrost.values", {
-    valuePipeline: Bifrost.Singleton(function (typeConverters, stringFormatter) {
+﻿doLittle.namespace("doLittle.values", {
+    valuePipeline: doLittle.Singleton(function (typeConverters, stringFormatter) {
         this.getValueForView = function (element, value) {
-            if (Bifrost.isNullOrUndefined(value)) {
+            if (doLittle.isNullOrUndefined(value)) {
                 return value;
             }
             var actualValue = ko.utils.unwrapObservable(value);
-            if (Bifrost.isNullOrUndefined(actualValue)) {
+            if (doLittle.isNullOrUndefined(actualValue)) {
                 return value;
             }
 
@@ -14,7 +14,7 @@
             if (stringFormatter.hasFormat(element)) {
                 returnValue = stringFormatter.format(element, actualValue);
             } else {
-                if (!Bifrost.isNullOrUndefined(value._typeAsString)) {
+                if (!doLittle.isNullOrUndefined(value._typeAsString)) {
                     returnValue = typeConverters.convertTo(actualValue);
                 }
             }
@@ -22,13 +22,13 @@
         };
 
         this.getValueForProperty = function (property, value) {
-            if (Bifrost.isNullOrUndefined(property)) {
+            if (doLittle.isNullOrUndefined(property)) {
                 return value;
             }
-            if (Bifrost.isNullOrUndefined(value)) {
+            if (doLittle.isNullOrUndefined(value)) {
                 return value;
             }
-            if (!Bifrost.isNullOrUndefined(property._typeAsString)) {
+            if (!doLittle.isNullOrUndefined(property._typeAsString)) {
                 value = typeConverters.convertFrom(value, property._typeAsString);
             }
 
@@ -38,14 +38,14 @@
 });
 
 (function () {
-    var valuePipeline = Bifrost.values.valuePipeline.create();
+    var valuePipeline = doLittle.values.valuePipeline.create();
 
     var oldReadValue = ko.selectExtensions.readValue;
     ko.selectExtensions.readValue = function (element) {
         var value = oldReadValue(element);
 
         var bindings = ko.bindingProvider.instance.getBindings(element, ko.contextFor(element));
-        if (Bifrost.isNullOrUndefined(bindings)) {
+        if (doLittle.isNullOrUndefined(bindings)) {
             return value;
         }
         var result = valuePipeline.getValueForProperty(bindings.value, value);
@@ -56,7 +56,7 @@
     ko.selectExtensions.writeValue = function (element, value, allowUnset) {
         var result = value;
         var bindings = ko.bindingProvider.instance.getBindings(element, ko.contextFor(element));
-        if (!Bifrost.isNullOrUndefined(bindings)) {
+        if (!doLittle.isNullOrUndefined(bindings)) {
             result = ko.utils.unwrapObservable(valuePipeline.getValueForView(element, bindings.value));
         }
         oldWriteValue(element, result, allowUnset);

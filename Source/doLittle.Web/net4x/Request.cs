@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Web;
 
-namespace Bifrost.Web
+namespace doLittle.Web
 {
     public class Request : IWebRequest
     {

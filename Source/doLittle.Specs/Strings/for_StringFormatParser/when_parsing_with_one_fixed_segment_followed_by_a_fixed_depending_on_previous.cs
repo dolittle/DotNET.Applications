@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Strings.for_StringFormatParser
+namespace doLittle.Specs.Strings.for_StringFormatParser
 {
     public class when_parsing_with_one_fixed_segment_followed_by_a_fixed_depending_on_previous : given.a_string_format_parser
     {

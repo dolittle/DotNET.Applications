@@ -1,9 +1,9 @@
-﻿using Bifrost.Diagnostics;
-using Bifrost.Execution;
+﻿using doLittle.Diagnostics;
+using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Diagnostics.for_TypeRules.given
+namespace doLittle.Specs.Diagnostics.for_TypeRules.given
 {
     public class all_dependencies
     {

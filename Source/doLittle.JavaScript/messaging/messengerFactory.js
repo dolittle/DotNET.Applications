@@ -1,13 +1,13 @@
-﻿Bifrost.namespace("Bifrost.messaging", {
-    messengerFactory: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.messaging", {
+    messengerFactory: doLittle.Singleton(function () {
         this.create = function () {
-            var messenger = Bifrost.messaging.Messenger.create();
+            var messenger = doLittle.messaging.Messenger.create();
             return messenger;
         };
 
         this.global = function () {
-            return Bifrost.messaging.Messenger.global;
+            return doLittle.messaging.Messenger.global;
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.messengerFactory = Bifrost.messaging.messengerFactory;
+doLittle.WellKnownTypesDependencyResolver.types.messengerFactory = doLittle.messaging.messengerFactory;

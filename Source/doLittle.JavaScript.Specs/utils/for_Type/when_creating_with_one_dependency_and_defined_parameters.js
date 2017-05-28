@@ -1,6 +1,6 @@
 describe("when creating with one dependency and defined parameters", function () {
 
-    Bifrost.dependencyResolver = {
+    doLittle.dependencyResolver = {
         resolve: function (namespace, name) {
             if (name == "first") {
                 return "first";
@@ -12,7 +12,7 @@ describe("when creating with one dependency and defined parameters", function ()
         }
     }
 
-    var type = Bifrost.Type.extend(function (first, options) {
+    var type = doLittle.Type.extend(function (first, options) {
         this.something = "Hello";
         this.first = first;
         this.options = options;

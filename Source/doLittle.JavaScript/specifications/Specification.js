@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.specifications", {
-    Specification: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.specifications", {
+    Specification: doLittle.Type.extend(function () {
         /// <summary>Represents a rule based on the specification pattern</summary>
         var self = this;
         var currentInstance = ko.observable();
@@ -25,7 +25,7 @@
             }
             var instance = currentInstance();
 
-            if (!Bifrost.isNullOrUndefined(instance)) {
+            if (!doLittle.isNullOrUndefined(instance)) {
                 return self.evaluator(instance);
             }
             return false;
@@ -48,13 +48,13 @@
             /// </param>
             /// <returns>A new composed rule</returns>
 
-            if (Bifrost.isFunction(rule)) {
+            if (doLittle.isFunction(rule)) {
                 var oldRule = rule;
-                rule = Bifrost.specifications.Specification.create();
+                rule = doLittle.specifications.Specification.create();
                 rule.evaluator = oldRule;
             }
 
-            var and = Bifrost.specifications.And.create(this, rule);
+            var and = doLittle.specifications.And.create(this, rule);
             return and;
         };
 
@@ -66,18 +66,18 @@
             /// </param>
             /// <returns>A new composed rule</returns>
 
-            if (Bifrost.isFunction(rule)) {
+            if (doLittle.isFunction(rule)) {
                 var oldRule = rule;
-                rule = Bifrost.specifications.Specification.create();
+                rule = doLittle.specifications.Specification.create();
                 rule.evaluator = oldRule;
             }
 
-            var or = Bifrost.specifications.Or.create(this, rule);
+            var or = doLittle.specifications.Or.create(this, rule);
             return or;
         };
     })
 });
-Bifrost.specifications.Specification.when = function (evaluator) {
+doLittle.specifications.Specification.when = function (evaluator) {
     /// <summary>Starts a rule chain</summary>
     /// <param name="evaluator">
     /// The evaluator can either be a function that gets called with the instance
@@ -85,7 +85,7 @@ Bifrost.specifications.Specification.when = function (evaluator) {
     /// not have the instance passed 
     /// </param>
     /// <returns>A new composed rule</returns>
-    var rule = Bifrost.specifications.Specification.create();
+    var rule = doLittle.specifications.Specification.create();
     rule.evaluator = evaluator;
     return rule;
 };

@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Logging;
+using doLittle.Logging;
 
-namespace Bifrost.Strings
+namespace doLittle.Strings
 {
     /// <summary>
     /// Represents a <see cref="ISegment"/> for an arbitrary string

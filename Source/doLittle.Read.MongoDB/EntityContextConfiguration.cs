@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Configuration;
-using Bifrost.Entities;
+using doLittle.Configuration;
+using doLittle.Entities;
 
-namespace Bifrost.Read.MongoDB
+namespace doLittle.Read.MongoDB
 {
     /// <summary>
     /// Represents a MongoDB implementation of <see cref="IEntityContextConfiguration"/>

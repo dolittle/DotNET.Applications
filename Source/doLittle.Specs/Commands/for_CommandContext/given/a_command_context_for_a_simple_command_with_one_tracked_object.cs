@@ -1,8 +1,8 @@
 ﻿using Machine.Specifications;
 using System;
-using Bifrost.Events;
+using doLittle.Events;
 
-namespace Bifrost.Specs.Commands.for_CommandContext.given
+namespace doLittle.Specs.Commands.for_CommandContext.given
 {
     public class a_command_context_for_a_simple_command_with_one_tracked_object : a_command_context_for_a_simple_command
     {

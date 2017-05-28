@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Web;
-using Bifrost.Configuration;
-using Bifrost.Web.Commands;
+using doLittle.Configuration;
+using doLittle.Web.Commands;
 
-namespace Bifrost.Web.Security
+namespace doLittle.Web.Security
 {
     public class SecurityRouteHttpHandler : IHttpHandler
     {

@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Conventions;
+using doLittle.Conventions;
 
-namespace Bifrost.Exceptions
+namespace doLittle.Exceptions
 {
     /// <summary>
     /// Implement this interface to subscribe to exceptions.

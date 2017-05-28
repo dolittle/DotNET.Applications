@@ -1,9 +1,9 @@
 ﻿using Machine.Specifications;
-using Bifrost.Security;
+using doLittle.Security;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_SecurityDescriptor
+namespace doLittle.Specs.Security.for_SecurityDescriptor
 {
     public class when_adding_an_action
     {

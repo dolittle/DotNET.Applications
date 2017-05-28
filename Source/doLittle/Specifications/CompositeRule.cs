@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Bifrost.Specifications
+namespace doLittle.Specifications
 {
     /// <summary>
     /// Composes two rules into a single rule that can be evaluated atomically.

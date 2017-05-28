@@ -1,7 +1,7 @@
 describe("when throwing a defined exception", function() {
 	var exceptionThrown;
 	
-	Bifrost.Exception.define("Something.SomeException");
+	doLittle.Exception.define("Something.SomeException");
 	
 	try {
 		throw new Something.SomeException();

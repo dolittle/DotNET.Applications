@@ -1,20 +1,20 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    viewModelTypes: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.views", {
+    viewModelTypes: doLittle.Singleton(function () {
         var self = this;
 
         function getNamespaceFrom(path) {
-            var localPath = Bifrost.Path.getPathWithoutFilename(path);
-            var namespacePath = Bifrost.namespaceMappers.mapPathToNamespace(localPath);
+            var localPath = doLittle.Path.getPathWithoutFilename(path);
+            var namespacePath = doLittle.namespaceMappers.mapPathToNamespace(localPath);
             if (namespacePath != null) {
-                var namespace = Bifrost.namespace(namespacePath);
+                var namespace = doLittle.namespace(namespacePath);
                 return namespace;
             }
             return null;
         }
 
         function getTypeNameFrom(path) {
-            var localPath = Bifrost.Path.getPathWithoutFilename(path);
-            var filename = Bifrost.Path.getFilenameWithoutExtension(path);
+            var localPath = doLittle.Path.getPathWithoutFilename(path);
+            var filename = doLittle.Path.getFilenameWithoutExtension(path);
             return filename;
         }
 
@@ -32,7 +32,7 @@
             var namespace = getNamespaceFrom(path);
             if (namespace != null) {
                 var typename = getTypeNameFrom(path);
-                if (Bifrost.isType(namespace[typename])) {
+                if (doLittle.isType(namespace[typename])) {
                     return namespace[typename];
                 }
             }
@@ -42,10 +42,10 @@
 
         this.getViewModelTypeForPath = function (path) {
             var type = getViewModelTypeForPathImplementation(path);
-            if (Bifrost.isNullOrUndefined(type)) {
+            if (doLittle.isNullOrUndefined(type)) {
                 var deepPath = path.replace(".js", "/index.js");
                 type = getViewModelTypeForPathImplementation(deepPath);
-                if (Bifrost.isNullOrUndefined(type)) {
+                if (doLittle.isNullOrUndefined(type)) {
                     deepPath = path.replace(".js", "/Index.js");
                     getViewModelTypeForPathImplementation(deepPath);
                 }
@@ -56,12 +56,12 @@
 
 
         this.beginCreateInstanceOfViewModel = function (path, region, viewModelParameters) {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
 
             var type = self.getViewModelTypeForPath(path);
             if (type != null) {
-                var previousRegion = Bifrost.views.Region.current;
-                Bifrost.views.Region.current = region;
+                var previousRegion = doLittle.views.Region.current;
+                doLittle.views.Region.current = region;
 
                 viewModelParameters = viewModelParameters || {};
                 viewModelParameters.region = region;
@@ -83,4 +83,4 @@
 
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.viewModelTypes = Bifrost.views.viewModelTypes;
+doLittle.WellKnownTypesDependencyResolver.types.viewModelTypes = doLittle.views.viewModelTypes;

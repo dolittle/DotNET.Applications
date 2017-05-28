@@ -1,8 +1,8 @@
-Bifrost.namespace("Bifrost.values", {
-    typeConverters: Bifrost.Singleton(function () {
+doLittle.namespace("doLittle.values", {
+    typeConverters: doLittle.Singleton(function () {
         var convertersByType = {};
 
-        var typeConverterTypes = Bifrost.values.TypeConverter.getExtenders();
+        var typeConverterTypes = doLittle.values.TypeConverter.getExtenders();
         typeConverterTypes.forEach(function (type) {
             var converter = type.create();
             convertersByType[converter.supportedType] = converter;
@@ -10,7 +10,7 @@ Bifrost.namespace("Bifrost.values", {
 
         this.convertFrom = function (value, type) {
             var actualType = null;
-            if (Bifrost.isString(type)) {
+            if (doLittle.isString(type)) {
                 actualType = eval(type);
             } else {
                 actualType = type;
@@ -23,7 +23,7 @@ Bifrost.namespace("Bifrost.values", {
         };
 
         this.convertTo = function (value) {
-            if (Bifrost.isNullOrUndefined(value)) {
+            if (doLittle.isNullOrUndefined(value)) {
                 return value;
             }
             for (var converter in convertersByType) {
@@ -37,4 +37,4 @@ Bifrost.namespace("Bifrost.values", {
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.typeConverters = Bifrost.values.typeConverters;
+doLittle.WellKnownTypesDependencyResolver.types.typeConverters = doLittle.values.typeConverters;

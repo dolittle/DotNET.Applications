@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Configuration;
+using doLittle.Configuration;
 
-namespace Bifrost.Entities.Files
+namespace doLittle.Entities.Files
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEntityContextConfiguration"/> for the simple file based <see cref="EntityContext{T}"/>

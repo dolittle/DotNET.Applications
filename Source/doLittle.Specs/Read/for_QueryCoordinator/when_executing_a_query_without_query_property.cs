@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Read;
+using doLittle.Read;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.for_QueryCoordinator
+namespace doLittle.Specs.Read.for_QueryCoordinator
 {
     public class when_executing_a_query_without_query_property : given.a_query_coordinator
     {

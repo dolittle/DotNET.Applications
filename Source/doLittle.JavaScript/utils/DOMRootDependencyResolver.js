@@ -1,4 +1,4 @@
-﻿Bifrost.dependencyResolvers.DOMRootDependencyResolver = {
+﻿doLittle.dependencyResolvers.DOMRootDependencyResolver = {
     canResolve: function (namespace, name) {
         return name === "DOMRoot";
     },
@@ -8,15 +8,15 @@
             return document.body;
         }
 
-        var promise = Bifrost.execution.Promise.create();
-        Bifrost.dependencyResolvers.DOMRootDependencyResolver.promises.push(promise);
+        var promise = doLittle.execution.Promise.create();
+        doLittle.dependencyResolvers.DOMRootDependencyResolver.promises.push(promise);
         return promise;
     }
 };
 
-Bifrost.dependencyResolvers.DOMRootDependencyResolver.promises = [];
-Bifrost.dependencyResolvers.DOMRootDependencyResolver.documentIsReady = function () {
-    Bifrost.dependencyResolvers.DOMRootDependencyResolver.promises.forEach(function (promise) {
+doLittle.dependencyResolvers.DOMRootDependencyResolver.promises = [];
+doLittle.dependencyResolvers.DOMRootDependencyResolver.documentIsReady = function () {
+    doLittle.dependencyResolvers.DOMRootDependencyResolver.promises.forEach(function (promise) {
         promise.signal(document.body);
     });
 };

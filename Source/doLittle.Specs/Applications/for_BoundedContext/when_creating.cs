@@ -1,7 +1,7 @@
-﻿using Bifrost.Applications;
+﻿using doLittle.Applications;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Applications.for_BoundedContext
+namespace doLittle.Specs.Applications.for_BoundedContext
 {
     public class when_creating
     {

@@ -1,7 +1,7 @@
-﻿using Bifrost.FluentValidation.Commands;
+﻿using doLittle.FluentValidation.Commands;
 using FluentValidation;
 
-namespace Bifrost.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
+namespace doLittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
 {
     public class CommandForValidationValidator : CommandInputValidator<CommandForValidation>
     {

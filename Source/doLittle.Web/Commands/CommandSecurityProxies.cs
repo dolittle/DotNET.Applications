@@ -8,17 +8,17 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Bifrost.Applications;
-using Bifrost.CodeGeneration;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Commands;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.Lifecycle;
-using Bifrost.Web.Configuration;
-using Bifrost.Web.Proxies;
+using doLittle.Applications;
+using doLittle.CodeGeneration;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Commands;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.Lifecycle;
+using doLittle.Web.Configuration;
+using doLittle.Web.Proxies;
 
-namespace Bifrost.Web.Commands
+namespace doLittle.Web.Commands
 {
     public class CommandSecurityProxies : IProxyGenerator
     {
@@ -75,7 +75,7 @@ namespace Bifrost.Web.Commands
                     var name = $"{type.Name.ToCamelCase()}SecurityContext";
                     currentNamespace.Content.Assign(name)
                         .WithType(t => t
-                            .WithSuper("Bifrost.commands.CommandSecurityContext")
+                            .WithSuper("doLittle.commands.CommandSecurityContext")
                             .Function
                             .Body
                             .Variant("self", v => v.WithThis())

@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.Diagnostics;
+using doLittle.Diagnostics;
 
-namespace Bifrost.Commands.Diagnostics
+namespace doLittle.Commands.Diagnostics
 {
     /// <summary>
     /// Represents a rule that will check if a <see cref="ICommand"/> has too many properties

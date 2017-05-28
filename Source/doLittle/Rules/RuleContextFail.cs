@@ -2,7 +2,7 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-namespace Bifrost.Rules
+namespace doLittle.Rules
 {
     /// <summary>
     /// Delegate that gets called when a <see cref="IRule"/> fails

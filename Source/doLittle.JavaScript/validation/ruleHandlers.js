@@ -1,4 +1,4 @@
-Bifrost.namespace("Bifrost.validation");
-Bifrost.validation.ruleHandlers = (function () {
-    return Bifrost.validation.ruleHandlers || { };
+doLittle.namespace("doLittle.validation");
+doLittle.validation.ruleHandlers = (function () {
+    return doLittle.validation.ruleHandlers || { };
 })();

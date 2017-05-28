@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Bifrost.Rules;
-using Bifrost.Validation.Rules;
+using doLittle.Rules;
+using doLittle.Validation.Rules;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Validation.Rules.for_Required
+namespace doLittle.Specs.Validation.Rules.for_Required
 {
     public class when_evaluating_empty_string
     {

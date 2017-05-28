@@ -1,6 +1,6 @@
-var Bifrost = Bifrost || {};
+var doLittle = doLittle || {};
 (function(global, undefined) {
-    Bifrost.extend = function extend(destination, source) {
+    doLittle.extend = function extend(destination, source) {
         return $.extend(destination, source);
     };
 })(window);

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Machine.Specifications;
 
-namespace Bifrost.FluentValidation.Specs.for_PropertyValidatorWithDynamicState
+namespace doLittle.FluentValidation.Specs.for_PropertyValidatorWithDynamicState
 {
     public class when_adding_property_expression
     {

@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Conventions;
+using doLittle.Conventions;
 
-namespace Bifrost.Commands
+namespace doLittle.Commands
 {
     /// <summary>
     /// Defines the basic command.
@@ -18,10 +18,5 @@ namespace Bifrost.Commands
     /// </remarks>
     public interface ICommand : IConvention
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        Guid Id { get; set; }
     }
 }

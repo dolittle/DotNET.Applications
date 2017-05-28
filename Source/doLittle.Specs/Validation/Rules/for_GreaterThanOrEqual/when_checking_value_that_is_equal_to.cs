@@ -1,10 +1,10 @@
-﻿using Bifrost.Rules;
-using Bifrost.Validation.Rules;
+﻿using doLittle.Rules;
+using doLittle.Validation.Rules;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Validation.Rules.for_GreaterThanOrEqual
+namespace doLittle.Specs.Validation.Rules.for_GreaterThanOrEqual
 {
     public class when_checking_value_that_is_equal_to
     {

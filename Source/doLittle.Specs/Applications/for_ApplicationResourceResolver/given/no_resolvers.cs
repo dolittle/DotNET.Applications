@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Bifrost.Applications;
+using doLittle.Applications;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResourceResolver.given
+namespace doLittle.Specs.Applications.for_ApplicationResourceResolver.given
 {
     public class no_resolvers : an_identifier
     {

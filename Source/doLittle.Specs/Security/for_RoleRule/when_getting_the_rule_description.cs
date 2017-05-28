@@ -1,7 +1,7 @@
-﻿using Bifrost.Security;
+﻿using doLittle.Security;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Security.for_RoleRule
+namespace doLittle.Specs.Security.for_RoleRule
 {
     [Subject(typeof (RoleRule))]
     public class when_getting_the_rule_description : given.a_rule_role

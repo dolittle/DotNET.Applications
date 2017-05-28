@@ -5,14 +5,14 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Bifrost.Dynamic;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.Logging;
-using Bifrost.Read;
-using Bifrost.Web.Configuration;
+using doLittle.Dynamic;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.Logging;
+using doLittle.Read;
+using doLittle.Web.Configuration;
 
-namespace Bifrost.Web.Read
+namespace doLittle.Web.Read
 {
     public class QueryService
     {

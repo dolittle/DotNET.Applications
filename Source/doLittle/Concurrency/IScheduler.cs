@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Concurrency
+namespace doLittle.Concurrency
 {
     /// <summary>
     /// Defines a scheduler for scheduling operations

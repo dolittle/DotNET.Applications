@@ -1,10 +1,10 @@
 ﻿using System;
-using Bifrost.Events;
-using Bifrost.Specs.Events.Fakes;
+using doLittle.Events;
+using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Events.for_UncommittedEventStream
+namespace doLittle.Specs.Events.for_UncommittedEventStream
 {
     public class when_appending_an_event_to_an_uncommitted_event_stream_belonging_to_a_different_event_source
         : given.an_empty_uncommitted_event_stream

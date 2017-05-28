@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Commands;
+using doLittle.Commands;
 
-namespace Bifrost.Specs.Commands.Diagnostics.for_CommandInheritanceRule
+namespace doLittle.Specs.Commands.Diagnostics.for_CommandInheritanceRule
 {
     public class CommandImplentingICommand : ICommand
     {

@@ -22,7 +22,7 @@
         }
     };
 
-    var region = new Bifrost.views.Region(
+    var region = new doLittle.views.Region(
         messengerFactory,
         operationsFactory,
         tasksFactory

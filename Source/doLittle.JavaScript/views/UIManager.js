@@ -1,8 +1,8 @@
-Bifrost.namespace("Bifrost.views", {
-    UIManager: Bifrost.Singleton(function(documentService) {
-        var elementVisitorTypes = Bifrost.markup.ElementVisitor.getExtenders();
+doLittle.namespace("doLittle.views", {
+    UIManager: doLittle.Singleton(function(documentService) {
+        var elementVisitorTypes = doLittle.markup.ElementVisitor.getExtenders();
         var elementVisitors = [];
-        var postBindingVisitorTypes = Bifrost.views.PostBindingVisitor.getExtenders();
+        var postBindingVisitorTypes = doLittle.views.PostBindingVisitor.getExtenders();
         var postBindingVisitors = [];
 
         elementVisitorTypes.forEach(function (type) {
@@ -16,7 +16,7 @@ Bifrost.namespace("Bifrost.views", {
         this.handle = function (root) {
             documentService.traverseObjects(function(element) {
                 elementVisitors.forEach(function(visitor) {
-                    var actions = Bifrost.markup.ElementVisitorResultActions.create();
+                    var actions = doLittle.markup.ElementVisitorResultActions.create();
                     visitor.visit(element, actions);
                 });
             }, root);
@@ -31,4 +31,4 @@ Bifrost.namespace("Bifrost.views", {
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.UIManager = Bifrost.views.UIManager;
+doLittle.WellKnownTypesDependencyResolver.types.UIManager = doLittle.views.UIManager;

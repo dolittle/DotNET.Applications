@@ -2,10 +2,10 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Configuration;
-using Bifrost.Events.Azure.Tables;
+using doLittle.Configuration;
+using doLittle.Events.Azure.Tables;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Extensions for configuring <see cref="EventStoreConfiguration"/>

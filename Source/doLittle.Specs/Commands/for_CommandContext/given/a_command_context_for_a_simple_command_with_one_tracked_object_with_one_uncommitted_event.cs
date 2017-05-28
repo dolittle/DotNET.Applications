@@ -1,8 +1,8 @@
-﻿using Bifrost.Events;
+﻿using doLittle.Events;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Commands.for_CommandContext.given
+namespace doLittle.Specs.Commands.for_CommandContext.given
 {
     public class a_command_context_for_a_simple_command_with_one_tracked_object_with_one_uncommitted_event : a_command_context_for_a_simple_command_with_one_tracked_object
     {

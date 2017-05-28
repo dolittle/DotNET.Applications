@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Execution;
+using doLittle.Execution;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Execution.for_WriteOnceExpandoObject
+namespace doLittle.Specs.Execution.for_WriteOnceExpandoObject
 {
     [Behaviors]
     public class a_read_only_container

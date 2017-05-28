@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Mapping.for_Mapper
+﻿namespace doLittle.Specs.Mapping.for_Mapper
 {
     public class Target
     {

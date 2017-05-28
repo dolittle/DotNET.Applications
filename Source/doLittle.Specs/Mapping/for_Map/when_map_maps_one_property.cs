@@ -2,7 +2,7 @@
 using System.Reflection;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Mapping.for_Map
+namespace doLittle.Specs.Mapping.for_Map
 {
     public class when_map_maps_one_property
     {

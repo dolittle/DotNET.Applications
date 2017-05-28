@@ -1,1 +1,1 @@
-juicer merge Bifrost.js -o Bifrost.debug.js -s --force -m none
+juicer merge doLittle.js -o doLittle.debug.js -s --force -m none

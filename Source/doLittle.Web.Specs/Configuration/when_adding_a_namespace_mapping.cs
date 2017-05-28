@@ -1,7 +1,7 @@
-﻿using Bifrost.Web.Configuration;
+﻿using doLittle.Web.Configuration;
 using Machine.Specifications;
 
-namespace Bifrost.Web.Specs.Configuration
+namespace doLittle.Web.Specs.Configuration
 {
     [Subject(typeof(NamespaceMapper))]
     public class when_adding_a_namespace_mapping : given.a_namespace_mapper
@@ -15,7 +15,7 @@ namespace Bifrost.Web.Specs.Configuration
         Establish context = () =>
             {
                 my_client_namespace = "MyClient.**.";
-                my_server_namespace = "Bifrost.Web.Specs.Configuration.**.";
+                my_server_namespace = "doLittle.Web.Specs.Configuration.**.";
 
                 namespace_mapper.Add(my_client_namespace,my_server_namespace);
             };

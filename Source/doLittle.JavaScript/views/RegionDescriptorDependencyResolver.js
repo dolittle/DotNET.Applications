@@ -1,4 +1,4 @@
-﻿Bifrost.dependencyResolvers.RegionDescriptor = {
+﻿doLittle.dependencyResolvers.RegionDescriptor = {
     canResolve: function (namespace, name) {
         return name === "RegionDescriptor";
     },

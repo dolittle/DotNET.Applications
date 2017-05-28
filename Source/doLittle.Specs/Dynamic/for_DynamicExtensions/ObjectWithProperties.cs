@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Dynamic.for_DynamicExtensions
+﻿namespace doLittle.Specs.Dynamic.for_DynamicExtensions
 {
     public class ObjectWithProperties
     {

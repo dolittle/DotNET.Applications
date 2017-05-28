@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
-using Bifrost.Domain;
-using Bifrost.Events;
-using Bifrost.Execution;
-using Bifrost.Lifecycle;
+using doLittle.Domain;
+using doLittle.Events;
+using doLittle.Execution;
+using doLittle.Lifecycle;
 
-namespace Bifrost.Commands
+namespace doLittle.Commands
 {
     /// <summary>
     /// Defines a context for a <see cref="ICommand">command</see> passing through

@@ -1,7 +1,7 @@
-﻿using Bifrost.Rules;
+﻿using doLittle.Rules;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Rules.for_BrokenRuleReason
+namespace doLittle.Specs.Rules.for_BrokenRuleReason
 {
     public class when_creating
     {

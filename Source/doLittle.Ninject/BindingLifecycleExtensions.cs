@@ -2,14 +2,14 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Execution;
+using doLittle.Execution;
 using Ninject.Syntax;
 #if(FALSE)
 using Ninject.Web.Common;
 #endif
 
 
-namespace Bifrost.Ninject
+namespace doLittle.Ninject
 {
     /// <summary>
     /// Provides functionality for setting scope to a Ninject <see cref="IBindingInSyntax{T}">Binding syntax</see> 

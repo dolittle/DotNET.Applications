@@ -3,18 +3,18 @@
     var firstInstance = null;
     var secondInstance = null;
     beforeEach(function () {
-        Bifrost.dependencyResolver = {
+        doLittle.dependencyResolver = {
             getDependenciesFor: sinon.stub()
         };
 
-        type = Bifrost.Type.extend(function () {
+        type = doLittle.Type.extend(function () {
         });
         firstInstance = type.create();
         secondInstance = type.create();
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolver = {};
+        doLittle.dependencyResolver = {};
     });
 
     it("should return different instances", function () {

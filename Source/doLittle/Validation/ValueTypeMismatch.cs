@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Validation
+namespace doLittle.Validation
 {
     /// <summary>
     /// The exception that is thrown if a value coming in is of the wrong type from what is expected in a rule

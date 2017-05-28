@@ -8,13 +8,13 @@
             _name: "required",
             create: sinon.stub()
         };
-        Bifrost.validation.Rule = {
+        doLittle.validation.Rule = {
             getExtenders: function () {
                 return [required];
             }
         }
 
-        validator = Bifrost.validation.Validator.create({
+        validator = doLittle.validation.Validator.create({
             required: options
         });
     });

@@ -1,12 +1,12 @@
 ﻿using System;
-using Bifrost.Rules;
-using Bifrost.Validation;
-using Bifrost.Validation.Rules;
+using doLittle.Rules;
+using doLittle.Validation;
+using doLittle.Validation.Rules;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Validation.Rules.for_Regex
+namespace doLittle.Specs.Validation.Rules.for_Regex
 {
     public class when_checking_value_with_non_matching_expression
     {

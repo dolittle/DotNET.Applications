@@ -1,9 +1,9 @@
-﻿using Bifrost.Commands.Diagnostics;
-using Bifrost.Diagnostics;
+﻿using doLittle.Commands.Diagnostics;
+using doLittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Commands.Diagnostics.for_TooManyPropertiesRule.given
+namespace doLittle.Specs.Commands.Diagnostics.for_TooManyPropertiesRule.given
 {
     public class a_too_many_properties_rule
     {

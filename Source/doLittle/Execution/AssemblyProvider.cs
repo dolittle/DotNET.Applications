@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Collections;
-using Bifrost.Extensions;
+using doLittle.Collections;
+using doLittle.Extensions;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Represents an implementation of <see cref="IAssemblyProvider"/>

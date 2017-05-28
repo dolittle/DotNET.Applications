@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
 
-namespace Bifrost.Entities
+namespace doLittle.Entities
 {
     /// <summary>
     /// Represents a null implementation of <see cref="IEntityContext{T}"/> doing absolutely nothing

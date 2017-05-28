@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Dynamic;
-using Bifrost.Logging;
-using Bifrost.Serialization;
-using Bifrost.Time;
+using doLittle.Logging;
+using doLittle.Serialization;
+using doLittle.Time;
 
-namespace Bifrost.Events.Files
+namespace doLittle.Events.Files
 {
     /// <summary>
     /// Represents a simple and naïve implementation for handling <see cref="IEventProcessorStates"/>

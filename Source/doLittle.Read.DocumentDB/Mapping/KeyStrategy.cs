@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Mapping;
+using doLittle.Mapping;
 
-namespace Bifrost.DocumentDB.Mapping
+namespace doLittle.DocumentDB.Mapping
 {
     /// <summary>
     /// Represents an implementation of <see cref="IPropertyMappingStrategy"/> for defining a key

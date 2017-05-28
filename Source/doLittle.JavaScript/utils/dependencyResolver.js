@@ -1,7 +1,7 @@
-Bifrost.namespace("Bifrost", {
+doLittle.namespace("doLittle", {
     dependencyResolver: (function () {
         function resolveImplementation(namespace, name) {
-            var resolvers = Bifrost.dependencyResolvers.getAll();
+            var resolvers = doLittle.dependencyResolvers.getAll();
             var resolvedSystem = null;
             resolvers.forEach(function (resolver) {
                 if (resolvedSystem != null) {
@@ -22,7 +22,7 @@ Bifrost.namespace("Bifrost", {
                 system._super !== null) {
 
                 if (typeof system._super !== "undefined" &&
-                    system._super === Bifrost.Type) {
+                    system._super === doLittle.Type) {
                     return true;
                 }
 
@@ -42,12 +42,12 @@ Bifrost.namespace("Bifrost", {
         }
 
         function beginHandleSystemInstance(system) {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
 
             if (system != null &&
                 system._super !== null &&
                 typeof system._super !== "undefined" &&
-                system._super === Bifrost.Type) {
+                system._super === doLittle.Type) {
 
                 system.beginCreate().continueWith(function (result, next) {
                     promise.signal(result);
@@ -62,7 +62,7 @@ Bifrost.namespace("Bifrost", {
         return {
             getDependenciesFor: function (func) {
                 var dependencies = [];
-                var parameters = Bifrost.functionParser.parse(func);
+                var parameters = doLittle.functionParser.parse(func);
                 for (var i = 0; i < parameters.length; i++) {
                     dependencies.push(parameters[i].name);
                 }
@@ -71,7 +71,7 @@ Bifrost.namespace("Bifrost", {
 
             canResolve: function (namespace, name) {
                 // Loop through resolvers and check if anyone can resolve it, if so return true - if not false
-                var resolvers = Bifrost.dependencyResolvers.getAll();
+                var resolvers = doLittle.dependencyResolvers.getAll();
                 var canResolve = false;
 
                 resolvers.forEach(function (resolver) {
@@ -89,27 +89,27 @@ Bifrost.namespace("Bifrost", {
                 var resolvedSystem = resolveImplementation(namespace, name);
                 if (typeof resolvedSystem === "undefined" || resolvedSystem === null) {
                     console.log("Unable to resolve '" + name + "' in '" + namespace + "'");
-                    throw new Bifrost.UnresolvedDependencies();
+                    throw new doLittle.UnresolvedDependencies();
                 }
 
-                if (resolvedSystem instanceof Bifrost.execution.Promise) {
+                if (resolvedSystem instanceof doLittle.execution.Promise) {
                     console.log("'" + name + "' was resolved as an asynchronous dependency, consider using beginCreate() or make the dependency available prior to calling create");
-                    throw new Bifrost.AsynchronousDependenciesDetected();
+                    throw new doLittle.AsynchronousDependenciesDetected();
                 }
 
                 return handleSystemInstance(resolvedSystem);
             },
 
             beginResolve: function (namespace, name) {
-                var promise = Bifrost.execution.Promise.create();
-                Bifrost.configure.ready(function () {
+                var promise = doLittle.execution.Promise.create();
+                doLittle.configure.ready(function () {
                     var resolvedSystem = resolveImplementation(namespace, name);
                     if (typeof resolvedSystem === "undefined" || resolvedSystem === null) {
                         console.log("Unable to resolve '" + name + "' in '" + namespace + "'");
-                        promise.fail(new Bifrost.UnresolvedDependencies());
+                        promise.fail(new doLittle.UnresolvedDependencies());
                     }
 
-                    if (resolvedSystem instanceof Bifrost.execution.Promise) {
+                    if (resolvedSystem instanceof doLittle.execution.Promise) {
                         resolvedSystem.continueWith(function (system, innerPromise) {
                             beginHandleSystemInstance(system)
                             .continueWith(function (actualSystem, next) {
@@ -127,4 +127,4 @@ Bifrost.namespace("Bifrost", {
         };
     })()
 });
-Bifrost.WellKnownTypesDependencyResolver.types.dependencyResolver = Bifrost.dependencyResolver;
+doLittle.WellKnownTypesDependencyResolver.types.dependencyResolver = doLittle.dependencyResolver;

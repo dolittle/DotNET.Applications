@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Bifrost.Collections;
+using doLittle.Collections;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Collection
+namespace doLittle.Specs.Collection
 {
     public class when_clearing : given.empty_collection
     {

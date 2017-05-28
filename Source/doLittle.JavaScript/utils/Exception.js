@@ -1,27 +1,27 @@
-Bifrost.namespace("Bifrost");
+doLittle.namespace("doLittle");
 
-Bifrost.DefinitionMustBeFunction = function (message) {
+doLittle.DefinitionMustBeFunction = function (message) {
     this.prototype = Error.prototype;
     this.name = "DefinitionMustBeFunction";
     this.message = message || "Definition must be function";
 };
 
-Bifrost.MissingName = function (message) {
+doLittle.MissingName = function (message) {
     this.prototype = Error.prototype;
     this.name = "MissingName";
     this.message = message || "Missing name";
 };
 
-Bifrost.Exception = (function(global, undefined) {
+doLittle.Exception = (function(global, undefined) {
     function throwIfNameMissing(name) {
         if (!name || typeof name === "undefined") {
-            throw new Bifrost.MissingName();
+            throw new doLittle.MissingName();
         }
     }
     
     function throwIfDefinitionNotAFunction(definition) {
         if (typeof definition !== "function") {
-            throw new Bifrost.DefinitionMustBeFunction();
+            throw new doLittle.DefinitionMustBeFunction();
         }
     }
 
@@ -40,7 +40,7 @@ Bifrost.Exception = (function(global, undefined) {
         }
         
         var ns = name.substr(0,lastDot);
-        Bifrost.namespace(ns);
+        doLittle.namespace(ns);
         
         var scope = global;
         var parts = ns.split('.');

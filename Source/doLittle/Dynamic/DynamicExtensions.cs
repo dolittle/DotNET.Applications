@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Dynamic;
 
-namespace Bifrost.Dynamic
+namespace doLittle.Dynamic
 {
     /// <summary>
     /// Provides a set of extension methods for working with dynamic types

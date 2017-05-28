@@ -3,15 +3,15 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
-using Bifrost.Configuration;
-using Bifrost.JSON.Concepts;
-using Bifrost.Web.SignalR;
+using doLittle.Configuration;
+using doLittle.JSON.Concepts;
+using doLittle.Web.SignalR;
 using Microsoft.AspNet.SignalR;
 using System.Web.Routing;
 using Owin;
 using Newtonsoft.Json;
 
-namespace Bifrost.Web
+namespace doLittle.Web
 {
     public class Configurator : ICanConfigure
     {
@@ -23,7 +23,7 @@ namespace Bifrost.Web
 
         void ConfigureSignalR(IConfigure configure)
         {
-            var resolver = new BifrostDependencyResolver(configure.Container);
+            var resolver = new doLittleDependencyResolver(configure.Container);
 
             var serializerSettings = new JsonSerializerSettings
             {

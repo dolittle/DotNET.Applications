@@ -1,30 +1,30 @@
-﻿Bifrost.namespace("Bifrost.views", {
+﻿doLittle.namespace("doLittle.views", {
     Region: function(messengerFactory, operationsFactory, tasksFactory) {
         /// <summary>Represents a region in the visual composition on a page</summary>
         var self = this;
 
-        /// <field name="view" type="observable of Bifrost.views.View">Observable holding View for the composition</field>
+        /// <field name="view" type="observable of doLittle.views.View">Observable holding View for the composition</field>
         this.view = ko.observable();
 
-        /// <field name="viewModel" type="Bifrost.views.ViewModel">The ViewModel associated with the view</field>
+        /// <field name="viewModel" type="doLittle.views.ViewModel">The ViewModel associated with the view</field>
         this.viewModel = null;
 
-        /// <field name="messenger" type="Bifrost.messaging.Messenger">The messenger for the region</field>
+        /// <field name="messenger" type="doLittle.messaging.Messenger">The messenger for the region</field>
         this.messenger = messengerFactory.create();
 
-        /// <field name="globalMessenger" type="Bifrost.messaging.Messenger">The global messenger</field>
+        /// <field name="globalMessenger" type="doLittle.messaging.Messenger">The global messenger</field>
         this.globalMessenger = messengerFactory.global();
 
-        /// <field name="operations" type="Bifrost.interaction.Operations">Operations for the region</field>
+        /// <field name="operations" type="doLittle.interaction.Operations">Operations for the region</field>
         this.operations = operationsFactory.create();
 
-        /// <field name="tasks" type="Bifrost.tasks.Tasks">Tasks for the region</field>
+        /// <field name="tasks" type="doLittle.tasks.Tasks">Tasks for the region</field>
         this.tasks = tasksFactory.create();
 
-        /// <field name="parent" type="Bifrost.views.Region">Parent region, null if there is no parent</field>
+        /// <field name="parent" type="doLittle.views.Region">Parent region, null if there is no parent</field>
         this.parent = null;
 
-        /// <field name="children" type="Bifrost.views.Region[]">Child regions within this region</field>
+        /// <field name="children" type="doLittle.views.Region[]">Child regions within this region</field>
         this.children = ko.observableArray();
 
         /// <field name="commands" type="observableArray">Array of commands inside the region</field>
@@ -163,13 +163,13 @@
         });
 
         /// <field name="isExecuting" type="observable">Indiciates wether or not execution tasks are being performend in this region or any of its child regions</field>
-        this.isExecuting = thisOrChildHasTaskType(Bifrost.tasks.ExecutionTask, "isExecuting");
+        this.isExecuting = thisOrChildHasTaskType(doLittle.tasks.ExecutionTask, "isExecuting");
 
         /// <field name="isComposing" type="observable">Indiciates wether or not execution tasks are being performend in this region or any of its child regions</field>
-        this.isComposing = thisOrChildHasTaskType(Bifrost.views.ComposeTask, "isComposing");
+        this.isComposing = thisOrChildHasTaskType(doLittle.views.ComposeTask, "isComposing");
 
         /// <field name="isLoading" type="observable">Indiciates wether or not loading tasks are being performend in this region or any of its child regions</field>
-        this.isLoading = thisOrChildHasTaskType(Bifrost.tasks.LoadTask, "isLoading");
+        this.isLoading = thisOrChildHasTaskType(doLittle.tasks.LoadTask, "isLoading");
 
         /// <field name="isBusy" type="observable">Indicates wether or not tasks are being performed in this region or any of its child regions</field>
         this.isBusy = ko.computed(function () {
@@ -189,4 +189,4 @@
         });
     }
 });
-Bifrost.views.Region.current = null;
+doLittle.views.Region.current = null;

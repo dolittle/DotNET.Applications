@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Dynamic
+namespace doLittle.Dynamic
 {
     /// <summary>
     /// Provides a set of helper methods for working with dynamic types

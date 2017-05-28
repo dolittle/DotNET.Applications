@@ -1,11 +1,11 @@
 ﻿using System;
-using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Execution;
+using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker.given
+namespace doLittle.Specs.Commands.for_CommandHandlerInvoker.given
 {
     public class all_dependencies
     {

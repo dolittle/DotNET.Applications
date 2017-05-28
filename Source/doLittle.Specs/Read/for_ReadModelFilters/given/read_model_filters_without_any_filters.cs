@@ -1,7 +1,7 @@
-﻿using Bifrost.Read;
+﻿using doLittle.Read;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.for_ReadModelFilters.given
+namespace doLittle.Specs.Read.for_ReadModelFilters.given
 {
     public class read_model_filters_without_any_filters : all_dependencies
     {

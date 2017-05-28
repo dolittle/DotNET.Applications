@@ -1,6 +1,6 @@
-﻿using Bifrost.Events;
+﻿using doLittle.Events;
 
-namespace Bifrost.Specs.Events.Fakes
+namespace doLittle.Specs.Events.Fakes
 {
     public class SimpleEventV2ToV3Migrator : IEventMigrator<v2.SimpleEvent, v3.SimpleEvent>
     {

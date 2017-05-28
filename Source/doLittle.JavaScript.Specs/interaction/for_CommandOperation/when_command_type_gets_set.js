@@ -17,7 +17,7 @@
 
     var context = {};
 
-    var instance = Bifrost.interaction.CommandOperation.create({
+    var instance = doLittle.interaction.CommandOperation.create({
         commandSecurityService: commandSecurityService,
         region: region,
         context: context

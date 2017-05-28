@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Reflection;
-using Bifrost.Validation;
+using doLittle.Validation;
 
-namespace Bifrost.Read.Validation
+namespace doLittle.Read.Validation
 {
     /// <summary>
     /// Represents a builder for building validation description for a query

@@ -7,7 +7,7 @@
 // You may not use this file except in compliance with the License.
 // You may obtain a copy of the license at 
 //
-//   http://github.com/dolittle/Bifrost/blob/master/MIT-LICENSE.txt
+//   http://github.com/dolittle/doLittle/blob/master/MIT-LICENSE.txt
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,10 @@
 // limitations under the License.
 //
 #endregion
-using Bifrost.Configuration.Assemblies;
-using Bifrost.Execution;
+using doLittle.Configuration.Assemblies;
+using doLittle.Execution;
 
-namespace Bifrost.Autofac
+namespace doLittle.Autofac
 {
     /// <summary>
     /// Reperesents an <see cref="ICanSpecifyAssemblies">assembly specifier</see> for client aspects

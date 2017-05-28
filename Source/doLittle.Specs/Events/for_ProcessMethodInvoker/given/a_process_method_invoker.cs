@@ -1,7 +1,7 @@
-﻿using Bifrost.Events;
+﻿using doLittle.Events;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_ProcessMethodInvoker.given
+namespace doLittle.Specs.Events.for_ProcessMethodInvoker.given
 {
     public class a_process_method_invoker
     {

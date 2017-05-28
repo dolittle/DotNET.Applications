@@ -5,12 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Applications;
-using Bifrost.Execution;
-using Bifrost.Lifecycle;
-using Bifrost.Time;
+using doLittle.Applications;
+using doLittle.Execution;
+using doLittle.Lifecycle;
+using doLittle.Time;
 
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEventEnvelopes"/>

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Bifrost.Read;
+using doLittle.Read;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.for_QueryableProvider
+namespace doLittle.Specs.Read.for_QueryableProvider
 {
     public class when_paging_is_set_two_show_second_page
     {

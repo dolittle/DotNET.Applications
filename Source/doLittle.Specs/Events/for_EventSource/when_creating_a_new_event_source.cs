@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Events;
+using doLittle.Events;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventSource
+namespace doLittle.Specs.Events.for_EventSource
 {
 	[Subject(Subjects.creating_event_source)]
 	public class when_creating_a_new_event_source : given.a_stateful_event_source 

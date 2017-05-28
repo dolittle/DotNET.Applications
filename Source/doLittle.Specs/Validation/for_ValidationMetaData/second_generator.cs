@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Validation.MetaData;
+using doLittle.Validation.MetaData;
 
-namespace Bifrost.Specs.Validation.for_ValidationMetaData
+namespace doLittle.Specs.Validation.for_ValidationMetaData
 {
     public class second_generator : ICanGenerateValidationMetaData
     {

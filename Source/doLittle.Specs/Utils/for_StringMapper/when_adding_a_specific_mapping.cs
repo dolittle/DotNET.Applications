@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Bifrost.Utils;
+using doLittle.Utils;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Utils.for_StringMapper
+namespace doLittle.Specs.Utils.for_StringMapper
 {
     public class when_adding_a_specific_mapping
     {

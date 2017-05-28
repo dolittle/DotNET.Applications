@@ -1,10 +1,10 @@
-﻿using Bifrost.Configuration;
-using Bifrost.Entities;
-using Bifrost.Execution;
+﻿using doLittle.Configuration;
+using doLittle.Entities;
+using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Configuration.for_ConfigurationExtensions.given
+namespace doLittle.Specs.Configuration.for_ConfigurationExtensions.given
 {
 
     public class a_configuration_element_with_storage

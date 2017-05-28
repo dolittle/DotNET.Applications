@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.mapping", {
-    maps: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.mapping", {
+    maps: doLittle.Singleton(function () {
         var self = this;
         var maps = {};
 
@@ -7,7 +7,7 @@
             return sourceType._typeId + " - " + targetType._typeId;
         }
 
-        var extenders = Bifrost.mapping.Map.getExtenders();
+        var extenders = doLittle.mapping.Map.getExtenders();
 
         extenders.forEach(function (extender) {
             var map = extender.create();
@@ -16,7 +16,7 @@
         });
 
         this.hasMapFor = function (sourceType, targetType) {
-            if (Bifrost.isNullOrUndefined(sourceType) || Bifrost.isNullOrUndefined(targetType)) {
+            if (doLittle.isNullOrUndefined(sourceType) || doLittle.isNullOrUndefined(targetType)) {
                 return false;
             }
             var key = getKeyFrom(sourceType, targetType);

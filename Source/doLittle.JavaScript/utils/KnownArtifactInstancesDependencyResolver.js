@@ -1,10 +1,10 @@
-﻿Bifrost.namespace("Bifrost", {
+﻿doLittle.namespace("doLittle., {
     KnownArtifactInstancesDependencyResolver: function () {
         var self = this;
         var supportedArtifacts = {
-            readModels: Bifrost.read.ReadModelOf,
-            commands: Bifrost.commands.Command,
-            queries: Bifrost.read.Query
+            readModels: doLittle.read.ReadModelOf,
+            commands: doLittle.commands.Command,
+            queries: doLittle.read.Query
         };
 
         function isMoreSpecificNamespace(base, compareTo) {

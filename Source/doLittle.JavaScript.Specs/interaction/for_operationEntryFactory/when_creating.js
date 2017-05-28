@@ -18,7 +18,7 @@
     var operationEntryType = null;
 
     beforeEach(function () {
-        existingOperationEntryType = Bifrost.interaction.OperationEntry;
+        existingOperationEntryType = doLittle.interaction.OperationEntry;
 
         operationEntryType = {
             create: sinon.mock().withArgs({
@@ -27,14 +27,14 @@
             }).returns(operationEntry)
         };
 
-        Bifrost.interaction.OperationEntry = operationEntryType;
+        doLittle.interaction.OperationEntry = operationEntryType;
 
-        var factory = Bifrost.interaction.operationEntryFactory.create();
+        var factory = doLittle.interaction.operationEntryFactory.create();
         instance = factory.create(operation, operationState);
     });
 
     afterEach(function () {
-        Bifrost.interaction.OperationEntry = existingOperationEntryType;
+        doLittle.interaction.OperationEntry = existingOperationEntryType;
     });
     
     it("should create a new instance", function () {

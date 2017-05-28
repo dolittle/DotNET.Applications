@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-namespace Bifrost.Rules
+namespace doLittle.Rules
 {
     /// <summary>
     /// Represents a reason for why a <see cref="IRule"/> is broken

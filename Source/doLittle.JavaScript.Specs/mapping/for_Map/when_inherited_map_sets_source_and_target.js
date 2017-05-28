@@ -2,7 +2,7 @@
     var source = "Source";
     var target = "Target";
     
-    var map = Bifrost.mapping.Map.extend(function () {
+    var map = doLittle.mapping.Map.extend(function () {
         this.source(source);
         this.target(target);
     });

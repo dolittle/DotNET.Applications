@@ -5,9 +5,9 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using Bifrost.Serialization;
+using doLittle.Serialization;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     /// <summary>
     /// Represents an implementation of <see cref="IRequestParamsFactory"/>

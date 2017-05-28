@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Bifrost.FluentValidation.Specs
+namespace doLittle.FluentValidation.Specs
 {
     public class ObjectValidator : BusinessValidator<object>
     {

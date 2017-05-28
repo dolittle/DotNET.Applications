@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
-using Bifrost.Tenancy;
+using doLittle.Tenancy;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Tenancy.for_DefaultTenantIdResolver
+namespace doLittle.Specs.Tenancy.for_DefaultTenantIdResolver
 {
     public class when_sid_claim_is_on_principal : given.a_default_tenant_id_resolver
     {

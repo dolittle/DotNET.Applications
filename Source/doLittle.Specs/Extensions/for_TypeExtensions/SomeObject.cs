@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Extensions.for_TypeExtensions
+﻿namespace doLittle.Specs.Extensions.for_TypeExtensions
 {
     public class SomeObject
     {

@@ -1,10 +1,10 @@
-﻿Bifrost.namespace("Bifrost.commands");
-Bifrost.commands.CommandRequest = function(command) {
+﻿doLittle.namespace("doLittle.commands");
+doLittle.commands.CommandRequest = function(command) {
     var self = this;
 
     var builtInCommand = {};
-    if (typeof Bifrost.commands.Command !== "undefined") {
-        builtInCommand = Bifrost.commands.Command.create({
+    if (typeof doLittle.commands.Command !== "undefined") {
+        builtInCommand = doLittle.commands.Command.create({
             region: { commands: [] },
             commandCoordinator: {},
             commandValidationService: {},
@@ -52,7 +52,7 @@ Bifrost.commands.CommandRequest = function(command) {
     }
 
     this.type = command._commandType;
-    this.correlationId = Bifrost.Guid.create();
+    this.correlationId = doLittle.Guid.create();
 
     var properties = getPropertiesFromCommand(command);
     var commandContent = ko.toJS(properties);
@@ -60,7 +60,7 @@ Bifrost.commands.CommandRequest = function(command) {
 };
 
 
-Bifrost.commands.CommandRequest.createFrom = function (command) {
-    var commandDescriptor = new Bifrost.commands.CommandRequest(command);
+doLittle.commands.CommandRequest.createFrom = function (command) {
+    var commandDescriptor = new doLittle.commands.CommandRequest(command);
     return commandDescriptor;
 };

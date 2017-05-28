@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Configuration;
-using Bifrost.Entities;
+using doLittle.Configuration;
+using doLittle.Entities;
 
-namespace Bifrost.DocumentDB.Entities
+namespace doLittle.DocumentDB.Entities
 {
     /// <summary>
     /// Implements the <see cref="IEntityContextConfiguration"/> specific for the DocumentDB support

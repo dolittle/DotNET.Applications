@@ -9,14 +9,14 @@ describe("when mapping to instance with mismatching types", function(){
 	};
 
 	
-	var type = Bifrost.Type.extend(function () {
+	var type = doLittle.Type.extend(function () {
         this.integer = 0;
     });
 
 	var mappedInstance = type.create();
 
 	(function becauseOf(){
-	    var mapper = Bifrost.mapping.mapper.create(parameters);
+	    var mapper = doLittle.mapping.mapper.create(parameters);
 	    mapper.mapToInstance(type, data, mappedInstance);
 	})();
 

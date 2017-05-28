@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Tasks;
+using doLittle.Tasks;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Tasks.for_TaskManager
+namespace doLittle.Specs.Tasks.for_TaskManager
 {
     public class when_pausing : given.a_task_manager_with_one_reporter
     {

@@ -1,5 +1,5 @@
-Bifrost.namespace("Bifrost.validation");
-Bifrost.validation.Validator = (function () {
+doLittle.namespace("doLittle.validation");
+doLittle.validation.Validator = (function () {
     function Validator(options) {
         var self = this;
         this.isValid = ko.observable(true);
@@ -20,7 +20,7 @@ Bifrost.validation.Validator = (function () {
                 }
             }
             for (var property in options) {
-                var ruleTypes = Bifrost.validation.Rule.getExtenders();
+                var ruleTypes = doLittle.validation.Rule.getExtenders();
                 ruleTypes.some(setupRule);
             }
         };

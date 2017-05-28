@@ -1,9 +1,9 @@
 ﻿using System;
-using Bifrost.Tasks;
+using doLittle.Tasks;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Tasks.for_TaskRepository
+namespace doLittle.Specs.Tasks.for_TaskRepository
 {
     public class when_deleting_task_by_id : given.a_task_repository
     {

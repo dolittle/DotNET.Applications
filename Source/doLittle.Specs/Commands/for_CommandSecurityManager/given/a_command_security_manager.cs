@@ -1,9 +1,9 @@
-﻿using Bifrost.Commands;
-using Bifrost.Security;
+﻿using doLittle.Commands;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Commands.for_CommandSecurityManager.given
+namespace doLittle.Specs.Commands.for_CommandSecurityManager.given
 {
     public class a_command_security_manager
     {

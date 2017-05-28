@@ -1,10 +1,10 @@
-﻿using Bifrost.Events;
-using Bifrost.Specs.Events.Fakes;
-using Bifrost.Specs.Events.for_EventMigrationLevelDiscoverer.given;
+﻿using doLittle.Events;
+using doLittle.Specs.Events.Fakes;
+using doLittle.Specs.Events.for_EventMigrationLevelDiscoverer.given;
 using Machine.Specifications;
 using System;
 
-namespace Bifrost.Specs.Events.for_EventMigrationHierarchyManager.given
+namespace doLittle.Specs.Events.for_EventMigrationHierarchyManager.given
 {
     public class an_event_migration_hierarchy_manager_with_two_logical_events : an_event_migration_hierarchy_discoverer_with_two_logical_events_one_of_which_is_migrated
     {

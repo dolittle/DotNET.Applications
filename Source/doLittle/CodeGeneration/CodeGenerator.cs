@@ -5,7 +5,7 @@
 using System.IO;
 using System.Text;
 
-namespace Bifrost.CodeGeneration
+namespace doLittle.CodeGeneration
 {
     /// <summary>
     /// Represents an implementation for <see cref="ICodeGenerator"/>

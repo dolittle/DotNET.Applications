@@ -1,11 +1,11 @@
-﻿using Bifrost.Exceptions;
-using Bifrost.Execution;
-using Bifrost.Read;
-using Bifrost.Read.Validation;
+﻿using doLittle.Exceptions;
+using doLittle.Execution;
+using doLittle.Read;
+using doLittle.Read.Validation;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Read.for_QueryCoordinator.given
+namespace doLittle.Specs.Read.for_QueryCoordinator.given
 {
     public class all_dependencies
     {

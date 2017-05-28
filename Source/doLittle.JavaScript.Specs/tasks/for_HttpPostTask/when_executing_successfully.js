@@ -16,7 +16,7 @@
 
     var result = null;
 
-    var task = Bifrost.tasks.HttpPostTask.create({
+    var task = doLittle.tasks.HttpPostTask.create({
         url: url,
         payload: payload,
         server: server

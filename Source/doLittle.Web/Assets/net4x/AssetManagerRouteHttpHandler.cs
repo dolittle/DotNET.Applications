@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Web;
-using Bifrost.Configuration;
+using doLittle.Configuration;
 using Newtonsoft.Json;
 
-namespace Bifrost.Web.Assets
+namespace doLittle.Web.Assets
 {
     public class AssetManagerRouteHttpHandler : IHttpHandler
     {

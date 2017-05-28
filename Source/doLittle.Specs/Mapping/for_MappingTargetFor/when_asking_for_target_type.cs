@@ -1,7 +1,7 @@
-﻿using Bifrost.Mapping;
+﻿using doLittle.Mapping;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Mapping.for_MappingTargetFor
+namespace doLittle.Specs.Mapping.for_MappingTargetFor
 {
     public class when_asking_for_target_type
     {

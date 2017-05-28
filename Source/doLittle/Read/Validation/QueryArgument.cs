@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Reflection;
-using Bifrost.Rules;
+using doLittle.Rules;
 
-namespace Bifrost.Read.Validation
+namespace doLittle.Read.Validation
 {
     /// <summary>
     /// Represents an argument on a query

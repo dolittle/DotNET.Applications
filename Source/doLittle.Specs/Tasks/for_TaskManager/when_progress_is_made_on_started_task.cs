@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace Bifrost.Specs.Tasks.for_TaskManager
+namespace doLittle.Specs.Tasks.for_TaskManager
 {
     public class when_progress_is_made_on_started_task : given.a_task_manager_with_one_reporter
     {

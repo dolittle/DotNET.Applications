@@ -1,13 +1,13 @@
 ﻿using System.Dynamic;
 using System.Threading;
-using Bifrost.Applications;
-using Bifrost.Commands;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Commands;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Commands.for_CommandContextManager
+namespace doLittle.Specs.Commands.for_CommandContextManager
 {
     [Subject(Subjects.establishing_context)]
     public class when_establishing_on_different_threads_with_same_command : given.a_command_context_manager

@@ -6,7 +6,7 @@
         hasFormat: sinon.stub().returns(false)
     };
 
-    var pipeline = Bifrost.values.valuePipeline.createWithoutScope({
+    var pipeline = doLittle.values.valuePipeline.createWithoutScope({
         typeConverters: typeConverters,
         stringFormatter: stringFormatter
     });

@@ -1,5 +1,5 @@
-﻿using Bifrost.CodeGeneration;
-using Bifrost.CodeGeneration.JavaScript;
+﻿using doLittle.CodeGeneration;
+using doLittle.CodeGeneration.JavaScript;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Dynamic;
 
-namespace Bifrost.Web.Specs.Proxies.for_ReadModelProxyExtensions
+namespace doLittle.Web.Specs.Proxies.for_ReadModelProxyExtensions
 {
     public class when_generating__strings__
     {

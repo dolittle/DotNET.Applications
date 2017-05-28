@@ -2,7 +2,7 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-namespace Bifrost.Tenancy
+namespace doLittle.Tenancy
 {
     /// <summary>
     /// Defines systems that can resolve the <see cref="TenantId"/> of a <see cref="ITenant"/>

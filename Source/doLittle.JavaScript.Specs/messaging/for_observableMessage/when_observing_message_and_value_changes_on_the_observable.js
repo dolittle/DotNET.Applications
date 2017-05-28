@@ -3,8 +3,8 @@
     var messagePublished = null;
     var observable = null;
     beforeEach(function () {
-        Bifrost.messaging = Bifrost.messaging || {};
-        Bifrost.messaging.Messenger = {
+        doLittle.messaging = doLittle.messaging || {};
+        doLittle.messaging.Messenger = {
             global: {
                 publish: function (message, value) {
                     messagePublished = value;

@@ -5,7 +5,7 @@
 using System.Web.Routing;
 using System.Web;
 
-namespace Bifrost.Web.Security
+namespace doLittle.Web.Security
 {
     public class SecurityRouteHandler : IRouteHandler
     {

@@ -2,7 +2,7 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-namespace Bifrost.Events
+namespace doLittle.Events
 {
     /// <summary>
     /// Represents an <see cref="IEvent"/> and its <see cref="EventSourceVersion">version</see> on an <see cref="IEventSource"/>

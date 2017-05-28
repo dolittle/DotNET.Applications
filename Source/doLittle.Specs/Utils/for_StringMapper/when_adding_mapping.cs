@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Utils;
+using doLittle.Utils;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Utils.for_StringMapper
+namespace doLittle.Specs.Utils.for_StringMapper
 {
     public class when_adding_mapping
     {

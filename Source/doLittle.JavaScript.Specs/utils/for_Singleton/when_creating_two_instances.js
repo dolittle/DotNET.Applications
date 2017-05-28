@@ -3,11 +3,11 @@
     var firstInstance = null;
     var secondInstance = null;
     beforeEach(function () {
-        Bifrost.dependencyResolver = {
+        doLittle.dependencyResolver = {
             getDependenciesFor: sinon.stub()
         };
 
-        type = Bifrost.Singleton(function () {
+        type = doLittle.Singleton(function () {
             this.something = "When creating two instances";
         });
         firstInstance = type.create();
@@ -15,7 +15,7 @@
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolver = {};
+        doLittle.dependencyResolver = {};
     });
 
     it("should return correct instance for the first", function () {

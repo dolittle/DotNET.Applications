@@ -1,8 +1,8 @@
 describe("when creating asynchronously with two dependencies", function() {
 
-	Bifrost.dependencyResolver = {
+	doLittle.dependencyResolver = {
 		beginResolve: function(namespace,name) {
-			var promise = Bifrost.execution.Promise.create();
+			var promise = doLittle.execution.Promise.create();
 			promise.signal(name);
 			return promise;
 		},
@@ -11,7 +11,7 @@ describe("when creating asynchronously with two dependencies", function() {
 		}
 	}
 
-	var type = Bifrost.Type.extend(function(first, second) {
+	var type = doLittle.Type.extend(function(first, second) {
 		this.something = "Hello";
 		this.first = first;
 		this.second = second;

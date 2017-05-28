@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Reflection;
-using Bifrost.CodeGeneration;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Web.Configuration;
-using Bifrost.Web.Proxies;
+using doLittle.CodeGeneration;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Web.Configuration;
+using doLittle.Web.Proxies;
 
-namespace Bifrost.Web.Configuration
+namespace doLittle.Web.Configuration
 {
     public class NamespaceConfigurationProxies : IProxyGenerator
     {
@@ -25,9 +25,9 @@ namespace Bifrost.Web.Configuration
         {
             var global = _codeGenerator
                 .Global()
-                    .Variant("namespaceMapper", v => v.WithFunctionCall(f=>f.WithName("Bifrost.StringMapper.create")))
+                    .Variant("namespaceMapper", v => v.WithFunctionCall(f=>f.WithName("doLittle.StringMapper.create")))
                     .WithNamespaceMappersFrom(_configuration.PathsToNamespaces)
-                    .AssignAccessor("Bifrost.namespaceMappers.default", a => a.WithLiteral("namespaceMapper"))
+                    .AssignAccessor("doLittle.namespaceMappers.default", a => a.WithLiteral("namespaceMapper"))
                     ;
 
             var result = _codeGenerator.GenerateFrom(global);

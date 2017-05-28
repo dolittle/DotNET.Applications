@@ -1,7 +1,7 @@
-﻿using Bifrost.Domain;
-using Bifrost.Events;
+﻿using doLittle.Domain;
+using doLittle.Events;
 
-namespace Bifrost.Specs.Domain.for_AggregateRootRepository
+namespace doLittle.Specs.Domain.for_AggregateRootRepository
 {
     public class SimpleStatelessAggregateRoot : AggregateRoot
     {

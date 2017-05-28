@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     [Singleton]
     public class RegisteredServices : IRegisteredServices

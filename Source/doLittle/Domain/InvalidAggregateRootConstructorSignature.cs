@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Domain
+namespace doLittle.Domain
 {
     /// <summary>
     /// Gets thrown if an <see cref="AggregateRoot"/> does not follow the convention for expected

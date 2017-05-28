@@ -1,6 +1,6 @@
-﻿using Bifrost.Read;
+﻿using doLittle.Read;
 
-namespace Bifrost.Specs.Read.Validation.for_QueryValidator
+namespace doLittle.Specs.Read.Validation.for_QueryValidator
 {
     public class SomeQuery : IQuery
     {

@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bifrost.Utils
+namespace doLittle.Utils
 {
     /// <summary>
     /// Represents an implementation of <see cref="IStringMapper"/>

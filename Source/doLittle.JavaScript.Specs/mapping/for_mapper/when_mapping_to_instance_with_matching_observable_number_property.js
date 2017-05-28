@@ -6,7 +6,7 @@ describe("when mapping to instance with matching observable number property", fu
 	    maps: { hasMapFor: sinon.stub().returns(false) }
 	};
 	
-	var type = Bifrost.Type.extend(function () {
+	var type = doLittle.Type.extend(function () {
         var self = this;
 
         this.integer = ko.observable(0);
@@ -16,7 +16,7 @@ describe("when mapping to instance with matching observable number property", fu
 	var mappedInstance = type.create();
 
 	(function becauseOf(){
-	    var mapper = Bifrost.mapping.mapper.create(parameters);
+	    var mapper = doLittle.mapping.mapper.create(parameters);
 	    mapper.mapToInstance(type, data, mappedInstance);
 	})();
 

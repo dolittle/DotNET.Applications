@@ -2,13 +2,13 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Entities;
-using Bifrost.Execution;
-using Bifrost.Read.MongoDB.Concepts;
+using doLittle.Entities;
+using doLittle.Execution;
+using doLittle.Read.MongoDB.Concepts;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace Bifrost.Read.MongoDB
+namespace doLittle.Read.MongoDB
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEntityContextConnection"/> for MongoDB

@@ -2,7 +2,7 @@
     var error = null;
     var errorCalledWith = null;
 
-    var promise = Bifrost.execution.Promise.create();
+    var promise = doLittle.execution.Promise.create();
     promise.onFail(function (e) {
         errorCalledWith = e;
     });

@@ -32,7 +32,7 @@
         }
     };
 
-    var task = Bifrost.read.QueryTask.create({
+    var task = doLittle.read.QueryTask.create({
         taskFactory: taskFactory,
         query: query,
         paging: paging

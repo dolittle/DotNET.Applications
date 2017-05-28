@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost", {
-    Path: Bifrost.Type.extend(function (fullPath) {
+﻿doLittle.namespace("doLittle., {
+    Path: doLittle.Type.extend(function (fullPath) {
         var self = this;
 
         // Based on node.js implementation : http://stackoverflow.com/questions/9451100/filename-extension-in-javascript
@@ -41,7 +41,7 @@
         this.fullPath = fullPath;
 
         this.hasExtension = function () {
-            if (Bifrost.isNullOrUndefined(self.extension)) {
+            if (doLittle.isNullOrUndefined(self.extension)) {
                 return false;
             }
             if (self.extension === "") {
@@ -51,35 +51,35 @@
         };
     })
 });
-Bifrost.Path.makeRelative = function (fullPath) {
+doLittle.Path.makeRelative = function (fullPath) {
     if (fullPath.indexOf("/") === 0) {
         return fullPath.substr(1);
     }
 
     return fullPath;
 };
-Bifrost.Path.getPathWithoutFilename = function (fullPath) {
+doLittle.Path.getPathWithoutFilename = function (fullPath) {
     var lastIndex = fullPath.lastIndexOf("/");
     return fullPath.substr(0, lastIndex);
 };
-Bifrost.Path.getFilename = function (fullPath) {
+doLittle.Path.getFilename = function (fullPath) {
     var lastIndex = fullPath.lastIndexOf("/");
     return fullPath.substr(lastIndex+1);
 };
-Bifrost.Path.getFilenameWithoutExtension = function (fullPath) {
+doLittle.Path.getFilenameWithoutExtension = function (fullPath) {
     var filename = this.getFilename(fullPath);
     var lastIndex = filename.lastIndexOf(".");
     return filename.substr(0,lastIndex);
 };
-Bifrost.Path.hasExtension = function (path) {
+doLittle.Path.hasExtension = function (path) {
     if (path.indexOf("?") > 0) {
         path = path.substr(0, path.indexOf("?"));
     }
     var lastIndex = path.lastIndexOf(".");
     return lastIndex > 0;
 };
-Bifrost.Path.changeExtension = function (fullPath, newExtension) {
-    var path = Bifrost.Path.create({ fullPath: fullPath });
+doLittle.Path.changeExtension = function (fullPath, newExtension) {
+    var path = doLittle.Path.create({ fullPath: fullPath });
     var newPath = path.directory + path.filenameWithoutExtension + "." + newExtension;
     return newPath;
 };

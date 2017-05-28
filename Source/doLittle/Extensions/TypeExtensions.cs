@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Bifrost.Extensions
+namespace doLittle.Extensions
 {
     /// <summary>
     /// Provides a set of methods for working with <see cref="Type">types</see>

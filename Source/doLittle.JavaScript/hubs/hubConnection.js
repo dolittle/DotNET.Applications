@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.hubs", {
-    hubConnection: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.hubs", {
+    hubConnection: doLittle.Singleton(function () {
         var self = this;
         var hub = $.hubConnection("/signalr", { useDefaultPath: false });
         /* jshint ignore:start */
@@ -7,7 +7,7 @@
         /* jshint ignore:end */
 
         this.isConnected = false;
-        this.connected = Bifrost.Event.create();
+        this.connected = doLittle.Event.create();
 
         this.createProxy = function (hubName) {
             var proxy = hub.createHubProxy(hubName);
@@ -22,4 +22,4 @@
         });
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.hubConnection = Bifrost.hubs.hubConnection;
+doLittle.WellKnownTypesDependencyResolver.types.hubConnection = doLittle.hubs.hubConnection;

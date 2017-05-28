@@ -6,7 +6,7 @@ describe("when mapping to type with matching array property", function () {
         maps: { hasMapFor: sinon.stub().returns(false) }
     };
 	
-	var type = Bifrost.Type.extend(function () {
+	var type = doLittle.Type.extend(function () {
         var self = this;
 
         this.stringProperty = "s";
@@ -20,7 +20,7 @@ describe("when mapping to type with matching array property", function () {
 	var mappedInstance = type.create();
 
 	(function becauseOf(){
-	    var mapper = Bifrost.mapping.mapper.create(parameters);
+	    var mapper = doLittle.mapping.mapper.create(parameters);
 	    mapper.mapToInstance(type, data, mappedInstance);
 	})();
 

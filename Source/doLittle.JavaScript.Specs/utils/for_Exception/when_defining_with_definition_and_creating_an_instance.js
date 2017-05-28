@@ -1,7 +1,7 @@
 describe("when defining with definition and creating an instance", function() {
 	var someValue = "Something";
 	
-	Bifrost.Exception.define("SomeException", "Default message", function(message) {
+	doLittle.Exception.define("SomeException", "Default message", function(message) {
 		this.someProperty = someValue;
 	});
 	

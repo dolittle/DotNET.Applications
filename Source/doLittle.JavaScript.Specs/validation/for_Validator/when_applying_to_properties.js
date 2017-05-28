@@ -6,7 +6,7 @@
             third: {}
         };
 
-        Bifrost.validation.Validator.applyToProperties(itemWithProperties, {});
+        doLittle.validation.Validator.applyToProperties(itemWithProperties, {});
         var validatorCount = 0;
         var propertyCount = 0;
 

@@ -1,9 +1,9 @@
-﻿Bifrost.namespace("Bifrost.tasks", {
-    HttpPostTask: Bifrost.tasks.Task.extend(function (server, url, payload) {
+﻿doLittle.namespace("doLittle.tasks", {
+    HttpPostTask: doLittle.tasks.Task.extend(function (server, url, payload) {
         /// <summary>Represents a task that can perform a Http Post request</summary>
 
         this.execute = function () {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
 
             server
                 .post(url, payload)

@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.IO;
-using Bifrost.Events;
-using Bifrost.Events.Files;
+using doLittle.Events;
+using doLittle.Events.Files;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
     /// Extensions for configuration

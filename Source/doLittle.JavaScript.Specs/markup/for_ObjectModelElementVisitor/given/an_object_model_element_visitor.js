@@ -24,7 +24,7 @@
         ensure: sinon.stub()
     };
 
-    this.object_model_element_visitor = Bifrost.markup.ObjectModelElementVisitor.create({
+    this.object_model_element_visitor = doLittle.markup.ObjectModelElementVisitor.create({
         elementNaming: this.element_naming,
         namespaces: this.namespaces,
         objectModelFactory: this.object_model_factory,

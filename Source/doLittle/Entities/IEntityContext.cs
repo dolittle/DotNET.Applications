@@ -5,7 +5,7 @@
 using System;
 using System.Linq;
 
-namespace Bifrost.Entities
+namespace doLittle.Entities
 {
     /// <summary>
     /// Defines a context for working with entities typically stored in a datastore

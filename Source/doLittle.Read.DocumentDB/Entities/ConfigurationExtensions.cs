@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.Configuration;
-using Bifrost.DocumentDB;
-using Bifrost.DocumentDB.Entities;
+using doLittle.Configuration;
+using doLittle.DocumentDB;
+using doLittle.DocumentDB.Entities;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
     /// Extensions for configuration

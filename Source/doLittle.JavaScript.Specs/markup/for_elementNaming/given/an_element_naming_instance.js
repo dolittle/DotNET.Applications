@@ -1,3 +1,3 @@
 ﻿given("an element naming instance", function () {
-    this.elementNaming = Bifrost.markup.elementNaming.createWithoutScope();
+    this.elementNaming = doLittle.markup.elementNaming.createWithoutScope();
 });

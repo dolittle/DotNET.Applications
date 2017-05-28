@@ -1,8 +1,8 @@
-﻿Bifrost.namespace("Bifrost.tasks", {
-    LoadTask: Bifrost.tasks.Task.extend(function () {
+﻿doLittle.namespace("doLittle.tasks", {
+    LoadTask: doLittle.tasks.Task.extend(function () {
         /// <summary>Represents a base task that represents anything that is loading things</summary>
         this.execute = function () {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
             promise.signal();
             return promise;
         };

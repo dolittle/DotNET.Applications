@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Logging;
+using doLittle.Logging;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Logging.for_LogAppenders
+namespace doLittle.Specs.Logging.for_LogAppenders
 {
     public class when_appending_to_appender_that_throws_exception : given.one_appender
     {

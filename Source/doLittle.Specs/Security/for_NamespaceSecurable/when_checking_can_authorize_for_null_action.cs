@@ -1,7 +1,7 @@
-﻿using Bifrost.Security;
+﻿using doLittle.Security;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Security.for_NamespaceSecurable
+namespace doLittle.Specs.Security.for_NamespaceSecurable
 {
     [Subject(typeof(NamespaceSecurable))]
     public class when_checking_can_authorize_for_null_action : given.a_namespace_securable

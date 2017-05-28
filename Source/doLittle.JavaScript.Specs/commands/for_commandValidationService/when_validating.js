@@ -19,7 +19,7 @@
     command.deep.property.validator = new validator();
 
 
-    var commandValidationService = Bifrost.commands.commandValidationService.create();
+    var commandValidationService = doLittle.commands.commandValidationService.create();
     var result = commandValidationService.validate(command);
 
     it("should return a result", function () {

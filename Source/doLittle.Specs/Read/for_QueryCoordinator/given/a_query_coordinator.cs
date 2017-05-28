@@ -1,10 +1,10 @@
-﻿using Bifrost.Read;
-using Bifrost.Read.Validation;
-using Bifrost.Rules;
-using Bifrost.Security;
+﻿using doLittle.Read;
+using doLittle.Read.Validation;
+using doLittle.Rules;
+using doLittle.Security;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.for_QueryCoordinator.given
+namespace doLittle.Specs.Read.for_QueryCoordinator.given
 {
     public class a_query_coordinator : all_dependencies
     {

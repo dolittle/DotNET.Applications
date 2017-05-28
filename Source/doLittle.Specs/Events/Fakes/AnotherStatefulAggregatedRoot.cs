@@ -1,7 +1,7 @@
-﻿using Bifrost.Domain;
+﻿using doLittle.Domain;
 using System;
 
-namespace Bifrost.Specs.Events.Fakes
+namespace doLittle.Specs.Events.Fakes
 {
     public class AnotherStatefulAggregatedRoot : AggregateRoot
     {

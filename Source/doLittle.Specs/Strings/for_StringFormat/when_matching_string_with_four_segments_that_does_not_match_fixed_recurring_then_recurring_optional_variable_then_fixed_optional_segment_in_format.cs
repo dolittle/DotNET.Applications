@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Strings.for_StringFormat
+namespace doLittle.Specs.Strings.for_StringFormat
 {
     public class when_matching_string_with_four_segments_that_does_not_match_fixed_recurring_then_recurring_optional_variable_then_fixed_optional_segment_in_format
     {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Bifrost.Concurrency
+namespace doLittle.Concurrency
 {
     /// <summary>
     /// Represents a <see cref="IScheduler"/>

@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Validation.MetaData;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Validation.MetaData;
 using Newtonsoft.Json;
 
-namespace Bifrost.Web.Commands
+namespace doLittle.Web.Commands
 {
     public class CommandValidationPropertyExtender : ICanExtendCommandProperty
     {

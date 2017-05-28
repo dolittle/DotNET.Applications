@@ -5,7 +5,7 @@
 using FluentValidation.Internal;
 using FluentValidation.Validators;
 
-namespace Bifrost.FluentValidation.MetaData
+namespace doLittle.FluentValidation.MetaData
 {
     /// <summary>
     /// Provides extensions for formatting messages from property validator

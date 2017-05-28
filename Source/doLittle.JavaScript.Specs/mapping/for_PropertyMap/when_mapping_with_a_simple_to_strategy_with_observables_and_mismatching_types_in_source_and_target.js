@@ -1,5 +1,5 @@
 ﻿describe("when mapping with a simple to strategy with observables and mismatching types in source and target", function () {
-    var propertyMap = Bifrost.mapping.PropertyMap.create({
+    var propertyMap = doLittle.mapping.PropertyMap.create({
         sourceProperty: "sourceProperty",
         typeConverters: {
             convertFrom: sinon.stub().returns(42)

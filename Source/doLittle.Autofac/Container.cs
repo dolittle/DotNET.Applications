@@ -9,10 +9,10 @@ using System.Linq;
 using System.Reflection;
 using Autofac;
 using Autofac.Core; 
-using Bifrost.Execution;
-using IContainer = Bifrost.Execution.IContainer;
+using doLittle.Execution;
+using IContainer = doLittle.Execution.IContainer;
 
-namespace Bifrost.Autofac
+namespace doLittle.Autofac
 {
     /// <summary>
     /// Represents an implementation of <see cref="Execution.IContainer"/> for AutoFac

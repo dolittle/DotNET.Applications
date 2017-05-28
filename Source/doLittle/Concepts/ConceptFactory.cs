@@ -5,7 +5,7 @@
 using System;
 using System.Reflection;
 
-namespace Bifrost.Concepts
+namespace doLittle.Concepts
 {
     /// <summary>
     /// Factory to create an instance of a <see cref="ConceptAs{T}"/> from the Type and Underlying value.

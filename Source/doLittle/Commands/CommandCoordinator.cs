@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.Exceptions;
-using Bifrost.Globalization;
-using Bifrost.Lifecycle;
-using Bifrost.Logging;
+using doLittle.Exceptions;
+using doLittle.Globalization;
+using doLittle.Lifecycle;
+using doLittle.Logging;
 
-namespace Bifrost.Commands
+namespace doLittle.Commands
 {
     /// <summary>
     /// Represents a <see cref="ICommandCoordinator">ICommandCoordinator</see>

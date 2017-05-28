@@ -6,9 +6,9 @@
     var dependencyResolvers;
 
     beforeEach(function () {
-        dependencyResolvers = Bifrost.dependencyResolvers;
+        dependencyResolvers = doLittle.dependencyResolvers;
 
-        Bifrost.dependencyResolvers = {
+        doLittle.dependencyResolvers = {
 
             getAll: function () {
                 return [{
@@ -20,11 +20,11 @@
                 }];
             }
         };
-        systemReceived = Bifrost.dependencyResolver.resolve("something");
+        systemReceived = doLittle.dependencyResolver.resolve("something");
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolvers = dependencyResolvers;
+        doLittle.dependencyResolvers = dependencyResolvers;
     });
 
     it("should call resolve", function () {

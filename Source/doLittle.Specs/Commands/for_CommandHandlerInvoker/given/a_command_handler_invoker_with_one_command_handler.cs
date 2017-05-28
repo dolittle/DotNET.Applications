@@ -1,9 +1,9 @@
-﻿using Bifrost.Applications;
-using Bifrost.Commands;
+﻿using doLittle.Applications;
+using doLittle.Commands;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker.given
+namespace doLittle.Specs.Commands.for_CommandHandlerInvoker.given
 {
     public class a_command_handler_invoker_with_one_command_handler : a_command_handler_invoker_with_no_command_handlers
     {

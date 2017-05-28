@@ -6,11 +6,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Bifrost.Concepts;
-using Bifrost.Extensions;
+using doLittle.Concepts;
+using doLittle.Extensions;
 using Newtonsoft.Json;
 
-namespace Bifrost.JSON.Concepts
+namespace doLittle.JSON.Concepts
 {
     /// <summary>
     /// Represents a <see cref="JsonConverter"/> that can serialize and deserialize a <see cref="IDictionary{TKey, TValue}">dictionary</see> of <see cref="ConceptAs{T}"/>

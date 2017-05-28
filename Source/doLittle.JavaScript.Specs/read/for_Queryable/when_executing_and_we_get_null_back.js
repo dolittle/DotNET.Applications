@@ -11,8 +11,8 @@
         var pagingInfoType = null;
 
         beforeEach(function () {
-            pagingInfoType = Bifrost.read.PagingInfo;
-            Bifrost.read.PagingInfo = {
+            pagingInfoType = doLittle.read.PagingInfo;
+            doLittle.read.PagingInfo = {
                 create: function () {
                     return {};
                 }
@@ -28,7 +28,7 @@
                 }
             };
 
-            var queryable = Bifrost.read.Queryable.create({
+            var queryable = doLittle.read.Queryable.create({
                 query: query,
                 region: region,
                 queryService: queryService,
@@ -40,7 +40,7 @@
         });
 
         afterEach(function () {
-            Bifrost.read.PagingInfo = pagingInfoType;
+            doLittle.read.PagingInfo = pagingInfoType;
         });
 
 

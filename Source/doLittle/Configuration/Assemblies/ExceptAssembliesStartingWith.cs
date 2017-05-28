@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
-using Bifrost.Specifications;
+using doLittle.Specifications;
 
-namespace Bifrost.Configuration.Assemblies
+namespace doLittle.Configuration.Assemblies
 {
     /// <summary>
     /// Rule representing an exception for <see cref="IncludeAllRule"/>, 

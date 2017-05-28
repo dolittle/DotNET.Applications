@@ -1,12 +1,12 @@
-Bifrost.namespace("Bifrost", {
+doLittle.namespace("doLittle", {
     dependencyResolvers: (function () {
         return {
             getAll: function () {
                 var resolvers = [
-                    new Bifrost.WellKnownTypesDependencyResolver(),
-                    new Bifrost.DefaultDependencyResolver(),
-                    new Bifrost.KnownArtifactTypesDependencyResolver(),
-                    new Bifrost.KnownArtifactInstancesDependencyResolver(),
+                    new doLittle.WellKnownTypesDependencyResolver(),
+                    new doLittle.DefaultDependencyResolver(),
+                    new doLittle.KnownArtifactTypesDependencyResolver(),
+                    new doLittle.KnownArtifactInstancesDependencyResolver(),
 
                 ];
                 for (var property in this) {

@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Commands.for_CommandHandlerInvoker
+﻿namespace doLittle.Specs.Commands.for_CommandHandlerInvoker
 {
     public class Subjects
     {

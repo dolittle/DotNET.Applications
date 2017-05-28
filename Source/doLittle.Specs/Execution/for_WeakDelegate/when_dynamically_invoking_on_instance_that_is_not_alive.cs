@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Execution;
+using doLittle.Execution;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Execution.for_WeakDelegate
+namespace doLittle.Specs.Execution.for_WeakDelegate
 {
     public class when_dynamically_invoking_on_instance_that_is_not_alive
     {

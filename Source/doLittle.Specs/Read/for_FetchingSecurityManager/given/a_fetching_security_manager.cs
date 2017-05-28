@@ -1,9 +1,9 @@
-﻿using Bifrost.Read;
-using Bifrost.Security;
+﻿using doLittle.Read;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Read.for_FetchingSecurityManager.given
+namespace doLittle.Specs.Read.for_FetchingSecurityManager.given
 {
     public class a_fetching_security_manager
     {

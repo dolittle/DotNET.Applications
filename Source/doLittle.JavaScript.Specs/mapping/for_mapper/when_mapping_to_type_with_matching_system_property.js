@@ -7,7 +7,7 @@ describe("when mapping to type with matching system property", function(){
 	    maps: { hasMapFor: sinon.stub().returns(false) }
 	};
 
-	var type = Bifrost.Type.extend(function () {
+	var type = doLittle.Type.extend(function () {
         var self = this;
 
         this._name = "something else";
@@ -19,7 +19,7 @@ describe("when mapping to type with matching system property", function(){
 
 
 	(function becauseOf(){
-	    var mapper = Bifrost.mapping.mapper.create(parameters);
+	    var mapper = doLittle.mapping.mapper.create(parameters);
 		mappedInstance = mapper.map(type, data);
 	})();
 

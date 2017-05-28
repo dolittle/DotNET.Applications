@@ -9,7 +9,7 @@ describe("when mapping to instance with read only observable property", function
 	    maps: { hasMapFor: sinon.stub().returns(false) }
 	};
 
-	var type = Bifrost.Type.extend(function () {
+	var type = doLittle.Type.extend(function () {
 	    this.numberProperty = ko.computed(function () {
 	        return 42;
 	    });
@@ -23,7 +23,7 @@ describe("when mapping to instance with read only observable property", function
     }
 
 	(function becauseOf(){
-	    var mapper = Bifrost.mapping.mapper.create(parameters);
+	    var mapper = doLittle.mapping.mapper.create(parameters);
 		mapper.mapToInstance(type, data, mappedInstance);
 	})();
 

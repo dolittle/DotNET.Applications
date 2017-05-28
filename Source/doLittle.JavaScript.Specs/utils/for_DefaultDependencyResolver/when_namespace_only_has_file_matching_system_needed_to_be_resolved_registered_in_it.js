@@ -1,5 +1,5 @@
 describe("when namespace only has file matching system needed to be resolved registered in it", function () {
-    var resolver = new Bifrost.DefaultDependencyResolver();
+    var resolver = new doLittle.DefaultDependencyResolver();
     var ns;
     var resolved = null;
     var actualResolved = null;
@@ -15,7 +15,7 @@ describe("when namespace only has file matching system needed to be resolved reg
     };
 
     var fileFactoryMock = {
-        create: sinon.mock().withArgs("/Someplace/On/Server/something.js", Bifrost.io.fileType.javaScript).returns(file)
+        create: sinon.mock().withArgs("/Someplace/On/Server/something.js", doLittle.io.fileType.javaScript).returns(file)
     };
     var fileManagerMock = {
         load: sinon.mock().withArgs([file]).returns({
@@ -32,14 +32,14 @@ describe("when namespace only has file matching system needed to be resolved reg
             _scripts: ["something"]
         };
 
-        fileFactory = Bifrost.io.fileFactory;
-        fileManager = Bifrost.io.fileManager;
+        fileFactory = doLittle.io.fileFactory;
+        fileManager = doLittle.io.fileManager;
 
-        Bifrost.io.fileFactory = {
+        doLittle.io.fileFactory = {
             create: sinon.stub().returns(fileFactoryMock)
         };
 
-        Bifrost.io.fileManager = {
+        doLittle.io.fileManager = {
             create: sinon.stub().returns(fileManagerMock)
         }
 
@@ -51,8 +51,8 @@ describe("when namespace only has file matching system needed to be resolved reg
     });
 
     afterEach(function () {
-        Bifrost.io.fileFactory = fileFactory;
-        Bifrost.io.fileManager = fileManager;
+        doLittle.io.fileFactory = fileFactory;
+        doLittle.io.fileManager = fileManager;
     });
 
     it("should be able to resolve", function () {
@@ -64,7 +64,7 @@ describe("when namespace only has file matching system needed to be resolved reg
     });
 
     it("should return a promise", function () {
-        expect(resolved instanceof Bifrost.execution.Promise).toBe(true);
+        expect(resolved instanceof doLittle.execution.Promise).toBe(true);
     });
 
     it("should resolve system loaded into namespace", function () {

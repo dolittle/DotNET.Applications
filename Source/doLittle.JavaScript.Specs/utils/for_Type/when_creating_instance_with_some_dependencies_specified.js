@@ -3,7 +3,7 @@
     var instance = null;
 
     beforeEach(function () {
-        Bifrost.dependencyResolver = {
+        doLittle.dependencyResolver = {
             getDependenciesFor: function () {
                 return ["something","second"];
             },
@@ -14,7 +14,7 @@
             }
         };
 
-        var myType = Bifrost.Type.extend(function (something,second) {
+        var myType = doLittle.Type.extend(function (something,second) {
             this.something = something;
             this.second = second;
         });

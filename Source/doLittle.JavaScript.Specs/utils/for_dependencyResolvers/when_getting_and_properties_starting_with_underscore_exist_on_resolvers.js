@@ -1,8 +1,8 @@
 describe("when getting and properties starting with underscore exist on resolvers", function() {
 
-	Bifrost.dependencyResolvers._something = { something: "hello"};
+	doLittle.dependencyResolvers._something = { something: "hello"};
 
-	var all = Bifrost.dependencyResolvers.getAll();
+	var all = doLittle.dependencyResolvers.getAll();
 
 	it("should ignore the properties starting with underscore", function() {
 		var hasUnderscore = false;

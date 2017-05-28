@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using Bifrost.Applications;
-using Bifrost.Logging;
-using Bifrost.Serialization;
+using doLittle.Applications;
+using doLittle.Logging;
+using doLittle.Serialization;
 
-namespace Bifrost.Events.Files
+namespace doLittle.Events.Files
 {
     /// <summary>
     /// Represents a simple file based <see cref="IEventStore"/>

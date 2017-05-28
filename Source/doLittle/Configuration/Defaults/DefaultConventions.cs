@@ -2,9 +2,9 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Execution;
+using doLittle.Execution;
 
-namespace Bifrost.Configuration.Defaults
+namespace doLittle.Configuration.Defaults
 {
     /// <summary>
     /// Represents a <see cref="IDefaultConventions"/> implementation
@@ -14,7 +14,7 @@ namespace Bifrost.Configuration.Defaults
         IContainer _container;
         
         /// <summary>
-        /// Initializes a new instance of the <see cref="Bifrost.Configuration.Defaults.DefaultConventions"/> class.
+        /// Initializes a new instance of the <see cref="doLittle.Configuration.Defaults.DefaultConventions"/> class.
         /// </summary>
         public DefaultConventions(IContainer container)
         {

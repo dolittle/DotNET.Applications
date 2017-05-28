@@ -6,16 +6,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Bifrost.Applications;
-using Bifrost.CodeGeneration;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Commands;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.Web.Configuration;
-using Bifrost.Web.Proxies;
+using doLittle.Applications;
+using doLittle.CodeGeneration;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Commands;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.Web.Configuration;
+using doLittle.Web.Proxies;
 
-namespace Bifrost.Web.Commands
+namespace doLittle.Web.Commands
 {
     public class CommandProxies : IProxyGenerator
     {
@@ -30,7 +30,7 @@ namespace Bifrost.Web.Commands
 
         static CommandProxies()
         {
-            ExcludeCommandsStartingWithNamespace("Bifrost");
+            ExcludeCommandsStartingWithNamespace("doLittle");
         }
 
         public static void ExcludeCommandsStartingWithNamespace(string @namespace)
@@ -82,7 +82,7 @@ namespace Bifrost.Web.Commands
                     var name = ((string)identifier.Resource.Name).ToCamelCase();
                     currentNamespace.Content.Assign(name)
                         .WithType(t =>
-                            t.WithSuper("Bifrost.commands.Command")
+                            t.WithSuper("doLittle.commands.Command")
                                 .Function
                                     .Body
                                         .Variant("self", v => v.WithThis())

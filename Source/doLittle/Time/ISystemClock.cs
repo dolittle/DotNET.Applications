@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Time
+namespace doLittle.Time
 {
     /// <summary>
     /// Defines a clock that keeps track of the current system date and time.

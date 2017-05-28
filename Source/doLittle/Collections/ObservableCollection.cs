@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Collections
+namespace doLittle.Collections
 {
     /// <summary>
     /// Represents an implementation of <see cref="IObservableCollection{T}"/>

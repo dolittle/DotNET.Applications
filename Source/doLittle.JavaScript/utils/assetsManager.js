@@ -1,14 +1,14 @@
-﻿Bifrost.namespace("Bifrost", {
+﻿doLittle.namespace("doLittle., {
     assetsManager: {
         scripts: [],
         isInitialized: function() {
-            return Bifrost.assetsManager.scripts.length > 0;
+            return doLittle.assetsManager.scripts.length > 0;
         },
         initialize: function () {
-            var promise = Bifrost.execution.Promise.create();
-            if (!Bifrost.assetsManager.isInitialized()) {
-                $.get("/Bifrost/AssetsManager", { extension: "js" }, function (result) {
-                    Bifrost.assetsManager.initializeFromAssets(result);
+            var promise = doLittle.execution.Promise.create();
+            if (!doLittle.assetsManager.isInitialized()) {
+                $.get("/doLittle/AssetsManager", { extension: "js" }, function (result) {
+                    doLittle.assetsManager.initializeFromAssets(result);
                     promise.signal();
                 }, "json");
             } else {
@@ -17,24 +17,24 @@
             return promise;
         },
         initializeFromAssets: function (assets) {
-            if (!Bifrost.assetsManager.isInitialized()) {
-                Bifrost.assetsManager.scripts = assets;
-                Bifrost.namespaces.create().initialize();
+            if (!doLittle.assetsManager.isInitialized()) {
+                doLittle.assetsManager.scripts = assets;
+                doLittle.namespaces.create().initialize();
             }
         },
         getScripts: function () {
-            return Bifrost.assetsManager.scripts;
+            return doLittle.assetsManager.scripts;
         },
         hasScript: function(script) {
-            return Bifrost.assetsManager.scripts.some(function (scriptInSystem) {
+            return doLittle.assetsManager.scripts.some(function (scriptInSystem) {
                 return scriptInSystem === script;
             });
         },
         getScriptPaths: function () {
             var paths = [];
 
-            Bifrost.assetsManager.scripts.forEach(function (fullPath) {
-                var path = Bifrost.Path.getPathWithoutFilename(fullPath);
+            doLittle.assetsManager.scripts.forEach(function (fullPath) {
+                var path = doLittle.Path.getPathWithoutFilename(fullPath);
                 if (paths.indexOf(path) === -1) {
                     paths.push(path);
                 }

@@ -19,13 +19,13 @@
                 };
             }
         };
-        Bifrost.validation.Rule = {
+        doLittle.validation.Rule = {
             getExtenders: function () {
                 return [someRule];
             }
         };
 
-        validator = Bifrost.validation.Validator.create(options);
+        validator = doLittle.validation.Validator.create(options);
         validator.validate("something");
     });
 

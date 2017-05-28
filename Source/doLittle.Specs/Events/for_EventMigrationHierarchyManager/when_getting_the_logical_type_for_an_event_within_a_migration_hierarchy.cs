@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Specs.Events.Fakes.v3;
+using doLittle.Specs.Events.Fakes.v3;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventMigrationHierarchyManager
+namespace doLittle.Specs.Events.for_EventMigrationHierarchyManager
 {
     public class when_getting_the_logical_type_for_an_event_within_a_migration_hierarchy : given.an_event_migration_hierarchy_manager_with_two_logical_events
     {

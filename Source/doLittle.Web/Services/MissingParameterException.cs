@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     public class MissingParameterException : ArgumentException
     {

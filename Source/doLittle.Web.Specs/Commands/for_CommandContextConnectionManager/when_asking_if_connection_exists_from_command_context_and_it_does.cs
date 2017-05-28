@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Web.Commands;
+using doLittle.Web.Commands;
 using Machine.Specifications;
 
-namespace Bifrost.Web.Specs.Commands.for_CommandContextConnectionManager
+namespace doLittle.Web.Specs.Commands.for_CommandContextConnectionManager
 {
     public class when_asking_if_connection_exists_from_command_context_and_it_does
     {

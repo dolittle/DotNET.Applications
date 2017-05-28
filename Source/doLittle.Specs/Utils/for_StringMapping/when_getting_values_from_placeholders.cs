@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Bifrost.Utils;
+using doLittle.Utils;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Utils.for_StringMapping
+namespace doLittle.Specs.Utils.for_StringMapping
 {
     public class when_getting_values_from_placeholders
     {

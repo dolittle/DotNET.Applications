@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Bifrost.Execution
+namespace doLittle.Execution
 {
     /// <summary>
     /// Defines functionality for accessing the filesystem

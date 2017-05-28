@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Strings;
+using doLittle.Strings;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Strings.for_FixedStringSegment
+namespace doLittle.Specs.Strings.for_FixedStringSegment
 {
     public class when_matching_multiple_strings_with_recurring_matching_segment_and_unmatched_string_in_the_middle
     {

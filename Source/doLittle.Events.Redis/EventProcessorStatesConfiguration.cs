@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Events.Redis
+namespace doLittle.Events.Redis
 {
     /// <summary>
     /// Represents the configuration for the Redis implementation of <see cref="IEventProcessorStates"/>

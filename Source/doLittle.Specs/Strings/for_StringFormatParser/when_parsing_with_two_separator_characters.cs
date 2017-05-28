@@ -1,7 +1,7 @@
-﻿using Bifrost.Strings;
+﻿using doLittle.Strings;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Strings.for_StringFormatParser
+namespace doLittle.Specs.Strings.for_StringFormatParser
 {
     public class when_parsing_with_two_separator_characters : given.a_string_format_parser
     {

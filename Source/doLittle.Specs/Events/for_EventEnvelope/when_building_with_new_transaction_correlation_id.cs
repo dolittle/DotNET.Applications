@@ -1,8 +1,8 @@
-﻿using Bifrost.Events;
-using Bifrost.Lifecycle;
+﻿using doLittle.Events;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventEnvelope
+namespace doLittle.Specs.Events.for_EventEnvelope
 {
     public class when_building_with_new_transaction_correlation_id : given.an_event_envelope
     {

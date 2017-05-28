@@ -3,7 +3,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Web.Specs.Pipeline.for_SinglePageApplication
+namespace doLittle.Web.Specs.Pipeline.for_SinglePageApplication
 {
     public class when_processing_before_with_a_request_with_extension : given.a_single_page_application_and_a_web_context_with_default_routes
     {

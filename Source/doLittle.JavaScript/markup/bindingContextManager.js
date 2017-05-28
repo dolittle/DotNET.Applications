@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.markup", {
-    bindingContextManager: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.markup", {
+    bindingContextManager: doLittle.Singleton(function () {
 
         this.ensure = function (element) {
             // If there is specific bindingContext for element, return it
@@ -24,4 +24,4 @@
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.bindingContextManager = Bifrost.markup.bindingContextManager;
+doLittle.WellKnownTypesDependencyResolver.types.bindingContextManager = doLittle.markup.bindingContextManager;

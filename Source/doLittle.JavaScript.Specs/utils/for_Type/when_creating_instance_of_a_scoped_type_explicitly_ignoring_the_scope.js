@@ -4,11 +4,11 @@
     var secondInstance = 42;
 
     beforeEach(function () {
-        existingGetDependenciesFor = Bifrost.dependencyResolver.getDependenciesFor;
-        Bifrost.dependencyResolver.getDependenciesFor = function () { return []; };
+        existingGetDependenciesFor = doLittle.dependencyResolver.getDependenciesFor;
+        doLittle.dependencyResolver.getDependenciesFor = function () { return []; };
 
         var counter = 0;
-        var type = Bifrost.Type.extend(function () {
+        var type = doLittle.Type.extend(function () {
             var self = this;
 
             this.id = counter++;
@@ -19,7 +19,7 @@
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolver.getDependenciesFor = existingGetDependenciesFor;
+        doLittle.dependencyResolver.getDependenciesFor = existingGetDependenciesFor;
     });
 
     it("should have two different instances", function () {

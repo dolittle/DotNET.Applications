@@ -1,18 +1,18 @@
-﻿Bifrost.namespace("Bifrost", {
-    configureType: Bifrost.Singleton(function(assetsManager) {
+﻿doLittle.namespace("doLittle., {
+    configureType: doLittle.Singleton(function(assetsManager) {
         var self = this;
 
-        var defaultUriMapper = Bifrost.StringMapper.create();
+        var defaultUriMapper = doLittle.StringMapper.create();
         defaultUriMapper.addMapping("{boundedContext}/{module}/{feature}/{view}", "{boundedContext}/{module}/{feature}/{view}.html");
         defaultUriMapper.addMapping("{boundedContext}/{feature}/{view}", "{boundedContext}/{feature}/{view}.html");
         defaultUriMapper.addMapping("{feature}/{view}", "{feature}/{view}.html");
         defaultUriMapper.addMapping("{view}", "{view}.html");
-        Bifrost.uriMappers.default = defaultUriMapper;
+        doLittle.uriMappers.default = defaultUriMapper;
 
-        var bifrostVisualizerUriMapper = Bifrost.StringMapper.create();
-        bifrostVisualizerUriMapper.addMapping("Visualizer/{module}/{view}", "/Bifrost/Visualizer/{module}/{view}.html");
-        bifrostVisualizerUriMapper.addMapping("Visualizer/{view}", "/Bifrost/Visualizer/{view}.html");
-        Bifrost.uriMappers.bifrostVisualizer = bifrostVisualizerUriMapper;
+        var doLittleVisualizerUriMapper = doLittle.StringMapper.create();
+        doLittleVisualizerUriMapper.addMapping("Visualizer/{module}/{view}", "/doLittle/Visualizer/{module}/{view}.html");
+        doLittleVisualizerUriMapper.addMapping("Visualizer/{view}", "/doLittle/Visualizer/{view}.html");
+        doLittle.uriMappers.doLittleVisualizer = doLittleVisualizerUriMapper;
 
         this.isReady = false;
         this.readyCallbacks = [];
@@ -21,7 +21,7 @@
         this.applyMasterViewModel = true;
 
         function onReady() {
-            Bifrost.views.Region.current = document.body.region;
+            doLittle.views.Region.current = document.body.region;
             self.isReady = true;
             for (var callbackIndex = 0; callbackIndex < self.readyCallbacks.length; callbackIndex++) {
                 self.readyCallbacks[callbackIndex]();
@@ -29,33 +29,33 @@
         }
 
         function hookUpNavigaionAndApplyViewModel() {
-            Bifrost.navigation.navigationManager.hookup();
+            doLittle.navigation.navigationManager.hookup();
 
             if (self.applyMasterViewModel === true) {
-                Bifrost.views.viewModelManager.create().masterViewModel.apply();
+                doLittle.views.viewModelManager.create().masterViewModel.apply();
             }
         }
 
         function onStartup() {
-            var configurators = Bifrost.configurator.getExtenders();
+            var configurators = doLittle.configurator.getExtenders();
             configurators.forEach(function (configuratorType) {
                 var configurator = configuratorType.create();
                 configurator.config(self);
             });
 
 
-            Bifrost.dependencyResolvers.DOMRootDependencyResolver.documentIsReady();
-            Bifrost.views.viewModelBindingHandler.initialize();
-            Bifrost.views.viewBindingHandler.initialize();
-            Bifrost.navigation.navigationBindingHandler.initialize();
+            doLittle.dependencyResolvers.DOMRootDependencyResolver.documentIsReady();
+            doLittle.views.viewModelBindingHandler.initialize();
+            doLittle.views.viewBindingHandler.initialize();
+            doLittle.navigation.navigationBindingHandler.initialize();
 
             if (typeof History !== "undefined" && typeof History.Adapter !== "undefined") {
-                Bifrost.WellKnownTypesDependencyResolver.types.history = History;
+                doLittle.WellKnownTypesDependencyResolver.types.history = History;
             }
 
             assetsManager.initialize().continueWith(function () {
                 if (self.initializeLandingPage === true) {
-                    Bifrost.views.viewManager.create().initializeLandingPage().continueWith(hookUpNavigaionAndApplyViewModel);
+                    doLittle.views.viewManager.create().initializeLandingPage().continueWith(hookUpNavigaionAndApplyViewModel);
                 } else {
                     hookUpNavigaionAndApplyViewModel();
                 }
@@ -81,4 +81,4 @@
         });
     })
 });
-Bifrost.configure = Bifrost.configureType.create();
+doLittle.configure = doLittle.configureType.create();

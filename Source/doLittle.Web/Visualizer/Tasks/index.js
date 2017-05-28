@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.Visualizer.Tasks", {
-    index: Bifrost.views.ViewModel.extend(function (taskHistory) {
+﻿doLittle.namespace("doLittle.Visualizer.Tasks", {
+    index: doLittle.views.ViewModel.extend(function (taskHistory) {
         var self = this;
 
         this.taskHistory = taskHistory;

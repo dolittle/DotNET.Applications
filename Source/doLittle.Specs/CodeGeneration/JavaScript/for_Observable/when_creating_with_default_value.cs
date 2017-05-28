@@ -1,7 +1,7 @@
-﻿using Bifrost.CodeGeneration.JavaScript;
+﻿using doLittle.CodeGeneration.JavaScript;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.CodeGeneration.JavaScript.for_Observable
+namespace doLittle.Specs.CodeGeneration.JavaScript.for_Observable
 {
     public class when_creating_without_default_value
     {

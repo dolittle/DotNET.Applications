@@ -1,10 +1,10 @@
-﻿using Bifrost.Events;
-using Bifrost.Specs.Events.Fakes;
+﻿using doLittle.Events;
+using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Events.for_EventSource
+namespace doLittle.Specs.Events.for_EventSource
 {
     [Subject(Subjects.reapplying_events)]
     public class when_reapplying_a_stream_of_committed_events : given.a_stateful_event_source

@@ -1,6 +1,6 @@
 ﻿describe("when resolving a string with only a wildcard", function () {
     var expectedResult = "this.is.a.wildcard.uri.for_things";
-    var mapping = Bifrost.StringMapping.create({
+    var mapping = doLittle.StringMapping.create({
         format: "**/",
         mappedFormat: "**."
     });

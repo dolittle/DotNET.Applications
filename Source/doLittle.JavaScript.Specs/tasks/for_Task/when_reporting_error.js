@@ -1,6 +1,6 @@
 ﻿describe("when reporting error", function () {
 
-    var task = Bifrost.tasks.Task.create();
+    var task = doLittle.tasks.Task.create();
     task.reportError("something");
 
     it("should have one error", function () {

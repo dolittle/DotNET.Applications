@@ -1,5 +1,5 @@
 ﻿describe("when setting region on element", function () {
-    var service = Bifrost.documentService.createWithoutScope({
+    var service = doLittle.documentService.createWithoutScope({
         DOMRoot: {}
     });
 

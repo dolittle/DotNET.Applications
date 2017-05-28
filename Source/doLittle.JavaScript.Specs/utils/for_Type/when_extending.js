@@ -3,18 +3,18 @@ describe("when extending", function () {
     var result = null;
 
     beforeEach(function () {
-        Bifrost.dependencyResolver = {
+        doLittle.dependencyResolver = {
             getDependenciesFor: sinon.stub()
         };
-        result = Bifrost.Type.extend(typeDefinition);
+        result = doLittle.Type.extend(typeDefinition);
     });
 
     afterEach(function () {
-        Bifrost.functionParser = {};
+        doLittle.functionParser = {};
     });
 
     it("should get the dependencies for the function", function () {
-        expect(Bifrost.dependencyResolver.getDependenciesFor.called).toBe(true);
+        expect(doLittle.dependencyResolver.getDependenciesFor.called).toBe(true);
     });
 
     it("should return the type definition", function () {
@@ -29,8 +29,8 @@ describe("when extending", function () {
         expect(typeDefinition._typeId).toBeDefined();
     });
 
-    it("should add this type to the list of types that extend Bifrost Type", function () {
-        var extenders = Bifrost.Type.getExtenders();
+    it("should add this type to the list of types that extend doLittle Type", function () {
+        var extenders = doLittle.Type.getExtenders();
         expect(extenders).toContain(typeDefinition);
     });
 });

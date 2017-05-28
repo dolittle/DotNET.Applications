@@ -5,7 +5,7 @@
 using System.Web.Routing;
 using System.Web;
 
-namespace Bifrost.Web.Configuration
+namespace doLittle.Web.Configuration
 {
     public class ConfigurationRouteHandler : IRouteHandler
     {

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Commands;
+using doLittle.Commands;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Commands.for_HandleCommandSecurityActionBuilder
+namespace doLittle.Specs.Commands.for_HandleCommandSecurityActionBuilder
 {
     public class when_targetting_commands
     {

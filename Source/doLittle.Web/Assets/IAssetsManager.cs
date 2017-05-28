@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Web.Assets
+namespace doLittle.Web.Assets
 {
     public interface IAssetsManager
     {

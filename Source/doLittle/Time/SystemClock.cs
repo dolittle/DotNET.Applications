@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Time
+namespace doLittle.Time
 {
     /// <summary>
     /// Represents an implementation of <see cref="ISystemClock"/>

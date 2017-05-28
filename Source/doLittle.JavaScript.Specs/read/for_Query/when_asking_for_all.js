@@ -5,7 +5,7 @@
     var queryableFactory = {
     };
 
-    var query = Bifrost.read.Query.create({
+    var query = doLittle.read.Query.create({
         queryableFactory: queryableFactory,
         region: region
     });

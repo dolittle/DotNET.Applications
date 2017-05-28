@@ -1,5 +1,5 @@
 ﻿describe("when mapping without strategy set", function () {
-    var propertyMap = Bifrost.mapping.PropertyMap.create({
+    var propertyMap = doLittle.mapping.PropertyMap.create({
         sourceProperty: "Source",
         typeConverters: {}
     });
@@ -8,8 +8,8 @@
     var exception = null;
 
     beforeEach(function () {
-        missingPropertyStrategy = Bifrost.mapping.MissingPropertyStrategy;
-        Bifrost.mapping.MissingPropertyStrategy = Bifrost.Type.extend(function () { });
+        missingPropertyStrategy = doLittle.mapping.MissingPropertyStrategy;
+        doLittle.mapping.MissingPropertyStrategy = doLittle.Type.extend(function () { });
 
         
         try {
@@ -21,10 +21,10 @@
     });
 
     afterEach(function () {
-        Bifrost.mapping.MissingPropertyStrategy = missingPropertyStrategy;
+        doLittle.mapping.MissingPropertyStrategy = missingPropertyStrategy;
     });
 
     it("should throw missing property strategy", function () {
-        expect(exception._type).toBe(Bifrost.mapping.MissingPropertyStrategy);
+        expect(exception._type).toBe(doLittle.mapping.MissingPropertyStrategy);
     });
 });

@@ -2,9 +2,9 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.Mapping;
+using doLittle.Mapping;
 
-namespace Bifrost.Entities.Files.Mapping
+namespace doLittle.Entities.Files.Mapping
 {
     /// <summary>
     /// Represents the base mapping for mapping any type to a <see cref="System.IO.File"/>

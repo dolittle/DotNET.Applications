@@ -1,7 +1,7 @@
-﻿Bifrost.namespace("Bifrost", {
-    systemEvents: Bifrost.Singleton(function () {
-        this.readModels = Bifrost.read.readModelSystemEvents.create();
-        this.commands = Bifrost.commands.commandEvents.create();
+﻿doLittle.namespace("doLittle., {
+    systemEvents: doLittle.Singleton(function () {
+        this.readModels = doLittle.read.readModelSystemEvents.create();
+        this.commands = doLittle.commands.commandEvents.create();
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.systemEvents = Bifrost.systemEvents;
+doLittle.WellKnownTypesDependencyResolver.types.systemEvents = doLittle.systemEvents;

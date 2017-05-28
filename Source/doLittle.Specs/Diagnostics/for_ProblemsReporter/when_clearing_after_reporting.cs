@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using Bifrost.Diagnostics;
+using doLittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Diagnostics.for_ProblemsReporter
+namespace doLittle.Specs.Diagnostics.for_ProblemsReporter
 {
     public class when_clearing_after_reporting
     {

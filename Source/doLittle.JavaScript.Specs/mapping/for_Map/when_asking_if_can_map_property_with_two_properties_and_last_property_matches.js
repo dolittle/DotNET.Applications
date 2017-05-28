@@ -2,15 +2,15 @@
     var propertyMapType = null;
     var result = null;
     beforeEach(function () {
-        propertyMapType = Bifrost.mapping.PropertyMap;
-        Bifrost.mapping.PropertyMap = {
+        propertyMapType = doLittle.mapping.PropertyMap;
+        doLittle.mapping.PropertyMap = {
             create: function (options) {
                 return {
                 };
             }
         };
 
-        var map = Bifrost.mapping.Map.create();
+        var map = doLittle.mapping.Map.create();
         map.property("Something");
         map.property("SomeProperty");
 
@@ -19,7 +19,7 @@
 
 
     afterEach(function () {
-        Bifrost.mapping.PropertyMap = propertyMapType;
+        doLittle.mapping.PropertyMap = propertyMapType;
     });
 
     it("should be able to map property", function () {

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     public interface IRegisteredServices
     {

@@ -1,11 +1,11 @@
 ﻿using System;
-using Bifrost.Events;
-using Bifrost.Specs.Events.Fakes;
+using doLittle.Events;
+using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Events.for_EventSource
+namespace doLittle.Specs.Events.for_EventSource
 {
     public class when_reapplying_a_stream_on_a_stateless_event_source : given.a_stateless_event_source
     {

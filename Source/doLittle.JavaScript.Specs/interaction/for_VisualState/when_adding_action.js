@@ -1,6 +1,6 @@
 describe("when adding action", function() {
 	var action = { some : "action" };
-	var state = Bifrost.interaction.VisualState.create();
+	var state = doLittle.interaction.VisualState.create();
 	state.addAction(action);
 
 	it("should have one action", function() {

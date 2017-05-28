@@ -1,10 +1,10 @@
-﻿using Bifrost.Commands;
-using Bifrost.Security;
+﻿using doLittle.Commands;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Commands.for_CommandCoordinator
+namespace doLittle.Specs.Commands.for_CommandCoordinator
 {
     [Subject(typeof(CommandCoordinator))]
     public class when_handling_a_command_that_fails_security : given.a_command_coordinator

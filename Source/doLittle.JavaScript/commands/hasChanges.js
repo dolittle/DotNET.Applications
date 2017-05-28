@@ -5,7 +5,7 @@
         if (target._initialValueSet === false) {
             target.hasChanges(false);
         } else {
-            if (Bifrost.isArray(target._initialValue)) {
+            if (doLittle.isArray(target._initialValue)) {
                 target.hasChanges(!target._initialValue.shallowEquals(target()));
                 return;
             }
@@ -19,7 +19,7 @@
 
     target.setInitialValue = function (value) {
         var initialValue;
-        if (Bifrost.isArray(value)) {
+        if (doLittle.isArray(value)) {
             initialValue = value.clone();
         } else {
             initialValue = value;

@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Web.Routing;
 
-namespace Bifrost.Web.Security
+namespace doLittle.Web.Security
 {
     public class SecurityRoute : Route
     {
-        const string _url = "Bifrost/Security";
+        const string _url = "doLittle/Security";
 
         public SecurityRoute()
             : base(_url, new SecurityRouteHandler())

@@ -1,11 +1,11 @@
-﻿using Bifrost.Read.Validation;
-using Bifrost.Validation;
+﻿using doLittle.Read.Validation;
+using doLittle.Validation;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
 
-namespace Bifrost.Specs.Read.Validation.for_QueryValidator
+namespace doLittle.Specs.Read.Validation.for_QueryValidator
 {
     public class when_validating_query_with_descriptor : given.a_query_validator
     {

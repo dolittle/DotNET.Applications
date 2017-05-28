@@ -1,10 +1,10 @@
 ﻿using System.Dynamic;
-using Bifrost.Execution;
+using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Execution.for_ExecutionContextDetailsPopulator
+namespace doLittle.Specs.Execution.for_ExecutionContextDetailsPopulator
 {
     public class when_populating_and_two_populators_exist
     {

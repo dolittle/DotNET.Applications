@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 
-namespace Bifrost.CodeGeneration.JavaScript
+namespace doLittle.CodeGeneration.JavaScript
 {
     /// <summary>
     /// Provides methods for working with assignment
@@ -157,7 +157,7 @@ namespace Bifrost.CodeGeneration.JavaScript
         /// <returns>The <see cref="Assignment"/> to build on</returns>
         public static Assignment WithGuidEmpty(this Assignment assignment)
         {
-            return assignment.WithLiteral("Bifrost.Guid.empty");
+            return assignment.WithLiteral("doLittle.Guid.empty");
         }
 
         /// <summary>

@@ -16,13 +16,13 @@ describe("when mapping to instance with map that has propertymap for one of the 
         }
     };
 
-    var type = Bifrost.Type.extend(function () {
+    var type = doLittle.Type.extend(function () {
         this.number = 0;
     });
 
     var mappedInstance = type.create();
 
-    var mapper = Bifrost.mapping.mapper.create(parameters);
+    var mapper = doLittle.mapping.mapper.create(parameters);
     var mappedProperties = mapper.mapToInstance(type, data, mappedInstance);
 
     it("should map the property through the map", function () {

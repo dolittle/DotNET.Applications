@@ -27,7 +27,7 @@
         }
     };
 
-    var readModelOf = Bifrost.read.ReadModelOf.create({
+    var readModelOf = doLittle.read.ReadModelOf.create({
         mapper: mapper,
         region: region,
         taskFactory: taskFactory,

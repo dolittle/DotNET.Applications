@@ -1,9 +1,9 @@
-﻿using Bifrost.Applications;
+﻿using doLittle.Applications;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Applications.for_SubFeature
+namespace doLittle.Specs.Applications.for_SubFeature
 {
     public class when_adding_sub_feature
     {

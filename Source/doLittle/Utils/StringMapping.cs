@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Text.RegularExpressions;
 
-namespace Bifrost.Utils
+namespace doLittle.Utils
 {
     /// <summary>
     /// Represents a mapping for a string

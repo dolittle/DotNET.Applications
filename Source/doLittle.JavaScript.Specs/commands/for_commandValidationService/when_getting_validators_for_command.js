@@ -12,7 +12,7 @@
         command.something.validator = "something";
         command.deep.property.validator = "deep.property";
 
-        var commandValidationService = Bifrost.commands.commandValidationService.create();
+        var commandValidationService = doLittle.commands.commandValidationService.create();
         validators = commandValidationService.getValidatorsFor(command);
     });
 

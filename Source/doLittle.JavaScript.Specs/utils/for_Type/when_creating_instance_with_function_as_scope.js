@@ -6,11 +6,11 @@
     var instance = null;
 
     beforeEach(function () {
-        Bifrost.dependencyResolver = {
+        doLittle.dependencyResolver = {
             getDependenciesFor: sinon.stub()
         };
 
-        type = Bifrost.Type.extend(function () {
+        type = doLittle.Type.extend(function () {
             this.something = "hello";
         }).scopeTo(function (namespace, name) {
             scopeCalled = true;
@@ -25,7 +25,7 @@
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolver = {};
+        doLittle.dependencyResolver = {};
     });
 
     it("should create a proper instance", function () {

@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using Newtonsoft.Json;
 
-namespace Bifrost.JSON.Serialization
+namespace doLittle.JSON.Serialization
 {
     /// <summary>
     /// Represents an implementation of <see cref="JsonConverter"/> for dealing with <see cref="Exception"/>

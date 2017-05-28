@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Bifrost.Validation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Defines a builder for building rules for value validation

@@ -1,4 +1,4 @@
-Bifrost.namespace("Bifrost", {
+doLittle.namespace("doLittle", {
     isObject: function (o) {
         if (o === null || typeof o === "undefined" ) {
             return false;

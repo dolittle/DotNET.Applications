@@ -1,6 +1,6 @@
 ﻿describe("when converting from a default date string", function () {
 
-    var converter = Bifrost.values.DateTypeConverter.create();
+    var converter = doLittle.values.DateTypeConverter.create();
     var result1 = converter.convertFrom("0001-01-01T00:00:00");
     var result2 = converter.convertFrom("0001-01-01T00:00:00Z");
     var result3 = converter.convertFrom(null);

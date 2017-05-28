@@ -7,14 +7,14 @@
         getExtendersIn = function (namespace) { return [Test.extender, Test.Deeper.extender, Test.Deeper.EvenDeeper.extender]; };
 
     beforeEach(function () {
-        Bifrost.namespace("Test", { extender: Bifrost.Type.extend(function () { }) });
-        Bifrost.namespace("Test.Deeper", { extender: Bifrost.Type.extend(function () { }) });
-        Bifrost.namespace("Test.Deeper.EvenDeeper", { extender: Bifrost.Type.extend(function () { }) });
+        doLittle.namespace("Test", { extender: doLittle.Type.extend(function () { }) });
+        doLittle.namespace("Test.Deeper", { extender: doLittle.Type.extend(function () { }) });
+        doLittle.namespace("Test.Deeper.EvenDeeper", { extender: doLittle.Type.extend(function () { }) });
         namespace = Test.Deeper.EvenDeeper.extender._namespace;
 
-        Bifrost.commands.Command = { getExtendersIn: getExtendersIn };
+        doLittle.commands.Command = { getExtendersIn: getExtendersIn };
 
-        resolver = new Bifrost.KnownArtifactTypesDependencyResolver();
+        resolver = new doLittle.KnownArtifactTypesDependencyResolver();
         propertyToResolve = "commandTypes";
         namespace = {};
         

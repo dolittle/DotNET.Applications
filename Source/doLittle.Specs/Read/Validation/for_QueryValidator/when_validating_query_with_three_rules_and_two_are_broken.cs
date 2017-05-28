@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Read.Validation;
-using Bifrost.Rules;
-using Bifrost.Validation;
+using doLittle.Read.Validation;
+using doLittle.Rules;
+using doLittle.Validation;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Read.Validation.for_QueryValidator
+namespace doLittle.Specs.Read.Validation.for_QueryValidator
 {
     public class when_validating_query_with_three_rules_and_two_are_broken : given.a_query_validator
     {

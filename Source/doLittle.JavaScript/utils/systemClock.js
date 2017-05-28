@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost", {
-    systemClock: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle., {
+    systemClock: doLittle.Singleton(function () {
         this.nowInMilliseconds = function () {
             return window.performance.now();
         };

@@ -5,7 +5,7 @@
 using System.Linq;
 using System.Security.Claims;
 
-namespace Bifrost.Tenancy
+namespace doLittle.Tenancy
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICanResolveTenantId"/>

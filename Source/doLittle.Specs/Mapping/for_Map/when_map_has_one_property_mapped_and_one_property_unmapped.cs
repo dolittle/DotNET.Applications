@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Bifrost.Mapping;
+using doLittle.Mapping;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Mapping.for_Map
+namespace doLittle.Specs.Mapping.for_Map
 {
     public class when_map_has_one_property_mapped_and_one_property_unmapped
     {

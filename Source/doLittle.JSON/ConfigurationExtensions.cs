@@ -2,10 +2,10 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Bifrost.JSON.Serialization;
-using Bifrost.Serialization;
+using doLittle.JSON.Serialization;
+using doLittle.Serialization;
 
-namespace Bifrost.Configuration
+namespace doLittle.Configuration
 {
     /// <summary>
     /// Extensions for configuring <see cref="ISerializer"/>

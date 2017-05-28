@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.IO;
 
-namespace Bifrost.CodeGeneration
+namespace doLittle.CodeGeneration
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICodeWriter"/>

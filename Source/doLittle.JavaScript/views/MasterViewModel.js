@@ -1,10 +1,10 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    MasterViewModel: Bifrost.Type.extend(function (documentService) {
+﻿doLittle.namespace("doLittle.views", {
+    MasterViewModel: doLittle.Type.extend(function (documentService) {
         var self = this;
 
         function deactivateViewModel(viewModel) {
-            if (!Bifrost.isNullOrUndefined(viewModel)) {
-                if (Bifrost.isFunction(viewModel.deactivated)) {
+            if (!doLittle.isNullOrUndefined(viewModel)) {
+                if (doLittle.isFunction(viewModel.deactivated)) {
                     viewModel.deactivated();
                 }
                 
@@ -13,7 +13,7 @@
 
 
         function activateViewModel(viewModel) {
-            if (!Bifrost.isNullOrUndefined(viewModel) && Bifrost.isFunction(viewModel.activated)) {
+            if (!doLittle.isNullOrUndefined(viewModel) && doLittle.isFunction(viewModel.activated)) {
                 viewModel.activated();
             }
         }

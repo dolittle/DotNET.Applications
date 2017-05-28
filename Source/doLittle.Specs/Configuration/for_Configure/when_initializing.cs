@@ -2,7 +2,7 @@
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Configuration.for_Configure
+namespace doLittle.Specs.Configuration.for_Configure
 {
     public class when_initializing : given.a_configure_instance
     {

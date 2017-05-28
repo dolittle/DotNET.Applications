@@ -2,7 +2,7 @@
     var firstValue = ko.observable(42);
     var secondValue = ko.observable(43);
 
-    var queryType = Bifrost.read.Query.extend(function () {
+    var queryType = doLittle.read.Query.extend(function () {
         this.firstObservable = ko.observable(firstValue);
         this.secondObservable = ko.observable(secondValue);
         this.nonObservable = "";

@@ -6,7 +6,7 @@
 using Microsoft.Extensions.Logging;
 #endif
 
-namespace Bifrost.Logging
+namespace doLittle.Logging
 {
     /// <summary>
     /// Represents the default <see cref="ICanConfigureLogAppenders">configurator</see> for <see cref="ILogAppenders"/>

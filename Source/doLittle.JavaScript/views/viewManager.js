@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    viewManager: Bifrost.Singleton(function (viewFactory, pathResolvers, regionManager, UIManager, viewModelManager, viewModelLoader, viewModelTypes, documentService) {
+﻿doLittle.namespace("doLittle.views", {
+    viewManager: doLittle.Singleton(function (viewFactory, pathResolvers, regionManager, UIManager, viewModelManager, viewModelLoader, viewModelTypes, documentService) {
         var self = this;
 
 
@@ -10,7 +10,7 @@
 
             var dataBindString = "";
             var dataBind = element.attributes.getNamedItem("data-bind");
-            if (!Bifrost.isNullOrUndefined(dataBind)) {
+            if (!doLittle.isNullOrUndefined(dataBind)) {
                 dataBindString = dataBind.value + ", ";
             } else {
                 dataBind = document.createAttribute("data-bind");
@@ -20,10 +20,10 @@
         }
 
         this.initializeLandingPage = function () {
-            var promise = Bifrost.execution.Promise.create();
+            var promise = doLittle.execution.Promise.create();
             var body = document.body;
             if (body !== null) {
-                var file = Bifrost.Path.getFilenameWithoutExtension(document.location.toString());
+                var file = doLittle.Path.getFilenameWithoutExtension(document.location.toString());
                 if (file === "") {
                     file = "index";
                 }
@@ -41,13 +41,13 @@
                             var viewModelPath = viewModelManager.getViewModelPathForView(actualPath);
                             if (!viewModelManager.isLoaded(viewModelPath)) {
                                 viewModelLoader.load(viewModelPath, region).continueWith(function (viewModel) {
-                                    if (!Bifrost.isNullOrUndefined(viewModel)) {
+                                    if (!doLittle.isNullOrUndefined(viewModel)) {
                                         setViewModelForElement(body, viewModel);
                                     }
                                 });
                             } else {
                                 viewModelTypes.beginCreateInstanceOfViewModel(viewModelPath, region).continueWith(function (viewModel) {
-                                    if (!Bifrost.isNullOrUndefined(viewModel)) {
+                                    if (!doLittle.isNullOrUndefined(viewModel)) {
                                         setViewModelForElement(body, viewModel);
                                     }
                                 });
@@ -68,4 +68,4 @@
         };
     })
 });
-Bifrost.WellKnownTypesDependencyResolver.types.viewManager = Bifrost.views.viewManager;
+doLittle.WellKnownTypesDependencyResolver.types.viewManager = doLittle.views.viewManager;

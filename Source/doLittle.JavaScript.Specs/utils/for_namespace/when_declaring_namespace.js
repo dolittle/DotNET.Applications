@@ -1,5 +1,5 @@
 ﻿describe("when declaring namespace", function () {
-    Bifrost.namespace("Something.Cool.That.Does.Not.Exist", {
+    doLittle.namespace("Something.Cool.That.Does.Not.Exist", {
         something: function () {
         },
         objectLiteral: {},

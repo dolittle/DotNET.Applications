@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq.Expressions;
-using Bifrost.Rules;
-using Bifrost.Extensions;
+using doLittle.Rules;
+using doLittle.Extensions;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace Bifrost.Read.Validation
+namespace doLittle.Read.Validation
 {
     /// <summary>
     /// Represents an implementation of <see cref="IQueryValidator"/>

@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bifrost.Applications
+namespace doLittle.Applications
 {
     /// <summary>
     /// Represents an implementation of <see cref="IApplicationResourceIdentifier"/> - an identifier for <see cref="IApplicationResource">resources</see> in an <see cref="IApplication"/>

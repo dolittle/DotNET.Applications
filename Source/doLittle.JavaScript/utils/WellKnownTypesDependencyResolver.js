@@ -1,7 +1,7 @@
-﻿Bifrost.namespace("Bifrost", {
+﻿doLittle.namespace("doLittle., {
     WellKnownTypesDependencyResolver: function () {
         var self = this;
-        this.types = Bifrost.WellKnownTypesDependencyResolver.types;
+        this.types = doLittle.WellKnownTypesDependencyResolver.types;
 
         this.canResolve = function (namespace, name) {
             return self.types.hasOwnProperty(name);
@@ -13,6 +13,6 @@
     }
 });
 
-Bifrost.WellKnownTypesDependencyResolver.types = {
+doLittle.WellKnownTypesDependencyResolver.types = {
     options: {}
 };

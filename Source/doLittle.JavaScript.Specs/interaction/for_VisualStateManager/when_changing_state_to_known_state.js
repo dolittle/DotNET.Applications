@@ -1,6 +1,6 @@
 describe("when changing state to known state", function() {
 
-	var manager = Bifrost.interaction.VisualStateManager.create();
+	var manager = doLittle.interaction.VisualStateManager.create();
 
 	manager.namingRoot = { some: "namingRoot" };
 

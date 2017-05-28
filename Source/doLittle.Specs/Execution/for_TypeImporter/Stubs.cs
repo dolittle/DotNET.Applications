@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Execution.for_TypeImporter
+﻿namespace doLittle.Specs.Execution.for_TypeImporter
 {
     public interface ISingleInterface
     {

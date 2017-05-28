@@ -22,17 +22,17 @@
             }
         }
 
-        formatterBefore = Bifrost.values.Formatter;
-        Bifrost.values.Formatter = {
+        formatterBefore = doLittle.values.Formatter;
+        doLittle.values.Formatter = {
             getExtenders: sinon.stub().returns([dateFormatterType])
         };
 
-        formatter = Bifrost.values.stringFormatter.createWithoutScope();
+        formatter = doLittle.values.stringFormatter.createWithoutScope();
         result = formatter.format(element, value);
     });
 
     afterEach(function () {
-        Bifrost.values.Formatter = formatterBefore;
+        doLittle.values.Formatter = formatterBefore;
     });
 
     it("should format the first chunk", function () {

@@ -1,9 +1,9 @@
 ﻿using Biförost.Specs.Security.Fakes;
-using Bifrost.Security;
+using doLittle.Security;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_SecurityDescriptor
+namespace doLittle.Specs.Security.for_SecurityDescriptor
 {
     [Subject(typeof(BaseSecurityDescriptor))]
     public class when_checking_can_authorize_with_no_targets_that_can_authorize

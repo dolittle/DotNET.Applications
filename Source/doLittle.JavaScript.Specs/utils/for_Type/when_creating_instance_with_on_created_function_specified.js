@@ -4,11 +4,11 @@ describe("when creating instance with on created function specified", function (
 
     var instance = null;
     beforeEach(function () {
-        Bifrost.dependencyResolver = {
+        doLittle.dependencyResolver = {
             getDependenciesFor: sinon.stub()
         };
 
-        type = Bifrost.Type.extend(function () {
+        type = doLittle.Type.extend(function () {
             this.onCreated = onCreatedStub;
         });
 
@@ -16,7 +16,7 @@ describe("when creating instance with on created function specified", function (
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolver = {};
+        doLittle.dependencyResolver = {};
     });
 
     it("should call the on created function", function () {

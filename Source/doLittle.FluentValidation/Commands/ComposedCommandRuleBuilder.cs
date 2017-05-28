@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FluentValidation;
 
-namespace Bifrost.FluentValidation.Commands
+namespace doLittle.FluentValidation.Commands
 {
     /// <summary>
     /// Represents an implementation of <see cref="IComposedCommandRuleBuilder"/>.

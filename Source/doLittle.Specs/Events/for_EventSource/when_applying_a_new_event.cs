@@ -1,7 +1,7 @@
-﻿using Bifrost.Specs.Events.Fakes;
+﻿using doLittle.Specs.Events.Fakes;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventSource
+namespace doLittle.Specs.Events.for_EventSource
 {
     [Subject(Subjects.applying_events)]
 	public class when_applying_a_new_event : given.a_stateful_event_source

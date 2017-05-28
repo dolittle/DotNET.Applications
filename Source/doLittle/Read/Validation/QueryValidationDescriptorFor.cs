@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Bifrost.Extensions;
-using Bifrost.Validation;
+using doLittle.Extensions;
+using doLittle.Validation;
 
-namespace Bifrost.Read.Validation
+namespace doLittle.Read.Validation
 {
     /// <summary>
     /// Represents the basis for a validation descriptor for describing validation for queries

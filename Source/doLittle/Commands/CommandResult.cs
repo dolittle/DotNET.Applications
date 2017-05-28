@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Bifrost.Validation;
+using doLittle.Validation;
 
-namespace Bifrost.Commands
+namespace doLittle.Commands
 {
     /// <summary>
     /// Represents the result from the <see cref="ICommandCoordinator">CommandCoordinator</see>

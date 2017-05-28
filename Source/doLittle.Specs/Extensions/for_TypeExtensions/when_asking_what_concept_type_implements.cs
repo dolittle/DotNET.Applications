@@ -1,10 +1,10 @@
 ﻿using System;
-using Bifrost.Concepts;
-using Bifrost.Extensions;
-using Bifrost.Validation;
+using doLittle.Concepts;
+using doLittle.Extensions;
+using doLittle.Validation;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Extensions.for_TypeExtensions
+namespace doLittle.Specs.Extensions.for_TypeExtensions
 {
     public class when_asking_what_concept_type_implements
     {

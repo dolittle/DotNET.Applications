@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Concepts;
+using doLittle.Concepts;
 
-namespace Bifrost.JSON.Specs.Serialization
+namespace doLittle.JSON.Specs.Serialization
 {
     public class ConceptAsString : ConceptAs<String>
     {

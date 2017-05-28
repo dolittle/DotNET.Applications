@@ -5,11 +5,11 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Extensions;
-using Bifrost.Read;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Extensions;
+using doLittle.Read;
 
-namespace Bifrost.Web.Read
+namespace doLittle.Web.Read
 {
     public static class ReadModelProxyExtensions
     {

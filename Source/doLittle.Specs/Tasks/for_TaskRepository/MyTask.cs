@@ -1,6 +1,6 @@
-﻿using Bifrost.Tasks;
+﻿using doLittle.Tasks;
 
-namespace Bifrost.Specs.Tasks.for_TaskRepository
+namespace doLittle.Specs.Tasks.for_TaskRepository
 {
     public class MyTask : Task
     {

@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.interaction", {
-    Trigger: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.interaction", {
+    Trigger: doLittle.Type.extend(function () {
         var self = this;
 
         this.actions = [];

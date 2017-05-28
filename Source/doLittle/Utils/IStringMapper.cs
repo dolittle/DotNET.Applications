@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Utils
+namespace doLittle.Utils
 {
     /// <summary>
     /// Defines a system for mapping strings that picks the first <see cref="IStringMapping"/> that matches

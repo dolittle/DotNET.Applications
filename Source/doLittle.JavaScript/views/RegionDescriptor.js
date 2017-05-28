@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.views", {
-    RegionDescriptor: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.views", {
+    RegionDescriptor: doLittle.Type.extend(function () {
         this.describe = function (region) {
         };
     })

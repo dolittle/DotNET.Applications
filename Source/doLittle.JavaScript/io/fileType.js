@@ -1,4 +1,4 @@
-﻿Bifrost.namespace("Bifrost.io", {
+﻿doLittle.namespace("doLittle.io", {
     fileType: {
         unknown: 0,
         text: 1,

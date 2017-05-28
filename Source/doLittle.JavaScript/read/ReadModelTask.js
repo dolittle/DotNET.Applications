@@ -1,6 +1,6 @@
-﻿Bifrost.namespace("Bifrost.read", {
-    ReadModelTask: Bifrost.tasks.LoadTask.extend(function (readModelOf, propertyFilters, taskFactory) {
-        var url = "/Bifrost/ReadModel/InstanceMatching?_rm=" + readModelOf._generatedFrom;
+﻿doLittle.namespace("doLittle.read", {
+    ReadModelTask: doLittle.tasks.LoadTask.extend(function (readModelOf, propertyFilters, taskFactory) {
+        var url = "/doLittle/ReadModel/InstanceMatching?_rm=" + readModelOf._generatedFrom;
         var payload = {
             descriptor: {
                 readModel: readModelOf._name,

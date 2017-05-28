@@ -1,9 +1,9 @@
 ﻿using System;
-using Bifrost.Read;
+using doLittle.Read;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Read.for_QueryCoordinator
+namespace doLittle.Specs.Read.for_QueryCoordinator
 {
     public class when_executing_and_provider_throws_an_exception : given.a_query_coordinator_with_known_provider
     {

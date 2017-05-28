@@ -8,15 +8,15 @@ describe("when resolving asynchronous and resolver returns a system", function()
     var dependencyResolvers;
 
     beforeEach(function () {
-        configure = Bifrost.configure;
-        Bifrost.configure = {
+        configure = doLittle.configure;
+        doLittle.configure = {
             ready: function (callback) {
                 readyCallback = callback;
             }
         };
 
-        dependencyResolvers = Bifrost.dependencyResolvers;
-        Bifrost.dependencyResolvers = {
+        dependencyResolvers = doLittle.dependencyResolvers;
+        doLittle.dependencyResolvers = {
             getAll: function () {
                 return [{
                     canResolve: function () {
@@ -29,7 +29,7 @@ describe("when resolving asynchronous and resolver returns a system", function()
             }
         };
         
-        Bifrost.dependencyResolver
+        doLittle.dependencyResolver
             .beginResolve(ns, "something")
             .continueWith(function (parameter, nextPromise) {
                 result = parameter;
@@ -39,8 +39,8 @@ describe("when resolving asynchronous and resolver returns a system", function()
     });
 
     afterEach(function () {
-        Bifrost.dependencyResolvers = dependencyResolvers;
-        Bifrost.configure = configure;
+        doLittle.dependencyResolvers = dependencyResolvers;
+        doLittle.configure = configure;
     });
 
 	it("should continue with system from resolver as parameter", function() {

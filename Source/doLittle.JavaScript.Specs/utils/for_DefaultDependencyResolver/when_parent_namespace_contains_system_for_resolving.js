@@ -1,10 +1,10 @@
 ﻿describe("when parent namespace contains system for resolving", function () {
-    var resolver = new Bifrost.DefaultDependencyResolver();
+    var resolver = new doLittle.DefaultDependencyResolver();
 
-    Bifrost.namespace("Parent", {
+    doLittle.namespace("Parent", {
         something: "Hello"
     });
-    Bifrost.namespace("Parent.Child", {
+    doLittle.namespace("Parent.Child", {
     });
 
     var ns = Parent.Child;

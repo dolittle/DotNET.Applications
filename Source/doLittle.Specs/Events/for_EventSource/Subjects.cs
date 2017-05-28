@@ -1,4 +1,4 @@
-﻿namespace Bifrost.Specs.Events.for_EventSource
+﻿namespace doLittle.Specs.Events.for_EventSource
 {
     public class Subjects
     {

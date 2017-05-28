@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq.Expressions;
-using Bifrost.Extensions;
+using doLittle.Extensions;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace Bifrost.Events.Azure.Tables
+namespace doLittle.Events.Azure.Tables
 {
 
     /// <summary>

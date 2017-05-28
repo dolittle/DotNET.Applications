@@ -1,7 +1,7 @@
 ﻿using System;
-using Bifrost.Commands;
+using doLittle.Commands;
 
-namespace Bifrost.FluentValidation.Specs.Commands
+namespace doLittle.FluentValidation.Specs.Commands
 {
     public class AnotherSimpleCommand : ICommand
     {

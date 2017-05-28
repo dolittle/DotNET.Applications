@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     /// <summary>
     /// Defines a collection of <see cref="IHttpCookie"/>

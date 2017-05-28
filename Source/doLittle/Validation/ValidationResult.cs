@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace Bifrost.Validation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Represents a container for the results of a validation request

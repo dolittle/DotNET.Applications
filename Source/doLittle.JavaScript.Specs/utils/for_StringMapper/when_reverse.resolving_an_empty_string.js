@@ -20,7 +20,7 @@
         }
     }
 
-    var mapper = Bifrost.StringMapper.create({
+    var mapper = doLittle.StringMapper.create({
         stringMappingFactory: stringMappingFactory
     });
     mapper.addMapping("{feature}", "/Features/{feature}");

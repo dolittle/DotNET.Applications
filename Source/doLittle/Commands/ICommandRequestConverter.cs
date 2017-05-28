@@ -2,7 +2,7 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-namespace Bifrost.Commands
+namespace doLittle.Commands
 {
     /// <summary>
     /// Defines a converter that can convert between a <see cref="ICommand"/> and a <see cref="CommandRequest"/>

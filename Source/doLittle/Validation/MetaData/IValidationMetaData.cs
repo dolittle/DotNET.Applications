@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Bifrost.Validation.MetaData
+namespace doLittle.Validation.MetaData
 {
     /// <summary>
     /// Represents a system for retrieving validation metadata

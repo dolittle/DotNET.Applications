@@ -1,8 +1,8 @@
 ﻿using Machine.Specifications;
 using System;
-using Bifrost.Specs.Events.Fakes;
+using doLittle.Specs.Events.Fakes;
 
-namespace Bifrost.Specs.Events.for_EventSource.given
+namespace doLittle.Specs.Events.for_EventSource.given
 {
     public class a_stateless_event_source : all_dependencies
     {

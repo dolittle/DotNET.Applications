@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Web.Routing;
 
-namespace Bifrost.Web.Configuration
+namespace doLittle.Web.Configuration
 {
     public class ConfigurationRoute : Route
     {
-        const string ConfigurationUrl = "Bifrost/Application";
+        const string ConfigurationUrl = "doLittle/Application";
 
         public ConfigurationRoute()
             : base(ConfigurationUrl, new ConfigurationRouteHandler())

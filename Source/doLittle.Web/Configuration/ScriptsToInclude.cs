@@ -2,7 +2,7 @@
  *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-namespace Bifrost.Web.Configuration
+namespace doLittle.Web.Configuration
 {
     public class ScriptsToInclude
     {
@@ -10,7 +10,7 @@ namespace Bifrost.Web.Configuration
         public bool Knockout { get; set; }
         public bool JQueryHistory { get; set; }
         public bool Require { get; set; }
-        public bool Bifrost { get; set; }
+        public bool doLittle { get; set; }
 
         public bool SignalR { get; set; }
 
@@ -20,7 +20,7 @@ namespace Bifrost.Web.Configuration
             JQueryHistory = true;
             Knockout = true;
             Require = true;
-            Bifrost = true;
+            doLittle = true;
             SignalR = true;
         }
 
@@ -30,7 +30,7 @@ namespace Bifrost.Web.Configuration
             JQueryHistory = false;
             Knockout = false;
             Require = false;
-            Bifrost = false;
+            doLittle = false;
             SignalR = false;
         }
     }

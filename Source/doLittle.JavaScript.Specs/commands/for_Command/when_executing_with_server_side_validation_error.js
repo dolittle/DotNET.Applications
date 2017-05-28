@@ -51,17 +51,17 @@
 
     var commandResult = null;
     beforeEach(function () {
-        commandResult = Bifrost.commands.CommandResult;
-        Bifrost.commands.CommandResult = {
+        commandResult = doLittle.commands.CommandResult;
+        doLittle.commands.CommandResult = {
             create: sinon.stub()
         };
     });
 
     afterEach(function () {
-        Bifrost.commands.CommandResult = commandResult;
+        doLittle.commands.CommandResult = commandResult;
     });
 
-    var command = Bifrost.commands.Command.create(parameters);
+    var command = doLittle.commands.Command.create(parameters);
     command.execute();
 
     it("should call error", function () {

@@ -1,9 +1,9 @@
 ﻿describe("when adding multiple requirements explicitly", function () {
-    Bifrost.dependencyResolver.getDependenciesFor = function () {
+    doLittle.dependencyResolver.getDependenciesFor = function () {
         return [];
     };
 
-    var type = Bifrost.Type.extend(function () {
+    var type = doLittle.Type.extend(function () {
     }).requires("something", "somethingElse", "andThird");
 
 

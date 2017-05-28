@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Serialization;
+using doLittle.Serialization;
 
-namespace Bifrost.Entities.Files
+namespace doLittle.Entities.Files
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEntityContext{T}"/> for simple file storage

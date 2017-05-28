@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Read.Validation;
+using doLittle.Read.Validation;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Read.Validation.for_QueryValidationDescriptors.given
+namespace doLittle.Specs.Read.Validation.for_QueryValidationDescriptors.given
 {
     public class no_query_validation_descriptors : given.all_dependencies
     {

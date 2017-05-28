@@ -1,8 +1,8 @@
 ﻿using System;
-using Bifrost.Applications;
+using doLittle.Applications;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Applications.for_ApplicationResourceTypes
+namespace doLittle.Specs.Applications.for_ApplicationResourceTypes
 {
     public class when_getting_for_unknown_identifier : given.one_resource_type
     {

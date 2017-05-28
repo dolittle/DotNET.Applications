@@ -5,7 +5,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Bifrost.Specifications
+namespace doLittle.Specifications
 {
     /// <summary>
     /// Extensions to help chain simple rules into complex rules

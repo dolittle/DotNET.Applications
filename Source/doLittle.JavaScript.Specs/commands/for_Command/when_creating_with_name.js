@@ -22,7 +22,7 @@
         },
         mapper: {}
     }
-    var command = Bifrost.commands.Command.create(parameters);
+    var command = doLittle.commands.Command.create(parameters);
 
     it("should set name on the command", function () {
         expect(command._name).toBe("something");

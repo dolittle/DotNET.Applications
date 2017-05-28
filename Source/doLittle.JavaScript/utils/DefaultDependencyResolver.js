@@ -1,4 +1,4 @@
-﻿Bifrost.namespace("Bifrost", {
+﻿doLittle.namespace("doLittle., {
     DefaultDependencyResolver: function () {
         var self = this;
 
@@ -7,7 +7,7 @@
         };
 
         this.doesNamespaceHaveScriptReference = function (namespace, name) {
-            if (namespace.hasOwnProperty("_scripts") && Bifrost.isArray(namespace._scripts)) {
+            if (namespace.hasOwnProperty("_scripts") && doLittle.isArray(namespace._scripts)) {
                 for (var i = 0; i < namespace._scripts.length; i++) {
                     var script = namespace._scripts[i];
                     if (script === name) {
@@ -37,9 +37,9 @@
 
         this.loadScriptReference = function (namespace, name, promise) {
             var fileName = self.getFileName(namespace, name);
-            var file = Bifrost.io.fileFactory.create().create(fileName, Bifrost.io.fileType.javaScript);
+            var file = doLittle.io.fileFactory.create().create(fileName, doLittle.io.fileType.javaScript);
 
-            Bifrost.io.fileManager.create().load([file]).continueWith(function (types) {
+            doLittle.io.fileManager.create().load([file]).continueWith(function (types) {
                 var system = types[0];
                 if (self.doesNamespaceHave(namespace, name)) {
                     system = namespace[name];
@@ -74,7 +74,7 @@
                     return current[name];
                 }
                 if (self.doesNamespaceHaveScriptReference(current, name) ) {
-                    var promise = Bifrost.execution.Promise.create();       
+                    var promise = doLittle.execution.Promise.create();       
                     self.loadScriptReference(current, name, promise);
                     return promise;
                 }

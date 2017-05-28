@@ -7,10 +7,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bifrost.CodeGeneration.JavaScript;
-using Bifrost.Extensions;
+using doLittle.CodeGeneration.JavaScript;
+using doLittle.Extensions;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     public static class ServiceExtensions
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Execution.for_BindingConventionManager.given
+namespace doLittle.Specs.Execution.for_BindingConventionManager.given
 {
     public class a_binding_convention_manager_with_one_type : a_binding_convention_manager
     {

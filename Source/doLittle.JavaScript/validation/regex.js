@@ -1,26 +1,26 @@
-Bifrost.namespace("Bifrost.validation", {
-    regex: Bifrost.validation.Rule.extend(function () {
+doLittle.namespace("doLittle.validation", {
+    regex: doLittle.validation.Rule.extend(function () {
         var self = this;
 
         function notSet(value) {
-            return Bifrost.isUndefined(value) || Bifrost.isNull(value);
+            return doLittle.isUndefined(value) || doLittle.isNull(value);
         }
 
         function throwIfOptionsInvalid(options) {
             if (notSet(options)) {
-                throw new Bifrost.validation.OptionsNotDefined();
+                throw new doLittle.validation.OptionsNotDefined();
             }
             if (notSet(options.expression)) {
-                throw new Bifrost.validation.MissingExpression();
+                throw new doLittle.validation.MissingExpression();
             }
-            if (!Bifrost.isString(options.expression)) {
-                throw new Bifrost.validation.NotAString("Expression " + options.expression + " is not a string.");
+            if (!doLittle.isString(options.expression)) {
+                throw new doLittle.validation.NotAString("Expression " + options.expression + " is not a string.");
             }
         }
 
         function throwIfValueIsNotString(value) {
-            if (!Bifrost.isString(value)) {
-                throw new Bifrost.validation.NotAString("Value " + value + " is not a string.");
+            if (!doLittle.isString(value)) {
+                throw new doLittle.validation.NotAString("Value " + value + " is not a string.");
             }
         }
 

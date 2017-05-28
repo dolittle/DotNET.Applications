@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.values", {
-    ValueConsumer: Bifrost.Type.extend(function () {
+﻿doLittle.namespace("doLittle.values", {
+    ValueConsumer: doLittle.Type.extend(function () {
 
         this.canNotifyChanges = function () {
             return false;

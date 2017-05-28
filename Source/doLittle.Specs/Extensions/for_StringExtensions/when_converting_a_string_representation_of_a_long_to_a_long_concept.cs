@@ -1,7 +1,7 @@
-﻿using Bifrost.Extensions;
+﻿using doLittle.Extensions;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Extensions.for_StringExtensions
+namespace doLittle.Specs.Extensions.for_StringExtensions
 {
     [Subject(typeof(StringExtensions))]
     public class when_converting_a_string_representation_of_a_long_to_a_long_concept

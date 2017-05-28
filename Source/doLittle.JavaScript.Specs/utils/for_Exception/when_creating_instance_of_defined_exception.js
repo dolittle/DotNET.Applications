@@ -1,5 +1,5 @@
 describe("when creating instance of defined exception", function() {
-	Bifrost.Exception.define("SomeException");
+	doLittle.Exception.define("SomeException");
 	
 	var instance = new SomeException();
 	

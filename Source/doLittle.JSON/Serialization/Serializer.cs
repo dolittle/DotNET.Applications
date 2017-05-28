@@ -10,18 +10,18 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Bifrost.Applications;
-using Bifrost.Concepts;
-using Bifrost.Execution;
-using Bifrost.Extensions;
-using Bifrost.JSON.Application;
-using Bifrost.JSON.Concepts;
-using Bifrost.JSON.Events;
-using Bifrost.Serialization;
+using doLittle.Applications;
+using doLittle.Concepts;
+using doLittle.Execution;
+using doLittle.Extensions;
+using doLittle.JSON.Application;
+using doLittle.JSON.Concepts;
+using doLittle.JSON.Events;
+using doLittle.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Bifrost.JSON.Serialization
+namespace doLittle.JSON.Serialization
 {
     /// <summary>
     /// Represents a <see cref="ISerializer"/>

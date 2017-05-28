@@ -1,10 +1,10 @@
-﻿using Bifrost.Execution;
+﻿using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 using Ninject;
 using Ninject.Activation;
 
-namespace Bifrost.Ninject.Specs.for_KernelExtensions.given
+namespace doLittle.Ninject.Specs.for_KernelExtensions.given
 {
     public class a_kernel_and_a_type_importer
     {

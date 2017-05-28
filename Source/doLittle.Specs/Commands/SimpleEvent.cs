@@ -1,6 +1,6 @@
-﻿using Bifrost.Events;
+﻿using doLittle.Events;
 
-namespace Bifrost.Specs.Commands
+namespace doLittle.Specs.Commands
 {
     public class SimpleEvent : Event
     {

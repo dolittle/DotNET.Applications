@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace Bifrost.JSON.Specs.Serialization.for_Serializer
+namespace doLittle.JSON.Specs.Serialization.for_Serializer
 {
     public class when_serializing_type_with_an_interface_property_and_instance_set_to_implementation : given.a_serializer
     {

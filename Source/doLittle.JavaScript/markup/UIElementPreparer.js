@@ -1,12 +1,12 @@
-﻿Bifrost.namespace("Bifrost.markup", {
-    UIElementPreparer: Bifrost.Singleton(function () {
+﻿doLittle.namespace("doLittle.markup", {
+    UIElementPreparer: doLittle.Singleton(function () {
         this.prepare = function (element, instance) {
             var result = instance.prepare(instance._type, element);
-            if (result instanceof Bifrost.execution.Promise) {
+            if (result instanceof doLittle.execution.Promise) {
                 result.continueWith(function () {
 
-                    if (!Bifrost.isNullOrUndefined(instance.template)) {
-                        var UIManager = Bifrost.views.UIManager.create();
+                    if (!doLittle.isNullOrUndefined(instance.template)) {
+                        var UIManager = doLittle.views.UIManager.create();
 
                         UIManager.handle(instance.template);
 

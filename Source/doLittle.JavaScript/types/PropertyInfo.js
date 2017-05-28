@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost.types", {
-    PropertyInfo: Bifrost.Type.extend(function (name, type) {
+﻿doLittle.namespace("doLittle.types", {
+    PropertyInfo: doLittle.Type.extend(function (name, type) {
         this.name = name;
         this.type = type;
     })

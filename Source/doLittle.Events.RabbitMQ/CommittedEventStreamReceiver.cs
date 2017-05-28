@@ -5,14 +5,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Bifrost.Serialization;
+using doLittle.Serialization;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Bifrost.Applications;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Lifecycle;
 using System;
 
-namespace Bifrost.Events.RabbitMQ
+namespace doLittle.Events.RabbitMQ
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICanReceiveCommittedEventStream"/> for RabbitMQ

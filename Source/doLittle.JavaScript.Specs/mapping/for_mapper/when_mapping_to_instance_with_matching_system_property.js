@@ -7,7 +7,7 @@ describe("when mapping to instance with matching system property", function(){
 	};
 
 	
-	var type = Bifrost.Type.extend(function () {
+	var type = doLittle.Type.extend(function () {
         var self = this;
 
         this._name = "something else";
@@ -17,7 +17,7 @@ describe("when mapping to instance with matching system property", function(){
 	var mappedInstance = type.create();
 
 	(function becauseOf(){
-	    var mapper = Bifrost.mapping.mapper.create(parameters);
+	    var mapper = doLittle.mapping.mapper.create(parameters);
 	    mapper.mapToInstance(type, data, mappedInstance);
 	})();
 

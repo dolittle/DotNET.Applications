@@ -4,16 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq;
-using Bifrost.Commands;
-using Bifrost.Extensions;
-using Bifrost.Serialization;
+using doLittle.Commands;
+using doLittle.Extensions;
+using doLittle.Serialization;
 #if (NET461)
 using Microsoft.AspNet.SignalR;
 #else
 using Microsoft.AspNetCore.SignalR;
 #endif
 
-namespace Bifrost.Web.Commands
+namespace doLittle.Web.Commands
 {
     public class CommandCoordinator : Hub
     {

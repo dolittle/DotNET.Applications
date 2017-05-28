@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Execution.for_ContractToImplementorsMap
+namespace doLittle.Specs.Execution.for_ContractToImplementorsMap
 {
     public class when_feeding_two_times : given.an_empty_map
     {

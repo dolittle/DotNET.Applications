@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Bifrost.Security;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_SecurityActor
+namespace doLittle.Specs.Security.for_SecurityActor
 {
     [Subject(typeof(SecurityActor))]
     public class when_authorizing_action_with_a_rule_that_causes_an_error

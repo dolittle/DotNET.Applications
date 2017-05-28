@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Bifrost.Web.Specs.Proxies.for_ReadModelProxyExtensions
+namespace doLittle.Web.Specs.Proxies.for_ReadModelProxyExtensions
 {
     class ObjectWithString
     {

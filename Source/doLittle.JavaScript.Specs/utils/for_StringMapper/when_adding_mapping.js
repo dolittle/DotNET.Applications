@@ -17,7 +17,7 @@
         return mappings[mappingIndex++];
     });
 
-    var mapper = Bifrost.StringMapper.create({
+    var mapper = doLittle.StringMapper.create({
         stringMappingFactory: stringMappingFactory
     });
     mapper.addMapping("Something", "else");

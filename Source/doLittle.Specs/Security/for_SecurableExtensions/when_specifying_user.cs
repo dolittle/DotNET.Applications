@@ -1,13 +1,13 @@
 ﻿using System.Linq;
-using Bifrost.Configuration;
-using Bifrost.Configuration.Defaults;
-using Bifrost.Execution;
-using Bifrost.Security;
+using doLittle.Configuration;
+using doLittle.Configuration.Defaults;
+using doLittle.Execution;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Security.for_SecurableExtensions
+namespace doLittle.Specs.Security.for_SecurableExtensions
 {
     public class when_specifying_user
     {

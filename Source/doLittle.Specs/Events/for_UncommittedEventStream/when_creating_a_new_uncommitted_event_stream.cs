@@ -1,6 +1,6 @@
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_UncommittedEventStream
+namespace doLittle.Specs.Events.for_UncommittedEventStream
 {
     public class when_creating_a_new_uncommitted_event_stream : given.an_empty_uncommitted_event_stream
     {

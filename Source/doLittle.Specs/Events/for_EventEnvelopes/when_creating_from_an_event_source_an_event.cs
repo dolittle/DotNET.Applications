@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Security.Principal;
-using Bifrost.Applications;
-using Bifrost.Events;
-using Bifrost.Lifecycle;
+using doLittle.Applications;
+using doLittle.Events;
+using doLittle.Lifecycle;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Events.for_EventEnvelopes
+namespace doLittle.Specs.Events.for_EventEnvelopes
 {
     public class when_creating_from_an_event_source_an_event : given.an_event_envelopes
     {

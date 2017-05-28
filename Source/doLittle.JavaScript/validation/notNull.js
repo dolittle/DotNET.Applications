@@ -1,7 +1,7 @@
-Bifrost.namespace("Bifrost.validation", {
-    notNull: Bifrost.validation.Rule.extend(function () {
+doLittle.namespace("doLittle.validation", {
+    notNull: doLittle.validation.Rule.extend(function () {
         this.validate = function (value) {
-            return !(Bifrost.isUndefined(value) || Bifrost.isNull(value));
+            return !(doLittle.isUndefined(value) || doLittle.isNull(value));
         };
     })
 });

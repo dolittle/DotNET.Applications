@@ -1,9 +1,9 @@
-﻿using Bifrost.Applications;
+﻿using doLittle.Applications;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Bifrost.Specs.Applications.for_Application
+namespace doLittle.Specs.Applications.for_Application
 {
     public class when_initializing
     {

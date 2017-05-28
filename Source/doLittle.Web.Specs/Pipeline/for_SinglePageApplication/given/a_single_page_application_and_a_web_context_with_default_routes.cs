@@ -1,9 +1,9 @@
 using Machine.Specifications;
-using Bifrost.Web.Pipeline;
+using doLittle.Web.Pipeline;
 using Moq;
 using System.Web.Routing;
 
-namespace Bifrost.Web.Specs.Pipeline.for_SinglePageApplication.given
+namespace doLittle.Web.Specs.Pipeline.for_SinglePageApplication.given
 {
     public class a_single_page_application_and_a_web_context_with_default_routes
     {

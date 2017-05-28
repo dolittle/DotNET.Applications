@@ -1,7 +1,7 @@
 ﻿describe("when specification with observable evaluator gets changed", function () {
 
     var evaluator = ko.observable(false);
-    var rule = Bifrost.specifications.Specification.create();
+    var rule = doLittle.specifications.Specification.create();
     rule.evaluator = evaluator;
     var instance = { something: 42 };
     rule.evaluate(instance);

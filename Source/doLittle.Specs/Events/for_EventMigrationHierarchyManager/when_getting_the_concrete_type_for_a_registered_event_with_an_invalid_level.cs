@@ -1,8 +1,8 @@
 using System;
-using Bifrost.Events;
+using doLittle.Events;
 using Machine.Specifications;
 
-namespace Bifrost.Specs.Events.for_EventMigrationHierarchyManager
+namespace doLittle.Specs.Events.for_EventMigrationHierarchyManager
 {
     public class when_getting_the_concrete_type_for_a_registered_event_with_an_invalid_level : given.an_event_migration_hierarchy_manager_with_two_logical_events
     {

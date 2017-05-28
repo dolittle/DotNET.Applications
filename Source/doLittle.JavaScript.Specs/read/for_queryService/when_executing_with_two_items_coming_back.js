@@ -31,7 +31,7 @@
 
     var mapper = {};
 
-    var instance = Bifrost.read.queryService.createWithoutScope({
+    var instance = doLittle.read.queryService.createWithoutScope({
         mapper: mapper,
         taskFactory: taskFactory
     });

@@ -3,20 +3,20 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Web.Routing;
-using Bifrost.Configuration;
-using Bifrost.Web.Assets;
-using Bifrost.Web.Commands;
-using Bifrost.Web.Configuration;
-using Bifrost.Web.Proxies;
-using Bifrost.Web.Read;
-using Bifrost.Web.Security;
-using Bifrost.Web.Services;
+using doLittle.Configuration;
+using doLittle.Web.Assets;
+using doLittle.Web.Commands;
+using doLittle.Web.Configuration;
+using doLittle.Web.Proxies;
+using doLittle.Web.Read;
+using doLittle.Web.Security;
+using doLittle.Web.Services;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Bifrost.Web.BootStrapper),"PreApplicationStart")]
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(Bifrost.Web.BootStrapper), "Start")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(doLittle.Web.BootStrapper),"PreApplicationStart")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(doLittle.Web.BootStrapper), "Start")]
 
-namespace Bifrost.Web
+namespace doLittle.Web
 {
     public class BootStrapper
     {
@@ -29,12 +29,12 @@ namespace Bifrost.Web
             RouteTable.Routes.Add(new ProxyRoute());
             RouteTable.Routes.Add(new SecurityRoute());
             RouteTable.Routes.Add(new ConfigurationRoute());
-            RouteTable.Routes.Add(new AssetManagerRoute("Bifrost/AssetsManager"));
-            RouteTable.Routes.AddService<CommandCoordinatorService>("Bifrost/CommandCoordinator");
-            RouteTable.Routes.AddService<CommandSecurityService>("Bifrost/CommandSecurity");
-            RouteTable.Routes.AddService<QueryService>("Bifrost/Query");
-            RouteTable.Routes.AddService<ReadModelService>("Bifrost/ReadModel");
-            RouteTable.Routes.AddApplicationFromAssembly("Bifrost", typeof(BootStrapper).Assembly);
+            RouteTable.Routes.Add(new AssetManagerRoute("doLittle/AssetsManager"));
+            RouteTable.Routes.AddService<CommandCoordinatorService>("doLittle/CommandCoordinator");
+            RouteTable.Routes.AddService<CommandSecurityService>("doLittle/CommandSecurity");
+            RouteTable.Routes.AddService<QueryService>("doLittle/Query");
+            RouteTable.Routes.AddService<ReadModelService>("doLittle/ReadModel");
+            RouteTable.Routes.AddApplicationFromAssembly("doLittle", typeof(BootStrapper).Assembly);
         }
 
         public static void Start()
@@ -62,7 +62,7 @@ namespace Bifrost.Web
             {
                 var resourceName = resource.Replace(rootNamespace + ".", string.Empty);
                 resourceName = resourceName.Replace(".", "/");
-                resourceName = "Bifrost/" + resourceName;
+                resourceName = "doLittle/" + resourceName;
                 var formatted = string.Format("{0}.{1}",
                     resourceName.Substring(0, resourceName.LastIndexOf("/")),
                     resourceName.Substring(resourceName.LastIndexOf("/") + 1)

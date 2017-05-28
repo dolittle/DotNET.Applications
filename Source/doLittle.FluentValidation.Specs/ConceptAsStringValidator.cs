@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Bifrost.FluentValidation.Specs.for_ValidationMetaDataGenerator
+namespace doLittle.FluentValidation.Specs.for_ValidationMetaDataGenerator
 {
     public class ConceptAsStringValidator : BusinessValidator<ConceptAsString>
     {

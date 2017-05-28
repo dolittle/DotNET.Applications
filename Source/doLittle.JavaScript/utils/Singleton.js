@@ -1,5 +1,5 @@
-﻿Bifrost.namespace("Bifrost", {
+﻿doLittle.namespace("doLittle., {
     Singleton: function (typeDefinition) {
-        return Bifrost.Type.extend(typeDefinition).scopeTo(window);
+        return doLittle.Type.extend(typeDefinition).scopeTo(window);
     }
 });

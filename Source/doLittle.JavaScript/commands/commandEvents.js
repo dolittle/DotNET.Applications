@@ -1,6 +1,6 @@
-﻿Bifrost.namespace("Bifrost.commands", {
-    commandEvents: Bifrost.Singleton(function () {
-        this.succeeded = Bifrost.Event.create();
-        this.failed = Bifrost.Event.create();
+﻿doLittle.namespace("doLittle.commands", {
+    commandEvents: doLittle.Singleton(function () {
+        this.succeeded = doLittle.Event.create();
+        this.failed = doLittle.Event.create();
     })
 });

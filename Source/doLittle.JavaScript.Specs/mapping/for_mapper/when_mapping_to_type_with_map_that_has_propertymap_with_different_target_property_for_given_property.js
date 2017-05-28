@@ -14,11 +14,11 @@ describe("when mapping to type with map that has propertymap with different targ
         }
     };
 
-    var type = Bifrost.Type.extend(function () {
+    var type = doLittle.Type.extend(function () {
         this.targetNumber = 0;
     });
 
-    var mapper = Bifrost.mapping.mapper.create(parameters);
+    var mapper = doLittle.mapping.mapper.create(parameters);
     var mappedInstance = mapper.map(type, data);
 
     it("should map the property through the map", function () {

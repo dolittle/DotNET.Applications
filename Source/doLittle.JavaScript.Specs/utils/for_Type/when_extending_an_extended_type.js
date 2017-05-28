@@ -5,17 +5,17 @@
     var anExtensionOfTheSecondExtendedType = null;
 
     beforeEach(function () {
-        Bifrost.dependencyResolver = {
+        doLittle.dependencyResolver = {
             getDependenciesFor: sinon.stub()
         };
-        initialType = Bifrost.Type.extend(initialType);
+        initialType = doLittle.Type.extend(initialType);
         extendedType = initialType.extend(function (foo){});
         aSecondExtendedType = initialType.extend(function (bar) { });
         anExtensionOfTheSecondExtendedType = aSecondExtendedType.extend(function (func){});
     });
 
     afterEach(function () {
-        Bifrost.functionParser = {};
+        doLittle.functionParser = {};
     });
 
     it("should return these types from the types that extend inital type", function () {
@@ -26,8 +26,8 @@
         expect(extenders.length).toEqual(3);
     });
     
-    it("should return these types from the types that extend Bifrost type", function () {
-        var extenders = Bifrost.Type.getExtenders();
+    it("should return these types from the types that extend doLittle type", function () {
+        var extenders = doLittle.Type.getExtenders();
         expect(extenders).toContain(extendedType);
         expect(extenders).toContain(aSecondExtendedType);
         expect(extenders).toContain(anExtensionOfTheSecondExtendedType);

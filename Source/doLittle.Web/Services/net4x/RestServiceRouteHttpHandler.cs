@@ -5,13 +5,13 @@
 using System;
 using System.Web;
 using System.Web.SessionState;
-using Bifrost.Configuration;
-using Bifrost.Exceptions;
-using Bifrost.Execution;
-using Bifrost.Security;
-using Bifrost.Services;
+using doLittle.Configuration;
+using doLittle.Exceptions;
+using doLittle.Execution;
+using doLittle.Security;
+using doLittle.Services;
 
-namespace Bifrost.Web.Services
+namespace doLittle.Web.Services
 {
     // Todo : add async support - performance gain! 
     public class RestServiceRouteHttpHandler : IHttpHandler, IRequiresSessionState // IHttpAsyncHandler

@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Web;
-using Bifrost.Configuration;
+using doLittle.Configuration;
 
-namespace Bifrost.Web.Proxies
+namespace doLittle.Web.Proxies
 {
     public class ProxyRouteHttpHandler : IHttpHandler
     {

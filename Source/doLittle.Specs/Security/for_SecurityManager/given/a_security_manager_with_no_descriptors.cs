@@ -1,10 +1,10 @@
 ﻿using System;
-using Bifrost.Execution;
-using Bifrost.Security;
+using doLittle.Execution;
+using doLittle.Security;
 using Machine.Specifications;
 using Moq;
 
-namespace Bifrost.Specs.Security.for_SecurityManager.given
+namespace doLittle.Specs.Security.for_SecurityManager.given
 {
     public class a_security_manager_with_no_descriptors
     {
