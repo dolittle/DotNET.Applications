@@ -361,7 +361,8 @@ Target "DeployNugetPackages" (fun _ ->
     let source = if( isReleaseBuild && String.IsNullOrEmpty(nugetKey) = false ) then nugetUrl else mygetUrl
 
     if( String.IsNullOrEmpty(key) = false ) then
-        let packages = !! (sprintfn "%s/*.nupkg" nugetDirectory)
+        let packagesPath = sprintf "%s/*.nupkg" nugetDirectory
+        let packages = !! (packagesPath)
                         |> Seq.toArray
                         
         for package in packages do
