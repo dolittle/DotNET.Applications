@@ -1,4 +1,4 @@
-# dolittle
+# ![dolittle Logo](Media/Logo/Logo.png)
 
 [![Join the chat at https://gitter.im/dolittle/home](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dolittle/home?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Stories in Ready](https://badge.waffle.io/dolittle/home.png?label=ready&title=Ready)](http://waffle.io/dolittle/home)
@@ -13,8 +13,6 @@
 | Windows | [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/umi5t4qs6stw9uud?svg=true)](https://ci.appveyor.com/project/Dolittle/core) |
 | Linux | [![Travis Build Status](https://travis-ci.org/dolittle/DotNET.Core.svg?branch=master)](https://travis-ci.org/dolittle/DotNET.Core) |
 
-
-![dolittle Logo](Media/Logo/logo_128x128.png)
 
 ## Documentation can be found [here](http://www.dolittle.io)
 
