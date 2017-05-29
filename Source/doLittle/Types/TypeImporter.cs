@@ -5,17 +5,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using doLittle.Execution;
 
-namespace doLittle.Execution
+namespace doLittle.Types
 {
     /// <summary>
     /// Represents a <see cref="ITypeImporter">ITypeImporter</see>
     /// </summary>
     public class TypeImporter : ITypeImporter
     {
-        private readonly IContainer _container;
-        private readonly ITypeDiscoverer _typeDiscoverer;
-
+        readonly IContainer _container;
+        readonly ITypeDiscoverer _typeDiscoverer;
 
         /// <summary>
         /// Initializes a new instance of <see cref="TypeImporter">TypeImporter</see>
@@ -28,7 +28,7 @@ namespace doLittle.Execution
             _typeDiscoverer = typeDiscoverer;
         }
 
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public T[] ImportMany<T>()
         {
             try
@@ -45,8 +45,7 @@ namespace doLittle.Execution
             return new T[0];
         }
 
-
-
+        /// <inheritdoc/>
         public T Import<T>()
         {
             try
@@ -68,7 +67,6 @@ namespace doLittle.Execution
             }
             return default(T);
         }
-#pragma warning restore 1591 // Xml Comments
 
         void ThrowUnableToImportType(Type type, ArgumentException innerException)
         {

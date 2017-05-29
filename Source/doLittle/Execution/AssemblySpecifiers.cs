@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using doLittle.Configuration.Assemblies;
 using doLittle.Extensions;
+using doLittle.Types;
 
 namespace doLittle.Execution
 {

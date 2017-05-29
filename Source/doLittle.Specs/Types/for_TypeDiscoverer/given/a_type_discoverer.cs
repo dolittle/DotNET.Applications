@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Reflection;
+using doLittle.Types;
 using doLittle.Execution;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Specs.Execution.for_TypeDiscoverer.given
+namespace doLittle.Specs.Types.for_TypeDiscoverer.given
 {
 #if(NET461)
     public class FakeAssembly : Assembly {}

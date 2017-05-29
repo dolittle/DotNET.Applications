@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.Execution;
+using doLittle.Types;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Execution.for_TypeFinder
+namespace doLittle.Specs.Types.for_TypeFinder
 {
     [Subject(typeof(TypeFinder))]
     public class when_finding_types_with_multiple_implementations : given.a_type_finder

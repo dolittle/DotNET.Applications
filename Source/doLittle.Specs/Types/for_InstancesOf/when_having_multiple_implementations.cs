@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using doLittle.Execution;
+using doLittle.Types;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace doLittle.Specs.Execution.for_InstancesOf
+namespace doLittle.Specs.Types.for_InstancesOf
 {
     public class when_having_multiple_implementations
     {

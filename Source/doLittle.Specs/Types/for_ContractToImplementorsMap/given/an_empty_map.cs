@@ -1,7 +1,7 @@
-﻿using doLittle.Execution;
+﻿using doLittle.Types;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Execution.for_ContractToImplementorsMap.given
+namespace doLittle.Specs.Types.for_ContractToImplementorsMap.given
 {
     public class an_empty_map
     {

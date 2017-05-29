@@ -6,26 +6,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace doLittle.Execution
+namespace doLittle.Types
 {
     /// <summary>
     /// Represents an implementation of <see cref="ITypeFinder"/>
     /// </summary>
     public class TypeFinder : ITypeFinder
     {
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public Type FindSingle<T>(IContractToImplementorsMap types)
         {
             var type = FindSingle(types, typeof(T));
             return type;
         }
 
+        /// <inheritdoc/>
         public IEnumerable<Type> FindMultiple<T>(IContractToImplementorsMap types)
         {
             var typesFound = FindMultiple(types, typeof(T));
             return typesFound;
         }
 
+        /// <inheritdoc/>
         public Type FindSingle(IContractToImplementorsMap types, Type type)
         {
             var typesFound = types.GetImplementorsFor(type);
@@ -33,24 +35,25 @@ namespace doLittle.Execution
             return typesFound.SingleOrDefault();
         }
 
+        /// <inheritdoc/>
         public IEnumerable<Type> FindMultiple(IContractToImplementorsMap types, Type type)
         {
             var typesFound = types.GetImplementorsFor(type);
             return typesFound;
         }
 
+        /// <inheritdoc/>
         public Type FindTypeByFullName(IContractToImplementorsMap types, string fullName)
         {
             var typeFound = types.All.Where(t => t.FullName == fullName).SingleOrDefault();
             ThrowIfTypeNotFound(fullName, typeFound);
             return typeFound;
         }
-#pragma warning restore 1591 // Xml Comments
 
         void ThrowIfMultipleTypesFound(Type type, IEnumerable<Type> typesFound)
         {
             if (typesFound.Count() > 1)
-                throw new MultipleTypesFoundException(string.Format("More than one type found for '{0}'", type.FullName));
+                throw new MultipleTypesFound(string.Format("More than one type found for '{0}'", type.FullName));
         }
 
         void ThrowIfTypeNotFound(string fullName, Type typeFound)

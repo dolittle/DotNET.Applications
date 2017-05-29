@@ -1,4 +1,4 @@
-﻿namespace doLittle.Specs.Execution.for_InstancesOf
+﻿namespace doLittle.Specs.Types.for_InstancesOf
 {
     public interface IAmAnInterface
     {

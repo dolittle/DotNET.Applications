@@ -1,5 +1,5 @@
 ﻿
-namespace doLittle.Specs.Execution.for_ContractToImplementorsMap
+namespace doLittle.Specs.Types.for_ContractToImplementorsMap
 {
     public abstract class AbstractClassWithInterface : AbstractClass, IInterface
     {

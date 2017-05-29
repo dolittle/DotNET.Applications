@@ -2,6 +2,7 @@
 using Machine.Specifications;
 using Moq;
 using doLittle.Execution;
+using doLittle.Types;
 
 namespace doLittle.Specs.Tasks.for_TaskManager.given
 {

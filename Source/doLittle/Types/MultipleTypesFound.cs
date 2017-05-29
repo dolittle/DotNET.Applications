@@ -4,22 +4,22 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace doLittle.Execution
+namespace doLittle.Types
 {
     /// <summary>
     /// The exception that is thrown when multiple types are found and not allowed
     /// </summary>
-    public class MultipleTypesFoundException : ArgumentException
+    public class MultipleTypesFound : ArgumentException
     {
         /// <summary>
-        /// Initializes an instance of <see cref="MultipleTypesFoundException"/>
+        /// Initializes an instance of <see cref="MultipleTypesFound"/>
         /// </summary>
-        public MultipleTypesFoundException() {}
+        public MultipleTypesFound() {}
 
         /// <summary>
-        /// Initializes an instance of <see cref="MultipleTypesFoundException"/>
+        /// Initializes an instance of <see cref="MultipleTypesFound"/>
         /// </summary>
         /// <param name="message">Message with details about the exception</param>
-        public MultipleTypesFoundException(string message) : base(message) {}
+        public MultipleTypesFound(string message) : base(message) {}
     }
 }

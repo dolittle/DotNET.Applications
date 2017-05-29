@@ -1,5 +1,5 @@
-﻿using doLittle.Execution;
-using doLittle.Mapping;
+﻿using doLittle.Mapping;
+using doLittle.Types;
 using Machine.Specifications;
 using Moq;
 

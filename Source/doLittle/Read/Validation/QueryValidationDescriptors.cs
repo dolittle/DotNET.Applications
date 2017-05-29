@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using doLittle.Execution;
 using doLittle.Extensions;
+using doLittle.Types;
 
 namespace doLittle.Read.Validation
 {

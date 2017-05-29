@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace doLittle.Specs.Execution.for_InstancesOf
+namespace doLittle.Specs.Types.for_InstancesOf
 {
     public class SecondImplementation : IAmAnInterface
     {

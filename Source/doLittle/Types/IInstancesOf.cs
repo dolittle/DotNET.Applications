@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace doLittle.Execution
+namespace doLittle.Types
 {
     /// <summary>
     /// Defines something that can discover types and give instance of these types

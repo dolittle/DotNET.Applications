@@ -5,6 +5,7 @@
 using System.Linq;
 using System.Reflection;
 using doLittle.Execution;
+using doLittle.Types;
 
 namespace doLittle.Tenancy
 {

@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using doLittle.Execution;
 using doLittle.Extensions;
+using doLittle.Types;
 
 namespace doLittle.Tenancy
 {

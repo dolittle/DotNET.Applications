@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
+using doLittle.Execution;
 
-namespace doLittle.Execution
+namespace doLittle.Types
 {
     /// <summary>
     /// Represents a <see cref="ITypeDiscoverer">ITypeDiscoverer</see>

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using doLittle.Execution;
 using System.Reflection;
+using doLittle.Types;
 
 namespace doLittle.Events
 {

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace doLittle.Execution
+namespace doLittle.Types
 {
     /// <summary>
     /// Discovers types based upon basetypes

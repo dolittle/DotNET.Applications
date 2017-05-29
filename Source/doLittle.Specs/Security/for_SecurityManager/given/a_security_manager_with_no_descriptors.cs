@@ -1,6 +1,7 @@
 ﻿using System;
 using doLittle.Execution;
 using doLittle.Security;
+using doLittle.Types;
 using Machine.Specifications;
 using Moq;
 

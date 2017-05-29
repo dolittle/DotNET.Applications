@@ -1,8 +1,8 @@
 ﻿using System;
-using doLittle.Execution;
+using doLittle.Types;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Execution.for_TypeImporter
+namespace doLittle.Specs.Types.for_TypeImporter
 {
     [Subject(typeof(TypeImporter))]
     public class when_importing_single_types_and_multiple_are_available : given.a_type_importer

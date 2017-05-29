@@ -4,6 +4,7 @@ using doLittle.Configuration.Assemblies;
 using doLittle.Configuration.Defaults;
 using doLittle.Events;
 using doLittle.Execution;
+using doLittle.Types;
 using doLittle.Tenancy;
 using Machine.Specifications;
 using Moq;

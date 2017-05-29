@@ -16,6 +16,7 @@ using doLittle.Execution;
 using doLittle.Extensions;
 using doLittle.Logging;
 using doLittle.Tenancy;
+using doLittle.Types;
 #if(!NET461)
 using Microsoft.Extensions.Logging;
 #endif

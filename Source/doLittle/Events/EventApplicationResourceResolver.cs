@@ -8,6 +8,7 @@ using System.Linq;
 using doLittle.Applications;
 using doLittle.Execution;
 using doLittle.Logging;
+using doLittle.Types;
 
 namespace doLittle.Events
 {

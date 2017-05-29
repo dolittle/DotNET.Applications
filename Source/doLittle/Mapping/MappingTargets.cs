@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using doLittle.Execution;
 using doLittle.Extensions;
+using doLittle.Types;
 
 namespace doLittle.Mapping
 {

@@ -9,6 +9,7 @@ using System.Reflection;
 using doLittle.Exceptions;
 using doLittle.Execution;
 using doLittle.Read.Validation;
+using doLittle.Types;
 
 namespace doLittle.Read
 {

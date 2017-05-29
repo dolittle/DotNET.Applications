@@ -5,6 +5,7 @@
 using System;
 using doLittle.Execution;
 using doLittle.Extensions;
+using doLittle.Types;
 
 namespace doLittle.Commands
 {

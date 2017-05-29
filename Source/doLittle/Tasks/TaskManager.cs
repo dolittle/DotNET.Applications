@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using doLittle.Execution;
 using doLittle.Extensions;
+using doLittle.Types;
 
 namespace doLittle.Tasks
 {

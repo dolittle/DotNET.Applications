@@ -1,8 +1,8 @@
 ﻿using System;
-using doLittle.Execution;
+using doLittle.Types;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Execution.for_TypeFinder
+namespace doLittle.Specs.Types.for_TypeFinder
 {
     [Subject(typeof(TypeFinder))]
     public class when_finding_type_by_name_that_exists : given.a_type_finder

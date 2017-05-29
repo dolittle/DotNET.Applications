@@ -2,7 +2,7 @@
 using System.Linq;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Execution.for_TypeImporter
+namespace doLittle.Specs.Types.for_TypeImporter
 {
     public class when_importing_multiple_types : given.a_type_importer
     {

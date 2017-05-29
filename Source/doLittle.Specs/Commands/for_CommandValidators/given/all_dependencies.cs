@@ -1,5 +1,6 @@
 ﻿using doLittle.Commands;
 using doLittle.Execution;
+using doLittle.Types;
 using Machine.Specifications;
 using Moq;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Execution.for_ContractToImplementorsMap
+namespace doLittle.Specs.Types.for_ContractToImplementorsMap
 {
     public class when_feeding_two_times : given.an_empty_map
     {

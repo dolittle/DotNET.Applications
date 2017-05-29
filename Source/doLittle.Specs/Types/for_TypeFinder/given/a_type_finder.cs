@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using doLittle.Execution;
+using doLittle.Types;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Specs.Execution.for_TypeFinder.given
+namespace doLittle.Specs.Types.for_TypeFinder.given
 {
     public class a_type_finder
     {

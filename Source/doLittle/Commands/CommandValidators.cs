@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using doLittle.Execution;
 using doLittle.Validation;
+using doLittle.Types;
 
 namespace doLittle.Commands
 {

@@ -5,8 +5,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using doLittle.Execution;
 
-namespace doLittle.Execution
+namespace doLittle.Types
 {
     /// <summary>
     /// Represents an implementation of <see cref="IInstancesOf{T}"/>
@@ -16,8 +17,8 @@ namespace doLittle.Execution
     public class InstancesOf<T> : IInstancesOf<T>
         where T : class
     {
-        IEnumerable<Type> _types;
-        IContainer _container;
+        readonly IEnumerable<Type> _types;
+        readonly IContainer _container;
 
         /// <summary>
         /// Initalizes an instance of <see cref="IInstancesOf{T}"/>
@@ -30,7 +31,7 @@ namespace doLittle.Execution
             _container = container;
         }
 
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public IEnumerator<T> GetEnumerator()
         {
             foreach (var type in _types) yield return _container.Get(type) as T;
@@ -40,6 +41,5 @@ namespace doLittle.Execution
         {
             foreach (var type in _types) yield return _container.Get(type);
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }

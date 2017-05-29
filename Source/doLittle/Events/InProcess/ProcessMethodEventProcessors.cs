@@ -9,6 +9,7 @@ using System.Reflection;
 using doLittle.Applications;
 using doLittle.Execution;
 using doLittle.Time;
+using doLittle.Types;
 
 namespace doLittle.Events.InProcess
 {

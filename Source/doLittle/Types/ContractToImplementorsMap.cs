@@ -10,36 +10,38 @@ using System.Reflection;
 using System.Threading.Tasks;
 using doLittle.Extensions;
 
-namespace doLittle.Execution
+namespace doLittle.Types
 {
     /// <summary>
     /// Represents an implementation of <see cref="IContractToImplementorsMap"/>
     /// </summary>
     public class ContractToImplementorsMap : IContractToImplementorsMap
     {
-        ConcurrentDictionary<Type, ConcurrentDictionary<string, Type>> _contractsAndImplementors = new ConcurrentDictionary<Type, ConcurrentDictionary<string, Type>>();
-        ConcurrentDictionary<Type, Type> _allTypes = new ConcurrentDictionary<Type, Type>();
+        readonly ConcurrentDictionary<Type, ConcurrentDictionary<string, Type>> _contractsAndImplementors = new ConcurrentDictionary<Type, ConcurrentDictionary<string, Type>>();
+        readonly ConcurrentDictionary<Type, Type> _allTypes = new ConcurrentDictionary<Type, Type>();
 
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public IEnumerable<Type> All { get { return _allTypes.Keys; } }
 
+        /// <inheritdoc/>
         public void Feed(IEnumerable<Type> types)
         {
             MapTypes(types);
             AddTypesToAllTypes(types);
         }
 
+        /// <inheritdoc/>
         public IEnumerable<Type> GetImplementorsFor<T>()
         {
             return GetImplementorsFor(typeof(T));
         }
 
+        /// <inheritdoc/>
         public IEnumerable<Type> GetImplementorsFor(Type contract)
         {
             var implementingTypes = GetImplementingTypesFor(contract);
             return implementingTypes.Values;
         }
-#pragma warning restore 1591 // Xml Comments
 
         void AddTypesToAllTypes(IEnumerable<Type> types)
         {

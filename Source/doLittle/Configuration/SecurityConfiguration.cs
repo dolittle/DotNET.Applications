@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using doLittle.Execution;
 using doLittle.Security;
+using doLittle.Types;
 
 namespace doLittle.Configuration
 {

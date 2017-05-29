@@ -2,6 +2,7 @@
 using doLittle.Execution;
 using doLittle.Read;
 using doLittle.Read.Validation;
+using doLittle.Types;
 using Machine.Specifications;
 using Moq;
 

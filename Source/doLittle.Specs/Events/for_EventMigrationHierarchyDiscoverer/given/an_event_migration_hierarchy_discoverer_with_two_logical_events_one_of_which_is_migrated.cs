@@ -4,6 +4,7 @@ using Machine.Specifications;
 using Moq;
 using System;
 using doLittle.Specs.Events.Fakes;
+using doLittle.Types;
 
 namespace doLittle.Specs.Events.for_EventMigrationLevelDiscoverer.given
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Execution.for_ContractToImplementorsMap
+namespace doLittle.Specs.Types.for_ContractToImplementorsMap
 {
     public class when_asking_for_implementors_of_type_by_generic_without_implementors : given.an_empty_map
     {

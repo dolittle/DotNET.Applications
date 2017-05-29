@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using doLittle.Execution;
 using doLittle.Tenancy;
+using doLittle.Types;
 using Machine.Specifications;
 using Moq;
 

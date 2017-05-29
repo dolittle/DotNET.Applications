@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace doLittle.Execution
+namespace doLittle.Types
 {
     /// <summary>
     /// Exception that is thrown when a type is not possible to be resolved by its name

@@ -1,8 +1,8 @@
 ﻿using System;
-using doLittle.Execution;
+using doLittle.Types;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Execution.for_TypeFinder
+namespace doLittle.Specs.Types.for_TypeFinder
 {
     [Subject(typeof(TypeFinder))]
     public class when_finding_types_with_multiple_implementations_but_asking_for_a_single : given.a_type_finder
@@ -13,6 +13,6 @@ namespace doLittle.Specs.Execution.for_TypeFinder
 
         Because of = () => exception = Catch.Exception(() => type_finder.FindSingle<IMultiple>(contract_to_implementors_map_mock.Object));
 
-        It should_throw_a_multiple_types_found_exception = () => exception.ShouldBeOfExactType<MultipleTypesFoundException>();
+        It should_throw_a_multiple_types_found_exception = () => exception.ShouldBeOfExactType<MultipleTypesFound>();
     }
 }

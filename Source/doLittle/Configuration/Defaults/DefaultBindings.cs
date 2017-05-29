@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using doLittle.Configuration.Assemblies;
 using doLittle.Execution;
+using doLittle.Types;
 
 namespace doLittle.Configuration.Defaults
 {

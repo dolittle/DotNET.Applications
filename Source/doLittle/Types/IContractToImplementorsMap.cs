@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace doLittle.Execution
+namespace doLittle.Types
 {
     /// <summary>
     /// Defines a system that handles the relationship between contracts and their implementors

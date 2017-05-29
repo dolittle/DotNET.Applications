@@ -1,4 +1,4 @@
-﻿namespace doLittle.Specs.Execution.for_TypeFinder
+﻿namespace doLittle.Specs.Types.for_TypeFinder
 {
     public interface ISingle
     {

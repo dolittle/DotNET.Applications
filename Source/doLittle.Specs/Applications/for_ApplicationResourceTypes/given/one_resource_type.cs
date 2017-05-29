@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using doLittle.Applications;
-using doLittle.Execution;
+using doLittle.Types;
 using Machine.Specifications;
 using Moq;
 

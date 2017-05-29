@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using doLittle.Execution;
+using doLittle.Types;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Execution.for_TypeDiscoverer
+namespace doLittle.Specs.Types.for_TypeDiscoverer
 {
     [Subject(typeof(TypeDiscoverer))]
     public class when_finding_type_by_name_that_exists : given.a_type_discoverer
