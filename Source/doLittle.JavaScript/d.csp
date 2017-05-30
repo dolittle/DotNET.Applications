@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{15567D0A-4DAF-49CD-9F8F-4FA94AD889D3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>doLittle.JavaScript</RootNamespace>
+    <AssemblyName>doLittle.JavaScript</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\Solutions\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>13371b08</NuGetPackageImportStamp>
+    <JSLintSkip>
+    </JSLintSkip>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>True</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\doLittle.JavaScript.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>False</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>True</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\doLittle.JavaScript.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="commands\commandEvents.js" />
+    <Content Include="commands\CommandSecurityContext.js" />
+    <Content Include="commands\commandSecurityService.js" />
+    <Content Include="commands\HandleCommandsTask.js" />
+    <Content Include="commands\HandleCommandTask.js" />
+    <Content Include="commands\hasChanges.js" />
+    <Content Include="hubs\Hub.js" />
+    <Content Include="hubs\hubConnection.js" />
+    <Content Include="hubs\hubDependencyResolver.js" />
+    <Content Include="mapping\Map.js" />
+    <Content Include="mapping\maps.js" />
+    <Content Include="mapping\MissingPropertyStrategy.js" />
+    <Content Include="mapping\PropertyMap.js" />
+    <Content Include="markup\attributeValues.js" />
+    <Content Include="markup\bindingContextManager.js" />
+    <Content Include="markup\BindingContext.js" />
+    <Content Include="markup\elementNaming.js" />
+    <Content Include="markup\MultipleNamespacesInNameNotAllowed.js" />
+    <Content Include="markup\MultiplePropertyReferencesNotAllowed.js" />
+    <Content Include="markup\NamespaceDefinition.js" />
+    <Content Include="markup\namespaceDefinitions.js" />
+    <Content Include="markup\namespaces.js" />
+    <Content Include="markup\ParentTagNameMismatched.js" />
+    <Content Include="markup\propertyExpander.js" />
+    <Content Include="markup\UIElementPreparer.js" />
+    <Content Include="markup\valueProviderParser.js" />
+    <Content Include="specifications\And.js" />
+    <Content Include="specifications\Or.js" />
+    <Content Include="specifications\Specification.js" />
+    <Content Include="types\PropertyInfo.js" />
+    <Content Include="types\TypeInfo.js" />
+    <Content Include="utils\configurator.js" />
+    <Content Include="validation\length.js" />
+    <Content Include="validation\notNull.js" />
+    <Content Include="values\Binding.js" />
+    <Content Include="values\StringTypeConverter.js" />
+    <Content Include="values\DateFormatter.js" />
+    <Content Include="values\DateTypeConverter.js" />
+    <Content Include="values\Formatter.js" />
+    <Content Include="values\NumberTypeConverter.js" />
+    <Content Include="values\stringFormatter.js" />
+    <Content Include="values\ValueConsumer.js" />
+    <Content Include="values\valuePipeline.js" />
+    <Content Include="dispatcher.js" />
+    <Content Include="documentService.js" />
+    <Content Include="Event.js" />
+    <Content Include="extensions\HTMLElementExtensions.js" />
+    <Content Include="extensions\DateExtensions.js" />
+    <Content Include="extensions\HTMLCollectionExtensions.js" />
+    <Content Include="extensions\HTMLElementExtensions.js" />
+    <Content Include="extensions\NodeListExtensions.js" />
+    <Content Include="interaction\CommandOperation.js" />
+    <Content Include="interaction\VisualState.js" />
+    <Content Include="interaction\VisualStateAction.js" />
+    <Content Include="interaction\visualStateActions\Opacity.js" />
+    <Content Include="interaction\VisualStateGroup.js" />
+    <Content Include="interaction\VisualStateManager.js" />
+    <Content Include="interaction\VisualStateManagerElementVisitor.js" />
+    <Content Include="interaction\VisualStateTransition.js" />
+    <Content Include="io\File.js" />
+    <Content Include="io\fileFactory.js" />
+    <Content Include="io\fileManager.js" />
+    <Content Include="io\fileType.js" />
+    <Content Include="Libraries\knockout-3.1.0.debug.js" />
+    <Content Include="Libraries\knockout-3.1.0.js" />
+    <Content Include="linked.js" />
+    <Content Include="polyfills\classList.js" />
+    <Content Include="read\readModelSystemEvents.js" />
+    <Content Include="read\ReadModelTask.js" />
+    <Content Include="systemEvents.js" />
+    <Content Include="tasks\TaskHistoryEntry.js" />
+    <Content Include="TimeSpan.js" />
+    <Content Include="utils\areEqual.js" />
+    <Content Include="utils\deepClone.js" />
+    <Content Include="utils\isNullOrUndefined.js" />
+    <Content Include="utils\isType.js" />
+    <Content Include="values\ValueProvider.js" />
+    <Content Include="values\valueConsumers.js" />
+    <Content Include="values\valueProviders.js" />
+    <Content Include="views\ComposeTask.js" />
+    <Content Include="tasks\ExecutionTask.js" />
+    <Content Include="tasks\FileLoadTask.js" />
+    <Content Include="interaction\Action.js" />
+    <Content Include="interaction\EventTrigger.js" />
+    <Content Include="interaction\operationsFactory.js" />
+    <Content Include="interaction\Operation.js" />
+    <Content Include="interaction\OperationContext.js" />
+    <Content Include="interaction\OperationEntry.js" />
+    <Content Include="interaction\operationEntryFactory.js" />
+    <Content Include="interaction\Operations.js" />
+    <Content Include="interaction\Trigger.js" />
+    <Content Include="messaging\messengerFactory.js" />
+    <Content Include="polyfills\ElementPolyfills.js" />
+    <Content Include="read\queryableFactory.js" />
+    <Content Include="read\PagingInfo.js" />
+    <Content Include="read\Queryable.js" />
+    <Content Include="read\QueryTask.js" />
+    <Content Include="mapping\mapper.js" />
+    <Content Include="read\readModelOfDependencyResolver.js" />
+    <Content Include="services\Service.js" />
+    <Content Include="services\serviceDependencyResolver.js" />
+    <Content Include="taskFactory.js" />
+    <Content Include="tasks\HttpGetTask.js" />
+    <Content Include="tasks\HttpPostTask.js" />
+    <Content Include="tasks\LoadTask.js" />
+    <Content Include="tasks\tasksFactory.js" />
+    <Content Include="tasks\Task.js" />
+    <Content Include="tasks\taskHistory.js" />
+    <Content Include="tasks\Tasks.js" />
+    <Content Include="utils\KnownArtifactInstancesDependencyResolver.js" />
+    <Content Include="utils\KnownArtifactTypesDependencyResolver.js" />
+    <Content Include="utils\isFunction.js" />
+    <Content Include="utils\DOMRootDependencyResolver.js" />
+    <Content Include="utils\isString.js" />
+    <Content Include="utils\isNull.js" />
+    <Content Include="utils\isObject.js" />
+    <Content Include="utils\isUndefined.js" />
+    <Content Include="utils\namespaceMappers.js" />
+    <Content Include="utils\server.js" />
+    <Content Include="utils\StringMapper.js" />
+    <Content Include="utils\stringMappingFactory.js" />
+    <Content Include="utils\systemClock.js" />
+    <Content Include="utils\uriMappers.js" />
+    <Content Include="utils\StringMapping.js" />
+    <Content Include="validation\lessThanOrEqual.js" />
+    <Content Include="validation\greaterThanOrEqual.js" />
+    <Content Include="views\Content.js" />
+    <Content Include="markup\Control.js" />
+    <Content Include="views\PostBindingVisitor.js" />
+    <Content Include="views\DataViewModelFileAttributeElementVisitor.js" />
+    <Content Include="views\MasterViewModel.js" />
+    <Content Include="navigation\DataNavigationFrameAttributeElementVisitor.js" />
+    <Content Include="navigation\navigationBindingHandler.js" />
+    <Content Include="values\typeExtender.js" />
+    <Content Include="views\ViewBindingHandlerTemplateSource.js" />
+    <Content Include="markup\ElementVisitor.js" />
+    <Content Include="markup\ElementVisitorResultActions.js" />
+    <Content Include="views\Items.js" />
+    <Content Include="markup\NamingRoot.js" />
+    <Content Include="markup\ObjectModelElementVisitor.js" />
+    <Content Include="markup\objectModelFactory.js" />
+    <Content Include="values\TypeConverter.js" />
+    <Content Include="values\typeConverters.js" />
+    <Content Include="markup\UIElement.js" />
+    <Content Include="views\UIManager.js" />
+    <Content Include="views\ViewModelLoadTask.js" />
+    <Content Include="views\ViewLoadTask.js" />
+    <Content Include="views\Region.js" />
+    <Content Include="views\RegionDependencyResolver.js" />
+    <Content Include="views\RegionDescriptor.js" />
+    <Content Include="views\RegionDescriptorDependencyResolver.js" />
+    <Content Include="views\regionDescriptorManager.js" />
+    <Content Include="views\regionManager.js" />
+    <Content Include="views\viewBindingHandler.js" />
+    <Content Include="views\RelativePathResolver.js" />
+    <Content Include="views\UriMapperPathResolver.js" />
+    <Content Include="views\PathResolver.js" />
+    <Content Include="views\pathResolvers.js" />
+    <Content Include="views\viewModelLoader.js" />
+    <Content Include="views\viewModelTypes.js" />
+    <EmbeddedResource Include="doLittle.debug.js">
+      <DependentUpon>doLittle.js</DependentUpon>
+    </EmbeddedResource>
+    <Content Include="doLittle.js" />
+    <Content Include="commands\bindingHandlers.js" />
+    <Content Include="commands\Command.js" />
+    <Content Include="commands\commandCoordinator.js" />
+    <Content Include="commands\commandDependencyResolver.js" />
+    <Content Include="commands\CommandRequest.js" />
+    <Content Include="commands\CommandResult.js" />
+    <Content Include="navigation\NavigationFrame.js" />
+    <Content Include="read\Query.js" />
+    <Content Include="read\queryDependencyResolver.js" />
+    <Content Include="read\queryService.js" />
+    <Content Include="read\ReadModel.js" />
+    <Content Include="read\ReadModelOf.js" />
+    <Content Include="read\readModelService.js" />
+    <Content Include="utils\configure.js" />
+    <Content Include="execution\Promise.js" />
+    <Content Include="Libraries\domReady.js" />
+    <Content Include="Libraries\jquery-1.7.1.min.js" />
+    <Content Include="Libraries\jquery.history.js" />
+    <Content Include="Libraries\order.js" />
+    <Content Include="Libraries\require.js" />
+    <Content Include="Libraries\text.js" />
+    <Content Include="messaging\observableMessage.js" />
+    <Content Include="navigation\observableQueryParameter.js" />
+    <Content Include="messaging\Messenger.js" />
+    <Content Include="navigation\navigateTo.js" />
+    <Content Include="navigation\navigationManager.js" />
+    <Content Include="sagas\Saga.js" />
+    <Content Include="sagas\sagaNarrator.js" />
+    <Content Include="utils\assetsManager.js" />
+    <Content Include="utils\DefaultDependencyResolver.js" />
+    <Content Include="utils\dependencyResolver.js" />
+    <Content Include="utils\dependencyResolvers.js" />
+    <Content Include="utils\Exception.js" />
+    <Content Include="utils\exceptions.js" />
+    <Content Include="utils\extend.js" />
+    <Content Include="utils\functionParser.js" />
+    <Content Include="utils\guid.js" />
+    <Content Include="utils\hashString.js" />
+    <Content Include="utils\isArray.js" />
+    <Content Include="utils\isNumber.js" />
+    <Content Include="utils\namespace.js" />
+    <Content Include="utils\namespaces.js" />
+    <Content Include="utils\Path.js" />
+    <Content Include="utils\Singleton.js" />
+    <Content Include="extensions\stringExtensions.js" />
+    <Content Include="utils\Type.js" />
+    <Content Include="utils\Uri.js" />
+    <Content Include="validation\email.js" />
+    <Content Include="validation\greaterThan.js" />
+    <Content Include="validation\exceptions.js" />
+    <Content Include="validation\lessThan.js" />
+    <Content Include="validation\regex.js" />
+    <Content Include="validation\maxLength.js" />
+    <Content Include="validation\minLength.js" />
+    <Content Include="validation\range.js" />
+    <Content Include="validation\required.js" />
+    <Content Include="validation\Rule.js" />
+    <Content Include="validation\ruleHandlers.js" />
+    <Content Include="validation\validation.js" />
+    <Content Include="validation\validationMessageFor.js" />
+    <Content Include="validation\validationSummaryFor.js" />
+    <Content Include="validation\Validator.js" />
+    <Content Include="views\viewModelBindingHandler.js" />
+    <Content Include="views\View.js" />
+    <Content Include="views\viewFactory.js" />
+    <Content Include="views\viewLoader.js" />
+    <Content Include="views\viewManager.js" />
+    <Content Include="views\ViewModel.js" />
+    <Content Include="views\viewModelManager.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- Custom task to bundle together files -->
+  <UsingTask TaskName="Bundle" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" Condition=" '$(OS)' == 'Windows_NT' ">
+    <ParameterGroup>
+      <InputFilename ParameterType="System.String" Required="true" />
+      <OutputFilename ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Core" />
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Linq" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+            var keyword = "@depends";
+            var directory = Path.GetDirectoryName(InputFilename);
+            Func<string, string> maybeAddNewline = s => s.EndsWith(Environment.NewLine) ? s : s + Environment.NewLine;
+            File.WriteAllText(
+                OutputFilename,
+                string.Join("",
+                    File.ReadAllLines(InputFilename)
+                        .Where(l => l.StartsWith(keyword))
+                        .Select(l => l.Substring(keyword.Length).Trim())
+                        .Select(l => Path.Combine(directory, l))
+                        .Select(File.ReadAllText)
+                        .Select(maybeAddNewline)));
+          ]]></Code>
+    </Task>
+  </UsingTask>
+  <Target Name="CreatedoLittleDebug" Inputs="@(Content)" Outputs="doLittle.debug.js" BeforeTargets="BeforeBuild" Condition=" '$(OS)' == 'Windows_NT' ">
+    <Bundle InputFilename="$(ProjectDir)doLittle.js" OutputFilename="$(ProjectDir)doLittle.debug.js" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Content Include="markup\AttachedProperty.js" />
+    <Content Include="values\DefaultValueConsumer.js" />
+    <Content Include="views\ViewBindingHandlerTemplateEngine.js" />
+    <Content Include="views\DataViewAttributeElementVisitor.js" />
+    <Content Include="extensions\ArrayExtensions.js" />
+    <Content Include="commands\commandValidationService.js" />
+    <Content Include="commands\commandSecurityContextFactory.js" />
+    <Compile Include="..\Common\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="DummyClass.cs" />
+    <Content Include="utils\WellKnownTypesDependencyResolver.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="doLittle.JS.nuspec" />
+    <None Include="jshint.conf" />
+    <None Include="merge.cmd" />
+  </ItemGroup>
+  <UsingTask AssemblyFile="$(ProjectDir)..\..\Tools\JsLintNet\JsLintNet.dll" TaskName="JSLintTask" Condition=" '$(OS)' == 'Windows_NT' " />
+  <Target Name="BeforeBuild">
+    <JSLintTask SourceDirectory="$(ProjectDir)" SettingsFile="$(ProjectDir)jshint.conf" UseHint="true" Condition=" '$(OS)' == 'Windows_NT' " />
+  </Target>
+</Project>

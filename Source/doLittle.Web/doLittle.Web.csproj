@@ -29,6 +29,13 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <Target Name="CopyJavaSscript" BeforeTargets="Build">
+    <Copy
+        SourceFiles="../doLittle.JavaScript/doLittle.debug.js"
+        DestinationFolder="./Scripts"
+        />
+  </Target>
+
   <ItemGroup>
     <None Update="**\*.cs">
       <PackagePath>src/</PackagePath>
@@ -69,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\doLittle\doLittle.csproj" />
+    <ProjectReference Include="..\doLittle.JavaScript\doLittle.JavaScript.csproj" />
     <ProjectReference Include="..\doLittle.JSON\doLittle.JSON.csproj" />
   </ItemGroup>
   
