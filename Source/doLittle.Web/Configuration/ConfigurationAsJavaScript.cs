@@ -2,10 +2,12 @@
  *  Copyright (c) 2008-2017 doLittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using doLittle.Configuration;
+using doLittle.Logging;
 using doLittle.Web.Assets;
 using doLittle.Web.Proxies;
 using Newtonsoft.Json;
@@ -14,13 +16,16 @@ namespace doLittle.Web.Configuration
 {
     public class ConfigurationAsJavaScript
     {
+        ILogger _logger;
+
         WebConfiguration _webConfiguration;
 
         string _configurationAsString;
 
-        public ConfigurationAsJavaScript(WebConfiguration webConfiguration)
+        public ConfigurationAsJavaScript(WebConfiguration webConfiguration, ILogger logger)
         {
             _webConfiguration = webConfiguration;
+            _logger = logger;
         }
 
         string GetResource(string name)
@@ -33,10 +38,10 @@ namespace doLittle.Web.Configuration
                 var content = Encoding.UTF8.GetString(bytes);
                 return content;
             }
-            catch
+            catch( Exception ex )
             {
-                Debug.Write($"Couldn't get the resource '{name}'");
-                throw;
+                _logger.Error(ex,$"Couldn't get the resource '{name}'");
+                throw ex;
             }
         }
 
