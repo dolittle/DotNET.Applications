@@ -4145,7 +4145,7 @@ doLittle.namespace("doLittle.commands", {
                 command: commandRequest
             };
 
-            var url = "/doLittle/CommandCoordinator/Handle?_cmd=" + command._commandType;
+            var url = "/doLittle/CommandCoordinator/Handle?_cmd=" + encodeURIComponent(command._commandType);
 
             server.post(url, parameters).continueWith(function (result) {
                 var commandResult = doLittle.commands.CommandResult.createFrom(result);
