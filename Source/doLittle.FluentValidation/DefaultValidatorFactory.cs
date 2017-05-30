@@ -9,6 +9,7 @@ using System.Reflection;
 using doLittle.Execution;
 using doLittle.Extensions;
 using doLittle.FluentValidation.Commands;
+using doLittle.Types;
 using FluentValidation;
 
 namespace doLittle.FluentValidation
