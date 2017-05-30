@@ -23,10 +23,6 @@ namespace Microsoft.AspNetCore.Builder
 {
     public static class ApplicationBuilderExtensions
     {
-        public static void AdddoLittle(this IServiceCollection serviceCollection)
-        {
-        }
-
         public static IApplicationBuilder UsedoLittle(this IApplicationBuilder builder, IHostingEnvironment hostingEnvironment)
         {            
             Configure.DiscoverAndConfigure(builder.ApplicationServices.GetService<ILoggerFactory>());
