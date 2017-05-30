@@ -15,6 +15,7 @@ using doLittle.Commands;
 using doLittle.Execution;
 using doLittle.Extensions;
 using doLittle.Lifecycle;
+using doLittle.Types;
 using doLittle.Web.Configuration;
 using doLittle.Web.Proxies;
 

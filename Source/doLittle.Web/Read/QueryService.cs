@@ -10,6 +10,7 @@ using doLittle.Execution;
 using doLittle.Extensions;
 using doLittle.Logging;
 using doLittle.Read;
+using doLittle.Types;
 using doLittle.Web.Configuration;
 
 namespace doLittle.Web.Read

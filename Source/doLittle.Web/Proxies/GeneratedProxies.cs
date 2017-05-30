@@ -5,6 +5,7 @@
 using System.Linq;
 using System.Text;
 using doLittle.Execution;
+using doLittle.Types;
 using doLittle.Web.Commands;
 using doLittle.Web.Configuration;
 #if(NET461)

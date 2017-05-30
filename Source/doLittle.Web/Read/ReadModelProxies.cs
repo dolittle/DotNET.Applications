@@ -9,6 +9,7 @@ using doLittle.CodeGeneration.JavaScript;
 using doLittle.Execution;
 using doLittle.Extensions;
 using doLittle.Read;
+using doLittle.Types;
 using doLittle.Web.Configuration;
 using doLittle.Web.Proxies;
 

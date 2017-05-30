@@ -12,6 +12,7 @@ using doLittle.Read;
 using doLittle.Web.Configuration;
 using doLittle.Web.Proxies;
 using System.Reflection;
+using doLittle.Types;
 
 namespace doLittle.Web.Read
 {
