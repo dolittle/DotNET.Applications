@@ -3,6 +3,8 @@ doLittle.JSON
 doLittle.FluentValidation
 doLittle.Ninject
 doLittle.StructureMap
+doLittle.Autofac
+doLittle.SimpleInjector
 doLittle.Events.Azure.Tables
 doLittle.Events.MongoDB
 doLittle.Events.RabbitMQ
