@@ -1,4 +1,4 @@
-﻿doLittle.namespace(""doLittle",{
+﻿doLittle.namespace("doLittle",{
     WellKnownTypesDependencyResolver: function () {
         var self = this;
         this.types = doLittle.WellKnownTypesDependencyResolver.types;

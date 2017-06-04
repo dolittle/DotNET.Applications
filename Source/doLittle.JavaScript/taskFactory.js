@@ -1,4 +1,4 @@
-﻿doLittle.namespace(""doLittle",{
+﻿doLittle.namespace("doLittle",{
     taskFactory: doLittle.Singleton(function () {
         this.createHttpPost = function (url, payload) {
             var task = doLittle.tasks.HttpPostTask.create({

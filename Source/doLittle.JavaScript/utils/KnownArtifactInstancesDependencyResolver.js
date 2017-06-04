@@ -1,4 +1,4 @@
-﻿doLittle.namespace(""doLittle",{
+﻿doLittle.namespace("doLittle",{
     KnownArtifactInstancesDependencyResolver: function () {
         var self = this;
         var supportedArtifacts = {

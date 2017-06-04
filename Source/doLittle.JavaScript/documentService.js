@@ -1,4 +1,4 @@
-﻿doLittle.namespace(""doLittle",{
+﻿doLittle.namespace("doLittle",{
     documentService: doLittle.Singleton(function (DOMRoot) {
         var self = this;
 
