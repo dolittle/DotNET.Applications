@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using doLittle.Concepts;
@@ -17,6 +18,8 @@ namespace doLittle.Web.Services
 {
     public class RestServiceMethodInvoker : IRestServiceMethodInvoker
     {
+        public static bool DebuggerBreakOnInvocation = false;
+
         private readonly ISerializer _serializer;
         private readonly IJsonInterceptor _jsonInterceptor;
         private readonly ILogger _logger;
@@ -33,6 +36,7 @@ namespace doLittle.Web.Services
 
         public string Invoke(string baseUrl, object instance, Uri uri, NameValueCollection inputParameters)
         {
+            if( DebuggerBreakOnInvocation ) Debugger.Break();
             _logger.Trace($"BaseUrl : '{baseUrl}'");
             _logger.Trace($"Uri : '{uri}'");
 
@@ -111,10 +115,9 @@ namespace doLittle.Web.Services
 
             input = _jsonInterceptor.Intercept(input);
 
-            _logger.Trace($"Deserialzie '{input}' into {parameter.ParameterType}");
+            _logger.Trace($"Deserialize '{input}' into {parameter.ParameterType}");
             var deserialized = _serializer.FromJson(parameter.ParameterType, input, SerializationOptions.CamelCase);
             return deserialized;
-
         }
 
         string GetMethodNameFromUri(string baseUrl, Uri uri)
