@@ -1,4 +1,4 @@
-﻿doLittle.namespace("doLittle., {
+﻿doLittle.namespace(""doLittle",{
     stringMappingFactory: doLittle.Singleton(function () {
 
         this.create = function (format, mappedFormat) {

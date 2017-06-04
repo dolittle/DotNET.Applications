@@ -1,4 +1,4 @@
-﻿doLittle.namespace("doLittle., {
+﻿doLittle.namespace(""doLittle",{
     isFunction: function (value) {
         return typeof value === "function";
     }

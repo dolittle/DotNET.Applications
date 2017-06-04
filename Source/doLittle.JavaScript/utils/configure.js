@@ -1,4 +1,4 @@
-﻿doLittle.namespace("doLittle., {
+﻿doLittle.namespace(""doLittle",{
     configureType: doLittle.Singleton(function(assetsManager) {
         var self = this;
 

@@ -1,4 +1,4 @@
-﻿doLittle.namespace("doLittle., {
+﻿doLittle.namespace("doLittle", {
     Path: doLittle.Type.extend(function (fullPath) {
         var self = this;
 
