@@ -39,7 +39,6 @@ namespace doLittle.JSON.Serialization
         /// </summary>
         /// <param name="container">A <see cref="IContainer"/> used to create instances of types during serialization</param>
         /// <param name="applicationResourceIdentifierConverter"><see cref="IApplicationResourceIdentifierConverter"/> for converting string representations of <see cref="IApplicationResourceIdentifier"/></param>
-        /// <param name="logger"><see cref="ILogger"/> to use for logging</param>
         public Serializer(
             IContainer container, 
             IApplicationResourceIdentifierConverter applicationResourceIdentifierConverter)
