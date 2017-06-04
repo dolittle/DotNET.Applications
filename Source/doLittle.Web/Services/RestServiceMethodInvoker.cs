@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using doLittle.Concepts;
 using doLittle.Extensions;
+using doLittle.Logging;
 using doLittle.Serialization;
 
 namespace doLittle.Web.Services
@@ -18,11 +19,16 @@ namespace doLittle.Web.Services
     {
         private readonly ISerializer _serializer;
         private readonly IJsonInterceptor _jsonInterceptor;
+        private readonly ILogger _logger;
 
-        public RestServiceMethodInvoker(ISerializer serializer, IJsonInterceptor jsonInterceptor)
+        public RestServiceMethodInvoker(
+            ISerializer serializer,
+            IJsonInterceptor jsonInterceptor,
+            ILogger logger)
         {
             _serializer = serializer;
             _jsonInterceptor = jsonInterceptor;
+            _logger = logger;
         }
 
         public string Invoke(string baseUrl, object instance, Uri uri, NameValueCollection inputParameters)
@@ -58,11 +64,13 @@ namespace doLittle.Web.Services
 
         object[] GetParameterValues(NameValueCollection inputParameters, MethodInfo method)
         {
+            _logger.Trace($"GetParameterValues for {method.Name} on {method.DeclaringType.FullName}");
             var values = new List<object>();
             var parameters = method.GetParameters();
             foreach (var parameter in parameters)
             {
                 var parameterAsString = inputParameters[parameter.Name];
+                _logger.Trace($"Parameter {parameter.Name} - {parameterAsString}");
                 values.Add(HandleValue(parameter, parameterAsString));
             }
             return values.ToArray();
@@ -75,8 +83,6 @@ namespace doLittle.Web.Services
 
             return value;
         }
-
-
 
         object HandleValue(ParameterInfo parameter, string input)
         {            
