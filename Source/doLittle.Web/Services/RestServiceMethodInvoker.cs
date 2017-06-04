@@ -33,10 +33,15 @@ namespace doLittle.Web.Services
 
         public string Invoke(string baseUrl, object instance, Uri uri, NameValueCollection inputParameters)
         {
+            _logger.Trace($"BaseUrl : '{baseUrl}'");
+            _logger.Trace($"Uri : '{uri}'");
+
             FilterInputParameters(inputParameters);
 
             var type = instance.GetType();
             var methodName = GetMethodNameFromUri(baseUrl, uri);
+            _logger.Trace($"Method : {methodName}");
+
             ThrowIfMethodNameNotSpecified(methodName, instance, uri);
             ThrowIfMethodMissing(methodName, instance, uri);
 
@@ -45,6 +50,8 @@ namespace doLittle.Web.Services
             ThrowIfParameterMissing(method, type, uri, inputParameters);
 
             var values = GetParameterValues(inputParameters, method);
+
+            _logger.Trace($"Invoke with {values.Length} parameters");
             var result = method.Invoke(instance, values);
 
             var serializedResult = _serializer.ToJson(result, SerializationOptions.CamelCase);
