@@ -48,7 +48,6 @@ namespace doLittle.JSON.Serialization
             _applicationResourceIdentifierConverter = applicationResourceIdentifierConverter;
             _cacheAutoTypeName = new ConcurrentDictionary<ISerializationOptions, JsonSerializer>();
             _cacheNoneTypeName = new ConcurrentDictionary<ISerializationOptions, JsonSerializer>();
-            _logger = logger;
         }
 
         /// <inheritdoc/>
