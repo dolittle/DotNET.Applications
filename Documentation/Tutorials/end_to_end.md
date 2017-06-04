@@ -1,13 +1,18 @@
 ---
 title: End To End Tutorial
-description: Take a full roundtrip of Bifrost
+description: Take a full roundtrip of doLittle
 keywords: .NET, JavaScript
 author: einari
 ---
 # End To End
 
-The purpose of this tutorial is to take you through the entire stack of Bifrost, all the steps you need
-and can do to successfully build software using Bifrost. The philosophy behind Bifrost is somewhat
+> [!Note]
+> doLittle is in an **Alpha** state - but doLittle originates from [Bifrost](https://github.com/dolittle/bifrost)
+> which has a stable version. If you're ok with trying out an **Alpha** - carry on :)
+> The Bifrost equivalent of this tutorial can be found [here](http://www.dolittle.io/bifrost/Tutorials/end_to_end.html)
+
+The purpose of this tutorial is to take you through the entire stack of doLittle, all the steps you need
+and can do to successfully build software using doLittle. The philosophy behind doLittle is somewhat
 different than what you find in more established architectures. For instance, you'll hardly see any
 talk about data and doing good old CRUD (Create Read Update Delete), instead we talk about behaviors
 and their consequences which in most cases result in data being generated, but not necessarily.
@@ -60,29 +65,29 @@ Name the project "Web".
 
 ### Nuget
 
-Bifrost is available on Nuget, so we will be using Nuget to pull down Bifrost and any dependencies
+doLittle is available on Nuget, so we will be using Nuget to pull down doLittle and any dependencies
 it has.
 
-For the Concepts, Domain, Events and Read projects, we need to add a dependency only to Bifrost,
+For the Concepts, Domain, Events and Read projects, we need to add a dependency only to doLittle,
 the core part:
 
 ```PowerShell
-    PM> Install-Package Bifrost
+    PM> Install-Package doLittle
 ```
 
 
-For the Web project we will need more, as we are going to have to configure things. Bifrost has support
+For the Web project we will need more, as we are going to have to configure things. doLittle has support
 for all kinds of combinations of IOC containers, database choices and so forth, but for this tutorial
-we will be very specific and use a set of extensions to Bifrost that we have neatly packed into a
-Nuget package called `Bifrost.Default`.
+we will be very specific and use a set of extensions to doLittle that we have neatly packed into a
+Nuget package called `doLittle.Default`.
 
 > [!Note]
-> Bifrost is currently dependending on pre-release versions of some of its dependencies (Ninject & FluentValidation)
-> Due to Bifrost being marked as a release package, NuGet inside Visual Studio will complain and not install correctly.
+> doLittle is currently dependending on pre-release versions of some of its dependencies (Ninject & FluentValidation)
+> Due to doLittle being marked as a release package, NuGet inside Visual Studio will complain and not install correctly.
 > This experience is not the same using the dotnet CLI and project.json.
 >
 > In order for you to get things running, you need to explicitly install the FluentValidation and Ninject parts before
-> the `Bifrost.Default` package.
+> the `doLittle.Default` package.
 >
 > ![Ninject PreRelease](quickstart_images/ninject_prerelease.png)
 >
@@ -91,24 +96,17 @@ Nuget package called `Bifrost.Default`.
 >```PowerShell
 >    PM> Install-Package Ninject -version 4.0.0-beta-0134
 >```
->
-> ![FluentValidation PreRelease](quickstart_images/fluentvalidation_prerelease.png)
->
-> Or through the package manager console:
->
->```PowerShell
->    PM> Install-Package FluentValidation -version 6.4.0-beta-9
->```
+
 
 So select the Web project and do:
 
 ```PowerShell
-    PM> Install-Package Bifrost.Default
+    PM> Install-Package doLittle.Default
 ```
 
-What this does is setup Bifrost with Ninject as IOC Container, Newtonsoft JSON, FluentValidation and SignalR.
-It also configures Bifrost to treat this as a single page application and adds an HTML file that
-just sets up Bifrost for you to start working with it.
+What this does is setup doLittle with Ninject as IOC Container, Newtonsoft JSON, FluentValidation and SignalR.
+It also configures doLittle to treat this as a single page application and adds an HTML file that
+just sets up doLittle for you to start working with it.
 
 ### Frontend
 
@@ -140,8 +138,8 @@ Employees folder. We're going to add some HTML within the body tag in the newly 
 Now we're going to add a viewmodel that will be associated with your feature.
 
 ```js
-    Bifrost.namespace("HumanResources.Employees", {
-        register: Bifrost.Type.extend(function() {
+    doLittle.namespace("HumanResources.Employees", {
+        register: doLittle.Type.extend(function() {
         })
     });
 ```
@@ -192,8 +190,8 @@ software.
 
 A concept is a lightweight representation of something you have in your domain vocabulary. Instead of losing
 what things are by using primitives such as booleans, integers or strings, we encapsulate these parts of
-the vocabulary into what we call concepts. Bifrost has a baseclass to help you out with this and something
-that is supported throughout Bifrost; ConceptAs<>. We recommend making concepts available for both your
+the vocabulary into what we call concepts. doLittle has a baseclass to help you out with this and something
+that is supported throughout doLittle; ConceptAs<>. We recommend making concepts available for both your
 read side and your execution / behavior side, this is were the Concepts project we created earlier comes
 into play.
 
@@ -206,7 +204,7 @@ Add a new class inside the new folder called SocialSecurityNumber.
 
 
 ```csharp
-    using Bifrost.Concepts;
+    using doLittle.Concepts;
 
     namespace Concepts.Persons
     {
@@ -239,7 +237,7 @@ you want to happen in the system, so we model it so.
 For our tutorial we will not be all too creative, we will simply be adding a RegisterEmployee command.
 
 ```csharp
-    using Bifrost.Commands;
+    using doLittle.Commands;
     using Concepts.Persons;
 
     namespace Domain.HumanResources.Employees
@@ -257,14 +255,14 @@ For our tutorial we will not be all too creative, we will simply be adding a Reg
 
 Performing a behavior in a system needs to be validated that it is correct before we can apply it.
 Validation is divided into two steps; Input and Business. Input being typically connected with
-properties and consumed on a client. Bifrost generates metadata that can be used directly by
+properties and consumed on a client. doLittle generates metadata that can be used directly by
 clientside validators.
 
 Lets start by adding an Input validator for our command. Add a file next to the command called
 RegisterEmployeeInputValidator and make it look like below:
 
 ```csharp
-    using Bifrost.Validation;
+    using doLittle.Validation;
     using FluentValidation;
 
     namespace Domain.HumanResources.Employees
@@ -301,7 +299,7 @@ For now, business validation is not something we will be performing at this stag
 the way you would write one is very similar to that of an input validator:
 
 ```csharp
-    using Bifrost.Validation;
+    using doLittle.Validation;
     using FluentValidation;
 
     namespace Domain.HumanResources.Employees
@@ -316,7 +314,7 @@ the way you would write one is very similar to that of an input validator:
 
 ### Security
 
-Normally we would at this stage be looking at security and Bifrost has a very similar
+Normally we would at this stage be looking at security and doLittle has a very similar
 approach as with validation to how to setup security. We will not be doing this in this
 tutorial, it will be the subject of another tutorial.
 
@@ -336,7 +334,7 @@ EmployeeRegistered class into the Employees module and make it look like this:
 
 ```csharp
     using System;
-    using Bifrost.Events;
+    using doLittle.Events;
 
     namespace Events.HumanResources.Employees
     {
@@ -372,7 +370,7 @@ called Registration, it should look like below:
 
 ```csharp
     using System;
-    using Bifrost.Domain;
+    using doLittle.Domain;
     using Events.HumanResources.Employee;
 
     namespace Domain.HumanResources.Employees
@@ -413,8 +411,8 @@ In the domain project, lets add a class called CommandHandlers next to the comma
 validators and the aggregate. Make it look like below:
 
 ```csharp
-    using Bifrost.Commands;
-    using Bifrost.Domain;
+    using doLittle.Commands;
+    using doLittle.Domain;
 
     namespace Domain.HumanResources.Employees
     {
@@ -441,12 +439,12 @@ validators and the aggregate. Make it look like below:
 
 ### CommandCoordinator
 
-In Bifrost there is entry point for commands, this is the place that all commands go through.
-Using the entire stack of Bifrost, you don't necessarily see this system.
+In doLittle there is entry point for commands, this is the place that all commands go through.
+Using the entire stack of doLittle, you don't necessarily see this system.
 The CommandCoordinator is responsible for coordinating the pipeline of a command, the unit of
 work in which a command lives in. The unit of work is called CommandContext and is unique
 for every command instance that goes through the system. At the very end of such a unit of
-work, Bifrost commits any events that was applied during the unit of work. This is similar
+work, doLittle commits any events that was applied during the unit of work. This is similar
 to a transaction.
 
 ### CommandResult
@@ -460,15 +458,15 @@ asynchronously processed.
 ### ReadModel
 
 Now that we've taken care of business and applied events, we must look at the consequences of
-this. Lets start with the end result, the data what we will have. In Bifrost we refer to this
-as a readmodel, and we have a marker interface called [IReadModel](../api/Bifrost.Read.IReadModel.html).
+this. Lets start with the end result, the data what we will have. In doLittle we refer to this
+as a readmodel, and we have a marker interface called [IReadModel](../api/doLittle.Read.IReadModel.html).
 
 Lets go into the Read project and recreate the bounded context and the module structure;
 HumanResources.Employees. Add a class called Employee and make it look like below:
 
 ```csharp
     using System;
-    using Bifrost.Read;
+    using doLittle.Read;
 
     namespace Read.HumanResources.Employees
     {
@@ -497,8 +495,8 @@ unaware of the other subscribers existense.
 
 
 ```csharp
-    using Bifrost.Events;
-    using Bifrost.Read;
+    using doLittle.Events;
+    using doLittle.Read;
     using Events.HumanResources.Employees;
 
     namespace Read.HumanResources.Employees
@@ -528,20 +526,20 @@ unaware of the other subscribers existense.
 
 ### Query
 
-In order to get the data out, Bifrost comes with a formalization of querying that we
+In order to get the data out, doLittle comes with a formalization of querying that we
 will be using. The formalization involves creating a class representing the different
 queries one needs with the name of the class giving away the name of the query.
 All one needs to do then is to implement the IQueryFor<> generic interface and implement
 the query. The reasoning behind this model is to move the concerns of the client away
 from the server, so typically paging and similar things is not something you have to
-concern yourself about - Bifrost will amend this information to the IQueryable<> that you
+concern yourself about - doLittle will amend this information to the IQueryable<> that you
 return.
 
 In the Read project inside the Employees folder, add a class called AllEmployees and
 make it look like below:
 
 ```csharp
-    using Bifrost.Read;
+    using doLittle.Read;
 
     namespace Read.HumanResources.Employees
     {
@@ -568,7 +566,7 @@ make it look like below:
 
 ## Going back up to the frontend
 
-With all the artifacts we now in C#, Bifrost produces a set of proxies at runtime that the JavaScript can take advantage of.
+With all the artifacts we now in C#, doLittle produces a set of proxies at runtime that the JavaScript can take advantage of.
 
 ### ViewModel
 
@@ -579,8 +577,8 @@ to hook it all up in the view.
 Lets modify the viewmodel to look like this:
 
 ```js
-    Bifrost.namespace("HumanResources.Employees", {
-        register: Bifrost.Type.extend(function(registerEmployee, allEmployees) {
+    doLittle.namespace("HumanResources.Employees", {
+        register: doLittle.Type.extend(function(registerEmployee, allEmployees) {
             var self = this;
             this.register = registerEmployee;
             this.employees = allEmployees.all();
@@ -589,7 +587,7 @@ Lets modify the viewmodel to look like this:
 ```
 
 Basically what we`ve done now is to take a dependency on the command we created and the query we created.
-Bifrost generates a proxy for these and you can just use them directly like above. Inside Bifrost there sits
+doLittle generates a proxy for these and you can just use them directly like above. Inside doLittle there sits
 an IOC (Inversion of Control) container that resolves dependencies in different ways, one being well known
 commands and queries coming from proxies.
 
@@ -620,12 +618,12 @@ Going into the view file, we need to make it look like this:
 ```
 
 You might notice that naming is slightly different from the client JavaScript code to the C# code,
-varying on casing. Bifrost adhers to what is expected in the different spaces, read more [here](conventions.md).
+varying on casing. doLittle adhers to what is expected in the different spaces, read more [here](conventions.md).
 
 What the above alteration has done is to add binding of the values on the commands into the inputs.
-In addition we add validation messages using a binding handler that comes with Bifrost called
+In addition we add validation messages using a binding handler that comes with doLittle called
 "validationMessageFor" which points to the same values as its input is bound to.
-The button gets bound up using another binding handler from Bifrost; command, and is bound
+The button gets bound up using another binding handler from doLittle; command, and is bound
 directly to the command sitting on the viewmodel.
 
 The app should now be capable of executing the command and have all validation hooked up automatically.

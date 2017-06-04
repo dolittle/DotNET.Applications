@@ -93,6 +93,7 @@ namespace doLittle.Web.Services
 
         object HandleValue(ParameterInfo parameter, string input)
         {            
+            _logger.Trace($"Parameter : {parameter.Name} - {input}");
             if (parameter.ParameterType == typeof(string))
                 return input;
 
@@ -109,7 +110,11 @@ namespace doLittle.Web.Services
             }
 
             input = _jsonInterceptor.Intercept(input);
-            return _serializer.FromJson(parameter.ParameterType, input);
+
+            _logger.Trace($"Deserialzie '{input}' into {parameter.ParameterType}");
+            var deserialized = _serializer.FromJson(parameter.ParameterType, input, SerializationOptions.CamelCase);
+            return deserialized;
+
         }
 
         string GetMethodNameFromUri(string baseUrl, Uri uri)
