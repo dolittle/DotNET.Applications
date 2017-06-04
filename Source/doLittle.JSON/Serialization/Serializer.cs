@@ -17,6 +17,7 @@ using doLittle.Extensions;
 using doLittle.JSON.Application;
 using doLittle.JSON.Concepts;
 using doLittle.JSON.Events;
+using doLittle.Logging;
 using doLittle.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -28,9 +29,8 @@ namespace doLittle.JSON.Serialization
     /// </summary>
     public class Serializer : ISerializer
     {
-        IContainer _container;
-        IApplicationResourceIdentifierConverter _applicationResourceIdentifierConverter;
-
+        readonly IContainer _container;
+        readonly IApplicationResourceIdentifierConverter _applicationResourceIdentifierConverter;
         ConcurrentDictionary<ISerializationOptions, JsonSerializer> _cacheAutoTypeName;
         ConcurrentDictionary<ISerializationOptions, JsonSerializer> _cacheNoneTypeName;
 
@@ -39,12 +39,16 @@ namespace doLittle.JSON.Serialization
         /// </summary>
         /// <param name="container">A <see cref="IContainer"/> used to create instances of types during serialization</param>
         /// <param name="applicationResourceIdentifierConverter"><see cref="IApplicationResourceIdentifierConverter"/> for converting string representations of <see cref="IApplicationResourceIdentifier"/></param>
-        public Serializer(IContainer container, IApplicationResourceIdentifierConverter applicationResourceIdentifierConverter)
+        /// <param name="logger"><see cref="ILogger"/> to use for logging</param>
+        public Serializer(
+            IContainer container, 
+            IApplicationResourceIdentifierConverter applicationResourceIdentifierConverter)
         {
             _container = container;
             _applicationResourceIdentifierConverter = applicationResourceIdentifierConverter;
             _cacheAutoTypeName = new ConcurrentDictionary<ISerializationOptions, JsonSerializer>();
             _cacheNoneTypeName = new ConcurrentDictionary<ISerializationOptions, JsonSerializer>();
+            _logger = logger;
         }
 
         /// <inheritdoc/>
@@ -207,7 +211,9 @@ namespace doLittle.JSON.Serialization
 
                     if (!propertiesMatched.Contains(propertyName))
                     {
-                        var property = type.GetTypeInfo().GetProperty(propertyName);
+                        var typeInfo = type.GetTypeInfo();
+                        var property = typeInfo.GetProperty(propertyName);
+                        if( property == null ) property = typeInfo.GetProperty(propertyName.ToPascalCase());
                         if (property != null)
                         {
                             var deserialized = serializer.Deserialize(reader, property.PropertyType);
