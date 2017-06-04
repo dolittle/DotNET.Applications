@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using doLittle.Logging;
 using doLittle.Serialization;
 
 namespace doLittle.Web.Services
@@ -15,10 +16,12 @@ namespace doLittle.Web.Services
     public class RequestParamsFactory : IRequestParamsFactory
     {
         readonly ISerializer _serializer;
+        readonly ILogger _logger;
 
-        public RequestParamsFactory(ISerializer serializer)
+        public RequestParamsFactory(ISerializer serializer, ILogger logger)
         {
             _serializer = serializer;
+            _logger = logger;
         }
 
         /// <inheritdoc/>
@@ -38,6 +41,8 @@ namespace doLittle.Web.Services
             var input = new byte[stream.Length];
             stream.Read(input, 0, input.Length);
             var inputAsString = System.Text.Encoding.UTF8.GetString(input);
+            _logger.Trace($"RAW JSON: {inputAsString}");
+
             var inputDictionary = _serializer.FromJson(typeof(Dictionary<string, string>), inputAsString, null) as Dictionary<string,string>;
 
             var inputStreamParams = new NameValueCollection();

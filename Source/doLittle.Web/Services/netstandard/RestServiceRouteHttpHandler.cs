@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using doLittle.Configuration;
 using doLittle.Exceptions;
 using doLittle.Execution;
+using doLittle.Logging;
 using doLittle.Security;
 using doLittle.Services;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +23,7 @@ namespace doLittle.Web.Services
         IContainer _container;
         ISecurityManager _securityManager;
         IExceptionPublisher _exceptionPublisher;
+        ILogger _logger;
 
         public RestServiceRouteHttpHandler(Type type, string url) 
             : this(
@@ -31,7 +33,8 @@ namespace doLittle.Web.Services
                 Configure.Instance.Container.Get<IRestServiceMethodInvoker>(),
                 Configure.Instance.Container,
                 Configure.Instance.Container.Get<ISecurityManager>(),
-                Configure.Instance.Container.Get<IExceptionPublisher>())
+                Configure.Instance.Container.Get<IExceptionPublisher>(),
+                Configure.Instance.Container.Get<ILogger>())
         {}
 
         public RestServiceRouteHttpHandler(
@@ -41,7 +44,8 @@ namespace doLittle.Web.Services
             IRestServiceMethodInvoker invoker,
             IContainer container,
             ISecurityManager securityManager,
-            IExceptionPublisher exceptionPublisher)
+            IExceptionPublisher exceptionPublisher,
+            ILogger logger)
         {
             _type = type;
             _url = url;
@@ -50,25 +54,36 @@ namespace doLittle.Web.Services
             _container = container;
             _securityManager = securityManager;
             _exceptionPublisher = exceptionPublisher;
+            _logger = logger;
         }
 
         public Task ProcessRequest(HttpContext context)
         {
             try
             {
+                var request = context.Request;
+                _logger.Information($"Request : {request.Path}");
+                
                 var form = _factory.BuildParamsCollectionFrom(new HttpRequest(context.Request));
                 var serviceInstance = _container.Get(_type);
 
+                _logger.Trace("Authorize");
                 var authorizationResult = _securityManager.Authorize<InvokeService>(serviceInstance);
 
                 if (!authorizationResult.IsAuthorized)
                 {
+                    _logger.Trace("Not authorized");
                     throw new HttpStatus.HttpStatusException(404, "Forbidden");
                 }
+                _logger.Trace("Authorized");
 
-                var request = context.Request;
+                
                 var url = $"{request.Scheme}://{request.Host}{request.Path}";
+
+                _logger.Trace($"URL : {url}");
                 var result = _invoker.Invoke(_url, serviceInstance, new Uri(url), form);
+
+                _logger.Trace($"Result : {result}");
                 return context.Response.WriteAsync(result);
             }
             catch (Exception e)
