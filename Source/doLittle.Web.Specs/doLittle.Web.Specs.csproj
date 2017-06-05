@@ -13,6 +13,8 @@
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+
+    <DefaultItemExcludes>bin\**\*;obj\**\*</DefaultItemExcludes>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>

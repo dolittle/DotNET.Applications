@@ -23,6 +23,8 @@
     <!--<RuntimeIdentifiers>win</RuntimeIdentifiers>-->
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+
+    <DefaultItemExcludes>bin\**\*;obj\**\*</DefaultItemExcludes>
   </PropertyGroup>
   
 

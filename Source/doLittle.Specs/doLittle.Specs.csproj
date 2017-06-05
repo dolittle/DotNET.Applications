@@ -17,6 +17,8 @@
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+
+    <DefaultItemExcludes>bin\**\*;obj\**\*</DefaultItemExcludes>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Execution\for_TypeImporter\**\*;Events\MethodEventArgumentsSpecs.cs;Events\MethodEventFactorySpecs.cs" />

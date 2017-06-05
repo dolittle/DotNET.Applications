@@ -17,6 +17,8 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+
+    <DefaultItemExcludes>bin\**\*;obj\**\*</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>

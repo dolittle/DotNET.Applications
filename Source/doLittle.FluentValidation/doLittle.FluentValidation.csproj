@@ -23,6 +23,8 @@
     <!--<RuntimeIdentifiers>win</RuntimeIdentifiers>-->
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+
+    <DefaultItemExcludes>bin\**\*;obj\**\*</DefaultItemExcludes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
