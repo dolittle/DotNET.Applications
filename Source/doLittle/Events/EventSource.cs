@@ -36,6 +36,7 @@ namespace doLittle.Events
         {
             UncommittedEvents.Append(@event, Version);
             Version = Version.NextSequence();
+            InvokeOnMethod(@event);
         }
 
         /// <inheritdoc/>
