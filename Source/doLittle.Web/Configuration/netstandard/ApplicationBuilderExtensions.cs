@@ -3,6 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using doLittle.Configuration;
 using doLittle.Web;
@@ -23,6 +25,8 @@ namespace Microsoft.AspNetCore.Builder
 {
     public static class ApplicationBuilderExtensions
     {
+        static AsyncLocal<ClaimsPrincipal> _currentPrincipal = new AsyncLocal<ClaimsPrincipal>();
+
         public static IApplicationBuilder UsedoLittle(this IApplicationBuilder builder, IHostingEnvironment hostingEnvironment)
         {            
             Configure.DiscoverAndConfigure(builder.ApplicationServices.GetService<ILoggerFactory>());
@@ -45,6 +49,16 @@ namespace Microsoft.AspNetCore.Builder
 
             var webConfiguration = Configure.Instance.Container.Get<WebConfiguration>();
             webConfiguration.ApplicationPhysicalPath = hostingEnvironment.WebRootPath;
+
+            if( ClaimsPrincipal.ClaimsPrincipalSelector == null )
+            {
+                builder.Use(async (context, next) =>
+                {
+                    _currentPrincipal.Value = context.User;
+                    await next();
+                });
+                ClaimsPrincipal.ClaimsPrincipalSelector = () => _currentPrincipal.Value;
+            }
 
             return builder;
         }
