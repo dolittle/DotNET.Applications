@@ -5,11 +5,16 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters;
+using System.IO;
 using doLittle.Concepts;
 using doLittle.Entities;
 using doLittle.Extensions;
 using doLittle.Mapping;
 using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace doLittle.DocumentDB.Entities
 {
