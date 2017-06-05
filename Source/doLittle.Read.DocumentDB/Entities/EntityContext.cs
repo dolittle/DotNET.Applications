@@ -61,8 +61,7 @@ namespace doLittle.DocumentDB.Entities
             properties.ForEach(p =>
             {
                 var value = p.GetValue(entity);
-
-                if (value.IsConcept()) value = value.GetConceptValue();
+                if (p.PropertyType.IsConcept()) value = value.GetConceptValue();
 
                 if (p.Name.ToLowerInvariant() == "id")
                     document.Id = value.ToString();
