@@ -153,6 +153,6 @@ namespace doLittle.DocumentDB.Entities
 
             return default(T);
         }
-
+    }
 #pragma warning restore 1591 // Xml Comments
 }
