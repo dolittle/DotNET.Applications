@@ -70,6 +70,8 @@ namespace doLittle.FluentValidation.Commands
 
         public ICommandBusinessValidator GetBusinessValidatorFor(Type commandType)
         {
+            _logger.Information($"Get business validator for : {commandType.AssemblyQualifiedName}");
+
             if (!typeof(ICommand).GetTypeInfo().IsAssignableFrom(commandType))
                 return null;
 
@@ -77,10 +79,13 @@ namespace doLittle.FluentValidation.Commands
             _businessCommandValidators.TryGetValue(commandType, out registeredBusinessValidatorType);
 
             if (registeredBusinessValidatorType != null)
+            {
+                _logger.Information($"Validator for {commandType.AssemblyQualifiedName} found");
                 return _container.Get(registeredBusinessValidatorType) as ICommandBusinessValidator;
+            }
 
+            _logger.Information($"Building dynamic validator for {commandType.AssemblyQualifiedName}");
             var typesAndDiscoveredValidators = GetValidatorsFor(commandType, _dynamicallyDiscoveredBusinessValidators);
-
             return BuildDynamicallyDiscoveredBusinessValidator(commandType, typesAndDiscoveredValidators);
         }
 
