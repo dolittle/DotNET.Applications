@@ -63,7 +63,7 @@ namespace doLittle.Events.Files
             var eventSourceIdentifier = _applicationResourceIdentifierConverter.AsString(eventSource);
             var eventPath = GetPathFor(eventSourceIdentifier, eventSourceId);
 
-            var files = Directory.GetFiles(eventPath).OrderBy(f => f);
+            var files = _files.GetFilesIn(eventPath,"*.*").OrderBy(f => f);
             var eventFiles = files.Where(f => f.EndsWith(".event")).ToArray();
             var envelopeFiles = files.Where(f => f.EndsWith(".envelope")).ToArray();
 
