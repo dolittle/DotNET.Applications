@@ -3,6 +3,7 @@ using doLittle.Commands;
 using doLittle.Execution;
 using doLittle.FluentValidation.Commands;
 using doLittle.Types;
+using doLittle.Logging;
 using Machine.Specifications;
 using Moq;
 
