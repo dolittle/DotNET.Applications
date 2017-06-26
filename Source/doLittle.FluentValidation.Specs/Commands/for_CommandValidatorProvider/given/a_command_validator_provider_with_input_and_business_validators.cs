@@ -80,7 +80,9 @@ namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
 
                                     command_validator_provider = new CommandValidatorProvider(
                                         type_discoverer_mock.Object,
-                                        container_mock.Object);
+                                        container_mock.Object,
+                                        Mock.Of<ILogger>()
+                                    );
                                 };
     }
 }
