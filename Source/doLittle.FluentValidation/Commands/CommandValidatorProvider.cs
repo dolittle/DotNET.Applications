@@ -77,15 +77,31 @@ namespace doLittle.FluentValidation.Commands
 
             Type registeredBusinessValidatorType;
             _businessCommandValidators.TryGetValue(commandType, out registeredBusinessValidatorType);
+            var typesAndDiscoveredValidators = GetValidatorsFor(commandType, _dynamicallyDiscoveredBusinessValidators);
+            var hasCrossCuttingValidators = typesAndDiscoveredValidators.Count > 0;
 
             if (registeredBusinessValidatorType != null)
             {
                 _logger.Information($"Validator for {commandType.AssemblyQualifiedName} found");
-                return _container.Get(registeredBusinessValidatorType) as ICommandBusinessValidator;
+                var validator = _container.Get(registeredBusinessValidatorType) as ICommandBusinessValidator;
+
+                if( hasCrossCuttingValidators && validator is IEnumerable<IValidationRule> ) 
+                {
+                    var dynamicValidator = BuildDynamicallyDiscoveredBusinessValidator(commandType, typesAndDiscoveredValidators);
+                    var addRuleMethod = dynamicValidator.GetType().GetTypeInfo().GetMethod("AddRule", BindingFlags.Public|BindingFlags.Instance);
+                    if( addRuleMethod != null ) 
+                        ((IEnumerable<IValidationRule>)validator).ForEach(rule => 
+                        {
+                            _logger.Information($"Adding rule with ruleset '{rule.RuleSet}'");
+                            addRuleMethod.Invoke(dynamicValidator, new[] {rule});
+                        });
+
+                    return dynamicValidator;
+                }
+                return validator;
             }
 
             _logger.Information($"Building dynamic validator for {commandType.AssemblyQualifiedName}");
-            var typesAndDiscoveredValidators = GetValidatorsFor(commandType, _dynamicallyDiscoveredBusinessValidators);
             return BuildDynamicallyDiscoveredBusinessValidator(commandType, typesAndDiscoveredValidators);
         }
 
@@ -106,7 +122,7 @@ namespace doLittle.FluentValidation.Commands
             {
                 _logger.Information($"Validator for {commandType.AssemblyQualifiedName} found");
                 var validator = _container.Get(registeredInputValidatorType) as ICommandInputValidator;
-                if( validator is IEnumerable<IValidationRule> ) 
+                if( hasCrossCuttingValidators && validator is IEnumerable<IValidationRule> ) 
                 {
                     var dynamicValidator = BuildDynamicallyDiscoveredInputValidator(commandType, typesAndDiscoveredValidators);
                     var addRuleMethod = dynamicValidator.GetType().GetTypeInfo().GetMethod("AddRule", BindingFlags.Public|BindingFlags.Instance);
