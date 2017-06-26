@@ -72,6 +72,7 @@ namespace doLittle.Events.Files
         /// <inheritdoc/>
         public IEnumerable<string> GetFilesIn(string directory, string searchPattern)
         {
+            if( !Directory.Exists(directory) ) return new string[0];
             return Directory.GetFiles(directory, searchPattern);
         }
 
