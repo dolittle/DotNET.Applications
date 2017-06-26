@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using doLittle.Applications;
+using doLittle.Concepts;
 using doLittle.Extensions;
 
 namespace doLittle.Commands
@@ -40,7 +41,18 @@ namespace doLittle.Commands
             // todo: Verify that the command shape matches 100% - do not allow anything else
 
             // todo: Convert to target type if mismatch
-            request.Content.Keys.ForEach(property => properties[property]?.SetValue(instance, request.Content[property]));
+            request.Content.Keys.ForEach(propertyName => {
+                if( properties.ContainsKey(propertyName) ) 
+                {
+                    var property = properties[propertyName];
+                    object value = request.Content[propertyName];
+                    if( property.PropertyType.IsConcept() )
+                    {
+                        value = ConceptFactory.CreateConceptInstance(property.PropertyType, value);
+                    }
+                    property.SetValue(instance, value);
+                }
+            });
 
             return instance;
         }
