@@ -9,6 +9,7 @@ using System.Reflection;
 using doLittle.Commands;
 using doLittle.Execution;
 using doLittle.Extensions;
+using doLittle.Logging;
 using doLittle.Types;
 using doLittle.Validation;
 using FluentValidation;
@@ -21,12 +22,13 @@ namespace doLittle.FluentValidation.Commands
     [Singleton]
     public class CommandValidatorProvider : ICommandValidatorProvider
     {
-        static Type _commandInputValidatorType = typeof (ICommandInputValidator);
-        static Type _commandBusinessValidatorType = typeof (ICommandBusinessValidator);
-        static Type _validatesType = typeof (ICanValidate<>);
+        static Type _commandInputValidatorType = typeof(ICommandInputValidator);
+        static Type _commandBusinessValidatorType = typeof(ICommandBusinessValidator);
+        static Type _validatesType = typeof(ICanValidate<>);
 
         ITypeDiscoverer _typeDiscoverer;
         IContainer _container;
+        ILogger _logger;
 
         Dictionary<Type, Type> _inputCommandValidators;
         Dictionary<Type, Type> _businessCommandValidators;
@@ -41,10 +43,15 @@ namespace doLittle.FluentValidation.Commands
         /// and  <see cref="ICommandBusinessValidator"/> implementations
         /// </param>
         /// <param name="container">An instance of <see cref="IContainer"/> to manage instances of any <see cref="ICommandInputValidator"/></param>
-        public CommandValidatorProvider(ITypeDiscoverer typeDiscoverer, IContainer container)
+        /// <param name="logger">A <see cref="ILogger"/> for logging</param>
+        public CommandValidatorProvider(
+            ITypeDiscoverer typeDiscoverer,
+            IContainer container,
+            ILogger logger)
         {
             _typeDiscoverer = typeDiscoverer;
             _container = container;
+            _logger = logger;
 
             InitializeCommandValidators();
             InitializeDynamicValidators();
@@ -63,7 +70,7 @@ namespace doLittle.FluentValidation.Commands
 
         public ICommandBusinessValidator GetBusinessValidatorFor(Type commandType)
         {
-            if (!typeof (ICommand).GetTypeInfo().IsAssignableFrom(commandType))
+            if (!typeof(ICommand).GetTypeInfo().IsAssignableFrom(commandType))
                 return null;
 
             Type registeredBusinessValidatorType;
@@ -79,6 +86,8 @@ namespace doLittle.FluentValidation.Commands
 
         public ICommandInputValidator GetInputValidatorFor(Type commandType)
         {
+            _logger.Information($"Get input validator for : {commandType.AssemblyQualifiedName}");
+
             if (!typeof(ICommand).GetTypeInfo().IsAssignableFrom(commandType))
                 return null;
 
@@ -86,14 +95,18 @@ namespace doLittle.FluentValidation.Commands
             _inputCommandValidators.TryGetValue(commandType, out registeredInputValidatorType);
 
             if (registeredInputValidatorType != null)
+            {
+                _logger.Information($"Validator for {commandType.AssemblyQualifiedName} found");
                 return _container.Get(registeredInputValidatorType) as ICommandInputValidator;
+            }
+
+            _logger.Information($"Building dynamic validator for {commandType.AssemblyQualifiedName}");
 
             var typesAndDiscoveredValidators = GetValidatorsFor(commandType, _dynamicallyDiscoveredInputValidators);
-
             return BuildDynamicallyDiscoveredInputValidator(commandType, typesAndDiscoveredValidators);
         }
 
-        Dictionary<Type,IEnumerable<Type>> GetValidatorsFor(Type commandType, Dictionary<Type, List<Type>> registeredTypes)
+        Dictionary<Type, IEnumerable<Type>> GetValidatorsFor(Type commandType, Dictionary<Type, List<Type>> registeredTypes)
         {
             var typesOnCommand = GetTypesFromCommand(commandType).ToList();
             var validatorTypes = new Dictionary<Type, IEnumerable<Type>>();
@@ -112,7 +125,7 @@ namespace doLittle.FluentValidation.Commands
             return commandPropertyTypes;
         }
 
-        ICommandInputValidator BuildDynamicallyDiscoveredInputValidator(Type commandType, IDictionary<Type,IEnumerable<Type>> typeAndAssociatedValidatorTypes)
+        ICommandInputValidator BuildDynamicallyDiscoveredInputValidator(Type commandType, IDictionary<Type, IEnumerable<Type>> typeAndAssociatedValidatorTypes)
         {
             Type[] typeArgs = { commandType };
             var closedValidatorType = typeof(ComposedCommandInputValidator<>).MakeGenericType(typeArgs);
@@ -123,7 +136,7 @@ namespace doLittle.FluentValidation.Commands
                 var validatorTypes = typeAndAssociatedValidatorTypes[key];
                 if (validatorTypes.Any())
                     propertyTypeAndValidatorInstances.Add(key, validatorTypes.Select(v => _container.Get(v) as IValidator).ToArray());
-                    
+
             }
             return Activator.CreateInstance(closedValidatorType, propertyTypeAndValidatorInstances) as ICommandInputValidator;
         }
@@ -191,10 +204,12 @@ namespace doLittle.FluentValidation.Commands
         {
             var commandType = GetCommandType(typeToRegister);
 
-            if (commandType == null || 
+            if (commandType == null ||
                 commandType.GetTypeInfo().IsInterface ||
                 validatorRegistry.ContainsKey(commandType))
                 return;
+
+            _logger.Information($"Registering input validator {typeToRegister.AssemblyQualifiedName} for {commandType.AssemblyQualifiedName}");
 
             validatorRegistry.Add(commandType, typeToRegister);
         }
@@ -203,17 +218,21 @@ namespace doLittle.FluentValidation.Commands
         {
             var validatedType = GetValidatedType(typeToRegister);
 
-            if (validatedType == null || validatedType.GetTypeInfo().IsInterface || validatedType.IsAPrimitiveType())
+            if (validatedType == null ||
+                validatedType.GetTypeInfo().IsInterface ||
+                validatedType.IsAPrimitiveType())
                 return;
+
+            _logger.Information($"Registering validator of type {typeToRegister.AssemblyQualifiedName} for validation of {validatedType.AssemblyQualifiedName}");
 
             if (validatorRegistry.ContainsKey(validatedType))
             {
-               validatorRegistry[validatedType].Add(typeToRegister);
+                validatorRegistry[validatedType].Add(typeToRegister);
             }
             else
             {
                 validatorRegistry.Add(validatedType, new List<Type>() { typeToRegister });
-            }   
+            }
         }
 
         Type GetCommandType(Type typeToRegister)
@@ -234,14 +253,14 @@ namespace doLittle.FluentValidation.Commands
         Type GetValidatedType(Type typeToRegister)
         {
             Type validatedType = null;
-            validatedType = GetGenericParameterType(typeToRegister, typeof (IValidateInput<>));
-            return validatedType ?? GetGenericParameterType(typeToRegister, typeof (IValidateBusinessRules<>));
+            validatedType = GetGenericParameterType(typeToRegister, typeof(IValidateInput<>));
+            return validatedType ?? GetGenericParameterType(typeToRegister, typeof(IValidateBusinessRules<>));
         }
 
         Type GetGenericParameterType(Type typeToQuery, Type genericInterfaceType)
         {
-            return (from @interface in typeToQuery.GetTypeInfo().GetInterfaces() 
-                    where @interface.GetTypeInfo().IsGenericType && @interface.GetTypeInfo().GetGenericTypeDefinition() == genericInterfaceType 
+            return (from @interface in typeToQuery.GetTypeInfo().GetInterfaces()
+                    where @interface.GetTypeInfo().IsGenericType && @interface.GetTypeInfo().GetGenericTypeDefinition() == genericInterfaceType
                     select @interface.GetTypeInfo().GetGenericArguments()[0]).FirstOrDefault();
         }
     }
