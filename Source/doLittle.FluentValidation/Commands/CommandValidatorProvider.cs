@@ -99,15 +99,31 @@ namespace doLittle.FluentValidation.Commands
             Type registeredInputValidatorType;
             _inputCommandValidators.TryGetValue(commandType, out registeredInputValidatorType);
 
+            var typesAndDiscoveredValidators = GetValidatorsFor(commandType, _dynamicallyDiscoveredInputValidators);
+            var hasCrossCuttingValidators = typesAndDiscoveredValidators.Count > 0;
+
             if (registeredInputValidatorType != null)
             {
                 _logger.Information($"Validator for {commandType.AssemblyQualifiedName} found");
-                return _container.Get(registeredInputValidatorType) as ICommandInputValidator;
+                var validator = _container.Get(registeredInputValidatorType) as ICommandInputValidator;
+                if( validator is IEnumerable<IValidationRule> ) 
+                {
+                    var dynamicValidator = BuildDynamicallyDiscoveredInputValidator(commandType, typesAndDiscoveredValidators);
+                    var addRuleMethod = dynamicValidator.GetType().GetTypeInfo().GetMethod("AddRule", BindingFlags.Public|BindingFlags.Instance);
+                    if( addRuleMethod != null ) 
+                        ((IEnumerable<IValidationRule>)validator).ForEach(rule => 
+                        {
+                            _logger.Information($"Adding rule with ruleset '{rule.RuleSet}'");
+                            addRuleMethod.Invoke(dynamicValidator, new[] {rule});
+                        });
+
+                    return dynamicValidator;
+                }
+
+                return validator;
             }
 
             _logger.Information($"Building dynamic validator for {commandType.AssemblyQualifiedName}");
-
-            var typesAndDiscoveredValidators = GetValidatorsFor(commandType, _dynamicallyDiscoveredInputValidators);
             return BuildDynamicallyDiscoveredInputValidator(commandType, typesAndDiscoveredValidators);
         }
 
@@ -132,6 +148,7 @@ namespace doLittle.FluentValidation.Commands
 
         ICommandInputValidator BuildDynamicallyDiscoveredInputValidator(Type commandType, IDictionary<Type, IEnumerable<Type>> typeAndAssociatedValidatorTypes)
         {
+            _logger.Information($"Build dynamic input validator for {commandType.AssemblyQualifiedName}");
             Type[] typeArgs = { commandType };
             var closedValidatorType = typeof(ComposedCommandInputValidator<>).MakeGenericType(typeArgs);
 
@@ -140,9 +157,14 @@ namespace doLittle.FluentValidation.Commands
             {
                 var validatorTypes = typeAndAssociatedValidatorTypes[key];
                 if (validatorTypes.Any())
-                    propertyTypeAndValidatorInstances.Add(key, validatorTypes.Select(v => _container.Get(v) as IValidator).ToArray());
-
+                    propertyTypeAndValidatorInstances.Add(key, validatorTypes.Select(v => {
+                        _logger.Information($"Adding validator {v.AssemblyQualifiedName}");
+                        var validator = _container.Get(v) as IValidator;
+                        return validator;
+                    }).ToArray());
             }
+
+            _logger.Information($"Create instance dynamic composed validator of type {closedValidatorType.AssemblyQualifiedName}");
             return Activator.CreateInstance(closedValidatorType, propertyTypeAndValidatorInstances) as ICommandInputValidator;
         }
 
