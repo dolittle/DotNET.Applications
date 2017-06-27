@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using doLittle.DependencyInversion;
 using doLittle.Execution;
 using doLittle.Types;
 
@@ -21,16 +22,16 @@ namespace doLittle.Read
         /// <summary>
         /// Initializes an instance of <see cref="ReadModelFilters"/>
         /// </summary>
-        /// <param name="typeDiscoverer"><see cref="ITypeDiscoverer"/> to use for discovering filters</param>
+        /// <param name="typeFinder"><see cref="ITypeFinder"/> to use for discovering filters</param>
         /// <param name="container"><see cref="IContainer"/> for instantiating filters</param>
-        public ReadModelFilters(ITypeDiscoverer typeDiscoverer, IContainer container)
+        public ReadModelFilters(ITypeFinder typeFinder, IContainer container)
         {
             _container = container;
 
-            _filterTypes = typeDiscoverer.FindMultiple<ICanFilterReadModels>();
+            _filterTypes = typeFinder.FindMultiple<ICanFilterReadModels>();
         }
 
-#pragma warning disable 1591
+        /// <inheritdoc/>
         public IEnumerable<IReadModel> Filter(IEnumerable<IReadModel> readModels)
         {
             if (_filterTypes.Count() == 0) return readModels;
@@ -43,6 +44,5 @@ namespace doLittle.Read
 
             return readModels;
         }
-#pragma warning restore 1591
     }
 }

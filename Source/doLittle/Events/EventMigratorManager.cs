@@ -5,9 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.Execution;
 using System.Reflection;
+using doLittle.Execution;
 using doLittle.Types;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Events
 {
@@ -21,24 +22,24 @@ namespace doLittle.Events
     [Singleton]
     public class EventMigratorManager : IEventMigratorManager
     {
-        readonly ITypeDiscoverer _typeDiscoverer;
+        readonly ITypeFinder _typeFinder;
         readonly IContainer _container;
         readonly Dictionary<Type, Type> _migratorTypes;
 
         /// <summary>
         /// Initializes an instance of <see cref="EventMigratorManager">EventMigratorManager</see>
         /// </summary>
-        /// <param name="typeDiscoverer"><see cref="ITypeDiscoverer"/> to use for discovering <see cref="IEventMigrator{T1,T2}">Event migrators</see></param>
+        /// <param name="typeFinder"><see cref="ITypeFinder"/> to use for discovering <see cref="IEventMigrator{T1,T2}">Event migrators</see></param>
         /// <param name="container"><see cref="IContainer"/> to use for instantiation of <see cref="IEventMigrator{T1,T2}">Event migrators</see></param>
-        public EventMigratorManager(ITypeDiscoverer typeDiscoverer, IContainer container)
+        public EventMigratorManager(ITypeFinder typeFinder, IContainer container)
         {
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _container = container;
             _migratorTypes = new Dictionary<Type, Type>();
             Initialize();
         }
 
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public IEvent Migrate(IEvent @event)
         {
             var result = @event;
@@ -50,8 +51,6 @@ namespace doLittle.Events
             }
             return result;
         }
-#pragma warning restore 1591 // Xml Comments
-
 
         /// <summary>
         /// Register a migrator
@@ -66,7 +65,7 @@ namespace doLittle.Events
 
         void Initialize()
         {
-            var migratorTypes = _typeDiscoverer.FindMultiple(typeof(IEventMigrator<,>));
+            var migratorTypes = _typeFinder.FindMultiple(typeof(IEventMigrator<,>));
             foreach (var migrator in migratorTypes)
             {
                 RegisterMigrator(migrator);

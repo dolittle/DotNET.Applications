@@ -2,6 +2,7 @@
  *  Copyright (c) 2008-2017 doLittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System.Collections.Generic;
 using doLittle.Execution;
 using doLittle.Types;
 
@@ -17,25 +18,18 @@ namespace doLittle.Commands
     [Singleton]
     public class CommandHandlerManager : ICommandHandlerManager
     {
-        readonly ITypeImporter _importer;
-        ICommandHandlerInvoker[] _invokers;
+        readonly IEnumerable<ICommandHandlerInvoker> _invokers;
 
         /// <summary>
         /// Initializes a new instance of a <see cref="CommandHandlerManager">CommandHandlerManager</see>
         /// </summary>
-        /// <param name="importer">
-        /// <see cref="ITypeImporter">TypeImporter</see> to use for discovering the 
+        /// <param name="invokers">
+        /// <see cref="IInstancesOf{ICommandHandlerInvoker}">Invokers</see> to use for discovering the 
         /// <see cref="ICommandHandlerInvoker">ICommandHandlerInvoker</see>'s to use
         /// </param>
-        public CommandHandlerManager(ITypeImporter importer)
+        public CommandHandlerManager(IInstancesOf<ICommandHandlerInvoker> invokers)
         {
-            _importer = importer;
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            _invokers = _importer.ImportMany<ICommandHandlerInvoker>();
+            _invokers = invokers;
         }
 
         /// <inheritdoc/>

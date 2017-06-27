@@ -2,7 +2,7 @@
  *  Copyright (c) 2008-2017 doLittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Entities
 {
@@ -11,11 +11,10 @@ namespace doLittle.Entities
     /// </summary>
     public class NullEntityContextConnection : IEntityContextConnection
     {
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public void Initialize(IContainer container)
         {
 
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }

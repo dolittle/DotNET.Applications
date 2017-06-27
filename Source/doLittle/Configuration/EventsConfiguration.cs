@@ -6,6 +6,7 @@ using System;
 using doLittle.Events;
 using doLittle.Events.InProcess;
 using doLittle.Execution;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Configuration
 {

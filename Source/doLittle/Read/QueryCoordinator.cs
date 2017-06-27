@@ -10,6 +10,7 @@ using doLittle.Exceptions;
 using doLittle.Execution;
 using doLittle.Read.Validation;
 using doLittle.Types;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Read
 {
@@ -22,7 +23,7 @@ namespace doLittle.Read
         const string ExecuteMethodName = "Execute";
 
         Dictionary<Type, Type> _queryProviderTypesPerTargetType;
-        readonly ITypeDiscoverer _typeDiscoverer;
+        readonly ITypeFinder _typeFinder;
         readonly IContainer _container;
         readonly IFetchingSecurityManager _fetchingSecurityManager;
         readonly IQueryValidator _validator;
@@ -32,21 +33,21 @@ namespace doLittle.Read
         /// <summary>
         /// Initializes a new instance of <see cref="QueryCoordinator"/>
         /// </summary>
-        /// <param name="typeDiscoverer"><see cref="ITypeDiscoverer"/> to use for discovering <see cref="IQueryProviderFor{T}"/> implementations</param>
+        /// <param name="typeFinder"><see cref="ITypeFinder"/> to use for discovering <see cref="IQueryProviderFor{T}"/> implementations</param>
         /// <param name="container"><see cref="IContainer"/> for getting instances of <see cref="IQueryProviderFor{T}">query providers</see></param>
         /// <param name="fetchingSecurityManager"><see cref="IFetchingSecurityManager"/> to use for securing <see cref="IQuery">queries</see></param>
         /// <param name="validator"><see cref="IQueryValidator"/> to use for validating <see cref="IQuery">queries</see></param>
         /// <param name="filters"><see cref="IReadModelFilters">Filters</see> used to filter any of the read models coming back after a query</param>
         /// <param name="exceptionPublisher">An <see cref="IExceptionPublisher"/> to send exceptions to</param>
         public QueryCoordinator(
-            ITypeDiscoverer typeDiscoverer, 
+            ITypeFinder typeFinder, 
             IContainer container, 
             IFetchingSecurityManager fetchingSecurityManager,
             IQueryValidator validator,
             IReadModelFilters filters,
             IExceptionPublisher exceptionPublisher)
         {
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _container = container;
             _fetchingSecurityManager = fetchingSecurityManager;
             _validator = validator;
@@ -172,7 +173,7 @@ namespace doLittle.Read
 
         void DiscoverQueryTypesPerTargetType()
         {
-            var queryTypes = _typeDiscoverer.FindMultiple(typeof(IQueryProviderFor<>));
+            var queryTypes = _typeFinder.FindMultiple(typeof(IQueryProviderFor<>));
 
             _queryProviderTypesPerTargetType = queryTypes.Select(t => new
             {

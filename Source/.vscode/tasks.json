@@ -10,7 +10,7 @@
             "taskName": "build",
             "args": ["doLittle", "-f", "netstandard1.6" ],
             "isBuildCommand": true,
-            "showOutput": "silent",
+            "showOutput": "always",
             "problemMatcher": "$msCompile"
         }
     ]

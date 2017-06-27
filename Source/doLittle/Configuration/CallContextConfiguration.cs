@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using doLittle.Execution;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Configuration
 {
@@ -20,13 +21,13 @@ namespace doLittle.Configuration
             CallContextType = typeof(DefaultCallContext);
         }
 
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public Type CallContextType { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(IContainer container)
         {
             container.Bind<ICallContext>(CallContextType);
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }

@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using doLittle.Entities;
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Configuration
 {
@@ -12,8 +12,7 @@ namespace doLittle.Configuration
     /// </summary>
     public class DefaultStorageConfiguration : ConfigurationStorageElement, IDefaultStorageConfiguration
     {
-#pragma warning disable 1591 // Xml Comments
-
+        /// <inheritdoc/>
         public override void Initialize(IContainer container)
         {
             if (EntityContextConfiguration == null)
@@ -22,6 +21,6 @@ namespace doLittle.Configuration
             EntityContextConfiguration.BindDefaultEntityContext(container);
             base.Initialize(container);
         }
-#pragma warning restore 1591  //Xml Comments
+
     }
 }

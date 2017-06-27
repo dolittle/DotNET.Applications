@@ -19,7 +19,7 @@ namespace doLittle.Applications
     {
         IApplication _application;
         IApplicationResourceTypes _types;
-        ITypeDiscoverer _typeDiscoverer;
+        ITypeFinder _typeFinder;
         ILogger _logger;
         Dictionary<string, ICanResolveApplicationResources> _resolversByType;
 
@@ -29,19 +29,19 @@ namespace doLittle.Applications
         /// <param name="application">Current <see cref="IApplication">Application</see></param>
         /// <param name="types"><see cref="IApplicationResourceTypes">Resource types</see> available</param>
         /// <param name="resolvers">Instances of <see cref="ICanResolveApplicationResources"/> for specialized resolving</param>
-        /// <param name="typeDiscoverer"><see cref="ITypeDiscoverer"/> for discovering types needed</param>
+        /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering types needed</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public ApplicationResourceResolver(
             IApplication application, 
             IApplicationResourceTypes types, 
             IInstancesOf<ICanResolveApplicationResources> resolvers, 
-            ITypeDiscoverer typeDiscoverer,
+            ITypeFinder typeFinder,
             ILogger logger)
         {
             _application = application;
             _types = types;
             _resolversByType = resolvers.ToDictionary(r => r.ApplicationResourceType.Identifier, r => r);
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _logger = logger;
         }
 
@@ -54,7 +54,7 @@ namespace doLittle.Applications
             if (_resolversByType.ContainsKey(typeIdentifier)) return _resolversByType[typeIdentifier].Resolve(identifier);
 
             var resourceType = _types.GetFor(typeIdentifier);
-            var types = _typeDiscoverer.FindMultiple(resourceType.Type);
+            var types = _typeFinder.FindMultiple(resourceType.Type);
             var typesMatchingName = types.Where(t => t.Name == identifier.Resource.Name);
 
             ThrowIfAmbiguousTypes(identifier, typesMatchingName);

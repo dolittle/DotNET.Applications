@@ -4,9 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Globalization;
 using System.Reflection;
-using doLittle.Configuration.Assemblies;
+using doLittle.Assemblies.Configuration;
 using doLittle.Execution;
 using doLittle.Tenancy;
+using doLittle.DependencyInversion;
+using doLittle.DependencyInversion.Conventions;
 
 namespace doLittle.Configuration
 {

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using doLittle.Serialization;
 using System;
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Configuration
 {
@@ -13,15 +13,15 @@ namespace doLittle.Configuration
     /// </summary>
     public class SerializationConfiguration : ISerializationConfiguration
     {
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public Type SerializerType { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize (IContainer container)
         {
             if( SerializerType != null )
                 container.Bind<ISerializer>(SerializerType, BindingLifecycle.Singleton);
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }
 

@@ -6,6 +6,7 @@ using System;
 using System.Reflection;
 using doLittle.Applications;
 using doLittle.Execution;
+using doLittle.DependencyInversion;
 using doLittle.Time;
 
 namespace doLittle.Events.InProcess

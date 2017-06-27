@@ -8,12 +8,16 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using doLittle.Configuration.Assemblies;
+using doLittle.Assemblies;
+using doLittle.Assemblies.Configuration;
 using doLittle.Configuration.Defaults;
+using doLittle.DependencyInversion;
+using doLittle.DependencyInversion.Conventions;
 using doLittle.Diagnostics;
 using doLittle.Events;
 using doLittle.Execution;
 using doLittle.Extensions;
+using doLittle.IO;
 using doLittle.Logging;
 using doLittle.Tenancy;
 using doLittle.Types;
@@ -57,17 +61,12 @@ namespace doLittle.Configuration
         /// </summary>
         /// <returns></returns>
         public static Configure DiscoverAndConfigure(
-#if(!NET461)
             ILoggerFactory loggerFactory,
-#endif
             Action<AssembliesConfigurationBuilder> assembliesConfigurationBuilderCallback = null, 
             IEnumerable<ICanProvideAssemblies> additionalAssemblyProviders = null)
         {
-#if (NET461)
-            var logAppenders = LoggingConfigurator.DiscoverAndConfigure();
-#else
             var logAppenders = LoggingConfigurator.DiscoverAndConfigure(loggerFactory);
-#endif
+
             Logging.ILogger logger = new Logger(logAppenders);
             logger.Information("Starting up");
 
@@ -83,19 +82,14 @@ namespace doLittle.Configuration
             contractToImplementorsMap.Feed(executingAssembly.GetTypes());
 
             logger.Trace("Specifying which assemblies to include");
-            var assemblySpecifiers = new AssemblySpecifiers(contractToImplementorsMap, new TypeFinder(), assembliesConfigurationBuilder.RuleBuilder);
+            var assemblySpecifiers = new AssemblySpecifiers(assembliesConfigurationBuilder.RuleBuilder);
             assemblySpecifiers.SpecifyUsingSpecifiersFrom(executingAssembly);
 
             var assemblyProviders = new List<ICanProvideAssemblies>
             {
-#if (NET461)
-                new AppDomainAssemblyProvider(logger),
-#else
                 new DefaultAssemblyProvider(logger),
-#endif
                 new FileSystemAssemblyProvider(new FileSystem(), logger)
             };
-
 
             if (additionalAssemblyProviders != null) assemblyProviders.AddRange(additionalAssemblyProviders);
 
@@ -104,8 +98,7 @@ namespace doLittle.Configuration
                 assemblyProviders,
                 new AssemblyFilters(assembliesConfiguration), 
                 new AssemblyUtility(),
-                assemblySpecifiers,
-                contractToImplementorsMap);
+                assemblySpecifiers);
 
             var assemblies = assemblyProvider.GetAll(); 
             

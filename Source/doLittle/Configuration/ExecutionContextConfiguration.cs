@@ -2,6 +2,7 @@
  *  Copyright (c) 2008-2017 doLittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using doLittle.DependencyInversion;
 using doLittle.Execution;
 
 namespace doLittle.Configuration
@@ -11,11 +12,10 @@ namespace doLittle.Configuration
     /// </summary>
     public class ExecutionContextConfiguration : IExecutionContextConfiguration
     {
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public void Initialize(IContainer container)
         {
             container.Bind(() => container.Get<IExecutionContextManager>().Current);
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }

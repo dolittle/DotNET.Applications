@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using doLittle.Applications;
 using doLittle.Execution;
+using doLittle.DependencyInversion;
 using doLittle.Extensions;
 using doLittle.Types;
 
@@ -23,7 +24,7 @@ namespace doLittle.Commands
     {
         const string HandleMethodName = "Handle";
 
-        readonly ITypeDiscoverer _discoverer;
+        readonly ITypeFinder _typeFinder;
         readonly IContainer _container;
         readonly IApplicationResources _applicationResources;
         readonly ICommandRequestConverter _converter;
@@ -34,17 +35,17 @@ namespace doLittle.Commands
         /// <summary>
         /// Initializes a new instance of <see cref="CommandHandlerInvoker">CommandHandlerInvoker</see>
         /// </summary>
-        /// <param name="discoverer">A <see cref="ITypeDiscoverer"/> to use for discovering <see cref="IHandleCommands">command handlers</see></param>
+        /// <param name="typeFinder">A <see cref="ITypeFinder"/> to use for discovering <see cref="IHandleCommands">command handlers</see></param>
         /// <param name="container">A <see cref="IContainer"/> to use for getting instances of objects</param>
         /// <param name="applicationResources"><see cref="IApplicationResources"/> for identifying resources</param>
         /// <param name="converter"><see cref="ICommandRequestConverter"/> for converting to actual <see cref="ICommand"/> instances</param>
         public CommandHandlerInvoker(
-            ITypeDiscoverer discoverer, 
+            ITypeFinder typeFinder, 
             IContainer container, 
             IApplicationResources applicationResources,
             ICommandRequestConverter converter)
         {
-            _discoverer = discoverer;
+            _typeFinder = typeFinder;
             _container = container;
             _applicationResources = applicationResources;
             _converter = converter;
@@ -107,7 +108,7 @@ namespace doLittle.Commands
 
         void Initialize()
         {
-            var handlers = _discoverer.FindMultiple<IHandleCommands>();
+            var handlers = _typeFinder.FindMultiple<IHandleCommands>();
             handlers.ForEach(Register);
         }
     }

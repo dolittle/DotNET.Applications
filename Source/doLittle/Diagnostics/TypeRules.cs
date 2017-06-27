@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Reflection;
 using doLittle.Execution;
+using doLittle.DependencyInversion;
 using doLittle.Types;
 
 namespace doLittle.Diagnostics
@@ -13,7 +14,7 @@ namespace doLittle.Diagnostics
     /// </summary>
     public class TypeRules : ITypeRules
     {
-        ITypeDiscoverer _typeDiscoverer;
+        ITypeFinder _typeFinder;
         IContainer _container;
         IProblemsFactory _problemsFactory;
         IProblemsReporter _problemsReporter;
@@ -21,32 +22,32 @@ namespace doLittle.Diagnostics
         /// <summary>
         /// Initializes a new instance of <see cref="TypeRules"/>
         /// </summary>
-        /// <param name="typeDiscoverer"><see cref="ITypeDiscoverer"/> used for discovering rules</param>
+        /// <param name="typeFinder"><see cref="ITypeFinder"/> used for discovering rules</param>
         /// <param name="container"><see cref="IContainer"/> used for getting instances</param>
         /// <param name="problemsFactory"><see cref="IProblemsFactory"/> used for creating problems</param>
         /// <param name="problemsReporter"><see cref="IProblemsReporter">Reporter</see> to use for reporting back any problems</param>
         public TypeRules(
-                    ITypeDiscoverer typeDiscoverer, 
+                    ITypeFinder typeFinder, 
                     IContainer container, 
                     IProblemsFactory problemsFactory, 
                     IProblemsReporter problemsReporter)
         {
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _container = container;
             _problemsFactory = problemsFactory;
             _problemsReporter = problemsReporter;
         }
 
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public void ValidateAll()
         {
-            var ruleTypes = _typeDiscoverer.FindMultiple(typeof(ITypeRuleFor<>));
+            var ruleTypes = _typeFinder.FindMultiple(typeof(ITypeRuleFor<>));
             foreach (var ruleType in ruleTypes)
             {
                 var rule = (dynamic)_container.Get(ruleType);
 
                 var typeForRule = ruleType.GetTypeInfo().GetInterface(typeof(ITypeRuleFor<>).Name).GetTypeInfo().GetGenericArguments()[0];
-                var types = _typeDiscoverer.FindMultiple(typeForRule);
+                var types = _typeFinder.FindMultiple(typeForRule);
                 foreach (var type in types)
                 {
                     var problems = _problemsFactory.Create();
@@ -57,6 +58,5 @@ namespace doLittle.Diagnostics
                 }
             }
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }

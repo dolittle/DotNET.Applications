@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using doLittle.Execution;
 using doLittle.Extensions;
 using doLittle.Types;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Tasks
 {
@@ -27,14 +28,14 @@ namespace doLittle.Tasks
         /// </summary>
         /// <param name="taskRepository">A <see cref="ITaskRepository"/> to load / save <see cref="Task">tasks</see></param>
         /// <param name="taskScheduler">A <see cref="ITaskScheduler"/> for executing tasks and their operations</param>
-        /// <param name="typeImporter">A <see cref="ITypeImporter"/> used for importing <see cref="ITaskStatusReporter"/></param>
+        /// <param name="reporters"><see cref="IInstancesOf{ITaskStatusReporter}">Reporters</see></param>
         /// <param name="container">A <see cref="IContainer"/> to use for getting instances</param>
-        public TaskManager(ITaskRepository taskRepository, ITaskScheduler taskScheduler, ITypeImporter typeImporter, IContainer container)
+        public TaskManager(ITaskRepository taskRepository, ITaskScheduler taskScheduler, IInstancesOf<ITaskStatusReporter> reporters, IContainer container)
         {
             _taskRepository = taskRepository;
             _taskScheduler = taskScheduler;
             _container = container;
-            _reporters = typeImporter.ImportMany<ITaskStatusReporter>();
+            _reporters = reporters;
         }
 
 #pragma warning disable 1591 // Xml Comments

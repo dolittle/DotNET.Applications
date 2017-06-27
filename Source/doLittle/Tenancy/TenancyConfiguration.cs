@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
 using System.Reflection;
-using doLittle.Execution;
 using doLittle.Types;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Tenancy
 {
@@ -17,10 +17,10 @@ namespace doLittle.Tenancy
         /// <inheritdoc/>
         public void Initialize(IContainer container)
         {
-            var typeDiscoverer = container.Get<ITypeDiscoverer>();
+            var tyepFinder = container.Get<ITypeFinder>();
 
             var resolverType = typeof(DefaultTenantIdResolver);
-            var resolverTypes = typeDiscoverer.FindMultiple<ICanResolveTenantId>().Where(t => t.GetTypeInfo().Assembly != typeof(TenancyConfiguration).GetTypeInfo().Assembly);
+            var resolverTypes = tyepFinder.FindMultiple<ICanResolveTenantId>().Where(t => t.GetTypeInfo().Assembly != typeof(TenancyConfiguration).GetTypeInfo().Assembly);
             if (resolverTypes.Count() > 1) throw new MultipleTenantIdResolversFound();
             if (resolverTypes.Count() == 1) resolverType = resolverTypes.First();
 

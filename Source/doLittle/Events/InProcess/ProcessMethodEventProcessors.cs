@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using doLittle.Applications;
 using doLittle.Execution;
+using doLittle.DependencyInversion;
 using doLittle.Time;
 using doLittle.Types;
 
@@ -38,7 +39,7 @@ namespace doLittle.Events.InProcess
 
         IApplicationResources _applicationResources;
         IApplicationResourceIdentifierConverter _applicationResourcesIdentifierConverter;
-        ITypeDiscoverer _typeDiscoverer;
+        ITypeFinder _typeFinder;
         IContainer _container;
         ISystemClock _systemClock;
 
@@ -47,19 +48,19 @@ namespace doLittle.Events.InProcess
         /// </summary>
         /// <param name="applicationResources"><see cref="IApplicationResources"/> for identifying <see cref="IEvent">events</see> </param>
         /// <param name="applicationResourcesIdentifierConverter"><see cref="IApplicationResourceIdentifierConverter"/> for converting <see cref="IApplicationResourceIdentifier"/> to and from different formats</param>
-        /// <param name="typeDiscoverer"><see cref="ITypeDiscoverer"/> for discovering implementations of <see cref="IProcessEvents"/></param>
+        /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering implementations of <see cref="IProcessEvents"/></param>
         /// <param name="container"><see cref="IContainer"/> for the implementation <see cref="ProcessMethodEventProcessor"/> when acquiring instances of implementations of <see cref="IProcessEvents"/></param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for timing <see cref="IEventProcessors"/></param>
         public ProcessMethodEventProcessors(
             IApplicationResources applicationResources, 
             IApplicationResourceIdentifierConverter applicationResourcesIdentifierConverter,
-            ITypeDiscoverer typeDiscoverer, 
+            ITypeFinder typeFinder, 
             IContainer container, 
             ISystemClock systemClock)
         {
             _applicationResources = applicationResources;
             _applicationResourcesIdentifierConverter = applicationResourcesIdentifierConverter;
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _container = container;
             _systemClock = systemClock;
 
@@ -80,7 +81,7 @@ namespace doLittle.Events.InProcess
 
         void PopulateEventProcessors()
         {
-            var processors = _typeDiscoverer.FindMultiple<IProcessEvents>();
+            var processors = _typeFinder.FindMultiple<IProcessEvents>();
             foreach (var processor in processors)
             {
                 var methods = processor.GetTypeInfo().GetMethods(BindingFlags.Public | BindingFlags.Instance).Where(m =>

@@ -7,6 +7,7 @@ using System.Reflection;
 using doLittle.Execution;
 using doLittle.Security;
 using doLittle.Types;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Configuration
 {
@@ -15,18 +16,17 @@ namespace doLittle.Configuration
     /// </summary>
     public class SecurityConfiguration : ISecurityConfiguration
     {
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public void Initialize(IContainer container)
         {
-            var typeDiscoverer = container.Get<ITypeDiscoverer>();
+            var typeFinder = container.Get<ITypeFinder>();
 
             var resolverType = typeof(DefaultPrincipalResolver);
-            var resolverTypes = typeDiscoverer.FindMultiple<ICanResolvePrincipal>().Where(t => t.GetTypeInfo().Assembly != typeof(SecurityConfiguration).GetTypeInfo().Assembly);
+            var resolverTypes = typeFinder.FindMultiple<ICanResolvePrincipal>().Where(t => t.GetTypeInfo().Assembly != typeof(SecurityConfiguration).GetTypeInfo().Assembly);
             if (resolverTypes.Count() > 1) throw new MultiplePrincipalResolversFound();
             if (resolverTypes.Count() == 1) resolverType = resolverTypes.First();
 
             container.Bind<ICanResolvePrincipal>(resolverType);
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }

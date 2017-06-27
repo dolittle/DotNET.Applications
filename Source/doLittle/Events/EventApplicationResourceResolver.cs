@@ -26,12 +26,12 @@ namespace doLittle.Events
         /// Initializes a new instance of <see cref="EventApplicationResourceResolver"/>
         /// </summary>
         /// <param name="application">Current <see cref="IApplication"/></param>
-        /// <param name="typeDiscoverer"><see cref="ITypeDiscoverer"/> for finding correct <see cref="IEvent">event type</see></param>
+        /// <param name="typeFinder"><see cref="ITypeFinder"/> for finding correct <see cref="IEvent">event type</see></param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        public EventApplicationResourceResolver(IApplication application, ITypeDiscoverer typeDiscoverer, ILogger logger)
+        public EventApplicationResourceResolver(IApplication application, ITypeFinder typeFinder, ILogger logger)
         {
             _application = application;
-            _eventTypes = typeDiscoverer.FindMultiple<IEvent>();
+            _eventTypes = typeFinder.FindMultiple<IEvent>();
             _logger = logger;
         }
 

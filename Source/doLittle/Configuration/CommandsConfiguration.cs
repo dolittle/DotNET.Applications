@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using doLittle.Commands;
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Configuration
 {
@@ -13,9 +13,10 @@ namespace doLittle.Configuration
     /// </summary>
     public class CommandsConfiguration : ConfigurationStorageElement, ICommandsConfiguration
     {
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public Type CommandCoordinatorType { get; set; }
 
+        /// <inheritdoc/>
         public override void Initialize(IContainer container)
         {
             if (CommandCoordinatorType != null)
@@ -26,7 +27,5 @@ namespace doLittle.Configuration
                 base.Initialize(container);
             }
         }
-                
-#pragma warning restore 1591 // Xml Comments
     }
 }

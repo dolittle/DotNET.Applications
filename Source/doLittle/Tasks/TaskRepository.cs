@@ -5,10 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using doLittle.DependencyInversion;
 using doLittle.Entities;
 using doLittle.Execution;
 using doLittle.Extensions;
-using System.Reflection;
+
 
 namespace doLittle.Tasks
 {

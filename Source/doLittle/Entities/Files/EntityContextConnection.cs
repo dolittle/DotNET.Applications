@@ -7,6 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using doLittle.Execution;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Entities.Files
 {
@@ -70,10 +71,9 @@ namespace doLittle.Entities.Files
         /// </summary>
         public EntityContextConfiguration Configuration { get; private set; }
         
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public void Initialize(IContainer container)
         {
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using doLittle.Execution;
 using doLittle.Types;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Security
 {
@@ -15,18 +16,18 @@ namespace doLittle.Security
     [Singleton]
     public class SecurityManager : ISecurityManager
     {
-        readonly ITypeDiscoverer _typeDiscoverer;
+        readonly ITypeFinder _typeFinder;
         readonly IContainer _container;
         IEnumerable<ISecurityDescriptor> _securityDescriptors;
 
         /// <summary>
         /// Initializes a new instance of <see cref="SecurityManager"/>
         /// </summary>
-        /// <param name="typeDiscoverer"><see cref="ITypeDiscoverer"/> to discover any <see cref="BaseSecurityDescriptor">security descriptors</see></param>
+        /// <param name="typeFinder"><see cref="ITypeFinder"/> to discover any <see cref="BaseSecurityDescriptor">security descriptors</see></param>
         /// <param name="container"><see cref="IContainer"/> to instantiate instances of <see cref="ISecurityDescriptor"/></param>
-        public SecurityManager(ITypeDiscoverer typeDiscoverer, IContainer container)
+        public SecurityManager(ITypeFinder typeFinder, IContainer container)
         {
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _container = container;
 
             PopulateSecurityDescriptors();
@@ -34,13 +35,13 @@ namespace doLittle.Security
 
         void PopulateSecurityDescriptors()
         {
-            var securityDescriptorTypes = _typeDiscoverer.FindMultiple<ISecurityDescriptor>();
+            var securityDescriptorTypes = _typeFinder.FindMultiple<ISecurityDescriptor>();
             var instances = new List<ISecurityDescriptor>();
             instances.AddRange(securityDescriptorTypes.Select(t => _container.Get(t) as ISecurityDescriptor));
             _securityDescriptors = instances;
         }
 
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public AuthorizationResult Authorize<T>(object target) where T : ISecurityAction
         {
             var result = new AuthorizationResult();
@@ -57,6 +58,5 @@ namespace doLittle.Security
 
             return result;
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }

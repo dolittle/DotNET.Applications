@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using doLittle.DependencyInversion;
 using doLittle.Execution;
 using doLittle.Extensions;
 using doLittle.Types;
@@ -23,9 +24,9 @@ namespace doLittle.Read.Validation
         /// <summary>
         /// Initializes an instance of <see cref="QueryValidationDescriptors"/>
         /// </summary>
-        public QueryValidationDescriptors(ITypeDiscoverer typeDiscoverer, IContainer container)
+        public QueryValidationDescriptors(ITypeFinder typeFinder, IContainer container)
         {
-            var descriptors = typeDiscoverer.FindMultiple(typeof(QueryValidationDescriptorFor<>)).Where(d => d != typeof(QueryValidationDescriptorFor<>));
+            var descriptors = typeFinder.FindMultiple(typeof(QueryValidationDescriptorFor<>)).Where(d => d != typeof(QueryValidationDescriptorFor<>));
             descriptors.ForEach(d => {
                 var queryType = d.GetTypeInfo().BaseType.GetTypeInfo().GetGenericArguments()[0];
                 var descriptor = container.Get(d) as IQueryValidationDescriptor;
@@ -33,17 +34,16 @@ namespace doLittle.Read.Validation
             });
         }
 
-
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public bool HasDescriptorFor<TQuery>() where TQuery : IQuery
         {
             return _descriptors.ContainsKey(typeof(TQuery)); 
         }
 
+        /// <inheritdoc/>
         public IQueryValidationDescriptor GetDescriptorFor<TQuery>() where TQuery : IQuery
         {
             return _descriptors[typeof(TQuery)];
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }

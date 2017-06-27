@@ -6,6 +6,7 @@ using System.Globalization;
 using doLittle.Applications;
 using doLittle.Security;
 using doLittle.Tenancy;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Execution
 {

@@ -20,28 +20,28 @@ namespace doLittle.Events
     [Singleton]
     public class EventMigrationHierarchyDiscoverer : IEventMigrationHierarchyDiscoverer
     {
-        private readonly ITypeDiscoverer _typeDiscoverer;
+        private readonly ITypeFinder _typeFinder;
         private static readonly Type _migrationInterface = typeof (IAmNextGenerationOf<>);
 
         /// <summary>
         /// Initializes an instance of <see cref="EventMigrationHierarchyDiscoverer"/>
         /// </summary>
-        /// <param name="typeDiscoverer"></param>
-        public EventMigrationHierarchyDiscoverer(ITypeDiscoverer typeDiscoverer)
+        /// <param name="typeFinder"></param>
+        public EventMigrationHierarchyDiscoverer(ITypeFinder typeFinder)
         {
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
         }
 
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public IEnumerable<EventMigrationHierarchy> GetMigrationHierarchies()
         {
             var allEvents = GetAllEventTypes();
             var logicalEvents = GetLogicalEvents(allEvents);
             return logicalEvents.Select(logicalEvent => GetMigrationHierarchy(logicalEvent,allEvents)).ToList();
         }
-#pragma warning restore 1591 // Xml Comments
 
-        private static EventMigrationHierarchy GetMigrationHierarchy(Type logicalEvent, IEnumerable<Type> allEvents)
+
+        static EventMigrationHierarchy GetMigrationHierarchy(Type logicalEvent, IEnumerable<Type> allEvents)
         {
             var migrationHierarchy = new EventMigrationHierarchy(logicalEvent);
             var migratedEvents = GetMigratedEvents(allEvents);
@@ -55,12 +55,12 @@ namespace doLittle.Events
             return migrationHierarchy;
         }
 
-        private static Type GetMigrationTypeFor(Type migrationSourceType, IEnumerable<Type> migratedEventTypes)
+        static Type GetMigrationTypeFor(Type migrationSourceType, IEnumerable<Type> migratedEventTypes)
         {
             return migratedEventTypes.Select(candidateType => GetMigrationType(migrationSourceType, candidateType)).FirstOrDefault(type => type != null);
         }
 
-        private static Type GetMigrationType(Type migrationSourceType, Type candidateType)
+        static Type GetMigrationType(Type migrationSourceType, Type candidateType)
         {
             var types = from interfaceType in 
                             candidateType.GetTypeInfo().ImplementedInterfaces
@@ -79,14 +79,14 @@ namespace doLittle.Events
             return migratedFromType == null ? null : candidateType;
         }
 
-        private static IEnumerable<Type> GetLogicalEvents(IEnumerable<Type> allEventTypes)
+        static IEnumerable<Type> GetLogicalEvents(IEnumerable<Type> allEventTypes)
         {
             var migratedEvents = GetMigratedEvents(allEventTypes);
 
             return allEventTypes.Except(migratedEvents);
         }
 
-        private static IEnumerable<Type> GetMigratedEvents(IEnumerable<Type> allEventTypes)
+        static IEnumerable<Type> GetMigratedEvents(IEnumerable<Type> allEventTypes)
         {
             foreach(var @event in allEventTypes)
             {
@@ -103,9 +103,9 @@ namespace doLittle.Events
             }
         }
 
-        private IEnumerable<Type> GetAllEventTypes()
+        IEnumerable<Type> GetAllEventTypes()
         {
-            return _typeDiscoverer.FindMultiple<IEvent>();
+            return _typeFinder.FindMultiple<IEvent>();
         }
     }
 }
