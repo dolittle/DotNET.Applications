@@ -9,7 +9,7 @@ namespace doLittle.Specs.Read.for_ReadModelFilters.given
 
         Establish context = () =>
         {
-            filters = new ReadModelFilters(type_discoverer_mock.Object, container_mock.Object);
+            filters = new ReadModelFilters(type_discoverer.Object, container.Object);
         };
     }
 }

@@ -37,18 +37,20 @@ namespace doLittle.Commands
         {
             var handled = false;
 
-            foreach( var invoker in _invokers )
+            foreach (var invoker in _invokers)
             {
-                if( invoker.TryHandle(command) )
+                if (invoker.TryHandle(command))
                 {
                     handled = true;
                 }
             }
 
-            if(!handled)
-            {
-                throw new CommandWasNotHandled(command);
-            }
+            ThrowIfNotHandled(command, handled);
+        }
+
+        void ThrowIfNotHandled(CommandRequest command, bool handled)
+        {
+            if (!handled) throw new CommandWasNotHandled(command);
         }
     }
 }

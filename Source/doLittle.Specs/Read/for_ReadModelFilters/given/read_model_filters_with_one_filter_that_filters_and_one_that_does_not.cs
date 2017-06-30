@@ -12,17 +12,17 @@ namespace doLittle.Specs.Read.for_ReadModelFilters.given
 
         Establish context = () =>
         {
-            type_discoverer_mock.Setup(t => t.FindMultiple<ICanFilterReadModels>()).Returns(new Type[] {
+            type_discoverer.Setup(t => t.FindMultiple<ICanFilterReadModels>()).Returns(new Type[] {
                 typeof(FilterThatFilters),
                 typeof(FilterThatDoesNotFilter)
             });
             filtering_filter = new FilterThatFilters();
-            container_mock.Setup(c => c.Get(typeof(FilterThatFilters))).Returns(filtering_filter);
+            container.Setup(c => c.Get(typeof(FilterThatFilters))).Returns(filtering_filter);
 
             non_filtering_filter = new FilterThatDoesNotFilter();
-            container_mock.Setup(c => c.Get(typeof(FilterThatDoesNotFilter))).Returns(non_filtering_filter);
+            container.Setup(c => c.Get(typeof(FilterThatDoesNotFilter))).Returns(non_filtering_filter);
 
-            filters = new ReadModelFilters(type_discoverer_mock.Object, container_mock.Object);
+            filters = new ReadModelFilters(type_discoverer.Object, container.Object);
         };
     }
 }

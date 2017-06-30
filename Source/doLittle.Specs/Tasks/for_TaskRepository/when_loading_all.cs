@@ -22,8 +22,8 @@ namespace doLittle.Specs.Tasks.for_TaskRepository
 
             new Dictionary<string, string> { { "AString", "Hello world" }, { "AnInteger", "42" } }.ForEach(task_entities[0].State.Add);
             new Dictionary<string, string> { { "AString", "Hello second world" }, { "AnInteger", "43" } }.ForEach(task_entities[1].State.Add);
-            container_mock.Setup(c => c.Get(typeof(MyTask))).Returns(() => new MyTask());
-            entity_context_mock.Setup(e => e.Entities).Returns(task_entities.AsQueryable());
+            container.Setup(c => c.Get(typeof(MyTask))).Returns(() => new MyTask());
+            entity_context.Setup(e => e.Entities).Returns(task_entities.AsQueryable());
         };
 
         Because of = () => result = repository.LoadAll().Select(t=>(MyTask)t).ToArray();

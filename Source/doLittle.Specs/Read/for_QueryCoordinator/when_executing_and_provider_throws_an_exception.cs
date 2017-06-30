@@ -30,6 +30,6 @@ namespace doLittle.Specs.Read.for_QueryCoordinator
 
         It should_set_the_exception_on_the_result = () => result.Exception.ShouldEqual(exception_thrown);
 
-        It should_publish_the_exception = () => exception_publisher_mock.Verify(m => m.Publish(exception_thrown));
+        It should_publish_the_exception = () => exception_publisher.Verify(m => m.Publish(exception_thrown));
     }
 }

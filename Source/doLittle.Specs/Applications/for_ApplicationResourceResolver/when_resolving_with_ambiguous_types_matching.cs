@@ -22,7 +22,7 @@ namespace doLittle.Specs.Applications.for_ApplicationResourceResolver
         Establish context = () =>
         {
             resource_type.SetupGet(t => t.Type).Returns(typeof(IInterface));
-            type_discoverer.Setup(t => t.FindMultiple(typeof(IInterface))).Returns(
+            type_finder.Setup(t => t.FindMultiple(typeof(IInterface))).Returns(
                 new[] {
                     typeof(Hidden1.Implementation),
                     typeof(Hidden2.Implementation)

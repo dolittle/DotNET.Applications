@@ -1,5 +1,5 @@
-﻿using doLittle.Entities;
-using doLittle.Execution;
+﻿using doLittle.DependencyInversion;
+using doLittle.Entities;
 
 namespace doLittle.Specs.Configuration
 {

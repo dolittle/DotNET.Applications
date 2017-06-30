@@ -19,7 +19,7 @@ namespace doLittle.Specs.Commands.for_CommandHandlerInvoker.given
                                     command_type = new ApplicationResourceIdentifier(application.Object, new IApplicationLocation[0], applicationResource.Object);
                                     application_resources.Setup(a => a.Identify(typeof(Command))).Returns(command_type);
                                     handler = new CommandHandler();
-                                    type_discoverer.Setup(t => t.FindMultiple<IHandleCommands>()).Returns(new[]
+                                    type_finder.Setup(t => t.FindMultiple<IHandleCommands>()).Returns(new[]
                                                                                                               {typeof(CommandHandler)});
 
                                     container.Setup(c => c.Get(typeof (CommandHandler))).Returns(handler);

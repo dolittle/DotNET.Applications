@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using doLittle.DependencyInversion;
 using doLittle.Execution;
 using doLittle.Tenancy;
 using doLittle.Types;
@@ -11,17 +12,17 @@ namespace doLittle.Specs.Tenancy.for_TenancyConfiguration.given
     public class no_tenant_id_resolvers
     {
         protected static Mock<IContainer> container;
-        protected static Mock<ITypeDiscoverer> type_discoverer;
+        protected static Mock<ITypeFinder> type_finder;
         protected static TenancyConfiguration configuration;
         protected static List<Type> resolvers;
 
         Establish context = () =>
         {
             resolvers = new List<Type>();
-            type_discoverer = new Mock<ITypeDiscoverer>();
-            type_discoverer.Setup(t => t.FindMultiple<ICanResolveTenantId>()).Returns(resolvers);
+            type_finder = new Mock<ITypeFinder>();
+            type_finder.Setup(t => t.FindMultiple<ICanResolveTenantId>()).Returns(resolvers);
             container = new Mock<IContainer>();
-            container.Setup(c => c.Get<ITypeDiscoverer>()).Returns(type_discoverer.Object);
+            container.Setup(c => c.Get<ITypeFinder>()).Returns(type_finder.Object);
             configuration = new TenancyConfiguration();
         };
     }

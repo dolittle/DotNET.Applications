@@ -16,11 +16,11 @@ namespace doLittle.Specs.Configuration.for_ConfigurationExtensions
         };
 
 
-        Because of = () => configuration.BindDefaultEntityContext(container_mock.Object);
+        Because of = () => configuration.BindDefaultEntityContext(container.Object);
 
-        It should_bind_the_default_connection_connection = () => container_mock.Verify(c => c.Bind(typeof(EntityContextConnection), connection));
-        It should_bind_to_the_default_storage_type = () => container_mock.Verify(c => c.Bind(typeof(IEntityContext<>),default_type));
-        It should_not_make_any_other_calls_on_the_container = () => container_mock.VerifyAll();
+        It should_bind_the_default_connection_connection = () => container.Verify(c => c.Bind(typeof(EntityContextConnection), connection));
+        It should_bind_to_the_default_storage_type = () => container.Verify(c => c.Bind(typeof(IEntityContext<>),default_type));
+        It should_not_make_any_other_calls_on_the_container = () => container.VerifyAll();
       
     }
 }

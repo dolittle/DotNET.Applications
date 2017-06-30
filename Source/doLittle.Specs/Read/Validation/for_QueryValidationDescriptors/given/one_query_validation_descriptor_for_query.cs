@@ -12,9 +12,9 @@ namespace doLittle.Specs.Read.Validation.for_QueryValidationDescriptors.given
         Establish context = () =>
         {
             descriptor = new SimpleQueryDescriptor();
-            type_discoverer_mock.Setup(t => t.FindMultiple(typeof(QueryValidationDescriptorFor<>))).Returns(new Type[] { typeof(SimpleQueryDescriptor) } );
-            container_mock.Setup(c => c.Get(typeof(SimpleQueryDescriptor))).Returns(descriptor);
-            descriptors = new QueryValidationDescriptors(type_discoverer_mock.Object, container_mock.Object);
+            type_finder.Setup(t => t.FindMultiple(typeof(QueryValidationDescriptorFor<>))).Returns(new Type[] { typeof(SimpleQueryDescriptor) } );
+            container.Setup(c => c.Get(typeof(SimpleQueryDescriptor))).Returns(descriptor);
+            descriptors = new QueryValidationDescriptors(type_finder.Object, container.Object);
         };
     }
 }

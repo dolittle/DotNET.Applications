@@ -35,13 +35,13 @@ namespace doLittle.Specs.Diagnostics.for_TypeRules.given
                 return problems;
             });
 
-            type_discoverer_mock.Setup(t => t.FindMultiple(type_for_rule)).Returns(new[] {
+            type_finder.Setup(t => t.FindMultiple(type_for_rule)).Returns(new[] {
                     first_type, second_type
                 });
 
             type_rules = new TypeRules(
-                                type_discoverer_mock.Object,
-                                container_mock.Object,
+                                type_finder.Object,
+                                container.Object,
                                 problems_factory_mock.Object,
                                 problems_reporter_mock.Object
                              );

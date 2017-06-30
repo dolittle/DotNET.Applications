@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using doLittle.Assemblies.Configuration;
 using doLittle.Configuration;
-using doLittle.Configuration.Assemblies;
 using doLittle.Configuration.Defaults;
 using doLittle.Events;
 using doLittle.Execution;
@@ -8,6 +8,7 @@ using doLittle.Types;
 using doLittle.Tenancy;
 using Machine.Specifications;
 using Moq;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Specs.Configuration.for_Configure.given
 {
@@ -28,7 +29,6 @@ namespace doLittle.Specs.Configuration.for_Configure.given
         protected static Mock<IExecutionContextConfiguration> execution_context_configuration;
         protected static Mock<ISecurityConfiguration> security_configuration;
         protected static Mock<ITenancyConfiguration> tenancy_configuration;
-        protected static Mock<ITypeImporter> type_importer;
         protected static Mock<IInstancesOf<ICanConfigure>> configurators;
         protected static Mock<IInstancesOf<IWantToKnowWhenConfigurationIsDone>> after_configuration_callbacks;
         
@@ -72,9 +72,6 @@ namespace doLittle.Specs.Configuration.for_Configure.given
 
                                     tenancy_configuration = new Mock<ITenancyConfiguration>();
                                     container.Setup(c => c.Get<ITenancyConfiguration>()).Returns(tenancy_configuration.Object);
-
-                                    type_importer = new Mock<ITypeImporter>();
-                                    container.Setup(c => c.Get<ITypeImporter>()).Returns(type_importer.Object);
 
                                     configure_instance = Configure.With(container.Object, default_conventions.Object, default_bindings.Object, new AssembliesConfiguration(null));
                                     

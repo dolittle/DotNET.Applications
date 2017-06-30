@@ -16,18 +16,18 @@ namespace doLittle.Specs.Read.for_QueryCoordinator.given
             query_provider_mock = new Mock<IQueryProviderFor<NonGenericKnownType>>();
             provider_type = query_provider_mock.Object.GetType();
 
-            type_discoverer_mock.Setup(t => t.FindMultiple(typeof(IQueryProviderFor<>))).Returns(new[] { provider_type });
-            container_mock.Setup(c => c.Get(provider_type)).Returns(query_provider_mock.Object);
+            type_finder.Setup(t => t.FindMultiple(typeof(IQueryProviderFor<>))).Returns(new[] { provider_type });
+            container.Setup(c => c.Get(provider_type)).Returns(query_provider_mock.Object);
 
-            fetching_security_manager_mock.Setup(f => f.Authorize(Moq.It.IsAny<IQuery>())).Returns(new AuthorizationResult());
+            fetching_security_manager.Setup(f => f.Authorize(Moq.It.IsAny<IQuery>())).Returns(new AuthorizationResult());
 
             coordinator = new QueryCoordinator(
-                type_discoverer_mock.Object,
-                container_mock.Object,
-                fetching_security_manager_mock.Object,
-                query_validator_mock.Object,
-                read_model_filters_mock.Object,
-                exception_publisher_mock.Object);
+                type_finder.Object,
+                container.Object,
+                fetching_security_manager.Object,
+                query_validator.Object,
+                read_model_filters.Object,
+                exception_publisher.Object);
         };
     }
 }

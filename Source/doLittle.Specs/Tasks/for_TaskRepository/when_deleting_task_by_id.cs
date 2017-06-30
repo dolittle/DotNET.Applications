@@ -12,7 +12,7 @@ namespace doLittle.Specs.Tasks.for_TaskRepository
 
         Establish context = () =>
         {
-            entity_context_mock.Setup(e=>e.DeleteById(Moq.It.IsAny<Guid>())).Callback((Guid i)=>task_entity_id = i);
+            entity_context.Setup(e=>e.DeleteById(Moq.It.IsAny<Guid>())).Callback((Guid i)=>task_entity_id = i);
         };
 
         Because of = () => repository.DeleteById(task_id);

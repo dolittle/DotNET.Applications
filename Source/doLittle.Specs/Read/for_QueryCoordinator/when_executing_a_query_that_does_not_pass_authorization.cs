@@ -30,7 +30,7 @@ namespace doLittle.Specs.Read.for_QueryCoordinator
             authorizeDescriptorResult.ProcessAuthorizeActionResult(authorizeActionResult);
             authorizationResult.ProcessAuthorizeDescriptorResult(authorizeDescriptorResult);
 
-            fetching_security_manager_mock.Setup(f => f.Authorize(Moq.It.IsAny<IQuery>())).Returns(authorizationResult);   
+            fetching_security_manager.Setup(f => f.Authorize(Moq.It.IsAny<IQuery>())).Returns(authorizationResult);   
         };
 
         Because of = () => result = coordinator.Execute(query, paging);

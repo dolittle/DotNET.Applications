@@ -9,6 +9,7 @@ using doLittle.Execution;
 using doLittle.Extensions;
 using doLittle.Types;
 using doLittle.DependencyInversion;
+using System.Linq;
 
 namespace doLittle.Tasks
 {
@@ -38,7 +39,7 @@ namespace doLittle.Tasks
             _reporters = reporters;
         }
 
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public T Start<T>() where T : Task
         {
             var task = _container.Get<T>();
@@ -60,6 +61,7 @@ namespace doLittle.Tasks
             return task;
         }
 
+        /// <inheritdoc/>
         public T Resume<T>(TaskId taskId) where T : Task
         {
             var task = _taskRepository.Load(taskId) as T;
@@ -69,6 +71,7 @@ namespace doLittle.Tasks
             return task;
         }
 
+        /// <inheritdoc/>
         public void Stop(TaskId taskId)
         {
             var task = _taskRepository.Load(taskId);
@@ -77,21 +80,20 @@ namespace doLittle.Tasks
             Report(t => t.Stopped(task));
         }
 
+        /// <inheritdoc/>
         public void Pause(TaskId taskId)
         {
             var task = _taskRepository.Load(taskId);
             _taskScheduler.Stop(task);
             Report(t => t.Paused(task));
         }
-#pragma warning restore 1591 // Xml Comments
 
         void Report(Expression<Action<ITaskStatusReporter>> expression)
         {
             var method = expression.GetMethodInfo();
             var arguments = expression.GetMethodArguments();
-
-            foreach (var reporter in _reporters)
-                method.Invoke(reporter, arguments);
+            
+            _reporters.ForEach(reporter => method.Invoke(reporter, arguments));
         }
     }
 }

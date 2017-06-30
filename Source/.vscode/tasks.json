@@ -8,10 +8,17 @@
     "tasks": [
         {
             "taskName": "build",
-            "args": ["doLittle", "-f", "netstandard1.6" ],
+            "args": ["doLittle.Specs", "-f", "netcoreapp1.1" ],
             "isBuildCommand": true,
             "showOutput": "always",
             "problemMatcher": "$msCompile"
+        },
+        {
+            "taskName": "test",
+            "args": ["doLittle.Specs/doLittle.Specs.csproj"],
+            "isTestCommand": true,
+            "problemMatcher": "$msCompile"
         }
+        
     ]
 }

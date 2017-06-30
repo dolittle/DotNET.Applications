@@ -20,7 +20,7 @@ namespace doLittle.Specs.Tasks.for_TaskRepository
                 AnInteger = 43
             };
 
-            entity_context_mock.Setup(e=>e.Insert(Moq.It.IsAny<TaskEntity>())).Callback((TaskEntity t) => task_entity = t);
+            entity_context.Setup(e=>e.Insert(Moq.It.IsAny<TaskEntity>())).Callback((TaskEntity t) => task_entity = t);
         };
 
         Because of = () => repository.Save(task);

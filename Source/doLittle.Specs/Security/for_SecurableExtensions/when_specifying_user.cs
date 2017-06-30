@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using doLittle.Configuration;
 using doLittle.Configuration.Defaults;
+using doLittle.DependencyInversion;
 using doLittle.Execution;
 using doLittle.Security;
 using Machine.Specifications;

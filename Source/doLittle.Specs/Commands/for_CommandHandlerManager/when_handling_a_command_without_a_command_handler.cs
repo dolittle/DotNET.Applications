@@ -7,7 +7,6 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-
 namespace doLittle.Specs.Commands.for_CommandHandlerManager
 {
     public class when_handling_a_command_without_a_command_handler : given.a_command_handler_manager

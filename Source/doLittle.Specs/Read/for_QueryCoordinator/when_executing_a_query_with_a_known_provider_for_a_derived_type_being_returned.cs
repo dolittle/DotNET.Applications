@@ -36,6 +36,6 @@ namespace doLittle.Specs.Read.for_QueryCoordinator
 
         It should_forward_query_to_provider = () => query_provider_for_derived_type.query_passed_to_execute.ShouldEqual(actual_query);
         It should_forward_paging_info_to_provider = () => query_provider_for_derived_type.paging_info_passed_to_execute.ShouldEqual(paging);
-        It should_filter_result = () => read_model_filters_mock.Verify(r => r.Filter(items),Times.Once());
+        It should_filter_result = () => read_model_filters.Verify(r => r.Filter(items),Times.Once());
     }
 }

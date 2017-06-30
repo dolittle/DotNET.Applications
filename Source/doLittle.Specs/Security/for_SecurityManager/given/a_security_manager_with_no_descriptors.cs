@@ -1,4 +1,5 @@
 ﻿using System;
+using doLittle.DependencyInversion;
 using doLittle.Execution;
 using doLittle.Security;
 using doLittle.Types;
@@ -9,18 +10,18 @@ namespace doLittle.Specs.Security.for_SecurityManager.given
 {
     public class a_security_manager_with_no_descriptors
     {
-        protected static Mock<ITypeDiscoverer> type_discoverer_mock;
+        protected static Mock<ITypeFinder> type_finder;
         protected static Mock<IContainer> container;
         protected static SecurityManager security_manager;
 
         Establish context = () =>
             {
-                type_discoverer_mock = new Mock<ITypeDiscoverer>();
+                type_finder = new Mock<ITypeFinder>();
                 container = new Mock<IContainer>();
-                type_discoverer_mock.Setup(d => d.FindMultiple(typeof(ISecurityDescriptor)))
+                type_finder.Setup(d => d.FindMultiple(typeof(ISecurityDescriptor)))
                                     .Returns(new Type[]{});
 
-                security_manager = new SecurityManager(type_discoverer_mock.Object, container.Object);
+                security_manager = new SecurityManager(type_finder.Object, container.Object);
             };
     }
 }

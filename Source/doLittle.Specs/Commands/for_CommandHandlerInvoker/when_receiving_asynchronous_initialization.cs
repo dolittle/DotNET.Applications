@@ -20,7 +20,7 @@ namespace doLittle.Specs.Commands.for_CommandHandlerInvoker
             var command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
             var thread = new Thread(() => invoker.TryHandle(command));
 
-            type_discoverer
+            type_finder
                 .Setup(t => t.FindMultiple<IHandleCommands>())
                 .Callback(
                     () =>
@@ -33,6 +33,6 @@ namespace doLittle.Specs.Commands.for_CommandHandlerInvoker
             thread.Join();
         };
 
-        It should_initialize_only_once = () => type_discoverer.Verify(m => m.FindMultiple<IHandleCommands>(), Times.Once);
+        It should_initialize_only_once = () => type_finder.Verify(m => m.FindMultiple<IHandleCommands>(), Times.Once);
     }
 }

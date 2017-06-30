@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Security.Claims;
 using doLittle.Applications;
+using doLittle.DependencyInversion;
 using doLittle.Execution;
 using doLittle.Security;
 using doLittle.Tenancy;

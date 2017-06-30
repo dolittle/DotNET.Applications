@@ -21,20 +21,20 @@ namespace doLittle.Specs.Diagnostics.for_TypeRules.given
             type_for_rule = typeof(object);
             rule_type = type_rule_mock.Object.GetType();
 
-            type_discoverer_mock.Setup(t => t.FindMultiple(typeof(ITypeRuleFor<>))).Returns(new[] {
+            type_finder.Setup(t => t.FindMultiple(typeof(ITypeRuleFor<>))).Returns(new[] {
                     rule_type
                 });
-            type_discoverer_mock.Setup(t => t.FindMultiple(type_for_rule)).Returns(new[] {
+            type_finder.Setup(t => t.FindMultiple(type_for_rule)).Returns(new[] {
                     type_for_rule
                 });
 
-            container_mock.Setup(t => t.Get(rule_type)).Returns(type_rule_mock.Object);
+            container.Setup(t => t.Get(rule_type)).Returns(type_rule_mock.Object);
 
             problems_factory_mock.Setup(p => p.Create()).Returns(problems_mock.Object);
 
             type_rules = new TypeRules(
-                                type_discoverer_mock.Object,
-                                container_mock.Object,
+                                type_finder.Object,
+                                container.Object,
                                 problems_factory_mock.Object,
                                 problems_reporter_mock.Object
                              );

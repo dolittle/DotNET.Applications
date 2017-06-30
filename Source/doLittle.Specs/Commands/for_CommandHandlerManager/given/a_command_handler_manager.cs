@@ -1,4 +1,5 @@
-﻿using doLittle.Commands;
+﻿using System.Collections.Generic;
+using doLittle.Commands;
 using doLittle.Execution;
 using doLittle.Types;
 using Machine.Specifications;
@@ -9,12 +10,13 @@ namespace doLittle.Specs.Commands.for_CommandHandlerManager.given
     public class a_command_handler_manager
     {
         protected static CommandHandlerManager manager;
-        protected static Mock<ITypeImporter> type_importer_mock;
+        protected static Mock<IInstancesOf<ICommandHandlerInvoker>> invokers;
 
-            Establish context = () =>
-                                {
-                                    type_importer_mock = new Mock<ITypeImporter>();
-                                    manager = new CommandHandlerManager(type_importer_mock.Object);
-                                };
+        Establish context = () =>
+                            {
+                                invokers = new Mock<IInstancesOf<ICommandHandlerInvoker>>();
+                                invokers.Setup(_ => _.GetEnumerator()).Returns(new List<ICommandHandlerInvoker>().GetEnumerator());
+                                manager = new CommandHandlerManager(invokers.Object);
+                            };
     }
 }

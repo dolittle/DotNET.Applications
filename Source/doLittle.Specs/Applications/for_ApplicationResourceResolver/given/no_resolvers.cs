@@ -15,7 +15,7 @@ namespace doLittle.Specs.Applications.for_ApplicationResourceResolver.given
                 application.Object,
                 application_resource_types.Object, 
                 resolvers.Object,
-                type_discoverer.Object,
+                type_finder.Object,
                 logger);
         };
     }

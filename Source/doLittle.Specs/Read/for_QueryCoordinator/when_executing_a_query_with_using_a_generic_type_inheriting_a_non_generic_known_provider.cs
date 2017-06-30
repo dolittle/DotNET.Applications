@@ -36,6 +36,6 @@ namespace doLittle.Specs.Read.for_QueryCoordinator
         Because of = () => coordinator.Execute(query, paging);
 
         It should_forward_query_with_clause_to_provider = () => query_provider_mock.Verify(q => q.Execute(actual_query, paging), Moq.Times.Once());
-        It should_filter_result = () => read_model_filters_mock.Verify(r => r.Filter(items), Times.Once());
+        It should_filter_result = () => read_model_filters.Verify(r => r.Filter(items), Times.Once());
     }
 }

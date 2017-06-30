@@ -22,8 +22,8 @@ namespace doLittle.Specs.Configuration.for_EventsConfiguration
                                     
                                 };
 
-        Because of = () => events_configuration.Initialize(container_mock.Object);
+        Because of = () => events_configuration.Initialize(container.Object);
 
-        It should_bind_the_specific_storage_for_events = () => container_mock.Verify(c => c.Bind(typeof(IEntityContext<IEvent>), Moq.It.IsAny<Type>()));
+        It should_bind_the_specific_storage_for_events = () => container.Verify(c => c.Bind(typeof(IEntityContext<IEvent>), Moq.It.IsAny<Type>()));
     }
 }

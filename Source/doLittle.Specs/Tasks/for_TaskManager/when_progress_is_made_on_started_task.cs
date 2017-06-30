@@ -1,4 +1,5 @@
-﻿using Machine.Specifications;
+﻿using doLittle.Tasks;
+using Machine.Specifications;
 
 namespace doLittle.Specs.Tasks.for_TaskManager
 {
@@ -6,20 +7,20 @@ namespace doLittle.Specs.Tasks.for_TaskManager
     {
         static OurTask task;
         static bool save_called;
-
-        Establish context = () => {
+        
+        Establish context = () => 
+        {
             task = new OurTask
             {
                 CurrentOperation = 1
             };
-            container_mock.Setup(c => c.Get<OurTask>()).Returns(task);
+            container.Setup(c => c.Get<OurTask>()).Returns(task);
             task_manager.Start<OurTask>();;
-            task_repository_mock.Setup(c => c.Save(task)).Callback(() => save_called = true);
+            task_repository.Setup(c => c.Save(task)).Callback(() => save_called = true);
         };
 
         Because of = () => task.Progress();
-
         It should_save_task = () => save_called.ShouldBeTrue();
-        It should_call_the_status_reporter = () => task_status_reporter_mock.Verify(t => t.StateChanged(task), Moq.Times.Once());
+        It should_call_the_status_reporter = () => task_status_reporter.Verify(t => t.StateChanged(task), Moq.Times.Once());
     }
 }

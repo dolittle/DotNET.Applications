@@ -14,13 +14,13 @@ namespace doLittle.Specs.Tasks.for_TaskManager
             {
                 Id = task_id,
             };
-            task_repository_mock.Setup(t=>t.Load(task_id)).Returns(task);
+            task_repository.Setup(t=>t.Load(task_id)).Returns(task);
         };
 
         Because of = () => task_manager.Stop(task_id);
 
         It should_call_end_on_the_task = () => task.EndCalled.ShouldBeTrue();
-        It should_delete_the_task = () => task_repository_mock.Verify(t => t.Delete(task), Moq.Times.Once());
-        It should_call_the_status_reporter = () => task_status_reporter_mock.Verify(t => t.Stopped(task), Moq.Times.Once());
+        It should_delete_the_task = () => task_repository.Verify(t => t.Delete(task), Moq.Times.Once());
+        It should_call_the_status_reporter = () => task_status_reporter.Verify(t => t.Stopped(task), Moq.Times.Once());
     }
 }

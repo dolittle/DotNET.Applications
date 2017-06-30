@@ -18,7 +18,7 @@ namespace doLittle.Specs.Read.for_QueryCoordinator
 
             validation_result = new QueryValidationResult(new[] { new BrokenRule(null,null,null) });
 
-            query_validator_mock.Setup(c => c.Validate(query)).Returns(validation_result);
+            query_validator.Setup(c => c.Validate(query)).Returns(validation_result);
         };
 
         Because of = () => result = coordinator.Execute(query, paging);

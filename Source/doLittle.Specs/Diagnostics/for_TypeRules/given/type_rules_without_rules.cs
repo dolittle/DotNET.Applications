@@ -9,8 +9,8 @@ namespace doLittle.Specs.Diagnostics.for_TypeRules.given
 
         Establish context = () => 
             type_rules = new TypeRules(
-                                type_discoverer_mock.Object, 
-                                container_mock.Object, 
+                                type_finder.Object, 
+                                container.Object, 
                                 problems_factory_mock.Object,
                                 problems_reporter_mock.Object
                              );

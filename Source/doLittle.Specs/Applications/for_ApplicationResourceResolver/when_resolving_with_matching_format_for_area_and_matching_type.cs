@@ -29,7 +29,7 @@ namespace doLittle.Specs.Applications.for_ApplicationResourceResolver
             application.SetupGet(a => a.Structure).Returns(application_structure.Object);
 
 
-            type_discoverer.Setup(t => t.FindMultiple(typeof(IInterface))).Returns(new[] { typeof(Implementation) });
+            type_finder.Setup(t => t.FindMultiple(typeof(IInterface))).Returns(new[] { typeof(Implementation) });
         };
 
         Because of = () => result = resolver.Resolve(identifier.Object);

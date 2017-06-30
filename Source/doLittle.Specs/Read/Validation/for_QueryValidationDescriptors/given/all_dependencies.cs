@@ -1,4 +1,5 @@
-﻿using doLittle.Execution;
+﻿using doLittle.DependencyInversion;
+using doLittle.Execution;
 using doLittle.Types;
 using Machine.Specifications;
 using Moq;
@@ -7,13 +8,13 @@ namespace doLittle.Specs.Read.Validation.for_QueryValidationDescriptors.given
 {
     public class all_dependencies
     {
-        protected static Mock<ITypeDiscoverer> type_discoverer_mock;
-        protected static Mock<IContainer> container_mock;
+        protected static Mock<ITypeFinder> type_finder;
+        protected static Mock<IContainer> container;
 
         Establish context = () =>
         {
-            type_discoverer_mock = new Mock<ITypeDiscoverer>();
-            container_mock = new Mock<IContainer>();
+            type_finder = new Mock<ITypeFinder>();
+            container = new Mock<IContainer>();
         };
     }
 }

@@ -11,7 +11,7 @@ namespace doLittle.Specs.Applications.for_ApplicationResourceResolver.given
         protected static Mock<IApplication> application;
         protected static Mock<IApplicationResourceTypes> application_resource_types;
         protected static Mock<IInstancesOf<ICanResolveApplicationResources>> resolvers;
-        protected static Mock<ITypeDiscoverer> type_discoverer;
+        protected static Mock<ITypeFinder> type_finder;
         protected static Mock<IApplicationStructure> application_structure;
         protected static ILogger logger;
 
@@ -22,7 +22,7 @@ namespace doLittle.Specs.Applications.for_ApplicationResourceResolver.given
             application.SetupGet(a => a.Structure).Returns(application_structure.Object);
             application_resource_types = new Mock<IApplicationResourceTypes>();
             resolvers = new Mock<IInstancesOf<ICanResolveApplicationResources>>();
-            type_discoverer = new Mock<ITypeDiscoverer>();
+            type_finder = new Mock<ITypeFinder>();
             logger = Mock.Of<ILogger>();
         };
     }
