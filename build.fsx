@@ -255,7 +255,7 @@ Target "Build" (fun _ ->
     for directory in projectsDirectories do
         tracef "Building %s" directory.FullName
         //let allArgs = sprintf "build %s %s" directory.FullName (if isWindows then "" else "-f netstandard1.6")
-        let allArgs = sprintf "build %s %s" directory.FullName "-f netstandard1.6")
+        let allArgs = sprintf "build %s %s" directory.FullName "-f netstandard1.6"
         spawnProcess("dotnet", allArgs)
 
     trace "**** Building Done ****"
