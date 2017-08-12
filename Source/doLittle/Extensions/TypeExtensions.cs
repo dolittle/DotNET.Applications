@@ -79,6 +79,17 @@ namespace doLittle.Extensions
         }
 
         /// <summary>
+        /// Check if a type is a DateTimeOffset or not
+        /// </summary>
+        /// <param name="type"><see cref="Type"/> to check</param>
+        /// <returns>True if type is a date, false if not</returns>
+        public static bool IsDateTimeOffset(this Type type)
+        {
+            return type == typeof (DateTimeOffset) || Nullable.GetUnderlyingType(type) == typeof (DateTimeOffset);
+        }
+        
+
+        /// <summary>
         /// Check if a type is a Boolean or not
         /// </summary>
         /// <param name="type"><see cref="Type"/> to check</param>
