@@ -136,7 +136,7 @@ namespace doLittle.CodeGeneration.JavaScript
                 if (type.IsNumericType())
                     return assignment.WithDefaultNumericValue(type);
 
-                if (type.IsDate())
+                if (type.IsDate() || type.IsDateTimeOffset())
                     return assignment.WithDate();
 
                 if (type.IsBoolean())
