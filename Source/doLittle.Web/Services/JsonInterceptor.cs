@@ -2,6 +2,7 @@
  *  Copyright (c) 2008-2017 doLittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using doLittle.DependencyInversion;
 using doLittle.Execution;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -19,10 +20,10 @@ namespace doLittle.Web.Services
         private readonly IEnumerable<Type> _valueInterceptors;
         private readonly IContainer _container;
 
-        public JsonInterceptor(ITypeDiscoverer typeDiscoverer, IContainer container)
+        public JsonInterceptor(ITypeFinder typeFinder, IContainer container)
         {
             _container = container;
-            _valueInterceptors = typeDiscoverer.FindMultiple(typeof(ICanInterceptValue<>));
+            _valueInterceptors = typeFinder.FindMultiple(typeof(ICanInterceptValue<>));
         }
 
         public string Intercept(string json)

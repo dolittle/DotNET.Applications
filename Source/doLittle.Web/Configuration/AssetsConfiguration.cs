@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using doLittle.Configuration;
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 
 namespace doLittle.Web.Configuration
 {
