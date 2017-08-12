@@ -4,7 +4,7 @@
         <Description>doLittle is a platform designed to build Line of Business applications without sacrificing architectural quality, code quality or scalability.</Description>
         <Copyright>Copyright 2008 - 2017 Dolittle</Copyright>
         <Authors>all contributors</Authors>
-        <TargetFrameworks>net461;netstandard1.6</TargetFrameworks>
+        <TargetFrameworks>netstandard1.6</TargetFrameworks>
         <DebugType>portable</DebugType>
         <PackageTags>MVVM;SOLID;CQRS;LOB</PackageTags>
         <PackageReleaseNotes>https://github.com/doLittle/DotNET.Core/blob/master/CHANGELOG.md</PackageReleaseNotes>
@@ -41,10 +41,10 @@
     </ItemGroup>
 
     <PropertyGroup>
-        <TargetFrameworks>net461;netstandard1.6</TargetFrameworks>
+        <TargetFrameworks>netstandard1.6</TargetFrameworks>
         <AssemblyName>doLittle</AssemblyName>
         <PackageId>doLittle</PackageId>
-        <DocumentationFile>bin\Debug\net461\doLittle.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\doLittle.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
@@ -83,17 +83,6 @@
             <PackagePath>lib/netstandard1.6/</PackagePath>
             <Pack>true</Pack>
         </None>
-        <None Update="bin\Release\net461\*.pdb">
-            <PackagePath>lib/net461/</PackagePath>
-            <Pack>true</Pack>
-        </None>
-    </ItemGroup>
-
-    <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-        <Reference Include="System" />
-        <Reference Include="Microsoft.CSharp" />
-        <Reference Include="System.Dynamic" />
-        <Compile Remove="Execution\DefaultAssemblyProvider.cs" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
