@@ -5,7 +5,7 @@
     <Description>doLittle is a platform designed to build Line of Business applications without sacrificing architectural quality, code quality or scalability.</Description>
     <Copyright>Copyright 2008 - 2017 Dolittle</Copyright>
     <Authors>all contributors</Authors>
-    <TargetFrameworks>net461;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6</TargetFrameworks>
     <DebugType>portable</DebugType>
     <AssemblyName>doLittle.Read.DocumentDB</AssemblyName>
     <PackageId>doLittle.Read.DocumentDB</PackageId>
@@ -43,7 +43,7 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="1.2.1" />
-    
+    <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-alpha-*"/>
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">

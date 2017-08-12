@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6</TargetFrameworks>
     <AssemblyName>doLittle.SimpleInjector</AssemblyName>
     <PackageId>doLittle.SimpleInjector</PackageId>
     <DocumentationFile>bin\Debug\net461\doLittle.SimpleInjector.xml</DocumentationFile>
@@ -12,7 +12,7 @@
     <Description>doLittle is a platform designed to build Line of Business applications without sacrificing architectural quality, code quality or scalability.</Description>
     <Copyright>Copyright 2008 - 2017 Dolittle</Copyright>
     <Authors>all contributors</Authors>
-    <TargetFrameworks>net461;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6</TargetFrameworks>
     <DebugType>portable</DebugType>
     <PackageTags>MVVM;SOLID;CQRS;LOB</PackageTags>
     <PackageReleaseNotes>https://github.com/doLittle/DotNET.Core/blob/master/CHANGELOG.md</PackageReleaseNotes>
@@ -34,6 +34,9 @@
 
   <ItemGroup>
     <PackageReference Include="SimpleInjector" Version="4.0.7" />
+    <PackageReference Include="doLittle.Assemblies" Version="2.0.0-alpha-*"/>
+    <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-alpha-*"/>
+   
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">

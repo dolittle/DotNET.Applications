@@ -5,11 +5,11 @@ doLittle.Ninject
 doLittle.StructureMap
 doLittle.Autofac
 doLittle.SimpleInjector
+doLittle.JavaScript
 doLittle.Events.Azure.Tables
 doLittle.Events.MongoDB
 doLittle.Events.RabbitMQ
 doLittle.Events.Redis
 doLittle.Read.MongoDB
 doLittle.Read.DocumentDB
-doLittle.JavaScript
 doLittle.Web
