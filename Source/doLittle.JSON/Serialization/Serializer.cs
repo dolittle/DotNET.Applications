@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using doLittle.Applications;
 using doLittle.Concepts;
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 using doLittle.Extensions;
 using doLittle.JSON.Application;
 using doLittle.JSON.Concepts;

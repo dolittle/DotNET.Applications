@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 using SimpleInjector;
 
 namespace doLittle.SimpleInjector
@@ -73,8 +73,6 @@ namespace doLittle.SimpleInjector
                 case BindingLifecycle.Singleton:
                     lifestyle = Lifestyle.Singleton;
                     break;
-                case BindingLifecycle.Request:
-                    throw new NotImplementedException();
                 case BindingLifecycle.Transient:
                     lifestyle = Lifestyle.Transient;
                     break;

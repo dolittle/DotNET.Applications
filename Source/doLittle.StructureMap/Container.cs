@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 using StructureMap.Pipeline;
 
 namespace doLittle.StructureMap
@@ -199,7 +199,6 @@ namespace doLittle.StructureMap
             switch (lifecycle)
             {
                 case BindingLifecycle.Transient: return new TransientLifecycle();
-                case BindingLifecycle.Request: throw new NotImplementedException();
                 case BindingLifecycle.Singleton: return new SingletonLifecycle();
                 case BindingLifecycle.Thread: return new ThreadLocalStorageLifecycle();
             }

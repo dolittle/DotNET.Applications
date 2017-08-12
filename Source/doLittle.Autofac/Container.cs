@@ -9,13 +9,13 @@ using System.Linq;
 using System.Reflection;
 using Autofac;
 using Autofac.Core; 
-using doLittle.Execution;
-using IContainer = doLittle.Execution.IContainer;
+using doLittle.DependencyInversion;
+using IContainer = doLittle.DependencyInversion.IContainer;
 
 namespace doLittle.Autofac
 {
     /// <summary>
-    /// Represents an implementation of <see cref="Execution.IContainer"/> for AutoFac
+    /// Represents an implementation of <see cref="DependencyInversion.IContainer"/> for AutoFac
     /// </summary>
     public class Container : IContainer
     {

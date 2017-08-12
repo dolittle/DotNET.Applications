@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 using FluentValidation;
 
 namespace doLittle.FluentValidation

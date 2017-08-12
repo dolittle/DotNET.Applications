@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using doLittle.Commands;
+using doLittle.DependencyInversion;
 using doLittle.Execution;
 using doLittle.Extensions;
 using doLittle.Logging;
@@ -26,7 +27,7 @@ namespace doLittle.FluentValidation.Commands
         static Type _commandBusinessValidatorType = typeof(ICommandBusinessValidator);
         static Type _validatesType = typeof(ICanValidate<>);
 
-        ITypeDiscoverer _typeDiscoverer;
+        ITypeFinder _typeFinder;
         IContainer _container;
         ILogger _logger;
 
@@ -38,18 +39,18 @@ namespace doLittle.FluentValidation.Commands
         /// <summary>
         /// Initializes an instance of <see cref="CommandValidatorProvider"/> CommandValidatorProvider
         /// </summary>
-        /// <param name="typeDiscoverer">
-        /// An instance of ITypeDiscoverer to help identify and register <see cref="ICommandInputValidator"/> implementations
+        /// <param name="typeFinder">
+        /// An instance of <see cref="ITypeFinder"/> to help identify and register <see cref="ICommandInputValidator"/> implementations
         /// and  <see cref="ICommandBusinessValidator"/> implementations
         /// </param>
         /// <param name="container">An instance of <see cref="IContainer"/> to manage instances of any <see cref="ICommandInputValidator"/></param>
         /// <param name="logger">A <see cref="ILogger"/> for logging</param>
         public CommandValidatorProvider(
-            ITypeDiscoverer typeDiscoverer,
+            ITypeFinder typeFinder,
             IContainer container,
             ILogger logger)
         {
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _container = container;
             _logger = logger;
 
@@ -222,8 +223,8 @@ namespace doLittle.FluentValidation.Commands
             _inputCommandValidators = new Dictionary<Type, Type>();
             _businessCommandValidators = new Dictionary<Type, Type>();
 
-            var commandInputValidators = _typeDiscoverer.FindMultiple(_commandInputValidatorType);
-            var commandBusinessValidators = _typeDiscoverer.FindMultiple(_commandBusinessValidatorType);
+            var commandInputValidators = _typeFinder.FindMultiple(_commandInputValidatorType);
+            var commandBusinessValidators = _typeFinder.FindMultiple(_commandBusinessValidatorType);
 
             commandInputValidators.ForEach(type => RegisterCommandValidator(type, _inputCommandValidators));
             commandBusinessValidators.ForEach(type => RegisterCommandValidator(type, _businessCommandValidators));
@@ -234,9 +235,9 @@ namespace doLittle.FluentValidation.Commands
             _dynamicallyDiscoveredBusinessValidators = new Dictionary<Type, List<Type>>();
             _dynamicallyDiscoveredInputValidators = new Dictionary<Type, List<Type>>();
 
-            var inputValidators = _typeDiscoverer.FindMultiple(typeof(IValidateInput<>))
+            var inputValidators = _typeFinder.FindMultiple(typeof(IValidateInput<>))
                 .Where(t => t != typeof(InputValidator<>) && t != typeof(ComposedCommandInputValidator<>));
-            var businessValidators = _typeDiscoverer.FindMultiple(typeof(IValidateBusinessRules<>))
+            var businessValidators = _typeFinder.FindMultiple(typeof(IValidateBusinessRules<>))
                 .Where(t => t != typeof(BusinessValidator<>) && t != typeof(ComposedCommandBusinessValidator<>));
 
             inputValidators.ForEach(type => RegisterValidator(type, _dynamicallyDiscoveredInputValidators));

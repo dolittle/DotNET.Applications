@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 using doLittle.Extensions;
 using doLittle.FluentValidation.Commands;
 using doLittle.Types;
@@ -19,20 +19,20 @@ namespace doLittle.FluentValidation
     /// </summary>
     public class DefaultValidatorFactory : IValidatorFactory
     {
-        ITypeDiscoverer _typeDiscoverer;
+        ITypeFinder _typeFinder;
         IContainer _container;
         Dictionary<Type, Type> _validatorsByType;
 
         /// <summary>
         /// Initializes a new instance of <see cref="DefaultValidatorFactory"/>
         /// </summary>
-        /// <param name="typeDiscoverer">A <see cref="ITypeDiscoverer"/> used for discovering validators</param>
+        /// <param name="typeFinder">A <see cref="ITypeFinder"/> used for discovering validators</param>
         /// <param name="container">A <see cref="IContainer"/> to use for creating instances of the different validators</param>
-        public DefaultValidatorFactory(ITypeDiscoverer typeDiscoverer, IContainer container)
+        public DefaultValidatorFactory(ITypeFinder typeFinder, IContainer container)
         {
             _container = container;
             _validatorsByType = new Dictionary<Type, Type>();
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             Populate();
         }
 
@@ -55,7 +55,7 @@ namespace doLittle.FluentValidation
 
         void Populate()
         {
-            var validatorTypes = _typeDiscoverer.FindMultiple(typeof(IValidator)).Where(
+            var validatorTypes = _typeFinder.FindMultiple(typeof(IValidator)).Where(
                 t =>
                     !t.HasInterface<ICommandInputValidator>() &&
                     !t.HasInterface<ICommandBusinessValidator>());

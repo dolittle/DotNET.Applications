@@ -5,8 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.Execution;
-using IContainer = doLittle.Execution.IContainer;
+using doLittle.DependencyInversion;
+using IContainer = doLittle.DependencyInversion.IContainer;
 
 namespace doLittle.SimpleInjector
 {

@@ -20,8 +20,7 @@ namespace doLittle.Ninject
         /// <param name="kernel"><see cref="IKernel"/> to load into</param>
         public static void LoadAllModules(this IKernel kernel)
         {
-            var typeImporter = kernel.Get<ITypeImporter>();
-            var modules = typeImporter.ImportMany<NinjectModule>();
+            var modules = kernel.Get<IInstancesOf<NinjectModule>>();
             if( modules.Count() > 0 ) kernel.Load(modules);
         }
     }

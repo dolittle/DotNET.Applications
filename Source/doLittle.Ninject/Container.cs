@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 using Ninject;
 using Ninject.Parameters;
 using Ninject.Planning.Bindings;
