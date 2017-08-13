@@ -82,7 +82,7 @@ namespace doLittle.Configuration
             contractToImplementorsMap.Feed(executingAssembly.GetTypes());
 
             logger.Trace("Specifying which assemblies to include");
-            var assemblySpecifiers = new AssemblySpecifiers(assembliesConfigurationBuilder.RuleBuilder);
+            var assemblySpecifiers = new AssemblySpecifiers(assembliesConfigurationBuilder.RuleBuilder, logger);
             assemblySpecifiers.SpecifyUsingSpecifiersFrom(executingAssembly);
 
             var assemblyProviders = new List<ICanProvideAssemblies>
