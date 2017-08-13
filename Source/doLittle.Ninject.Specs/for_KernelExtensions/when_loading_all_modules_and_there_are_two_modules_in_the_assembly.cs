@@ -11,7 +11,10 @@ namespace doLittle.Ninject.Specs.for_KernelExtensions
 
         Establish context = () => 
         {
-            type_importer_mock.Setup(t => t.ImportMany<NinjectModule>()).Returns(new NinjectModule[] { new FirstModule(), new SecondModule() });
+            ninject_modules.Setup(n => n.GetEnumerator()).Returns(new List<NinjectModule>(new NinjectModule[] {
+                new FirstModule(),
+                new SecondModule()
+            }).GetEnumerator());
             kernel_mock.Setup(k=>k.Load(Moq.It.IsAny<IEnumerable<INinjectModule>>())).Callback((IEnumerable<INinjectModule> a) => result = a);
         };
 
