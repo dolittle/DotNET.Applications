@@ -17,7 +17,7 @@ namespace doLittle.Web.Read
 {
     public class QueryService
     {
-        ITypeDiscoverer _typeDiscoverer;
+        ITypeFinder _typeFinder;
         IContainer _container;
         IQueryCoordinator _queryCoordinator;
         WebConfiguration _configuration;
@@ -25,13 +25,13 @@ namespace doLittle.Web.Read
         ILogger _logger;
 
         public QueryService(
-            ITypeDiscoverer typeDiscoverer,
+            ITypeFinder typeFinder,
             IContainer container,
             IQueryCoordinator queryCoordinator,
             WebConfiguration configuration,
             ILogger logger)
         {
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _container = container;
             _queryCoordinator = queryCoordinator;
             _configuration = configuration;
@@ -43,7 +43,7 @@ namespace doLittle.Web.Read
             try
             {
                 _logger.Information($"Executing query : {descriptor.NameOfQuery}");
-                var queryType = _typeDiscoverer.GetQueryTypeByName(descriptor.GeneratedFrom);
+                var queryType = _typeFinder.GetQueryTypeByName(descriptor.GeneratedFrom);
                 var query = _container.Get(queryType) as IQuery;
 
                 PopulateProperties(descriptor, queryType, query);

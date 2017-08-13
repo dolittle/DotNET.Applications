@@ -12,11 +12,11 @@ namespace doLittle.Web.Configuration
     {
         readonly StringMapper _clientToServerMapper = new StringMapper();
         readonly StringMapper _serverToClientMapper = new StringMapper();
-        readonly ITypeDiscoverer _typeDiscoverer;
+        readonly ITypeFinder _typeFinder;
 
-        public NamespaceMapper(ITypeDiscoverer typeDiscoverer)
+        public NamespaceMapper(ITypeFinder typeFinder)
         {
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _clientToServerMapper = new StringMapper();
             _serverToClientMapper = new StringMapper();
         }
@@ -43,7 +43,7 @@ namespace doLittle.Web.Configuration
             foreach (var mapper in mappers)
             {
                 var fullyQualifiedName = mapper.Resolve(fullyQualifiedClientName);
-                var matchingType = _typeDiscoverer.FindTypeByFullName(fullyQualifiedName);
+                var matchingType = _typeFinder.FindTypeByFullName(fullyQualifiedName);
                 if (matchingType != null)
                     return matchingType;
             }

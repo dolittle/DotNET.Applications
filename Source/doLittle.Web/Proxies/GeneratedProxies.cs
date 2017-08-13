@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
 using System.Text;
+using doLittle.DependencyInversion;
 using doLittle.Execution;
 using doLittle.Types;
 using doLittle.Web.Commands;
@@ -29,7 +30,7 @@ namespace doLittle.Web.Proxies
 #if(NET461)
             HubProxies hubProxies,
 #endif
-            ITypeDiscoverer typeDiscoverer,
+            ITypeFinder typeFinder,
             IContainer container)
         {
             var builder = new StringBuilder();
@@ -43,7 +44,7 @@ namespace doLittle.Web.Proxies
             builder.Append(hubProxies.Generate());
 #endif
 
-            var generatorTypes = typeDiscoverer.FindMultiple<IProxyGenerator>().Where(t => !t.Namespace.StartsWith("doLittle"));
+            var generatorTypes = typeFinder.FindMultiple<IProxyGenerator>().Where(t => !t.Namespace.StartsWith("doLittle"));
             foreach (var generatorType in generatorTypes)
             {
                 var generator = container.Get(generatorType) as IProxyGenerator;

@@ -18,20 +18,20 @@ namespace doLittle.Web.Read
     public class ReadModelProxies : IProxyGenerator
     {
        
-        ITypeDiscoverer _typeDiscoverer;
+        ITypeFinder _typeFinder;
         ICodeGenerator _codeGenerator;
         WebConfiguration _configuration;
 
-        public ReadModelProxies(ITypeDiscoverer typeDiscoverer, ICodeGenerator codeGenerator, WebConfiguration configuration)
+        public ReadModelProxies(ITypeFinder typeFinder, ICodeGenerator codeGenerator, WebConfiguration configuration)
         {
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _codeGenerator = codeGenerator;
             _configuration = configuration;
         }
 
         public string Generate()
         {
-            var typesByNamespace = _typeDiscoverer.FindMultiple<IReadModel>().GroupBy(t => t.Namespace);
+            var typesByNamespace = _typeFinder.FindMultiple<IReadModel>().GroupBy(t => t.Namespace);
 
             var result = new StringBuilder();
 

@@ -24,8 +24,8 @@ namespace doLittle.Web.Commands
 
         IApplicationResources _applicationResources;
         IApplicationResourceIdentifierConverter _applicationResourceIdentifierConverter;
-        ITypeDiscoverer _typeDiscoverer;
-        ITypeImporter _typeImporter;
+        ITypeFinder _typeFinder;
+        IInstancesOf<ICanExtendCommandProperty> _commandPropertyExtenders;
         ICodeGenerator _codeGenerator;
         WebConfiguration _configuration;
 
@@ -42,15 +42,15 @@ namespace doLittle.Web.Commands
         public CommandProxies(
             IApplicationResources applicationResources,
             IApplicationResourceIdentifierConverter applicationResourceIdentifierConverter, 
-            ITypeDiscoverer typeDiscoverer, 
-            ITypeImporter typeImporter, 
+            ITypeFinder typeFinder, 
+            IInstancesOf<ICanExtendCommandProperty> commandPropertyExtenders,
             ICodeGenerator codeGenerator, 
             WebConfiguration configuration)
         {
             _applicationResources = applicationResources;
             _applicationResourceIdentifierConverter = applicationResourceIdentifierConverter;
-            _typeDiscoverer = typeDiscoverer;
-            _typeImporter = typeImporter;
+            _typeFinder = typeFinder;
+            _commandPropertyExtenders = commandPropertyExtenders;
             _codeGenerator = codeGenerator;
             
             _configuration = configuration;
@@ -58,8 +58,7 @@ namespace doLittle.Web.Commands
 
         public string Generate()
         {
-            var typesByNamespace = _typeDiscoverer.FindMultiple<ICommand>().Where(t => !_namespacesToExclude.Any(n => t.Namespace.StartsWith(n))).GroupBy(t=>t.Namespace);
-            var commandPropertyExtenders = _typeImporter.ImportMany<ICanExtendCommandProperty>();
+            var typesByNamespace = _typeFinder.FindMultiple<ICommand>().Where(t => !_namespacesToExclude.Any(n => t.Namespace.StartsWith(n))).GroupBy(t=>t.Namespace);
 
             var result = new StringBuilder();
 
@@ -91,7 +90,7 @@ namespace doLittle.Web.Commands
 
                                         .WithObservablePropertiesFrom(type, excludePropertiesFrom: typeof(ICommand), observableVisitor: (propertyName, observable) =>
                                         {
-                                            foreach (var commandPropertyExtender in commandPropertyExtenders)
+                                            foreach (var commandPropertyExtender in _commandPropertyExtenders)
                                                 commandPropertyExtender.Extend(type, propertyName, observable);
                                         }));
                 }

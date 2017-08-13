@@ -17,15 +17,15 @@ namespace doLittle.Web.Read
 {
     public class ReadModelService
     {
-        ITypeDiscoverer _typeDiscoverer;
+        ITypeFinder _typeFinder;
         IContainer _container;
         IReadModelFilters _readModelFilters;
         IFetchingSecurityManager _fetchingSecurityManager;
         MethodInfo _authorizeMethod;
 
-        public ReadModelService(ITypeDiscoverer typeDiscoverer, IContainer container, IFetchingSecurityManager fetchingSecurityManager, IReadModelFilters readModelFilters)
+        public ReadModelService(ITypeFinder typeFinder, IContainer container, IFetchingSecurityManager fetchingSecurityManager, IReadModelFilters readModelFilters)
         {
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _container = container;
             _fetchingSecurityManager = fetchingSecurityManager;
             _readModelFilters = readModelFilters;
@@ -39,7 +39,7 @@ namespace doLittle.Web.Read
 
         public object InstanceMatching(ReadModelQueryDescriptor descriptor)
         {
-            var readModelType = _typeDiscoverer.FindTypeByFullName(descriptor.GeneratedFrom);
+            var readModelType = _typeFinder.FindTypeByFullName(descriptor.GeneratedFrom);
             if (readModelType != null)
             {
                 var readModelOfType = typeof(IReadModelOf<>).MakeGenericType(readModelType);

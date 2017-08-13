@@ -23,20 +23,20 @@ namespace doLittle.Web.Commands
 {
     public class CommandSecurityProxies : IProxyGenerator
     {
-        readonly ITypeDiscoverer _typeDiscoverer;
+        readonly ITypeFinder _typeFinder;
         readonly ICodeGenerator _codeGenerator;
         readonly ICommandSecurityManager _commandSecurityManager;
         readonly IApplicationResources _applicationResources;
         readonly WebConfiguration _configuration;
 
         public CommandSecurityProxies(
-            ITypeDiscoverer typeDiscoverer,
+            ITypeFinder typeFinder,
             ICodeGenerator codeGenerator,
             ICommandSecurityManager commandSecurityManager,
             IApplicationResources applicationResources,
             WebConfiguration configuration)
         {
-            _typeDiscoverer = typeDiscoverer;
+            _typeFinder = typeFinder;
             _codeGenerator = codeGenerator;
             _configuration = configuration;
             _applicationResources = applicationResources;
@@ -45,7 +45,7 @@ namespace doLittle.Web.Commands
 
         public string Generate()
         {
-            var typesByNamespace = _typeDiscoverer
+            var typesByNamespace = _typeFinder
                 .FindMultiple<ICommand>()
                 .Where(t => !CommandProxies._namespacesToExclude.Any(n => t.Namespace.StartsWith(n)))
                 .GroupBy(t => t.Namespace);
