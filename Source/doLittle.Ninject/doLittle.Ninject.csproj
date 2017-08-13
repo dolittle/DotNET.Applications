@@ -22,6 +22,9 @@
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
 
     <DefaultItemExcludes>bin\**\*;obj\**\*</DefaultItemExcludes>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <TreatSpecificWarningsAsErrors />
+    <NoWarn>0618</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
