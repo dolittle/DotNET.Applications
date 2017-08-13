@@ -206,7 +206,6 @@ namespace doLittle.Configuration
                 () => Commands.Initialize(Container),
                 () => Container.Get<IEventsConfiguration>().Initialize(Container),
                 () => Tasks.Initialize(Container),
-                () => Views.Initialize(Container),
                 () => Frontend.Initialize(Container),
                 () => CallContext.Initialize(Container),
                 () => ExecutionContext.Initialize(Container),
