@@ -22,7 +22,6 @@ namespace doLittle.Specs.Configuration.for_Configure.given
         protected static Mock<IEventsConfiguration> events_configuration;
         protected static Mock<ITasksConfiguration> tasks_configuration;
         protected static Mock<ISerializationConfiguration> serialization_configuration;
-        protected static Mock<IViewsConfiguration> views_configuration;
         protected static Mock<IDefaultStorageConfiguration> default_storage_configuration;
         protected static Mock<IFrontendConfiguration> frontend_configuration;
         protected static Mock<ICallContextConfiguration> call_context_configuration;
@@ -48,9 +47,6 @@ namespace doLittle.Specs.Configuration.for_Configure.given
 
                                     tasks_configuration = new Mock<ITasksConfiguration>();
                                     container.Setup(c => c.Get<ITasksConfiguration>()).Returns(tasks_configuration.Object);
-
-                                    views_configuration = new Mock<IViewsConfiguration>();
-                                    container.Setup(c => c.Get<IViewsConfiguration>()).Returns(views_configuration.Object);
            
                                     serialization_configuration = new Mock<ISerializationConfiguration>();
                                     container.Setup(c => c.Get<ISerializationConfiguration>()).Returns(serialization_configuration.Object);

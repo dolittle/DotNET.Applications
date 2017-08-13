@@ -184,7 +184,6 @@ namespace doLittle.Configuration
         public ICommandsConfiguration Commands { get; private set; }
         
         public ITasksConfiguration Tasks { get; private set; }
-        public IViewsConfiguration Views { get; private set; }
         public IBindingConventionManager ConventionManager { get; private set; }
         public ISerializationConfiguration Serialization { get; private set; }
         public IFrontendConfiguration Frontend { get; private set; }
@@ -226,7 +225,6 @@ namespace doLittle.Configuration
         {
             Commands = Container.Get<ICommandsConfiguration>();
             Tasks = Container.Get<ITasksConfiguration>();
-            Views = Container.Get<IViewsConfiguration>();
             ConventionManager = Container.Get<IBindingConventionManager>();
             Serialization = Container.Get<ISerializationConfiguration>();
             DefaultStorage = Container.Get<IDefaultStorageConfiguration>();

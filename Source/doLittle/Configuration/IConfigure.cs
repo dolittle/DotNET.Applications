@@ -39,11 +39,6 @@ namespace doLittle.Configuration
         ITasksConfiguration Tasks { get; }
 
         /// <summary>
-        /// Gets the configuration for views
-        /// </summary>
-        IViewsConfiguration Views { get; }
-
-        /// <summary>
         /// Gets the convention manager for bindings
         /// </summary>
         IBindingConventionManager ConventionManager { get; }
