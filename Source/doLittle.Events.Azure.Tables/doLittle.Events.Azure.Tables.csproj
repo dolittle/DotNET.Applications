@@ -19,17 +19,12 @@
     <PackageLicenseUrl>https://github.com/doLittle/DotNET.Core/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/doLittle/DotNET.Core</RepositoryUrl>
-    <!--<RuntimeIdentifiers>win</RuntimeIdentifiers>-->
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
 
     <DefaultItemExcludes>bin\**\*;obj\**\*</DefaultItemExcludes>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,10 +34,6 @@
     </None>
     <None Update="bin\Release\netstandard1.6\*.pdb">
       <PackagePath>lib/netstandard1.6/</PackagePath>
-      <Pack>true</Pack>
-    </None>
-    <None Update="bin\Release\net461\*.pdb">
-      <PackagePath>lib/net461/</PackagePath>
       <Pack>true</Pack>
     </None>
   </ItemGroup>

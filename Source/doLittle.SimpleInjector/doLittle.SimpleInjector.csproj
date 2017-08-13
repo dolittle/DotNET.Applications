@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard1.6</TargetFrameworks>
     <AssemblyName>doLittle.SimpleInjector</AssemblyName>
     <PackageId>doLittle.SimpleInjector</PackageId>
-    <DocumentationFile>bin\Debug\net461\doLittle.SimpleInjector.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\doLittle.SimpleInjector.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -20,13 +20,10 @@
     <PackageLicenseUrl>https://github.com/doLittle/DotNET.Core/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/doLittle/DotNET.Core</RepositoryUrl>
-    <!--<RuntimeIdentifiers>win</RuntimeIdentifiers>-->
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-
     <DefaultItemExcludes>bin\**\*;obj\**\*</DefaultItemExcludes>
   </PropertyGroup>
-  
 
   <ItemGroup>
     <ProjectReference Include="..\doLittle\doLittle.csproj" />
@@ -36,12 +33,6 @@
     <PackageReference Include="SimpleInjector" Version="4.0.7" />
     <PackageReference Include="doLittle.Assemblies" Version="2.0.0-alpha-*"/>
     <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-alpha-*"/>
-   
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6</TargetFrameworks>
     <AssemblyName>doLittle.Events.Azure.DocumentDB</AssemblyName>
     <PackageId>doLittle.Events.Azure.DocumentDB</PackageId>
-    <DocumentationFile>bin\Debug\net461\doLittle.Events.Azure.DocumentDB.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\doLittle.Events.Azure.DocumentDB.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -11,7 +11,7 @@
     <Description>doLittle is a platform designed to build Line of Business applications without sacrificing architectural quality, code quality or scalability.</Description>
     <Copyright>Copyright 2008 - 2017 Dolittle</Copyright>
     <Authors>all contributors</Authors>
-    <TargetFrameworks>net461;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6</TargetFrameworks>
     <DebugType>portable</DebugType>
     <PackageTags>MVVM;SOLID;CQRS;LOB</PackageTags>
     <PackageReleaseNotes>https://github.com/doLittle/DotNET.Core/blob/master/CHANGELOG.md</PackageReleaseNotes>
@@ -19,19 +19,13 @@
     <PackageLicenseUrl>https://github.com/doLittle/DotNET.Core/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/doLittle/DotNET.Core</RepositoryUrl>
-    <!--<RuntimeIdentifiers>win</RuntimeIdentifiers>-->
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
 
     <DefaultItemExcludes>bin\**\*;obj\**\*</DefaultItemExcludes>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
-
   <ItemGroup>
     <None Update="**\*.cs">
       <PackagePath>src/</PackagePath>
@@ -39,10 +33,6 @@
     </None>
     <None Update="bin\Release\netstandard1.6\*.pdb">
       <PackagePath>lib/netstandard1.6/</PackagePath>
-      <Pack>true</Pack>
-    </None>
-    <None Update="bin\Release\net461\*.pdb">
-      <PackagePath>lib/net461/</PackagePath>
       <Pack>true</Pack>
     </None>
   </ItemGroup>
