@@ -1,6 +1,6 @@
 ﻿using System;
 using doLittle.Commands;
-using doLittle.Execution;
+using doLittle.DependencyInversion;
 using doLittle.FluentValidation.Commands;
 using doLittle.Types;
 using doLittle.Logging;
@@ -14,7 +14,7 @@ namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
         protected static CommandValidatorProvider command_validator_provider;
 
         protected static Mock<IContainer> container_mock;
-        protected static Mock<ITypeDiscoverer> type_discoverer_mock;
+        protected static Mock<ITypeFinder> type_finder;
 
 
         protected static Type[] command_input_validators = new[] {
@@ -40,9 +40,9 @@ namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
         Establish context = () =>
                                 {
                                     container_mock = new Mock<IContainer>();
-                                    type_discoverer_mock = new Mock<ITypeDiscoverer>();
+                                    type_finder = new Mock<ITypeFinder>();
 
-                                    type_discoverer_mock.Setup(td => td.FindMultiple(typeof (ICommandInputValidator)))
+                                    type_finder.Setup(td => td.FindMultiple(typeof (ICommandInputValidator)))
                                         .Returns(new []
                                                 {
                                                     typeof(SimpleCommandInputValidator),
@@ -51,7 +51,7 @@ namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
                                                 }
                                         );
 
-                                    type_discoverer_mock.Setup(td => td.FindMultiple(typeof (ICommandBusinessValidator)))
+                                    type_finder.Setup(td => td.FindMultiple(typeof (ICommandBusinessValidator)))
                                         .Returns(new []
                                                 {
                                                     typeof(SimpleCommandBusinessValidator),
@@ -60,7 +60,7 @@ namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
                                                 }
                                         );
 
-                                    type_discoverer_mock.Setup(td => td.FindMultiple(typeof(ICommandInputValidator)))
+                                    type_finder.Setup(td => td.FindMultiple(typeof(ICommandInputValidator)))
                                         .Returns(new[]
                                                 {
                                                     typeof(SimpleCommandInputValidator),
@@ -69,7 +69,7 @@ namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
                                                 }
                                         );
 
-                                    type_discoverer_mock.Setup(td => td.FindMultiple(typeof(ICommandBusinessValidator)))
+                                    type_finder.Setup(td => td.FindMultiple(typeof(ICommandBusinessValidator)))
                                         .Returns(new[]
                                                 {
                                                     typeof(SimpleCommandBusinessValidator),
@@ -80,7 +80,7 @@ namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
 
 
                                     command_validator_provider = new CommandValidatorProvider(
-                                        type_discoverer_mock.Object,
+                                        type_finder.Object,
                                         container_mock.Object,
                                         Mock.Of<ILogger>()
                                     );
