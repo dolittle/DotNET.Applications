@@ -11,9 +11,23 @@ namespace doLittle.Serialization
     /// </summary>
     public class SerializationOptions : ISerializationOptions
     {
-        static readonly SerializationOptions DefaultOptions = new SerializationOptions(SerializationOptionsFlags.None);
-        static readonly SerializationOptions CamelCaseOptions = new SerializationOptions(SerializationOptionsFlags.UseCamelCase);
-        static readonly SerializationOptions IncludeTypeNamesOptions = new SerializationOptions(SerializationOptionsFlags.IncludeTypeNames);
+        /// <summary>
+        /// The default serialization options
+        /// </summary>
+        /// <returns>An instance of <see cref="ISerializationOptions"/></returns>
+        public static readonly ISerializationOptions DefaultOptions = new SerializationOptions(SerializationOptionsFlags.None);
+
+        /// <summary>
+        /// Serialization options for using camel case
+        /// </summary>
+        /// <returns>An instance of <see cref="ISerializationOptions"/></returns>
+        public static readonly ISerializationOptions CamelCaseOptions = new SerializationOptions(SerializationOptionsFlags.UseCamelCase);
+
+        /// <summary>
+        /// Serialization options for including type names
+        /// </summary>
+        /// <returns>An instance of <see cref="ISerializationOptions"/></returns>
+        public static readonly ISerializationOptions IncludeTypeNamesOptions = new SerializationOptions(SerializationOptionsFlags.IncludeTypeNames);
 
         /// <summary>
         /// Gets the default serialization options that will serialize all properties without any special flags.
