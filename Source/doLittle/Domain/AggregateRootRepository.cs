@@ -50,7 +50,7 @@ namespace doLittle.Domain
         /// <inheritdoc/>
 		public T Get(EventSourceId id)
         {
-            _logger.Information($"Get '{typeof(T).AssemblyQualifiedName}' with Id of '{id.Value}'");
+            _logger.Trace($"Get '{typeof(T).AssemblyQualifiedName}' with Id of '{id.Value}'");
 
             var commandContext = _commandContextManager.GetCurrent();
             var type = typeof(T);
@@ -72,9 +72,9 @@ namespace doLittle.Domain
 
         void FastForward(ICommandContext commandContext, T aggregateRoot)
         {
-            _logger.Information($"FastForward - {typeof(T).AssemblyQualifiedName}");
+            _logger.Trace($"FastForward - {typeof(T).AssemblyQualifiedName}");
             var identifier = _applicationResources.Identify(typeof(T));
-            _logger.Information($"With identifier '{identifier?.ToString()??"<unknown identifier>"}'");
+            _logger.Trace($"With identifier '{identifier?.ToString()??"<unknown identifier>"}'");
             
             var version = _eventSourceVersions.GetFor(identifier, aggregateRoot.EventSourceId);
             aggregateRoot.FastForward(version);

@@ -70,7 +70,7 @@ namespace doLittle.Events.Redis
 
         string GetKeyFor(IApplicationResourceIdentifier eventSource, EventSourceId eventSourceId)
         {
-            _logger.Information($"Getting key for eventSource '{eventSource?.ToString()??"<unknown eventsource"}' with Id '{eventSourceId?.Value.ToString()??"<unknown eventsource id>"}'");
+            _logger.Trace($"Getting key for eventSource '{eventSource?.ToString()??"<unknown eventsource"}' with Id '{eventSourceId?.Value.ToString()??"<unknown eventsource id>"}'");
             var identifier = _applicationResourceIdentifierConverter.AsString(eventSource);
 
             var key = $"{VersionForPrefix}-{identifier}-{eventSourceId.Value}";
