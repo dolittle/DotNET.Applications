@@ -4,6 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using doLittle.Collections;
 
 namespace doLittle.Applications
 {
@@ -90,6 +92,18 @@ namespace doLittle.Applications
         public int CompareTo(IApplicationResourceIdentifier other)
         {
             return GetHashCode().CompareTo(other.GetHashCode());
+        }
+
+        /// <inheritdoc/>
+        public override string ToString() 
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append(Application.Name);
+            stringBuilder.Append($" - {Resource.Name}");
+
+            LocationSegments.ForEach(segment => stringBuilder.Append("- {segment.Name}"));
+
+            return stringBuilder.ToString();
         }
     }
 }
