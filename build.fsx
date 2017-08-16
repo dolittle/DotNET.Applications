@@ -163,7 +163,7 @@ let buildNumber = if String.IsNullOrWhiteSpace(envBuildNumber) then 0 else envBu
 let isReleaseBuild = false 
 System.Environment.SetEnvironmentVariable("RELEASE_BUILD",if isReleaseBuild then "true" else "false")
 
-let buildVersion = new BuildVersion(2,0,0, buildNumber, "alpha", false)
+let buildVersion = new BuildVersion(2,0,0, buildNumber, "alpha2", false)
 
 // Package related
 let nugetPath = "./.nuget/NuGet.exe"
