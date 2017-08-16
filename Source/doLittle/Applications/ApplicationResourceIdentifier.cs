@@ -98,10 +98,11 @@ namespace doLittle.Applications
         public override string ToString() 
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append(Application.Name);
-            stringBuilder.Append($" - {Resource.Name}");
-
-            LocationSegments.ForEach(segment => stringBuilder.Append("- {segment.Name}"));
+            
+            stringBuilder.Append(Application?.Name?.ToString() ?? "<unknown application>");
+            stringBuilder.Append($" - {Resource?.Name?.ToString() ?? "<unknown resource>"}");
+           
+            LocationSegments.ForEach(segment => stringBuilder.Append($"- {segment?.Name?.ToString() ?? "<unknown segment>"}"));
 
             return stringBuilder.ToString();
         }
