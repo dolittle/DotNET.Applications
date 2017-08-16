@@ -1,6 +1,7 @@
 ﻿using doLittle.Applications;
 using doLittle.Commands;
 using doLittle.Events;
+using doLittle.Logging;
 using Machine.Specifications;
 using Moq;
 
@@ -12,6 +13,7 @@ namespace doLittle.Specs.Domain.for_AggregateRootRepository.given
         protected static Mock<IEventSourceVersions> event_source_versions;
         protected static Mock<IEventStore> event_store;
         protected static Mock<IApplicationResources> application_resources;
+        protected static Mock<ILogger> logger;
 
         Establish context = () =>
         {
@@ -19,6 +21,7 @@ namespace doLittle.Specs.Domain.for_AggregateRootRepository.given
             event_source_versions = new Mock<IEventSourceVersions>();
             event_store = new Mock<IEventStore>();
             application_resources = new Mock<IApplicationResources>();
+            logger = new Mock<ILogger>();
         };
     }
 }

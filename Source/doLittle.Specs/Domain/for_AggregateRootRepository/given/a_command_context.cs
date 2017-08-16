@@ -7,7 +7,6 @@ namespace doLittle.Specs.Domain.for_AggregateRootRepository.given
 {
     public class a_command_context : all_dependencies
 	{
-		protected static AggregateRootRepository<SimpleStatefulAggregateRoot> repository;
 	    protected static Mock<ICommandContext> command_context_mock;
 
 		Establish context = () =>

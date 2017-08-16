@@ -9,7 +9,7 @@ namespace doLittle.Specs.Domain.for_AggregateRootRepository
         protected static AggregateRootRepository<AggregateRootWithInvalidConstructorParameter> aggregate_root_repository;
         protected static Exception result;
 
-        Establish context = () => aggregate_root_repository = new AggregateRootRepository<AggregateRootWithInvalidConstructorParameter>(command_context_manager.Object, event_store.Object, event_source_versions.Object, application_resources.Object);
+        Establish context = () => aggregate_root_repository = new AggregateRootRepository<AggregateRootWithInvalidConstructorParameter>(command_context_manager.Object, event_store.Object, event_source_versions.Object, application_resources.Object, logger.Object);
 
         Because of = () => result = Catch.Exception(() => aggregate_root_repository.Get(Guid.NewGuid()));
 

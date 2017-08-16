@@ -8,6 +8,7 @@ using System.Reflection;
 using doLittle.Applications;
 using doLittle.Commands;
 using doLittle.Events;
+using doLittle.Logging;
 
 namespace doLittle.Domain
 {
@@ -22,6 +23,7 @@ namespace doLittle.Domain
         IEventStore _eventStore;
         IEventSourceVersions _eventSourceVersions;
         IApplicationResources _applicationResources;
+        readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of <see cref="AggregateRootRepository{T}">AggregatedRootRepository</see>
@@ -30,21 +32,26 @@ namespace doLittle.Domain
         /// <param name="eventStore"><see cref="IEventStore"/> for getting <see cref="IEvent">events</see></param>
         /// <param name="eventSourceVersions"><see cref="IEventSourceVersions"/> for working with versioning of <see cref="AggregateRoot"/></param>
         /// <param name="applicationResources"><see cref="IApplicationResources"/> for being able to identify resources</param>
+        /// <param name="logger"><see cref="ILogger"/> to use for logging</param>
         public AggregateRootRepository(
             ICommandContextManager commandContextManager,
             IEventStore eventStore,
             IEventSourceVersions eventSourceVersions,
-            IApplicationResources applicationResources)
+            IApplicationResources applicationResources, 
+            ILogger logger)
         {
             _commandContextManager = commandContextManager;
             _eventStore = eventStore;
             _eventSourceVersions = eventSourceVersions;
             _applicationResources = applicationResources;
+            _logger = logger;
         }
 
         /// <inheritdoc/>
 		public T Get(EventSourceId id)
         {
+            _logger.Information($"Get '{typeof(T).AssemblyQualifiedName}' with Id of '{id.Value}'");
+
             var commandContext = _commandContextManager.GetCurrent();
             var type = typeof(T);
             var constructor = GetConstructorFor(type);
@@ -65,7 +72,10 @@ namespace doLittle.Domain
 
         void FastForward(ICommandContext commandContext, T aggregateRoot)
         {
+            _logger.Information($"FastForward - {typeof(T).AssemblyQualifiedName}");
             var identifier = _applicationResources.Identify(typeof(T));
+            _logger.Information($"With identifier '{identifier.ToString()}'");
+            
             var version = _eventSourceVersions.GetFor(identifier, aggregateRoot.EventSourceId);
             aggregateRoot.FastForward(version);
         }
