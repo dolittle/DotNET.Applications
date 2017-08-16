@@ -50,7 +50,7 @@ namespace doLittle.Domain
         /// <inheritdoc/>
 		public T Get(EventSourceId id)
         {
-            _logger.Trace($"Get '{typeof(T).AssemblyQualifiedName}' with Id of '{id.Value}'");
+            _logger.Trace($"Get '{typeof(T).AssemblyQualifiedName}' with Id of '{id?.Value.ToString() ?? "<unknown id>"}'");
 
             var commandContext = _commandContextManager.GetCurrent();
             var type = typeof(T);
