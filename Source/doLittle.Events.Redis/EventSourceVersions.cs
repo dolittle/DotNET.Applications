@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using doLittle.Applications;
 using doLittle.Execution;
+using doLittle.Logging;
 using StackExchange.Redis;
 
 namespace doLittle.Events.Redis
@@ -16,9 +17,10 @@ namespace doLittle.Events.Redis
     {
         const string VersionForPrefix = "VersionFor";
 
-        IApplicationResourceIdentifierConverter _applicationResourceIdentifierConverter;
-        IEventStore _eventStore;
-        IDatabase _database;
+        readonly IApplicationResourceIdentifierConverter _applicationResourceIdentifierConverter;
+        readonly ILogger _logger;
+        readonly IEventStore _eventStore;
+        readonly IDatabase _database;
         
 
         /// <summary>
@@ -27,12 +29,15 @@ namespace doLittle.Events.Redis
         /// <param name="configuration"><see cref="EventSourceVersionsConfiguration">Configuration</see></param>
         /// <param name="eventStore"><see cref="IEventStore"/> for getting information if not in the database</param>
         /// <param name="applicationResourceIdentifierConverter">Converter for converting <see cref="IApplicationResourceIdentifier"/> "/></param>
+        /// <param name="logger"><see cref="ILogger"/> to use for logging</param>
         public EventSourceVersions(
             EventSourceVersionsConfiguration configuration,
             IEventStore eventStore,
-            IApplicationResourceIdentifierConverter applicationResourceIdentifierConverter)
+            IApplicationResourceIdentifierConverter applicationResourceIdentifierConverter,
+            ILogger logger)
         {
             _applicationResourceIdentifierConverter = applicationResourceIdentifierConverter;
+            _logger = logger;
             _eventStore = eventStore;
 
             var redis = ConnectionMultiplexer.Connect(string.Join(";", configuration.ConnectionStrings));
@@ -65,7 +70,11 @@ namespace doLittle.Events.Redis
 
         string GetKeyFor(IApplicationResourceIdentifier eventSource, EventSourceId eventSourceId)
         {
-            var key = $"{VersionForPrefix}-{_applicationResourceIdentifierConverter.AsString(eventSource)}-{eventSourceId.Value}";
+            _logger.Information($"Getting key for eventSource '{eventSource}' with Id '{eventSourceId.Value}'");
+            var identifier = _applicationResourceIdentifierConverter.AsString(eventSource);
+            
+
+            var key = $"{VersionForPrefix}-{identifier}-{eventSourceId.Value}";
             return key;
         }
     }
