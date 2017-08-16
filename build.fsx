@@ -45,9 +45,9 @@ type BuildVersion(major:int, minor:int, patch: int, build:int, preReleaseString:
             if release then 
                 sprintf "%d.%d.%d" major minor patch
             else 
-                sprintf "%d.%d.%d-%d" major minor patch build
+                sprintf "%d.%d.%d.%d" major minor patch build
         else
-            sprintf "%d.%d.%d-%s-%d" major minor patch preReleaseString build
+            sprintf "%d.%d.%d-%s.%d" major minor patch preReleaseString build
 
     member this.IsPreRelease with get() : bool = preReleaseString.Length > 0
 
