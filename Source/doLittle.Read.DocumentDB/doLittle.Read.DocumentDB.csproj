@@ -39,6 +39,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="1.2.1" />
-    <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-alpha-*"/>
+    <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-*"/>
   </ItemGroup>
 </Project>

@@ -74,10 +74,10 @@
 
     <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
     <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
-    <PackageReference Include="doLittle.Assemblies" Version="2.0.0-alpha-*"/>
-    <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-alpha-*"/>
-    <PackageReference Include="doLittle.Execution" Version="2.0.0-alpha-*"/>
-    <PackageReference Include="doLittle.Types" Version="2.0.0-alpha-*"/>
+    <PackageReference Include="doLittle.Assemblies" Version="2.0.0-*"/>
+    <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-*"/>
+    <PackageReference Include="doLittle.Execution" Version="2.0.0-*"/>
+    <PackageReference Include="doLittle.Types" Version="2.0.0-*"/>
     
   </ItemGroup>
 </Project>

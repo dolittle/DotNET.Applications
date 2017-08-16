@@ -43,9 +43,9 @@
 
   <ItemGroup>
     <PackageReference Include="Ninject" Version="4.0.0-beta-0134" />
-    <PackageReference Include="doLittle.Assemblies" Version="2.0.0-alpha-*"/>
-    <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-alpha-*"/>
-    <PackageReference Include="doLittle.Types" Version="2.0.0-alpha-*"/>
+    <PackageReference Include="doLittle.Assemblies" Version="2.0.0-*"/>
+    <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-*"/>
+    <PackageReference Include="doLittle.Types" Version="2.0.0-*"/>
   </ItemGroup>
 
 </Project>
