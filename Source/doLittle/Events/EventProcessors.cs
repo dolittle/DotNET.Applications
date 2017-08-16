@@ -39,7 +39,6 @@ namespace doLittle.Events
         public IEventProcessingResults Process(IEventEnvelope envelope, IEvent @event)
         {
             var identifier = _applicationResources.Identify(@event);
-            var i = _eventProcessorsByResourceIdentifier.First().Value;
             if (!_eventProcessorsByResourceIdentifier.ContainsKey(identifier)) return new EventProcessingResults(new IEventProcessingResult[0]);
 
             List<IEventProcessingResult> results = new List<IEventProcessingResult>();
