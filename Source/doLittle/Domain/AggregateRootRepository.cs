@@ -74,7 +74,7 @@ namespace doLittle.Domain
         {
             _logger.Information($"FastForward - {typeof(T).AssemblyQualifiedName}");
             var identifier = _applicationResources.Identify(typeof(T));
-            _logger.Information($"With identifier '{identifier.ToString()}'");
+            _logger.Information($"With identifier '{identifier?.ToString()??"<unknown identifier>"}'");
             
             var version = _eventSourceVersions.GetFor(identifier, aggregateRoot.EventSourceId);
             aggregateRoot.FastForward(version);
@@ -89,14 +89,14 @@ namespace doLittle.Domain
                 aggregateRoot.ReApply(stream);
         }
 
-        T GetInstanceFrom(EventSourceId id, System.Reflection.ConstructorInfo constructor)
+        T GetInstanceFrom(EventSourceId id, ConstructorInfo constructor)
         {
             return (constructor.GetParameters()[0].ParameterType == typeof(EventSourceId) ?
                 constructor.Invoke(new object[] { id }) :
                 constructor.Invoke(new object[] { id.Value })) as T;
         }
 
-        System.Reflection.ConstructorInfo GetConstructorFor(Type type)
+        ConstructorInfo GetConstructorFor(Type type)
         {
             return type.GetTypeInfo().GetConstructors().Where(c =>
             {
@@ -107,7 +107,7 @@ namespace doLittle.Domain
             }).SingleOrDefault();
         }
 
-        void ThrowIfConstructorIsInvalid(Type type, System.Reflection.ConstructorInfo constructor)
+        void ThrowIfConstructorIsInvalid(Type type, ConstructorInfo constructor)
         {
             if (constructor == null) throw new InvalidAggregateRootConstructorSignature(type);
         }
