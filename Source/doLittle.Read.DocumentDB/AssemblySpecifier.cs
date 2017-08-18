@@ -17,7 +17,7 @@ namespace doLittle.Read.DocumentDB
         public void Specify(IAssemblyRuleBuilder builder)
         {
             builder.ExcludeAssembliesStartingWith(
-                "MongoDB"
+                "Microsoft.Azure.DocumentDB.Core"
             );
         }
 #pragma warning disable 1591 // Xml Comments
