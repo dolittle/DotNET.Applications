@@ -16,7 +16,7 @@ using Microsoft.Azure.Documents.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace doLittle.DocumentDB.Entities
+namespace doLittle.Read.DocumentDB.Entities
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEntityContext{T}"/> specifically for DocumentDB

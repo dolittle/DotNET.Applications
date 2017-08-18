@@ -6,7 +6,7 @@ using System;
 using doLittle.Configuration;
 using doLittle.Entities;
 
-namespace doLittle.DocumentDB.Entities
+namespace doLittle.Read.DocumentDB.Entities
 {
     /// <summary>
     /// Implements the <see cref="IEntityContextConfiguration"/> specific for the DocumentDB support

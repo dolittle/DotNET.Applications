@@ -3,9 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using doLittle.Configuration;
-using doLittle.DocumentDB;
-using doLittle.DocumentDB.Entities;
+using doLittle.Read.DocumentDB;
+using doLittle.Read.DocumentDB.Entities;
 
 namespace doLittle.Configuration
 {

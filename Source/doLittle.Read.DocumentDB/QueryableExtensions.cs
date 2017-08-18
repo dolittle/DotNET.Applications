@@ -7,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace doLittle.DocumentDB
+namespace doLittle.Read.DocumentDB
 {
     /// <summary>
     /// Extends queryable with DocumentDB specific extensions

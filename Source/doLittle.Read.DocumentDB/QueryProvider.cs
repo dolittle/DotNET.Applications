@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
-using doLittle.DocumentDB.Entities;
 using doLittle.Read;
+using doLittle.Read.DocumentDB.Entities;
 using Microsoft.Azure.Documents.Linq;
 
-namespace doLittle.DocumentDB.Read
+namespace doLittle.Read.DocumentDB
 {
     /// <summary>
     /// Represents an implementation of <see cref="IQueryProviderFor{T}"/>

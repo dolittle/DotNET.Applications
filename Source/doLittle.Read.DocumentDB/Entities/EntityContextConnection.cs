@@ -9,7 +9,7 @@ using doLittle.DependencyInversion;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 
-namespace doLittle.DocumentDB.Entities
+namespace doLittle.Read.DocumentDB.Entities
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEntityContextConnection"/>

@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using Microsoft.Azure.Documents;
 
-namespace doLittle.DocumentDB
+namespace doLittle.Read.DocumentDB
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICollectionStrategy"/> that 

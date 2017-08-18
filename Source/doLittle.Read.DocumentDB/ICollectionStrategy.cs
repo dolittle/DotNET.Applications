@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using Microsoft.Azure.Documents;
 
-namespace doLittle.DocumentDB
+namespace doLittle.Read.DocumentDB
 {
     /// <summary>
     /// Defines a strategy to be used for dealing with entities and their relation to collections

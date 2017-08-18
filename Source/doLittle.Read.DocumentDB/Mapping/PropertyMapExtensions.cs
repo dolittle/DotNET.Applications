@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using doLittle.Mapping;
 
-namespace doLittle.DocumentDB.Mapping
+namespace doLittle.Read.DocumentDB.Mapping
 {
     /// <summary>
     /// Extensions for <see cref="IPropertyMap"/>

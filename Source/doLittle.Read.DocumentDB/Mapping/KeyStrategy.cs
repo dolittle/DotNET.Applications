@@ -5,7 +5,7 @@
 using System;
 using doLittle.Mapping;
 
-namespace doLittle.DocumentDB.Mapping
+namespace doLittle.Read.DocumentDB.Mapping
 {
     /// <summary>
     /// Represents an implementation of <see cref="IPropertyMappingStrategy"/> for defining a key

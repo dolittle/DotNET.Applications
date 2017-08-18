@@ -5,7 +5,7 @@
 using doLittle.Mapping;
 using Microsoft.Azure.Documents;
 
-namespace doLittle.DocumentDB.Mapping
+namespace doLittle.Read.DocumentDB.Mapping
 {
     /// <summary>
     /// Represents a concrete map for mapping any type to a <see cref="Document"/>
