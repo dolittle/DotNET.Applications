@@ -20,7 +20,6 @@ namespace doLittle.FluentValidation
         List<PropertyInfo> _properties = new List<PropertyInfo>();
 
 #pragma warning disable 1591 // Xml Comments
-        protected PropertyValidatorWithDynamicState(Expression<Func<string>> errorMessageResourceSelector) : base(errorMessageResourceSelector) { }
         protected PropertyValidatorWithDynamicState(string errorMessage) : base(errorMessage) { }
         protected PropertyValidatorWithDynamicState(string errorMessageResourceName, Type errorMessageResourceType) : base(errorMessageResourceName, errorMessageResourceType) { }
 

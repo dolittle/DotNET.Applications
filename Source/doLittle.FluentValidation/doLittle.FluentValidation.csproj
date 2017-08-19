@@ -44,7 +44,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\doLittle\doLittle.csproj" />
-    <PackageReference Include="FluentValidation" Version="6.4.1" />
+    <PackageReference Include="FluentValidation" Version="7.1.1" />
     <PackageReference Include="doLittle.Assemblies" Version="2.0.0-*"/>
     <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-*"/>
     <PackageReference Include="doLittle.Execution" Version="2.0.0-*"/>
