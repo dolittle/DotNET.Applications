@@ -16,13 +16,13 @@ namespace doLittle.Events
         /// <inheritdoc/>
         public void Failed(IEventProcessor processor, IEvent @event, IEventEnvelope envelope, IEnumerable<EventProcessingMessage> messages)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <inheritdoc/>
         public void Info(IEventProcessor processor, IEvent @event, IEventEnvelope envelope, IEnumerable<EventProcessingMessage> messages)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
