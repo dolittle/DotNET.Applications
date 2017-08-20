@@ -9,6 +9,7 @@ using System.Reflection;
 using doLittle.Applications;
 using doLittle.Concepts;
 using doLittle.Extensions;
+using doLittle.Logging;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using Microsoft.WindowsAzure.Storage.Table;
@@ -25,7 +26,9 @@ namespace doLittle.Events.Azure.Tables
         IApplicationResources _applicationResources;
         IApplicationResourceIdentifierConverter _applicationResourceIdentifierConverter;
         IApplicationResourceResolver _applicationResourceResolver;
+        ILogger _logger;
         CloudTable _table;
+        
 
         /// <summary>
         /// Initializes a new instance of <see cref="EventStore"/>
@@ -34,15 +37,18 @@ namespace doLittle.Events.Azure.Tables
         /// <param name="applicationResourceIdentifierConverter"><see cref="IApplicationResourceIdentifierConverter">Converter</see> for converting to and from string representations</param>
         /// <param name="applicationResourceResolver"><see cref="IApplicationResourceResolver"/> for resolving types from <see cref="IApplicationResourceIdentifier">identifiers</see></param>
         /// <param name="connectionStringProvider"><see cref="ICanProvideConnectionString">ConnectionString provider</see></param>
+        /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public EventStore(
             IApplicationResources applicationResources,
             IApplicationResourceIdentifierConverter applicationResourceIdentifierConverter,
             IApplicationResourceResolver applicationResourceResolver,
-            ICanProvideConnectionString connectionStringProvider)
+            ICanProvideConnectionString connectionStringProvider,
+            ILogger logger)
         {
             _applicationResources = applicationResources;
             _applicationResourceIdentifierConverter = applicationResourceIdentifierConverter;
             _applicationResourceResolver = applicationResourceResolver;
+            _logger = logger;
             var connectionString = connectionStringProvider();
 
             var account = CloudStorageAccount.Parse(connectionString);
@@ -193,7 +199,12 @@ namespace doLittle.Events.Azure.Tables
                 if (propertiesToIgnore.Contains(property.Name)) continue;
                 var value = property.GetValue(instance);
                 var entityProperty = GetEntityPropertyFor(property, value);
-                if (entityProperty != null) @event.Properties[property.Name] = entityProperty;
+                if (entityProperty != null) {
+
+                    @event.Properties[property.Name] = entityProperty;
+
+                    _logger.Trace($"Adding property '{property.Name}' as entity property '{entityProperty.PropertyType}' - '{entityProperty.ToString()}'");
+                }
             }
         }
 
