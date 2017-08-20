@@ -65,7 +65,7 @@ namespace doLittle.Events.Azure.Tables
         {
             var batch = new TableBatchOperation();
 
-            _logger.Information($"Committing {eventsAndEnvelopes.Count()} events");
+            _logger.Trace($"Committing {eventsAndEnvelopes.Count()} events");
 
             eventsAndEnvelopes.ForEach((e) =>
             {
@@ -206,7 +206,7 @@ namespace doLittle.Events.Azure.Tables
 
                     @event.Properties[property.Name] = entityProperty;
 
-                    _logger.Information($"Adding property '{property.Name}' as entity property '{entityProperty.PropertyType}' - '{entityProperty.ToString()}'");
+                    _logger.Trace($"Adding property '{property.Name}' as entity property '{entityProperty.PropertyType}' - '{entityProperty.ToString()}'");
                 }
             }
         }
