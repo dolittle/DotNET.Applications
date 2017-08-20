@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\doLittle\doLittle.csproj" />
+    <ProjectReference Include="..\doLittle.JSON\doLittle.JSON.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -144,7 +144,7 @@ namespace doLittle.Read.DocumentDB.Entities
             var serializer = new JsonSerializer()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                 ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
                 NullValueHandling = NullValueHandling.Ignore
             };

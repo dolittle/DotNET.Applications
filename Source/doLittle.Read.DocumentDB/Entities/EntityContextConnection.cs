@@ -8,6 +8,11 @@ using doLittle.Entities;
 using doLittle.DependencyInversion;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
+using Newtonsoft.Json;
+using doLittle.JSON.Serialization;
+using doLittle.Serialization;
+using doLittle.JSON.Concepts;
+using doLittle.JSON.Events;
 
 namespace doLittle.Read.DocumentDB.Entities
 {
@@ -104,7 +109,13 @@ namespace doLittle.Read.DocumentDB.Entities
 #pragma warning disable 1591 // Xml Comments
         public void Initialize(IContainer container)
         {
-            Client = new DocumentClient(new Uri(_configuration.Url), _configuration.AuthorizationKey);
+            var serializerSettings = new JsonSerializerSettings();
+            serializerSettings.ContractResolver = new SerializerContractResolver(container, SerializationOptions.DefaultOptions);
+            serializerSettings.Converters.Add(new ConceptConverter());
+            serializerSettings.Converters.Add(new ConceptDictionaryConverter());
+            serializerSettings.Converters.Add(new EventSourceVersionConverter());
+
+            Client = new DocumentClient(new Uri(_configuration.Url), _configuration.AuthorizationKey, serializerSettings);
 
             Client.ReadDatabaseFeedAsync()
                 .ContinueWith(a => Database = a.Result.Where(d => d.Id == _configuration.DatabaseId).SingleOrDefault())
