@@ -74,7 +74,9 @@ namespace doLittle.Events.Azure.Tables
                 var rowKey = e.Envelope.SequenceNumber.Value.ToString("000000000000"); 
                 var @event = new DynamicTableEntity(partitionKey, rowKey);
 
+                _logger.Trace("Adding properties for envelope");
                 AddPropertiesFrom(@event, e.Envelope);
+                _logger.Trace($"Adding properties for event : {e.Event.GetType().AssemblyQualifiedName}");
                 AddPropertiesFrom(@event, e.Event, "EventSourceId");
 
                 batch.Add(TableOperation.Insert(@event));
@@ -197,8 +199,11 @@ namespace doLittle.Events.Azure.Tables
 
         void AddPropertiesFrom(DynamicTableEntity @event, object instance, params string[] propertiesToIgnore)
         {
+            _logger.Trace("AddPropertiesFrom()")
             foreach (var property in instance.GetType().GetTypeInfo().GetProperties())
             {
+                _logger.Trace($"Property : {property.Name}");
+
                 if (propertiesToIgnore.Contains(property.Name)) continue;
                 var value = property.GetValue(instance);
                 var entityProperty = GetEntityPropertyFor(property, value);
@@ -206,7 +211,9 @@ namespace doLittle.Events.Azure.Tables
 
                     @event.Properties[property.Name] = entityProperty;
 
-                    _logger.Trace($"Adding property '{property.Name}' as entity property '{entityProperty.PropertyType}' - '{entityProperty.ToString()}'");
+                    _logger.Trace($"Adding property '{property.Name}' as entity property '{entityProperty.PropertyType}'");
+                } else {
+                    _logger.Trace("No Entity property");
                 }
             }
         }
