@@ -65,6 +65,8 @@ namespace doLittle.Events.Azure.Tables
         {
             var batch = new TableBatchOperation();
 
+            _logger.Trace($"Committing {eventsAndEnvelopes.Count()} events")
+
             eventsAndEnvelopes.ForEach((e) =>
             {
                 var partitionKey = GetPartitionKeyFor(e.Envelope.EventSource, e.Envelope.EventSourceId);
