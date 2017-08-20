@@ -253,7 +253,7 @@ namespace doLittle.Events.Azure.Tables
             else if (valueType == typeof(DateTime)) entityProperty = new EntityProperty((DateTime)value);
             else if (valueType == typeof(DateTimeOffset)) entityProperty = new EntityProperty((DateTimeOffset)value);
             else if (valueType == typeof(bool)) entityProperty = new EntityProperty((bool)value);
-            else if (valueType == typeof(decimal)) entityProperty = new EntityProperty((double)value);
+            else if (valueType == typeof(decimal)) entityProperty = new EntityProperty(Convert.ToDouble(value));
             else if (valueType == typeof(double)) entityProperty = new EntityProperty((double)value);
             else if (valueType == typeof(float)) entityProperty = new EntityProperty((double)value);
             else if (valueType.HasInterface<IApplicationResourceIdentifier>()) entityProperty = new EntityProperty(_applicationResourceIdentifierConverter.AsString((IApplicationResourceIdentifier)value));
