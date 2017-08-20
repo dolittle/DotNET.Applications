@@ -68,7 +68,8 @@ namespace doLittle.Events.Azure.Tables
             eventsAndEnvelopes.ForEach((e) =>
             {
                 var partitionKey = GetPartitionKeyFor(e.Envelope.EventSource, e.Envelope.EventSourceId);
-                var rowKey = e.Envelope.SequenceNumber.Value.ToString();
+                // RowKeys are string - for us to be able to sort them, we need to add leading zeros
+                var rowKey = e.Envelope.SequenceNumber.Value.ToString("000000000000"); 
                 var @event = new DynamicTableEntity(partitionKey, rowKey);
 
                 AddPropertiesFrom(@event, e.Envelope);
