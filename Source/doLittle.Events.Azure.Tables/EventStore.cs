@@ -206,6 +206,8 @@ namespace doLittle.Events.Azure.Tables
 
                 if (propertiesToIgnore.Contains(property.Name)) continue;
                 var value = property.GetValue(instance);
+
+                _logger.Trace($"Property value : '{value}' - with type '{value.GetType()}'");
                 var entityProperty = GetEntityPropertyFor(property, value);
                 if (entityProperty != null) {
 
@@ -220,21 +222,27 @@ namespace doLittle.Events.Azure.Tables
 
         EntityProperty GetEntityPropertyFor(PropertyInfo property, object value)
         {
+            _logger.Trace("Getting entity property");
             EntityProperty entityProperty = null;
             var valueType = value.GetType();
 
             if (value.IsConcept())
             {
+                _logger.Trace("Value is a concept");
                 value = value.GetConceptValue();
                 valueType = valueType.GetConceptValueType();
+                _logger.Trace($"The concept is of type '{valueType.Name}'");
             }
 
             if( value == null )
             {
+                _logger.Trace($"The value is null - attempting to resolve from valueType '{valueType.Name}'");
                 var typeInfo = valueType.GetTypeInfo();
                 if (typeInfo.IsValueType || valueType.HasDefaultConstructor())
                     value = Activator.CreateInstance(valueType);
                 else if (valueType == typeof(string)) value = string.Empty;
+
+                _logger.Trace($"Setting default value to '{value}'");
             }
 
             if (valueType == typeof(EventSourceVersion)) entityProperty = new EntityProperty(((EventSourceVersion)value).Combine());
