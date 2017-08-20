@@ -199,7 +199,7 @@ namespace doLittle.Events.Azure.Tables
 
         void AddPropertiesFrom(DynamicTableEntity @event, object instance, params string[] propertiesToIgnore)
         {
-            _logger.Trace("AddPropertiesFrom()")
+            _logger.Trace("AddPropertiesFrom()");
             foreach (var property in instance.GetType().GetTypeInfo().GetProperties())
             {
                 _logger.Trace($"Property : {property.Name}");
