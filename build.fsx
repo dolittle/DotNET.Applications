@@ -292,7 +292,7 @@ Target "DotNetTest" (fun _ ->
 //*****************************************************************************
 Target "PackageForNuGet" (fun _ ->
     for directory in projectsDirectories do
-        let allArgs = sprintf "pack --no-build %s --output %s" directory.FullName nugetDirectory
+        let allArgs = sprintf "pack --include-source --include-symbols --no-build %s --output %s" directory.FullName nugetDirectory
         spawnProcess("dotnet", allArgs)
 )
 
