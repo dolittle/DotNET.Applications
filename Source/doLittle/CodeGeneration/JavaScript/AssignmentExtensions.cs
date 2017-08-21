@@ -135,12 +135,11 @@ namespace doLittle.CodeGeneration.JavaScript
             {
                 if (type.IsNumericType())
                     return assignment.WithDefaultNumericValue(type);
-
-                if (type.IsDate() || type.IsDateTimeOffset())
+                else if (type.IsDate() || type.IsDateTimeOffset())
                     return assignment.WithDate();
-
-                if (type.IsBoolean())
+                else if (type.IsBoolean())
                     return assignment.WithBoolean();
+                else assignment.WithLiteral("\"\"");
             }
             else
             {
