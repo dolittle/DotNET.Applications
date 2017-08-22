@@ -33,7 +33,8 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
         <PackageReference Include="Machine.Specifications" Version="0.11.0" />
         <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
-        <PackageReference Include="moq" Version="4.7.8" />
+        <PackageReference Include="Castle.Core" Version="4.1.1" />
+        <PackageReference Include="moq" Version="4.7.9" />
         <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0-*" />
     </ItemGroup>
 
