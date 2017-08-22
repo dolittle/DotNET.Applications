@@ -108,7 +108,15 @@ namespace doLittle.Read.DocumentDB.Entities
 
         public void Delete(T entity)
         {
-
+            var properties = typeof(T).GetTypeInfo().GetProperties();
+            var idProperty = properties.Where(a => a.Name.ToLowerInvariant() == "id").AsEnumerable().FirstOrDefault();
+            var id = idProperty.GetValue(entity);
+            
+            Document document = _connection.Client.CreateDocumentQuery<Document>(_collection.DocumentsLink)
+                .Where(r => r.Id == id.ToString())
+                .AsEnumerable()
+                .SingleOrDefault();
+            var result = _connection.Client.DeleteDocumentAsync(document.SelfLink).Result;
         }
 
         public void Save(T entity)
