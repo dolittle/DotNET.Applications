@@ -41,15 +41,21 @@ namespace doLittle.Commands
             // todo: Verify that the command shape matches 100% - do not allow anything else
 
             // todo: Convert to target type if mismatch
-            request.Content.Keys.ForEach(propertyName => {
-                if( properties.ContainsKey(propertyName) ) 
+            request.Content.Keys.ForEach(propertyName =>
+            {
+                if (properties.ContainsKey(propertyName))
                 {
                     var property = properties[propertyName];
                     object value = request.Content[propertyName];
-                    if( property.PropertyType.IsConcept() )
+                    if (property.PropertyType.IsConcept())
                     {
                         value = ConceptFactory.CreateConceptInstance(property.PropertyType, value);
                     }
+                    else if (property.PropertyType == typeof(DateTimeOffset) && value.GetType() == typeof(DateTime))
+                    {
+                        value = new DateTimeOffset((DateTime)value);
+                    }
+
                     property.SetValue(instance, value);
                 }
             });
