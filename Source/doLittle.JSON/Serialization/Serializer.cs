@@ -225,7 +225,7 @@ namespace doLittle.JSON.Serialization
 
         JsonSerializer CreateSerializerForDeserialization(ISerializationOptions options = null)
         {
-            return RetrieveSerializer(options ?? SerializationOptions.Default);
+            return RetrieveSerializer(options ?? SerializationOptions.Default, true);
         }
 
         JsonSerializer CreateSerializerForSerialization(ISerializationOptions options = null)
@@ -233,21 +233,21 @@ namespace doLittle.JSON.Serialization
             return RetrieveSerializer(options ?? SerializationOptions.Default);
         }
 
-        JsonSerializer RetrieveSerializer(ISerializationOptions options)
+        JsonSerializer RetrieveSerializer(ISerializationOptions options, bool ignoreReadOnlyProperties = false)
         {
             if (options.Flags.HasFlag(SerializationOptionsFlags.IncludeTypeNames))
             {
-                return _cacheAutoTypeName.GetOrAdd(options, _ => CreateSerializer(options, TypeNameHandling.Auto));
+                return _cacheAutoTypeName.GetOrAdd(options, _ => CreateSerializer(options, TypeNameHandling.Auto, ignoreReadOnlyProperties));
             }
             else
             {
-                return _cacheNoneTypeName.GetOrAdd(options, _ => CreateSerializer(options, TypeNameHandling.None));
+                return _cacheNoneTypeName.GetOrAdd(options, _ => CreateSerializer(options, TypeNameHandling.None, ignoreReadOnlyProperties));
             }
         }
 
-        JsonSerializer CreateSerializer(ISerializationOptions options, TypeNameHandling typeNameHandling)
+        JsonSerializer CreateSerializer(ISerializationOptions options, TypeNameHandling typeNameHandling, bool ignoreReadOnlyProperties = false)
         {
-            var contractResolver = new SerializerContractResolver(_container, options);
+            var contractResolver = new SerializerContractResolver(_container, options, ignoreReadOnlyProperties);
 
             var serializer = new JsonSerializer
             {

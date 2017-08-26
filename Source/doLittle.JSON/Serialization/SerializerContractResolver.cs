@@ -22,16 +22,20 @@ namespace doLittle.JSON.Serialization
 
         readonly IContainer _container;
         readonly ISerializationOptions _options;
+        readonly bool _ignoreReadOnlyProperties;
 
         /// <summary>
         /// Initializes a new instance of <see cref="SerializerContractResolver"/>
         /// </summary>
         /// <param name="container">A <see cref="IContainer"/> to use for creating instances of types</param>
         /// <param name="options"><see cref="ISerializationOptions"/> to use during resolving</param>
-        public SerializerContractResolver(IContainer container, ISerializationOptions options)
+        /// <param name="ignoreReadOnlyProperties">Wether or not to ignore read only properties - default false</param>
+        
+        public SerializerContractResolver(IContainer container, ISerializationOptions options, bool ignoreReadOnlyProperties = false)
         {
             _container = container;
             _options = options;
+            _ignoreReadOnlyProperties = ignoreReadOnlyProperties;
         }
 
 
@@ -39,7 +43,10 @@ namespace doLittle.JSON.Serialization
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
             var properties = base.CreateProperties(type, memberSerialization);
-            if( _options != null )
+            if( _ignoreReadOnlyProperties ) 
+                properties = properties.Where(p => p.Writable == true).ToList();
+
+            if (_options != null)
                 return properties.Where(p => _options.ShouldSerializeProperty(type, p.PropertyName)).ToList();
 
             return properties;
@@ -49,8 +56,8 @@ namespace doLittle.JSON.Serialization
         public override JsonContract ResolveContract(Type type)
         {
             var contract = base.ResolveContract(type);
-        
-            if (contract is JsonObjectContract && 
+
+            if (contract is JsonObjectContract &&
                 !type.GetTypeInfo().IsValueType &&
                 !type.HasDefaultConstructor())
             {
@@ -65,10 +72,10 @@ namespace doLittle.JSON.Serialization
                                                   }
                                                   catch
                                                   {
-                                                    if (defaultCreator != null)
-                                                        return defaultCreator();
-                                                    else
-                                                        return null;
+                                                      if (defaultCreator != null)
+                                                          return defaultCreator();
+                                                      else
+                                                          return null;
                                                   }
                                               };
             }
@@ -79,7 +86,7 @@ namespace doLittle.JSON.Serialization
         protected override string ResolvePropertyName(string propertyName)
         {
             var result = base.ResolvePropertyName(propertyName);
-            if (_options != null && 
+            if (_options != null &&
                 _options.Flags.HasFlag(SerializationOptionsFlags.UseCamelCase))
                 result = result.ToCamelCase();
 
