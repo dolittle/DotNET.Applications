@@ -37,7 +37,7 @@ namespace doLittle.JSON.Serialization
         ConcurrentDictionary<ISerializationOptions, JsonSerializer> _cacheNoneTypeNameReadOnly;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Serializer2"/>
+        /// Initializes a new instance of <see cref="Serializer"/>
         /// </summary>
         /// <param name="container">A <see cref="IContainer"/> used to create instances of types during serialization</param>
         /// <param name="applicationResourceIdentifierConverter"><see cref="IApplicationResourceIdentifierConverter"/> for converting string representations of <see cref="IApplicationResourceIdentifier"/></param>
