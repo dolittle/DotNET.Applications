@@ -40,7 +40,7 @@ namespace doLittle.JSON.Serialization
         /// <param name="container">A <see cref="IContainer"/> used to create instances of types during serialization</param>
         /// <param name="applicationResourceIdentifierConverter"><see cref="IApplicationResourceIdentifierConverter"/> for converting string representations of <see cref="IApplicationResourceIdentifier"/></param>
         public Serializer(
-            IContainer container, 
+            IContainer container,
             IApplicationResourceIdentifierConverter applicationResourceIdentifierConverter)
         {
             _container = container;
@@ -178,7 +178,7 @@ namespace doLittle.JSON.Serialization
                 var property = properties.Single(p => p.Name.ToCamelCase() == parameter.Name.ToCamelCase());
                 propertiesFound.Add(property.Name);
 
-                object parameterInstance = null;                
+                object parameterInstance = null;
                 if (parameter.ParameterType == typeof(object))
                 {
                     parameterInstance = serializer.Deserialize(new JsonTextReader(new StringReader(property.Value.ToString())), typeof(ExpandoObject));
@@ -211,8 +211,8 @@ namespace doLittle.JSON.Serialization
                     {
                         var typeInfo = type.GetTypeInfo();
                         var property = typeInfo.GetProperty(propertyName);
-                        if( property == null ) property = typeInfo.GetProperty(propertyName.ToPascalCase());
-                        if (property != null)
+                        if (property == null) property = typeInfo.GetProperty(propertyName.ToPascalCase());
+                        if (property != null && property.CanWrite )
                         {
                             var deserialized = serializer.Deserialize(reader, property.PropertyType);
                             property.SetValue(instance, deserialized);
