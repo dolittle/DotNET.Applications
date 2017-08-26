@@ -68,7 +68,8 @@ namespace doLittle.Entities.Files
         {
             var path = _connection.GetPathFor<T>();
             var id = GetIdFrom(entity);
-            var filePath = string.Format("{0}\\{1}", path, id);
+            var filePath = Path.Combine(path, id.ToString());
+            
             File.Delete(filePath);
         }
 
@@ -77,7 +78,7 @@ namespace doLittle.Entities.Files
             var json = _serializer.ToJson(entity);
             var path = _connection.GetPathFor<T>();
             var id = GetIdFrom(entity);
-            var filePath = string.Format("{0}\\{1}", path, id);
+            var filePath = Path.Combine(path, id.ToString());
             File.WriteAllText(filePath, json);
         }
 
