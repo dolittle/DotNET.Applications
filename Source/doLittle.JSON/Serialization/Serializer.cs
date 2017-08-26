@@ -32,10 +32,12 @@ namespace doLittle.JSON.Serialization
         readonly IContainer _container;
         readonly IApplicationResourceIdentifierConverter _applicationResourceIdentifierConverter;
         ConcurrentDictionary<ISerializationOptions, JsonSerializer> _cacheAutoTypeName;
+        ConcurrentDictionary<ISerializationOptions, JsonSerializer> _cacheAutoTypeNameReadOnly;
         ConcurrentDictionary<ISerializationOptions, JsonSerializer> _cacheNoneTypeName;
+        ConcurrentDictionary<ISerializationOptions, JsonSerializer> _cacheNoneTypeNameReadOnly;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Serializer"/>
+        /// Initializes a new instance of <see cref="Serializer2"/>
         /// </summary>
         /// <param name="container">A <see cref="IContainer"/> used to create instances of types during serialization</param>
         /// <param name="applicationResourceIdentifierConverter"><see cref="IApplicationResourceIdentifierConverter"/> for converting string representations of <see cref="IApplicationResourceIdentifier"/></param>
@@ -47,6 +49,8 @@ namespace doLittle.JSON.Serialization
             _applicationResourceIdentifierConverter = applicationResourceIdentifierConverter;
             _cacheAutoTypeName = new ConcurrentDictionary<ISerializationOptions, JsonSerializer>();
             _cacheNoneTypeName = new ConcurrentDictionary<ISerializationOptions, JsonSerializer>();
+            _cacheAutoTypeNameReadOnly = new ConcurrentDictionary<ISerializationOptions, JsonSerializer>();
+            _cacheNoneTypeNameReadOnly = new ConcurrentDictionary<ISerializationOptions, JsonSerializer>();
         }
 
         /// <inheritdoc/>
@@ -230,17 +234,19 @@ namespace doLittle.JSON.Serialization
 
         JsonSerializer CreateSerializerForSerialization(ISerializationOptions options = null)
         {
-            return RetrieveSerializer(options ?? SerializationOptions.Default);
+            return RetrieveSerializer(options ?? SerializationOptions.Default, false);
         }
 
         JsonSerializer RetrieveSerializer(ISerializationOptions options, bool ignoreReadOnlyProperties = false)
         {
             if (options.Flags.HasFlag(SerializationOptionsFlags.IncludeTypeNames))
             {
+                if( ignoreReadOnlyProperties ) return _cacheAutoTypeNameReadOnly.GetOrAdd(options, _ => CreateSerializer(options, TypeNameHandling.Auto, ignoreReadOnlyProperties));
                 return _cacheAutoTypeName.GetOrAdd(options, _ => CreateSerializer(options, TypeNameHandling.Auto, ignoreReadOnlyProperties));
             }
             else
             {
+                if( ignoreReadOnlyProperties ) return _cacheNoneTypeNameReadOnly.GetOrAdd(options, _ => CreateSerializer(options, TypeNameHandling.None, ignoreReadOnlyProperties));
                 return _cacheNoneTypeName.GetOrAdd(options, _ => CreateSerializer(options, TypeNameHandling.None, ignoreReadOnlyProperties));
             }
         }
