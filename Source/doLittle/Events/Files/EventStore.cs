@@ -85,7 +85,7 @@ namespace doLittle.Events.Files
                 _logger.Trace($"Envelope as JSON : {envelopeAsJson}");
 
                 _logger.Trace("Correlation");
-                var _correllationId = Guid.Parse((string)envelopeValues["CorrellationId"]);
+                var _correlationId = Guid.Parse((string)envelopeValues["CorrelationId"]);
                 _logger.Trace("EventId");
                 var _eventId = Guid.Parse((string)envelopeValues["EventId"]);
                 _logger.Trace("SequenceNumber");
@@ -108,7 +108,7 @@ namespace doLittle.Events.Files
                 var _occurred = (DateTime)envelopeValues["Occurred"];
 
                 var envelope = new EventEnvelope(
-                    _correllationId,
+                    _correlationId,
                     _eventId,
                     _sequenceNumber,
                     _sequenceNumberForEventType,
