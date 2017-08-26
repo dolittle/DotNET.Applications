@@ -25,6 +25,7 @@ namespace doLittle.Events.Files
         IApplicationResourceResolver _applicationResourceResolver;
         ISerializer _serializer;
         IFiles _files;
+        ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of <see cref="EventStore"/>
@@ -38,8 +39,8 @@ namespace doLittle.Events.Files
         /// <param name="files"><see cref="IFiles"/> to work with files</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public EventStore(
-            EventStoreConfiguration configuration, 
-            IApplicationResources applicationResources, 
+            EventStoreConfiguration configuration,
+            IApplicationResources applicationResources,
             IApplicationResourceIdentifierConverter applicationResourceIdentifierConverter,
             IApplicationResourceResolver applicationResourceResolver,
             IEventEnvelopes eventEnvelopes,
@@ -55,6 +56,7 @@ namespace doLittle.Events.Files
             _applicationResourceResolver = applicationResourceResolver;
             _serializer = serializer;
             _files = files;
+            _logger = logger;
         }
 
         /// <inheritdoc/>
@@ -63,7 +65,7 @@ namespace doLittle.Events.Files
             var eventSourceIdentifier = _applicationResourceIdentifierConverter.AsString(eventSource);
             var eventPath = GetPathFor(eventSourceIdentifier, eventSourceId);
 
-            var files = _files.GetFilesIn(eventPath,"*.*").OrderBy(f => f);
+            var files = _files.GetFilesIn(eventPath, "*.*").OrderBy(f => f);
             var eventFiles = files.Where(f => f.EndsWith(".event")).ToArray();
             var envelopeFiles = files.Where(f => f.EndsWith(".envelope")).ToArray();
 
@@ -71,7 +73,7 @@ namespace doLittle.Events.Files
 
             var events = new List<EventAndEnvelope>();
 
-            for ( var eventIndex=0; eventIndex<eventFiles.Length; eventIndex++)
+            for (var eventIndex = 0; eventIndex < eventFiles.Length; eventIndex++)
             {
                 var envelopeFile = envelopeFiles[eventIndex];
                 var eventFile = eventFiles[eventIndex];
@@ -80,18 +82,31 @@ namespace doLittle.Events.Files
                 var eventAsJson = _files.ReadString(Path.GetDirectoryName(eventFile), Path.GetFileName(eventFile));
                 var envelopeValues = _serializer.GetKeyValuesFromJson(envelopeAsJson);
 
+                _logger.Trace($"Envelope as JSON : {envelopeAsJson}");
+
+                _logger.Trace("Correlation");
                 var _correllationId = Guid.Parse((string)envelopeValues["CorrellationId"]);
+                _logger.Trace("EventId");
                 var _eventId = Guid.Parse((string)envelopeValues["EventId"]);
+                _logger.Trace("SequenceNumber");
                 var _sequenceNumber = (long)envelopeValues["SequenceNumber"];
+                _logger.Trace("SequenceNumberForEventType");
                 var _sequenceNumberForEventType = (long)envelopeValues["SequenceNumberForEventType"];
+                _logger.Trace("Generation");
                 var _generation = (long)envelopeValues["Generation"];
+                _logger.Trace("Event");
                 var _event = _applicationResourceIdentifierConverter.FromString((string)envelopeValues["Event"]);
+                _logger.Trace("EventSourceId");
                 var _eventSourceId = Guid.Parse((string)envelopeValues["EventSourceId"]);
+                _logger.Trace("EventSource");
                 var _eventSource = _applicationResourceIdentifierConverter.FromString((string)envelopeValues["EventSource"]);
+                _logger.Trace("EventSourceVersion");
                 var _eventSourceVersion = EventSourceVersion.FromCombined(double.Parse(envelopeValues["Version"].ToString()));
+                _logger.Trace("CausedBy");
                 var _causedBy = (string)envelopeValues["CausedBy"];
+                _logger.Trace("Occurred");
                 var _occurred = (DateTime)envelopeValues["Occurred"];
-                    
+
                 var envelope = new EventEnvelope(
                     _correllationId,
                     _eventId,
@@ -149,7 +164,7 @@ namespace doLittle.Events.Files
             var eventSourceIdentifier = _applicationResourceIdentifierConverter.AsString(eventSource);
             var eventPath = GetPathFor(eventSourceIdentifier, eventSourceId);
 
-            var first = _files.GetFilesIn(eventPath,"*.event").OrderByDescending(f => f).FirstOrDefault();
+            var first = _files.GetFilesIn(eventPath, "*.event").OrderByDescending(f => f).FirstOrDefault();
             if (first == null) return EventSourceVersion.Zero;
 
             var versionAsString = Path.GetFileNameWithoutExtension(first);
