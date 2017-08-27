@@ -89,7 +89,7 @@ namespace doLittle.Entities.Files
         public T GetById<TProperty>(TProperty id)
         {
             var path = _connection.GetPathFor<T>();
-            var filePath = string.Format("{0}\\{1}", path, id);
+            var filePath = Path.Combine(path,id.ToString());
             var json = File.ReadAllText(filePath);
             var entity = _serializer.FromJson<T>(json);
             return entity;
@@ -98,7 +98,7 @@ namespace doLittle.Entities.Files
         public void DeleteById<TProperty>(TProperty id)
         {
             var path = _connection.GetPathFor<T>();
-            var filePath = string.Format("{0}\\{1}", path, id);
+            var filePath = Path.Combine(path,id.ToString());
             File.Delete(filePath);
         }
 
