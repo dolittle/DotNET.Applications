@@ -70,9 +70,9 @@ namespace doLittle.Applications
 
         void ThrowIfAmbiguousTypes(IApplicationResourceIdentifier identifier, IEnumerable<Type> typesMatchingName)
         {
-            _logger.Error($"Ambiguous types found for {identifier.Resource.Name}");
             if (typesMatchingName.Count() > 1) 
             {
+                _logger.Error($"Ambiguous types found for {identifier.Resource.Name}");
                 typesMatchingName.ForEach(type => _logger.Trace($"  Type found: {type.AssemblyQualifiedName}"));
                 throw new AmbiguousTypes(identifier);
             }
