@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using doLittle.Execution;
 using doLittle.Lifecycle;
+using doLittle.Logging;
 
 namespace doLittle.Events
 {
@@ -20,6 +21,7 @@ namespace doLittle.Events
         ICanSendCommittedEventStream _committedEventStreamSender;
         IEventEnvelopes _eventEnvelopes;
         IEventSequenceNumbers _eventSequenceNumbers;
+        readonly ILogger _logger;
 
         /// <summary>
         /// Initializes an instance of a <see cref="UncommittedEventStreamCoordinator"/>
@@ -29,27 +31,32 @@ namespace doLittle.Events
         /// <param name="committedEventStreamSender"><see cref="ICanSendCommittedEventStream"/> send the <see cref="CommittedEventStream"/></param>
         /// <param name="eventEnvelopes"><see cref="IEventEnvelopes"/> for working with <see cref="EventEnvelope"/></param>
         /// <param name="eventSequenceNumbers"><see cref="IEventSequenceNumbers"/> for allocating <see cref="EventSequenceNumber">sequence number</see> for <see cref="IEvent">events</see></param>
+        /// <param name="logger"><see cref="ILogger"/> for doing logging</param>
         public UncommittedEventStreamCoordinator(
             IEventStore eventStore,
             IEventSourceVersions eventSourceVersions,
             ICanSendCommittedEventStream committedEventStreamSender,
             IEventEnvelopes eventEnvelopes,
-            IEventSequenceNumbers eventSequenceNumbers)
+            IEventSequenceNumbers eventSequenceNumbers,
+            ILogger logger)
         {
             _eventStore = eventStore;
             _eventSourceVersions = eventSourceVersions;
             _committedEventStreamSender = committedEventStreamSender;
             _eventEnvelopes = eventEnvelopes;
             _eventSequenceNumbers = eventSequenceNumbers;
+            _logger = logger;
         }
 
         /// <inheritdoc/>
         public void Commit(TransactionCorrelationId correlationId, UncommittedEventStream uncommittedEventStream)
         {
+            _logger.Information($"Committing uncommitted event stream with correlationId '{correlationId}'");
             var envelopes = _eventEnvelopes.CreateFrom(uncommittedEventStream.EventSource, uncommittedEventStream.EventsAndVersion);
             var envelopesAsArray = envelopes.ToArray();
             var eventsAsArray = uncommittedEventStream.ToArray();
 
+            _logger.Trace("Create an array of events and envelopes");
             var eventsAndEnvelopes = new List<EventAndEnvelope>();
             for( var eventIndex=0; eventIndex<eventsAsArray.Length; eventIndex++ )
             {
@@ -64,10 +71,16 @@ namespace doLittle.Events
                 ));
             }
 
+            _logger.Trace("Committing events to event store");
             _eventStore.Commit(eventsAndEnvelopes);
+
+            _logger.Trace($"Set event source versions for the event source '{envelopesAsArray[0].EventSource}' with id '{envelopesAsArray[0].EventSourceId}'");
             _eventSourceVersions.SetFor(envelopesAsArray[0].EventSource, envelopesAsArray[0].EventSourceId, envelopesAsArray[envelopesAsArray.Length - 1].Version);
 
+            _logger.Trace("Create a committed event stream");
             var committedEventStream = new CommittedEventStream(uncommittedEventStream.EventSourceId, eventsAndEnvelopes);
+
+            _logger.Trace("Send the committed event stream");
             _committedEventStreamSender.Send(committedEventStream);
         }
     }

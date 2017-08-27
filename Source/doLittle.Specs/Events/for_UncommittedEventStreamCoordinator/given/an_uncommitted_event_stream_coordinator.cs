@@ -13,6 +13,7 @@ namespace doLittle.Specs.Events.for_UncommittedEventStreamCoordinator.given
                 event_source_versions.Object,
                 committed_event_stream_sender.Object, 
                 event_envelopes.Object,
-                event_sequence_numbers.Object);
+                event_sequence_numbers.Object,
+                logger.Object);
     }
 }

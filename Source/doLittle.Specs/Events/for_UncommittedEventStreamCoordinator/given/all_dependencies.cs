@@ -1,4 +1,5 @@
 ﻿using doLittle.Events;
+using doLittle.Logging;
 using Machine.Specifications;
 using Moq;
 
@@ -11,6 +12,7 @@ namespace doLittle.Specs.Events.for_UncommittedEventStreamCoordinator.given
         protected static Mock<ICanSendCommittedEventStream> committed_event_stream_sender;
         protected static Mock<IEventEnvelopes> event_envelopes;
         protected static Mock<IEventSequenceNumbers> event_sequence_numbers;
+        protected static Mock<ILogger> logger;
 
         Establish context = () =>
         {
@@ -19,6 +21,7 @@ namespace doLittle.Specs.Events.for_UncommittedEventStreamCoordinator.given
             committed_event_stream_sender = new Mock<ICanSendCommittedEventStream>();
             event_envelopes = new Mock<IEventEnvelopes>();
             event_sequence_numbers = new Mock<IEventSequenceNumbers>();
+            logger = new Mock<ILogger>();
         };
     }
 }
