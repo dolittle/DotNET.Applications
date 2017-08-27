@@ -65,27 +65,33 @@ namespace doLittle.Commands
             {
                 using (_localizer.BeginScope())
                 {
-                    _logger.Information("Handle command");
+                    _logger.Information($"Handle command of type {command.Type}");
 
                     commandResult = CommandResult.ForCommand(command);
 
+                    _logger.Trace("Authorize");
                     var authorizationResult = _commandSecurityManager.Authorize(command);
                     if (!authorizationResult.IsAuthorized)
                     {
+                        _logger.Trace("Command not authorized");
                         commandResult.SecurityMessages = authorizationResult.BuildFailedAuthorizationMessages();
                         transaction.Rollback();
                         return commandResult;
                     }
 
+                    _logger.Trace("Validate");
                     var validationResult = _commandValidationService.Validate(command);
                     commandResult.ValidationResults = validationResult.ValidationResults;
                     commandResult.CommandValidationMessages = validationResult.CommandErrorMessages;
 
                     if (commandResult.Success)
                     {
+                        _logger.Trace("Command is considered valid");
                         try
                         {
+                            _logger.Trace("Handle the command");
                             _commandHandlerManager.Handle(command);
+                            _logger.Trace("Commit transaction");
                             transaction.Commit();
                         }
                         catch (TargetInvocationException ex)

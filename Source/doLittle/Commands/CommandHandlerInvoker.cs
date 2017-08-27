@@ -11,6 +11,7 @@ using doLittle.Execution;
 using doLittle.DependencyInversion;
 using doLittle.Extensions;
 using doLittle.Types;
+using doLittle.Logging;
 
 namespace doLittle.Commands
 {
@@ -28,6 +29,7 @@ namespace doLittle.Commands
         readonly IContainer _container;
         readonly IApplicationResources _applicationResources;
         readonly ICommandRequestConverter _converter;
+        readonly ILogger _logger;
         readonly Dictionary<IApplicationResourceIdentifier, MethodInfo> _commandHandlers = new Dictionary<IApplicationResourceIdentifier, MethodInfo>();
         readonly object _initializationLock = new object();
         bool _initialized;
@@ -39,16 +41,19 @@ namespace doLittle.Commands
         /// <param name="container">A <see cref="IContainer"/> to use for getting instances of objects</param>
         /// <param name="applicationResources"><see cref="IApplicationResources"/> for identifying resources</param>
         /// <param name="converter"><see cref="ICommandRequestConverter"/> for converting to actual <see cref="ICommand"/> instances</param>
+        /// <param name="logger"><see cref="ILogger"/> used for logging</param>
         public CommandHandlerInvoker(
-            ITypeFinder typeFinder, 
-            IContainer container, 
+            ITypeFinder typeFinder,
+            IContainer container,
             IApplicationResources applicationResources,
-            ICommandRequestConverter converter)
+            ICommandRequestConverter converter,
+            ILogger logger)
         {
             _typeFinder = typeFinder;
             _container = container;
             _applicationResources = applicationResources;
             _converter = converter;
+            _logger = logger;
             _initialized = false;
         }
 
@@ -82,13 +87,25 @@ namespace doLittle.Commands
         {
             EnsureInitialized();
 
+            _logger.Information($"Trying to invoke command handlers for {command.Type}");
             if (_commandHandlers.ContainsKey(command.Type))
             {
                 var commandHandlerType = _commandHandlers[command.Type].DeclaringType;
+                _logger.Trace($"Trying command handler '{commandHandlerType.AssemblyQualifiedName}'");
                 var commandHandler = _container.Get(commandHandlerType);
                 var method = _commandHandlers[command.Type];
                 var commandInstance = _converter.Convert(command);
-                method.Invoke(commandHandler, new[] { commandInstance });
+
+
+                _logger.Trace($"Invoke");
+                try
+                {
+                    method.Invoke(commandHandler, new[] { commandInstance });
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex,$"Failed invoking command handler '{commandHandlerType.AssemblyQualifiedName}' for command of type '{command.Type}'");
+                }
                 return true;
             }
 
@@ -101,7 +118,7 @@ namespace doLittle.Commands
 
             lock (_initializationLock)
             {
-                if( !_initialized) Initialize();
+                if (!_initialized) Initialize();
                 _initialized = true;
             }
         }

@@ -3,6 +3,7 @@ using doLittle.Applications;
 using doLittle.Commands;
 using doLittle.DependencyInversion;
 using doLittle.Execution;
+using doLittle.Logging;
 using doLittle.Types;
 using Machine.Specifications;
 using Moq;
@@ -16,6 +17,8 @@ namespace doLittle.Specs.Commands.for_CommandHandlerInvoker.given
         protected static Mock<IApplicationResources> application_resources;
         protected static Mock<ICommandRequestConverter> command_request_converter;
 
+        protected static Mock<ILogger> logger;
+
         Establish context = () =>
         {
             type_finder = new Mock<ITypeFinder>();
@@ -23,6 +26,7 @@ namespace doLittle.Specs.Commands.for_CommandHandlerInvoker.given
             container = new Mock<IContainer>();
             application_resources = new Mock<IApplicationResources>();
             command_request_converter = new Mock<ICommandRequestConverter>();
+            logger = new Mock<ILogger>();
         };
     }
 }

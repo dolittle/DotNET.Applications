@@ -7,6 +7,6 @@ namespace doLittle.Specs.Commands.for_CommandHandlerInvoker.given
     {
         protected static CommandHandlerInvoker invoker;
 
-        Establish context = () => invoker = new CommandHandlerInvoker(type_finder.Object, container.Object, application_resources.Object, command_request_converter.Object); 
+        Establish context = () => invoker = new CommandHandlerInvoker(type_finder.Object, container.Object, application_resources.Object, command_request_converter.Object, logger.Object); 
     }
 }
