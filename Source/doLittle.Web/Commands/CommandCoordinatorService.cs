@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using doLittle.Commands;
 using doLittle.Extensions;
+using doLittle.Logging;
 using doLittle.Serialization;
 
 namespace doLittle.Web.Commands
@@ -15,22 +16,33 @@ namespace doLittle.Web.Commands
     {
         readonly ICommandCoordinator _commandCoordinator;
         readonly ISerializer _serializer;
+        readonly ILogger _logger;
 
         public CommandCoordinatorService(
             ICommandCoordinator commandCoordinator,
-            ISerializer serializer)
+            ISerializer serializer,
+            ILogger logger)
         {
             _commandCoordinator = commandCoordinator;
             _serializer = serializer;
+            _logger = logger;
         }
 
         public CommandResult Handle(JsonCommandRequest command)
         {
-            var contentAsKeyValues = _serializer.GetKeyValuesFromJson(command.Content).ToDictionary(k => k.Key.ToPascalCase(), k => k.Value);
-            var commandRequest = new CommandRequest(command.CorrelationId, command.Type, contentAsKeyValues);
+            try
+            {
+                var contentAsKeyValues = _serializer.GetKeyValuesFromJson(command.Content).ToDictionary(k => k.Key.ToPascalCase(), k => k.Value);
+                var commandRequest = new CommandRequest(command.CorrelationId, command.Type, contentAsKeyValues);
 
-            var result = _commandCoordinator.Handle(commandRequest);
-            return result;
+                var result = _commandCoordinator.Handle(commandRequest);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Failed handling command '{command.Type}'");
+                return new CommandResult { Exception = ex };
+            }
         }
 
         public IEnumerable<CommandResult> HandleMany(IEnumerable<JsonCommandRequest> commands)
