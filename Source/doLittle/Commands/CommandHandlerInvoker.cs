@@ -104,9 +104,13 @@ namespace doLittle.Commands
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex,$"Failed invoking command handler '{commandHandlerType.AssemblyQualifiedName}' for command of type '{command.Type}'");
+                    _logger.Error(ex, $"Failed invoking command handler '{commandHandlerType.AssemblyQualifiedName}' for command of type '{command.Type}'");
                 }
                 return true;
+            }
+            else
+            {
+                _logger.Information("No command handlers to invoke");
             }
 
             return false;
