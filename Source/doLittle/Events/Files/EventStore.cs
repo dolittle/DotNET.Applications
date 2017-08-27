@@ -95,6 +95,8 @@ namespace doLittle.Events.Files
                 var _causedBy = (string)envelopeValues["CausedBy"];
                 var _occurred = (DateTime)envelopeValues["Occurred"];
 
+                _logger.Trace("Create the envelope");
+
                 var envelope = new EventEnvelope(
                     _correlationId,
                     _eventId,
@@ -109,8 +111,13 @@ namespace doLittle.Events.Files
                     _occurred
                 );
 
+                _logger.Trace($"Resolve event type from '{envelope.Event}'");
                 var eventType = _applicationResourceResolver.Resolve(envelope.Event);
+
+                _logger.Trace($"Resolved to {eventType.AssemblyQualifiedName}");
+                _logger.Trace($"Deserialize event from {eventAsJson}");
                 var eventInstance = _serializer.FromJson(eventType, eventAsJson) as IEvent;
+                _logger.Trace("Add event to committed event stream");
                 events.Add(new EventAndEnvelope(envelope, eventInstance));
             }
 
