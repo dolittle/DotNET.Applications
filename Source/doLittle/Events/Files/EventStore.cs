@@ -83,16 +83,38 @@ namespace doLittle.Events.Files
                 var envelopeValues = _serializer.GetKeyValuesFromJson(envelopeAsJson);
 
                 _logger.Trace($"Envelope as JSON : {envelopeAsJson}");
+
+                _logger.Trace("CorrelationId");
                 var _correlationId = Guid.Parse((string)envelopeValues["CorrelationId"]);
+
+                _logger.Trace("EventId");
                 var _eventId = Guid.Parse((string)envelopeValues["EventId"]);
+
+                _logger.Trace("SequenceNumber");
                 var _sequenceNumber = (long)envelopeValues["SequenceNumber"];
+
+                _logger.Trace("SequenceNumberForEventType");
                 var _sequenceNumberForEventType = (long)envelopeValues["SequenceNumberForEventType"];
+
+                _logger.Trace("Generation");
                 var _generation = (long)envelopeValues["Generation"];
+
+                _logger.Trace("Event");
                 var _event = _applicationResourceIdentifierConverter.FromString((string)envelopeValues["Event"]);
+
+                _logger.Trace("EventSourceId");
                 var _eventSourceId = Guid.Parse((string)envelopeValues["EventSourceId"]);
+
+                _logger.Trace("EventSource");
                 var _eventSource = _applicationResourceIdentifierConverter.FromString((string)envelopeValues["EventSource"]);
+
+                _logger.Trace("EventSourceVersion");
                 var _eventSourceVersion = EventSourceVersion.FromCombined(double.Parse(envelopeValues["Version"].ToString()));
+
+                _logger.Trace("CausedBy");
                 var _causedBy = (string)envelopeValues["CausedBy"];
+
+                _logger.Trace("Occurred");
                 var _occurred = (DateTime)envelopeValues["Occurred"];
 
                 _logger.Trace("Create the envelope");
