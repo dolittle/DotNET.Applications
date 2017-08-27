@@ -8,6 +8,7 @@ using doLittle.Domain;
 using doLittle.Events;
 using doLittle.Execution;
 using doLittle.Lifecycle;
+using doLittle.Logging;
 
 namespace doLittle.Commands
 {
@@ -16,8 +17,10 @@ namespace doLittle.Commands
     /// </summary>
     public class CommandContext : ICommandContext
     {
-        IUncommittedEventStreamCoordinator _uncommittedEventStreamCoordinator;
-        List<IAggregateRoot> _objectsTracked = new List<IAggregateRoot>();
+        readonly IUncommittedEventStreamCoordinator _uncommittedEventStreamCoordinator;
+        readonly List<IAggregateRoot> _objectsTracked = new List<IAggregateRoot>();
+
+        readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new <see cref="CommandContext">CommandContext</see>
@@ -25,14 +28,17 @@ namespace doLittle.Commands
         /// <param name="command">The <see cref="CommandRequest">command</see> the context is for</param>
         /// <param name="executionContext">The <see cref="IExecutionContext"/> for the command</param>
         /// <param name="uncommittedEventStreamCoordinator">The <see cref="IUncommittedEventStreamCoordinator"/> to use for coordinating the committing of events</param>
+        /// <param name="logger"><see cref="ILogger"/> to use for logging</param>
         public CommandContext(
             CommandRequest command,
             IExecutionContext executionContext,
-            IUncommittedEventStreamCoordinator uncommittedEventStreamCoordinator)
+            IUncommittedEventStreamCoordinator uncommittedEventStreamCoordinator,
+            ILogger logger)
         {
             Command = command;
             ExecutionContext = executionContext;
             _uncommittedEventStreamCoordinator = uncommittedEventStreamCoordinator;
+            _logger = logger;
 
             // This should be exposed to the client somehow - maybe even coming from the client
             TransactionCorrelationId = Guid.NewGuid();
@@ -70,13 +76,17 @@ namespace doLittle.Commands
         /// <inheritdoc/>
         public void Commit()
         {
+            _logger.Information("Commit transaction");
             var trackedObjects = GetObjectsBeingTracked();
             foreach (var trackedObject in trackedObjects)
             {
+                _logger.Trace($"Committing events from {trackedObject.GetType().AssemblyQualifiedName}");
                 var events = trackedObject.UncommittedEvents;
                 if (events.HasEvents)
                 {
+                    _logger.Trace("Events present - send them to uncommitted eventstream coordinator");
                     _uncommittedEventStreamCoordinator.Commit(TransactionCorrelationId, events);
+                    _logger.Trace("Commit object");
                     trackedObject.Commit();
                 }
             }
@@ -85,8 +95,9 @@ namespace doLittle.Commands
         /// <inheritdoc/>
         public void Rollback()
         {
-            // Todo : Should rollback any aggregated roots that are being tracked - 
-            // PS: What do you do with events that has already been dispatched and stored?
+            // Todo : Should rollback any aggregated roots that are being tracked - this should really only be allowed to happen if we have not stored the events yet
+            // once the events are stored, we can't roll back
+
         }
 #pragma warning restore 1591 // Xml Comments
     }
