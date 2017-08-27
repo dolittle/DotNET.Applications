@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using doLittle.Domain;
 using doLittle.Events;
 using doLittle.Execution;
@@ -55,9 +56,10 @@ namespace doLittle.Commands
         public IExecutionContext ExecutionContext { get; }
 
         /// <inheritdoc/>
-        public void RegisterForTracking(IAggregateRoot aggregatedRoot)
+        public void RegisterForTracking(IAggregateRoot aggregateRoot)
         {
-            _objectsTracked.Add(aggregatedRoot);
+            if( _objectsTracked.Contains(aggregateRoot)) return;
+            _objectsTracked.Add(aggregateRoot);
         }
 
         /// <inheritdoc/>
@@ -78,6 +80,7 @@ namespace doLittle.Commands
         {
             _logger.Information("Commit transaction");
             var trackedObjects = GetObjectsBeingTracked();
+            _logger.Trace($"Total number of objects tracked '{trackedObjects.Count()}");
             foreach (var trackedObject in trackedObjects)
             {
                 _logger.Trace($"Committing events from {trackedObject.GetType().AssemblyQualifiedName}");
