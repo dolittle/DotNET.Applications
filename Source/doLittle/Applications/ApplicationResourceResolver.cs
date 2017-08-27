@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using doLittle.Collections;
 using doLittle.Execution;
 using doLittle.Logging;
 using doLittle.Types;
@@ -70,8 +71,11 @@ namespace doLittle.Applications
         void ThrowIfAmbiguousTypes(IApplicationResourceIdentifier identifier, IEnumerable<Type> typesMatchingName)
         {
             _logger.Error($"Ambiguous types found for {identifier.Resource.Name}");
-            if (typesMatchingName.Count() > 1)
+            if (typesMatchingName.Count() > 1) 
+            {
+                typesMatchingName.ForEach(type => _logger.Trace($"  Type found: {type.AssemblyQualifiedName}"));
                 throw new AmbiguousTypes(identifier);
+            }
         }
     }
 }
