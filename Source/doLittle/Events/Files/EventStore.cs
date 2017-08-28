@@ -64,7 +64,10 @@ namespace doLittle.Events.Files
         public IEnumerable<EventAndEnvelope> GetFor(IApplicationResourceIdentifier eventSource, EventSourceId eventSourceId)
         {
             var eventSourceIdentifier = _applicationResourceIdentifierConverter.AsString(eventSource);
+            _logger.Trace($"Get events for '{eventSourceIdentifier}' with id '{eventSourceId}'");
             var eventPath = GetPathFor(eventSourceIdentifier, eventSourceId);
+
+            _logger.Trace($"Path for events is '{eventPath}'");
 
             var files = _files.GetFilesIn(eventPath, "*.*").OrderBy(f => f);
             var eventFiles = files.Where(f => f.EndsWith(".event")).ToArray();
@@ -79,11 +82,16 @@ namespace doLittle.Events.Files
                 var envelopeFile = envelopeFiles[eventIndex];
                 var eventFile = eventFiles[eventIndex];
 
+                _logger.Trace($"Envelope file : '{envelopeFile}'");
+                _logger.Trace($"Event file : '{eventFile}'");
+
                 var envelopeAsJson = _files.ReadString(Path.GetDirectoryName(envelopeFile), Path.GetFileName(envelopeFile));
                 var eventAsJson = _files.ReadString(Path.GetDirectoryName(eventFile), Path.GetFileName(eventFile));
-                var envelopeValues = _serializer.GetKeyValuesFromJson(envelopeAsJson);
 
                 _logger.Trace($"Envelope as JSON : {envelopeAsJson}");
+                var envelopeValues = _serializer.GetKeyValuesFromJson(envelopeAsJson);
+
+                _logger.Trace("Get all the values from it");
 
                 var _correlationId = Guid.Parse(PropertiesFor<EventEnvelope>.GetValue(envelopeValues, e=>e.CorrelationId));
                 var _eventId = Guid.Parse(PropertiesFor<EventEnvelope>.GetValue(envelopeValues, e=>e.EventId));
@@ -140,6 +148,10 @@ namespace doLittle.Events.Files
 
                 var eventFileName = $"{envelope.Version.Commit}.{envelope.Version.Sequence}.event";
                 var envelopeFileName = $"{envelope.Version.Commit}.{envelope.Version.Sequence}.envelope";
+
+                _logger.Trace($"Writing event to '{eventFileName}'");
+                _logger.Trace($"Writing envelope to '{envelopeFileName}'")
+
 
                 _files.WriteString(path, eventFileName, eventAsJson);
                 _files.WriteString(path, envelopeFileName, envelopeAsJson);
