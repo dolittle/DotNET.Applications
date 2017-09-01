@@ -150,7 +150,7 @@ namespace doLittle.Events.Files
                 var envelopeFileName = $"{envelope.Version.Commit}.{envelope.Version.Sequence}.envelope";
 
                 _logger.Trace($"Writing event to '{eventFileName}'");
-                _logger.Trace($"Writing envelope to '{envelopeFileName}'")
+                _logger.Trace($"Writing envelope to '{envelopeFileName}'");
 
 
                 _files.WriteString(path, eventFileName, eventAsJson);
