@@ -5,7 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using doLittle.Extensions;
+using doLittle.Collections;
+using doLittle.Reflection;
 using doLittle.Validation;
 
 namespace doLittle.Read.Validation

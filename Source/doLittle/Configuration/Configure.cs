@@ -11,19 +11,18 @@ using System.Threading.Tasks;
 using doLittle.Assemblies;
 using doLittle.Assemblies.Configuration;
 using doLittle.Configuration.Defaults;
+using doLittle.Collections;
 using doLittle.DependencyInversion;
 using doLittle.DependencyInversion.Conventions;
 using doLittle.Diagnostics;
 using doLittle.Events;
 using doLittle.Execution;
-using doLittle.Extensions;
+using doLittle.Reflection;
 using doLittle.IO;
 using doLittle.Logging;
 using doLittle.Tenancy;
 using doLittle.Types;
-#if(!NET461)
 using Microsoft.Extensions.Logging;
-#endif
 
 namespace doLittle.Configuration
 {

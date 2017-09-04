@@ -5,7 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using doLittle.Extensions;
+using doLittle.Reflection;
+using doLittle.Strings;
 
 namespace doLittle.Events.Files
 {

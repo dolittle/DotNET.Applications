@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq.Expressions;
-using doLittle.Extensions;
+using doLittle.Reflection;
 using Microsoft.WindowsAzure.Storage.Table;
 
 namespace doLittle.Events.Azure.Tables

@@ -6,11 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using doLittle.Collections;
 using doLittle.DependencyInversion;
 using doLittle.Entities;
 using doLittle.Execution;
-using doLittle.Extensions;
-
+using doLittle.Reflection;
 
 namespace doLittle.Tasks
 {

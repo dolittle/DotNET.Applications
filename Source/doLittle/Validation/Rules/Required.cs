@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using doLittle.Rules;
-using doLittle.Extensions;
+using doLittle.Reflection;
 using System.Reflection;
 
 namespace doLittle.Validation.Rules

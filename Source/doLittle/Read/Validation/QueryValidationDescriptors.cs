@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using doLittle.DependencyInversion;
 using doLittle.Execution;
-using doLittle.Extensions;
+using doLittle.Collections;
 using doLittle.Types;
 
 namespace doLittle.Read.Validation

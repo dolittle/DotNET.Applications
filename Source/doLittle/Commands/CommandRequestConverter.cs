@@ -7,7 +7,8 @@ using System.Linq;
 using System.Reflection;
 using doLittle.Applications;
 using doLittle.Concepts;
-using doLittle.Extensions;
+using doLittle.Collections;
+using doLittle.Reflection;
 
 namespace doLittle.Commands
 {

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using doLittle.Execution;
-using doLittle.Extensions;
+using doLittle.Reflection;
 using doLittle.Types;
 
 namespace doLittle.Commands

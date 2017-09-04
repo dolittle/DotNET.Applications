@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using doLittle.Execution;
-using doLittle.Extensions;
+using doLittle.Collections;
 using doLittle.Types;
 
 namespace doLittle.Tenancy

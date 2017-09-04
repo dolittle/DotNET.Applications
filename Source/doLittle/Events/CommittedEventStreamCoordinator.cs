@@ -4,8 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Linq;
 using System.Threading.Tasks;
+using doLittle.Collections;
 using doLittle.Execution;
-using doLittle.Extensions;
+using doLittle.Reflection;
 
 namespace doLittle.Events
 {

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using doLittle.Extensions;
+using doLittle.Reflection;
 
 namespace doLittle.CodeGeneration.JavaScript
 {

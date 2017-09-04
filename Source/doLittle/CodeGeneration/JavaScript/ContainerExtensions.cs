@@ -8,7 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using doLittle.Concepts;
-using doLittle.Extensions;
+using doLittle.Collections;
+using doLittle.Reflection;
+using doLittle.Strings;
 
 namespace doLittle.CodeGeneration.JavaScript
 {

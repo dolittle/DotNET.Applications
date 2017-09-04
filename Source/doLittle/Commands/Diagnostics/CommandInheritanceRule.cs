@@ -5,8 +5,7 @@
 using System;
 using System.Reflection;
 using doLittle.Diagnostics;
-using doLittle.Extensions;
-
+using doLittle.Reflection;
 
 namespace doLittle.Commands.Diagnostics
 {

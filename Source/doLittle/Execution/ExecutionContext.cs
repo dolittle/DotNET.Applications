@@ -5,6 +5,7 @@
 using System.Globalization;
 using System.Security.Claims;
 using doLittle.Applications;
+using doLittle.Dynamic;
 using doLittle.Tenancy;
 using doLittle.DependencyInversion.Conventions;
 

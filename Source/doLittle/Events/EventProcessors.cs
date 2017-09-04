@@ -5,8 +5,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using doLittle.Applications;
+using doLittle.Collections;
 using doLittle.Execution;
-using doLittle.Extensions;
+using doLittle.Reflection;
 using doLittle.Types;
 
 namespace doLittle.Events

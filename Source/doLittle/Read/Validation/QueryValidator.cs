@@ -4,8 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq.Expressions;
+using doLittle.Collections;
 using doLittle.Rules;
-using doLittle.Extensions;
+using doLittle.Reflection;
 using System.Reflection;
 using System.Collections.Generic;
 

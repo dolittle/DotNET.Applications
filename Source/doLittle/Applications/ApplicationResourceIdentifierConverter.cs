@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using doLittle.Extensions;
+using doLittle.Collections;
 
 namespace doLittle.Applications
 {
