@@ -6,8 +6,8 @@ using System;
 using System.Linq;
 using System.Reflection;
 using doLittle.CodeGeneration.JavaScript;
-using doLittle.Extensions;
 using doLittle.Read;
+using doLittle.Strings;
 
 namespace doLittle.Web.Read
 {

@@ -13,12 +13,13 @@ using System.Reflection;
 using doLittle.Applications;
 using doLittle.Concepts;
 using doLittle.DependencyInversion;
-using doLittle.Extensions;
+using doLittle.Reflection;
 using doLittle.JSON.Application;
 using doLittle.JSON.Concepts;
 using doLittle.JSON.Events;
 using doLittle.Logging;
 using doLittle.Serialization;
+using doLittle.Strings;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

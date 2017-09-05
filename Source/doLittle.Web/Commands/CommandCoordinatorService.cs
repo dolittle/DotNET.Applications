@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using doLittle.Commands;
-using doLittle.Extensions;
+using doLittle.Strings;
 using doLittle.Logging;
 using doLittle.Serialization;
 

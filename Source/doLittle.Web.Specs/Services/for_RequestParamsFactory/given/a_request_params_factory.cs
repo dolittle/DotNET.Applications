@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Web;
+using doLittle.Logging;
 using doLittle.Serialization;
 using doLittle.Web.Services;
 using Machine.Specifications;
@@ -55,15 +55,6 @@ namespace doLittle.Web.Specs.Services.for_RequestParamsFactory.given
                                                                 {IN_INPUT_STREAM_COOKIES_AND_SERVER_VARIABLES,FROM_INPUTSTREAM}
                                                             };
                                                                 
-                                     var cookiesParams = new HttpCookieCollection()
-                                                            {
-                                                                new HttpCookie(IN_ALL, FROM_COOKIES),
-                                                                new HttpCookie(IN_COOKIES_ONLY, FROM_COOKIES),
-                                                                new HttpCookie(IN_FORMS_INPUT_STREAM_COOKIES_AND_SERVER_VARIABLES, FROM_COOKIES),
-                                                                new HttpCookie(IN_INPUT_STREAM_COOKIES_AND_SERVER_VARIABLES,FROM_COOKIES),
-                                                                new HttpCookie(IN_COOKIES_AND_SERVER_VARIABLES,FROM_COOKIES)
-                                                            };
-
                                      var serverVariablesParams = new NameValueCollection
                                                             {
                                                                 {IN_ALL, FROM_SERVERVARIABLES},
@@ -82,7 +73,7 @@ namespace doLittle.Web.Specs.Services.for_RequestParamsFactory.given
                                     http_request_base_mock.Setup(r => r.Form).Returns(formParams);
                                     http_request_base_mock.Setup(r => r.InputStream).Returns(new MemoryStream(input_stream));
                                     
-                                    request_params_factory = new RequestParamsFactory(serializer_mock.Object);
+                                    request_params_factory = new RequestParamsFactory(serializer_mock.Object, Mock.Of<ILogger>());
                                 };
         
         }

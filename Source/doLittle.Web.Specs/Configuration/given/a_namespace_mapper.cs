@@ -1,4 +1,5 @@
 ﻿using doLittle.Execution;
+using doLittle.Types;
 using doLittle.Web.Configuration;
 using Machine.Specifications;
 using Moq;
@@ -7,7 +8,7 @@ namespace doLittle.Web.Specs.Configuration.given
 {
     public class a_namespace_mapper
     {
-        protected static Mock<ITypeDiscoverer> type_discoverer;
+        protected static Mock<ITypeFinder> type_discoverer;
         protected static NamespaceMapper namespace_mapper;
         protected static string client_side_namespace_format;
         protected static string server_type_namespace_format;
@@ -19,7 +20,7 @@ namespace doLittle.Web.Specs.Configuration.given
 
         Establish context = () =>
             {
-                type_discoverer = new Mock<ITypeDiscoverer>();
+                type_discoverer = new Mock<ITypeFinder>();
                 type_discoverer.Setup(d => d.FindTypeByFullName(typeof (AMappedServerType).FullName))
                                .Returns(typeof (AMappedServerType));
 

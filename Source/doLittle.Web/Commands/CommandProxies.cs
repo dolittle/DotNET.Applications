@@ -11,7 +11,7 @@ using doLittle.CodeGeneration;
 using doLittle.CodeGeneration.JavaScript;
 using doLittle.Commands;
 using doLittle.Execution;
-using doLittle.Extensions;
+using doLittle.Strings;
 using doLittle.Types;
 using doLittle.Web.Configuration;
 using doLittle.Web.Proxies;

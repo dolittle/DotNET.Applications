@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using doLittle.Concepts;
-using doLittle.Extensions;
+using doLittle.Reflection;
 using Newtonsoft.Json;
 
 namespace doLittle.JSON.Concepts

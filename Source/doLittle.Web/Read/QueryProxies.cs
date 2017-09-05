@@ -7,7 +7,7 @@ using System.Linq;
 using doLittle.CodeGeneration;
 using doLittle.CodeGeneration.JavaScript;
 using doLittle.Execution;
-using doLittle.Extensions;
+using doLittle.Strings;
 using doLittle.Read;
 using doLittle.Web.Configuration;
 using doLittle.Web.Proxies;

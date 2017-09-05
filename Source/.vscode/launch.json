@@ -6,9 +6,11 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/Samples/SimpleWeb/bin/Debug/netcoreapp1.1/SimpleWeb.dll",
-            "args": [],
-            "cwd": "${workspaceRoot}/Samples/SimpleWeb",
+            "program": "dotnet",
+            "args": [
+                "test"
+            ],
+            "cwd": "${workspaceRoot}/doLittle.Web.Specs",
             "externalConsole": false,
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart"
@@ -17,7 +19,8 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
-            "processId": "${command.pickProcess}"
+            "processId": "${command:pickProcess}",
+            "justMyCode": false
         }
     ]
 }

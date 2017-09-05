@@ -7,7 +7,7 @@ using System.Text;
 using doLittle.CodeGeneration;
 using doLittle.CodeGeneration.JavaScript;
 using doLittle.Execution;
-using doLittle.Extensions;
+using doLittle.Strings;
 using doLittle.Read;
 using doLittle.Types;
 using doLittle.Web.Configuration;

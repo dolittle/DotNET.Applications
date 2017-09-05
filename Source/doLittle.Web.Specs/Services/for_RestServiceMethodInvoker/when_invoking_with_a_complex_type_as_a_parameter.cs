@@ -1,4 +1,7 @@
-﻿using Machine.Specifications;
+﻿using System.Diagnostics;
+using System.Threading;
+using doLittle.Serialization;
+using Machine.Specifications;
 using It = Machine.Specifications.It;
 
 namespace doLittle.Web.Specs.Services.for_RestServiceMethodInvoker
@@ -21,7 +24,7 @@ namespace doLittle.Web.Specs.Services.for_RestServiceMethodInvoker
                     StringValue = expected_string,
                     DoubleValue = expected_double
                 };
-                serializer_mock.Setup(s => s.FromJson(typeof(ComplexType), json, null)).Returns(expected_parameter);
+                serializer_mock.Setup(s => s.FromJson(typeof(ComplexType), json, SerializationOptions.CamelCase)).Returns(expected_parameter);
             };
 
         Because of = () => invoker.Invoke(base_url, service_instance, uri, parameters);

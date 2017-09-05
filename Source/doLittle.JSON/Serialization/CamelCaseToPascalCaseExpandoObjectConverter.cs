@@ -6,7 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
-using doLittle.Extensions;
+using doLittle.Reflection;
+using doLittle.Strings;
 using Newtonsoft.Json;
 
 namespace doLittle.JSON.Serialization

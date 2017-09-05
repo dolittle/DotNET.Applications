@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-        <AssemblyName>doLittle.Specs</AssemblyName>
+        <AssemblyName>doLittle.Web.Specs</AssemblyName>
         <DefaultItemExcludes>bin\**\*;obj\**\*</DefaultItemExcludes>
     </PropertyGroup>
     <ItemGroup>

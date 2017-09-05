@@ -9,7 +9,7 @@ using System.Runtime.Serialization.Formatters;
 using System.IO;
 using doLittle.Concepts;
 using doLittle.Entities;
-using doLittle.Extensions;
+using doLittle.Collections;
 using doLittle.Mapping;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;

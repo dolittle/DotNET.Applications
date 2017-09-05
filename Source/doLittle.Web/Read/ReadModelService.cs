@@ -5,11 +5,11 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using doLittle.DependencyInversion;
-using doLittle.Extensions;
-using doLittle.Read;
-using doLittle.Concepts;
 using System.Reflection;
+using doLittle.Concepts;
+using doLittle.DependencyInversion;
+using doLittle.Read;
+using doLittle.Strings;
 using doLittle.Security;
 using doLittle.Types;
 

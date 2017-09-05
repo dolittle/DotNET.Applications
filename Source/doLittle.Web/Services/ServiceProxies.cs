@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using doLittle.CodeGeneration;
 using doLittle.CodeGeneration.JavaScript;
-using doLittle.Extensions;
+using doLittle.Strings;
 using doLittle.Web.Proxies;
 
 namespace doLittle.Web.Services

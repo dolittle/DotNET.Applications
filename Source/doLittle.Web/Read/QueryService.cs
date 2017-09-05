@@ -5,11 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using doLittle.Concepts;
 using doLittle.Dynamic;
 using doLittle.DependencyInversion;
-using doLittle.Extensions;
 using doLittle.Logging;
 using doLittle.Read;
+using doLittle.Strings;
 using doLittle.Types;
 using doLittle.Web.Configuration;
 

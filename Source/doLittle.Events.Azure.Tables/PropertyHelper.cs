@@ -5,7 +5,6 @@
 using System;
 using System.Reflection;
 using doLittle.Concepts;
-using doLittle.Extensions;
 using Microsoft.WindowsAzure.Storage.Table;
 
 namespace doLittle.Events.Azure.Tables

@@ -8,7 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using doLittle.CodeGeneration.JavaScript;
-using doLittle.Extensions;
+using doLittle.Reflection;
+using doLittle.Strings;
 
 namespace doLittle.Web.Services
 {

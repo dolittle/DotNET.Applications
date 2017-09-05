@@ -5,7 +5,7 @@
 using System.Collections.Specialized;
 using System.IO;
 using System.Text;
-using doLittle.Extensions;
+using doLittle.Collections;
 
 namespace doLittle.Web.Services
 {

@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using doLittle.CodeGeneration.JavaScript;
 using doLittle.Concepts;
-using doLittle.Extensions;
+using doLittle.Strings;
 
 namespace doLittle.Web.Commands
 {
