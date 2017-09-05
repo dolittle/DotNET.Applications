@@ -1,3 +1,4 @@
 doLittle.Specs
 doLittle.FluentValidation.Specs
 doLittle.JSON.Specs
+doLittle.Web.Specs
