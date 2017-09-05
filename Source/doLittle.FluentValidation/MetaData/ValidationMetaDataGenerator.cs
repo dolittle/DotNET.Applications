@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using doLittle.Concepts;
-using doLittle.Extensions;
+using doLittle.Strings;
 using doLittle.FluentValidation.Commands;
 using doLittle.Types;
 using doLittle.Validation.MetaData;

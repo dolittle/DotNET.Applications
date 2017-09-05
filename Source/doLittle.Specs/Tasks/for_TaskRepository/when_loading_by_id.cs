@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using doLittle.Tasks;
-using doLittle.Extensions;
+using doLittle.Collections;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using doLittle.Extensions;
+using doLittle.Strings;
 using doLittle.FluentValidation.MetaData;
 using doLittle.Validation.MetaData;
 using Machine.Specifications;

@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using doLittle.DependencyInversion;
-using doLittle.Extensions;
 using doLittle.FluentValidation.Commands;
+using doLittle.Reflection;
 using doLittle.Types;
 using FluentValidation;
 

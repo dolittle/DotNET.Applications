@@ -1,6 +1,6 @@
 ﻿using doLittle.Concepts;
 
-namespace doLittle.Strings.Specs.for_StringExtensions
+namespace doLittle.Specs.Concepts.for_StringExtensions
 {
     public class ConceptAsLong : ConceptAs<long>
     {

@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using doLittle.Extensions;
+using doLittle.Reflection;
 using FluentValidation.Results;
 using FluentValidation.Validators;
 

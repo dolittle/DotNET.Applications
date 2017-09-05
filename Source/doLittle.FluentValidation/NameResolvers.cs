@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using doLittle.Concepts;
-using doLittle.Extensions;
+using doLittle.Reflection;
 using FluentValidation.Internal;
 
 namespace doLittle.FluentValidation

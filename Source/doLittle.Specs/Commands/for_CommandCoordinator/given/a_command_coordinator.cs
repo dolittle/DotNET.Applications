@@ -7,10 +7,11 @@ using Moq;
 using doLittle.Lifecycle;
 using doLittle.Applications;
 using System.Dynamic;
+using doLittle.Globalization;
 
 namespace doLittle.Specs.Commands.for_CommandCoordinator.given
 {
-    public abstract class a_command_coordinator : Globalization.given.a_localizer_mock
+    public class a_command_coordinator
     {
         protected static CommandCoordinator coordinator;
         protected static Mock<ICommandHandlerManager> command_handler_manager_mock;
@@ -19,6 +20,7 @@ namespace doLittle.Specs.Commands.for_CommandCoordinator.given
         protected static Mock<ICommandValidators> command_validators_mock;
         protected static Mock<ICommandContext> command_context_mock;
         protected static Mock<IExceptionPublisher> exception_publisher_mock;
+        protected static Mock<ILocalizer> localizer_mock;
         protected static Mock<ILogger> logger;
         protected static CommandRequest command;
 
@@ -39,6 +41,8 @@ namespace doLittle.Specs.Commands.for_CommandCoordinator.given
                                                                  .Returns(new AuthorizationResult());
 
                                     logger = new Mock<ILogger>();
+                                    localizer_mock = new Mock<ILocalizer>();
+                                    localizer_mock.Setup(l => l.BeginScope()).Returns(LocalizationScope.FromCurrentThread);
 
                                     coordinator = new CommandCoordinator(
                                         command_handler_manager_mock.Object,
