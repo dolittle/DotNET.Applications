@@ -8,14 +8,14 @@
     "tasks": [
         {
             "taskName": "build",
-            "args": ["doLittle.Web.Specs", "--no-restore",  "-f", "netcoreapp1.1" ],
+            "args": ["./Source/doLittle.Web.Specs", "--no-restore",  "-f", "netcoreapp1.1" ],
             "isBuildCommand": true,
             "showOutput": "always",
             "problemMatcher": "$msCompile"
         },
         {
             "taskName": "test",
-            "args": ["doLittle.Web.Specs/doLittle.Web.Specs.csproj", "--no-restore"],
+            "args": ["./Source/doLittle.Web.Specs/doLittle.Web.Specs.csproj", "--no-restore"],
             "isTestCommand": true,
             "problemMatcher": "$msCompile"
         }
