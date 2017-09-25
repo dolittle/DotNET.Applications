@@ -54,6 +54,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="1.1.1" />
         <PackageReference Include="doLittle.Assemblies" Version="2.0.0-*"/>
         <PackageReference Include="doLittle.Collections" Version="2.0.0-*"/>
+        <PackageReference Include="doLittle.Concepts" Version="2.0.0-*"/>
         <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-*"/>
         <PackageReference Include="doLittle.DependencyInversion.Conventions" Version="2.0.0-*"/>
         <PackageReference Include="doLittle.Dynamic" Version="2.0.0-*"/>
