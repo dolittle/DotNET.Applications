@@ -47,7 +47,6 @@ namespace doLittle.Specs.Events.for_UncommittedEventStreamCoordinator
 
             event_identifier = new Mock<IApplicationResourceIdentifier>();
             @event = new Mock<IEvent>();
-            @event.SetupGet(e => e.EventSourceId).Returns(event_source_id);
             event_envelope = new EventEnvelope(
                 TransactionCorrelationId.NotSet,
                 EventId.New(),

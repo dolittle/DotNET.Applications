@@ -8,7 +8,7 @@ namespace doLittle.Specs.Events.Fakes.v3
 
         public string ThirdGenerationProperty { get; set; }
 
-        public SimpleEvent(EventSourceId eventSourceId) : base(eventSourceId)
+        public SimpleEvent()
         {
             ThirdGenerationProperty = DEFAULT_VALUE_FOR_THIRD_GENERATION_PROPERTY;
         }

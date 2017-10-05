@@ -140,7 +140,7 @@ namespace doLittle.Events.Files
             foreach (var eventAndEnvelope in eventsAndEnvelopes)
             {
                 var eventSourceIdentifierAsString = _applicationResourceIdentifierConverter.AsString(eventAndEnvelope.Envelope.EventSource);
-                var path = GetPathFor(eventSourceIdentifierAsString, eventAndEnvelope.Event.EventSourceId);
+                var path = GetPathFor(eventSourceIdentifierAsString, eventAndEnvelope.Envelope.EventSourceId);
 
                 var envelope = eventAndEnvelope.Envelope;
                 var envelopeAsJson = _serializer.ToJson(eventAndEnvelope.Envelope, SerializationOptions.Default);

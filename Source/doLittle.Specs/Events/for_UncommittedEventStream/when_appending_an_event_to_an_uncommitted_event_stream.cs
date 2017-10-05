@@ -13,7 +13,7 @@ namespace doLittle.Specs.Events.for_UncommittedEventStream
 
         Establish context = () =>
         {
-            @event = new SimpleEvent(event_source_id);
+            @event = new SimpleEvent();
             version = new EventSourceVersion(1, 2);
         };
 

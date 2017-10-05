@@ -12,17 +12,6 @@ namespace doLittle.Events
     public abstract class Event : IEvent
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="Event">Event</see>
-        /// </summary>
-        protected Event(EventSourceId eventSourceId)
-        {
-            EventSourceId = eventSourceId;
-        }
-
-        /// <inheritdoc/>
-        public EventSourceId EventSourceId { get; set; }
-
-        /// <summary>
         /// Compares the event with another event, but will skip properties that are on the <see cref="IEvent"/> interface
         /// </summary>
         /// <param name="obj">The other event to compare to</param>

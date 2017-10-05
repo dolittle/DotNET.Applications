@@ -8,8 +8,7 @@ namespace doLittle.Specs.Events.Fakes.v2
 
         public string SecondGenerationProperty { get; set; }
 
-
-        public SimpleEvent(EventSourceId  eventSourceId) : base(eventSourceId)
+        public SimpleEvent()
         {
             SecondGenerationProperty = DEFAULT_VALUE_FOR_SECOND_GENERATION_PROPERTY;
         }

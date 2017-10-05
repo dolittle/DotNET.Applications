@@ -18,15 +18,15 @@ namespace doLittle.Specs.Events.for_EventSource
         Establish context =
             () =>
             {
-                @event = new SimpleEvent(event_source_id);
+                @event = new SimpleEvent();
                 event_envelope = new Mock<IEventEnvelope>();
                 event_envelope.SetupGet(e => e.Version).Returns(EventSourceVersion.Zero);
 
-                second_event = new SimpleEvent(event_source_id);
+                second_event = new SimpleEvent();
                 second_event_envelope = new Mock<IEventEnvelope>();
                 second_event_envelope.SetupGet(e => e.Version).Returns(EventSourceVersion.Zero.NextSequence());
 
-                third_event = new SimpleEvent(event_source_id);
+                third_event = new SimpleEvent();
                 third_event_envelope = new Mock<IEventEnvelope>();
                 third_event_envelope.SetupGet(e => e.Version).Returns(EventSourceVersion.Zero.NextCommit().NextSequence());
 

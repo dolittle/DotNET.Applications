@@ -54,7 +54,6 @@ namespace doLittle.Specs.Events.for_UncommittedEventStreamCoordinator
             first_event_source_version = new EventSourceVersion(4, 2);
             first_event_identifier = new Mock<IApplicationResourceIdentifier>();
             first_event = new Mock<IEvent>();
-            first_event.SetupGet(e => e.EventSourceId).Returns(event_source_id);
             first_event_envelope = new EventEnvelope(
                 TransactionCorrelationId.NotSet,
                 EventId.New(),
@@ -74,7 +73,6 @@ namespace doLittle.Specs.Events.for_UncommittedEventStreamCoordinator
             second_event_source_version = new EventSourceVersion(4, 3);
             second_event_identifier = new Mock<IApplicationResourceIdentifier>();
             second_event = new Mock<IEvent>();
-            second_event.SetupGet(e => e.EventSourceId).Returns(event_source_id);
             second_event_envelope = new EventEnvelope(
                 TransactionCorrelationId.NotSet,
                 EventId.New(),

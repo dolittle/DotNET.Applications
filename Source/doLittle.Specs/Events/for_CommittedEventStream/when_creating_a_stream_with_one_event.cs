@@ -13,7 +13,7 @@ namespace doLittle.Specs.Events.for_CommittedEventStream
 
         Establish context = () =>
         {
-            @event = new SimpleEvent(event_source_id);
+            @event = new SimpleEvent();
             event_envelope = new Mock<IEventEnvelope>();
         };
 

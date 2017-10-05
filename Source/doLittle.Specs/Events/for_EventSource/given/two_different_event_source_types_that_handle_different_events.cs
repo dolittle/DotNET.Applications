@@ -19,8 +19,8 @@ namespace doLittle.Specs.Events.for_EventSource.given
                                 {
                                     event_source_id = Guid.NewGuid();
                                     second_event_source_id = Guid.NewGuid();
-                                    simple_event = new SimpleEvent(event_source_id);
-                                    another_simple_event = new AnotherSimpleEvent(second_event_source_id);
+                                    simple_event = new SimpleEvent();
+                                    another_simple_event = new AnotherSimpleEvent();
 
                                     event_source = new StatefulAggregatedRoot(event_source_id);
                                     second_event_source = new AnotherStatefulAggregatedRoot(second_event_source_id);

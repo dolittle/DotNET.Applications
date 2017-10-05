@@ -22,7 +22,7 @@ namespace doLittle.Specs.Events.for_EventSource
                              handled_event_for_second_event_source = second_event_source.GetOnMethod(another_simple_event);
                              //unhandled_event_for_second_event_source = second_event_source.GetHandleMethod(simple_event);
 
-                             second_handled_event_for_second_event_source = second_event_source.GetOnMethod(new SimpleEventWithOneProperty(second_event_source_id));
+                             second_handled_event_for_second_event_source = second_event_source.GetOnMethod(new SimpleEventWithOneProperty());
                          };
 
         It should_get_the_correct_handle_method_for_the_simple_event = () => handled_event_for_first_event_source.ShouldNotBeNull();

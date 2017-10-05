@@ -13,7 +13,7 @@ namespace doLittle.Specs.Events.for_ProcessMethodInvoker
         Establish context = () =>
                                 {
                                     instance = new object();
-                                    @event = new SimpleEvent(Guid.NewGuid());
+                                    @event = new SimpleEvent();
                                 };
 
 

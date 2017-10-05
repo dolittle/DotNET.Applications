@@ -17,7 +17,7 @@ namespace doLittle.Specs.Events.for_UncommittedEventStream
                     events_and_envelopes = new List<EventAndVersion>();
                     for (var i = 0; i < 5; i++ )
                     {
-                        var @event = new SimpleEvent(event_source_id);
+                        var @event = new SimpleEvent();
                         events_and_envelopes.Add(new EventAndVersion(@event, version));
                         version = version.NextSequence();
                     }

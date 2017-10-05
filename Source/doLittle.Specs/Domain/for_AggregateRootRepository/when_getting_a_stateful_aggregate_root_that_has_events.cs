@@ -17,7 +17,7 @@ namespace doLittle.Specs.Domain.for_AggregateRootRepository
 
         Establish context = () =>
         {
-            var @event = new SimpleEvent(event_source_id);
+            var @event = new SimpleEvent();
             var version = new EventSourceVersion(1, 1);
             var event_envelope = new Mock<IEventEnvelope>();
             

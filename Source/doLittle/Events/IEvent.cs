@@ -15,9 +15,5 @@ namespace doLittle.Events
     /// </remarks>
     public interface IEvent : IConvention
     {
-        /// <summary>
-        /// Gets the <see cref="EventSourceId"/> for the <see cref="IEventSource"/> the event originates from
-        /// </summary>
-        EventSourceId EventSourceId { get; set; }
     }
 }

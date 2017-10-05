@@ -65,8 +65,6 @@ namespace doLittle.Events
         public void Append(IEvent @event, EventSourceVersion version)
         {
             ThrowIfEventIsNull(@event);
-            ThrowIfEventBelongsToOtherEventSource(@event);
-            @event.EventSourceId = EventSourceId;
             _events.Add(@event);
             _eventsAndVersion.Add(new EventAndVersion(@event, version));
         }
@@ -81,12 +79,6 @@ namespace doLittle.Events
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _events.GetEnumerator();
-        }
-
-        void ThrowIfEventBelongsToOtherEventSource(IEvent @event)
-        {
-            if (@event.EventSourceId != EventSourceId)
-                throw new EventBelongsToOtherEventSource(@event.EventSourceId, EventSourceId);
         }
 
         void ThrowIfEventIsNull(IEvent @event)

@@ -12,8 +12,8 @@ namespace doLittle.Specs.Events.for_Event
 
         Establish context = () =>
                                 {
-                                    first_event = new SimpleEventWithOneProperty(Guid.NewGuid());
-                                    second_event = new SimpleEventWithOneProperty(Guid.NewGuid());
+                                    first_event = new SimpleEventWithOneProperty();
+                                    second_event = new SimpleEventWithOneProperty();
                                 };
 
         Because of = () => is_equal = first_event.Equals(second_event);

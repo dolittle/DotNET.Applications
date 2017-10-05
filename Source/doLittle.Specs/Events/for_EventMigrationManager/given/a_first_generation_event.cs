@@ -20,7 +20,7 @@ namespace doLittle.Specs.Events.for_EventMigrationManager.given
         Establish context = () =>
                                 {
                                     event_source_id = Guid.NewGuid();
-                                    source_event = new SimpleEvent(event_source_id);
+                                    source_event = new SimpleEvent();
                                     type_finder = new Mock<ITypeFinder>();
                                     container = new Mock<IContainer>();
                                     container.Setup(c => c.Get(Moq.It.IsAny<Type>())).Returns(

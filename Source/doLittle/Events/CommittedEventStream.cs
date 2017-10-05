@@ -82,12 +82,6 @@ namespace doLittle.Events
         {
             if (eventAndEnvelope.Event == null)
                 throw new ArgumentNullException("Cannot append a null event");
-
-            if (eventAndEnvelope.Event.EventSourceId.Value != EventSourceId.Value)
-                throw new ArgumentException(
-                    string.Format("Cannot append an event from a different source.  Expected source {0} but got {1}.",
-                                  EventSourceId, eventAndEnvelope.Event.EventSourceId)
-                    );
         }
     }
 }

@@ -6,7 +6,7 @@ namespace doLittle.Specs.Events.Fakes
     {
         public v2.SimpleEvent Migrate(SimpleEvent source)
         {
-            var simpleEvent2 = new v2.SimpleEvent(source.EventSourceId);
+            var simpleEvent2 = new v2.SimpleEvent();
             return simpleEvent2;
         }
     }

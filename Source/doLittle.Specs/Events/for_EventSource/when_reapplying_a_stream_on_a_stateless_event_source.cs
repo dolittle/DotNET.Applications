@@ -12,7 +12,7 @@ namespace doLittle.Specs.Events.for_EventSource
         static CommittedEventStream event_stream;
         static Exception exception;
 
-        Establish context = () => event_stream = new CommittedEventStream(event_source_id, new[] { new EventAndEnvelope(new Mock<IEventEnvelope>().Object, new SimpleEvent(event_source_id)) });
+        Establish context = () => event_stream = new CommittedEventStream(event_source_id, new[] { new EventAndEnvelope(new Mock<IEventEnvelope>().Object, new SimpleEvent()) });
 
         Because of = () => exception = Catch.Exception(() => event_source.ReApply(event_stream));
 

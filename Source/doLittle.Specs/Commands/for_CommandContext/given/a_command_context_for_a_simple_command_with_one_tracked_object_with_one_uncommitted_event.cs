@@ -11,7 +11,7 @@ namespace doLittle.Specs.Commands.for_CommandContext.given
 
         Establish context = () =>
         {
-            uncommitted_event = new SimpleEvent(aggregated_root.EventSourceId);
+            uncommitted_event = new SimpleEvent();
             event_envelope = new Mock<IEventEnvelope>();
             event_envelope.SetupGet(e => e.EventSourceId).Returns(aggregated_root.EventSourceId);
             event_envelopes.Setup(e => e.CreateFrom(aggregated_root, uncommitted_event, Moq.It.IsAny<EventSourceVersion>())).Returns(event_envelope.Object);
