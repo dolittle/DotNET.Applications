@@ -6,9 +6,10 @@ using System.Globalization;
 using System.Reflection;
 using doLittle.Assemblies.Configuration;
 using doLittle.Execution;
-using doLittle.Tenancy;
 using doLittle.DependencyInversion;
 using doLittle.DependencyInversion.Conventions;
+using doLittle.Runtime.Tenancy;
+using doLittle.Runtime.Execution;
 
 namespace doLittle.Configuration
 {
@@ -43,11 +44,7 @@ namespace doLittle.Configuration
         /// </summary>
         IBindingConventionManager ConventionManager { get; }
 
-        /// <summary>
-        /// Gets the configureation for serialization
-        /// </summary>
-        ISerializationConfiguration Serialization { get; }
-        
+       
         /// <summary>
         /// Gets the configureation for the applications default storage
         /// </summary>
@@ -72,11 +69,6 @@ namespace doLittle.Configuration
         /// Gets the configuration for security
         /// </summary>
         ISecurityConfiguration Security { get; }
-
-        /// <summary>
-        /// Gets the configuration for tenancy
-        /// </summary>
-        ITenancyConfiguration Tenancy { get; }
 
         /// <summary>
         /// Gets the configuration for assemblies and how they are treated

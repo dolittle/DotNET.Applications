@@ -6,13 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using doLittle.Applications;
 using doLittle.Collections;
 using doLittle.Execution;
 using doLittle.DependencyInversion;
 using doLittle.Reflection;
 using doLittle.Types;
 using doLittle.Logging;
+using doLittle.Runtime.Applications;
 
 namespace doLittle.Commands
 {

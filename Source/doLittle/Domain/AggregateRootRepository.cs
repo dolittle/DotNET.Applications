@@ -5,10 +5,11 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using doLittle.Applications;
 using doLittle.Commands;
-using doLittle.Events;
 using doLittle.Logging;
+using doLittle.Runtime.Applications;
+using doLittle.Runtime.Events;
+using doLittle.Runtime.Events.Stores;
 
 namespace doLittle.Domain
 {

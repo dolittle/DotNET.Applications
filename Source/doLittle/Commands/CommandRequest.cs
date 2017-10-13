@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
-using doLittle.Applications;
-using doLittle.Lifecycle;
+using doLittle.Runtime.Applications;
+using doLittle.Runtime.Transactions;
 
 namespace doLittle.Commands
 {

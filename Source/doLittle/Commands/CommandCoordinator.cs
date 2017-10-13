@@ -6,8 +6,8 @@ using System;
 using System.Reflection;
 using doLittle.Exceptions;
 using doLittle.Globalization;
-using doLittle.Lifecycle;
 using doLittle.Logging;
+using doLittle.Runtime.Transactions;
 
 namespace doLittle.Commands
 {

@@ -5,7 +5,8 @@
 using System;
 using System.Linq.Expressions;
 using doLittle.Execution;
-using doLittle.Tenancy;
+using doLittle.Runtime.Execution;
+using doLittle.Runtime.Tenancy;
 
 namespace doLittle.Security
 {

@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using doLittle.DependencyInversion;
 using doLittle.Execution;
+using doLittle.Runtime.Execution;
 
 namespace doLittle.Configuration
 {

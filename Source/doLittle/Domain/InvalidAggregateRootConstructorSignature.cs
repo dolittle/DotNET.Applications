@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
+using doLittle.Runtime.Events;
 
 namespace doLittle.Domain
 {
@@ -11,7 +12,7 @@ namespace doLittle.Domain
     /// signature for the constructor. 
     /// 
     /// Expected format is a public constructor with one parameter which is either a <see cref="Guid"/>
-    /// or a <see cref="Events.EventSourceId"/>
+    /// or a <see cref="EventSourceId"/>
     /// </summary>
     public class InvalidAggregateRootConstructorSignature : ArgumentException
     {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using doLittle.Serialization;
+using doLittle.Serialization.Json;
 
 namespace doLittle.Entities.Files
 {

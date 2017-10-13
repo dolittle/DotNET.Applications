@@ -4,9 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using doLittle.Domain;
-using doLittle.Events;
-using doLittle.Execution;
-using doLittle.Lifecycle;
+using doLittle.Runtime.Execution;
+using doLittle.Runtime.Transactions;
 
 namespace doLittle.Commands
 {

@@ -5,10 +5,10 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using doLittle.Applications;
 using doLittle.Concepts;
 using doLittle.Collections;
 using doLittle.Reflection;
+using doLittle.Runtime.Applications;
 
 namespace doLittle.Commands
 {

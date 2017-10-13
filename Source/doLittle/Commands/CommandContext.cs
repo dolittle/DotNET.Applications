@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using doLittle.Domain;
-using doLittle.Events;
-using doLittle.Execution;
-using doLittle.Lifecycle;
+using doLittle.Runtime.Execution;
+using doLittle.Runtime.Events.Coordination;
+using doLittle.Runtime.Transactions;
 using doLittle.Logging;
 
 namespace doLittle.Commands

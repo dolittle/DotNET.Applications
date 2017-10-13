@@ -15,12 +15,10 @@ using doLittle.Collections;
 using doLittle.DependencyInversion;
 using doLittle.DependencyInversion.Conventions;
 using doLittle.Diagnostics;
-using doLittle.Events;
 using doLittle.Execution;
 using doLittle.Reflection;
 using doLittle.IO;
 using doLittle.Logging;
-using doLittle.Tenancy;
 using doLittle.Types;
 using Microsoft.Extensions.Logging;
 
@@ -184,12 +182,10 @@ namespace doLittle.Configuration
         
         public ITasksConfiguration Tasks { get; private set; }
         public IBindingConventionManager ConventionManager { get; private set; }
-        public ISerializationConfiguration Serialization { get; private set; }
         public IFrontendConfiguration Frontend { get; private set; }
         public ICallContextConfiguration CallContext { get; private set; }
         public IExecutionContextConfiguration ExecutionContext { get; private set; }
         public ISecurityConfiguration Security { get; private set; }
-        public ITenancyConfiguration Tenancy { get; private set; }
         public AssembliesConfiguration Assemblies { get; private set; }
         public IQualityAssurance QualityAssurance { get; private set; }
         public CultureInfo Culture { get; set; }
@@ -201,15 +197,12 @@ namespace doLittle.Configuration
             InitializeCulture();
             
             var initializers = new Action[] {
-                () => Serialization.Initialize(Container),
                 () => Commands.Initialize(Container),
-                () => Container.Get<IEventsConfiguration>().Initialize(Container),
                 () => Tasks.Initialize(Container),
                 () => Frontend.Initialize(Container),
                 () => CallContext.Initialize(Container),
                 () => ExecutionContext.Initialize(Container),
                 () => Security.Initialize(Container),
-                () => Tenancy.Initialize(Container),
                 () => DefaultStorage.Initialize(Container)
             };
 
@@ -224,13 +217,11 @@ namespace doLittle.Configuration
             Commands = Container.Get<ICommandsConfiguration>();
             Tasks = Container.Get<ITasksConfiguration>();
             ConventionManager = Container.Get<IBindingConventionManager>();
-            Serialization = Container.Get<ISerializationConfiguration>();
             DefaultStorage = Container.Get<IDefaultStorageConfiguration>();
             Frontend = Container.Get<IFrontendConfiguration>();
             CallContext = Container.Get<ICallContextConfiguration>();
             ExecutionContext = Container.Get<IExecutionContextConfiguration>();
             Security = Container.Get<ISecurityConfiguration>();
-            Tenancy = Container.Get<ITenancyConfiguration>();
             QualityAssurance = Container.Get<IQualityAssurance>();
         }
 
