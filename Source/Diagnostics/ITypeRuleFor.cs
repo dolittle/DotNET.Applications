@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using doLittle.Conventions;
 
 namespace doLittle.Diagnostics
 {
@@ -14,7 +13,7 @@ namespace doLittle.Diagnostics
     /// <remarks>
     /// Types inheriting from this interface will be automatically registered.
     /// </remarks>
-    public interface ITypeRuleFor<T> : IConvention
+    public interface ITypeRuleFor<T>
     {
         /// <summary>
         /// Validate and report any problems
