@@ -1,4 +1,0 @@
-﻿doLittle.namespace("doLittle",{
-    uriMappers: {
-    }
-});
