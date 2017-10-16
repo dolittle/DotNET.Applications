@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>doLittle.Commands</AssemblyName>
+    </PropertyGroup>
+    <Import Project="../../Build/MSBuild/default.props" />
+    <ItemGroup>
+        <PackageReference Include="doLittle.Execution" Version="2.0.0-*" />
+        <PackageReference Include="doLittle.Logging" Version="2.0.0-*" />
+        <PackageReference Include="doLittle.Runtime.Execution" Version="2.0.0-*" />
+        <PackageReference Include="doLittle.Runtime.Applications" Version="2.0.0-*" />
+        <PackageReference Include="doLittle.Runtime.Transactions" Version="2.0.0-*" />
+    </ItemGroup>
+</Project>
