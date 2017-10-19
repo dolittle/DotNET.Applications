@@ -37,6 +37,8 @@ log.txt
 
 *.trx
 
+.buildsettings
+
 # OS generated files #
 ######################
 .DS_Store
