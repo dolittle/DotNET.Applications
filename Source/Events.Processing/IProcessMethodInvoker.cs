@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace doLittle.Events
+namespace doLittle.Events.Processing
 {
 	/// <summary>
 	/// Defines an invoker for handle methods - it should recognize methods called Handle and be able to 

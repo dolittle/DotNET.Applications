@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace doLittle.Events
+namespace doLittle.Events.Processing
 {
     /// <summary>
     /// Represents an implementation of <see cref="IProcessMethodInvoker"/>

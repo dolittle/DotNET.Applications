@@ -5,7 +5,7 @@
 using System;
 using doLittle.Runtime.Applications;
 
-namespace doLittle.Events
+namespace doLittle.Events.Processing
 {
     /// <summary>
     /// Represents a <see cref="IApplicationResourceType">application resource type</see> for 

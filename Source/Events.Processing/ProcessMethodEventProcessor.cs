@@ -11,7 +11,7 @@ using doLittle.Runtime.Events;
 using doLittle.Runtime.Applications;
 using doLittle.Runtime.Events.Processing;
 
-namespace doLittle.Events.InProcess
+namespace doLittle.Events.Processing
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEventProcessor"/> for systems marked with the

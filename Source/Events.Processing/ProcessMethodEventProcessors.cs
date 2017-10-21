@@ -13,7 +13,7 @@ using doLittle.Types;
 using doLittle.Runtime.Applications;
 using doLittle.Runtime.Events.Processing;
 
-namespace doLittle.Events.InProcess
+namespace doLittle.Events.Processing
 {
     /// <summary>
     /// Represents an implementation of <see cref="IKnowAboutEventProcessors"/> for 
