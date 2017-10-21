@@ -1,6 +1,7 @@
-﻿using doLittle.Applications;
-using doLittle.Commands;
-using doLittle.Events;
+﻿using doLittle.Runtime.Applications;
+using doLittle.Runtime.Commands;
+using doLittle.Runtime.Events;
+using doLittle.Runtime.Events.Storage;
 using doLittle.Logging;
 using Machine.Specifications;
 using Moq;

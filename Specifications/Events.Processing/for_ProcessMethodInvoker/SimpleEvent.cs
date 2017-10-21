@@ -1,4 +1,4 @@
-﻿namespace doLittle.Runtime.Events.Processing.Specs.for_ProcessMethodInvoker
+﻿namespace doLittle.Events.Processing.Specs.for_ProcessMethodInvoker
 {
     public class SimpleEvent : IEvent
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using doLittle.Domain;
-using doLittle.Events;
+using doLittle.Runtime.Events;
 using Machine.Specifications;
 
 namespace doLittle.Specs.Domain.for_AggregateRootRepository

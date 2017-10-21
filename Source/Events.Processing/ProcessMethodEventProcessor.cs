@@ -4,16 +4,18 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using doLittle.Applications;
 using doLittle.Execution;
 using doLittle.DependencyInversion;
 using doLittle.Time;
+using doLittle.Runtime.Events;
+using doLittle.Runtime.Applications;
+using doLittle.Runtime.Events.Processing;
 
 namespace doLittle.Events.InProcess
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEventProcessor"/> for systems marked with the
-    /// <see cref="IProcessEvents"/> marker interface and has the "Process" method according to the
+    /// <see cref="ICanProcessEvents"/> marker interface and has the "Process" method according to the
     /// convention
     /// </summary>
     public class ProcessMethodEventProcessor : IEventProcessor
@@ -25,7 +27,7 @@ namespace doLittle.Events.InProcess
         /// <summary>
         /// Initializes a new instance of <see cref="ProcessMethodEventProcessor"/>
         /// </summary>
-        /// <param name="container"><see cref="IContainer"/> to use for getting instances of <see cref="IProcessEvents"/> implementation</param>
+        /// <param name="container"><see cref="IContainer"/> to use for getting instances of <see cref="ICanProcessEvents"/> implementation</param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for timing purposes</param>
         /// <param name="identifier"><see cref="EventProcessorIdentifier"/> that uniquely identifies the <see cref="ProcessMethodEventProcessor"/></param>
         /// <param name="event"><see cref="IApplicationResourceIdentifier">Identifier</see> for identifying the <see cref="IEvent"/></param>

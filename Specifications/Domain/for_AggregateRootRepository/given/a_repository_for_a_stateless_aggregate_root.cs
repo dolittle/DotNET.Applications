@@ -1,5 +1,5 @@
-﻿using doLittle.Applications;
-using doLittle.Commands;
+﻿using doLittle.Runtime.Applications;
+using doLittle.Runtime.Commands;
 using doLittle.Domain;
 using Machine.Specifications;
 using Moq;

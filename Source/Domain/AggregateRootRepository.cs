@@ -7,9 +7,11 @@ using System.Linq;
 using System.Reflection;
 using doLittle.Commands;
 using doLittle.Logging;
+using doLittle.Events;
+using doLittle.Runtime.Commands;
 using doLittle.Runtime.Applications;
 using doLittle.Runtime.Events;
-using doLittle.Runtime.Events.Stores;
+using doLittle.Runtime.Events.Storage;
 
 namespace doLittle.Domain
 {

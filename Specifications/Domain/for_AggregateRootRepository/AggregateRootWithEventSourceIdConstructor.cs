@@ -1,5 +1,5 @@
 ﻿using doLittle.Domain;
-using doLittle.Events;
+using doLittle.Runtime.Events;
 
 namespace doLittle.Specs.Domain.for_AggregateRootRepository
 {

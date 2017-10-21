@@ -1,4 +1,4 @@
-﻿using doLittle.Commands;
+﻿using doLittle.Runtime.Commands;
 using doLittle.Domain;
 using Machine.Specifications;
 using Moq;

@@ -9,7 +9,7 @@ namespace doLittle.Events
 {
     /// <summary>
     /// Represents a <see cref="IApplicationResourceType">application resource type</see> for 
-    /// <see cref="IProcessEvents">event processors</see>
+    /// <see cref="ICanProcessEvents">event processors</see>
     /// </summary>
     public class EventProcessorResourceType : IApplicationResourceType
     {
@@ -17,7 +17,7 @@ namespace doLittle.Events
         public string Identifier => "EventProcessor";
 
         /// <inheritdoc/>
-        public Type Type => typeof(IProcessEvents);
+        public Type Type => typeof(ICanProcessEvents);
 
         /// <inheritdoc/>
         public ApplicationArea Area => ApplicationAreas.Events;

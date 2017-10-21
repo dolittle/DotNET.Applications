@@ -1,5 +1,5 @@
 ﻿using doLittle.Domain;
-using doLittle.Events;
+using doLittle.Runtime.Events;
 using Machine.Specifications;
 using Moq;
 using System;

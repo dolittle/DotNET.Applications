@@ -18,7 +18,6 @@ namespace doLittle.Domain
         /// </summary>
         /// <param name="id"><see cref="EventSourceId"/> of aggregated root to get</param>
         /// <returns>An instance of the aggregated root</returns>
-        /// <exception cref="MissingAggregateRootException">Thrown if aggregated root does not exist</exception>
         T Get(EventSourceId id);
     }
 }

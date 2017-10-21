@@ -6,11 +6,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using doLittle.Applications;
 using doLittle.Execution;
 using doLittle.DependencyInversion;
 using doLittle.Time;
 using doLittle.Types;
+using doLittle.Runtime.Applications;
+using doLittle.Runtime.Events.Processing;
 
 namespace doLittle.Events.InProcess
 {
@@ -48,8 +49,8 @@ namespace doLittle.Events.InProcess
         /// </summary>
         /// <param name="applicationResources"><see cref="IApplicationResources"/> for identifying <see cref="IEvent">events</see> </param>
         /// <param name="applicationResourcesIdentifierConverter"><see cref="IApplicationResourceIdentifierConverter"/> for converting <see cref="IApplicationResourceIdentifier"/> to and from different formats</param>
-        /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering implementations of <see cref="IProcessEvents"/></param>
-        /// <param name="container"><see cref="IContainer"/> for the implementation <see cref="ProcessMethodEventProcessor"/> when acquiring instances of implementations of <see cref="IProcessEvents"/></param>
+        /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering implementations of <see cref="ICanProcessEvents"/></param>
+        /// <param name="container"><see cref="IContainer"/> for the implementation <see cref="ProcessMethodEventProcessor"/> when acquiring instances of implementations of <see cref="ICanProcessEvents"/></param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for timing <see cref="IEventProcessors"/></param>
         public ProcessMethodEventProcessors(
             IApplicationResources applicationResources, 
@@ -81,7 +82,7 @@ namespace doLittle.Events.InProcess
 
         void PopulateEventProcessors()
         {
-            var processors = _typeFinder.FindMultiple<IProcessEvents>();
+            var processors = _typeFinder.FindMultiple<ICanProcessEvents>();
             foreach (var processor in processors)
             {
                 var methods = processor.GetTypeInfo().GetMethods(BindingFlags.Public | BindingFlags.Instance).Where(m =>
