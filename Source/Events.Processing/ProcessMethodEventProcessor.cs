@@ -61,17 +61,23 @@ namespace doLittle.Events.Processing
         /// <inheritdoc/>
         public IEventProcessingResult Process(IEventEnvelope envelope, IEvent @event)
         {
-            _logger.Trace($"Process event using {_methodInfo.DeclaringType}");
+            _logger.Trace($"Process through a process method");
             var status = EventProcessingStatus.Success;
-            var start = _systemClock.GetCurrentTime();
             var messages = new EventProcessingMessage[0];
+
+            _logger.Trace("Get current time");
+            var start = _systemClock.GetCurrentTime();
+
+            _logger.Trace($"Start : {start}");
 
             try
             {
+                _logger.Trace($"Process event using {_methodInfo.DeclaringType}");
                 var processor = _container.Get(_methodInfo.DeclaringType);
                 _logger.Trace("Invoke method");
                 _methodInfo.Invoke(processor, new[] { @event });
-            } catch (Exception exception)
+            }
+            catch (Exception exception)
             {
                 _logger.Error(exception, "Failed processing");
                 status = EventProcessingStatus.Failed;
