@@ -10,6 +10,7 @@ using doLittle.Time;
 using doLittle.Runtime.Events;
 using doLittle.Runtime.Applications;
 using doLittle.Runtime.Events.Processing;
+using doLittle.Logging;
 
 namespace doLittle.Events.Processing
 {
@@ -20,9 +21,10 @@ namespace doLittle.Events.Processing
     /// </summary>
     public class ProcessMethodEventProcessor : IEventProcessor
     {
-        IContainer _container;
-        MethodInfo _methodInfo;
-        ISystemClock _systemClock;
+        readonly IContainer _container;
+        readonly MethodInfo _methodInfo;
+        readonly ISystemClock _systemClock;
+        readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ProcessMethodEventProcessor"/>
@@ -32,12 +34,14 @@ namespace doLittle.Events.Processing
         /// <param name="identifier"><see cref="EventProcessorIdentifier"/> that uniquely identifies the <see cref="ProcessMethodEventProcessor"/></param>
         /// <param name="event"><see cref="IApplicationResourceIdentifier">Identifier</see> for identifying the <see cref="IEvent"/></param>
         /// <param name="methodInfo"><see cref="MethodInfo"/> for the actual process method</param>
+        /// <param name="logger"></param>
         public ProcessMethodEventProcessor(
             IContainer container,
             ISystemClock systemClock,
             EventProcessorIdentifier identifier,
             IApplicationResourceIdentifier @event,
-            MethodInfo methodInfo)
+            MethodInfo methodInfo,
+            ILogger logger)
         {
             Identifier = identifier;
             Event = @event;
@@ -45,6 +49,7 @@ namespace doLittle.Events.Processing
             _container = container;
             _systemClock = systemClock;
             _methodInfo = methodInfo;
+            _logger = logger;
         }
 
         /// <inheritdoc/>
@@ -56,6 +61,7 @@ namespace doLittle.Events.Processing
         /// <inheritdoc/>
         public IEventProcessingResult Process(IEventEnvelope envelope, IEvent @event)
         {
+            _logger.Trace($"Process event using {_methodInfo.DeclaringType}");
             var status = EventProcessingStatus.Success;
             var start = _systemClock.GetCurrentTime();
             var messages = new EventProcessingMessage[0];
@@ -63,12 +69,14 @@ namespace doLittle.Events.Processing
             try
             {
                 var processor = _container.Get(_methodInfo.DeclaringType);
+                _logger.Trace("Invoke method");
                 _methodInfo.Invoke(processor, new[] { @event });
-            } catch (Exception ex)
+            } catch (Exception exception)
             {
+                _logger.Error(exception, "Failed processing");
                 status = EventProcessingStatus.Failed;
                 messages = new[] {
-                    new EventProcessingMessage(EventProcessingMessageSeverity.Error, ex.Message, ex.StackTrace.Split(Environment.NewLine.ToCharArray()))
+                    new EventProcessingMessage(EventProcessingMessageSeverity.Error, exception.Message, exception.StackTrace.Split(Environment.NewLine.ToCharArray()))
                 };
             }
             var end = _systemClock.GetCurrentTime();

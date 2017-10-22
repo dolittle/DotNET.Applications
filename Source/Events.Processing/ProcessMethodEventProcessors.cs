@@ -12,6 +12,7 @@ using doLittle.Time;
 using doLittle.Types;
 using doLittle.Runtime.Applications;
 using doLittle.Runtime.Events.Processing;
+using doLittle.Logging;
 
 namespace doLittle.Events.Processing
 {
@@ -43,6 +44,7 @@ namespace doLittle.Events.Processing
         ITypeFinder _typeFinder;
         IContainer _container;
         ISystemClock _systemClock;
+        private readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ProcessMethodEventProcessors"/>
@@ -52,12 +54,14 @@ namespace doLittle.Events.Processing
         /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering implementations of <see cref="ICanProcessEvents"/></param>
         /// <param name="container"><see cref="IContainer"/> for the implementation <see cref="ProcessMethodEventProcessor"/> when acquiring instances of implementations of <see cref="ICanProcessEvents"/></param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for timing <see cref="IEventProcessors"/></param>
+        /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public ProcessMethodEventProcessors(
-            IApplicationResources applicationResources, 
+            IApplicationResources applicationResources,
             IApplicationResourceIdentifierConverter applicationResourcesIdentifierConverter,
-            ITypeFinder typeFinder, 
-            IContainer container, 
-            ISystemClock systemClock)
+            ITypeFinder typeFinder,
+            IContainer container,
+            ISystemClock systemClock,
+            ILogger logger)
         {
             _applicationResources = applicationResources;
             _applicationResourcesIdentifierConverter = applicationResourcesIdentifierConverter;
@@ -66,6 +70,7 @@ namespace doLittle.Events.Processing
             _systemClock = systemClock;
 
             PopulateEventProcessors();
+            _logger = logger;
         }
 
         /// <inheritdoc/>
@@ -102,7 +107,7 @@ namespace doLittle.Events.Processing
                     var eventIdentifierAsString = _applicationResourcesIdentifierConverter.AsString(eventIdentifier);
                     var eventProcessorIdentifier = (EventProcessorIdentifier)$"{eventProcessorTypeIdentifierAsString}{IdentifierSeparator}{eventIdentifierAsString}";
 
-                    var processMethodEventProcessor = new ProcessMethodEventProcessor(_container, _systemClock, eventProcessorIdentifier, eventIdentifier, method);
+                    var processMethodEventProcessor = new ProcessMethodEventProcessor(_container, _systemClock, eventProcessorIdentifier, eventIdentifier, method, _logger);
                     _eventProcessors.Add(processMethodEventProcessor);
                 }
             }
