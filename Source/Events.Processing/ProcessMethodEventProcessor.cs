@@ -49,7 +49,7 @@ namespace doLittle.Events.Processing
             _systemClock = systemClock;
             _methodInfo = methodInfo;
             _logger = logger;
-            _logger.Trace($"ProcessMethodEventProcessor for '{@event}' exists on type '{methodInfo.DeclaringType}'");
+            _logger.Trace($"ProcessMethodEventProcessor for '{@event}' exists on type '{methodInfo}'");
         }
 
         /// <inheritdoc/>
@@ -72,7 +72,7 @@ namespace doLittle.Events.Processing
 
             try
             {
-                _logger.Trace($"Process event using {_methodInfo.DeclaringType}");
+                _logger.Trace($"Process event using {_methodInfo}");
                 var processor = _container.Get(_methodInfo.DeclaringType);
                 _logger.Trace("Invoke method");
                 _methodInfo.Invoke(processor, new[] { @event });

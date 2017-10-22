@@ -68,9 +68,9 @@ namespace doLittle.Events.Processing
             _typeFinder = typeFinder;
             _container = container;
             _systemClock = systemClock;
+            _logger = logger;
 
             PopulateEventProcessors();
-            _logger = logger;
         }
 
         /// <inheritdoc/>
@@ -90,6 +90,8 @@ namespace doLittle.Events.Processing
             var processors = _typeFinder.FindMultiple<ICanProcessEvents>();
             foreach (var processor in processors)
             {
+                _logger.Trace($"Processor '{processor.AssemblyQualifiedName}'");
+
                 var methods = processor.GetTypeInfo().GetMethods(BindingFlags.Public | BindingFlags.Instance).Where(m =>
                 {
                     var parameters = m.GetParameters();
@@ -101,11 +103,17 @@ namespace doLittle.Events.Processing
 
                 foreach (var method in methods)
                 {
+                    _logger.Trace($"Method found '{method}'");
+
                     var eventProcessorTypeIdentifier = _applicationResources.Identify(processor);
+                    _logger.Trace($"Processor identified as '{eventProcessorTypeIdentifier}'");
+
                     var eventProcessorTypeIdentifierAsString = _applicationResourcesIdentifierConverter.AsString(eventProcessorTypeIdentifier);
                     var eventIdentifier = _applicationResources.Identify(method.GetParameters()[0].ParameterType);
                     var eventIdentifierAsString = _applicationResourcesIdentifierConverter.AsString(eventIdentifier);
                     var eventProcessorIdentifier = (EventProcessorIdentifier)$"{eventProcessorTypeIdentifierAsString}{IdentifierSeparator}{eventIdentifierAsString}";
+
+                    _logger.Trace($"EventProcessor identifier '{eventProcessorIdentifier}'");
 
                     var processMethodEventProcessor = new ProcessMethodEventProcessor(_container, _systemClock, eventProcessorIdentifier, eventIdentifier, method, _logger);
                     _eventProcessors.Add(processMethodEventProcessor);
