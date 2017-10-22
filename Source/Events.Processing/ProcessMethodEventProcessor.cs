@@ -45,11 +45,11 @@ namespace doLittle.Events.Processing
         {
             Identifier = identifier;
             Event = @event;
-
             _container = container;
             _systemClock = systemClock;
             _methodInfo = methodInfo;
             _logger = logger;
+            _logger.Trace($"ProcessMethodEventProcessor for '{@event}' exists on type '{methodInfo.DeclaringType}'");
         }
 
         /// <inheritdoc/>
