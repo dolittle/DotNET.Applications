@@ -31,6 +31,19 @@ Linux / macOS
 $ Build\build.sh
 ```
 
+## Packages
+
+| Platform | Production   | From CI  |
+| ------- | ------- | ------ |
+| .NET SDK | [![NuGet](https://img.shields.io/nuget/v/dolittle.svg)](https://www.nuget.org/packages?q=dolittle) | [![MyGet](https://img.shields.io/myget/dolittle/vpre/dolittle.svg)](https://www.myget.org/gallery/dolittle) |
+
+
+## Build Status
+
+| Project | Windows | Linux / macOS |
+| -------- | ------ | ------------- |
+| .NET SDK | [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/umi5t4qs6stw9uud?svg=true)](https://ci.appveyor.com/project/Dolittle/dotnet-runtime) | [![Travis Build Status](https://travis-ci.org/dolittle/DotNET.SDK.svg?branch=master)](https://travis-ci.org/dolittle/DotNET.SDK) |
+
 ## Visual Studio
 
 You can open the `.sln` file in the root of the repository and just build directly.
