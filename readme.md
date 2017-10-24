@@ -42,7 +42,7 @@ $ Build\build.sh
 
 | Project | Windows | Linux / macOS |
 | -------- | ------ | ------------- |
-| .NET SDK | [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/umi5t4qs6stw9uud?svg=true)](https://ci.appveyor.com/project/Dolittle/dotnet-runtime) | [![Travis Build Status](https://travis-ci.org/dolittle/DotNET.SDK.svg?branch=master)](https://travis-ci.org/dolittle/DotNET.SDK) |
+| .NET SDK | [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/umi5t4qs6stw9uud?svg=true)](https://ci.appveyor.com/project/Dolittle/core) [![AppVeyor tests](https://img.shields.io/appveyor/tests/Dolittle/core.svg)]() | [![Travis Build Status](https://travis-ci.org/dolittle/DotNET.SDK.svg?branch=master)](https://travis-ci.org/dolittle/DotNET.SDK) |
 
 ## Visual Studio
 
