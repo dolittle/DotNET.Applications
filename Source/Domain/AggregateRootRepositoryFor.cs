@@ -16,10 +16,10 @@ using doLittle.Runtime.Events.Storage;
 namespace doLittle.Domain
 {
     /// <summary>
-    /// Defines a concrete implementation of <see cref="IAggregateRootRepository{T}">IAggregatedRootRepository</see>
+    /// Defines a concrete implementation of <see cref="IAggregateRootRepositoryFor{T}">IAggregatedRootRepository</see>
     /// </summary>
     /// <typeparam name="T">Type the repository is for</typeparam>
-    public class AggregateRootRepository<T> : IAggregateRootRepository<T>
+    public class AggregateRootRepositoryFor<T> : IAggregateRootRepositoryFor<T>
         where T : AggregateRoot
     {
         ICommandContextManager _commandContextManager;
@@ -29,14 +29,14 @@ namespace doLittle.Domain
         readonly ILogger _logger;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="AggregateRootRepository{T}">AggregatedRootRepository</see>
+        /// Initializes a new instance of <see cref="AggregateRootRepositoryFor{T}">AggregatedRootRepository</see>
         /// </summary>
         /// <param name="commandContextManager"> <see cref="ICommandContextManager"/> to use for tracking </param>
         /// <param name="eventStore"><see cref="IEventStore"/> for getting <see cref="IEvent">events</see></param>
         /// <param name="eventSourceVersions"><see cref="IEventSourceVersions"/> for working with versioning of <see cref="AggregateRoot"/></param>
         /// <param name="applicationResources"><see cref="IApplicationResources"/> for being able to identify resources</param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging</param>
-        public AggregateRootRepository(
+        public AggregateRootRepositoryFor(
             ICommandContextManager commandContextManager,
             IEventStore eventStore,
             IEventSourceVersions eventSourceVersions,

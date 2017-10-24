@@ -10,7 +10,7 @@ namespace doLittle.Domain
     /// Defines the basic functionality for finding and getting aggregated roots
     /// </summary>
     /// <typeparam name="T">Type of aggregated root</typeparam>
-    public interface IAggregateRootRepository<T>
+    public interface IAggregateRootRepositoryFor<T>
         where T : AggregateRoot
     {
         /// <summary>

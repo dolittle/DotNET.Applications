@@ -6,7 +6,7 @@ using doLittle.Logging;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Specs.Domain.for_AggregateRootRepository.given
+namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor.given
 {
     public class all_dependencies
     {

@@ -3,7 +3,7 @@ using doLittle.Domain;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Specs.Domain.for_AggregateRootRepository.given
+namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor.given
 {
     public class a_command_context : all_dependencies
 	{

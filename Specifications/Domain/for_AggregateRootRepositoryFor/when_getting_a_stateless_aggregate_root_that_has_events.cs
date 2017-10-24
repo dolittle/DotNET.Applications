@@ -3,9 +3,9 @@ using doLittle.Domain;
 using doLittle.Runtime.Events;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Domain.for_AggregateRootRepository
+namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor
 {
-    [Subject(typeof(AggregateRootRepository<>))]
+    [Subject(typeof(AggregateRootRepositoryFor<>))]
     public class when_getting_a_stateless_aggregate_root_that_has_events : given.a_repository_for_a_stateless_aggregate_root
     {
         static EventSourceId event_source_id = Guid.NewGuid();

@@ -4,17 +4,17 @@ using doLittle.Domain;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Specs.Domain.for_AggregateRootRepository.given
+namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor.given
 {
     public class a_repository_for_a_stateless_aggregate_root : a_command_context
     {
-        protected static AggregateRootRepository<SimpleStatelessAggregateRoot> repository;
+        protected static AggregateRootRepositoryFor<SimpleStatelessAggregateRoot> repository;
         protected static Mock<IApplicationResourceIdentifier> application_resource_identifier;
 
         Establish context = () =>
                                 {
                                     command_context_mock = new Mock<ICommandContext>();
-                                    repository = new AggregateRootRepository<SimpleStatelessAggregateRoot>(
+                                    repository = new AggregateRootRepositoryFor<SimpleStatelessAggregateRoot>(
                                         command_context_manager.Object,
                                         event_store.Object,
                                         event_source_versions.Object,

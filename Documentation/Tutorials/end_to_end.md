@@ -418,9 +418,9 @@ validators and the aggregate. Make it look like below:
     {
         public class CommandHandlers : IHandleCommands
         {
-            IAggregateRootRepository<Employee> _repository;
+            IAggregateRootRepositoryFor<Employee> _repository;
 
-            public CommandHandlers(IAggregateRootRepository<Employee> repository)
+            public CommandHandlers(IAggregateRootRepositoryFor<Employee> repository)
             {
                 _repository = repository;
             }
