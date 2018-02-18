@@ -5,7 +5,7 @@
 using System;
 using doLittle.Commands;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Defines a provider that returns command-specific input and business rule validators

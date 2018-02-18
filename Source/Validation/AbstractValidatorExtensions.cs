@@ -9,7 +9,7 @@ using doLittle.Reflection;
 using FluentValidation;
 using FluentValidation.Internal;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Validation extensions for building validation rules

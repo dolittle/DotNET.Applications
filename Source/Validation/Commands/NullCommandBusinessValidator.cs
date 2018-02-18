@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using doLittle.Commands;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Represent a null or non-existant validator.

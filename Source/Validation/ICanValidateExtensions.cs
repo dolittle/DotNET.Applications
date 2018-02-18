@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using doLittle.Validation;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Extensions to the <see cref="ICanValidate"/> interface to support the FluentValidation concept of RuleSets.

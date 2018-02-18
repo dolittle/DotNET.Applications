@@ -8,7 +8,7 @@ using doLittle.Collections;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Combines multiples validator descriptors into a single validator descriptor.

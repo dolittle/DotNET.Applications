@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using FluentValidation;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Defines an interface to add composed child validators to a parent validator.

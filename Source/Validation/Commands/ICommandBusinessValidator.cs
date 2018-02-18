@@ -5,7 +5,7 @@
 using doLittle.Validation;
 using FluentValidation;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Marker interface for business validators.

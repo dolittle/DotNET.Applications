@@ -11,7 +11,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Represents the rule for a model of any type

@@ -10,7 +10,7 @@ using doLittle.Concepts;
 using doLittle.Reflection;
 using FluentValidation.Internal;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Resolves property names and display names, taking into account concepts and model rules

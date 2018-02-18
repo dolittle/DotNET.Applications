@@ -10,7 +10,7 @@ using doLittle.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Represents a command business validator that is constructed from discovered rules.

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FluentValidation;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Represents an implementation of <see cref="IComposedCommandRuleBuilder"/>.

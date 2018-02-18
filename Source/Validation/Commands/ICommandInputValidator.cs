@@ -6,7 +6,7 @@ using doLittle.Commands;
 using doLittle.Validation;
 using FluentValidation;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Defines a marker interface for input level validator for a <see cref="ICommand"/>

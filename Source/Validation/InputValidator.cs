@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Base class to inherit from for basic input validation rules

@@ -6,7 +6,7 @@ using doLittle.Assemblies;
 using doLittle.Assemblies.Configuration;
 using doLittle.Assemblies.Rules;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Reperesents an <see cref="ICanSpecifyAssemblies">assembly specifier</see> for client aspects

@@ -6,7 +6,7 @@ using System;
 using doLittle.Validation;
 using FluentValidation;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Represents an implementation of <see cref="IValidatorFactory"/> for dealing with validation for commands

@@ -7,7 +7,7 @@ using System.Reflection;
 using doLittle.DependencyInversion;
 using FluentValidation;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Represents a <see cref="IValidatorFactory"/> that is based on conventions

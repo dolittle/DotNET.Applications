@@ -5,7 +5,7 @@
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// 

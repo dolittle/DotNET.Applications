@@ -5,7 +5,7 @@
 using System;
 using doLittle.Reflection;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Contains Type extension specific to validation

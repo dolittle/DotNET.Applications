@@ -9,7 +9,7 @@ using doLittle.Runtime.Commands;
 using doLittle.Execution;
 using doLittle.Validation;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Represents a <see cref="ICommandValidator">ICommandValidationService</see>

@@ -9,7 +9,7 @@ using FluentValidation;
 using FluentValidation.Internal;
 using FluentValidation.Results;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Base class to inherit from for basic business validation rules

@@ -10,7 +10,7 @@ using doLittle.Reflection;
 using FluentValidation.Results;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Represents a <see cref="PropertyValidator"/> that can hold dynamic state

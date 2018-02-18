@@ -8,7 +8,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Combines multiples validators into a single validator

@@ -12,7 +12,7 @@ using doLittle.Reflection;
 using doLittle.Types;
 using FluentValidation;
 
-namespace doLittle.FluentValidation
+namespace doLittle.Validation
 {
     /// <summary>
     /// Represents the default <see cref="IValidatorFactory"/> implementation used for validators

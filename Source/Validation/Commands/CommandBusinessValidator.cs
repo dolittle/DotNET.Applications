@@ -10,7 +10,7 @@ using doLittle.Validation;
 using FluentValidation;
 using FluentValidation.Internal;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Base class to inherit from for basic business-rule validation of a command.

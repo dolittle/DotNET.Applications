@@ -16,7 +16,7 @@ using doLittle.Types;
 using doLittle.Validation;
 using FluentValidation;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Represents an instance of an <see cref="ICommandValidatorProvider">ICommandValidatorProvider.</see>

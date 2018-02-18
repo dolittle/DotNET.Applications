@@ -8,7 +8,7 @@ using doLittle.Commands;
 using doLittle.Validation;
 using FluentValidation;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Base class to inherit from for basic input validation of a command.

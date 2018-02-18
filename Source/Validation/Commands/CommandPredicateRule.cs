@@ -12,7 +12,7 @@ using FluentValidation.Internal;
 using FluentValidation.Results;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation.Commands
+namespace doLittle.Commands.Validation
 {
     /// <summary>
     /// Represents the rule for a predicate in the form of a Func that will be called for validation
