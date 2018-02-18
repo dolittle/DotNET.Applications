@@ -5,13 +5,12 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using doLittle.Commands;
 using doLittle.Logging;
 using doLittle.Events;
-using doLittle.Runtime.Commands;
-using doLittle.Runtime.Applications;
 using doLittle.Runtime.Events;
 using doLittle.Runtime.Events.Storage;
+using doLittle.Runtime.Commands.Coordination;
+using doLittle.Applications;
 
 namespace doLittle.Domain
 {
@@ -25,7 +24,7 @@ namespace doLittle.Domain
         ICommandContextManager _commandContextManager;
         IEventStore _eventStore;
         IEventSourceVersions _eventSourceVersions;
-        IApplicationResources _applicationResources;
+        IApplicationArtifacts _applicationArtifacts;
         readonly ILogger _logger;
 
         /// <summary>
@@ -34,19 +33,19 @@ namespace doLittle.Domain
         /// <param name="commandContextManager"> <see cref="ICommandContextManager"/> to use for tracking </param>
         /// <param name="eventStore"><see cref="IEventStore"/> for getting <see cref="IEvent">events</see></param>
         /// <param name="eventSourceVersions"><see cref="IEventSourceVersions"/> for working with versioning of <see cref="AggregateRoot"/></param>
-        /// <param name="applicationResources"><see cref="IApplicationResources"/> for being able to identify resources</param>
+        /// <param name="applicationArtifacts"><see cref="IApplicationArtifacts"/> for being able to identify resources</param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging</param>
         public AggregateRootRepositoryFor(
             ICommandContextManager commandContextManager,
             IEventStore eventStore,
             IEventSourceVersions eventSourceVersions,
-            IApplicationResources applicationResources, 
+            IApplicationArtifacts applicationArtifacts, 
             ILogger logger)
         {
             _commandContextManager = commandContextManager;
             _eventStore = eventStore;
             _eventSourceVersions = eventSourceVersions;
-            _applicationResources = applicationResources;
+            _applicationArtifacts = applicationArtifacts;
             _logger = logger;
         }
 
@@ -76,7 +75,7 @@ namespace doLittle.Domain
         void FastForward(ICommandContext commandContext, T aggregateRoot)
         {
             _logger.Trace($"FastForward - {typeof(T).AssemblyQualifiedName}");
-            var identifier = _applicationResources.Identify(typeof(T));
+            var identifier = _applicationArtifacts.Identify(typeof(T));
             _logger.Trace($"With identifier '{identifier?.ToString()??"<unknown identifier>"}'");
             
             var version = _eventSourceVersions.GetFor(identifier, aggregateRoot.EventSourceId);
@@ -85,7 +84,7 @@ namespace doLittle.Domain
 
         void ReApplyEvents(ICommandContext commandContext, T aggregateRoot)
         {
-            var identifier = _applicationResources.Identify(typeof(T));
+            var identifier = _applicationArtifacts.Identify(typeof(T));
             var events = _eventStore.GetFor(identifier, aggregateRoot.EventSourceId);
             var stream = new CommittedEventStream(aggregateRoot.EventSourceId, events);
             if (stream.HasEvents)

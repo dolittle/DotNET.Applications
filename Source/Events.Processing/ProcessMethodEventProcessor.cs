@@ -4,13 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using doLittle.Execution;
 using doLittle.DependencyInversion;
 using doLittle.Time;
 using doLittle.Runtime.Events;
 using doLittle.Runtime.Applications;
 using doLittle.Runtime.Events.Processing;
 using doLittle.Logging;
+using doLittle.Applications;
 
 namespace doLittle.Events.Processing
 {
@@ -39,7 +39,7 @@ namespace doLittle.Events.Processing
             IContainer container,
             ISystemClock systemClock,
             EventProcessorIdentifier identifier,
-            IApplicationResourceIdentifier @event,
+            IApplicationArtifactIdentifier @event,
             MethodInfo methodInfo,
             ILogger logger)
         {
@@ -53,7 +53,7 @@ namespace doLittle.Events.Processing
         }
 
         /// <inheritdoc/>
-        public IApplicationResourceIdentifier Event { get; }
+        public IApplicationArtifactIdentifier Event { get; }
 
         /// <inheritdoc/>
         public EventProcessorIdentifier Identifier { get; }

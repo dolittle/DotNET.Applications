@@ -13,6 +13,7 @@ using doLittle.Types;
 using doLittle.Runtime.Applications;
 using doLittle.Runtime.Events.Processing;
 using doLittle.Logging;
+using doLittle.Applications;
 
 namespace doLittle.Events.Processing
 {
@@ -39,8 +40,8 @@ namespace doLittle.Events.Processing
 
         List<IEventProcessor> _eventProcessors = new List<IEventProcessor>();
 
-        IApplicationResources _applicationResources;
-        IApplicationResourceIdentifierConverter _applicationResourcesIdentifierConverter;
+        IApplicationArtifacts _applicationArtifacts;
+        IApplicationArtifactIdentifierStringConverter _applicationArtifactIdentifierStringConverter;
         ITypeFinder _typeFinder;
         IContainer _container;
         ISystemClock _systemClock;
@@ -49,22 +50,22 @@ namespace doLittle.Events.Processing
         /// <summary>
         /// Initializes a new instance of <see cref="ProcessMethodEventProcessors"/>
         /// </summary>
-        /// <param name="applicationResources"><see cref="IApplicationResources"/> for identifying <see cref="IEvent">events</see> </param>
-        /// <param name="applicationResourcesIdentifierConverter"><see cref="IApplicationResourceIdentifierConverter"/> for converting <see cref="IApplicationResourceIdentifier"/> to and from different formats</param>
+        /// <param name="applicationArtifacts"><see cref="IApplicationArtifacts"/> for identifying <see cref="IEvent">events</see> </param>
+        /// <param name="applicationArtifactIdentifierStringConverter"><see cref="IApplicationArtifactIdentifierStringConverter"/> for converting <see cref="IApplicationArtifactIdentifier"/> to and from different formats</param>
         /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering implementations of <see cref="ICanProcessEvents"/></param>
         /// <param name="container"><see cref="IContainer"/> for the implementation <see cref="ProcessMethodEventProcessor"/> when acquiring instances of implementations of <see cref="ICanProcessEvents"/></param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for timing <see cref="IEventProcessors"/></param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public ProcessMethodEventProcessors(
-            IApplicationResources applicationResources,
-            IApplicationResourceIdentifierConverter applicationResourcesIdentifierConverter,
+            IApplicationArtifacts applicationArtifacts,
+            IApplicationArtifactIdentifierStringConverter applicationArtifactIdentifierStringConverter,
             ITypeFinder typeFinder,
             IContainer container,
             ISystemClock systemClock,
             ILogger logger)
         {
-            _applicationResources = applicationResources;
-            _applicationResourcesIdentifierConverter = applicationResourcesIdentifierConverter;
+            _applicationArtifacts = applicationArtifacts;
+            _applicationArtifactIdentifierStringConverter = applicationArtifactIdentifierStringConverter;
             _typeFinder = typeFinder;
             _container = container;
             _systemClock = systemClock;
@@ -105,12 +106,12 @@ namespace doLittle.Events.Processing
                 {
                     _logger.Trace($"Method found '{method}'");
 
-                    var eventProcessorTypeIdentifier = _applicationResources.Identify(processor);
+                    var eventProcessorTypeIdentifier = _applicationArtifacts.Identify(processor);
                     _logger.Trace($"Processor identified as '{eventProcessorTypeIdentifier}'");
 
-                    var eventProcessorTypeIdentifierAsString = _applicationResourcesIdentifierConverter.AsString(eventProcessorTypeIdentifier);
-                    var eventIdentifier = _applicationResources.Identify(method.GetParameters()[0].ParameterType);
-                    var eventIdentifierAsString = _applicationResourcesIdentifierConverter.AsString(eventIdentifier);
+                    var eventProcessorTypeIdentifierAsString = _applicationArtifactIdentifierStringConverter.AsString(eventProcessorTypeIdentifier);
+                    var eventIdentifier = _applicationArtifacts.Identify(method.GetParameters()[0].ParameterType);
+                    var eventIdentifierAsString = _applicationArtifactIdentifierStringConverter.AsString(eventIdentifier);
                     var eventProcessorIdentifier = (EventProcessorIdentifier)$"{eventProcessorTypeIdentifierAsString}{IdentifierSeparator}{eventIdentifierAsString}";
 
                     _logger.Trace($"EventProcessor identifier '{eventProcessorIdentifier}'");
