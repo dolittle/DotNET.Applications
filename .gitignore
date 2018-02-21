@@ -32,6 +32,8 @@ _site
 *.fsx_*
 
 artifacts
+!Source/Artifacts
+!Specfications/Artifacts
 
 log.txt
 
