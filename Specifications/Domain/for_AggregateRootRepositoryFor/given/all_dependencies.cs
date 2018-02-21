@@ -1,5 +1,6 @@
-﻿using doLittle.Runtime.Applications;
+﻿using doLittle.Applications;
 using doLittle.Runtime.Commands;
+using doLittle.Runtime.Commands.Coordination;
 using doLittle.Runtime.Events;
 using doLittle.Runtime.Events.Storage;
 using doLittle.Logging;
@@ -13,7 +14,7 @@ namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor.given
         protected static Mock<ICommandContextManager> command_context_manager;
         protected static Mock<IEventSourceVersions> event_source_versions;
         protected static Mock<IEventStore> event_store;
-        protected static Mock<IApplicationResources> application_resources;
+        protected static Mock<IApplicationArtifacts> application_artifacts;
         protected static Mock<ILogger> logger;
 
         Establish context = () =>
@@ -21,7 +22,7 @@ namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor.given
             command_context_manager = new Mock<ICommandContextManager>();
             event_source_versions = new Mock<IEventSourceVersions>();
             event_store = new Mock<IEventStore>();
-            application_resources = new Mock<IApplicationResources>();
+            application_artifacts = new Mock<IApplicationArtifacts>();
             logger = new Mock<ILogger>();
         };
     }

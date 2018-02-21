@@ -5,7 +5,8 @@
     </PropertyGroup>
     <Import Project="../../Build/MSBuild/default.props" />
     <ItemGroup>
-        <PackageReference Include="doLittle.Runtime.Applications" Version="2.0.0-*" />
+        <PackageReference Include="doLittle.Applications" Version="2.0.0-*" />
+        <PackageReference Include="doLittle.Artifacts" Version="2.0.0-*" />
         <PackageReference Include="doLittle.Runtime.Events" Version="2.0.0-*" />
         <PackageReference Include="doLittle.Runtime.Events.Processing" Version="2.0.0-*" />
     </ItemGroup>

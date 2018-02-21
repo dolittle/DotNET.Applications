@@ -7,8 +7,13 @@
 
   <Import Project="../../Build/MSBuild/specs.props"/>
 
+    <ItemGroup>
+        <PackageReference Include="doLittle.Runtime.Commands.Coordination" Version="2.0.0-*" />
+    </ItemGroup>
+
+
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Domain\Domain.csproj" />
+    <ProjectReference Include="../../Source/Domain/Domain.csproj" />
   </ItemGroup>
 
 </Project>

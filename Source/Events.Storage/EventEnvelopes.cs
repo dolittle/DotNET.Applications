@@ -1,4 +1,4 @@
-﻿/*---------------------------------------------------------------------------------------------
+/*---------------------------------------------------------------------------------------------
  *  Copyright (c) 2008-2017 doLittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -11,15 +11,17 @@ using doLittle.Time;
 using doLittle.Runtime.Transactions;
 using doLittle.Runtime.Events.Migration;
 using doLittle.Events;
+using doLittle.Runtime.Events.Storage;
+using doLittle.Runtime.Events;
 
-namespace doLittle.Runtime.Events.Storage
+namespace doLittle.Events.Storage
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEventEnvelopes"/>
     /// </summary>
     public class EventEnvelopes : IEventEnvelopes
     {
-        IApplicationResources _applicationResources;
+        IApplicationArtifacts _applicationResources;
         ISystemClock _systemClock;
         IExecutionContext _executionContext;
         IEventMigrationHierarchyManager _eventMigrationHierarchyManager;
@@ -27,17 +29,17 @@ namespace doLittle.Runtime.Events.Storage
         /// <summary>
         /// Initializes a new instance of <see cref="EventEnvelopes"/>
         /// </summary>
-        /// <param name="applicationResources"><see cref="IApplicationResources"/> for identifying resources</param>
+        /// <param name="applicationArtifacts"><see cref="IApplicationArtifacts"/> for identifying artifacts</param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for working with time</param>
         /// <param name="executionContext"><see cref="IExecutionContext"/> for working with metadata related to current execution context</param>
         /// <param name="eventMigrationHierarchyManager"><see cref="IEventMigrationHierarchyManager"/> for working with the migration levels of <see cref="IEvent">events</see></param>
         public EventEnvelopes(
-            IApplicationResources applicationResources, 
+            IApplicationArtifacts applicationArtifacts, 
             ISystemClock systemClock, 
             IExecutionContext executionContext, 
             IEventMigrationHierarchyManager eventMigrationHierarchyManager)
         {
-            _applicationResources = applicationResources;
+            _applicationResources = applicationArtifacts;
             _systemClock = systemClock;
             _executionContext = executionContext;
             _eventMigrationHierarchyManager = eventMigrationHierarchyManager;

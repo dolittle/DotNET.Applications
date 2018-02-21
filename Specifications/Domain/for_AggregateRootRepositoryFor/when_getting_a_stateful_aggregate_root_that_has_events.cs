@@ -22,7 +22,7 @@ namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor
             var event_envelope = new Mock<IEventEnvelope>();
             
             event_envelope.SetupGet(e => e.Version).Returns(version);
-            event_store.Setup(e => e.GetFor(application_resource_identifier.Object, event_source_id)).Returns(new[] { new EventAndEnvelope(event_envelope.Object, @event) });
+            event_store.Setup(e => e.GetFor(application_artifact_identifier.Object, event_source_id)).Returns(new[] { new EventAndEnvelope(event_envelope.Object, @event) });
 
             expected_version = new EventSourceVersion(2,0);
         };

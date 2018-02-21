@@ -6,11 +6,10 @@ using System;
 using System.Reflection;
 using doLittle.DependencyInversion;
 using doLittle.Time;
+using doLittle.Applications;
 using doLittle.Runtime.Events;
-using doLittle.Runtime.Applications;
 using doLittle.Runtime.Events.Processing;
 using doLittle.Logging;
-using doLittle.Applications;
 
 namespace doLittle.Events.Processing
 {
@@ -32,7 +31,7 @@ namespace doLittle.Events.Processing
         /// <param name="container"><see cref="IContainer"/> to use for getting instances of <see cref="ICanProcessEvents"/> implementation</param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for timing purposes</param>
         /// <param name="identifier"><see cref="EventProcessorIdentifier"/> that uniquely identifies the <see cref="ProcessMethodEventProcessor"/></param>
-        /// <param name="event"><see cref="IApplicationResourceIdentifier">Identifier</see> for identifying the <see cref="IEvent"/></param>
+        /// <param name="event"><see cref="IApplicationArtifactIdentifier">Identifier</see> for identifying the <see cref="IEvent"/></param>
         /// <param name="methodInfo"><see cref="MethodInfo"/> for the actual process method</param>
         /// <param name="logger"></param>
         public ProcessMethodEventProcessor(

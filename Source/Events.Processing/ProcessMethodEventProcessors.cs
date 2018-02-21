@@ -6,14 +6,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using doLittle.Applications;
 using doLittle.Execution;
 using doLittle.DependencyInversion;
 using doLittle.Time;
 using doLittle.Types;
-using doLittle.Runtime.Applications;
 using doLittle.Runtime.Events.Processing;
 using doLittle.Logging;
-using doLittle.Applications;
 
 namespace doLittle.Events.Processing
 {

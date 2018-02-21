@@ -9,7 +9,7 @@ namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor
         protected static AggregateRootRepositoryFor<AggregateRootWithEventSourceIdConstructor> aggregate_root_repository;
         protected static AggregateRootWithEventSourceIdConstructor result;
 
-        Establish context = () => aggregate_root_repository = new AggregateRootRepositoryFor<AggregateRootWithEventSourceIdConstructor>(command_context_manager.Object, event_store.Object, event_source_versions.Object, application_resources.Object, logger.Object);
+        Establish context = () => aggregate_root_repository = new AggregateRootRepositoryFor<AggregateRootWithEventSourceIdConstructor>(command_context_manager.Object, event_store.Object, event_source_versions.Object, application_artifacts.Object, logger.Object);
 
         Because of = () => result = aggregate_root_repository.Get(Guid.NewGuid());
 
