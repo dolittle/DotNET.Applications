@@ -5,7 +5,7 @@
 using FluentValidation.Internal;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation.MetaData
+namespace doLittle.Validation.MetaData
 {
     /// <summary>
     /// Provides extensions for formatting messages from property validator
