@@ -10,12 +10,12 @@ using doLittle.Collections;
 using doLittle.Applications;
 using doLittle.Runtime.Commands;
 
-namespace doLittle.Commands
+namespace doLittle.Commands.Handling
 {
     /// <summary>
-    /// Represents an implementation of <see cref="ICommandRequestConverter"/>
+    /// Represents an implementation of <see cref="ICommandRequestToCommandConverter"/>
     /// </summary>
-    public class CommandRequestConverter : ICommandRequestConverter
+    public class CommandRequestToCommandConverter : ICommandRequestToCommandConverter
     {
         IApplicationArtifactResolver _applicationArtifactResolver;
 
@@ -23,7 +23,7 @@ namespace doLittle.Commands
         /// 
         /// </summary>
         /// <param name="applicationArtifactResolver"></param>
-        public CommandRequestConverter(IApplicationArtifactResolver applicationArtifactResolver)
+        public CommandRequestToCommandConverter(IApplicationArtifactResolver applicationArtifactResolver)
         {
             _applicationArtifactResolver = applicationArtifactResolver;
         }

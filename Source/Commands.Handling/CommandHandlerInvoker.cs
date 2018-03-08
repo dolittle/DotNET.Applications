@@ -16,7 +16,7 @@ using doLittle.Applications;
 using doLittle.Runtime.Commands.Handling;
 using doLittle.Runtime.Commands;
 
-namespace doLittle.Commands
+namespace doLittle.Commands.Handling
 {
     /// <summary>
     /// Represents a <see cref="ICommandHandlerInvoker">ICommandHandlerInvoker</see> for handling
@@ -31,7 +31,7 @@ namespace doLittle.Commands
         readonly ITypeFinder _typeFinder;
         readonly IContainer _container;
         readonly IApplicationArtifacts _applicationArtifacts;
-        readonly ICommandRequestConverter _converter;
+        readonly ICommandRequestToCommandConverter _converter;
         readonly ILogger _logger;
         readonly Dictionary<IApplicationArtifactIdentifier, MethodInfo> _commandHandlers = new Dictionary<IApplicationArtifactIdentifier, MethodInfo>();
         readonly object _initializationLock = new object();
@@ -43,13 +43,13 @@ namespace doLittle.Commands
         /// <param name="typeFinder">A <see cref="ITypeFinder"/> to use for discovering <see cref="ICanHandleCommands">command handlers</see></param>
         /// <param name="container">A <see cref="IContainer"/> to use for getting instances of objects</param>
         /// <param name="applicationArtifacts"><see cref="IApplicationArtifacts"/> for identifying resources</param>
-        /// <param name="converter"><see cref="ICommandRequestConverter"/> for converting to actual <see cref="ICommand"/> instances</param>
+        /// <param name="converter"><see cref="ICommandRequestToCommandConverter"/> for converting to actual <see cref="ICommand"/> instances</param>
         /// <param name="logger"><see cref="ILogger"/> used for logging</param>
         public CommandHandlerInvoker(
             ITypeFinder typeFinder,
             IContainer container,
             IApplicationArtifacts applicationArtifacts,
-            ICommandRequestConverter converter,
+            ICommandRequestToCommandConverter converter,
             ILogger logger)
         {
             _typeFinder = typeFinder;
@@ -91,6 +91,10 @@ namespace doLittle.Commands
             EnsureInitialized();
 
             _logger.Information($"Trying to invoke command handlers for {command.Type}");
+
+            var handlerKey = _commandHandlers.Keys.First();
+            var handler = _commandHandlers.First();
+
             if (_commandHandlers.ContainsKey(command.Type))
             {
                 var commandHandlerType = _commandHandlers[command.Type].DeclaringType;

@@ -5,12 +5,12 @@
 using doLittle.Commands;
 using doLittle.Runtime.Commands;
 
-namespace doLittle.Commands
+namespace doLittle.Commands.Handling
 {
     /// <summary>
     /// Defines a converter that can convert between a <see cref="ICommand"/> and a <see cref="CommandRequest"/>
     /// </summary>
-    public interface ICommandRequestConverter
+    public interface ICommandRequestToCommandConverter
     {
         /// <summary>
         /// Convert a <see cref="CommandRequest"/> to a <see cref="ICommand"/> instance of the correct type

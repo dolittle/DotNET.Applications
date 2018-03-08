@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using doLittle.Commands;
 
-namespace doLittle.Commands
+namespace doLittle.Commands.Handling
 {
     /// <summary>
     /// Marker interface for command handlers.
