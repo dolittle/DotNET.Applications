@@ -14,7 +14,7 @@ namespace doLittle.Commands.Validation
     /// Base class to inherit from for basic input validation of a command.
     /// </summary>
     /// <typeparam name="T">Concrete type of the Command to validate</typeparam>
-    public abstract class CommandInputValidator<T> : InputValidator<T>, ICanValidate<T>, ICommandInputValidator where T : class, ICommand
+    public abstract class CommandInputValidatorFor<T> : InputValidator<T>, ICanValidate<T>, ICommandInputValidator where T : class, ICommand
     {
 #pragma warning disable 1591 // Xml Comments
         public virtual IEnumerable<ValidationResult> ValidateFor(T command)
