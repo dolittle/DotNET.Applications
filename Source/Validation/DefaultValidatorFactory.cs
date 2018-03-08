@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using doLittle.DependencyInversion;
-using doLittle.FluentValidation.Commands;
+using doLittle.Commands;
 using doLittle.Reflection;
 using doLittle.Types;
 using FluentValidation;
+using doLittle.Commands.Validation;
 
 namespace doLittle.Validation
 {

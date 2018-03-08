@@ -60,20 +60,20 @@ namespace doLittle.Validation
         /// <param name="instance">TThe object to be validated</param>
         /// <param name="ruleSet">A comma separated list of rulesets to be used when validating</param>
         /// <returns>A ValidationResult object containing any validation failures</returns>
-        public ValidationResult Validate(T instance, string ruleSet)
+        public FluentValidation.Results.ValidationResult Validate(T instance, string ruleSet)
         {
             var result = (this as IValidator<T>).Validate(instance, ruleSet: ruleSet);
             return BuildResult(result);
         }
 
-        static ValidationResult BuildResult(ValidationResult rawResult)
+        static FluentValidation.Results.ValidationResult BuildResult(FluentValidation.Results.ValidationResult rawResult)
         {
             var cleanedErrors = rawResult.Errors.Select(error => new ValidationFailure(CleanPropertyName(error.PropertyName), error.ErrorMessage, error.AttemptedValue)
                 {
                     CustomState = error.CustomState
                 }).ToList();
 
-            return new ValidationResult(cleanedErrors);
+            return new FluentValidation.Results.ValidationResult(cleanedErrors);
         }
 
         static string CleanPropertyName(string propertyName)

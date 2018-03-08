@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using FluentValidation;
 using FluentValidation.Results;
 using FluentValidation.Validators;
@@ -40,10 +41,10 @@ namespace doLittle.Validation
         /// </summary>
         /// <param name="context">Context of the validation</param>
         /// <returns>ValidationResult</returns>
-        public override ValidationResult Validate(ValidationContext<T> context)
+        public override FluentValidation.Results.ValidationResult Validate(ValidationContext<T> context)
         {
             var errors = registeredValidators.SelectMany(x => x.Validate(context).Errors);
-            return new ValidationResult(errors);
+            return new FluentValidation.Results.ValidationResult(errors);
         }
     }
 }
