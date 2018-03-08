@@ -6,7 +6,7 @@ using System;
 using doLittle.Validation.MetaData;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation.MetaData
+namespace doLittle.Validation.MetaData
 {
     /// <summary>
     /// Defines a system that can generate rule from a Fluent Validation property validator.

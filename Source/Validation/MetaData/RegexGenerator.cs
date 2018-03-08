@@ -6,7 +6,7 @@ using System;
 using doLittle.Validation.MetaData;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation.MetaData
+namespace doLittle.Validation.MetaData
 {
     /// <summary>
     /// Represents the generator for generating a <see cref="Regex"/> rule from a <see cref="IRegularExpressionValidator"/>

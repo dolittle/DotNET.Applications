@@ -6,7 +6,7 @@ using System;
 using doLittle.Validation.MetaData;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation.MetaData
+namespace doLittle.Validation.MetaData
 {
     /// <summary>
     /// Represents the generater that can generate a <see cref="NotNull"/> rule from

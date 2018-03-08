@@ -8,13 +8,14 @@ using System.Linq;
 using System.Reflection;
 using doLittle.Concepts;
 using doLittle.Strings;
-using doLittle.FluentValidation.Commands;
+using doLittle.Commands;
 using doLittle.Types;
 using doLittle.Validation.MetaData;
 using FluentValidation;
 using FluentValidation.Validators;
+using doLittle.Commands.Validation;
 
-namespace doLittle.FluentValidation.MetaData
+namespace doLittle.Validation.MetaData
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICanGenerateValidationMetaData"/>
