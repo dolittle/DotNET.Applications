@@ -12,7 +12,7 @@ namespace doLittle.Commands.Validation
     /// <remarks>
     /// Always returns an empty validation result collection.
     /// </remarks>
-    public class NullCommandInputValidator<T> : CommandInputValidator<T> where T : class, ICommand
+    public class NullCommandInputValidatorFor<T> : CommandInputValidatorFor<T> where T : class, ICommand
     {
     }
 }
