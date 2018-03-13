@@ -1,14 +1,14 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.Artifacts;
-using doLittle.Strings;
+using Dolittle.Artifacts;
+using Dolittle.Strings;
 
-namespace doLittle.Applications
+namespace Dolittle.Applications
 {
     /// <summary>
     /// Represents an implementation of <see cref="IApplicationArtifacts"/>
@@ -35,17 +35,18 @@ namespace doLittle.Applications
         /// </summary>
         public const string SubFeatureKey = "SubFeature";
 
-
-        IApplication _application;
+        readonly IApplication _application;
+        readonly IArtifactTypeToTypeMaps _artifactTypeToTypeMaps;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationArtifacts"/>
         /// </summary>
         /// <param name="application">The <see cref="IApplication"/> the resource belongs to</param>
-        /// <param name="applicationArtifactTypes"><see cref="IArtifactTypes"/> for identifying <see cref="IArtifactType"/></param>
-        public ApplicationArtifacts(IApplication application, IArtifactTypes applicationArtifactTypes)
+        /// <param name="artifactTypeToTypeMaps"><see cref="IArtifactTypeToTypeMaps"/> for mapping <see cref="IArtifactType"/> to and from <see cref="Type"/></param>
+        public ApplicationArtifacts(IApplication application, IArtifactTypeToTypeMaps artifactTypeToTypeMaps)
         {
             _application = application;
+            _artifactTypeToTypeMaps = artifactTypeToTypeMaps;
         }
 
         /// <inheritdoc/>
@@ -58,6 +59,11 @@ namespace doLittle.Applications
         /// <inheritdoc/>
         public IApplicationArtifactIdentifier Identify(Type type)
         {
+            var artifactType = _artifactTypeToTypeMaps.Map(type);
+            var location = new ApplicationLocation(new[] { new BoundedContext("Somewhere")});
+            var applicationArtifactIdentifier = new ApplicationArtifactIdentifier(this._application, ApplicationAreas.Domain, location, new Artifact(type.Name, artifactType));
+            return applicationArtifactIdentifier;
+
 #if(false)
             var @namespace = type.Namespace;
 
@@ -72,9 +78,11 @@ namespace doLittle.Applications
                     return identifier;
                 }
             }
-#endif            
 
             throw new UnableToIdentifyArtifact(type);
+#endif            
+
+            
         }
 
 

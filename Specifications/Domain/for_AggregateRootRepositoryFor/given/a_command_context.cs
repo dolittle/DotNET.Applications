@@ -1,8 +1,8 @@
-﻿using doLittle.Runtime.Commands.Coordination;
+﻿using Dolittle.Runtime.Commands.Coordination;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor.given
+namespace Dolittle.Specs.Domain.for_AggregateRootRepositoryFor.given
 {
     public class a_command_context : all_dependencies
     {

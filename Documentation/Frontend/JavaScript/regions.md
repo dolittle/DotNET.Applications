@@ -8,7 +8,7 @@ author: einari
 
 Regions are at the center of the visual composition of the application.
 A region is a logical grouping of a [view](views.md) and a [view model](view_models.md).
-All regions are implicitly created during compositions, doLittle manages creation and
+All regions are implicitly created during compositions, Dolittle manages creation and
 lifecycle of them.
 
 ![Region Overview](images/region_overview.png)
@@ -39,8 +39,8 @@ Expanding a region with properties or functionality is done through what is know
 region descriptor. This makes it possible to separate out this into its own concept.
 
 ```javascript
-doLittle.namespace("BoundedContext.Feature", {
-    RegionDescriptor: doLittle.views.RegionDescriptor.extend(function() {
+Dolittle.namespace("BoundedContext.Feature", {
+    RegionDescriptor: Dolittle.views.RegionDescriptor.extend(function() {
         this.describe = function(region) {
             region.aCommonProperty = "Something";
         }
@@ -50,7 +50,7 @@ doLittle.namespace("BoundedContext.Feature", {
 
 ## Operations
 
-doLittle has the concept of [operations](Interaction/operations.md). Basically an encapsulation
+Dolittle has the concept of [operations](Interaction/operations.md). Basically an encapsulation
 of work that the user wants performed. The operations are aggregated into the region they belong
 to and when not executed represents a possible change.
 

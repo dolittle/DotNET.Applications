@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>Dolittle.SDK.Events.Storage</AssemblyName>
+    </PropertyGroup>
+    <Import Project="../../Build/MSBuild/default.props" />
+    <ItemGroup>
+        <PackageReference Include="Dolittle.Applications" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Runtime.Events" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Runtime.Events.Storage" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Runtime.Events.Migration" Version="2.0.0-*" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Applications\Applications.csproj" />
+    </ItemGroup>
+    
+</Project>

@@ -1,6 +1,6 @@
-﻿using doLittle.Concepts;
+﻿using Dolittle.Concepts;
 
-namespace doLittle.FluentValidation.Specs
+namespace Dolittle.FluentValidation.Specs
 {
     public class ConceptAsLong : ConceptAs<long>
     {

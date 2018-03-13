@@ -27,7 +27,7 @@ The basic folder structure we have is:
 
 A concrete sample of this would be:
 
-    doLittle.Specs
+    Dolittle.Specs
         Commands
             for_CommandContext
                 given

@@ -1,11 +1,11 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using doLittle.Runtime.Events;
+using Dolittle.Runtime.Events;
 
-namespace doLittle.Domain
+namespace Dolittle.Domain
 {
     /// <summary>
     /// Gets thrown if an <see cref="AggregateRoot"/> does not follow the convention for expected

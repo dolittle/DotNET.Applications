@@ -1,18 +1,18 @@
 ---
 title: End To End Tutorial
-description: Take a full roundtrip of doLittle
+description: Take a full roundtrip of Dolittle
 keywords: .NET, JavaScript
 author: einari
 ---
 # End To End
 
 > [!Note]
-> doLittle is in an **Alpha** state - but doLittle originates from [Bifrost](https://github.com/dolittle/bifrost)
+> Dolittle is in an **Alpha** state - but Dolittle originates from [Bifrost](https://github.com/dolittle/bifrost)
 > which has a stable version. If you're ok with trying out an **Alpha** - carry on :)
 > The Bifrost equivalent of this tutorial can be found [here](http://www.dolittle.io/bifrost/Tutorials/end_to_end.html)
 
-The purpose of this tutorial is to take you through the entire stack of doLittle, all the steps you need
-and can do to successfully build software using doLittle. The philosophy behind doLittle is somewhat
+The purpose of this tutorial is to take you through the entire stack of Dolittle, all the steps you need
+and can do to successfully build software using Dolittle. The philosophy behind Dolittle is somewhat
 different than what you find in more established architectures. For instance, you'll hardly see any
 talk about data and doing good old CRUD (Create Read Update Delete), instead we talk about behaviors
 and their consequences which in most cases result in data being generated, but not necessarily.
@@ -65,29 +65,29 @@ Name the project "Web".
 
 ### Nuget
 
-doLittle is available on Nuget, so we will be using Nuget to pull down doLittle and any dependencies
+Dolittle is available on Nuget, so we will be using Nuget to pull down Dolittle and any dependencies
 it has.
 
-For the Concepts, Domain, Events and Read projects, we need to add a dependency only to doLittle,
+For the Concepts, Domain, Events and Read projects, we need to add a dependency only to Dolittle,
 the core part:
 
 ```PowerShell
-    PM> Install-Package doLittle
+    PM> Install-Package Dolittle
 ```
 
 
-For the Web project we will need more, as we are going to have to configure things. doLittle has support
+For the Web project we will need more, as we are going to have to configure things. Dolittle has support
 for all kinds of combinations of IOC containers, database choices and so forth, but for this tutorial
-we will be very specific and use a set of extensions to doLittle that we have neatly packed into a
-Nuget package called `doLittle.Default`.
+we will be very specific and use a set of extensions to Dolittle that we have neatly packed into a
+Nuget package called `Dolittle.Default`.
 
 > [!Note]
-> doLittle is currently dependending on pre-release versions of some of its dependencies (Ninject & FluentValidation)
-> Due to doLittle being marked as a release package, NuGet inside Visual Studio will complain and not install correctly.
+> Dolittle is currently dependending on pre-release versions of some of its dependencies (Ninject & FluentValidation)
+> Due to Dolittle being marked as a release package, NuGet inside Visual Studio will complain and not install correctly.
 > This experience is not the same using the dotnet CLI and project.json.
 >
 > In order for you to get things running, you need to explicitly install the FluentValidation and Ninject parts before
-> the `doLittle.Default` package.
+> the `Dolittle.Default` package.
 >
 > ![Ninject PreRelease](quickstart_images/ninject_prerelease.png)
 >
@@ -101,12 +101,12 @@ Nuget package called `doLittle.Default`.
 So select the Web project and do:
 
 ```PowerShell
-    PM> Install-Package doLittle.Default
+    PM> Install-Package Dolittle.Default
 ```
 
-What this does is setup doLittle with Ninject as IOC Container, Newtonsoft JSON, FluentValidation and SignalR.
-It also configures doLittle to treat this as a single page application and adds an HTML file that
-just sets up doLittle for you to start working with it.
+What this does is setup Dolittle with Ninject as IOC Container, Newtonsoft JSON, FluentValidation and SignalR.
+It also configures Dolittle to treat this as a single page application and adds an HTML file that
+just sets up Dolittle for you to start working with it.
 
 ### Frontend
 
@@ -138,8 +138,8 @@ Employees folder. We're going to add some HTML within the body tag in the newly 
 Now we're going to add a viewmodel that will be associated with your feature.
 
 ```js
-    doLittle.namespace("HumanResources.Employees", {
-        register: doLittle.Type.extend(function() {
+    Dolittle.namespace("HumanResources.Employees", {
+        register: Dolittle.Type.extend(function() {
         })
     });
 ```
@@ -190,8 +190,8 @@ software.
 
 A concept is a lightweight representation of something you have in your domain vocabulary. Instead of losing
 what things are by using primitives such as booleans, integers or strings, we encapsulate these parts of
-the vocabulary into what we call concepts. doLittle has a baseclass to help you out with this and something
-that is supported throughout doLittle; ConceptAs<>. We recommend making concepts available for both your
+the vocabulary into what we call concepts. Dolittle has a baseclass to help you out with this and something
+that is supported throughout Dolittle; ConceptAs<>. We recommend making concepts available for both your
 read side and your execution / behavior side, this is were the Concepts project we created earlier comes
 into play.
 
@@ -204,7 +204,7 @@ Add a new class inside the new folder called SocialSecurityNumber.
 
 
 ```csharp
-    using doLittle.Concepts;
+    using Dolittle.Concepts;
 
     namespace Concepts.Persons
     {
@@ -237,7 +237,7 @@ you want to happen in the system, so we model it so.
 For our tutorial we will not be all too creative, we will simply be adding a RegisterEmployee command.
 
 ```csharp
-    using doLittle.Commands;
+    using Dolittle.Commands;
     using Concepts.Persons;
 
     namespace Domain.HumanResources.Employees
@@ -255,14 +255,14 @@ For our tutorial we will not be all too creative, we will simply be adding a Reg
 
 Performing a behavior in a system needs to be validated that it is correct before we can apply it.
 Validation is divided into two steps; Input and Business. Input being typically connected with
-properties and consumed on a client. doLittle generates metadata that can be used directly by
+properties and consumed on a client. Dolittle generates metadata that can be used directly by
 clientside validators.
 
 Lets start by adding an Input validator for our command. Add a file next to the command called
 RegisterEmployeeInputValidator and make it look like below:
 
 ```csharp
-    using doLittle.Validation;
+    using Dolittle.Validation;
     using FluentValidation;
 
     namespace Domain.HumanResources.Employees
@@ -299,7 +299,7 @@ For now, business validation is not something we will be performing at this stag
 the way you would write one is very similar to that of an input validator:
 
 ```csharp
-    using doLittle.Validation;
+    using Dolittle.Validation;
     using FluentValidation;
 
     namespace Domain.HumanResources.Employees
@@ -314,7 +314,7 @@ the way you would write one is very similar to that of an input validator:
 
 ### Security
 
-Normally we would at this stage be looking at security and doLittle has a very similar
+Normally we would at this stage be looking at security and Dolittle has a very similar
 approach as with validation to how to setup security. We will not be doing this in this
 tutorial, it will be the subject of another tutorial.
 
@@ -334,7 +334,7 @@ EmployeeRegistered class into the Employees module and make it look like this:
 
 ```csharp
     using System;
-    using doLittle.Events;
+    using Dolittle.Events;
 
     namespace Events.HumanResources.Employees
     {
@@ -370,7 +370,7 @@ called Registration, it should look like below:
 
 ```csharp
     using System;
-    using doLittle.Domain;
+    using Dolittle.Domain;
     using Events.HumanResources.Employee;
 
     namespace Domain.HumanResources.Employees
@@ -411,8 +411,8 @@ In the domain project, lets add a class called CommandHandlers next to the comma
 validators and the aggregate. Make it look like below:
 
 ```csharp
-    using doLittle.Commands;
-    using doLittle.Domain;
+    using Dolittle.Commands;
+    using Dolittle.Domain;
 
     namespace Domain.HumanResources.Employees
     {
@@ -439,12 +439,12 @@ validators and the aggregate. Make it look like below:
 
 ### CommandCoordinator
 
-In doLittle there is entry point for commands, this is the place that all commands go through.
-Using the entire stack of doLittle, you don't necessarily see this system.
+In Dolittle there is entry point for commands, this is the place that all commands go through.
+Using the entire stack of Dolittle, you don't necessarily see this system.
 The CommandCoordinator is responsible for coordinating the pipeline of a command, the unit of
 work in which a command lives in. The unit of work is called CommandContext and is unique
 for every command instance that goes through the system. At the very end of such a unit of
-work, doLittle commits any events that was applied during the unit of work. This is similar
+work, Dolittle commits any events that was applied during the unit of work. This is similar
 to a transaction.
 
 ### CommandResult
@@ -458,15 +458,15 @@ asynchronously processed.
 ### ReadModel
 
 Now that we've taken care of business and applied events, we must look at the consequences of
-this. Lets start with the end result, the data what we will have. In doLittle we refer to this
-as a readmodel, and we have a marker interface called [IReadModel](../api/doLittle.Read.IReadModel.html).
+this. Lets start with the end result, the data what we will have. In Dolittle we refer to this
+as a readmodel, and we have a marker interface called [IReadModel](../api/Dolittle.Read.IReadModel.html).
 
 Lets go into the Read project and recreate the bounded context and the module structure;
 HumanResources.Employees. Add a class called Employee and make it look like below:
 
 ```csharp
     using System;
-    using doLittle.Read;
+    using Dolittle.Read;
 
     namespace Read.HumanResources.Employees
     {
@@ -495,8 +495,8 @@ unaware of the other subscribers existense.
 
 
 ```csharp
-    using doLittle.Events;
-    using doLittle.Read;
+    using Dolittle.Events;
+    using Dolittle.Read;
     using Events.HumanResources.Employees;
 
     namespace Read.HumanResources.Employees
@@ -526,20 +526,20 @@ unaware of the other subscribers existense.
 
 ### Query
 
-In order to get the data out, doLittle comes with a formalization of querying that we
+In order to get the data out, Dolittle comes with a formalization of querying that we
 will be using. The formalization involves creating a class representing the different
 queries one needs with the name of the class giving away the name of the query.
 All one needs to do then is to implement the IQueryFor<> generic interface and implement
 the query. The reasoning behind this model is to move the concerns of the client away
 from the server, so typically paging and similar things is not something you have to
-concern yourself about - doLittle will amend this information to the IQueryable<> that you
+concern yourself about - Dolittle will amend this information to the IQueryable<> that you
 return.
 
 In the Read project inside the Employees folder, add a class called AllEmployees and
 make it look like below:
 
 ```csharp
-    using doLittle.Read;
+    using Dolittle.Read;
 
     namespace Read.HumanResources.Employees
     {
@@ -566,7 +566,7 @@ make it look like below:
 
 ## Going back up to the frontend
 
-With all the artifacts we now in C#, doLittle produces a set of proxies at runtime that the JavaScript can take advantage of.
+With all the artifacts we now in C#, Dolittle produces a set of proxies at runtime that the JavaScript can take advantage of.
 
 ### ViewModel
 
@@ -577,8 +577,8 @@ to hook it all up in the view.
 Lets modify the viewmodel to look like this:
 
 ```js
-    doLittle.namespace("HumanResources.Employees", {
-        register: doLittle.Type.extend(function(registerEmployee, allEmployees) {
+    Dolittle.namespace("HumanResources.Employees", {
+        register: Dolittle.Type.extend(function(registerEmployee, allEmployees) {
             var self = this;
             this.register = registerEmployee;
             this.employees = allEmployees.all();
@@ -587,7 +587,7 @@ Lets modify the viewmodel to look like this:
 ```
 
 Basically what we`ve done now is to take a dependency on the command we created and the query we created.
-doLittle generates a proxy for these and you can just use them directly like above. Inside doLittle there sits
+Dolittle generates a proxy for these and you can just use them directly like above. Inside Dolittle there sits
 an IOC (Inversion of Control) container that resolves dependencies in different ways, one being well known
 commands and queries coming from proxies.
 
@@ -618,12 +618,12 @@ Going into the view file, we need to make it look like this:
 ```
 
 You might notice that naming is slightly different from the client JavaScript code to the C# code,
-varying on casing. doLittle adhers to what is expected in the different spaces, read more [here](conventions.md).
+varying on casing. Dolittle adhers to what is expected in the different spaces, read more [here](conventions.md).
 
 What the above alteration has done is to add binding of the values on the commands into the inputs.
-In addition we add validation messages using a binding handler that comes with doLittle called
+In addition we add validation messages using a binding handler that comes with Dolittle called
 "validationMessageFor" which points to the same values as its input is bound to.
-The button gets bound up using another binding handler from doLittle; command, and is bound
+The button gets bound up using another binding handler from Dolittle; command, and is bound
 directly to the command sitting on the viewmodel.
 
 The app should now be capable of executing the command and have all validation hooked up automatically.

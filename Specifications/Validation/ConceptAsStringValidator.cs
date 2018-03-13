@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace doLittle.FluentValidation.Specs.for_ValidationMetaDataGenerator
+namespace Dolittle.FluentValidation.Specs.for_ValidationMetaDataGenerator
 {
     public class ConceptAsStringValidator : BusinessValidator<ConceptAsString>
     {

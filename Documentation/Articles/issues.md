@@ -10,7 +10,7 @@ The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL 
 “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in
 [RFC 2119](https://tools.ietf.org/html/rfc2119).
 
-doLittle has a default issue template when you create an issue in GitHub.
+Dolittle has a default issue template when you create an issue in GitHub.
 The template is targetting bugs. For any bugs or problems, please follow the template.
 
 ## Committing

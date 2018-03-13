@@ -1,9 +1,9 @@
-﻿using doLittle.Commands.Diagnostics;
-using doLittle.Diagnostics;
+﻿using Dolittle.Commands.Diagnostics;
+using Dolittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Specs.Commands.Diagnostics.for_CommandInheritanceRule.given
+namespace Dolittle.Specs.Commands.Diagnostics.for_CommandInheritanceRule.given
 {
     public class a_command_inheritance_rule
     {

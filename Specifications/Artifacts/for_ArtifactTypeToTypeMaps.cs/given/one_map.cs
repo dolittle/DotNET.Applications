@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.Types;
+using Dolittle.Types;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Artifacts.for_ArtifactTypeToTypeMaps.cs.given
+namespace Dolittle.Artifacts.for_ArtifactTypeToTypeMaps.given
 {
-
     public class one_map : all_dependencies
     {
         protected static ArtifactTypeToTypeMaps maps;
@@ -18,7 +17,7 @@ namespace doLittle.Artifacts.for_ArtifactTypeToTypeMaps.cs.given
         Establish context = () => 
         {
             artifact_type = Mock.Of<IArtifactType>();
-            type = typeof(string);
+            type = typeof(IUnderlyingArtifact);
 
             map = new ArtifactTypeToType(artifact_type, type);
 

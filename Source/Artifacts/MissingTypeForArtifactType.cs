@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace doLittle.Artifacts
+namespace Dolittle.Artifacts
 {
 
     /// <summary>

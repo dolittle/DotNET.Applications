@@ -1,9 +1,9 @@
-﻿using doLittle.Diagnostics;
+﻿using Dolittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace doLittle.Specs.Diagnostics.for_QualityAssurance
+namespace Dolittle.Specs.Diagnostics.for_QualityAssurance
 {
     public class when_validating
     {

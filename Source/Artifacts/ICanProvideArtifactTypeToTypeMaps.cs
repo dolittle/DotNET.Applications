@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace doLittle.Artifacts
+namespace Dolittle.Artifacts
 {
     /// <summary>
     /// Defines a system that is capable of providing <see cref="ArtifactTypeToType"/> maps

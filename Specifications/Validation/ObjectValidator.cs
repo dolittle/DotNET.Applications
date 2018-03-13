@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace doLittle.FluentValidation.Specs
+namespace Dolittle.FluentValidation.Specs
 {
     public class ObjectValidator : BusinessValidator<object>
     {

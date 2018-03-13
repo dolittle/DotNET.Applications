@@ -1,17 +1,17 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using doLittle.DependencyInversion;
-using doLittle.Time;
-using doLittle.Applications;
-using doLittle.Runtime.Events;
-using doLittle.Runtime.Events.Processing;
-using doLittle.Logging;
+using Dolittle.DependencyInversion;
+using Dolittle.Time;
+using Dolittle.Applications;
+using Dolittle.Runtime.Events;
+using Dolittle.Runtime.Events.Processing;
+using Dolittle.Logging;
 
-namespace doLittle.Events.Processing
+namespace Dolittle.Events.Processing
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEventProcessor"/> for systems marked with the

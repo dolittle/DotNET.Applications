@@ -1,13 +1,13 @@
 ﻿using System;
-using doLittle.Commands;
-using doLittle.DependencyInversion;
-using doLittle.FluentValidation.Commands;
-using doLittle.Types;
-using doLittle.Logging;
+using Dolittle.Commands;
+using Dolittle.DependencyInversion;
+using Dolittle.FluentValidation.Commands;
+using Dolittle.Types;
+using Dolittle.Logging;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.given
+namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.given
 {
     public class a_command_validator_provider_with_input_and_business_validators : commands
     {

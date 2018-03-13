@@ -1,16 +1,16 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using doLittle.Reflection;
+using Dolittle.Reflection;
 using FluentValidation.Results;
 using FluentValidation.Validators;
 
-namespace doLittle.Validation
+namespace Dolittle.Validation
 {
     /// <summary>
     /// Represents a <see cref="PropertyValidator"/> that can hold dynamic state

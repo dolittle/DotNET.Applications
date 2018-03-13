@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation.Specs.for_RuleBuilderExtensions
+namespace Dolittle.FluentValidation.Specs.for_RuleBuilderExtensions
 {
     public class FakePropertyValidatorWithDynamicState : PropertyValidatorWithDynamicState
     {

@@ -1,22 +1,22 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using doLittle.Collections;
-using doLittle.Execution;
-using doLittle.DependencyInversion;
-using doLittle.Reflection;
-using doLittle.Types;
-using doLittle.Logging;
-using doLittle.Applications;
-using doLittle.Runtime.Commands.Handling;
-using doLittle.Runtime.Commands;
+using Dolittle.Collections;
+using Dolittle.Execution;
+using Dolittle.DependencyInversion;
+using Dolittle.Reflection;
+using Dolittle.Types;
+using Dolittle.Logging;
+using Dolittle.Applications;
+using Dolittle.Runtime.Commands.Handling;
+using Dolittle.Runtime.Commands;
 
-namespace doLittle.Commands.Handling
+namespace Dolittle.Commands.Handling
 {
     /// <summary>
     /// Represents a <see cref="ICommandHandlerInvoker">ICommandHandlerInvoker</see> for handling

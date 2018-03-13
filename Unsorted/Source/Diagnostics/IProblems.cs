@@ -1,10 +1,10 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 
-namespace doLittle.Diagnostics
+namespace Dolittle.Diagnostics
 {
     /// <summary>
     /// Defines a collection of <see cref="Problem">problems</see>

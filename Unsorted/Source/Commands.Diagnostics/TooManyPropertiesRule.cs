@@ -1,12 +1,12 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
-using doLittle.Diagnostics;
+using Dolittle.Diagnostics;
 
-namespace doLittle.Commands.Diagnostics
+namespace Dolittle.Commands.Diagnostics
 {
     /// <summary>
     /// Represents a rule that will check if a <see cref="ICommand"/> has too many properties

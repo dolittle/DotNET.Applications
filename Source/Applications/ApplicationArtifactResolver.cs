@@ -1,18 +1,18 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.Applications;
-using doLittle.Artifacts;
-using doLittle.Collections;
-using doLittle.Execution;
-using doLittle.Logging;
-using doLittle.Types;
+using Dolittle.Applications;
+using Dolittle.Artifacts;
+using Dolittle.Collections;
+using Dolittle.Execution;
+using Dolittle.Logging;
+using Dolittle.Types;
 
-namespace doLittle.Applications
+namespace Dolittle.Applications
 {
     /// <summary>
     /// Represents an implementation of <see cref="IApplicationArtifactResolver"/>
@@ -20,23 +20,26 @@ namespace doLittle.Applications
     [Singleton]
     public class ApplicationArtifactResolver : IApplicationArtifactResolver
     {
-        IApplication _application;
-        IArtifactTypes _types;
-        ITypeFinder _typeFinder;
-        ILogger _logger;
-        Dictionary<string, ICanResolveApplicationArtifacts> _resolversByType;
+        readonly IApplication _application;
+        readonly IArtifactTypes _types;
+        readonly ITypeFinder _typeFinder;
+        readonly ILogger _logger;
+        readonly Dictionary<string, ICanResolveApplicationArtifacts> _resolversByType;
+        readonly IArtifactTypeToTypeMaps _artifactTypeToTypeMaps;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationArtifactResolver"/>
         /// </summary>
         /// <param name="application">Current <see cref="IApplication">Application</see></param>
         /// <param name="types"><see cref="IArtifactTypes">Artifact types</see> available</param>
+        /// <param name="artifactTypeToTypeMaps"><see cref="IArtifactTypeToTypeMaps"/> for mapping between <see cref="IArtifactType"/> and <see cref="Type"/></param>
         /// <param name="resolvers">Instances of <see cref="ICanResolveApplicationArtifacts"/> for specialized resolving</param>
         /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering types needed</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public ApplicationArtifactResolver(
             IApplication application, 
-            IArtifactTypes types, 
+            IArtifactTypes types,
+            IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
             IInstancesOf<ICanResolveApplicationArtifacts> resolvers, 
             ITypeFinder typeFinder,
             ILogger logger)
@@ -46,12 +49,21 @@ namespace doLittle.Applications
             _resolversByType = resolvers.ToDictionary(r => r.ArtifactType.Identifier, r => r);
             _typeFinder = typeFinder;
             _logger = logger;
+            _artifactTypeToTypeMaps = artifactTypeToTypeMaps;
         }
 
         /// <inheritdoc/>
         public Type Resolve(IApplicationArtifactIdentifier identifier)
         {
             _logger.Trace($"Trying to resolve : {identifier.Artifact.Name} - with type {identifier.Artifact.Type.Identifier}");
+
+            var artifactType = _artifactTypeToTypeMaps.Map(identifier.Artifact.Type);
+            var types = _typeFinder.FindMultiple(artifactType);
+            var typesMatchingName = types.Where(t => t.Name == identifier.Artifact.Name);
+
+            ThrowIfAmbiguousTypes(identifier, typesMatchingName);
+
+            if( typesMatchingName.Count() > 0 ) return typesMatchingName.First();
 
 #if(false)
             var typeIdentifier = identifier.Artifact.Type.Identifier;

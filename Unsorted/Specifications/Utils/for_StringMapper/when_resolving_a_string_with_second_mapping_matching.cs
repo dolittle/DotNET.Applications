@@ -1,9 +1,9 @@
-﻿using doLittle.Utils;
+﻿using Dolittle.Utils;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace doLittle.Specs.Utils.for_StringMapper
+namespace Dolittle.Specs.Utils.for_StringMapper
 {
     public class when_resolving_a_string_with_second_mapping_matching
     {

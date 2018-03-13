@@ -6,12 +6,12 @@ author: einari
 ---
 # Getting Started
 
-Getting started with doLittle is very simple.
+Getting started with Dolittle is very simple.
 
 ## Visual Studio
 
 The main Visual Studio solution file that is being used and maintained sits inside the
-root folder of the project and is called `doLittle.sln`.
+root folder of the project and is called `Dolittle.sln`.
 It holds all the projects and you should be able to run this directly.
 Minimum requirement is Visual Studio 2015.
 

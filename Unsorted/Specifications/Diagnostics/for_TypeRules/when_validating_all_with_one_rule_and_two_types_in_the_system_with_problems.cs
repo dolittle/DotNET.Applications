@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using doLittle.Diagnostics;
+using Dolittle.Diagnostics;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace doLittle.Specs.Diagnostics.for_TypeRules
+namespace Dolittle.Specs.Diagnostics.for_TypeRules
 {
     public class when_validating_all_with_one_rule_and_two_types_in_the_system_with_problems : given.type_rules_with_one_rule_and_two_types
     {

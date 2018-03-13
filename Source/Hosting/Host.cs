@@ -5,14 +5,14 @@
 using System;
 using System.Runtime.Serialization;
 using System.Threading;
-using doLittle.Applications;
-using doLittle.Assemblies;
-using doLittle.Configuration;
-using doLittle.DependencyInversion;
-using doLittle.Logging;
+using Dolittle.Applications;
+using Dolittle.Assemblies;
+using Dolittle.Configuration;
+using Dolittle.DependencyInversion;
+using Dolittle.Logging;
 using Microsoft.Extensions.Logging;
 
-namespace doLittle.Hosting
+namespace Dolittle.Hosting
 {
     /// <summary>
     /// Represents a simple host
@@ -26,11 +26,11 @@ namespace doLittle.Hosting
         {
             
             var loggerFactory = new LoggerFactory();
-            var logAppenders = doLittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory);
+            var logAppenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory);
             var logger = new Logger(logAppenders);
 
-            var assemblies = doLittle.Assemblies.Bootstrap.EntryPoint.Initialize(logger);
-            var typeFinder = doLittle.Types.Bootstrap.EntryPoint.Initialize(assemblies);
+            var assemblies = Dolittle.Assemblies.Bootstrap.EntryPoint.Initialize(logger);
+            var typeFinder = Dolittle.Types.Bootstrap.EntryPoint.Initialize(assemblies);
 
             IContainer container = null;
 
@@ -42,7 +42,7 @@ namespace doLittle.Hosting
                 new BindingBuilder(Binding.For(typeof(IContainer))).To(() => container).Build()
             };
 
-            Container = container = doLittle.DependencyInversion.Bootstrap.EntryPoint.Initialize(assemblies, typeFinder, bindings);
+            Container = container = Dolittle.DependencyInversion.Bootstrap.EntryPoint.Initialize(assemblies, typeFinder, bindings);
         }
 
         /// <inheritdoc/>

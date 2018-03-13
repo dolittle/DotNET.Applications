@@ -4,11 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
-using doLittle.Collections;
-using doLittle.Types;
+using Dolittle.Collections;
+using Dolittle.Types;
 
-namespace doLittle.Artifacts
+namespace Dolittle.Artifacts
 {
     /// <summary>
     /// Represents an implementation of <see cref="IArtifactTypeToTypeMaps"/>
@@ -16,7 +17,7 @@ namespace doLittle.Artifacts
     public class ArtifactTypeToTypeMaps : IArtifactTypeToTypeMaps
     {
         readonly IInstancesOf<ICanProvideArtifactTypeToTypeMaps> _artifactTypeToTypeMapProviders;
-        readonly Dictionary<IArtifactType, Type> _artifactTypeToTypeMaps = new Dictionary<IArtifactType, Type>();
+        readonly Dictionary<string, Type> _artifactTypeToTypeMaps = new Dictionary<string, Type>();
         readonly Dictionary<Type, IArtifactType> _typeToArtifactTypeMaps = new Dictionary<Type, IArtifactType>();
 
         /// <summary>
@@ -33,7 +34,8 @@ namespace doLittle.Artifacts
         public IArtifactType Map(Type type)
         {
             ThrowIfMissingArtifactType(type);
-            return _typeToArtifactTypeMaps[type];
+            var underlyingType = _typeToArtifactTypeMaps.Keys.Single(t => t.IsAssignableFrom(type));
+            return _typeToArtifactTypeMaps[underlyingType];
         }
 
 
@@ -41,7 +43,7 @@ namespace doLittle.Artifacts
         public Type Map(IArtifactType type)
         {
             ThrowIfMissingType(type);
-            return _artifactTypeToTypeMaps[type];
+            return _artifactTypeToTypeMaps[type.Identifier];
         }
 
         void Populate()
@@ -51,7 +53,7 @@ namespace doLittle.Artifacts
                 var maps = provider.Provide();
                 maps.ForEach(map =>
                 {
-                    _artifactTypeToTypeMaps[map.ArtifactType] = map.Type;
+                    _artifactTypeToTypeMaps[map.ArtifactType.Identifier] = map.Type;
                     _typeToArtifactTypeMaps[map.Type] = map.ArtifactType;
                 });
             });
@@ -59,12 +61,12 @@ namespace doLittle.Artifacts
 
         void ThrowIfMissingType(IArtifactType type)
         {
-            if (!_artifactTypeToTypeMaps.ContainsKey(type)) throw new MissingTypeForArtifactType(type);
+            if (!_artifactTypeToTypeMaps.ContainsKey(type.Identifier)) throw new MissingTypeForArtifactType(type);
         }        
 
         void ThrowIfMissingArtifactType(Type type)
         {
-            if (!_typeToArtifactTypeMaps.ContainsKey(type)) throw new MissingArtifactTypeForType(type);
+            if (!_typeToArtifactTypeMaps.Keys.Any(t => t.IsAssignableFrom(type))) throw new MissingArtifactTypeForType(type);
         }        
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using doLittle.FluentValidation.Commands;
-using doLittle.Validation;
+using Dolittle.FluentValidation.Commands;
+using Dolittle.Validation;
 using Machine.Specifications;
 
-namespace doLittle.FluentValidation.Specs.Commands.for_ComposedCommandInputValidator
+namespace Dolittle.FluentValidation.Specs.Commands.for_ComposedCommandInputValidator
 {
     [Subject(typeof(ComposedCommandInputValidator<>))]
     public class when_validating_a_command_with_an_invalid_long_with_a_composed_validator : given.a_composed_command_input_validator

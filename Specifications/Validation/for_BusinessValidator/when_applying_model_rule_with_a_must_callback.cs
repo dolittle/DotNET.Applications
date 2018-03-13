@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace doLittle.FluentValidation.Specs.for_BusinessValidator
+namespace Dolittle.FluentValidation.Specs.for_BusinessValidator
 {
     public class when_applying_model_rule_with_a_must_callback
     {

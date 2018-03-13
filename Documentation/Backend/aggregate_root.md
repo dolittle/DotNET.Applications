@@ -45,15 +45,15 @@ to maintain these system invariants.  The exact mechanism it uses will depend on
 > All rules are not created equal.  Business Rules are essentially business problems, not primarily technical problems.  It may be simpler and cheaper
 > to break a rule and then clean it up later in a compensating transaction, than to expend a lot of time, energy and money ensuring the rule is not broken.
 
-## Aggregate Roots in doLittle
+## Aggregate Roots in Dolittle
 
-doLittle provides a base class *AggregateRoot* that implements functionality that makes it easier to rehydrate Aggregate Roots, generate events and persist these
+Dolittle provides a base class *AggregateRoot* that implements functionality that makes it easier to rehydrate Aggregate Roots, generate events and persist these
 to the Event Store.  The *AggregateRoot* is an implementation of an [Event Source](./Events/event_sourcing).  It is *recommended* that all your *Aggregate Root*
 classes inherit from this class.
 
 ## State
 
-In doLittle, an *Aggregate* is a purely *WRITE* concern.  It plays no roll in reading or presentation.  As such, an *Aggregate* **must not** expose any public
+In Dolittle, an *Aggregate* is a purely *WRITE* concern.  It plays no roll in reading or presentation.  As such, an *Aggregate* **must not** expose any public
 state, via variables or properties.  Neither should the *Aggregate* return any of its internal entities or values objects, even in a transient state.
 The *Aggregate* is only required to keep such internal state that it requires to maintain its invariants.  Since no public state is exposed by the *Aggregate*
 it does not need to keep in state values that are not
@@ -65,7 +65,7 @@ All *AggregateRoot* classes must have a *Guid* key.  It is permissible to includ
 ## Rehydration
 
 *AggregateRoot*s are an [Event Source](./Events/event_sourcing.md) and their internal state is rehydrated from the persistance store by replaying the events associated
-with this instance.  doLittle distinguishes between *CommittedEventStream*s, which are persisted to the [Event Store](./Events/event_store.md) and *UncommittedEventStream*s
+with this instance.  Dolittle distinguishes between *CommittedEventStream*s, which are persisted to the [Event Store](./Events/event_store.md) and *UncommittedEventStream*s
 which are not persisted.  A *CommittedEventStream* can be replayed against an *AggregateRoot* and each [Event](./Events/introduction.md) re-applied.  Since the [Event](./Events/introduction.md)
 is responsible for setting an internal state, the *AggregateRoot* will be returned to its actual state when all [Events](./Events/introduction.md) are re-applied.  The
 *CommittedEventStream* is a perfect audit record of all changes of the *AggregateRoot*.

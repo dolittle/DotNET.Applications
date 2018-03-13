@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using doLittle.FluentValidation.Commands;
-using doLittle.FluentValidation.MetaData;
-using doLittle.Types;
+using Dolittle.FluentValidation.Commands;
+using Dolittle.FluentValidation.MetaData;
+using Dolittle.Types;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator.given
+namespace Dolittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator.given
 {
     public class a_validation_meta_data_generator_with_common_rules
     {

@@ -1,12 +1,12 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using doLittle.Assemblies;
-using doLittle.Assemblies.Configuration;
-using doLittle.Assemblies.Rules;
+using Dolittle.Assemblies;
+using Dolittle.Assemblies.Configuration;
+using Dolittle.Assemblies.Rules;
 
-namespace doLittle.Validation
+namespace Dolittle.Validation
 {
     /// <summary>
     /// Reperesents an <see cref="ICanSpecifyAssemblies">assembly specifier</see> for client aspects

@@ -1,7 +1,7 @@
 using System;
 using Machine.Specifications;
 
-namespace doLittle.Artifacts.for_ArtifactTypeToTypeMaps.cs
+namespace Dolittle.Artifacts.for_ArtifactTypeToTypeMaps
 {
     public class when_mapping_to_artifact_type_with_missing_map : given.no_maps
     {

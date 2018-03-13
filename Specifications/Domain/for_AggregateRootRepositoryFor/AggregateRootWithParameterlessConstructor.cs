@@ -1,7 +1,7 @@
 ﻿using System;
-using doLittle.Domain;
+using Dolittle.Domain;
 
-namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor
+namespace Dolittle.Specs.Domain.for_AggregateRootRepositoryFor
 {
     public class AggregateRootWithParameterlessConstructor : AggregateRoot
     {

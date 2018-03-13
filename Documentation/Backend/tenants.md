@@ -8,7 +8,7 @@ author: einari
 
 A tenant is an entity that uses your system. In a multi-tenant solution, this is often seen as the customers
 represented as companies of your system. On a tenant you can have associated properties that you wish to make
-accessible in a transparent way. doLittle provides a cross-cutting approach to dealing with tenants.
+accessible in a transparent way. Dolittle provides a cross-cutting approach to dealing with tenants.
 There are mechanisms in place to populate the details of a tenant as you please.
 
 ## ITenant
@@ -20,7 +20,7 @@ want to associate with every tenant.
 
 Import part of a multi-tenant application is the ability to identify the tenant through the unique id that
 represents it. This type of identification is often found on claims, but could also be found elsewhere.
-By default doLittle will try to resolve it from the most common claim types in the following order:
+By default Dolittle will try to resolve it from the most common claim types in the following order:
 
 * http://schemas.microsoft.com/identity/claims/tenantid
 * http://schemas.microsoft.com/identity/claims/identityprovider
@@ -36,7 +36,7 @@ instance from the incoming URL - for instance the domain or similar.
 By putting in an implementation of the `ICanResolveTenantId` interface you get the chance to do so.
 
 ```csharp
-using doLittle.Tenancy;
+using Dolittle.Tenancy;
 
 public class MyTenantIdResolver : ICanResolveTenantId
 {
@@ -53,13 +53,13 @@ There can only be one of these implementations. If you have two, an exception wi
 
 ## Populator - ICanPopulateTenant
 
-In doLittle you'll find an interface called `ICanPopulateTenant`. If you want to augment the dynamic object
+In Dolittle you'll find an interface called `ICanPopulateTenant`. If you want to augment the dynamic object
 associated with every tenant with details, you have to implement this interface. In fact, it is not possible
 to add content to the tenants details in arbitrary code, it only allows to be populated from an implementation
 of `ICanPopulateTenant`.
 
 ```csharp
-using doLittle.Tenancy;
+using Dolittle.Tenancy;
 
 public class MyTenantPopulator : ICanPopulateTenant
 {
@@ -72,10 +72,10 @@ public class MyTenantPopulator : ICanPopulateTenant
 ```
 
 Later in any code you'll be able to take a dependency in your constructor to the `ITenant`interface as long as
-it is being resolved by the [IOC container](./container.md) set up for doLittle.
+it is being resolved by the [IOC container](./container.md) set up for Dolittle.
 
 ```csharp
-using doLittle.Tenancy;
+using Dolittle.Tenancy;
 
 public class MyCode
 {

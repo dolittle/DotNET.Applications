@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace doLittle.FluentValidation.Specs.for_PropertyValidatorWithDynamicState
+namespace Dolittle.FluentValidation.Specs.for_PropertyValidatorWithDynamicState
 {
     public class Model
     {

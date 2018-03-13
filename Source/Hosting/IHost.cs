@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-using doLittle.DependencyInversion;
+using Dolittle.DependencyInversion;
 
-namespace doLittle.Hosting
+namespace Dolittle.Hosting
 {
     /// <summary>
     /// Defines a simple host

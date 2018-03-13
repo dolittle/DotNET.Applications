@@ -1,7 +1,7 @@
 ﻿using System;
-using doLittle.Commands;
+using Dolittle.Commands;
 
-namespace doLittle.FluentValidation.Specs.Commands
+namespace Dolittle.FluentValidation.Specs.Commands
 {
     public class SimpleCommand : ICommand
     {

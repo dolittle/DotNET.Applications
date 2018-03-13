@@ -1,16 +1,16 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq;
 using System.Reflection;
-using doLittle.Concepts;
-using doLittle.Collections;
-using doLittle.Applications;
-using doLittle.Runtime.Commands;
+using Dolittle.Concepts;
+using Dolittle.Collections;
+using Dolittle.Applications;
+using Dolittle.Runtime.Commands;
 
-namespace doLittle.Commands.Handling
+namespace Dolittle.Commands.Handling
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICommandRequestToCommandConverter"/>

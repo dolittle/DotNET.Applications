@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using doLittle.FluentValidation.Commands;
-using doLittle.Validation;
+using Dolittle.FluentValidation.Commands;
+using Dolittle.Validation;
 
-namespace doLittle.FluentValidation.Specs.Commands
+namespace Dolittle.FluentValidation.Specs.Commands
 {
     public class AnotherSimpleCommandBusinessValidator : CommandBusinessValidator<AnotherSimpleCommand>
     {

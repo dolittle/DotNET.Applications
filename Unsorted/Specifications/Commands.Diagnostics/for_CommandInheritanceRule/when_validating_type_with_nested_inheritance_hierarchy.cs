@@ -1,9 +1,9 @@
-﻿using doLittle.Diagnostics;
+﻿using Dolittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace doLittle.Specs.Commands.Diagnostics.for_CommandInheritanceRule
+namespace Dolittle.Specs.Commands.Diagnostics.for_CommandInheritanceRule
 {
     public class when_validating_type_with_nested_inheritance_hierarchy : given.a_command_inheritance_rule
     {

@@ -17,8 +17,8 @@ A command can also have authorization and validation rules associated with it.
 ## Proxy generation
 
 For C# developers, there are automatically generated proxies of commands, security and validation related to the command.
-Read more about the proxy generation features of doLittle [here](proxy_generation.md).
-These can be taken as dependencies on constructors of types. Read more about [dependency injection](dependency_injection.md) in doLittle.
+Read more about the proxy generation features of Dolittle [here](proxy_generation.md).
+These can be taken as dependencies on constructors of types. Read more about [dependency injection](dependency_injection.md) in Dolittle.
 
 Commands can be created manually in the client code if one wants to. It is not required to go through proxy generation.
 

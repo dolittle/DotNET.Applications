@@ -1,16 +1,16 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.Commands;
-using doLittle.Validation;
+using Dolittle.Commands;
+using Dolittle.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace doLittle.Commands.Validation
+namespace Dolittle.Commands.Validation
 {
     /// <summary>
     /// Represents a command business validator that is constructed from discovered rules.

@@ -1,9 +1,9 @@
-﻿using doLittle.Applications;
-using doLittle.Domain;
+﻿using Dolittle.Applications;
+using Dolittle.Domain;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor.given
+namespace Dolittle.Specs.Domain.for_AggregateRootRepositoryFor.given
 {
     public class a_repository_for_a_stateful_aggregate_root : a_command_context
 	{

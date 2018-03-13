@@ -6,8 +6,8 @@ author: einari
 ---
 # Proxy generation
 
-A key factor of doLittle is to provide a good development story end-to-end.
-In order for doLittle to deliver on that promise, it was important to come up with a good story
+A key factor of Dolittle is to provide a good development story end-to-end.
+In order for Dolittle to deliver on that promise, it was important to come up with a good story
 for how one could with the least amount of effort reuse whatever was being written in the backend
 into the frontend. Generating proxy objects for the different artifacts became the solution.
 

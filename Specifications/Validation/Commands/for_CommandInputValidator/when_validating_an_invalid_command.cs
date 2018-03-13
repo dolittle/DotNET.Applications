@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.FluentValidation.Commands;
-using doLittle.Validation;
+using Dolittle.FluentValidation.Commands;
+using Dolittle.Validation;
 using Machine.Specifications;
 
-namespace doLittle.FluentValidation.Specs.Commands.for_CommandInputValidator
+namespace Dolittle.FluentValidation.Specs.Commands.for_CommandInputValidator
 {
     [Subject(typeof(CommandInputValidator<>))]
     public class when_validating_an_invalid_command : given.a_command_input_validator

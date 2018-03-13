@@ -1,21 +1,21 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using doLittle.Concepts;
-using doLittle.Strings;
-using doLittle.Commands;
-using doLittle.Types;
-using doLittle.Validation.MetaData;
+using Dolittle.Concepts;
+using Dolittle.Strings;
+using Dolittle.Commands;
+using Dolittle.Types;
+using Dolittle.Validation.MetaData;
 using FluentValidation;
 using FluentValidation.Validators;
-using doLittle.Commands.Validation;
+using Dolittle.Commands.Validation;
 
-namespace doLittle.Validation.MetaData
+namespace Dolittle.Validation.MetaData
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICanGenerateValidationMetaData"/>

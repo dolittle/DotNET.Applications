@@ -1,9 +1,9 @@
-﻿using doLittle.FluentValidation.MetaData;
-using doLittle.Validation.MetaData;
+﻿using Dolittle.FluentValidation.MetaData;
+using Dolittle.Validation.MetaData;
 using FluentValidation.Validators;
 using Machine.Specifications;
 
-namespace doLittle.FluentValidation.Specs.MetaData.for_RegexGenerator
+namespace Dolittle.FluentValidation.Specs.MetaData.for_RegexGenerator
 {
     public class when_generating
     {

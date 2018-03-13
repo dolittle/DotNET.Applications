@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using doLittle.Types;
+using Dolittle.Types;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Artifacts.for_ArtifactTypeToTypeMaps.cs.given
+namespace Dolittle.Artifacts.for_ArtifactTypeToTypeMaps.given
 {
     public class no_maps : all_dependencies
     {

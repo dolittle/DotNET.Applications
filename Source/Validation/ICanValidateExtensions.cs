@@ -1,5 +1,5 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
@@ -8,9 +8,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using doLittle.Validation;
+using Dolittle.Validation;
 
-namespace doLittle.Validation
+namespace Dolittle.Validation
 {
     /// <summary>
     /// Extensions to the <see cref="ICanValidate"/> interface to support the FluentValidation concept of RuleSets.

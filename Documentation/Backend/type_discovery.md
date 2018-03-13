@@ -6,8 +6,8 @@ author: einari
 ---
 # Type Discovery
 
-doLittle is very focused around [convention over configuration](../Articles/convention_over_configuration.md).
-In order for doLittle to be able to do all its conventions, it needs to be able to know about
+Dolittle is very focused around [convention over configuration](../Articles/convention_over_configuration.md).
+In order for Dolittle to be able to do all its conventions, it needs to be able to know about
 the types in the system. The type discovery is built on top of the [assembly discovery](assembly_discovery.md).
 
 ## IInstancesOf

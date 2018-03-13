@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using doLittle.Utils;
+using Dolittle.Utils;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Utils.for_StringMapper
+namespace Dolittle.Specs.Utils.for_StringMapper
 {
     public class when_asking_for_all_mappings_and_no_mappings_have_been_registered
     {

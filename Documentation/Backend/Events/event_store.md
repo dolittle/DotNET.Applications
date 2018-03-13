@@ -17,6 +17,6 @@ event it is capable of processing automatically replayed - making it possible fo
 
 When resuming an [EventSource](event_source.md), all relevant events can be applied to
 the *EventSource* to resume state. There are more mechanisms as well, but it proves the
-importance of events as being the source of truth in doLittle.
+importance of events as being the source of truth in Dolittle.
 
 

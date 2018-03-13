@@ -1,7 +1,7 @@
-﻿using doLittle.FluentValidation.Commands;
+﻿using Dolittle.FluentValidation.Commands;
 using Machine.Specifications;
 
-namespace doLittle.FluentValidation.Specs.Commands.for_ComposedCommandInputValidator
+namespace Dolittle.FluentValidation.Specs.Commands.for_ComposedCommandInputValidator
 {
     [Subject(typeof (ComposedCommandInputValidator<>))]
     public class when_composing_a_validator : given.a_composed_command_input_validator

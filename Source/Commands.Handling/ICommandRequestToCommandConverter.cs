@@ -1,11 +1,11 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using doLittle.Commands;
-using doLittle.Runtime.Commands;
+using Dolittle.Commands;
+using Dolittle.Runtime.Commands;
 
-namespace doLittle.Commands.Handling
+namespace Dolittle.Commands.Handling
 {
     /// <summary>
     /// Defines a converter that can convert between a <see cref="ICommand"/> and a <see cref="CommandRequest"/>

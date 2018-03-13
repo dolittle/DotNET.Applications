@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>doLittle.Runtime.Artifacts.Specs</AssemblyName>
+    <AssemblyName>Dolittle.Runtime.Artifacts.Specs</AssemblyName>
   </PropertyGroup>
 
   <Import Project="../../Build/MSBuild/specs.props"></Import>

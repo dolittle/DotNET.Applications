@@ -22,7 +22,7 @@ The folder structure is pretty much the same, except for the given folder. And s
             success: function () {
             }
         };
-        var command = doLittle.commands.Command.create(options);
+        var command = Dolittle.commands.Command.create(options);
 
         it("should create an instance", function () {
             expect(command).toBeDefined();

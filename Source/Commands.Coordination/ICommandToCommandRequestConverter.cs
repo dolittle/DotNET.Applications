@@ -1,12 +1,12 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using doLittle.Commands;
-using doLittle.Runtime.Commands;
-using doLittle.Runtime.Transactions;
+using Dolittle.Commands;
+using Dolittle.Runtime.Commands;
+using Dolittle.Runtime.Transactions;
 
-namespace doLittle.Commands.Coordination
+namespace Dolittle.Commands.Coordination
 {
     /// <summary>
     /// Defines a system that is capable of converting from <see cref="ICommand"/> instances to <see cref="CommandRequest"/>

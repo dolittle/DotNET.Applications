@@ -1,19 +1,19 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.Applications;
-using doLittle.Artifacts;
-using doLittle.Collections;
-using doLittle.Execution;
-using doLittle.Reflection;
-using doLittle.Types;
-using doLittle.Events;
-using doLittle.Logging;
+using Dolittle.Applications;
+using Dolittle.Artifacts;
+using Dolittle.Collections;
+using Dolittle.Execution;
+using Dolittle.Reflection;
+using Dolittle.Types;
+using Dolittle.Events;
+using Dolittle.Logging;
 
-namespace doLittle.Runtime.Events.Processing
+namespace Dolittle.Runtime.Events.Processing
 {
     /// <summary>
     /// Represents an implementation of <see cref="IEventProcessors"/>

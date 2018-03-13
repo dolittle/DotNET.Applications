@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using doLittle.Diagnostics;
+using Dolittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace doLittle.Specs.Diagnostics.for_ProblemsReporter
+namespace Dolittle.Specs.Diagnostics.for_ProblemsReporter
 {
     public class when_clearing_after_reporting
     {

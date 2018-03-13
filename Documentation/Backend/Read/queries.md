@@ -6,7 +6,7 @@ author: einari
 ---
 # Queries
 
-doLittle has formalized queries into types. These types are then your contracts
+Dolittle has formalized queries into types. These types are then your contracts
 for your query capabilities. These queries can be as optimized for the
 datasource as you see fit for the feature they're being used in.
 
@@ -17,13 +17,13 @@ The generic type argument should point to a [read model](read_model.md).
 This is a marker interface and does not require you implement anything specific.
 Instead it is relying on a convention; its looking for a property called `Query`.
 This property needs a getter and can effectively return any type. The type that it
-returns is recognized by doLittle and doLittle will look for a [query provider](query_providers.md)
+returns is recognized by Dolittle and Dolittle will look for a [query provider](query_providers.md)
 for the type returned. By default you could be returning an `IQueryable<>` - something
-doLittle has a [query provider](query_providers.md) for.
+Dolittle has a [query provider](query_providers.md) for.
 
 
 ```csharp
-using doLittle.Read;
+using Dolittle.Read;
 
 public class AllEmployees : IQueryFor<Employee>
 {
@@ -35,7 +35,7 @@ The implementation of the query can be anything you want it to be. Use whatever
 underlying datastore and technique to get to the data. The only rule is that there
 must be a [query provider](query_providers.md) for the return type.
 
-doLittle has a very simple [repository for read models](read_model_repository.md) that
+Dolittle has a very simple [repository for read models](read_model_repository.md) that
 can be used.
 
 ### Arguments
@@ -46,7 +46,7 @@ a getter and a setter is considered an argument for the query.
 These can then be part of your query.
 
 ```csharp
-using doLittle.Read;
+using Dolittle.Read;
 
 public class EmployeesHiredAfter : IQueryFor<Employee>
 {
@@ -71,8 +71,8 @@ that inherits from `QueryValidationDescriptorFor<>` and point the generic argume
 query type.
 
 ```csharp
-using doLittle.Validation;
-using doLittle.Read.Validation;
+using Dolittle.Validation;
+using Dolittle.Read.Validation;
 
 public class EmployeeHiredAfterValidator : QueryValidationDescriptorFor<EmployeesHiredAfter>
 {
@@ -97,12 +97,12 @@ Some features require filtering the read models on a model level. This could for
 row level security with complex scenarios making it easier to do it as a post process after
 data has been received from the datasource.
 
-doLittle has a global mechanism for filtering.
+Dolittle has a global mechanism for filtering.
 
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
-using doLittle.Read;
+using Dolittle.Read;
 
 public class MyReadModelFilter : ICanFilterReadModels
 {
@@ -128,7 +128,7 @@ You secure the read models by adding a security descriptor, similar to how one d
 a fluent way.
 
 ```csharp
-using doLittle.Security;
+using Dolittle.Security;
 
 public class QuerySecurity : BaseSecurityDescriptor
 {

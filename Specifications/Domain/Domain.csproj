@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>doLittle.Domain.Specs</AssemblyName>
+    <AssemblyName>Dolittle.Domain.Specs</AssemblyName>
   </PropertyGroup>
 
   <Import Project="../../Build/MSBuild/specs.props"/>
 
     <ItemGroup>
-        <PackageReference Include="doLittle.Runtime.Commands.Coordination" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="2.0.0-*" />
     </ItemGroup>
 
 

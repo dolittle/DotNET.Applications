@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Dolittle.Validation;
 using FluentValidation;
 
-namespace doLittle.Commands.Validation
+namespace Dolittle.Commands.Validation
 {
     /// <summary>
     /// Represents an implementation of <see cref="IComposedCommandRuleBuilder"/>.

@@ -2,17 +2,17 @@
     <Import Project="../../Build/MSBuild/default.props" />
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>doLittle.SDK.Hosting</AssemblyName>
+        <AssemblyName>Dolittle.SDK.Hosting</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="doLittle.Assemblies" Version="2.0.0-*" />
-        <PackageReference Include="doLittle.Applications" Version="2.0.0-*" />
-        <PackageReference Include="doLittle.DependencyInversion" Version="2.0.0-*" />
-        <PackageReference Include="doLittle.DependencyInversion.Conventions" Version="2.0.0-*" />
-        <PackageReference Include="doLittle.DependencyInversion.Bootstrap" Version="2.0.0-*" />
-        <PackageReference Include="doLittle.Logging" Version="2.0.0-*" />
-        <PackageReference Include="doLittle.Types" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Assemblies" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Applications" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.DependencyInversion" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.DependencyInversion.Conventions" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.DependencyInversion.Bootstrap" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Logging" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Types" Version="2.0.0-*" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
     </ItemGroup>
 

@@ -1,7 +1,7 @@
-﻿using doLittle.FluentValidation.Commands;
+﻿using Dolittle.FluentValidation.Commands;
 using FluentValidation;
 
-namespace doLittle.FluentValidation.Specs.Commands
+namespace Dolittle.FluentValidation.Specs.Commands
 {
     public class SimpleCommandBusinessValidatorWithRuleset : CommandBusinessValidator<SimpleCommand>
     {

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Machine.Specifications;
 
-namespace doLittle.FluentValidation.Specs.for_PropertyValidatorWithDynamicState
+namespace Dolittle.FluentValidation.Specs.for_PropertyValidatorWithDynamicState
 {
     public class when_adding_property_expression
     {

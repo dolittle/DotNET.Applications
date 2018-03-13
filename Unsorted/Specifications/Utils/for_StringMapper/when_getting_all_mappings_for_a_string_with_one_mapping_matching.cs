@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using doLittle.Utils;
+using Dolittle.Utils;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace doLittle.Specs.Utils.for_StringMapper
+namespace Dolittle.Specs.Utils.for_StringMapper
 {
     [Subject(typeof(StringMapper))]
     public class when_getting_all_mappings_for_a_string_with_one_mapping_matching

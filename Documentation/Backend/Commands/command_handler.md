@@ -21,7 +21,7 @@ which will indicate whether the *Command* succeeded and, in the case of failure,
 public void Handle(AddRecommendationToCart cmd)
 ```
 
-There **MUST** be a single handler for a Command.  doLittle will throw an exception if there is no handler for a command or if there is more than one handler for a command.  There can only be a single handler for a command as there must be a clear and unambiguous
+There **MUST** be a single handler for a Command.  Dolittle will throw an exception if there is no handler for a command or if there is more than one handler for a command.  There can only be a single handler for a command as there must be a clear and unambiguous
 indication of the result of the execution of the command.  Multiple command handlers for a single command would require co-ordination of multiple results with associated rollback of successful handlers after unsuccessful ones.  Where you wish multiple things
 to happen on receipt of a Command, you must implement and handle this yourself in your *Command Handler*.
 

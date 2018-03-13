@@ -1,8 +1,8 @@
 using System;
-using doLittle.Concepts;
+using Dolittle.Concepts;
 using Machine.Specifications;
 
-namespace doLittle.FluentValidation.Specs.Concepts.given
+namespace Dolittle.FluentValidation.Specs.Concepts.given
 {
     public class concepts
     {

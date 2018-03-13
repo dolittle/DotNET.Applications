@@ -3,7 +3,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace doLittle.FluentValidation.Specs.for_RuleBuilderExtensions
+namespace Dolittle.FluentValidation.Specs.for_RuleBuilderExtensions
 {
 
     public class when_adding_dynamic_state_to_validator

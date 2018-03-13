@@ -1,6 +1,6 @@
 ---
-title: Welcome to doLittle
-description: This is the landing page of doLittle
+title: Welcome to Dolittle
+description: This is the landing page of Dolittle
 keywords: Home
 author: einari
 ---
@@ -31,7 +31,7 @@ author: einari
         </div>
         <hr>
         <div>
-           doLittle is a platform designed to build Line of Business applications without sacrificing architectural quality,
+           Dolittle is a platform designed to build Line of Business applications without sacrificing architectural quality,
            code quality or scalability. Embracing the concepts of Domain Driven Design, it helps developers and other stakeholders
            focus on business need and business value, rather than on the more technical aspects of the solution. Built from the ground up,
            it both embodies as well as encourages best quality engineering practises such as the SOLID principles, Convention Over Configuration

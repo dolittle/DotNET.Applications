@@ -1,7 +1,7 @@
-﻿using doLittle.FluentValidation.Commands;
+﻿using Dolittle.FluentValidation.Commands;
 using FluentValidation;
 
-namespace doLittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
+namespace Dolittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
 {
     public class CommandForValidationValidator : CommandInputValidator<CommandForValidation>
     {

@@ -1,13 +1,13 @@
-﻿using doLittle.Applications;
-using doLittle.Runtime.Commands;
-using doLittle.Runtime.Commands.Coordination;
-using doLittle.Runtime.Events;
-using doLittle.Runtime.Events.Storage;
-using doLittle.Logging;
+﻿using Dolittle.Applications;
+using Dolittle.Runtime.Commands;
+using Dolittle.Runtime.Commands.Coordination;
+using Dolittle.Runtime.Events;
+using Dolittle.Runtime.Events.Storage;
+using Dolittle.Logging;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor.given
+namespace Dolittle.Specs.Domain.for_AggregateRootRepositoryFor.given
 {
     public class all_dependencies
     {

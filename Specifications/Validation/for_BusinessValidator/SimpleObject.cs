@@ -1,4 +1,4 @@
-﻿namespace doLittle.FluentValidation.Specs.for_BusinessValidator
+﻿namespace Dolittle.FluentValidation.Specs.for_BusinessValidator
 {
     public class SimpleObject
     {

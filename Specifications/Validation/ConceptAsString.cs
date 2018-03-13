@@ -1,7 +1,7 @@
 ﻿using System;
-using doLittle.Concepts;
+using Dolittle.Concepts;
 
-namespace doLittle.FluentValidation.Specs
+namespace Dolittle.FluentValidation.Specs
 {
     public class ConceptAsString : ConceptAs<String>
     {

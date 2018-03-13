@@ -1,12 +1,12 @@
 ---
 title: About versioning
-description: Learn about how doLittle is versioned
+description: Learn about how Dolittle is versioned
 keywords: General
 author: einari
 ---
 # Versioning
 
-doLittle follows the [Semantic Versioning v2](https://semver.org) versioning scheme.
+Dolittle follows the [Semantic Versioning v2](https://semver.org) versioning scheme.
 
 Deviation from the standard; due to filesystem limitations, the **+** for build numbers is a **-**.
 

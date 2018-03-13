@@ -1,11 +1,11 @@
-﻿using doLittle.DependencyInversion;
-using doLittle.Diagnostics;
-using doLittle.Execution;
-using doLittle.Types;
+﻿using Dolittle.DependencyInversion;
+using Dolittle.Diagnostics;
+using Dolittle.Execution;
+using Dolittle.Types;
 using Machine.Specifications;
 using Moq;
 
-namespace doLittle.Specs.Diagnostics.for_TypeRules.given
+namespace Dolittle.Specs.Diagnostics.for_TypeRules.given
 {
     public class all_dependencies
     {

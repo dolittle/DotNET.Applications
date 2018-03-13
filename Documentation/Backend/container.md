@@ -6,8 +6,8 @@ author: einari
 ---
 # Container
 
-doLittle is using the *dependency principle* and is relying on an external system providing
+Dolittle is using the *dependency principle* and is relying on an external system providing
 its dependencies. This is typically an IOC containers job of providing this. In certain
-areas of doLittle, the container is used directly as a service locator. This is in places
+areas of Dolittle, the container is used directly as a service locator. This is in places
 where we typically [discover types](type_discovery.md) and need to be able to create
 instances of them, in case they have dependencies that needs to be resolved.

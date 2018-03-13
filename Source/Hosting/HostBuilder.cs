@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using doLittle.Applications;
+using Dolittle.Applications;
 
-namespace doLittle.Hosting
+namespace Dolittle.Hosting
 {
     /// <summary>
     /// Represents an implementation of <see cref="IHostBuilder"/>

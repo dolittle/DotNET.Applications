@@ -1,14 +1,14 @@
 ﻿using System.Dynamic;
-using doLittle.Commands;
-using doLittle.Runtime.Commands;
-using doLittle.FluentValidation.Commands;
-using doLittle.Runtime.Applications;
-using doLittle.Runtime.Transactions;
+using Dolittle.Commands;
+using Dolittle.Runtime.Commands;
+using Dolittle.FluentValidation.Commands;
+using Dolittle.Runtime.Applications;
+using Dolittle.Runtime.Transactions;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidator
+namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidator
 {
     public class when_validating_a_command_with_no_validators : given.a_command_validation_service
     {

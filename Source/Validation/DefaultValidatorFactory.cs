@@ -1,19 +1,19 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using doLittle.DependencyInversion;
-using doLittle.Commands;
-using doLittle.Reflection;
-using doLittle.Types;
+using Dolittle.DependencyInversion;
+using Dolittle.Commands;
+using Dolittle.Reflection;
+using Dolittle.Types;
 using FluentValidation;
-using doLittle.Commands.Validation;
+using Dolittle.Commands.Validation;
 
-namespace doLittle.Validation
+namespace Dolittle.Validation
 {
     /// <summary>
     /// Represents the default <see cref="IValidatorFactory"/> implementation used for validators

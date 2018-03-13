@@ -1,6 +1,6 @@
 ---
 title: About configuration
-description: How to configure doLittle
+description: How to configure Dolittle
 keywords: Configuration
 author: einari
 ---

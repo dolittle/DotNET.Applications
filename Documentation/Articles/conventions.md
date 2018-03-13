@@ -1,6 +1,6 @@
 ---
 title: About conventions
-description: Learn about how doLittle builds on conventions
+description: Learn about how Dolittle builds on conventions
 keywords: General
 author: einari
 ---
@@ -13,6 +13,6 @@ While all JavaScript is consistently using lower camelCase - with the exception 
 types that can be instantiated. These have upper CamelCase. This last convention is
 a convention that is common in the JavaScript space.
 
-Going between the two worlds, doLittle makes sure to translate everything.
+Going between the two worlds, Dolittle makes sure to translate everything.
 During serialization for instance, translation is done for naming - both ways - making
 it feel natural to a C# developer as well as a JavaScript developer.

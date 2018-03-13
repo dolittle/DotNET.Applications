@@ -1,18 +1,18 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq;
 using System.Reflection;
-using doLittle.Logging;
-using doLittle.Events;
-using doLittle.Runtime.Events;
-using doLittle.Runtime.Events.Storage;
-using doLittle.Runtime.Commands.Coordination;
-using doLittle.Applications;
+using Dolittle.Logging;
+using Dolittle.Events;
+using Dolittle.Runtime.Events;
+using Dolittle.Runtime.Events.Storage;
+using Dolittle.Runtime.Commands.Coordination;
+using Dolittle.Applications;
 
-namespace doLittle.Domain
+namespace Dolittle.Domain
 {
     /// <summary>
     /// Defines a concrete implementation of <see cref="IAggregateRootRepositoryFor{T}">IAggregatedRootRepository</see>

@@ -1,9 +1,9 @@
 ﻿using System;
-using doLittle.Domain;
-using doLittle.Runtime.Events;
+using Dolittle.Domain;
+using Dolittle.Runtime.Events;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor
+namespace Dolittle.Specs.Domain.for_AggregateRootRepositoryFor
 {
     [Subject(typeof(AggregateRootRepositoryFor<>))]
     public class when_getting_a_stateless_aggregate_root_that_has_events : given.a_repository_for_a_stateless_aggregate_root

@@ -1,7 +1,7 @@
-﻿using doLittle.Validation.MetaData;
+﻿using Dolittle.Validation.MetaData;
 using Machine.Specifications;
 
-namespace doLittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
+namespace Dolittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
 {
     public class when_generating_for_nested_properties : given.a_validation_meta_data_generator_with_common_rules
     {

@@ -1,25 +1,19 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using doLittle.Runtime.Applications;
+using Dolittle.Artifacts;
 
-namespace doLittle.Events.Processing
+namespace Dolittle.Events.Processing
 {
     /// <summary>
-    /// Represents a <see cref="IApplicationResourceType">application resource type</see> for 
+    /// Represents a <see cref="IArtifactType">application resource type</see> for 
     /// <see cref="ICanProcessEvents">event processors</see>
     /// </summary>
-    public class EventProcessorResourceType : IApplicationResourceType
+    public class EventProcessorArtifactType : IArtifactType
     {
         /// <inheritdoc/>
         public string Identifier => "EventProcessor";
-
-        /// <inheritdoc/>
-        public Type Type => typeof(ICanProcessEvents);
-
-        /// <inheritdoc/>
-        public ApplicationArea Area => ApplicationAreas.Events;
     }
 }

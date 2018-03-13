@@ -1,14 +1,14 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using doLittle.Applications;
-using doLittle.Commands;
-using doLittle.Reflection;
-using doLittle.Runtime.Commands;
-using doLittle.Runtime.Transactions;
+using Dolittle.Applications;
+using Dolittle.Commands;
+using Dolittle.Reflection;
+using Dolittle.Runtime.Commands;
+using Dolittle.Runtime.Transactions;
 
-namespace doLittle.Commands.Coordination
+namespace Dolittle.Commands.Coordination
 {
     /// <summary>
     /// Represents async implementation of <see cref="ICommandToCommandRequestConverter"/>

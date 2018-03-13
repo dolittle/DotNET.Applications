@@ -1,11 +1,11 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using doLittle.Commands;
+using Dolittle.Commands;
 
-namespace doLittle.Commands.Validation
+namespace Dolittle.Commands.Validation
 {
     /// <summary>
     /// Defines a provider that returns command-specific input and business rule validators

@@ -1,16 +1,16 @@
 ﻿using System.Dynamic;
 using System.Linq;
-using doLittle.Commands;
-using doLittle.Runtime.Commands;
-using doLittle.FluentValidation.Commands;
-using doLittle.Validation;
-using doLittle.Runtime.Applications;
-using doLittle.Runtime.Transactions;
+using Dolittle.Commands;
+using Dolittle.Runtime.Commands;
+using Dolittle.FluentValidation.Commands;
+using Dolittle.Validation;
+using Dolittle.Runtime.Applications;
+using Dolittle.Runtime.Transactions;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace doLittle.FluentValidation.Specs.Commands.for_CommandValidator
+namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidator
 {
     public class when_validating_a_command_that_has_model_rule_and_property_errors_on_input_validator : given.a_command_validation_service
     {

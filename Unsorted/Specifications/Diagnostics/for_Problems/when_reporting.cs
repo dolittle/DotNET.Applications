@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using doLittle.Diagnostics;
+using Dolittle.Diagnostics;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Diagnostics.for_Problems
+namespace Dolittle.Specs.Diagnostics.for_Problems
 {
     public class when_reporting
     {

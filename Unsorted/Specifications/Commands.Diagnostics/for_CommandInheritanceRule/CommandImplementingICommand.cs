@@ -1,7 +1,7 @@
 ﻿using System;
-using doLittle.Commands;
+using Dolittle.Commands;
 
-namespace doLittle.Specs.Commands.Diagnostics.for_CommandInheritanceRule
+namespace Dolittle.Specs.Commands.Diagnostics.for_CommandInheritanceRule
 {
     public class CommandImplentingICommand : ICommand
     {

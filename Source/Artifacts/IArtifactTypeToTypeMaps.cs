@@ -1,6 +1,6 @@
 using System;
 
-namespace doLittle.Artifacts
+namespace Dolittle.Artifacts
 {
     /// <summary>
     /// Defines a system that is capable of mapping between <see cref="IArtifactType"/> and <see cref="Type"/>

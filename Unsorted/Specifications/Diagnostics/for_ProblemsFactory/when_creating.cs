@@ -1,7 +1,7 @@
-﻿using doLittle.Diagnostics;
+﻿using Dolittle.Diagnostics;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Diagnostics.for_ProblemsFactory
+namespace Dolittle.Specs.Diagnostics.for_ProblemsFactory
 {
     public class when_creating 
     {

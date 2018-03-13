@@ -1,22 +1,22 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using doLittle.Collections;
-using doLittle.Commands;
-using doLittle.DependencyInversion;
-using doLittle.Execution;
-using doLittle.Logging;
-using doLittle.Reflection;
-using doLittle.Types;
-using doLittle.Validation;
+using Dolittle.Collections;
+using Dolittle.Commands;
+using Dolittle.DependencyInversion;
+using Dolittle.Execution;
+using Dolittle.Logging;
+using Dolittle.Reflection;
+using Dolittle.Types;
+using Dolittle.Validation;
 using FluentValidation;
 
-namespace doLittle.Commands.Validation
+namespace Dolittle.Commands.Validation
 {
     /// <summary>
     /// Represents an instance of an <see cref="ICommandValidatorProvider">ICommandValidatorProvider.</see>

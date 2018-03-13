@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Validators;
 
-namespace doLittle.FluentValidation.Specs.for_PropertyValidatorWithDynamicState
+namespace Dolittle.FluentValidation.Specs.for_PropertyValidatorWithDynamicState
 {
     public class MyValidator : PropertyValidatorWithDynamicState
     {

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace doLittle.Artifacts
+namespace Dolittle.Artifacts
 {
     /// <summary>
     /// Represents a mapping between <see cref="IArtifactType"/> and a <see cref="Type">CLR type</see>

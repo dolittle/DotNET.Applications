@@ -1,6 +1,6 @@
 ---
 title: About Concepts and Value Objects
-description: Learn about Concepts and Value Objects in doLittle
+description: Learn about Concepts and Value Objects in Dolittle
 keywords: 
 author: einari, smithmx
 ---
@@ -40,14 +40,14 @@ by a string.  We may be interested in area codes, international dialling codes, 
 so on.  Replacing a primitive with a type allows us to capture that while not all strings are telephone numbers, all telephone
 numbers can be expressed as strings.
 
-## Value Objects in doLittle
+## Value Objects in Dolittle
 
-Value object **MUST** be treated as immutable after creation and initial population.  doLittle does not enforce immutability, primarily as
+Value object **MUST** be treated as immutable after creation and initial population.  Dolittle does not enforce immutability, primarily as
 a concession to serialization and testing concerns.  However, it is imperative that you do not alter any properties of a value object.
 Instead, you should always create and return a new instance.  Altering the properties of a Value Object will change the results of equality
 comparisons and the result of *GetHashCode()*.
 
-doLittle provides two different artifacts to support the creation of objects with value-identity semantics.
+Dolittle provides two different artifacts to support the creation of objects with value-identity semantics.
 
 ## ConceptAs<T>
 
@@ -72,7 +72,7 @@ While the underlying ConceptAs<T> class can handle the implicit conversion to a 
 specific type (i.e. TelephoneNumber) in a generic manner in the base class.
 
 It is **not recommended** to enforce *correctness* of a ConceptAs<T> by throwing an exception if there is an attempt to create an instance in an invalid
-state.  It is the preferred strategy in doLittle to capture invalid state through the mechanism of [input validation](./validation). This allows a more
+state.  It is the preferred strategy in Dolittle to capture invalid state through the mechanism of [input validation](./validation). This allows a more
 graceful and information handling of the invalid state.
 
 > [!Note]
@@ -90,7 +90,7 @@ It is *recommended* and *encouraged* to use ConceptAs<T> as properties within Va
 with a single property.
 
 > [!Note]
-> Value objects within doLittle consider the *System Type* to be integral to their identity.  While it is permissible to inherit from a Value<T>
+> Value objects within Dolittle consider the *System Type* to be integral to their identity.  While it is permissible to inherit from a Value<T>
 > or ConceptAs<T> that you have created, a type of the base class and a type of subclass **WILL NOT** be considered equal, even if they have
 > all properties identical.  A value object can only be equal to itself or another object of the same type.
 

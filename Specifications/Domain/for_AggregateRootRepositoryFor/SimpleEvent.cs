@@ -1,7 +1,7 @@
 ﻿using System;
-using doLittle.Events;
+using Dolittle.Events;
 
-namespace doLittle.Specs.Domain.for_AggregateRootRepositoryFor
+namespace Dolittle.Specs.Domain.for_AggregateRootRepositoryFor
 {
     public class SimpleEvent : IEvent
     {

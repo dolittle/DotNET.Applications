@@ -1,7 +1,7 @@
-﻿using doLittle.Diagnostics;
+﻿using Dolittle.Diagnostics;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Diagnostics.for_TypeRules.given
+namespace Dolittle.Specs.Diagnostics.for_TypeRules.given
 {
     public class type_rules_without_rules : all_dependencies
     {

@@ -1,7 +1,7 @@
-﻿using doLittle.Utils;
+﻿using Dolittle.Utils;
 using Machine.Specifications;
 
-namespace doLittle.Specs.Utils.for_StringMapping
+namespace Dolittle.Specs.Utils.for_StringMapping
 {
     public class when_resolving_a_string_with_only_a_wildcard
     {

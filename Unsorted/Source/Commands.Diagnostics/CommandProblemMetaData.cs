@@ -1,13 +1,13 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) 2008-2017 doLittle. All rights reserved.
+ *  Copyright (c) 2008-2017 Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace doLittle.Commands.Diagnostics
+namespace Dolittle.Commands.Diagnostics
 {
     /// <summary>
-    /// Represents the metadata for a <see cref="doLittle.Diagnostics.Problem"/> generated for a <see cref="ICommand"/>
+    /// Represents the metadata for a <see cref="Dolittle.Diagnostics.Problem"/> generated for a <see cref="ICommand"/>
     /// </summary>
     public class CommandProblemMetaData
     {

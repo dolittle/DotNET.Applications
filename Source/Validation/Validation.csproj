@@ -1,19 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>doLittle.FluentValidation</AssemblyName>
+        <AssemblyName>Dolittle.SDK.Validation</AssemblyName>
     </PropertyGroup>
     <Import Project="../../Build/MSBuild/default.props" />
     <ItemGroup>
         <PackageReference Include="FluentValidation" Version="7.1.1" />
-        <PackageReference Include="doLittle.Runtime.Commands" Version="2.0.0-*" />
-        <PackageReference Include="doLittle.Runtime.Validation" Version="2.0.0-*" />
-        <PackageReference Include="doLittle.Types" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Runtime.Commands" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Runtime.Commands.Validation" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Runtime.Validation" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Types" Version="2.0.0-*" />
     </ItemGroup>
 
 
     <ItemGroup>
         <ProjectReference Include="..\Commands\Commands.csproj" />
+        <ProjectReference Include="..\Commands.Coordination\Commands.Coordination.csproj" />
+        <ProjectReference Include="..\Commands.Handling\Commands.Handling.csproj" />
     </ItemGroup>
 
 </Project>

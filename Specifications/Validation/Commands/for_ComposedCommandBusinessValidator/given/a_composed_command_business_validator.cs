@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using doLittle.FluentValidation.Commands;
-using doLittle.FluentValidation.Specs.Concepts.given;
+using Dolittle.FluentValidation.Commands;
+using Dolittle.FluentValidation.Specs.Concepts.given;
 using FluentValidation;
 using Machine.Specifications;
 
-namespace doLittle.FluentValidation.Specs.Commands.for_ComposedCommandBusinessValidator.given
+namespace Dolittle.FluentValidation.Specs.Commands.for_ComposedCommandBusinessValidator.given
 {
     public class a_composed_command_business_validator : commands
     {
