@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using Dolittle.Collections;
+using Dolittle.DependencyInversion;
 using Dolittle.Types;
 
 namespace Dolittle.Artifacts
@@ -16,17 +17,21 @@ namespace Dolittle.Artifacts
     /// </summary>
     public class ArtifactTypeToTypeMaps : IArtifactTypeToTypeMaps
     {
-        readonly IInstancesOf<ICanProvideArtifactTypeToTypeMaps> _artifactTypeToTypeMapProviders;
+        readonly ITypeFinder _typeFinder;
         readonly Dictionary<string, Type> _artifactTypeToTypeMaps = new Dictionary<string, Type>();
         readonly Dictionary<Type, IArtifactType> _typeToArtifactTypeMaps = new Dictionary<Type, IArtifactType>();
+        private readonly IContainer _container;
+
 
         /// <summary>
         /// Initializes a new instance of <see cref="ArtifactTypeToTypeMaps"/>
         /// </summary>
-        /// <param name="artifactTypeToTypeMapProviders"></param>
-        public ArtifactTypeToTypeMaps(IInstancesOf<ICanProvideArtifactTypeToTypeMaps> artifactTypeToTypeMapProviders)
+        /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering <see cref="IArtifactTypeMapFor{T}"/> types</param>
+        /// <param name="container"><see cref="IContainer"/> for creating instances of the maps</param>
+        public ArtifactTypeToTypeMaps(ITypeFinder typeFinder, IContainer container)
         {
-            _artifactTypeToTypeMapProviders = artifactTypeToTypeMapProviders;
+            _typeFinder = typeFinder;
+            _container = container;
             Populate();
         }
 
@@ -47,15 +52,14 @@ namespace Dolittle.Artifacts
         }
 
         void Populate()
-        {
-            _artifactTypeToTypeMapProviders.ForEach(provider =>
-            {
-                var maps = provider.Provide();
-                maps.ForEach(map =>
-                {
-                    _artifactTypeToTypeMaps[map.ArtifactType.Identifier] = map.Type;
-                    _typeToArtifactTypeMaps[map.Type] = map.ArtifactType;
-                });
+        {   
+            var maps = _typeFinder.FindMultiple(typeof(IArtifactTypeMapFor<>));
+            maps.ForEach(mapType => {
+                var artifactTypeTargetType = mapType.GenericTypeArguments[0];
+                var artifactType = _container.Get(mapType) as IArtifactType;
+
+                _artifactTypeToTypeMaps[artifactType.Identifier] = artifactTypeTargetType;
+                _typeToArtifactTypeMaps[artifactTypeTargetType] = artifactType;
             });
         }
 

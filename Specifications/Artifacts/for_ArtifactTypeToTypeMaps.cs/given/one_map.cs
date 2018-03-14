@@ -9,25 +9,20 @@ namespace Dolittle.Artifacts.for_ArtifactTypeToTypeMaps.given
 {
     public class one_map : all_dependencies
     {
+        protected const string identifier = "SomeArtifactType";
         protected static ArtifactTypeToTypeMaps maps;
-        protected static IArtifactType artifact_type;
-        protected static Type type;
-        protected static ArtifactTypeToType map;
-
+        protected static Mock<IArtifactTypeMapFor<IUnderlyingArtifact>> artifact_type_map;
         Establish context = () => 
         {
-            artifact_type = Mock.Of<IArtifactType>();
-            type = typeof(IUnderlyingArtifact);
+            artifact_type_map = new Mock<IArtifactTypeMapFor<IUnderlyingArtifact>>();
+            artifact_type_map.SetupGet(_ => _.Identifier).Returns(identifier);
 
-            map = new ArtifactTypeToType(artifact_type, type);
+            var mapType = typeof(IArtifactTypeMapFor<IUnderlyingArtifact>);
 
-            var provider = new Mock<ICanProvideArtifactTypeToTypeMaps>();
-            provider.Setup(_ => _.Provide()).Returns(new List<ArtifactTypeToType>(new[] { map }).AsEnumerable());
+            type_finder.Setup(_ => _.FindMultiple(typeof(IArtifactTypeMapFor<>))).Returns(new Type[] { mapType });
+            container.Setup(_ => _.Get(mapType)).Returns(artifact_type_map.Object);
 
-            providers.Setup(_ => _.GetEnumerator()).Returns(
-                new List<ICanProvideArtifactTypeToTypeMaps>(new[] {provider.Object}).GetEnumerator());
-            maps = new ArtifactTypeToTypeMaps(providers.Object);
+            maps = new ArtifactTypeToTypeMaps(type_finder.Object, container.Object);
         };
-
     }
 }

@@ -8,9 +8,9 @@ namespace Dolittle.Artifacts.for_ArtifactTypeToTypeMaps
     {
         static Type result;
         
-        Because of = () => result = maps.Map(artifact_type);
+        Because of = () => result = maps.Map(artifact_type_map.Object);
 
-        It should_return_correct_type = () => result.ShouldEqual(type);
+        It should_return_correct_type = () => result.ShouldEqual(typeof(IUnderlyingArtifact));
     }        
     
 }

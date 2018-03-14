@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-using Dolittle.Types;
+using System;
 using Machine.Specifications;
-using Moq;
 
 namespace Dolittle.Artifacts.for_ArtifactTypeToTypeMaps.given
 {
@@ -11,8 +9,8 @@ namespace Dolittle.Artifacts.for_ArtifactTypeToTypeMaps.given
 
         Establish context = () => 
         {
-            providers.Setup(_ => _.GetEnumerator()).Returns(new List<ICanProvideArtifactTypeToTypeMaps>().GetEnumerator());
-            maps = new ArtifactTypeToTypeMaps(providers.Object);
+            type_finder.Setup(_ => _.FindMultiple(typeof(IArtifactTypeMapFor<>))).Returns(new Type[0]);
+            maps = new ArtifactTypeToTypeMaps(type_finder.Object, container.Object);
         };
     }
 }
