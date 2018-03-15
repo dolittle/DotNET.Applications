@@ -1,4 +1,5 @@
 ﻿using System;
+using Dolittle.Artifacts;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
@@ -10,6 +11,6 @@ namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver
 
         Because of = () => exception = Catch.Exception(() => resolver.Resolve(identifier.Object));
 
-        It should_throw_unknown_application_resource_type = () => exception.ShouldBeOfExactType<UnknownApplicationResourceType>();
+        It should_throw_unknown_artifact_type = () => exception.ShouldBeOfExactType<UnknownArtifactType>();
     }
 }

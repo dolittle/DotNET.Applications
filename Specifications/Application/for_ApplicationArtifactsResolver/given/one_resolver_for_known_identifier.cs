@@ -16,7 +16,7 @@ namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver.given
         Establish context = () =>
         {
             resource_resolver = new Mock<ICanResolveApplicationArtifacts>();
-            resource_resolver.SetupGet(r => r.ApplicationArtifactType).Returns(artifact_type.Object);
+            resource_resolver.SetupGet(r => r.ArtifactType).Returns(artifact_type.Object);
             resource_resolver.Setup(r => r.Resolve(identifier.Object)).Returns(known_type);
 
             resolvers.Setup(r => r.GetEnumerator()).Returns(
@@ -25,8 +25,9 @@ namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver.given
                 );
 
             resolver = new ApplicationArtifactResolver(
-                application.Object,
-                application_resource_types.Object, 
+                application_structure_map.Object,
+                artifact_types.Object, 
+                artifact_type_to_type_maps.Object,
                 resolvers.Object,
                 type_finder.Object,
                 logger);

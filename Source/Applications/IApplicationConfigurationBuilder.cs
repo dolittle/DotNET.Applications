@@ -12,20 +12,23 @@ namespace Dolittle.Applications
     public interface IApplicationConfigurationBuilder
     {
         /// <summary>
-        /// Gets the <see cref="ApplicationName">name</see> of the application
+        /// Build <see cref="IApplicationBuilder"/> for the <see cref="IApplication"/>
         /// </summary>
-        ApplicationName Name { get; }
+        /// <param name="callback">Callback for building</param>
+        /// <returns><see cref="IApplicationConfigurationBuilder"/> for continuing building</returns>
+        IApplicationConfigurationBuilder Application(Func<IApplicationBuilder, IApplicationBuilder> callback);
 
         /// <summary>
-        /// Build <see cref="IApplicationStructureConfigurationBuilder"/> for the <see cref="IApplication"/>
+        /// Build <see cref="IApplicationStructureMapBuilder"/> for the <see cref="IApplication"/>
         /// </summary>
-        /// <param name="structureConfigurationBuilder"></param>
-        IApplicationConfigurationBuilder Structure(Func<IApplicationStructureConfigurationBuilder, IApplicationStructureConfigurationBuilder> structureConfigurationBuilder);
+        /// <param name="callback">Callback for building</param>
+        /// <returns><see cref="IApplicationConfigurationBuilder"/> for continuing building</returns>
+        IApplicationConfigurationBuilder StructureMappedTo(Func<IApplicationStructureMapBuilder, IApplicationStructureMapBuilder> callback);
 
         /// <summary>
         /// Builds the <see cref="IApplication"/>
         /// </summary>
-        /// <returns>A built version of the <see cref="IApplication"/></returns>
-        IApplication Build();
+        /// <returns>A built version of the <see cref="IApplication"/> and <see cref="IApplicationStructureMap"/></returns>
+        (IApplication application, IApplicationStructureMap structureMap) Build();
     }
 }

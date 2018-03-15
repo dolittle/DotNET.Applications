@@ -20,7 +20,6 @@ namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver
 
         Establish context = () =>
         {
-            resource_type.SetupGet(t => t.Type).Returns(typeof(IInterface));
             type_finder.Setup(t => t.FindMultiple(typeof(IInterface))).Returns(
                 new[] {
                     typeof(Hidden1.Implementation),

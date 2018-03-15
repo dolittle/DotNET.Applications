@@ -10,41 +10,40 @@ using Dolittle.Strings;
 namespace Dolittle.Applications
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IApplicationStructureConfigurationBuilder"/>
+    /// Represents an implementation of <see cref="IApplicationStructureMapBuilder"/>
     /// </summary>
-    public class ApplicationStructureConfigurationBuilder : IApplicationStructureConfigurationBuilder
+    public class ApplicationStructureMapBuilder : IApplicationStructureMapBuilder
     {
-        IDictionary<ApplicationArea, IEnumerable<IStringFormat>> _structureFormats;
+        readonly IDictionary<ApplicationArea, IEnumerable<IStringFormat>> _structureFormats;
 
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ApplicationStructureConfigurationBuilder"/>
+        /// Initializes a new instance of <see cref="ApplicationStructureMapBuilder"/>
         /// </summary>
-        public ApplicationStructureConfigurationBuilder()
+        public ApplicationStructureMapBuilder()
         {
             _structureFormats = new Dictionary<ApplicationArea, IEnumerable<IStringFormat>>();
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ApplicationStructureConfigurationBuilder"/>
+        /// Initializes a new instance of <see cref="ApplicationStructureMapBuilder"/>
         /// </summary>
-        /// <param name="structureFormats"></param>
-        public ApplicationStructureConfigurationBuilder(IDictionary<ApplicationArea, IEnumerable<IStringFormat>> structureFormats)
+        /// <param name="structureFormats">Current structure formats</param>
+        public ApplicationStructureMapBuilder(IDictionary<ApplicationArea, IEnumerable<IStringFormat>> structureFormats)
         {
             _structureFormats = structureFormats;
         }
 
 
         /// <inheritdoc/>
-        public IApplicationStructure Build()
+        public IApplicationStructureMap Build(IApplication application)
         {
-            throw new NotImplementedException();
-            //var applicationStructure = new ApplicationStructure(_structureFormats);
-            //return applicationStructure;
+            var applicationStructure = new ApplicationStructureMap(application, _structureFormats);
+            return applicationStructure;
         }
 
         /// <inheritdoc/>
-        public IApplicationStructureConfigurationBuilder Include(ApplicationArea area, string format)
+        public IApplicationStructureMapBuilder Include(ApplicationArea area, string format)
         {
             Logger.Internal.Trace($"Include '{format}' for '{area}'");
 
@@ -62,7 +61,7 @@ namespace Dolittle.Applications
             formats.Add(stringFormat);
             formatsByArea[area] = formats;
 
-            var builder = new ApplicationStructureConfigurationBuilder(formatsByArea);
+            var builder = new ApplicationStructureMapBuilder(formatsByArea);
             return builder;
         }
     }

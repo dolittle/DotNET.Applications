@@ -19,15 +19,6 @@ namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver
             var segment_matches = new Mock<ISegmentMatches>();
             segment_matches.SetupGet(s => s.HasMatches).Returns(true);
             string_format.Setup(s => s.Match(typeof(Implementation).Namespace)).Returns(segment_matches.Object);
-
-            application_structure.Setup(a => a.GetStructureFormatsForArea(area)).Returns(new[]
-            {
-                string_format.Object
-            });
-
-            application.SetupGet(a => a.Structure).Returns(application_structure.Object);
-
-
             type_finder.Setup(t => t.FindMultiple(typeof(IInterface))).Returns(new[] { typeof(Implementation) });
         };
 

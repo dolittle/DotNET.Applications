@@ -9,7 +9,7 @@ namespace Dolittle.Applications
     /// <summary>
     /// Defines a  
     /// </summary>
-    public interface IApplicationStructureConfigurationBuilder
+    public interface IApplicationStructureMapBuilder
     {
         /// <summary>
         /// Include a given mapping for structure representation
@@ -41,12 +41,13 @@ namespace Dolittle.Applications
         /// One format *CAN* include multiple SubFeatures, but only if there is a Feature before in the string format
         /// 
         /// </remarks>
-        IApplicationStructureConfigurationBuilder Include(ApplicationArea area, string format);
+        IApplicationStructureMapBuilder Include(ApplicationArea area, string format);
 
         /// <summary>
-        /// Build an <see cref="IApplicationStructureConfigurationBuilder"/>
+        /// Build an <see cref="IApplicationStructureMapBuilder"/>
         /// </summary>
-        /// <returns>A built version of the <see cref="IApplicationStructureConfigurationBuilder"/></returns>
-        IApplicationStructure Build();
+        /// <param name="application"><see cref="IApplication"/> that the map is built for</param>
+        /// <returns>A built version of the <see cref="IApplicationStructureMap"/></returns>
+        IApplicationStructureMap Build(IApplication application);
     }
 }

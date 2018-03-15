@@ -11,8 +11,9 @@ namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver.given
         {
             resolvers.Setup(r => r.GetEnumerator()).Returns(new List<ICanResolveApplicationArtifacts>().GetEnumerator());
             resolver = new ApplicationArtifactResolver(
-                application.Object,
-                application_artifact_types.Object, 
+                application_structure_map.Object,
+                artifact_types.Object, 
+                artifact_type_to_type_maps.Object,
                 resolvers.Object,
                 type_finder.Object,
                 logger);

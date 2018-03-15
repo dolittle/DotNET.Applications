@@ -5,9 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dolittle.Applications;
 using Dolittle.Artifacts;
-using Dolittle.Collections;
 using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Types;
@@ -20,7 +18,7 @@ namespace Dolittle.Applications
     [Singleton]
     public class ApplicationArtifactResolver : IApplicationArtifactResolver
     {
-        readonly IApplication _application;
+        readonly IApplicationStructureMap _applicationStructureMap;
         readonly IArtifactTypes _types;
         readonly ITypeFinder _typeFinder;
         readonly ILogger _logger;
@@ -30,21 +28,21 @@ namespace Dolittle.Applications
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationArtifactResolver"/>
         /// </summary>
-        /// <param name="application">Current <see cref="IApplication">Application</see></param>
+        /// <param name="applicationStructureMap">Current <see cref="IApplicationStructureMap">application structure map</see></param>
         /// <param name="types"><see cref="IArtifactTypes">Artifact types</see> available</param>
         /// <param name="artifactTypeToTypeMaps"><see cref="IArtifactTypeToTypeMaps"/> for mapping between <see cref="IArtifactType"/> and <see cref="Type"/></param>
         /// <param name="resolvers">Instances of <see cref="ICanResolveApplicationArtifacts"/> for specialized resolving</param>
         /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering types needed</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public ApplicationArtifactResolver(
-            IApplication application, 
+            IApplicationStructureMap applicationStructureMap, 
             IArtifactTypes types,
             IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
             IInstancesOf<ICanResolveApplicationArtifacts> resolvers, 
             ITypeFinder typeFinder,
             ILogger logger)
         {
-            _application = application;
+            _applicationStructureMap = applicationStructureMap;
             _types = types;
             _resolversByType = resolvers.ToDictionary(r => r.ArtifactType.Identifier, r => r);
             _typeFinder = typeFinder;
@@ -57,41 +55,19 @@ namespace Dolittle.Applications
         {
             _logger.Trace($"Trying to resolve : {identifier.Artifact.Name} - with type {identifier.Artifact.Type.Identifier}");
 
+            var typeIdentifier = identifier.Artifact.Type.Identifier;
+            if (_resolversByType.ContainsKey(typeIdentifier)) return _resolversByType[typeIdentifier].Resolve(identifier);
+
             var artifactType = _artifactTypeToTypeMaps.Map(identifier.Artifact.Type);
             var types = _typeFinder.FindMultiple(artifactType);
             var typesMatchingName = types.Where(t => t.Name == identifier.Artifact.Name);
 
-            ThrowIfAmbiguousTypes(identifier, typesMatchingName);
+            if( _applicationStructureMap.DoesAnyFitInStructure(typesMatchingName))
+                return _applicationStructureMap.GetBestMatchingTypeFor(typesMatchingName);
 
-            if( typesMatchingName.Count() > 0 ) return typesMatchingName.First();
-
-#if(false)
-            var typeIdentifier = identifier.Artifact.Type.Identifier;
-            if (_resolversByType.ContainsKey(typeIdentifier)) return _resolversByType[typeIdentifier].Resolve(identifier);
-
-            var artifactType = _types.GetFor(typeIdentifier);
-            var types = _typeFinder.FindMultiple(artifactType.Type);
-            var typesMatchingName = types.Where(t => t.Name == identifier.Artifact.Name);
-
-            ThrowIfAmbiguousTypes(identifier, typesMatchingName);
-
-            var formats = _application.Structure.GetStructureFormatsForArea(artifactType.Area);
-            var type = typesMatchingName.Where(t => formats.Any(f => f.Match(t.Namespace).HasMatches)).FirstOrDefault();
-            if (type != null) return type;
-#endif
             _logger.Error($"Unknown application resurce type : {identifier.Artifact.Type.Identifier}");
             
             throw new UnknownArtifactType(identifier.Artifact.Type.Identifier);
-        }
-
-        void ThrowIfAmbiguousTypes(IApplicationArtifactIdentifier identifier, IEnumerable<Type> typesMatchingName)
-        {
-            if (typesMatchingName.Count() > 1) 
-            {
-                _logger.Error($"Ambiguous types found for {identifier.Artifact.Name}");
-                typesMatchingName.ForEach(type => _logger.Trace($"  Type found: {type.AssemblyQualifiedName}"));
-                throw new AmbiguousTypes(identifier);
-            }
         }
     }
 }
