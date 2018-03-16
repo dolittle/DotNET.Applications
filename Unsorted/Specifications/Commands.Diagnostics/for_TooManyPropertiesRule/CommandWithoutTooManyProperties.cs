@@ -1,4 +1,4 @@
-﻿namespace Dolittle.Specs.Commands.Diagnostics.for_TooManyPropertiesRule
+﻿namespace Dolittle.Commands.Diagnostics.for_TooManyPropertiesRule
 {
     public class CommandWithoutTooManyProperties
     {

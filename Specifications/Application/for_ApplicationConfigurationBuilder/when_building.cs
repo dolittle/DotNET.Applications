@@ -2,30 +2,30 @@
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Applications.Specs.for_ApplicationConfigurationBuilder
+namespace Dolittle.Applications.for_ApplicationConfigurationBuilder
 {
     public class when_building
     {
         const string application_name = "Some Application";
 
         static ApplicationConfigurationBuilder builder;
-        static IApplication application;
-        static Mock<IApplicationStructureConfigurationBuilder> application_structure_configuration_builder;
-        static Mock<IApplicationStructure> application_structure;
+        static (IApplication application, IApplicationStructureMap structureMap) result;
+        static Mock<IApplicationStructureMapBuilder> application_structure_map_builder;
+        static Mock<IApplicationStructureMap> application_structure_map;
 
         Establish context = () =>
         {
-            application_structure = new Mock<IApplicationStructure>();
-            application_structure_configuration_builder = new Mock<IApplicationStructureConfigurationBuilder>();
-            application_structure_configuration_builder.Setup(a => a.Build()).Returns(application_structure.Object);
-            builder = new ApplicationConfigurationBuilder(application_name, application_structure_configuration_builder.Object);
+            application_structure_map = new Mock<IApplicationStructureMap>();
+            application_structure_map_builder = new Mock<IApplicationStructureMapBuilder>();
+            application_structure_map_builder.Setup(a => a.Build(Moq.It.IsAny<IApplication>())).Returns(application_structure_map.Object);
+            builder = new ApplicationConfigurationBuilder(application_name, application_structure_map_builder.Object);
         };
 
-        Because of = () => application = builder.Build();
+        Because of = () => result = builder.Build();
 
-        It should_return_an_application = () => application.ShouldNotBeNull();
-        It should_hold_the_name_of_the_application = () => ((string) application.Name).ShouldEqual(application_name);
-        It should_build_application_structure = () => application_structure_configuration_builder.Verify(a => a.Build(), Times.Once());
-        It should_hold_the_built_application_structure = () => application.Structure.ShouldEqual(application_structure.Object);
+        It should_return_an_application = () => result.application.ShouldNotBeNull();
+        It should_return_the_built_structure_map = () => result.structureMap.ShouldEqual(application_structure_map.Object);
+        It should_hold_the_name_of_the_application = () => ((string) result.application.Name).ShouldEqual(application_name);
+        It should_build_application_structure = () => application_structure_map_builder.Verify(a => a.Build(Moq.It.IsAny<IApplication>()), Times.Once());
     }
 }

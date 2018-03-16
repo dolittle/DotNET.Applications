@@ -1,7 +1,7 @@
 using Dolittle.Commands.Validation;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider
+namespace Dolittle.FluentValidation.Commands.for_CommandValidatorProvider
 {
     [Subject(typeof(CommandValidatorProvider))]
     public class when_created : given.a_command_validator_provider_with_input_and_business_validators

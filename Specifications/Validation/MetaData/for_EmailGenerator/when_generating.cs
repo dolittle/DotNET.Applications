@@ -2,7 +2,7 @@
 using FluentValidation.Validators;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.MetaData.for_EmailGenerator
+namespace Dolittle.FluentValidation.MetaData.for_EmailGenerator
 {
     public class when_generating
     {

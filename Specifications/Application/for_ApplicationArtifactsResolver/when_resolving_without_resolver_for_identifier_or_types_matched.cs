@@ -5,7 +5,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver
+namespace Dolittle.Applications.for_ApplicationArtifactsResolver
 {
 
     public class when_resolving_without_resolver_for_identifier_or_types_matched : given.one_resolver_for_known_identifier

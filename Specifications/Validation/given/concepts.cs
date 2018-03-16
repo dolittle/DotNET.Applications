@@ -2,7 +2,7 @@ using System;
 using Dolittle.Concepts;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.Concepts.given
+namespace Dolittle.FluentValidation.Concepts.given
 {
     public class concepts
     {

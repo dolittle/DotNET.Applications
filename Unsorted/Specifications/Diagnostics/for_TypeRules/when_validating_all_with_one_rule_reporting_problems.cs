@@ -2,7 +2,7 @@
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Specs.Diagnostics.for_TypeRules
+namespace Dolittle.Diagnostics.for_TypeRules
 {
     public class when_validating_all_with_one_rule_reporting_problems : given.type_rules_with_one_rule
     {

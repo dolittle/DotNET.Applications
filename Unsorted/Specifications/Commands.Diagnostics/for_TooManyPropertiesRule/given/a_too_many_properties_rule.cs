@@ -3,7 +3,7 @@ using Dolittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Specs.Commands.Diagnostics.for_TooManyPropertiesRule.given
+namespace Dolittle.Commands.Diagnostics.for_TooManyPropertiesRule.given
 {
     public class a_too_many_properties_rule
     {

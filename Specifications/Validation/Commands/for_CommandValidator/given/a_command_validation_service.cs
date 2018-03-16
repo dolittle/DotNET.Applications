@@ -1,11 +1,11 @@
 ﻿using Dolittle.Commands.Validation;
-using Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.given;
+using Dolittle.FluentValidation.Commands.for_CommandValidatorProvider.given;
 using Machine.Specifications;
 using Moq;
 using Dolittle.Runtime.Commands.Validation;
 using Dolittle.Commands.Handling;
 
-namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidator.given
+namespace Dolittle.FluentValidation.Commands.for_CommandValidator.given
 {
     public class a_command_validation_service : a_command_validator_provider_with_input_and_business_validators
     {

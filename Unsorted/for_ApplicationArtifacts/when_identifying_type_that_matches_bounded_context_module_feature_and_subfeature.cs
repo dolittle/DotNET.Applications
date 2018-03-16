@@ -5,7 +5,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Applications.Specs.for_ApplicationArtifacts
+namespace Dolittle.Applications.for_ApplicationArtifacts
 {
     public class when_identifying_type_that_matches_bounded_context_module_feature_and_subfeature : given.application_resources_with_one_structure_format
     {

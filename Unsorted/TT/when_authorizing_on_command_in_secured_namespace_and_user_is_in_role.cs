@@ -1,9 +1,9 @@
 ﻿using System.Security.Principal;
 using Dolittle.Security;
-using Dolittle.Specs.Security.Fakes;
+using Dolittle.Security.Fakes;
 using Machine.Specifications;
 
-namespace Dolittle.Specs.Security.for_SecurityDescriptor
+namespace Dolittle.Security.for_SecurityDescriptor
 {
     [Subject(typeof(SecurityDescriptor))]
     public class when_authorizing_on_command_in_secured_namespace_and_user_is_in_role : given.a_configured_security_descriptor

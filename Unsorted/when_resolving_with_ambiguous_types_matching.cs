@@ -2,7 +2,7 @@
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver
+namespace Dolittle.Applications.for_ApplicationArtifactsResolver
 {
     public class when_resolving_with_ambiguous_types_matching : given.no_resolvers
     {

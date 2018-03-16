@@ -4,7 +4,7 @@ using Dolittle.Commands.Validation;
 using Dolittle.Validation;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.Commands.for_CommandInputValidator
+namespace Dolittle.FluentValidation.Commands.for_CommandInputValidator
 {
     [Subject(typeof(CommandInputValidatorFor<>))]
     public class when_validating_an_invalid_command : given.a_command_input_validator

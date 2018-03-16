@@ -3,7 +3,7 @@ using Dolittle.Security;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Runtime.Commands.Security.Specs.for_CommandSecurityExtensions
+namespace Dolittle.Runtime.Commands.Security.for_CommandSecurityExtensions
 {
     public class when_specifying_a_specific_command_type
     {

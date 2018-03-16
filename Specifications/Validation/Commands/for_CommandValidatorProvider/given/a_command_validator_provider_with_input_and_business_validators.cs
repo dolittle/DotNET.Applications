@@ -7,7 +7,7 @@ using Dolittle.Logging;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.given
+namespace Dolittle.FluentValidation.Commands.for_CommandValidatorProvider.given
 {
     public class a_command_validator_provider_with_input_and_business_validators : commands
     {

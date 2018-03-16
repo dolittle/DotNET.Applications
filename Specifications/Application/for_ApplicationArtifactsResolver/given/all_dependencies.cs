@@ -4,7 +4,7 @@ using Dolittle.Types;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver.given
+namespace Dolittle.Applications.for_ApplicationArtifactsResolver.given
 {
     public class all_dependencies
     {

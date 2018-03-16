@@ -2,7 +2,7 @@
 using FluentValidation.Validators;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.MetaData.for_RequiredGenerator
+namespace Dolittle.FluentValidation.MetaData.for_RequiredGenerator
 {
     public class when_generating_from_not_null
     {

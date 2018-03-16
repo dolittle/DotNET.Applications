@@ -1,7 +1,7 @@
 ﻿using Dolittle.Validation;
 using FluentValidation.Validators;
 
-namespace Dolittle.FluentValidation.Specs.for_PropertyValidatorWithDynamicState
+namespace Dolittle.FluentValidation.for_PropertyValidatorWithDynamicState
 {
     public class MyValidator : PropertyValidatorWithDynamicState
     {

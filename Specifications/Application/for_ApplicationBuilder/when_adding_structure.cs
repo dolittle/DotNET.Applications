@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace Dolittle.Applications.Specs.for_ApplicationConfigurationBuilder
+namespace Dolittle.Applications.for_ApplicationConfigurationBuilder
 {
     public class when_adding_structure
     {

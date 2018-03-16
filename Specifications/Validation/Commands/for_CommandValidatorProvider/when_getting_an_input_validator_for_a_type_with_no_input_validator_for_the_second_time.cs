@@ -2,7 +2,7 @@
 using Dolittle.Validation;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider
+namespace Dolittle.FluentValidation.Commands.for_CommandValidatorProvider
 {
     [Subject(typeof(CommandValidatorProvider))]
     public class when_getting_an_input_validator_for_a_type_with_no_input_validator_for_the_second_time : given.a_command_validator_provider_with_input_and_business_validators

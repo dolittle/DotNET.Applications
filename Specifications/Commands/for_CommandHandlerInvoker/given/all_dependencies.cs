@@ -8,7 +8,7 @@ using Dolittle.Types;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Runtime.Commands.Specs.for_CommandHandlerInvoker.given
+namespace Dolittle.Runtime.Commands.for_CommandHandlerInvoker.given
 {
     public class all_dependencies
     {

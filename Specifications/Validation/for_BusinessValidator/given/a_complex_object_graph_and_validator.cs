@@ -2,7 +2,7 @@
 using FluentValidation;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.for_BusinessValidator.given
+namespace Dolittle.FluentValidation.for_BusinessValidator.given
 {
     public class a_complex_object_graph_and_validator
     {

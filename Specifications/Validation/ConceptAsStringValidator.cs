@@ -1,7 +1,7 @@
 ﻿using Dolittle.Validation;
 using FluentValidation;
 
-namespace Dolittle.FluentValidation.Specs.for_ValidationMetaDataGenerator
+namespace Dolittle.FluentValidation.for_ValidationMetaDataGenerator
 {
     public class ConceptAsStringValidator : BusinessValidator<ConceptAsString>
     {

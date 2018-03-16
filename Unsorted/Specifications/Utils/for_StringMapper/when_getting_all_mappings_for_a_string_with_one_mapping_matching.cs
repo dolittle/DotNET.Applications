@@ -5,7 +5,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Specs.Utils.for_StringMapper
+namespace Dolittle.Utils.for_StringMapper
 {
     [Subject(typeof(StringMapper))]
     public class when_getting_all_mappings_for_a_string_with_one_mapping_matching

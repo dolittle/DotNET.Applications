@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace Dolittle.Runtime.Commands.Handling.Specs.for_CommandHandlerInvoker.given
+namespace Dolittle.Runtime.Commands.Handling.for_CommandHandlerInvoker.given
 {
     public class a_command_handler_invoker_with_no_command_handlers : all_dependencies
     {

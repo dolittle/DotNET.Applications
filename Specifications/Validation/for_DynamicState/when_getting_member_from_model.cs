@@ -1,7 +1,7 @@
 ﻿using Dolittle.Validation;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.for_DynamicState
+namespace Dolittle.FluentValidation.for_DynamicState
 {
     public class when_getting_member_from_model
     {

@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Security.Principal;
 using Dolittle.Security;
-using Dolittle.Specs.Security.Fakes;
+using Dolittle.Security.Fakes;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Specs.Security.for_SecurityDescriptor
+namespace Dolittle.Security.for_SecurityDescriptor
 {
     [Subject(typeof(SecurityDescriptor))]
     public class when_authorizing_on_command_type_and_namespace_and_user_is_in_only_namespace_role : given.a_configured_security_descriptor

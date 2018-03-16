@@ -3,7 +3,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Specs.Commands.Diagnostics.for_TooManyPropertiesRule
+namespace Dolittle.Commands.Diagnostics.for_TooManyPropertiesRule
 {
     public class when_validating_type_without_too_many_properties : given.a_too_many_properties_rule
     {

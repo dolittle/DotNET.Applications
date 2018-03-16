@@ -1,6 +1,6 @@
 ﻿using Dolittle.Commands;
 
-namespace Dolittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
+namespace Dolittle.FluentValidation.MetaData.for_ValidationMetaDataGenerator
 {
     public class CommandWithConcept : ICommand
     {

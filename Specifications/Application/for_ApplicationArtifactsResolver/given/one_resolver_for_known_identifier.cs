@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver.given
+namespace Dolittle.Applications.for_ApplicationArtifactsResolver.given
 {
     public class one_resolver_for_known_identifier : an_identifier
     {

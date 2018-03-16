@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Dolittle.Commands.Validation;
 using Dolittle.Validation;
 
-namespace Dolittle.FluentValidation.Specs.Commands
+namespace Dolittle.FluentValidation.Commands
 {
     public class AnotherSimpleCommandBusinessValidator : CommandBusinessValidatorFor<AnotherSimpleCommand>
     {

@@ -3,7 +3,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Specs.Diagnostics.for_QualityAssurance
+namespace Dolittle.Diagnostics.for_QualityAssurance
 {
     public class when_validating
     {

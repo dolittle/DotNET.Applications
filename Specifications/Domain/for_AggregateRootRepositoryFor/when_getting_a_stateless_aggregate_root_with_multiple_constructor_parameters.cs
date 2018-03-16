@@ -2,7 +2,7 @@
 using Dolittle.Domain;
 using Machine.Specifications;
 
-namespace Dolittle.Specs.Domain.for_AggregateRootRepositoryFor
+namespace Dolittle.Domain.for_AggregateRootRepositoryFor
 {
     public class when_getting_a_stateless_aggregate_root_with_multiple_constructor_parameters : given.a_command_context
     {

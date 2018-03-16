@@ -5,7 +5,7 @@ using Moq;
 using System;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Specs.Domain.for_AggregateRootRepositoryFor
+namespace Dolittle.Domain.for_AggregateRootRepositoryFor
 {
     [Subject(typeof(AggregateRootRepositoryFor<>))]
     public class when_getting_a_stateful_aggregate_root_that_has_events : given.a_repository_for_a_stateful_aggregate_root

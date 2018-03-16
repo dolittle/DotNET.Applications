@@ -5,7 +5,7 @@ using Dolittle.Types;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator.given
+namespace Dolittle.FluentValidation.MetaData.for_ValidationMetaDataGenerator.given
 {
     public class a_validation_meta_data_generator_with_common_rules
     {

@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace Dolittle.Runtime.Events.Storage.Specs.for_EventEnvelopes.given
+namespace Dolittle.Runtime.Events.Storage.for_EventEnvelopes.given
 {
     public class an_event_envelopes : all_dependencies
     {

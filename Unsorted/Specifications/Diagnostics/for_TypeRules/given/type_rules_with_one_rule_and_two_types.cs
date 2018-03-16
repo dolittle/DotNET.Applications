@@ -3,7 +3,7 @@ using Dolittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Specs.Diagnostics.for_TypeRules.given
+namespace Dolittle.Diagnostics.for_TypeRules.given
 {
     public class type_rules_with_one_rule_and_two_types : given.type_rules_with_one_rule
     {

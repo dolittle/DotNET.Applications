@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Machine.Specifications;
 
-namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver.given
+namespace Dolittle.Applications.for_ApplicationArtifactsResolver.given
 {
     public class no_resolvers : an_identifier
     {

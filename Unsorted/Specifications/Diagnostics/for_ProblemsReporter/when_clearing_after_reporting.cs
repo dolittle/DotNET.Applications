@@ -4,7 +4,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Specs.Diagnostics.for_ProblemsReporter
+namespace Dolittle.Diagnostics.for_ProblemsReporter
 {
     public class when_clearing_after_reporting
     {

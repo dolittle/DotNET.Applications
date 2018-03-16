@@ -2,7 +2,7 @@ using System;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver
+namespace Dolittle.Applications.for_ApplicationArtifactsResolver
 {
     public class when_resolving_with_multiple_types_matched_by_name : given.no_resolvers
     {

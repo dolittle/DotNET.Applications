@@ -1,6 +1,6 @@
 ﻿using Dolittle.Commands;
 
-namespace Dolittle.Runtime.Commands.Specs.for_CommandRequestConverter
+namespace Dolittle.Runtime.Commands.for_CommandRequestConverter
 {
     public class Command : ICommand
     {

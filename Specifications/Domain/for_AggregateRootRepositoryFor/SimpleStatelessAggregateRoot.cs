@@ -1,7 +1,7 @@
 ﻿using Dolittle.Domain;
 using Dolittle.Runtime.Events;
 
-namespace Dolittle.Specs.Domain.for_AggregateRootRepositoryFor
+namespace Dolittle.Domain.for_AggregateRootRepositoryFor
 {
     public class SimpleStatelessAggregateRoot : AggregateRoot
     {

@@ -2,7 +2,7 @@
 using FluentValidation.Validators;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.MetaData.for_RegexGenerator
+namespace Dolittle.FluentValidation.MetaData.for_RegexGenerator
 {
     public class when_generating
     {

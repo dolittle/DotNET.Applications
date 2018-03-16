@@ -5,7 +5,7 @@ using System.Text;
 using Dolittle.Utils;
 using Machine.Specifications;
 
-namespace Dolittle.Specs.Utils.for_StringMapping
+namespace Dolittle.Utils.for_StringMapping
 {
     public class when_getting_values_from_placeholders
     {

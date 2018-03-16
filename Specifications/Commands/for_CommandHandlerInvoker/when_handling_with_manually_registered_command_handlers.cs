@@ -6,7 +6,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Runtime.Commands.Specs.for_CommandHandlerInvoker
+namespace Dolittle.Runtime.Commands.for_CommandHandlerInvoker
 {
     [Subject(Subjects.handling_commands)]
     public class when_handling_with_manually_registered_command_handlers : given.a_command_handler_invoker_with_no_command_handlers

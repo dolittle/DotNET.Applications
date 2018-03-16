@@ -4,7 +4,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Applications.Specs.for_ApplicationArtifactsResolver
+namespace Dolittle.Applications.for_ApplicationArtifactsResolver
 {
     public class when_resolving_with_matching_format_for_area_and_matching_type : given.no_resolvers
     {

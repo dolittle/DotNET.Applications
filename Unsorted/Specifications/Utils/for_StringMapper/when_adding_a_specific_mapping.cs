@@ -5,7 +5,7 @@ using System.Text;
 using Dolittle.Utils;
 using Machine.Specifications;
 
-namespace Dolittle.Specs.Utils.for_StringMapper
+namespace Dolittle.Utils.for_StringMapper
 {
     public class when_adding_a_specific_mapping
     {

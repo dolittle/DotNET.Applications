@@ -3,7 +3,7 @@ using Dolittle.Commands;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Runtime.Commands.Specs.for_CommandHandlerInvoker.given
+namespace Dolittle.Runtime.Commands.for_CommandHandlerInvoker.given
 {
     public class a_command_handler_invoker_with_one_command_handler : a_command_handler_invoker_with_no_command_handlers
     {

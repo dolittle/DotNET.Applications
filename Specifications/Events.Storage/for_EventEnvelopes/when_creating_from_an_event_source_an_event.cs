@@ -8,7 +8,7 @@ using Moq;
 using It = Machine.Specifications.It;
 using Dolittle.Events;
 
-namespace Dolittle.Runtime.Events.Storage.Specs.for_EventEnvelopes
+namespace Dolittle.Runtime.Events.Storage.for_EventEnvelopes
 {
     public class when_creating_from_an_event_source_an_event : given.an_event_envelopes
     {

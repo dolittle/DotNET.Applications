@@ -3,7 +3,7 @@ using System.Linq;
 using Dolittle.Diagnostics;
 using Machine.Specifications;
 
-namespace Dolittle.Specs.Diagnostics.for_Problems
+namespace Dolittle.Diagnostics.for_Problems
 {
     public class when_reporting
     {

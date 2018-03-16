@@ -1,7 +1,7 @@
 ﻿using Dolittle.Validation;
 using FluentValidation;
 
-namespace Dolittle.FluentValidation.Specs.for_BusinessValidator
+namespace Dolittle.FluentValidation.for_BusinessValidator
 {
     public class ValidatorWithModelRuleWithOneMustClause : BusinessValidator<SimpleObject>
     {

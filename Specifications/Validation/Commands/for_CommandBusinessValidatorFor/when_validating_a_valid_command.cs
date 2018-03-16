@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Machine.Specifications;
 using Dolittle.Validation;
 
-namespace Dolittle.FluentValidation.Specs.Commands.for_CommandBusinessValidatorFor
+namespace Dolittle.FluentValidation.Commands.for_CommandBusinessValidatorFor
 {
     public class when_validating_a_valid_command : given.a_command_business_validator
     {

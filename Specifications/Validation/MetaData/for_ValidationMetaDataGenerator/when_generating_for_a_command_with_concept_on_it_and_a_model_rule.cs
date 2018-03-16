@@ -4,7 +4,7 @@ using Dolittle.Validation;
 using Dolittle.Validation.MetaData;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
+namespace Dolittle.FluentValidation.MetaData.for_ValidationMetaDataGenerator
 {
     [Subject(typeof(ValidationMetaDataGenerator))]
     public class when_generating_for_a_command_with_concept_on_it_and_a_model_rule : given.a_validation_meta_data_generator_with_common_rules

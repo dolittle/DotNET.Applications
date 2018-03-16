@@ -1,7 +1,7 @@
 ﻿using System;
 using Dolittle.Commands;
 
-namespace Dolittle.Runtime.Commands.Coordination.Specs
+namespace Dolittle.Runtime.Commands.Coordination
 {
     public class SimpleCommand : ICommand
     {

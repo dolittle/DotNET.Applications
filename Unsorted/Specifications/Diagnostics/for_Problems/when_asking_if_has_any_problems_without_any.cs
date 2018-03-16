@@ -1,7 +1,7 @@
 ﻿using Dolittle.Diagnostics;
 using Machine.Specifications;
 
-namespace Dolittle.Specs.Diagnostics.for_Problems
+namespace Dolittle.Diagnostics.for_Problems
 {
     public class when_asking_if_has_any_problems_without_any
     {

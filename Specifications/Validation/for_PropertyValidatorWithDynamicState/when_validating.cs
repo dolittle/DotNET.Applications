@@ -3,7 +3,7 @@ using FluentValidation.Internal;
 using FluentValidation.Validators;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.for_PropertyValidatorWithDynamicState
+namespace Dolittle.FluentValidation.for_PropertyValidatorWithDynamicState
 {
     public class when_validating
     {

@@ -1,9 +1,9 @@
 ﻿using Dolittle.Commands;
-using Dolittle.FluentValidation.Specs.Concepts.given;
+using Dolittle.FluentValidation.Concepts.given;
 using Dolittle.Validation;
 using FluentValidation;
 
-namespace Dolittle.FluentValidation.Specs.Commands
+namespace Dolittle.FluentValidation.Commands
 {
     public class commands
     {

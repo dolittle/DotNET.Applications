@@ -11,7 +11,7 @@ using Moq;
 using It = Machine.Specifications.It;
 using Dolittle.Runtime.Commands.Validation;
 
-namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidator
+namespace Dolittle.FluentValidation.Commands.for_CommandValidator
 {
     public class when_validating_a_command_that_has_correct_inputs_but_does_not_fulfill_business_rules : given.a_command_validation_service
     {

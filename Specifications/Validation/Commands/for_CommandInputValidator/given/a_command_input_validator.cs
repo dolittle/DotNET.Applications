@@ -1,7 +1,7 @@
 ﻿using Dolittle.Validation;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.Commands.for_CommandInputValidator.given
+namespace Dolittle.FluentValidation.Commands.for_CommandInputValidator.given
 {
     public class a_command_input_validator
     {

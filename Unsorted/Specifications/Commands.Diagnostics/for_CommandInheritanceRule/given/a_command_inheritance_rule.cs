@@ -3,7 +3,7 @@ using Dolittle.Diagnostics;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Specs.Commands.Diagnostics.for_CommandInheritanceRule.given
+namespace Dolittle.Commands.Diagnostics.for_CommandInheritanceRule.given
 {
     public class a_command_inheritance_rule
     {

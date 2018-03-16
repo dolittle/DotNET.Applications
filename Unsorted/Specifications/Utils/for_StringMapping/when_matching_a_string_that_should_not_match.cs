@@ -1,7 +1,7 @@
 ﻿using Dolittle.Utils;
 using Machine.Specifications;
 
-namespace Dolittle.Specs.Utils.for_StringMapping
+namespace Dolittle.Utils.for_StringMapping
 {
     public class when_matching_a_string_that_should_not_match
     {

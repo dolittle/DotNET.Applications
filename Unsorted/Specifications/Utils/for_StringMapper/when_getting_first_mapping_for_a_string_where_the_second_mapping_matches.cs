@@ -3,7 +3,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Specs.Utils.for_StringMapper
+namespace Dolittle.Utils.for_StringMapper
 {
     [Subject(typeof(StringMapper))]
     public class when_getting_first_mapping_for_a_string_where_the_second_mapping_matches

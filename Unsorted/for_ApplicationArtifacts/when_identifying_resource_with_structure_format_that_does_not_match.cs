@@ -4,7 +4,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Applications.Specs.for_ApplicationArtifacts
+namespace Dolittle.Applications.for_ApplicationArtifacts
 {
     public class when_identifying_resource_with_structure_format_that_does_not_match : given.application_resources_with_one_structure_format
     {

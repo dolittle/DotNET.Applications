@@ -3,7 +3,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Specs.Utils.for_StringMapper
+namespace Dolittle.Utils.for_StringMapper
 {
     public class when_asking_if_has_mapping_for_and_it_has
     {

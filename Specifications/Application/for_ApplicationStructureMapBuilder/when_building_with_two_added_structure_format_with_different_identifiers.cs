@@ -3,7 +3,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Applications.Specs.for_ApplicationStructureMapBuilder
+namespace Dolittle.Applications.for_ApplicationStructureMapBuilder
 {
     public class when_building_with_two_added_structure_format_with_different_identifiers
     {

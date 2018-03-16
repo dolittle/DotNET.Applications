@@ -2,7 +2,7 @@
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Runtime.Commands.Specs.for_CommandRequestConverter.given
+namespace Dolittle.Runtime.Commands.for_CommandRequestConverter.given
 {
     public class all_dependencies
     {

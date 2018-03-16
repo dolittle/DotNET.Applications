@@ -5,7 +5,7 @@ using Dolittle.Time;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Runtime.Events.Storage.Specs.for_EventEnvelopes.given
+namespace Dolittle.Runtime.Events.Storage.for_EventEnvelopes.given
 {
     public class all_dependencies
     {

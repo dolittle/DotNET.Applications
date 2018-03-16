@@ -5,7 +5,7 @@ using Dolittle.Types;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Specs.Diagnostics.for_TypeRules.given
+namespace Dolittle.Diagnostics.for_TypeRules.given
 {
     public class all_dependencies
     {
