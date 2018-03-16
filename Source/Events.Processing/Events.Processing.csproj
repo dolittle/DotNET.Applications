@@ -13,6 +13,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Applications\Applications.csproj" />
+        <ProjectReference Include="..\Events\Events.csproj" />
     </ItemGroup>
     
 </Project>

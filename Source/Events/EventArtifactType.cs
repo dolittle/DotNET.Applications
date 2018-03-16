@@ -5,15 +5,15 @@
 using System;
 using Dolittle.Artifacts;
 
-namespace Dolittle.Events.Processing
+namespace Dolittle.Events
 {
     /// <summary>
-    /// Represents a <see cref="IArtifactType">application resource type</see> for 
-    /// <see cref="ICanProcessEvents">event processors</see>
+    /// Represents a <see cref="IArtifactTypeMapFor{IEvent}">application resource type</see> for 
+    /// <see cref="IEvent">event</see>
     /// </summary>
-    public class EventProcessorArtifactType : IArtifactTypeMapFor<ICanProcessEvents>
+    public class EventProcessor : IArtifactTypeMapFor<IEvent>
     {
         /// <inheritdoc/>
-        public string Identifier => "EventProcessor";
+        public string Identifier => "Event";
     }
 }

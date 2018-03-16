@@ -1,9 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../Build/MSBuild/default.props" />
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <AssemblyName>Dolittle.SDK.Domain</AssemblyName>
     </PropertyGroup>
-    <Import Project="../../Build/MSBuild/default.props" />
+    <ItemGroup>
+        <ProjectReference Include="..\Applications\Applications.csproj" />
+        <ProjectReference Include="..\Events\Events.csproj" />
+    </ItemGroup>
+    
     <ItemGroup>
         <PackageReference Include="Dolittle.Runtime.Commands" Version="2.0.0-*" />
         <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="2.0.0-*" />
@@ -11,8 +16,5 @@
         <PackageReference Include="Dolittle.Runtime.Events.Storage" Version="2.0.0-*" />
     </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Applications\Applications.csproj" />
-    </ItemGroup>
    
 </Project>
