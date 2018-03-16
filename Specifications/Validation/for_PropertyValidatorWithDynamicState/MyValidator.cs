@@ -1,4 +1,5 @@
-﻿using FluentValidation.Validators;
+﻿using Dolittle.Validation;
+using FluentValidation.Validators;
 
 namespace Dolittle.FluentValidation.Specs.for_PropertyValidatorWithDynamicState
 {

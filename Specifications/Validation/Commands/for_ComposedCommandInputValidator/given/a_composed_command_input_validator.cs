@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Dolittle.FluentValidation.Commands;
+using Dolittle.Commands.Validation;
 using Dolittle.FluentValidation.Specs.Concepts.given;
 using FluentValidation;
 using Machine.Specifications;
@@ -9,7 +9,7 @@ namespace Dolittle.FluentValidation.Specs.Commands.for_ComposedCommandInputValid
 {
     public class a_composed_command_input_validator : commands
     {
-        protected static ComposedCommandInputValidator<MySimpleCommand> composed_validator;
+        protected static ComposedCommandInputValidatorFor<MySimpleCommand> composed_validator;
 
         protected static MySimpleCommand valid_command;
         protected static MySimpleCommand command_with_invalid_string;
@@ -39,7 +39,7 @@ namespace Dolittle.FluentValidation.Specs.Commands.for_ComposedCommandInputValid
                         {typeof (concepts.LongConcept), new[] {new LongConceptInputValidator()}}
                     };
 
-                composed_validator = new ComposedCommandInputValidator<MySimpleCommand>(validators);
+                composed_validator = new ComposedCommandInputValidatorFor<MySimpleCommand>(validators);
             };
     }
 }

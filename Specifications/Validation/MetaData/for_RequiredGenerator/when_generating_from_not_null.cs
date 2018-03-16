@@ -1,5 +1,4 @@
-﻿using Dolittle.FluentValidation.MetaData;
-using Dolittle.Validation.MetaData;
+﻿using Dolittle.Validation.MetaData;
 using FluentValidation.Validators;
 using Machine.Specifications;
 

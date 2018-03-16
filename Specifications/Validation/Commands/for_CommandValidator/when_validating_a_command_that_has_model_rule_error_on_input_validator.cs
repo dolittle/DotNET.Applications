@@ -2,13 +2,14 @@
 using System.Linq;
 using Dolittle.Commands;
 using Dolittle.Runtime.Commands;
-using Dolittle.FluentValidation.Commands;
+using Dolittle.Commands.Validation;
 using Dolittle.Validation;
-using Dolittle.Runtime.Applications;
+using Dolittle.Applications;
 using Dolittle.Runtime.Transactions;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
+using Dolittle.Runtime.Commands.Validation;
 
 namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidator
 {
@@ -23,7 +24,7 @@ namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidator
 
         Establish context = () =>
         {
-            command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
+            command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationArtifactIdentifier>(), new ExpandoObject());
             command_instance = Mock.Of<ICommand>();
             command_request_converter.Setup(c => c.Convert(command)).Returns(command_instance);
             command_input_validator = new Mock<ICommandInputValidator>();

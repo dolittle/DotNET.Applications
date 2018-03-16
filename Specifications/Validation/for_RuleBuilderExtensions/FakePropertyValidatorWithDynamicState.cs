@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Dolittle.Validation;
 using FluentValidation.Validators;
 
 namespace Dolittle.FluentValidation.Specs.for_RuleBuilderExtensions

@@ -1,7 +1,7 @@
 ﻿using System;
 using Dolittle.Commands;
 using Dolittle.DependencyInversion;
-using Dolittle.FluentValidation.Commands;
+using Dolittle.Commands.Validation;
 using Dolittle.Types;
 using Dolittle.Logging;
 using Machine.Specifications;
@@ -35,8 +35,6 @@ namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
                                                                 typeof(StringConceptBusinessValidator)
                                                             };
 
-        protected static BindingLifecycle lifecycle;
-
         Establish context = () =>
                                 {
                                     container_mock = new Mock<IContainer>();
@@ -47,7 +45,7 @@ namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
                                                 {
                                                     typeof(SimpleCommandInputValidator),
                                                     typeof(AnotherSimpleCommandInputValidator),
-                                                    typeof(NullCommandInputValidator<ICommand>)
+                                                    typeof(NullCommandInputValidatorFor<ICommand>)
                                                 }
                                         );
 
@@ -56,7 +54,7 @@ namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
                                                 {
                                                     typeof(SimpleCommandBusinessValidator),
                                                     typeof(AnotherSimpleCommandBusinessValidator),
-                                                    typeof(NullCommandBusinessValidator<ICommand>)
+                                                    typeof(NullCommandBusinessValidatorFor<ICommand>)
                                                 }
                                         );
 
@@ -65,7 +63,7 @@ namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
                                                 {
                                                     typeof(SimpleCommandInputValidator),
                                                     typeof(AnotherSimpleCommandInputValidator),
-                                                    typeof(NullCommandInputValidator<ICommand>)
+                                                    typeof(NullCommandInputValidatorFor<ICommand>)
                                                 }
                                         );
 
@@ -74,7 +72,7 @@ namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.
                                                 {
                                                     typeof(SimpleCommandBusinessValidator),
                                                     typeof(AnotherSimpleCommandBusinessValidator),
-                                                    typeof(NullCommandBusinessValidator<ICommand>)
+                                                    typeof(NullCommandBusinessValidatorFor<ICommand>)
                                                 }
                                         );
 

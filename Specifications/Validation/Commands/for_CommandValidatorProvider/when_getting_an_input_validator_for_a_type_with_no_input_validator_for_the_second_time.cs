@@ -1,4 +1,4 @@
-﻿using Dolittle.FluentValidation.Commands;
+﻿using Dolittle.Commands.Validation;
 using Dolittle.Validation;
 using Machine.Specifications;
 
@@ -17,6 +17,6 @@ namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider
 
         Because of = () => input_validator = command_validator_provider.GetInputValidatorFor(command);
 
-        It should_return_the_a_dynamically_constructed_validator = () => input_validator.ShouldBeOfExactType(typeof(ComposedCommandInputValidator<MySimpleCommand>));
+        It should_return_the_a_dynamically_constructed_validator = () => input_validator.ShouldBeOfExactType(typeof(ComposedCommandInputValidatorFor<MySimpleCommand>));
     }
 }

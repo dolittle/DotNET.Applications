@@ -14,14 +14,14 @@ namespace Dolittle.Commands.Validation
     /// <summary>
     /// Represents a command input validator that is constructed from discovered rules.
     /// </summary>
-    public class ComposedCommandInputValidator<T> : InputValidator<T>, ICanValidate<T>, ICommandInputValidator
+    public class ComposedCommandInputValidatorFor<T> : InputValidator<T>, ICanValidate<T>, ICommandInputValidator
         where T : class, ICommand
     {
         /// <summary>
-        /// Instantiates an Instance of a <see cref="ComposedCommandInputValidator{T}"/>.
+        /// Instantiates an Instance of a <see cref="ComposedCommandInputValidatorFor{T}"/>.
         /// </summary>
         /// <param name="propertyTypesAndValidators">A collection of dynamically discovered validators to use.</param>
-        public ComposedCommandInputValidator(IDictionary<Type, IEnumerable<IValidator>> propertyTypesAndValidators)
+        public ComposedCommandInputValidatorFor(IDictionary<Type, IEnumerable<IValidator>> propertyTypesAndValidators)
         {
             foreach (var propertyType in propertyTypesAndValidators.Keys)
             {

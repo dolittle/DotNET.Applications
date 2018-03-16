@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Dolittle.FluentValidation.Commands;
+using Dolittle.Commands.Validation;
 using Dolittle.Validation;
 using Machine.Specifications;
 
 namespace Dolittle.FluentValidation.Specs.Commands.for_ComposedCommandBusinessValidator
 {
-    [Subject(typeof(ComposedCommandBusinessValidator<>))]
+    [Subject(typeof(ComposedCommandBusinessValidatorFor<>))]
     public class when_validating_a_command_with_an_invalid_long_with_a_composed_validator : given.a_composed_command_business_validator
     {
         static IEnumerable<ValidationResult> result;

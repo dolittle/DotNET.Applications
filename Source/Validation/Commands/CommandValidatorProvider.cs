@@ -168,7 +168,7 @@ namespace Dolittle.Commands.Validation
         {
             _logger.Information($"Build dynamic input validator for {commandType.AssemblyQualifiedName}");
             Type[] typeArgs = { commandType };
-            var closedValidatorType = typeof(ComposedCommandInputValidator<>).MakeGenericType(typeArgs);
+            var closedValidatorType = typeof(ComposedCommandInputValidatorFor<>).MakeGenericType(typeArgs);
 
             var propertyTypeAndValidatorInstances = new Dictionary<Type, IEnumerable<IValidator>>();
             foreach (var key in typeAndAssociatedValidatorTypes.Keys)
@@ -189,7 +189,7 @@ namespace Dolittle.Commands.Validation
         ICommandBusinessValidator BuildDynamicallyDiscoveredBusinessValidator(Type commandType, IDictionary<Type, IEnumerable<Type>> typeAndAssociatedValidatorTypes)
         {
             Type[] typeArgs = { commandType };
-            var closedValidatorType = typeof(ComposedCommandBusinessValidator<>).MakeGenericType(typeArgs);
+            var closedValidatorType = typeof(ComposedCommandBusinessValidatorFor<>).MakeGenericType(typeArgs);
 
             var propertyTypeAndValidatorInstances = new Dictionary<Type, IEnumerable<IValidator>>();
             foreach (var key in typeAndAssociatedValidatorTypes.Keys)
@@ -237,9 +237,9 @@ namespace Dolittle.Commands.Validation
             _dynamicallyDiscoveredInputValidators = new Dictionary<Type, List<Type>>();
 
             var inputValidators = _typeFinder.FindMultiple(typeof(IValidateInput<>))
-                .Where(t => t != typeof(InputValidator<>) && t != typeof(ComposedCommandInputValidator<>));
+                .Where(t => t != typeof(InputValidator<>) && t != typeof(ComposedCommandInputValidatorFor<>));
             var businessValidators = _typeFinder.FindMultiple(typeof(IValidateBusinessRules<>))
-                .Where(t => t != typeof(BusinessValidator<>) && t != typeof(ComposedCommandBusinessValidator<>));
+                .Where(t => t != typeof(BusinessValidator<>) && t != typeof(ComposedCommandBusinessValidatorFor<>));
 
             inputValidators.ForEach(type => RegisterValidator(type, _dynamicallyDiscoveredInputValidators));
             businessValidators.ForEach(type => RegisterValidator(type, _dynamicallyDiscoveredBusinessValidators));

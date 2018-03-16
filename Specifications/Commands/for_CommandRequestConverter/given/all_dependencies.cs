@@ -1,4 +1,4 @@
-﻿using Dolittle.Runtime.Applications;
+﻿using Dolittle.Applications;
 using Machine.Specifications;
 using Moq;
 

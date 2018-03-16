@@ -1,4 +1,5 @@
 using System.Linq;
+using Dolittle.Validation;
 using FluentValidation.Results;
 using Machine.Specifications;
 
@@ -7,7 +8,7 @@ namespace Dolittle.FluentValidation.Specs.for_BusinessValidator
     [Subject(typeof(BusinessValidator<>))]
     public class when_validating_a_complex_graph_with_model_rules_and_concepts : given.a_complex_object_graph_and_validator
     {
-        static ValidationResult result;
+        static global::FluentValidation.Results.ValidationResult result;
 
         Because of = () => result = validator.Validate(parent);
 

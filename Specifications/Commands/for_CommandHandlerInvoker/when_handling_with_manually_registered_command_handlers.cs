@@ -1,5 +1,5 @@
 ﻿using System.Dynamic;
-using Dolittle.Runtime.Applications;
+using Dolittle.Applications;
 using Dolittle.Commands;
 using Dolittle.Runtime.Transactions;
 using Machine.Specifications;
@@ -14,7 +14,7 @@ namespace Dolittle.Runtime.Commands.Specs.for_CommandHandlerInvoker
         static CommandHandler handler;
         static CommandRequest command;
         static ICommand command_instance;
-        static IApplicationResourceIdentifier command_type;
+        static IApplicationArtifactIdentifier command_type;
         static bool result;
 
         Establish context = () =>

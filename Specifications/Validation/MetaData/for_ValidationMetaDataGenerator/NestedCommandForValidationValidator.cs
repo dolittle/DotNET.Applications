@@ -1,9 +1,9 @@
-using Dolittle.FluentValidation.Commands;
+using Dolittle.Commands.Validation;
 using FluentValidation;
 
 namespace Dolittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
 {
-    public class NestedCommandForValidationValidator : CommandInputValidator<NestedCommandForValidation>
+    public class NestedCommandForValidationValidator : CommandInputValidatorFor<NestedCommandForValidation>
     {
         public NestedCommandForValidationValidator(CommandForValidationValidator commandForValidationValidator)
         {

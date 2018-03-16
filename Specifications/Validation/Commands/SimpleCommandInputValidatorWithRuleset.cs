@@ -1,9 +1,9 @@
-﻿using Dolittle.FluentValidation.Commands;
+﻿using Dolittle.Commands.Validation;
 using FluentValidation;
 
 namespace Dolittle.FluentValidation.Specs.Commands
 {
-    public class SimpleCommandInputValidatorWithRuleset : CommandInputValidator<SimpleCommand>
+    public class SimpleCommandInputValidatorWithRuleset : CommandInputValidatorFor<SimpleCommand>
     {
         public const string SERVER_ONLY_RULESET = "ServerOnly";
 

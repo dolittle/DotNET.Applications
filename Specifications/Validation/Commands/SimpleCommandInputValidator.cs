@@ -1,9 +1,9 @@
-﻿using Dolittle.FluentValidation.Commands;
+﻿using Dolittle.Commands.Validation;
 using FluentValidation;
 
 namespace Dolittle.FluentValidation.Specs.Commands
 {
-    public class SimpleCommandInputValidator : CommandInputValidator<SimpleCommand>
+    public class SimpleCommandInputValidator : CommandInputValidatorFor<SimpleCommand>
     {
         public SimpleCommandInputValidator()
         {

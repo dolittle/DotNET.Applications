@@ -1,7 +1,7 @@
 ﻿using Dolittle.Validation;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Specs.Commands.for_CommandBusinessValidator.given
+namespace Dolittle.FluentValidation.Specs.Commands.for_CommandBusinessValidatorFor.given
 {
     public class a_command_business_validator
     {

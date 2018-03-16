@@ -1,4 +1,4 @@
-using Dolittle.FluentValidation.Commands;
+using Dolittle.Commands.Validation;
 using Machine.Specifications;
 
 namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider

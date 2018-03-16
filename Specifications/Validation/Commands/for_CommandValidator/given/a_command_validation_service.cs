@@ -1,8 +1,9 @@
-﻿using Dolittle.Runtime.Commands;
-using Dolittle.FluentValidation.Commands;
+﻿using Dolittle.Commands.Validation;
 using Dolittle.FluentValidation.Specs.Commands.for_CommandValidatorProvider.given;
 using Machine.Specifications;
 using Moq;
+using Dolittle.Runtime.Commands.Validation;
+using Dolittle.Commands.Handling;
 
 namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidator.given
 {
@@ -10,12 +11,12 @@ namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidator.given
     {
         protected static ICommandValidator command_validator;
         protected static Mock<ICommandValidatorProvider> command_validator_provider_mock;
-        protected static Mock<ICommandRequestConverter> command_request_converter;
+        protected static Mock<ICommandRequestToCommandConverter> command_request_converter;
 
         Establish context = () =>
                                 {
                                     command_validator_provider_mock = new Mock<ICommandValidatorProvider>();
-                                    command_request_converter = new Mock<ICommandRequestConverter>();
+                                    command_request_converter = new Mock<ICommandRequestToCommandConverter>();
                                     command_validator = new CommandValidator(command_validator_provider_mock.Object, command_request_converter.Object);
                                 };
     }

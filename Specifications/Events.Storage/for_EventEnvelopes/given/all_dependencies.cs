@@ -1,5 +1,5 @@
 ﻿using Dolittle.Runtime.Events.Migration;
-using Dolittle.Runtime.Applications;
+using Dolittle.Applications;
 using Dolittle.Runtime.Execution;
 using Dolittle.Time;
 using Machine.Specifications;

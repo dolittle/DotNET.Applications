@@ -1,4 +1,4 @@
-﻿using Dolittle.FluentValidation.Commands;
+﻿using Dolittle.Commands.Validation;
 using Dolittle.Validation;
 using Machine.Specifications;
 

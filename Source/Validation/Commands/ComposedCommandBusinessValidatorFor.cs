@@ -19,10 +19,10 @@ namespace Dolittle.Commands.Validation
         where T : class, ICommand
     {
         /// <summary>
-        /// Instantiates an Instance of a <see cref="ComposedCommandBusinessValidator{T}"/>.
+        /// Instantiates an Instance of a <see cref="ComposedCommandBusinessValidatorFor{T}"/>.
         /// </summary>
         /// <param name="propertyTypesAndValidators">A collection of dynamically discovered validators to use.</param>
-        public ComposedCommandBusinessValidator(IDictionary<Type, IEnumerable<IValidator>> propertyTypesAndValidators)
+        public ComposedCommandBusinessValidatorFor(IDictionary<Type, IEnumerable<IValidator>> propertyTypesAndValidators)
         {
             foreach (var propertyType in propertyTypesAndValidators.Keys)
             {

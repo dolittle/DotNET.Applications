@@ -1,4 +1,5 @@
 ﻿using Dolittle.Concepts;
+using Dolittle.Validation;
 using FluentValidation;
 
 namespace Dolittle.FluentValidation.Specs

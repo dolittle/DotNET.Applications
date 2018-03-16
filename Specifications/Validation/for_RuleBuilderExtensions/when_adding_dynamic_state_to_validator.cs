@@ -2,6 +2,7 @@
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
+using Dolittle.Validation;
 
 namespace Dolittle.FluentValidation.Specs.for_RuleBuilderExtensions
 {

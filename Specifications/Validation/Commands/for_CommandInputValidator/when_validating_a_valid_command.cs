@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Dolittle.FluentValidation.Commands;
+using Dolittle.Commands.Validation;
 using Dolittle.Validation;
 using Machine.Specifications;
 
 namespace Dolittle.FluentValidation.Specs.Commands.for_CommandInputValidator
 {
-    [Subject(typeof(CommandInputValidator<>))]
+    [Subject(typeof(CommandInputValidatorFor<>))]
     public class when_validating_a_valid_command : given.a_command_input_validator
     {
         static IEnumerable<ValidationResult> results;

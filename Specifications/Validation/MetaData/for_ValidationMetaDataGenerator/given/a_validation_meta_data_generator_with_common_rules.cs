@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Dolittle.FluentValidation.Commands;
-using Dolittle.FluentValidation.MetaData;
+using Dolittle.Commands.Validation;
+using Dolittle.Validation.MetaData;
 using Dolittle.Types;
 using Machine.Specifications;
 using Moq;

@@ -12,7 +12,7 @@ namespace Dolittle.Commands.Validation
     /// <remarks>
     /// Always returns an empty validation result collection.
     /// </remarks>
-    public class NullCommandBusinessValidator<T> : CommandBusinessValidator<T> where T : class, ICommand
+    public class NullCommandBusinessValidatorFor<T> : CommandBusinessValidatorFor<T> where T : class, ICommand
     {
     }
 }

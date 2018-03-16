@@ -1,9 +1,9 @@
-﻿using Dolittle.FluentValidation.Commands;
+﻿using Dolittle.Commands.Validation;
 using FluentValidation;
 
 namespace Dolittle.FluentValidation.Specs.MetaData.for_ValidationMetaDataGenerator
 {
-    public class CommandForValidationValidator : CommandInputValidator<CommandForValidation>
+    public class CommandForValidationValidator : CommandInputValidatorFor<CommandForValidation>
     {
         public const string NotEmptyErrorMessage = "Should not be empty";
         public const string EmailAddressErrorMessage = "Not a valid email";

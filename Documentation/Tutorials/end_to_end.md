@@ -268,7 +268,7 @@ RegisterEmployeeInputValidator and make it look like below:
     namespace Domain.HumanResources.Employees
     {
         public class RegisterEmployeeInputValidator :
-                         CommandInputValidator<RegisterEmployee>
+                         CommandInputValidatorFor<RegisterEmployee>
         {
             public RegisterEmployeeInputValidator()
             {
@@ -305,7 +305,7 @@ the way you would write one is very similar to that of an input validator:
     namespace Domain.HumanResources.Employees
     {
         public class RegisterEmployeeBusinessValidator :
-                         CommandBusinessValidator<RegisterEmployee>
+                         CommandBusinessValidatorFor<RegisterEmployee>
         {
         }
     }

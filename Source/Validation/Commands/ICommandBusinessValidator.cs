@@ -12,7 +12,7 @@ namespace Dolittle.Commands.Validation
     /// </summary>
     /// <remarks>
     /// Types inheriting from this interface and also <see cref="ICanValidate{T}"/> will be automatically registered.
-    /// You most likely want to subclass <see cref="CommandBusinessValidator{T}"/>.
+    /// You most likely want to subclass <see cref="CommandBusinessValidatorFor{T}"/>.
     /// </remarks>
     public interface ICommandBusinessValidator : ICanValidate, IValidator
     {

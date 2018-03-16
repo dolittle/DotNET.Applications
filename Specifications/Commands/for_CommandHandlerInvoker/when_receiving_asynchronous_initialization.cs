@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Dynamic;
 using System.Threading;
-using Dolittle.Runtime.Applications;
+using Dolittle.Applications;
 using Dolittle.Commands;
 using Dolittle.Runtime.Transactions;
 using Machine.Specifications;
@@ -17,7 +17,7 @@ namespace Dolittle.Runtime.Commands.Specs.for_CommandHandlerInvoker
 
         Because of = () =>
         {
-            var command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
+            var command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationArtifactIdentifier>(), new ExpandoObject());
             var thread = new Thread(() => invoker.TryHandle(command));
 
             type_finder

@@ -1,5 +1,5 @@
 ﻿using System;
-using Dolittle.Runtime.Applications;
+using Dolittle.Applications;
 using Dolittle.Commands;
 using Dolittle.DependencyInversion;
 using Dolittle.Execution;

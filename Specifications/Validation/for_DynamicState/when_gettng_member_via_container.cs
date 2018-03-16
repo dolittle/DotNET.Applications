@@ -1,4 +1,5 @@
-﻿using Machine.Specifications;
+﻿using Dolittle.Validation;
+using Machine.Specifications;
 
 namespace Dolittle.FluentValidation.Specs.for_DynamicState
 {

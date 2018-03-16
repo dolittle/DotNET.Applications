@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Dolittle.Runtime.Applications;
+using Dolittle.Applications;
 using Dolittle.Commands;
 using Dolittle.Runtime.Transactions;
 using Machine.Specifications;
@@ -22,7 +22,7 @@ namespace Dolittle.Runtime.Commands.Specs.for_CommandRequestConverter
 
         Establish context = () =>
         {
-            var identifier = new Mock<IApplicationResourceIdentifier>();
+            var identifier = new Mock<IApplicationArtifactIdentifier>();
             var content = new Dictionary<string, object>()
             {
                 { string_property_name, string_property_value },

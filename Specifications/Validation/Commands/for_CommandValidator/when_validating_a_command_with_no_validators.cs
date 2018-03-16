@@ -1,12 +1,13 @@
 ﻿using System.Dynamic;
 using Dolittle.Commands;
 using Dolittle.Runtime.Commands;
-using Dolittle.FluentValidation.Commands;
-using Dolittle.Runtime.Applications;
+using Dolittle.Commands.Validation;
+using Dolittle.Applications;
 using Dolittle.Runtime.Transactions;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
+using Dolittle.Runtime.Commands.Validation;
 
 namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidator
 {
@@ -18,12 +19,12 @@ namespace Dolittle.FluentValidation.Specs.Commands.for_CommandValidator
 
         Establish context = () =>
                                 {
-                                    command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationResourceIdentifier>(), new ExpandoObject());
+                                    command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationArtifactIdentifier>(), new ExpandoObject());
                                     command_instance = Mock.Of<ICommand>();
                                     command_request_converter.Setup(c => c.Convert(command)).Returns(command_instance);
 
-                                    command_validator_provider_mock.Setup(cvs => cvs.GetInputValidatorFor(command_instance)).Returns(() => new NullCommandInputValidator<ICommand>());
-                                    command_validator_provider_mock.Setup(cvs => cvs.GetBusinessValidatorFor(command_instance)).Returns(() => new NullCommandBusinessValidator<ICommand>());
+                                    command_validator_provider_mock.Setup(cvs => cvs.GetInputValidatorFor(command_instance)).Returns(() => new NullCommandInputValidatorFor<ICommand>());
+                                    command_validator_provider_mock.Setup(cvs => cvs.GetBusinessValidatorFor(command_instance)).Returns(() => new NullCommandBusinessValidatorFor<ICommand>());
                                 };
 
         Because of = () => result = command_validator.Validate(command);

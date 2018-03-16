@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Dolittle.Validation;
+using FluentValidation;
 
 namespace Dolittle.FluentValidation.Specs.for_BusinessValidator
 {

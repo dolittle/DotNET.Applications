@@ -16,7 +16,7 @@ namespace Dolittle.Commands.Validation
     /// Base class to inherit from for basic business-rule validation of a command.
     /// </summary>
     /// <typeparam name="T">Concrete type of the Command to validate</typeparam>
-    public abstract class CommandBusinessValidator<T> : BusinessValidator<T>, ICanValidate<T>, ICommandBusinessValidator where T : class, ICommand
+    public abstract class CommandBusinessValidatorFor<T> : BusinessValidator<T>, ICanValidate<T>, ICommandBusinessValidator where T : class, ICommand
     {
 #pragma warning disable 1591 // Xml Comments
         public virtual IEnumerable<ValidationResult> ValidateFor(T command)
