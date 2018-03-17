@@ -11,16 +11,15 @@ namespace Dolittle.Artifacts.for_ArtifactTypeToTypeMaps.given
     {
         protected const string identifier = "SomeArtifactType";
         protected static ArtifactTypeToTypeMaps maps;
-        protected static Mock<IArtifactTypeMapFor<IUnderlyingArtifact>> artifact_type_map;
+        protected static ArtifactType artifact_type_map;
         Establish context = () => 
         {
-            artifact_type_map = new Mock<IArtifactTypeMapFor<IUnderlyingArtifact>>();
-            artifact_type_map.SetupGet(_ => _.Identifier).Returns(identifier);
+            artifact_type_map = new ArtifactType(identifier);
 
-            var mapType = typeof(IArtifactTypeMapFor<IUnderlyingArtifact>);
+            var mapType = typeof(ArtifactType);
 
             type_finder.Setup(_ => _.FindMultiple(typeof(IArtifactTypeMapFor<>))).Returns(new Type[] { mapType });
-            container.Setup(_ => _.Get(mapType)).Returns(artifact_type_map.Object);
+            container.Setup(_ => _.Get(mapType)).Returns(artifact_type_map);
 
             maps = new ArtifactTypeToTypeMaps(type_finder.Object, container.Object);
         };

@@ -55,7 +55,7 @@ namespace Dolittle.Artifacts
         {   
             var maps = _typeFinder.FindMultiple(typeof(IArtifactTypeMapFor<>));
             maps.ForEach(mapType => {
-                var artifactTypeTargetType = mapType.GenericTypeArguments[0];
+                var artifactTypeTargetType = mapType.GetInterface(typeof(IArtifactTypeMapFor<>).Name).GenericTypeArguments[0];
                 var artifactType = _container.Get(mapType) as IArtifactType;
 
                 _artifactTypeToTypeMaps[artifactType.Identifier] = artifactTypeTargetType;

@@ -9,6 +9,6 @@ namespace Dolittle.Artifacts.for_ArtifactTypeToTypeMaps
         
         Because of = () => result = maps.Map(typeof(ArtifactImplementation));
 
-        It should_return_correct_artifact_type = () => result.ShouldEqual(artifact_type_map.Object);
+        It should_return_correct_artifact_type = () => result.ShouldEqual(artifact_type_map);
     }            
 }
