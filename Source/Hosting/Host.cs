@@ -32,17 +32,16 @@ namespace Dolittle.Hosting
             var assemblies = Dolittle.Assemblies.Bootstrap.EntryPoint.Initialize(logger);
             var typeFinder = Dolittle.Types.Bootstrap.EntryPoint.Initialize(assemblies);
 
-            IContainer container = null;
 
             var bindings = new[] {
                 new BindingBuilder(Binding.For(typeof(IAssemblies))).To(assemblies).Build(),
                 new BindingBuilder(Binding.For(typeof(Logging.ILogger))).To(logger).Build(),
                 new BindingBuilder(Binding.For(typeof(IApplication))).To(application).Build(),
                 new BindingBuilder(Binding.For(typeof(IHost))).To(this).Build(),
-                new BindingBuilder(Binding.For(typeof(IContainer))).To(() => container).Build()
             };
 
-            Container = container = Dolittle.DependencyInversion.Bootstrap.EntryPoint.Initialize(assemblies, typeFinder, bindings);
+            var result = Dolittle.DependencyInversion.Bootstrap.Boot.Start(assemblies, typeFinder, logger, bindings);
+            Container = result.Container;
         }
 
         /// <inheritdoc/>
