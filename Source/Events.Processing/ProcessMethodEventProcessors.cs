@@ -101,12 +101,12 @@ namespace Dolittle.Events.Processing
                         typeof(IEvent).GetTypeInfo().IsAssignableFrom(parameters[0].ParameterType.GetTypeInfo());
                 });
 
+                var eventProcessorTypeIdentifier = _applicationArtifacts.Identify(processor);
+                _logger.Trace($"Processor identified as '{eventProcessorTypeIdentifier}'");
+
                 foreach (var method in methods)
                 {
                     _logger.Trace($"Method found '{method}'");
-
-                    var eventProcessorTypeIdentifier = _applicationArtifacts.Identify(processor);
-                    _logger.Trace($"Processor identified as '{eventProcessorTypeIdentifier}'");
 
                     var eventProcessorTypeIdentifierAsString = _applicationArtifactIdentifierStringConverter.AsString(eventProcessorTypeIdentifier);
                     var eventIdentifier = _applicationArtifacts.Identify(method.GetParameters()[0].ParameterType);
