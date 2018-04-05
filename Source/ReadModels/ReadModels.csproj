@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>Dolittle.SDK.ReadMOdels</AssemblyName>
+        <AssemblyName>Dolittle.SDK.ReadModels</AssemblyName>
     </PropertyGroup>
     <Import Project="../../Build/MSBuild/default.props" />
     <ItemGroup>
