@@ -18,7 +18,8 @@ namespace Dolittle.Applications.for_ApplicationLocationResolver
         static Mock<ISegmentMatch> bounded_context_match;
         static Mock<ISegmentMatch> module_match;
         static Mock<ISegmentMatch> feature_match;
-        static Mock<ISegmentMatch> subfeature_match;
+        static Mock<ISegmentMatch> first_subfeature_match;
+        static Mock<ISegmentMatch> second_subfeature_match;
         static Mock<ISegmentMatches> segment_matches;
         static IApplicationLocation result;
 
@@ -36,17 +37,21 @@ namespace Dolittle.Applications.for_ApplicationLocationResolver
             feature_match.SetupGet(b => b.Identifier).Returns(ApplicationLocationResolver.FeatureKey);
             feature_match.SetupGet(b => b.Values).Returns(new[] { Feature });
 
-            subfeature_match = new Mock<ISegmentMatch>();
-            subfeature_match.SetupGet(b => b.Identifier).Returns(ApplicationLocationResolver.SubFeatureKey);
-            subfeature_match.SetupGet(b => b.Values).Returns(new[] { TopLevelSubFeature, SecondLevelSubFeature });
+            first_subfeature_match = new Mock<ISegmentMatch>();
+            first_subfeature_match.SetupGet(b => b.Identifier).Returns(ApplicationLocationResolver.SubFeatureKey);
+            first_subfeature_match.SetupGet(b => b.Values).Returns(new[] { TopLevelSubFeature });
+
+            second_subfeature_match = new Mock<ISegmentMatch>();
+            second_subfeature_match.SetupGet(b => b.Identifier).Returns(ApplicationLocationResolver.SubFeatureKey);
+            second_subfeature_match.SetupGet(b => b.Values).Returns(new[] { SecondLevelSubFeature });
 
             var segments = new List<ISegmentMatch>(new[]
             {
                 bounded_context_match.Object,
                 module_match.Object,
                 feature_match.Object,
-                subfeature_match.Object,
-                
+                first_subfeature_match.Object,
+                second_subfeature_match.Object
             });
 
             segment_matches = new Mock<ISegmentMatches>();

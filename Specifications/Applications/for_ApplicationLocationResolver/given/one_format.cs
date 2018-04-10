@@ -14,7 +14,10 @@ namespace Dolittle.Applications.for_ApplicationLocationResolver.given
         {
             format = new Mock<IStringFormat>();
             application_structure_map.SetupGet(_ => _.Formats).Returns(new[] { format.Object });
-            resolver = new ApplicationLocationResolver(application_structure_map.Object);
+            resolver = new ApplicationLocationResolver(
+                application.Object,
+                application_structure_map.Object
+            );
         };
     }
 }

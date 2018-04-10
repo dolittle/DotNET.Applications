@@ -7,12 +7,12 @@ namespace Dolittle.Applications.for_ApplicationArtifactsResolver
     public class when_resolving_with_multiple_types_matched_by_name : given.no_resolvers
     {
 
-        public class First
+        public class First : IInterface
         {
             public class TheType {}
         }
 
-        public class Second
+        public class Second : IInterface
         {
             public class TheType {}
         }
@@ -27,7 +27,7 @@ namespace Dolittle.Applications.for_ApplicationArtifactsResolver
             var types = new[] { typeof(First.TheType), typeof(Second.TheType)};
             type_finder.Setup(_ => _.FindMultiple(typeof(IInterface))).Returns(types);
             application_structure_map.Setup(_ => _.DoesAnyFitInStructure(types)).Returns(true);
-            application_structure_map.Setup(_ => _.GetBestMatchingTypeFor(types)).Returns(types[1]);
+            application_structure_map.Setup(_ => _.GetBestMatchingTypeFor(identifier.Object, types)).Returns(types[1]);
         };
 
         Because of = () => result = resolver.Resolve(identifier.Object);
