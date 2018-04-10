@@ -37,10 +37,10 @@ namespace Dolittle.Applications
         /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering types needed</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public ApplicationArtifactResolver(
-            IApplicationStructureMap applicationStructureMap, 
+            IApplicationStructureMap applicationStructureMap,
             IArtifactTypes types,
             IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
-            IInstancesOf<ICanResolveApplicationArtifacts> resolvers, 
+            IInstancesOf<ICanResolveApplicationArtifacts> resolvers,
             ITypeFinder typeFinder,
             ILogger logger)
         {
@@ -58,27 +58,30 @@ namespace Dolittle.Applications
             _logger.Trace($"Trying to resolve : {identifier.Artifact.Name} - with type {identifier.Artifact.Type.Identifier}");
 
             var typeIdentifier = identifier.Artifact.Type.Identifier;
-            if (_resolversByType.ContainsKey(typeIdentifier)) return _resolversByType[typeIdentifier].Resolve(identifier);
+            if (_resolversByType.ContainsKey(typeIdentifier))return _resolversByType[typeIdentifier].Resolve(identifier);
 
             var artifactType = _artifactTypeToTypeMaps.Map(identifier.Artifact.Type);
-            var types = _typeFinder.FindMultiple(artifactType);
-            var typesMatchingName = types.Where(t => t.Name == identifier.Artifact.Name);
-            Type matchedType = null;
+            if (artifactType != null)
+            {
+                var types = _typeFinder.FindMultiple(artifactType);
+                var typesMatchingName = types.Where(t => t.Name == identifier.Artifact.Name);
+                Type matchedType = null;
 
-            if (_applicationStructureMap.DoesAnyFitInStructure(typesMatchingName))
-                matchedType = _applicationStructureMap.GetBestMatchingTypeFor(typesMatchingName);
+                if (_applicationStructureMap.DoesAnyFitInStructure(typesMatchingName))
+                    matchedType = _applicationStructureMap.GetBestMatchingTypeFor(typesMatchingName);
 
-            ThrowIfMismatchedArtifactType(artifactType, matchedType);
-            if( matchedType != null  ) return matchedType;
+                ThrowIfMismatchedArtifactType(artifactType, matchedType);
+                if (matchedType != null)return matchedType;
 
-            _logger.Error($"Unknown application resurce type : {identifier.Artifact.Type.Identifier}");
+                _logger.Error($"Unknown application resurce type : {identifier.Artifact.Type.Identifier}");
+            }
 
             throw new UnknownArtifactType(identifier.Artifact.Type.Identifier);
         }
 
         void ThrowIfMismatchedArtifactType(Type artifactType, Type matchedType)
         {
-            if (matchedType == null || 
+            if (matchedType == null ||
                 !artifactType.IsAssignableFrom(matchedType))
                 throw new MismatchingArtifactType(artifactType, matchedType);
         }
