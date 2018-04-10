@@ -69,7 +69,7 @@ namespace Dolittle.Runtime.Events.Processing
             systemsThatHasEventProcessors.ForEach(a => a.ForEach(e =>
             {
                 List<IEventProcessor> eventProcessors;
-                if (eventProcessorsByResourceIdentifier.ContainsKey(e.Event)) eventProcessors = _eventProcessorsByResourceIdentifier[e.Event];
+                if (eventProcessorsByResourceIdentifier.ContainsKey(e.Event)) eventProcessors = eventProcessorsByResourceIdentifier[e.Event];
                 else
                 {
                     eventProcessors = new List<IEventProcessor>();
