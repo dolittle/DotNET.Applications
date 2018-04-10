@@ -34,7 +34,7 @@ namespace Dolittle.Applications
         bool DoesAnyFitInStructure(IEnumerable<Type> types);
 
         /// <summary>
-        /// Get the mest matching type for a collection of types
+        /// Get the mest matching type for an <see cref="IApplicationArtifactIdentifier"/> within a collection of types
         /// </summary>
         /// <param name="types"><see cref="IEnumerable{Type}">Types</see> to get for</param>
         /// <returns><see cref="Type"/> that matches best</returns>

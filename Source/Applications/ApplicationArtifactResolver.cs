@@ -5,9 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using Dolittle.Artifacts;
 using Dolittle.Execution;
 using Dolittle.Logging;
+using Dolittle.Reflection;
 using Dolittle.Types;
 
 namespace Dolittle.Applications
@@ -61,13 +63,24 @@ namespace Dolittle.Applications
             var artifactType = _artifactTypeToTypeMaps.Map(identifier.Artifact.Type);
             var types = _typeFinder.FindMultiple(artifactType);
             var typesMatchingName = types.Where(t => t.Name == identifier.Artifact.Name);
+            Type matchedType = null;
 
-            if( _applicationStructureMap.DoesAnyFitInStructure(typesMatchingName))
-                return _applicationStructureMap.GetBestMatchingTypeFor(typesMatchingName);
+            if (_applicationStructureMap.DoesAnyFitInStructure(typesMatchingName))
+                matchedType = _applicationStructureMap.GetBestMatchingTypeFor(typesMatchingName);
+
+            ThrowIfMismatchedArtifactType(artifactType, matchedType);
+            if( matchedType != null  ) return matchedType;
 
             _logger.Error($"Unknown application resurce type : {identifier.Artifact.Type.Identifier}");
-            
+
             throw new UnknownArtifactType(identifier.Artifact.Type.Identifier);
+        }
+
+        void ThrowIfMismatchedArtifactType(Type artifactType, Type matchedType)
+        {
+            if (matchedType == null || 
+                !artifactType.IsAssignableFrom(matchedType))
+                throw new MismatchingArtifactType(artifactType, matchedType);
         }
     }
 }

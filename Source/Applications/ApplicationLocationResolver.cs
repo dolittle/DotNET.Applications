@@ -36,17 +36,19 @@ namespace Dolittle.Applications
         /// The key representing a <see cref="ISubFeature"/> as part of <see cref="IApplicationStructureMapBuilder"/>
         /// </summary>
         public const string SubFeatureKey = "SubFeature";
-        
+
         readonly IApplicationStructureMap _applicationStructureMap;
-        
+        readonly IApplication _application;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationLocationResolver"/>
         /// </summary>
+        /// <param name="application"></param>
         /// <param name="applicationStructureMap"></param>
-        public ApplicationLocationResolver(IApplicationStructureMap applicationStructureMap)
+        public ApplicationLocationResolver(IApplication application, IApplicationStructureMap applicationStructureMap)
         {
             _applicationStructureMap = applicationStructureMap;
+            _application = application;
         }
 
         /// <inheritdoc/>
@@ -78,40 +80,29 @@ namespace Dolittle.Applications
 
         IEnumerable<IApplicationLocationSegment> GetLocationSegmentsFrom(ISegmentMatches match)
         {
-            var matchAsDictionary = match.AsDictionary();
-
             var segments = new List<IApplicationLocationSegment>();
-            BoundedContext boundedContext = null;
-            Module module = null;
-            Feature feature = null;
             List<SubFeature> subFeatures = new List<SubFeature>();
 
-            if (matchAsDictionary.ContainsKey(BoundedContextKey))
+            segments.AddRange(_application.Prefixes.Select(_ => new BoundedContext(_.Name.AsString())));
+            IApplicationLocationSegment previousSegment = segments.SingleOrDefault(_ => _ is BoundedContext);
+
+            match.ForEach(stringSegment => 
             {
-                boundedContext = new BoundedContext(matchAsDictionary[BoundedContextKey].Single());
-                segments.Add(boundedContext);
+                IApplicationLocationSegment currentSegment = null;
 
-                if (matchAsDictionary.ContainsKey(ModuleKey))
+                switch( stringSegment.Identifier )
                 {
-                    module = new Module(boundedContext, matchAsDictionary[ModuleKey].Single());
-                    segments.Add(module);
-
-                    if (matchAsDictionary.ContainsKey(FeatureKey))
-                    {
-                        feature = new Feature(module, matchAsDictionary[FeatureKey].Single());
-                        segments.Add(feature);
-
-                        if (matchAsDictionary.ContainsKey(SubFeatureKey))
-                        {
-                            foreach (var subFeatureName in matchAsDictionary[SubFeatureKey])
-                            {
-                                var subFeature = new SubFeature(feature, subFeatureName);
-                                segments.Add(subFeature);
-                            }
-                        }
-                    }
+                    case BoundedContextKey : currentSegment = new BoundedContext(stringSegment.Values.Single()); break;
+                    case ModuleKey : currentSegment = new Module((BoundedContext)previousSegment, stringSegment.Values.Single()); break;
+                    case FeatureKey : currentSegment = new Feature(previousSegment, stringSegment.Values.Single()); break;
+                    case SubFeatureKey : currentSegment = new SubFeature((IFeature)previousSegment, stringSegment.Values.Single()); break;
                 }
-            }
+                if( currentSegment != null )
+                {
+                    segments.Add(currentSegment);
+                    previousSegment = currentSegment;
+                }
+            });
 
             return segments;
         }

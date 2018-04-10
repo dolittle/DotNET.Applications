@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Dolittle.Strings;
 
 namespace Dolittle.Applications
@@ -32,7 +33,7 @@ namespace Dolittle.Applications
         /// <inheritdoc/>
         public Type GetBestMatchingTypeFor(IEnumerable<Type> types)
         {
-            throw new NotImplementedException();
+            return types.First();
         }
     }
 }

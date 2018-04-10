@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using Dolittle.Collections;
 using Dolittle.Strings;
 
@@ -37,19 +38,31 @@ namespace Dolittle.Applications
         /// <inheritdoc/>
         public bool DoesAnyFitInStructure(IEnumerable<Type> types)
         {
-            throw new NotImplementedException();
+            return types.Any(DoesFitInStructure);
         }
 
         /// <inheritdoc/>
         public bool DoesFitInStructure(Type type)
         {
-            throw new NotImplementedException();
+            return _formats.Any(format => format.Match(GetTypeStringFor(type)).HasMatches);
         }
 
         /// <inheritdoc/>
         public Type GetBestMatchingTypeFor(IEnumerable<Type> types)
         {
-            throw new NotImplementedException();
+            var matchedType = types.Where(type => _formats.Any(format => format.Match(GetTypeStringFor(type)).HasMatches == true)).SingleOrDefault();
+            ThrowIfNoMatchingStructure(types, matchedType);
+            return matchedType;
+        }
+
+        string GetTypeStringFor(Type type)
+        {
+            return $"{type.Namespace}.{type.Name}";
+        }
+
+        void ThrowIfNoMatchingStructure(IEnumerable<Type> types, Type matchedType)
+        {
+            if (matchedType == null) throw new NoMatchingStructure(types);
         }
 
         void ThrowIfAmbiguousTypes(IApplicationArtifactIdentifier identifier, IEnumerable<Type> typesMatchingName)
@@ -59,6 +72,5 @@ namespace Dolittle.Applications
                 throw new AmbiguousTypes(identifier);
             }
         }
-       
     }
 }
