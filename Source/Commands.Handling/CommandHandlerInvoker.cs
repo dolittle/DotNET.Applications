@@ -92,6 +92,8 @@ namespace Dolittle.Commands.Handling
 
             _logger.Information($"Trying to invoke command handlers for {command.Type}");
 
+            if( _commandHandlers.Count == 0  ) return false;
+
             var handlerKey = _commandHandlers.Keys.First();
             var handler = _commandHandlers.First();
 
