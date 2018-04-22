@@ -35,14 +35,20 @@ namespace Dolittle.Artifacts
             Populate();
         }
 
+
+
         /// <inheritdoc/>
         public IArtifactType Map(Type type)
         {
             ThrowIfMissingArtifactType(type);
-            var underlyingType = _typeToArtifactTypeMaps.Keys.Single(t => t.IsAssignableFrom(type));
+            var candidates = _typeToArtifactTypeMaps.Keys.Where(t => t.IsAssignableFrom(type));
+
+            Type underlyingType = null;
+            if( candidates.Count() == 1 ) underlyingType = candidates.Single();
+            else underlyingType = FindClosestCandidateFor(type, candidates);
+
             return _typeToArtifactTypeMaps[underlyingType];
         }
-
 
         /// <inheritdoc/>
         public Type Map(IArtifactType type)
@@ -50,6 +56,36 @@ namespace Dolittle.Artifacts
             ThrowIfMissingType(type);
             return _artifactTypeToTypeMaps[type.Identifier];
         }
+
+        void BuildInheritanceTreeFor(Type type, List<Type> inherited)
+        {
+            var currentLevelInherited = new List<Type>();
+            if( type.BaseType != null ) currentLevelInherited.Add(type.BaseType);
+            currentLevelInherited.AddRange(type.GetInterfaces());
+            inherited.AddRange(currentLevelInherited);
+            currentLevelInherited.ForEach(t => BuildInheritanceTreeFor(t, inherited));
+        }
+
+        Type FindClosestCandidateFor(Type type, IEnumerable<Type> candidates)
+        {
+            Type underlyingType = null;
+            var inheritanceList = new List<Type>();
+            BuildInheritanceTreeFor(type, inheritanceList);
+
+            var previousIndex = Int32.MaxValue;
+
+            candidates.ForEach(candidate =>
+            {
+                var index = inheritanceList.IndexOf(candidate);
+                if (index < previousIndex)
+                {
+                    underlyingType = candidate;
+                    previousIndex = index;
+                }
+            });
+            return underlyingType;
+        }
+        
 
         void Populate()
         {   
