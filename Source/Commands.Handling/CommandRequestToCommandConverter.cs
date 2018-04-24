@@ -3,12 +3,15 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Dolittle.Concepts;
-using Dolittle.Collections;
 using Dolittle.Applications;
+using Dolittle.Collections;
+using Dolittle.Concepts;
 using Dolittle.Runtime.Commands;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Dolittle.Commands.Handling
 {
@@ -38,30 +41,59 @@ namespace Dolittle.Commands.Handling
             // todo: Verify that it is a an ICommand
             var instance = Activator.CreateInstance(type) as ICommand;
 
-            var properties = type.GetTypeInfo().DeclaredProperties.ToDictionary(p => p.Name, p => p);
+            var properties = type.GetTypeInfo().DeclaredProperties.ToDictionary(p => p.Name.ToLowerInvariant(), p => p);
             // todo: Verify that the command shape matches 100% - do not allow anything else
 
-            // todo: Convert to target type if mismatch
+            CopyPropertiesFromRequestToCommand(request, instance, properties);
+
+            return instance;
+        }
+
+        void CopyPropertiesFromRequestToCommand(CommandRequest request, ICommand instance, Dictionary<string, PropertyInfo> properties)
+        {
             request.Content.Keys.ForEach(propertyName =>
             {
+                propertyName = propertyName.ToLowerInvariant();
                 if (properties.ContainsKey(propertyName))
                 {
                     var property = properties[propertyName];
                     object value = request.Content[propertyName];
-                    if (property.PropertyType.IsConcept())
-                    {
-                        value = ConceptFactory.CreateConceptInstance(property.PropertyType, value);
-                    }
-                    else if (property.PropertyType == typeof(DateTimeOffset) && value.GetType() == typeof(DateTime))
-                    {
-                        value = new DateTimeOffset((DateTime)value);
-                    }
 
+                    value = HandleValue(property.PropertyType, value);
                     property.SetValue(instance, value);
                 }
             });
+        }
 
-            return instance;
+        object HandleValue(Type targetType, object value)
+        {
+            if (value is JArray ||  value is JObject)
+            {
+                value = JsonConvert.DeserializeObject(value.ToString(), targetType);
+            }
+            else if (targetType.IsConcept())
+            {
+                value = ConceptFactory.CreateConceptInstance(targetType, value);
+            }
+            else if (targetType == typeof(DateTimeOffset) && value.GetType() == typeof(DateTime))
+            {
+                value = new DateTimeOffset((DateTime) value);
+            }
+            else if (targetType.IsEnum)
+            {
+                value = Enum.Parse(targetType, value.ToString());
+            }
+            else if (targetType == typeof(Guid))
+            {
+                value = Guid.Parse(value.ToString());
+            }
+            else
+            {
+                if (!targetType.IsAssignableFrom(value.GetType()))
+                    value = System.Convert.ChangeType(value, targetType);
+            }
+
+            return value;
         }
     }
 }
