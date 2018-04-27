@@ -52,7 +52,8 @@ namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
                 { "a_guid", a_guid },
                 { "a_concept", a_concept_as_guid },
                 { "a_complex_type", JObject.Parse(JsonConvert.SerializeObject(a_complex_type)) },
-                { "astringwithpascalcasing", AStringWithPascalCasing },
+                { "astringwithpascalcasingontarget", AStringWithPascalCasing },
+                { "AStringWithPascalCasingOnSource", AStringWithPascalCasing },
                 { "an_enumerable_of_strings", an_enumerable_of_strings },
                 { "an_enumerable_of_integers", an_enumerable_of_integers },
                 { "an_enumerable_of_floats", an_enumerable_of_floats },
@@ -81,7 +82,8 @@ namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
         It should_hold_a_complex_type_with_the_correct_float_value = () => result.a_complex_type.a_float.ShouldEqual(a_complex_type.a_float);
         It should_hold_a_complex_type_with_the_correct_double_value = () => result.a_complex_type.a_double.ShouldEqual(a_complex_type.a_double);
         It should_hold_a_concept_converted_from_the_guid = () => result.a_concept.Value.ShouldEqual(a_concept_as_guid);
-        It should_hold_a_string_with_pascal_casing_coming_in_with_lower_case = () => result.AStringWithPascalCasing.ShouldEqual(AStringWithPascalCasing);
+        It should_hold_a_string_with_pascal_casing_on_target_coming_in_with_lower_case = () => result.AStringWithPascalCasingOnTarget.ShouldEqual(AStringWithPascalCasing);
+        It should_hold_a_string_with_pascal_casing_on_source_targetting_lower_case_on_target = () => result.astringwithpascalcasingonsource.ShouldEqual(AStringWithPascalCasing);
         It should_hold_an_enumerable_of_strings = () => result.an_enumerable_of_strings.ShouldEqual(an_enumerable_of_strings);
         It should_hold_an_enumerable_of_integers = () => result.an_enumerable_of_integers.ShouldEqual(an_enumerable_of_integers);
         It should_hold_an_enumerable_of_floats = () => result.an_enumerable_of_floats.ShouldEqual(an_enumerable_of_floats);

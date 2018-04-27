@@ -11,7 +11,9 @@ namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
         public double a_double { get; set; }
         public float a_float { get; set; }
         public Guid a_guid { get; set; }
-        public string AStringWithPascalCasing { get; set; }
+        public string AStringWithPascalCasingOnTarget { get; set; }
+        public string astringwithpascalcasingonsource { get; set; }
+        
         public concept_as_guid a_concept { get; set; }
         public complex_type a_complex_type { get; set; }
 

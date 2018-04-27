@@ -41,8 +41,8 @@ namespace Dolittle.Commands.Handling
             // todo: Verify that it is a an ICommand
             var instance = Activator.CreateInstance(type) as ICommand;
 
-            var properties = type.GetTypeInfo().DeclaredProperties.ToDictionary(p => p.Name.ToLowerInvariant(), p => p);
             // todo: Verify that the command shape matches 100% - do not allow anything else
+            var properties = type.GetTypeInfo().DeclaredProperties.ToDictionary(p => p.Name.ToLowerInvariant(), p => p);
 
             CopyPropertiesFromRequestToCommand(request, instance, properties);
 
@@ -53,10 +53,10 @@ namespace Dolittle.Commands.Handling
         {
             request.Content.Keys.ForEach(propertyName =>
             {
-                propertyName = propertyName.ToLowerInvariant();
-                if (properties.ContainsKey(propertyName))
+                var lowerCasedPropertyName = propertyName.ToLowerInvariant();
+                if (properties.ContainsKey(lowerCasedPropertyName))
                 {
-                    var property = properties[propertyName];
+                    var property = properties[lowerCasedPropertyName];
                     object value = request.Content[propertyName];
 
                     value = HandleValue(property.PropertyType, value);
