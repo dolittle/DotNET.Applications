@@ -42,7 +42,7 @@ namespace Dolittle.Commands.Handling
             var instance = Activator.CreateInstance(type) as ICommand;
 
             // todo: Verify that the command shape matches 100% - do not allow anything else
-            var properties = type.GetTypeInfo().DeclaredProperties.ToDictionary(p => p.Name.ToLowerInvariant(), p => p);
+            var properties = type.GetProperties().ToDictionary(p => p.Name.ToLowerInvariant(), p => p);
 
             CopyPropertiesFromRequestToCommand(request, instance, properties);
 
