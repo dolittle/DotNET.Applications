@@ -11,6 +11,7 @@ using It = Machine.Specifications.It;
 
 namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
 {
+
     public class when_converting_with_properties
     {
         static TransactionCorrelationId correlation_id;
