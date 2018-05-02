@@ -10,6 +10,7 @@
         <PackageReference Include="Dolittle.Applications" Version="2.0.0-*" />
         <PackageReference Include="Dolittle.Reflection" Version="2.0.0-*" />    
         <PackageReference Include="Dolittle.Types" Version="2.0.0-*" />    
+        <PackageReference Include="Dolittle.Serialization.Json" Version="2.0.0-*" />    
         <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="2.0.0-*" />
     </ItemGroup>
 

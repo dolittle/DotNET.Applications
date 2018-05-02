@@ -7,6 +7,7 @@ using Dolittle.Commands;
 using Dolittle.Reflection;
 using Dolittle.Runtime.Commands;
 using Dolittle.Runtime.Transactions;
+using Dolittle.Serialization.Json;
 
 namespace Dolittle.Commands.Coordination
 {
@@ -16,20 +17,25 @@ namespace Dolittle.Commands.Coordination
     public class CommandToCommandRequestConverter : ICommandToCommandRequestConverter
     {
         readonly IApplicationArtifacts _applicationArtifacts;
+        readonly ISerializer _serializer;
 
         /// <summary>
         /// Initializes a new instance of <see cref="CommandToCommandRequestConverter"/>
         /// </summary>
         /// <param name="applicationArtifacts">The <see cref="IApplicationArtifacts"/> for identifying artifacts</param>
-        public CommandToCommandRequestConverter(IApplicationArtifacts applicationArtifacts)
+        /// <param name="serializer"></param>
+        public CommandToCommandRequestConverter(IApplicationArtifacts applicationArtifacts, ISerializer serializer)
         {
             _applicationArtifacts = applicationArtifacts;
+            _serializer = serializer;
         }
 
         /// <inheritdoc/>
         public CommandRequest Convert(TransactionCorrelationId correlationId, ICommand command)
         {
-            var commandAsDictionary = command.ToDictionary();
+            var commandAsJson = _serializer.ToJson(command);
+            var commandAsDictionary = _serializer.GetKeyValuesFromJson(commandAsJson);
+            //var commandAsDictionary = command.ToDictionary();
             var applicationArtifactIdentifier = _applicationArtifacts.Identify(command);
             var commandRequest = new CommandRequest(correlationId, applicationArtifactIdentifier, commandAsDictionary);
             return commandRequest;
