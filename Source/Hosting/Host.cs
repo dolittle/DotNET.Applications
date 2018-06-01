@@ -22,10 +22,9 @@ namespace Dolittle.Hosting
         /// <summary>
         /// Initializes a new instance of <see cref="Host"/>
         /// </summary>
-        public Host(IApplication application)
+        public Host(IApplication application, ILoggerFactory loggerFactory = null)
         {
-            
-            var loggerFactory = new LoggerFactory();
+            if( loggerFactory == null ) loggerFactory = new LoggerFactory();
             var logAppenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory);
             var logger = new Logger(logAppenders);
 

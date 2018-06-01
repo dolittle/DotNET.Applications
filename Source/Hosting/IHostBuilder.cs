@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using Dolittle.Applications;
+using Microsoft.Extensions.Logging;
 
 namespace Dolittle.Hosting
 {
@@ -24,5 +25,12 @@ namespace Dolittle.Hosting
         /// </summary>
         /// <returns>An instance of a <see cref="IHost"/></returns>
         IHost Build();
+
+        /// <summary>
+        /// Build the <see cref="IHost"/>
+        /// </summary>
+        /// <param name="loggerFactory"><see cref="ILoggerFactory"/> for logging</param>
+        /// <returns>An instance of a <see cref="IHost"/></returns>
+        IHost Build(ILoggerFactory loggerFactory);
     }
 }

@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using Dolittle.Applications;
+using Microsoft.Extensions.Logging;
 
 namespace Dolittle.Hosting
 {
@@ -34,5 +35,13 @@ namespace Dolittle.Hosting
         {
             return new Host(_applicationBuilder.Build());
         }
+
+
+        /// <inheritdoc/>
+        public IHost Build(ILoggerFactory loggerFactory)
+        {
+            return new Host(_applicationBuilder.Build(), loggerFactory);
+        }
+        
     }
 }
