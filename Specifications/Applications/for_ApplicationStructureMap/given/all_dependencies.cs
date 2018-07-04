@@ -10,12 +10,12 @@ namespace Dolittle.Applications.for_ApplicationStructureMap.given
     {
         protected static Mock<IApplication> application;
 
-        protected static IDictionary<ApplicationArea, IEnumerable<IStringFormat>> formats_per_area;
+        protected static IEnumerable<IStringFormat> formats;
 
         Establish context = () => 
         {
             application = new Mock<IApplication>();
-            formats_per_area = new Dictionary<ApplicationArea, IEnumerable<IStringFormat>>();  
+            formats = new IStringFormat[0];
         };      
     }
 }

@@ -8,8 +8,6 @@ namespace Dolittle.Applications.for_ApplicationArtifactsResolver.given
     {
         protected const string artifact_name = "Implementation";
         protected const string artifact_type_identifier = "MyArtifactType";
-        protected static ApplicationArea area = "MyArea";
-
         protected static Mock<IApplicationArtifactIdentifier> identifier;
         protected static Mock<IArtifact> artifact;
         protected static Mock<IArtifactType> artifact_type;

@@ -14,7 +14,7 @@ namespace Dolittle.Applications
     /// </summary>
     public class ApplicationStructureMapBuilder : IApplicationStructureMapBuilder
     {
-        readonly IDictionary<ApplicationArea, IEnumerable<IStringFormat>> _structureFormats;
+        readonly IEnumerable<IStringFormat> _structureFormats;
 
 
         /// <summary>
@@ -22,14 +22,14 @@ namespace Dolittle.Applications
         /// </summary>
         public ApplicationStructureMapBuilder()
         {
-            _structureFormats = new Dictionary<ApplicationArea, IEnumerable<IStringFormat>>();
+            _structureFormats = new IStringFormat[0];
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationStructureMapBuilder"/>
         /// </summary>
         /// <param name="structureFormats">Current structure formats</param>
-        public ApplicationStructureMapBuilder(IDictionary<ApplicationArea, IEnumerable<IStringFormat>> structureFormats)
+        public ApplicationStructureMapBuilder(IEnumerable<IStringFormat> structureFormats)
         {
             _structureFormats = structureFormats;
         }
@@ -43,25 +43,18 @@ namespace Dolittle.Applications
         }
 
         /// <inheritdoc/>
-        public IApplicationStructureMapBuilder Include(ApplicationArea area, string format)
+        public IApplicationStructureMapBuilder Include(string format)
         {
-            Logger.Internal.Trace($"Include '{format}' for '{area}'");
+            Logger.Internal.Trace($"Include '{format}'");
 
             if ( !format.StartsWith("[")) format = $"[.]{format}";
-            var formatsByArea = new Dictionary<ApplicationArea, IEnumerable<IStringFormat>>(_structureFormats);
             var parser = new StringFormatParser();
             var stringFormat = parser.Parse(format);
 
-            List<IStringFormat> formats;
-            if (formatsByArea.ContainsKey(area))
-                formats = new List<IStringFormat>(formatsByArea[area]);
-            else
-                formats = new List<IStringFormat>();
-
+            var formats = new List<IStringFormat>(_structureFormats);
             formats.Add(stringFormat);
-            formatsByArea[area] = formats;
 
-            var builder = new ApplicationStructureMapBuilder(formatsByArea);
+            var builder = new ApplicationStructureMapBuilder(formats);
             return builder;
         }
     }

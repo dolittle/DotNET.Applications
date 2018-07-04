@@ -49,7 +49,7 @@ namespace Dolittle.Applications
             {
                 var artifactType = _artifactTypeToTypeMaps.Map(type);
                 var location = _applicationLocationResolver.Resolve(type);
-                var applicationArtifactIdentifier = new ApplicationArtifactIdentifier(_application, ApplicationAreas.Domain, location, new Artifact(type.Name, artifactType));
+                var applicationArtifactIdentifier = new ApplicationArtifactIdentifier(_application, location, new Artifact(type.Name, artifactType, 1));
                 return applicationArtifactIdentifier;
             }
 

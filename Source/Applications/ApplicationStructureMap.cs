@@ -17,19 +17,17 @@ namespace Dolittle.Applications
     public class ApplicationStructureMap : IApplicationStructureMap
     {
         readonly IApplication _application;
-        readonly IDictionary<ApplicationArea, IEnumerable<IStringFormat>> _formatsPerArea;
-        readonly IEnumerable<IStringFormat> _formats;
+                readonly IEnumerable<IStringFormat> _formats;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationStructureMap"/>
         /// </summary>
         /// <param name="application"></param>
-        /// <param name="formatsPerArea"></param>
-        public ApplicationStructureMap(IApplication application, IDictionary<ApplicationArea, IEnumerable<IStringFormat>> formatsPerArea)
+        /// <param name="formats">The <see cref="IStringFormat">formats</see> that will be used for mapping CLR type / namespace to an <see cref="IApplicationArtifactIdentifier"/> </param>
+        public ApplicationStructureMap(IApplication application, IEnumerable<IStringFormat> formats)
         {
             _application = application;
-            _formatsPerArea = formatsPerArea;
-            _formats = formatsPerArea.Values.SelectMany(_ => _).ToArray();
+            _formats = formats;
         }
 
         /// <inheritdoc/>

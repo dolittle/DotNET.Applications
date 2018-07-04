@@ -14,7 +14,6 @@ namespace Dolittle.Applications
         /// <summary>
         /// Include a given mapping for structure representation
         /// </summary>
-        /// <param name="area">A unique identifier for the format</param>
         /// <param name="format">Format of the structure</param>
         /// <returns></returns>
         /// <remarks>
@@ -41,7 +40,7 @@ namespace Dolittle.Applications
         /// One format *CAN* include multiple SubFeatures, but only if there is a Feature before in the string format
         /// 
         /// </remarks>
-        IApplicationStructureMapBuilder Include(ApplicationArea area, string format);
+        IApplicationStructureMapBuilder Include(string format);
 
         /// <summary>
         /// Build an <see cref="IApplicationStructureMapBuilder"/>

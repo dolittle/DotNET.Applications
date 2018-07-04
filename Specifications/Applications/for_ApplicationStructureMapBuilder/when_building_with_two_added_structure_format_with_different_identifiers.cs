@@ -7,8 +7,6 @@ namespace Dolittle.Applications.for_ApplicationStructureMapBuilder
 {
     public class when_building_with_two_added_structure_format_with_different_identifiers
     {
-        const string first_area = "FirstArea";
-        const string second_area = "SecondArea";
         const string first_structure_format = "[.]FirstFormat";
         const string second_structure_format = "[.]SecondFormat";
         static IApplicationStructureMapBuilder builder;
@@ -21,7 +19,7 @@ namespace Dolittle.Applications.for_ApplicationStructureMapBuilder
             application = new Mock<IApplication>();
             var b = new ApplicationStructureMapBuilder();
 
-            builder = b.Include(first_area, first_structure_format).Include(second_area, second_structure_format);
+            builder = b.Include(first_structure_format).Include(second_structure_format);
         };
 
         Because of = () => structure = builder.Build(application.Object);
