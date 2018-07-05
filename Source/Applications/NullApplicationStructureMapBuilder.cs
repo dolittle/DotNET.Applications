@@ -21,7 +21,7 @@ namespace Dolittle.Applications
         }
 
         /// <inheritdoc/>
-        public IApplicationStructureMapBuilder Include(ApplicationArea area, string format)
+        public IApplicationStructureMapBuilder Include(string format)
         {
             return this;
         }
