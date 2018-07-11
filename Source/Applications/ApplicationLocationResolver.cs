@@ -95,7 +95,16 @@ namespace Dolittle.Applications
                     case BoundedContextKey : currentSegment = new BoundedContext(stringSegment.Values.Single()); break;
                     case ModuleKey : currentSegment = new Module((BoundedContext)previousSegment, stringSegment.Values.Single()); break;
                     case FeatureKey : currentSegment = new Feature(previousSegment, stringSegment.Values.Single()); break;
-                    case SubFeatureKey : currentSegment = new SubFeature((IFeature)previousSegment, stringSegment.Values.Single()); break;
+                    case SubFeatureKey : 
+                        foreach (var segmentString in stringSegment.Values)
+                        {
+                            currentSegment = new SubFeature((IFeature)previousSegment, segmentString);
+
+                            if (segmentString == stringSegment.Values.Last()) break; // If it's the last one, let the statement outside this switch handle it
+                            segments.Add(currentSegment);
+                            previousSegment = currentSegment;
+                        }
+                        break;
                 }
                 if( currentSegment != null )
                 {
