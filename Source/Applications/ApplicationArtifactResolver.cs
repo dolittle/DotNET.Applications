@@ -58,7 +58,7 @@ namespace Dolittle.Applications
             _logger.Trace($"Trying to resolve : {identifier.Artifact.Name} - with type {identifier.Artifact.Type.Identifier}");
 
             var typeIdentifier = identifier.Artifact.Type.Identifier;
-            if (_resolversByType.ContainsKey(typeIdentifier))return _resolversByType[typeIdentifier].Resolve(identifier);
+            if (_resolversByType.ContainsKey(typeIdentifier)) return _resolversByType[typeIdentifier].Resolve(identifier);
 
             var artifactType = _artifactTypeToTypeMaps.Map(identifier.Artifact.Type);
             if (artifactType != null)
@@ -71,7 +71,7 @@ namespace Dolittle.Applications
                     matchedType = _applicationStructureMap.GetBestMatchingTypeFor(typesMatchingName);
 
                 ThrowIfMismatchedArtifactType(artifactType, matchedType);
-                if (matchedType != null)return matchedType;
+                if (matchedType != null) return matchedType;
 
                 _logger.Error($"Unknown application resurce type : {identifier.Artifact.Type.Identifier}");
             }
