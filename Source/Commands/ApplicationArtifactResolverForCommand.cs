@@ -18,6 +18,12 @@ namespace Dolittle.Commands
         readonly ITypeFinder _typeFinder;
         readonly ILogger _logger;
 
+        /// <summary>
+        /// Initialize a new instance of <see cref="ApplicationArtifactResolverForCommand"/>
+        /// </summary>
+        /// <param name="applicationArtifacts"></param>
+        /// <param name="typeFinder"></param>
+        /// <param name="logger"></param>
         public ApplicationArtifactResolverForCommand(
             IApplicationArtifacts applicationArtifacts,
             ITypeFinder typeFinder,
@@ -29,8 +35,6 @@ namespace Dolittle.Commands
             _logger = logger;
 
             _AAIToCommand = _typeFinder.FindMultiple<ICommand>().ToDictionary(c => _applicationArtifacts.Identify(c), c => c);
-
-
         }
 
         /// <inheritdoc/>
@@ -52,7 +56,5 @@ namespace Dolittle.Commands
             if (_AAIToCommand.ContainsKey(identifier))
                 throw new CommandNotFound(identifier);
         }
-
-        
     }
 }

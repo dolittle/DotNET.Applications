@@ -23,6 +23,7 @@ namespace Dolittle.Applications
         readonly IApplicationStructureMap _applicationStructureMap;
         readonly IArtifactTypes _types;
         readonly ITypeFinder _typeFinder;
+        readonly IEnumerable<IArtifactType> _artifactTypes;
         readonly ILogger _logger;
         readonly Dictionary<string, ICanResolveApplicationArtifacts> _resolversByType;
         readonly IArtifactTypeToTypeMaps _artifactTypeToTypeMaps;
@@ -42,13 +43,14 @@ namespace Dolittle.Applications
             IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
             IInstancesOf<ICanResolveApplicationArtifacts> resolvers,
             ITypeFinder typeFinder,
-
+            IInstancesOf<IArtifactType> artifactTypes,
             ILogger logger)
         {
             _applicationStructureMap = applicationStructureMap;
             _types = types;
             _resolversByType = resolvers.ToDictionary(r => r.ArtifactType.Identifier, r => r);
             _typeFinder = typeFinder;
+            _artifactTypes = artifactTypes;
             _logger = logger;
             _artifactTypeToTypeMaps = artifactTypeToTypeMaps;
         }
@@ -60,8 +62,7 @@ namespace Dolittle.Applications
 
             var typeIdentifier = identifier.Artifact.Type.Identifier;
             
-            ThrowIfUnknownArtifactType();
-            // throw new UnknownArtifactType(identifier.Artifact.Type.Identifier);
+            ThrowIfUnknownArtifactType(typeIdentifier);
 
             if (_resolversByType.ContainsKey(typeIdentifier)) 
             {
@@ -72,7 +73,7 @@ namespace Dolittle.Applications
 
                 return _resolversByType[typeIdentifier].Resolve(identifier);
             }
-            throw new HasNoResolver();
+            throw new CouldNotFindResolver(typeIdentifier);
 
 
             // var artifactType = _artifactTypeToTypeMaps.Map(identifier.Artifact.Type);
@@ -92,6 +93,12 @@ namespace Dolittle.Applications
             // }
 
             // throw new UnknownArtifactType(identifier.Artifact.Type.Identifier);
+        }
+
+        void ThrowIfUnknownArtifactType(string typeIdentifier)
+        {
+            if (! _artifactTypes.Any(artifactType => artifactType.Identifier == typeIdentifier))
+                throw new UnknownArtifactType(typeIdentifier);
         }
 
         void ThrowIfMismatchedArtifactType(Type artifactType, Type matchedType)
