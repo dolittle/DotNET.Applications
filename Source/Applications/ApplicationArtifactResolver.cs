@@ -42,6 +42,7 @@ namespace Dolittle.Applications
             IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
             IInstancesOf<ICanResolveApplicationArtifacts> resolvers,
             ITypeFinder typeFinder,
+
             ILogger logger)
         {
             _applicationStructureMap = applicationStructureMap;
@@ -58,25 +59,39 @@ namespace Dolittle.Applications
             _logger.Trace($"Trying to resolve : {identifier.Artifact.Name} - with type {identifier.Artifact.Type.Identifier}");
 
             var typeIdentifier = identifier.Artifact.Type.Identifier;
-            if (_resolversByType.ContainsKey(typeIdentifier)) return _resolversByType[typeIdentifier].Resolve(identifier);
+            
+            ThrowIfUnknownArtifactType();
+            // throw new UnknownArtifactType(identifier.Artifact.Type.Identifier);
 
-            var artifactType = _artifactTypeToTypeMaps.Map(identifier.Artifact.Type);
-            if (artifactType != null)
+            if (_resolversByType.ContainsKey(typeIdentifier)) 
             {
-                var types = _typeFinder.FindMultiple(artifactType);
-                var typesMatchingName = types.Where(t => t.Name == identifier.Artifact.Name);
-                Type matchedType = null;
+                var resolver = _resolversByType[typeIdentifier];
+                var matchedType = resolver.Resolve(identifier);
+                
+                ThrowIfMismatchedArtifactType(_artifactTypeToTypeMaps.Map(resolver.ArtifactType), matchedType);
 
-                if (_applicationStructureMap.DoesAnyFitInStructure(typesMatchingName))
-                    matchedType = _applicationStructureMap.GetBestMatchingTypeFor(typesMatchingName);
-
-                ThrowIfMismatchedArtifactType(artifactType, matchedType);
-                if (matchedType != null) return matchedType;
-
-                _logger.Error($"Unknown application resurce type : {identifier.Artifact.Type.Identifier}");
+                return _resolversByType[typeIdentifier].Resolve(identifier);
             }
+            throw new HasNoResolver();
 
-            throw new UnknownArtifactType(identifier.Artifact.Type.Identifier);
+
+            // var artifactType = _artifactTypeToTypeMaps.Map(identifier.Artifact.Type);
+            // if (artifactType != null)
+            // {
+            //     var types = _typeFinder.FindMultiple(artifactType);
+            //     var typesMatchingName = types.Where(t => t.Name == identifier.Artifact.Name);
+            //     Type matchedType = null;
+
+            //     if (_applicationStructureMap.DoesAnyFitInStructure(typesMatchingName))
+            //         matchedType = _applicationStructureMap.GetBestMatchingTypeFor(typesMatchingName);
+
+            //     ThrowIfMismatchedArtifactType(artifactType, matchedType);
+            //     if (matchedType != null) return matchedType;
+
+            //     _logger.Error($"Unknown application resurce type : {identifier.Artifact.Type.Identifier}");
+            // }
+
+            // throw new UnknownArtifactType(identifier.Artifact.Type.Identifier);
         }
 
         void ThrowIfMismatchedArtifactType(Type artifactType, Type matchedType)

@@ -35,8 +35,6 @@ namespace Dolittle.Artifacts
             Populate();
         }
 
-
-
         /// <inheritdoc/>
         public IArtifactType Map(Type type)
         {
