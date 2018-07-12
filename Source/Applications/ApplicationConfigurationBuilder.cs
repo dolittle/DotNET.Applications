@@ -34,7 +34,6 @@ namespace Dolittle.Applications
             Logger.Internal.Trace($"Building application {name} with a given structure map builder");
         }
         
-
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationConfigurationBuilder"/>
         /// </summary>
@@ -56,7 +55,6 @@ namespace Dolittle.Applications
             return applicationConfigurationBuilder;
         }
 
-
         /// <inheritdoc/>
         public IApplicationConfigurationBuilder StructureMappedTo(Func<IApplicationStructureMapBuilder, IApplicationStructureMapBuilder> callback)
         {
@@ -73,5 +71,6 @@ namespace Dolittle.Applications
             var applicationStructureMap = _structureMapBuilder.Build(application);
             return (application: application, structureMap: applicationStructureMap);
         }
+
     }
 }
