@@ -9,7 +9,6 @@ using Dolittle.Types;
 namespace Dolittle.Commands
 {
     /// <inheritdoc/>
-    /// <typeparam name="CommandArtifactType"> Resolving ApplicationArtifactIdentifiers of type <see cref="CommandArtifactType"/></typeparam>
     public class ApplicationArtifactResolverForCommand : ApplicationArtifactResolverFor<CommandArtifactType>
     {
         readonly Dictionary<IApplicationArtifactIdentifier, Type> _AAIToCommand;
