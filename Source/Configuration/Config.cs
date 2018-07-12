@@ -13,14 +13,14 @@ namespace Dolittle.Configuration
     public class Config
     {
         /// <summary>
-        /// Gets the <see cref="ApplicationName"/> of the <see cref="IApplication"/>
+        /// Gets the <see cref="Application"/> of the <see cref="IApplication"/>
         /// </summary>
-        public ApplicationName ApplicationName { get; set; } = ApplicationName.NotSet;
+        public ApplicationName Application { get; set; } = ApplicationName.NotSet;
 
         /// <summary>
-        /// Gets the name of the <see cref="BoundedContext"/> of the running host
+        /// Gets the name of the <see cref="Applications.BoundedContext"/> of the running host
         /// </summary>
-        public BoundedContextName BoundedContextName { get; set; } = BoundedContextName.NotSet;
+        public BoundedContextName BoundedContext { get; set; } = BoundedContextName.NotSet;
 
         /// <summary>
         /// The name of the Domain area

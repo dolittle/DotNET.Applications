@@ -45,11 +45,11 @@ namespace Dolittle.Configuration
         DefaultApplication(Config config)
         {
             ThrowIfNoConfigurationDetails(config);
-            
-            Config = config;
-            BoundedContext = new BoundedContext(config.BoundedContextName);
 
-            ApplicationBuilder = new ApplicationBuilder(config.ApplicationName)
+            Config = config;
+            BoundedContext = new BoundedContext(config.BoundedContext);
+
+            ApplicationBuilder = new ApplicationBuilder(config.Application)
                 .PrefixLocationsWith(BoundedContext)
                 .WithStructureStartingWith<BoundedContext>(bc => bc.Required
                     .WithChild<Module>(m => m
@@ -66,8 +66,8 @@ namespace Dolittle.Configuration
 
         void ThrowIfNoConfigurationDetails(Config config)
         {
-            if (config.ApplicationName.Equals(ApplicationName.NotSet) 
-                || config.BoundedContextName.Equals(BoundedContextName.NotSet))
+            if (config.Application.Equals(ApplicationName.NotSet) 
+                || config.BoundedContext.Equals(BoundedContextName.NotSet))
             {
                 throw new ConfigurationNotSpecified();
             }

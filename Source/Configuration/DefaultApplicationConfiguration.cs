@@ -8,15 +8,25 @@ namespace Dolittle.Configuration
     public class DefaultApplicationConfiguration
     {
         
+        /// <summary>
+        /// Gets the <see cref="DefaultApplicationConfiguration"/> based on the configuration details specified in the dolittle configuration json file.
+        /// </summary>
         public static DefaultApplicationConfiguration GetDefaultConfiguration()
         {
             return new DefaultApplicationConfiguration(JsonFile.GetConfig());
         }
 
+        /// <summary>
+        /// Gets the <see cref="DefaultApplicationConfiguration"/> based on the given <see cref="Config"/>
+        /// </summary>
         public static DefaultApplicationConfiguration GetDefaultConfiguration(Config config)
         {
             return new DefaultApplicationConfiguration(config);
         }
+
+        /// <summary>
+        /// Gets the <see cref="DefaultApplicationConfiguration"/> based on the given <see cref="DefaultApplication"/>
+        /// </summary>
 
         public static DefaultApplicationConfiguration GetDefaultConfiguration(DefaultApplication applicationConfig)
         {
@@ -48,7 +58,7 @@ namespace Dolittle.Configuration
 
             BoundedContext = defaultApplication.BoundedContext;
 
-            ApplicationConfiguration = new ApplicationConfigurationBuilder(Config.ApplicationName)
+            ApplicationConfiguration = new ApplicationConfigurationBuilder(Config.Application)
                 .Application(applicationBuilder => defaultApplication.ApplicationBuilder)
                 .StructureMappedTo(structureMapBuilder => structureMapBuilder
                     .Include(Config.DomainAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*")
@@ -63,7 +73,7 @@ namespace Dolittle.Configuration
             Config = applicationConfig.Config;
             BoundedContext = applicationConfig.BoundedContext;
 
-            ApplicationConfiguration = new ApplicationConfigurationBuilder(Config.ApplicationName)
+            ApplicationConfiguration = new ApplicationConfigurationBuilder(Config.Application)
                 .Application(applicationBuilder => applicationConfig.ApplicationBuilder)
                 .StructureMappedTo(structureMapBuilder => structureMapBuilder
                     .Include(Config.DomainAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*")
