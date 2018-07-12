@@ -13,8 +13,8 @@ namespace Dolittle.Configuration
         /// </summary>
         public ConfigurationNotSpecified() 
             : base($"No configuration details has been specified.\n"+
-             $"To get a default configuration for an {typeof(IApplication).AssemblyQualifiedName} you need to have specified an ApplicationName and BoundedContextName in a {JsonFile.DolittleJsonFileName} " +
-             $"or provide the {typeof(DefaultApplication).AssemblyQualifiedName} with a {typeof(Config).AssemblyQualifiedName}")
+             $"To get a default configuration for an {typeof(IApplication).AssemblyQualifiedName} you need to have specified names for Application and BoundedContext in a {JsonFile.DolittleJsonFileName} config file " +
+             $"or provide the default configuration with an instance of {typeof(Config).AssemblyQualifiedName}")
         {
 
         }

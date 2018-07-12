@@ -13,7 +13,7 @@ namespace Dolittle.Configuration
     public class Config
     {
         /// <summary>
-        /// Gets the <see cref="Application"/> of the <see cref="IApplication"/>
+        /// Gets the <see cref="ApplicationName"/> of the <see cref="IApplication"/>
         /// </summary>
         public ApplicationName Application { get; set; } = ApplicationName.NotSet;
 
