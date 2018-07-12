@@ -41,7 +41,7 @@ namespace Dolittle.Configuration
         /// <summary>
         /// The default <see cref="IBoundedContext"/> that's generated.
         /// </summary>
-        public IBoundedContext BoundedContext {get;}
+        public IBoundedContext BoundedContext {get; }
 
         /// <summary>
         /// The default <see cref="IApplication"/> and <see cref="IApplicationStructureMap"/> based on the provided configuration details.
@@ -68,13 +68,13 @@ namespace Dolittle.Configuration
                 .Build();
         }
 
-        DefaultApplicationConfiguration(DefaultApplication applicationConfig)
+        DefaultApplicationConfiguration(DefaultApplication defaultApplication)
         {
-            Config = applicationConfig.Config;
-            BoundedContext = applicationConfig.BoundedContext;
+            Config = defaultApplication.Config;
+            BoundedContext = defaultApplication.BoundedContext;
 
             ApplicationConfiguration = new ApplicationConfigurationBuilder(Config.Application)
-                .Application(applicationBuilder => applicationConfig.ApplicationBuilder)
+                .Application(applicationBuilder => defaultApplication.ApplicationBuilder)
                 .StructureMappedTo(structureMapBuilder => structureMapBuilder
                     .Include(Config.DomainAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*")
                     .Include(Config.EventsAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*")
