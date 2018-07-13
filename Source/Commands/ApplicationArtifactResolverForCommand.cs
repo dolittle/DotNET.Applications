@@ -16,12 +16,14 @@ namespace Dolittle.Commands
         /// </summary>
         /// <param name="applicationArtifacts"></param>
         /// <param name="typeFinder"></param>
+        /// <param name="artifactTypeToTypeMaps"></param>
         /// <param name="logger"></param>
         public ApplicationArtifactResolverForCommand(
             IApplicationArtifacts applicationArtifacts,
             ITypeFinder typeFinder,
+            IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
             ILogger logger
-        ) : base(applicationArtifacts, typeFinder, logger)
+        ) : base(applicationArtifacts, typeFinder, artifactTypeToTypeMaps, logger)
         { }
     }
 }

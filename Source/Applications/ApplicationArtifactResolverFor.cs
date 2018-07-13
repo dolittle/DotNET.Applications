@@ -23,11 +23,13 @@ namespace Dolittle.Applications
         /// <inheritdoc/>
         public IArtifactType ArtifactType => _resolver;
 
-
         readonly Dictionary<IApplicationArtifactIdentifier, Type> _AAIToType;
         readonly IApplicationArtifacts _applicationArtifacts;
         readonly ITypeFinder _typeFinder;
+        readonly IArtifactTypeToTypeMaps _artifactTypeToTypeMaps;
         readonly ILogger _logger;
+
+        readonly Type _artifactTypeToTypeMap;
 
         // <summary>
         /// Initialize a new instance of <see cref="ApplicationArtifactResolverForCommand"/>
@@ -38,26 +40,31 @@ namespace Dolittle.Applications
         public ApplicationArtifactResolverFor(
             IApplicationArtifacts applicationArtifacts,
             ITypeFinder typeFinder,
+            IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
             ILogger logger
         )
         {
             _applicationArtifacts = applicationArtifacts;
             _typeFinder = typeFinder;
+            _artifactTypeToTypeMaps = artifactTypeToTypeMaps;
             _logger = logger;
 
-            _AAIToType = _typeFinder.FindMultiple(typeof(T)).ToDictionary(c => _applicationArtifacts.Identify(c), c => c);
+            _artifactTypeToTypeMap = _artifactTypeToTypeMaps.Map(ArtifactType);
+
+            _AAIToType = _typeFinder.FindMultiple(_artifactTypeToTypeMap).ToDictionary(c => _applicationArtifacts.Identify(c), c => c);
         }
 
         /// <inheritdoc/>
         public virtual Type Resolve(IApplicationArtifactIdentifier identifier) 
         {
-            _logger.Trace($"Resolving an {typeof(IApplicationArtifactIdentifier)} for the {typeof(IArtifactType)} of {}");
+            _logger.Trace($"Resolving an {typeof(IApplicationArtifactIdentifier)} in a {typeof(ICanResolveApplicationArtifacts).AssemblyQualifiedName} resolver that can resolve a {typeof(IApplicationArtifactIdentifier)} with {typeof(IArtifactType)} " + 
+            $" {ArtifactType.Identifier} to a {typeof(Type).AssemblyQualifiedName} of type {_artifactTypeToTypeMap.AssemblyQualifiedName}");
 
             ThrowIfTypeNotFound(identifier);
 
             var matchedType = _AAIToType[identifier];
 
-            _logger.Trace($"Successfully resolved the {typeof(IApplicationArtifactIdentifier)} to {matchedType.AssemblyQualifiedName}");
+            _logger.Trace($"Resolved the {typeof(IApplicationArtifactIdentifier)} to {matchedType.AssemblyQualifiedName}");
 
             return matchedType;
         }
@@ -65,7 +72,7 @@ namespace Dolittle.Applications
         void ThrowIfTypeNotFound(IApplicationArtifactIdentifier identifier)
         {
             if (_AAIToType.ContainsKey(identifier))
-                throw new CommandNotFound(identifier);
+                throw new CouldNotResolveApplicationArtifactIdentifier(identifier, _artifactTypeToTypeMaps.Map(ArtifactType));
         }
     }
 }
