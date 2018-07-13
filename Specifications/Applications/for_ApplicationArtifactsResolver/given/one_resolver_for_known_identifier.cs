@@ -25,11 +25,9 @@ namespace Dolittle.Applications.for_ApplicationArtifactsResolver.given
                 );
 
             resolver = new ApplicationArtifactResolver(
-                application_structure_map.Object,
                 artifact_types.Object, 
                 artifact_type_to_type_maps.Object,
                 resolvers.Object,
-                type_finder.Object,
                 logger);
         };
     }

@@ -44,6 +44,7 @@ namespace Dolittle.Applications
         )
         {
             _aaiToTypeMaps = aaiToTypeMaps;
+            _artifactTypeToTypeMaps = artifactTypeToTypeMaps;
             _logger = logger;
 
             _artifactTypeToTypeMap = _artifactTypeToTypeMaps.Map(ArtifactType);
