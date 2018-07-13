@@ -9,6 +9,6 @@ namespace Dolittle.Artifacts
     /// </summary>
     public interface IArtifactTypeMapFor<T> : IArtifactType
     {
-
+        
     }
 }
