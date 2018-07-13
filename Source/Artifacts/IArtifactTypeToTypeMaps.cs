@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Dolittle.Artifacts
 {
@@ -7,6 +8,13 @@ namespace Dolittle.Artifacts
     /// </summary>
     public interface IArtifactTypeToTypeMaps
     {
+
+        /// <summary>
+        /// Gets a list of <see cref="Type"/>that has been mapped up to a <see cref="IArtifactType"/>
+        /// </summary>
+        /// <value></value>
+        IEnumerable<Type> MappedTypes {get; }
+
         /// <summary>
         /// Map from <see cref="Type"/> to a <see cref="IArtifactType"/>
         /// </summary>
@@ -20,5 +28,7 @@ namespace Dolittle.Artifacts
         /// <param name="type"><see cref="IArtifactType"/> to map from</param>
         /// <returns><see cref="Type"/> mapped to</returns>       
         Type Map(IArtifactType type);
+
+
     }
 }

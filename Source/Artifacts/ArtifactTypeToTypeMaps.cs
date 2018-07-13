@@ -21,8 +21,9 @@ namespace Dolittle.Artifacts
         readonly Dictionary<string, Type> _artifactTypeToTypeMaps = new Dictionary<string, Type>();
         readonly Dictionary<Type, IArtifactType> _typeToArtifactTypeMaps = new Dictionary<Type, IArtifactType>();
         private readonly IContainer _container;
-
-
+        
+        /// <inheritdoc/>
+        public IEnumerable<Type> MappedTypes => _typeToArtifactTypeMaps.Keys;
         /// <summary>
         /// Initializes a new instance of <see cref="ArtifactTypeToTypeMaps"/>
         /// </summary>
@@ -105,6 +106,6 @@ namespace Dolittle.Artifacts
         void ThrowIfMissingArtifactType(Type type)
         {
             if (!_typeToArtifactTypeMaps.Keys.Any(t => t.IsAssignableFrom(type))) throw new MissingArtifactTypeForType(type);
-        }        
+        }
     }
 }

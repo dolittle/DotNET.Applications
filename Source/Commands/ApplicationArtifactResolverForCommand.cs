@@ -14,16 +14,14 @@ namespace Dolittle.Commands
         /// <summary>
         /// Initialize a new instance of <see cref="ApplicationArtifactResolverForCommand"/>
         /// </summary>
-        /// <param name="applicationArtifacts"></param>
-        /// <param name="typeFinder"></param>
+        /// <param name="aaiToTypeMaps"></param>
         /// <param name="artifactTypeToTypeMaps"></param>
         /// <param name="logger"></param>
         public ApplicationArtifactResolverForCommand(
-            IApplicationArtifacts applicationArtifacts,
-            ITypeFinder typeFinder,
+            IApplicationArtifactIdentifierToTypeMaps aaiToTypeMaps,
             IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
             ILogger logger
-        ) : base(applicationArtifacts, typeFinder, artifactTypeToTypeMaps, logger)
+        ) : base(aaiToTypeMaps, artifactTypeToTypeMaps, logger)
         { }
     }
 }

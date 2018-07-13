@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Artifacts;
+using Dolittle.Collections;
 using Dolittle.Logging;
 using Dolittle.Types;
 
@@ -18,40 +19,35 @@ namespace Dolittle.Applications
     public abstract class ApplicationArtifactResolverFor<T> : ICanResolveApplicationArtifacts
         where T: IArtifactType, new()
     {
-        static IArtifactType _resolver = new T();
+        static readonly IArtifactType _resolver = new T();
 
         /// <inheritdoc/>
         public IArtifactType ArtifactType => _resolver;
 
-        readonly Dictionary<IApplicationArtifactIdentifier, Type> _AAIToType;
-        readonly IApplicationArtifacts _applicationArtifacts;
-        readonly ITypeFinder _typeFinder;
-        readonly IArtifactTypeToTypeMaps _artifactTypeToTypeMaps;
+        readonly IApplicationArtifactIdentifierToTypeMaps _aaiToTypeMaps;
+        IArtifactTypeToTypeMaps _artifactTypeToTypeMaps;
         readonly ILogger _logger;
-
+        
         readonly Type _artifactTypeToTypeMap;
 
-        // <summary>
-        /// Initialize a new instance of <see cref="ApplicationArtifactResolverForCommand"/>
+
+        /// <summary>
+        /// Initialize a new instance of <see cref="ApplicationArtifactResolverFor{T}"/>
         /// </summary>
-        /// <param name="applicationArtifacts"></param>
-        /// <param name="typeFinder"></param>
+        /// <param name="aaiToTypeMaps"></param>
+        /// <param name="artifactTypeToTypeMaps"></param>
         /// <param name="logger"></param>
         public ApplicationArtifactResolverFor(
-            IApplicationArtifacts applicationArtifacts,
-            ITypeFinder typeFinder,
+            IApplicationArtifactIdentifierToTypeMaps aaiToTypeMaps,
             IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
             ILogger logger
         )
         {
-            _applicationArtifacts = applicationArtifacts;
-            _typeFinder = typeFinder;
-            _artifactTypeToTypeMaps = artifactTypeToTypeMaps;
+            _aaiToTypeMaps = aaiToTypeMaps;
             _logger = logger;
 
             _artifactTypeToTypeMap = _artifactTypeToTypeMaps.Map(ArtifactType);
 
-            _AAIToType = _typeFinder.FindMultiple(_artifactTypeToTypeMap).ToDictionary(c => _applicationArtifacts.Identify(c), c => c);
         }
 
         /// <inheritdoc/>
@@ -60,19 +56,12 @@ namespace Dolittle.Applications
             _logger.Trace($"Resolving an {typeof(IApplicationArtifactIdentifier)} in a {typeof(ICanResolveApplicationArtifacts).AssemblyQualifiedName} resolver that can resolve a {typeof(IApplicationArtifactIdentifier)} with {typeof(IArtifactType)} " + 
             $" {ArtifactType.Identifier} to a {typeof(Type).AssemblyQualifiedName} of type {_artifactTypeToTypeMap.AssemblyQualifiedName}");
 
-            ThrowIfTypeNotFound(identifier);
-
-            var matchedType = _AAIToType[identifier];
+            var matchedType = _aaiToTypeMaps.Map(identifier);
 
             _logger.Trace($"Resolved the {typeof(IApplicationArtifactIdentifier)} to {matchedType.AssemblyQualifiedName}");
 
             return matchedType;
         }
 
-        void ThrowIfTypeNotFound(IApplicationArtifactIdentifier identifier)
-        {
-            if (_AAIToType.ContainsKey(identifier))
-                throw new CouldNotResolveApplicationArtifactIdentifier(identifier, _artifactTypeToTypeMaps.Map(ArtifactType));
-        }
     }
 }
