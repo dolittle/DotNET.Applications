@@ -102,7 +102,7 @@ namespace Dolittle.Applications
 
         void ThrowIfNoMap(Type type)
         {
-            if (_typeToArtifactIdentifierMaps.ContainsKey(type))
+            if (! _typeToArtifactIdentifierMaps.ContainsKey(type))
                 throw new UnableToIdentifyArtifact(type);
         }
         void ThrowIfNoMap(IApplicationArtifactIdentifier artifactIdentifier)
