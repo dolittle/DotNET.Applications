@@ -9,12 +9,13 @@
 
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Runtime.Commands" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Runtime.Events" Version="2.0.0-*" />
     </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Applications\Applications.csproj" />
     <ProjectReference Include="..\..\Source\Commands\Commands.csproj" />
+    <ProjectReference Include="..\..\Source\Events\Events.csproj" />
   </ItemGroup>
 
 
