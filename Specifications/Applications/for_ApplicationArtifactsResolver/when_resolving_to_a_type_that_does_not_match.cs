@@ -15,6 +15,6 @@ namespace Dolittle.Applications.for_ApplicationArtifactsResolver
 
         Because of = ()=> exception = Catch.Exception(()=> resolver.Resolve(identifier));
 
-        // It should_throw_MismatchingArtifactType = ()=> exception.ShouldBeOfExactType<MismatchingArtifactType>();
+        It should_throw_MismatchingArtifactType = ()=> exception.ShouldBeOfExactType<MismatchingArtifactType>();
     }
 }

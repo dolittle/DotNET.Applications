@@ -116,16 +116,26 @@ namespace Dolittle.Applications
         
         void ThrowIfDuplicateMapping(Type type, IApplicationArtifactIdentifier aai)
         {
+            ThrowIfTypeHasBeenMapped(type, aai);
+            ThrowIfApplicationArtifactIdentifierHasBeenMapped(type, aai);
+        }
+
+        void ThrowIfTypeHasBeenMapped(Type type, IApplicationArtifactIdentifier aai)
+        {
             if (_typeToArtifactIdentifierMaps.ContainsKey(type))
-                throw new DuplicateMapping(aai);
+                throw new DuplicateMapping(type, aai);
+        }
+
+        void ThrowIfApplicationArtifactIdentifierHasBeenMapped(Type type, IApplicationArtifactIdentifier aai)
+        {
+            if (_typeToArtifactIdentifierMaps.Any(pair => pair.Value.Equals(aai)))
+                throw new DuplicateMapping(aai, type);
         }
 
         void ThrowIfMultipleMatchingTypes(IApplicationArtifactIdentifier artifactIdentifier)
         {
             if (_typeToArtifactIdentifierMaps.Count(pair => pair.Value.Equals(artifactIdentifier)) > 1)
-            {
                 throw new MultipleTypesWithTheSameArtifactIdentifier(artifactIdentifier);   
-            }
         }
     }
 }

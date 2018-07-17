@@ -14,7 +14,7 @@ namespace Dolittle.Applications.for_ApplicationArtifactsResolver.given
         Establish context = () =>
         {
             type_finder_for_aai_to_type_maps = new Mock<ITypeFinder>();
-            type_finder_for_aai_to_type_maps.Setup(_ => _.FindMultiple(typeof(ICommand))).Returns(new Type[] {typeof(ACommand), typeof(FalseType), typeof(First.TheType), typeof(Second.TheType)});
+            type_finder_for_aai_to_type_maps.Setup(_ => _.FindMultiple(typeof(ICommand))).Returns(new Type[] {typeof(ACommand), typeof(FalseType)});
 
             // Used for one test
             type_finder_for_aai_to_type_maps.Setup(_ => _.FindMultiple(typeof(IEvent))).Returns(new Type[] {typeof(AnEvent)});
