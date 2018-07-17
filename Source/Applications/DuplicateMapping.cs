@@ -7,16 +7,16 @@ using System;
 namespace Dolittle.Applications
 {
     /// <summary>
-    /// Exception that gets thrown when trying to <see cref="IApplicationArtifactResolver">resolve</see>
-    /// and there is an ambiguous match
+    /// Exception that gets thrown when mapping <see cref="Types"/> and <see cref="IApplicationArtifactIdentifier"/>
+    /// and the mapping already exists.
     /// </summary>
-    public class AmbiguousTypes : ArgumentException
+    public class DuplicateMapping : ArgumentException
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="AmbiguousTypes"/>
+        /// Initializes a new instance of <see cref="DuplicateMapping"/>
         /// </summary>
         /// <param name="identifier"></param>
-        public AmbiguousTypes(IApplicationArtifactIdentifier identifier)
+        public DuplicateMapping(IApplicationArtifactIdentifier identifier)
             :base($"Ambiguous types found for identifier '{identifier.Artifact.Name}'")
         { }
     }

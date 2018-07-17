@@ -67,7 +67,7 @@ namespace Dolittle.Applications
         {
             if (typesMatchingName.Count() > 1) 
             {
-                throw new AmbiguousTypes(identifier);
+                throw new DuplicateMapping(identifier);
             }
         }
     }

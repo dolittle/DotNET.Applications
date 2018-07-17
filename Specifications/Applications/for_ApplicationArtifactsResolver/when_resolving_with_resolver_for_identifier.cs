@@ -3,7 +3,7 @@ using Machine.Specifications;
 
 namespace Dolittle.Applications.for_ApplicationArtifactsResolver
 {
-    public class when_resolving_with_resolver_for_identifier : given.one_resolver_for_known_identifier
+    public class when_resolving_with_resolver_for_identifier : given.resolver_that_knows_about_Commands_and_not_Events
     {
         static Type result;
         static IApplicationArtifactIdentifier identifier;

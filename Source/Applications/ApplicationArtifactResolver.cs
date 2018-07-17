@@ -20,26 +20,28 @@ namespace Dolittle.Applications
     [Singleton]
     public class ApplicationArtifactResolver : IApplicationArtifactResolver
     {
+        readonly IApplicationArtifactIdentifierAndTypeMaps _aaiAndTypeMaps;
         readonly IArtifactTypes _types;
         readonly ILogger _logger;
-        readonly Dictionary<string, ICanResolveApplicationArtifacts> _resolversByType;
         readonly IArtifactTypeToTypeMaps _artifactTypeToTypeMaps;
+
 
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationArtifactResolver"/>
         /// </summary>
+        /// 
+        /// <param name="aaiAndTypeMaps">The maps between <see cref="Type"/> and <see cref="IApplicationArtifactIdentifier"/> </param>
         /// <param name="types"><see cref="IArtifactTypes">Artifact types</see> available</param>
         /// <param name="artifactTypeToTypeMaps"><see cref="IArtifactTypeToTypeMaps"/> for mapping between <see cref="IArtifactType"/> and <see cref="Type"/></param>
-        /// <param name="resolvers">Instances of <see cref="ICanResolveApplicationArtifacts"/> for specialized resolving</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public ApplicationArtifactResolver(
+            IApplicationArtifactIdentifierAndTypeMaps aaiAndTypeMaps,
             IArtifactTypes types,
             IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
-            IInstancesOf<ICanResolveApplicationArtifacts> resolvers,
             ILogger logger)
         {
+            _aaiAndTypeMaps = aaiAndTypeMaps;
             _types = types;
-            _resolversByType = resolvers.ToDictionary(r => r.ArtifactType.Identifier, r => r);
             _logger = logger;
             _artifactTypeToTypeMaps = artifactTypeToTypeMaps;
         }
@@ -53,16 +55,14 @@ namespace Dolittle.Applications
             
             ThrowIfUnknownArtifactType(typeIdentifier);
 
-            if (_resolversByType.ContainsKey(typeIdentifier)) 
-            {
-                var resolver = _resolversByType[typeIdentifier];
-                var matchedType = resolver.Resolve(identifier);
-                
-                ThrowIfMismatchedArtifactType(_artifactTypeToTypeMaps.Map(resolver.ArtifactType), matchedType);
+            var matchedType = _aaiAndTypeMaps.GetTypeFor(identifier);
 
-                return _resolversByType[typeIdentifier].Resolve(identifier);
-            }
-            throw new CouldNotFindResolver(typeIdentifier);
+            _logger.Trace($"Matched {identifier.Artifact.Name} to a {matchedType.AssemblyQualifiedName}");
+
+            ThrowIfMismatchedArtifactType(_artifactTypeToTypeMaps.Map(identifier.Artifact.Type), matchedType);
+
+            return matchedType;
+            
         }
 
         void ThrowIfUnknownArtifactType(string typeIdentifier)

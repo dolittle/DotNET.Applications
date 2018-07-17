@@ -16,7 +16,7 @@ namespace Dolittle.Applications.for_ApplicationArtifactIdentifierToTypeMaps
             aai_to_type_maps = new ApplicationArtifactIdentifierAndTypeMaps(application_configuration.application, location_resolver, artifact_type_to_type_maps, type_finder_for_aai_to_type_maps.Object));
 
 
-        It should_be_a_Ambiguous = () => result.ShouldBeOfExactType(typeof(AmbiguousTypes));
+        It should_be_a_Ambiguous = () => result.ShouldBeOfExactType(typeof(DuplicateMapping));
         
     }
 }

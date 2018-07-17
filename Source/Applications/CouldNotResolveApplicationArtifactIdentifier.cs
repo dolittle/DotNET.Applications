@@ -3,7 +3,7 @@ using System;
 namespace Dolittle.Applications
 {
     /// <summary>
-    /// The excption that gets thrown when an instance of <see cref="ICanResolveApplicationArtifacts"/> could not find a matching <see cref="IApplicationArtifactIdentifier"/>
+    /// The excption that gets thrown when an <see cref="IApplicationArtifactResolver"/> could not find a matching <see cref="IApplicationArtifactIdentifier"/>
     /// </summary>
     public class CouldNotResolveApplicationArtifactIdentifier : Exception
     {

@@ -14,8 +14,10 @@ namespace Dolittle.Applications
     [Singleton]
     public class ApplicationArtifactIdentifierAndTypeMaps : IApplicationArtifactIdentifierAndTypeMaps
     {
+        /// <summary>
+        /// Represents the one-to-one relationship between a <see cref="IApplicationArtifactIdentifier"/> and a <see cref="Type"/>
+        /// </summary>
         readonly Dictionary<Type, IApplicationArtifactIdentifier> _typeToArtifactIdentifierMaps = new Dictionary<Type, IApplicationArtifactIdentifier>();
-
         readonly IApplication _application;
         readonly IApplicationLocationResolver _locationResolver;
         readonly IArtifactTypeToTypeMaps _artifactTypeToTypeMaps;
@@ -66,6 +68,7 @@ namespace Dolittle.Applications
         public Type GetTypeFor(IApplicationArtifactIdentifier artifactIdentifier)
         {
             ThrowIfNoMap(artifactIdentifier);
+            ThrowIfMultipleMatchingTypes(artifactIdentifier);
             return _typeToArtifactIdentifierMaps.SingleOrDefault(pair => pair.Value.Equals(artifactIdentifier)).Key;
         }
 
@@ -93,7 +96,7 @@ namespace Dolittle.Applications
                     {   
                         var aai = new ApplicationArtifactIdentifier(_application, _locationResolver.Resolve(type), new Artifact(type.Name, artifactType, 1));
 
-                        ThrowIfAmbiguousType(type, aai);
+                        ThrowIfDuplicateMapping(type, aai);
                         _typeToArtifactIdentifierMaps.Add(type, aai);
                     }
                 );
@@ -111,10 +114,18 @@ namespace Dolittle.Applications
                 throw new CouldNotResolveApplicationArtifactIdentifier(artifactIdentifier, _artifactTypeToTypeMaps.Map(artifactIdentifier.Artifact.Type));
         }
         
-        void ThrowIfAmbiguousType(Type type, IApplicationArtifactIdentifier aai)
+        void ThrowIfDuplicateMapping(Type type, IApplicationArtifactIdentifier aai)
         {
             if (_typeToArtifactIdentifierMaps.ContainsKey(type))
-                throw new AmbiguousTypes(aai);
+                throw new DuplicateMapping(aai);
+        }
+
+        void ThrowIfMultipleMatchingTypes(IApplicationArtifactIdentifier artifactIdentifier)
+        {
+            if (_typeToArtifactIdentifierMaps.Count(pair => pair.Value.Equals(artifactIdentifier)) > 1)
+            {
+                throw new MultipleTypesWithTheSameArtifactIdentifier(artifactIdentifier);   
+            }
         }
     }
 }

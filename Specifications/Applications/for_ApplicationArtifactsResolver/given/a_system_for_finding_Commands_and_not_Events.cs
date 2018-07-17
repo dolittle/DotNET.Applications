@@ -8,7 +8,7 @@ using Moq;
 
 namespace Dolittle.Applications.for_ApplicationArtifactsResolver.given
 {
-    public class a_system_for_finding_Commands : a_standard_configuration
+    public class a_system_for_finding_Commands_and_not_Events : a_standard_configuration
     {
         protected static Mock<IContainer> container;
         protected static IArtifactType command_artifact_type;

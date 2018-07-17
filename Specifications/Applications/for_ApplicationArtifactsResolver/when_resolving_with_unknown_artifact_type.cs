@@ -8,7 +8,7 @@ using It = Machine.Specifications.It;
 namespace Dolittle.Applications.for_ApplicationArtifactsResolver
 {
 
-    public class when_resolving_with_unknown_artifact_type : given.one_resolver_for_known_identifier
+    public class when_resolving_with_unknown_artifact_type : given.resolver_that_knows_about_Commands_and_not_Events
     {
         static Exception exception;
         static IApplicationArtifactIdentifier identifier;
