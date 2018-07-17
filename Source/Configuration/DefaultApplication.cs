@@ -7,7 +7,21 @@ namespace Dolittle.Configuration
     /// </summary>
     public class DefaultApplication
     {
-
+        /// <summary>
+        /// Gets the default <see cref="IApplicationBuilder"/> for a given <see cref="Config"/> with <see cref="BoundedContext"/> as prefix
+        /// </summary>
+        /// <param name="config">The configuration</param>
+        /// <param name="boundedContext">The <see cref="BoundedContext"/> to use as location prefix</param>
+        /// <returns></returns>
+        public static IApplicationBuilder GetDefaultApplicationBuilderForConfig(Config config, BoundedContext boundedContext)
+        {
+            return new ApplicationBuilder(config.Application)
+                .PrefixLocationsWith(boundedContext)
+                .WithStructureStartingWith<BoundedContext>(bc => bc.Required
+                    .WithChild<Module>(m => m
+                        .WithChild<Feature>(f => f
+                            .WithChild<SubFeature>(sf => sf.Recursive))));
+        }
         /// <summary>
         /// Gets the <see cref="DefaultApplication"/> based on the configuration details specified in the dolittle configuration json file.
         /// </summary>
@@ -40,7 +54,7 @@ namespace Dolittle.Configuration
         /// <summary>
         /// The default <see cref="IBoundedContext"/> that's generated.
         /// </summary>
-        public IBoundedContext BoundedContext {get; }
+        public BoundedContext BoundedContext {get; }
 
         DefaultApplication(Config config)
         {
@@ -49,12 +63,7 @@ namespace Dolittle.Configuration
             Config = config;
             BoundedContext = new BoundedContext(config.BoundedContext);
 
-            ApplicationBuilder = new ApplicationBuilder(config.Application)
-                .PrefixLocationsWith(BoundedContext)
-                .WithStructureStartingWith<BoundedContext>(bc => bc.Required
-                    .WithChild<Module>(m => m
-                        .WithChild<Feature>(f => f
-                            .WithChild<SubFeature>(sf => sf.Recursive))));
+            ApplicationBuilder = GetDefaultApplicationBuilderForConfig(config, BoundedContext);
 
         }
 

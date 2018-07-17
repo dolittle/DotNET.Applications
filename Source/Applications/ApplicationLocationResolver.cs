@@ -17,26 +17,6 @@ namespace Dolittle.Applications
     /// </summary>
     public class ApplicationLocationResolver : IApplicationLocationResolver
     {
-        /// <summary>
-        /// The key representing a <see cref="IBoundedContext"/> as part of <see cref="IApplicationStructureMapBuilder"/>
-        /// </summary>
-        public const string BoundedContextKey = "BoundedContext";
-
-        /// <summary>
-        /// The key representing a <see cref="IModule"/> as part of <see cref="IApplicationStructureMapBuilder"/>
-        /// </summary>
-        public const string ModuleKey = "Module";
-
-        /// <summary>
-        /// The key representing a <see cref="IFeature"/> as part of <see cref="IApplicationStructureMapBuilder"/>
-        /// </summary>
-        public const string FeatureKey = "Feature";
-
-        /// <summary>
-        /// The key representing a <see cref="ISubFeature"/> as part of <see cref="IApplicationStructureMapBuilder"/>
-        /// </summary>
-        public const string SubFeatureKey = "SubFeature";
-
         readonly IApplicationStructureMap _applicationStructureMap;
         readonly IApplication _application;
 
@@ -92,10 +72,10 @@ namespace Dolittle.Applications
 
                 switch( stringSegment.Identifier )
                 {
-                    case BoundedContextKey : currentSegment = new BoundedContext(stringSegment.Values.Single()); break;
-                    case ModuleKey : currentSegment = new Module((BoundedContext)previousSegment, stringSegment.Values.Single()); break;
-                    case FeatureKey : currentSegment = new Feature(previousSegment, stringSegment.Values.Single()); break;
-                    case SubFeatureKey : 
+                    case ApplicationStructureMap.BoundedContextKey : currentSegment = new BoundedContext(stringSegment.Values.Single()); break;
+                    case ApplicationStructureMap.ModuleKey : currentSegment = new Module((BoundedContext)previousSegment, stringSegment.Values.Single()); break;
+                    case ApplicationStructureMap.FeatureKey : currentSegment = new Feature(previousSegment, stringSegment.Values.Single()); break;
+                    case ApplicationStructureMap.SubFeatureKey : 
                         foreach (var segmentString in stringSegment.Values)
                         {
                             currentSegment = new SubFeature((IFeature)previousSegment, segmentString);
@@ -106,7 +86,7 @@ namespace Dolittle.Applications
                         }
                         break;
                 }
-                if( currentSegment != null )
+                if ( currentSegment != null )
                 {
                     segments.Add(currentSegment);
                     previousSegment = currentSegment;

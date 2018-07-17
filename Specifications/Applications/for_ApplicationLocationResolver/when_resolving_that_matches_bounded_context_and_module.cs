@@ -19,11 +19,11 @@ namespace Dolittle.Applications.for_ApplicationLocationResolver
         Establish context = () =>
         {
             bounded_context_match = new Mock<ISegmentMatch>();
-            bounded_context_match.SetupGet(b => b.Identifier).Returns(ApplicationLocationResolver.BoundedContextKey);
+            bounded_context_match.SetupGet(b => b.Identifier).Returns(ApplicationStructureMap.BoundedContextKey);
             bounded_context_match.SetupGet(b => b.Values).Returns(new[] { BoundedContext }); 
 
             module_match = new Mock<ISegmentMatch>();
-            module_match.SetupGet(b => b.Identifier).Returns(ApplicationLocationResolver.ModuleKey);
+            module_match.SetupGet(b => b.Identifier).Returns(ApplicationStructureMap.ModuleKey);
             module_match.SetupGet(b => b.Values).Returns(new[] { Module });
 
             var segments = new List<ISegmentMatch>(new[]

@@ -7,7 +7,19 @@ namespace Dolittle.Configuration
     /// </summary>
     public class DefaultApplicationConfiguration
     {
-        
+        /// <summary>
+        /// Gets the default <see cref="IApplicationStructureMapBuilder"/> for a given <see cref="Config"/>
+        /// </summary>
+        /// <param name="config">The configuration</param>
+        /// <returns></returns>
+        public static IApplicationStructureMapBuilder GetDefaultApplicationStructureMapBuilderForConfig(Config config)
+        {
+            return new ApplicationStructureMapBuilder()
+                .Include(config.DomainAreaName   + $".-^{{{ApplicationStructureMap.ModuleKey}}}.-^{{{ApplicationStructureMap.FeatureKey}}}.-^{{{ApplicationStructureMap.SubFeatureKey}}}*")
+                .Include(config.EventsAreaName   + $".-^{{{ApplicationStructureMap.ModuleKey}}}.-^{{{ApplicationStructureMap.FeatureKey}}}.-^{{{ApplicationStructureMap.SubFeatureKey}}}*")
+                .Include(config.ReadAreaName     + $".-^{{{ApplicationStructureMap.ModuleKey}}}.-^{{{ApplicationStructureMap.FeatureKey}}}.-^{{{ApplicationStructureMap.SubFeatureKey}}}*")
+                .Include(config.FrontendAreaName + $".-^{{{ApplicationStructureMap.ModuleKey}}}.-^{{{ApplicationStructureMap.FeatureKey}}}.-^{{{ApplicationStructureMap.SubFeatureKey}}}*");
+        }
         /// <summary>
         /// Gets the <see cref="DefaultApplicationConfiguration"/> based on the configuration details specified in the dolittle configuration json file.
         /// </summary>
@@ -60,11 +72,7 @@ namespace Dolittle.Configuration
 
             ApplicationConfiguration = new ApplicationConfigurationBuilder(Config.Application)
                 .Application(applicationBuilder => defaultApplication.ApplicationBuilder)
-                .StructureMappedTo(structureMapBuilder => structureMapBuilder
-                    .Include(Config.DomainAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*")
-                    .Include(Config.EventsAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*")
-                    .Include(Config.ReadAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*")
-                    .Include(Config.FrontendAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*"))
+                .StructureMappedTo(structureMapBuilder => GetDefaultApplicationStructureMapBuilderForConfig(Config))
                 .Build();
         }
 
@@ -75,11 +83,7 @@ namespace Dolittle.Configuration
 
             ApplicationConfiguration = new ApplicationConfigurationBuilder(Config.Application)
                 .Application(applicationBuilder => defaultApplication.ApplicationBuilder)
-                .StructureMappedTo(structureMapBuilder => structureMapBuilder
-                    .Include(Config.DomainAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*")
-                    .Include(Config.EventsAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*")
-                    .Include(Config.ReadAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*")
-                    .Include(Config.FrontendAreaName + ".-^{Module}.-^{Feature}.-^{SubFeature}*"))
+                .StructureMappedTo(structureMapBuilder => GetDefaultApplicationStructureMapBuilderForConfig(Config))
                 .Build();
         }
     }

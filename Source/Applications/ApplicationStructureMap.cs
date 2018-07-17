@@ -16,8 +16,28 @@ namespace Dolittle.Applications
     /// </summary>
     public class ApplicationStructureMap : IApplicationStructureMap
     {
+        /// <summary>
+        /// The key representing a <see cref="IBoundedContext"/> as part of <see cref="IApplicationStructureMapBuilder"/>
+        /// </summary>
+        public const string BoundedContextKey = "BoundedContext";
+
+        /// <summary>
+        /// The key representing a <see cref="IModule"/> as part of <see cref="IApplicationStructureMapBuilder"/>
+        /// </summary>
+        public const string ModuleKey = "Module";
+
+        /// <summary>
+        /// The key representing a <see cref="IFeature"/> as part of <see cref="IApplicationStructureMapBuilder"/>
+        /// </summary>
+        public const string FeatureKey = "Feature";
+
+        /// <summary>
+        /// The key representing a <see cref="ISubFeature"/> as part of <see cref="IApplicationStructureMapBuilder"/>
+        /// </summary>
+        public const string SubFeatureKey = "SubFeature";
+        
         readonly IApplication _application;
-                readonly IEnumerable<IStringFormat> _formats;
+        readonly IEnumerable<IStringFormat> _formats;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationStructureMap"/>
