@@ -24,7 +24,7 @@ namespace Dolittle.Applications
         /// <inheritdoc/>
         public IArtifactType ArtifactType => _resolver;
 
-        readonly IApplicationArtifactIdentifierToTypeMaps _aaiToTypeMaps;
+        readonly IApplicationArtifactIdentifierAndTypeMaps _aaiToTypeMaps;
         IArtifactTypeToTypeMaps _artifactTypeToTypeMaps;
         readonly ILogger _logger;
         
@@ -38,7 +38,7 @@ namespace Dolittle.Applications
         /// <param name="artifactTypeToTypeMaps"></param>
         /// <param name="logger"></param>
         public ApplicationArtifactResolverFor(
-            IApplicationArtifactIdentifierToTypeMaps aaiToTypeMaps,
+            IApplicationArtifactIdentifierAndTypeMaps aaiToTypeMaps,
             IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
             ILogger logger
         )
@@ -57,7 +57,7 @@ namespace Dolittle.Applications
             _logger.Trace($"Resolving an {typeof(IApplicationArtifactIdentifier)} in a {typeof(ICanResolveApplicationArtifacts).AssemblyQualifiedName} resolver that can resolve a {typeof(IApplicationArtifactIdentifier)} with {typeof(IArtifactType)} " + 
             $" {ArtifactType.Identifier} to a {typeof(Type).AssemblyQualifiedName} of type {_artifactTypeToTypeMap.AssemblyQualifiedName}");
 
-            var matchedType = _aaiToTypeMaps.Map(identifier);
+            var matchedType = _aaiToTypeMaps.GetTypeFor(identifier);
 
             _logger.Trace($"Resolved the {typeof(IApplicationArtifactIdentifier)} to {matchedType.AssemblyQualifiedName}");
 

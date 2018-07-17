@@ -18,7 +18,7 @@ namespace Dolittle.Commands
         /// <param name="artifactTypeToTypeMaps"></param>
         /// <param name="logger"></param>
         public ApplicationArtifactResolverForCommand(
-            IApplicationArtifactIdentifierToTypeMaps aaiToTypeMaps,
+            IApplicationArtifactIdentifierAndTypeMaps aaiToTypeMaps,
             IArtifactTypeToTypeMaps artifactTypeToTypeMaps,
             ILogger logger
         ) : base(aaiToTypeMaps, artifactTypeToTypeMaps, logger)

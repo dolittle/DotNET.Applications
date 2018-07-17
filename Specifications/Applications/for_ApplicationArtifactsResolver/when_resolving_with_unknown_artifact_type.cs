@@ -14,7 +14,7 @@ namespace Dolittle.Applications.for_ApplicationArtifactsResolver
         static IApplicationArtifactIdentifier identifier;
         Establish context = ()=>
         {
-            identifier = aai_to_type_maps.Map(typeof(given.AnEvent));
+            identifier = aai_to_type_maps.GetIdentifierFor(typeof(given.AnEvent));
         };
 
         Because of = ()=> exception = Catch.Exception(()=> resolver.Resolve(identifier));

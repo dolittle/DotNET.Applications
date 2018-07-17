@@ -9,10 +9,10 @@ using Dolittle.Types;
 namespace Dolittle.Applications
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IApplicationArtifactIdentifierToTypeMaps"/>
+    /// Represents an implementation of <see cref="IApplicationArtifactIdentifierAndTypeMaps"/>
     /// </summary>
     [Singleton]
-    public class ApplicationArtifactIdentifierToTypeMaps : IApplicationArtifactIdentifierToTypeMaps
+    public class ApplicationArtifactIdentifierAndTypeMaps : IApplicationArtifactIdentifierAndTypeMaps
     {
         readonly Dictionary<Type, IApplicationArtifactIdentifier> _typeToArtifactIdentifierMaps = new Dictionary<Type, IApplicationArtifactIdentifier>();
 
@@ -26,13 +26,13 @@ namespace Dolittle.Applications
         bool _initialized = false;
 
         /// <summary>
-        /// Initializes an instance of <see cref="ApplicationArtifactIdentifierToTypeMaps"/>
+        /// Initializes an instance of <see cref="ApplicationArtifactIdentifierAndTypeMaps"/>
         /// </summary>
         /// <param name="application"></param>
         /// <param name="locationResolver"></param>
         /// <param name="typeToTypeMaps"></param>
         /// <param name="typeFinder"></param>
-        public ApplicationArtifactIdentifierToTypeMaps(
+        public ApplicationArtifactIdentifierAndTypeMaps(
             IApplication application,
             IApplicationLocationResolver locationResolver,
             IArtifactTypeToTypeMaps typeToTypeMaps,
@@ -49,21 +49,21 @@ namespace Dolittle.Applications
 
 
         /// <inheritdoc/>
-        public IApplicationArtifactIdentifier Map(Type type)
+        public IApplicationArtifactIdentifier GetIdentifierFor(Type type)
         {
             ThrowIfNoMap(type);
             return _typeToArtifactIdentifierMaps[type];
         }
 
         /// <inheritdoc/>
-        public IApplicationArtifactIdentifier Map(object resource)
+        public IApplicationArtifactIdentifier GetIdentifierFor(object resource)
         {
             var type = resource.GetType();
-            return Map(type);
+            return GetIdentifierFor(type);
         }
 
         /// <inheritdoc/>
-        public Type Map(IApplicationArtifactIdentifier artifactIdentifier)
+        public Type GetTypeFor(IApplicationArtifactIdentifier artifactIdentifier)
         {
             ThrowIfNoMap(artifactIdentifier);
             return _typeToArtifactIdentifierMaps.SingleOrDefault(pair => pair.Value.Equals(artifactIdentifier)).Key;

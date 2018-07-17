@@ -10,7 +10,7 @@ namespace Dolittle.Applications.for_ApplicationArtifactsResolver
 
         Establish context = () =>
         {
-            identifier = aai_to_type_maps.Map(typeof(given.ACommand));
+            identifier = aai_to_type_maps.GetIdentifierFor(typeof(given.ACommand));
         };
         Because of = () => result = resolver.Resolve(identifier);
 

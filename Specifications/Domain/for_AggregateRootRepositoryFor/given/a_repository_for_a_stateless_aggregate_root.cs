@@ -23,7 +23,7 @@ namespace Dolittle.Domain.for_AggregateRootRepositoryFor.given
             command_context_manager.Setup(ccm => ccm.GetCurrent()).Returns(command_context_mock.Object);
 
             application_artifact_identifier = new Mock<IApplicationArtifactIdentifier>();
-            application_artifacts.Setup(a => a.Map(typeof(SimpleStatelessAggregateRoot))).Returns(application_artifact_identifier.Object);
+            application_artifacts.Setup(a => a.GetIdentifierFor(typeof(SimpleStatelessAggregateRoot))).Returns(application_artifact_identifier.Object);
         };
     }
 }

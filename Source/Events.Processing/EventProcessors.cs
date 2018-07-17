@@ -23,16 +23,16 @@ namespace Dolittle.Runtime.Events.Processing
     {
         readonly Dictionary<IApplicationArtifactIdentifier, List<IEventProcessor>> _eventProcessorsByResourceIdentifier;
         readonly List<IEventProcessor> _eventProcessors = new List<IEventProcessor>();
-        readonly IApplicationArtifactIdentifierToTypeMaps _aaiToTypeMaps;
+        readonly IApplicationArtifactIdentifierAndTypeMaps _aaiToTypeMaps;
         private readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of <see cref="EventProcessors"/>
         /// </summary>
-        /// <param name="aaiToTypeMaps"><see cref="IApplicationArtifactIdentifierToTypeMaps"/> for resolving resources</param>
+        /// <param name="aaiToTypeMaps"><see cref="IApplicationArtifactIdentifierAndTypeMaps"/> for resolving resources</param>
         /// <param name="systemsThatKnowsAboutEventProcessors">Instances of <see cref="IKnowAboutEventProcessors"/></param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        public EventProcessors(IApplicationArtifactIdentifierToTypeMaps aaiToTypeMaps, IInstancesOf<IKnowAboutEventProcessors> systemsThatKnowsAboutEventProcessors, ILogger logger)
+        public EventProcessors(IApplicationArtifactIdentifierAndTypeMaps aaiToTypeMaps, IInstancesOf<IKnowAboutEventProcessors> systemsThatKnowsAboutEventProcessors, ILogger logger)
         {
             _aaiToTypeMaps = aaiToTypeMaps;
             _eventProcessorsByResourceIdentifier = GatherEventProcessorsFrom(systemsThatKnowsAboutEventProcessors);
@@ -46,7 +46,7 @@ namespace Dolittle.Runtime.Events.Processing
         public IEventProcessingResults Process(IEventEnvelope envelope, IEvent @event)
         {
             _logger.Trace("Process event");
-            var identifier = _aaiToTypeMaps.Map(@event);
+            var identifier = _aaiToTypeMaps.GetIdentifierFor(@event);
             _logger.Trace($"Identifier for event - {identifier}");
             if (!_eventProcessorsByResourceIdentifier.ContainsKey(identifier)) {
                 _logger.Trace("No event processors able to process - return");

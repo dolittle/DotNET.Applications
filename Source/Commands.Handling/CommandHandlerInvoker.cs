@@ -30,7 +30,7 @@ namespace Dolittle.Commands.Handling
 
         readonly ITypeFinder _typeFinder;
         readonly IContainer _container;
-        readonly IApplicationArtifactIdentifierToTypeMaps _aaiToTypeMaps;
+        readonly IApplicationArtifactIdentifierAndTypeMaps _aaiToTypeMaps;
         readonly ICommandRequestToCommandConverter _converter;
         readonly ILogger _logger;
         readonly Dictionary<IApplicationArtifactIdentifier, MethodInfo> _commandHandlers = new Dictionary<IApplicationArtifactIdentifier, MethodInfo>();
@@ -42,13 +42,13 @@ namespace Dolittle.Commands.Handling
         /// </summary>
         /// <param name="typeFinder">A <see cref="ITypeFinder"/> to use for discovering <see cref="ICanHandleCommands">command handlers</see></param>
         /// <param name="container">A <see cref="IContainer"/> to use for getting instances of objects</param>
-        /// <param name="aaiToTypeMaps"><see cref="IApplicationArtifactIdentifierToTypeMaps"/> for identifying resources</param>
+        /// <param name="aaiToTypeMaps"><see cref="IApplicationArtifactIdentifierAndTypeMaps"/> for identifying resources</param>
         /// <param name="converter"><see cref="ICommandRequestToCommandConverter"/> for converting to actual <see cref="ICommand"/> instances</param>
         /// <param name="logger"><see cref="ILogger"/> used for logging</param>
         public CommandHandlerInvoker(
             ITypeFinder typeFinder,
             IContainer container,
-            IApplicationArtifactIdentifierToTypeMaps aaiToTypeMaps,
+            IApplicationArtifactIdentifierAndTypeMaps aaiToTypeMaps,
             ICommandRequestToCommandConverter converter,
             ILogger logger)
         {
@@ -80,7 +80,7 @@ namespace Dolittle.Commands.Handling
             handleMethods.ForEach(method =>
             {
                 var commandType = method.GetParameters()[0].ParameterType;
-                var identifier = _aaiToTypeMaps.Map(commandType);
+                var identifier = _aaiToTypeMaps.GetIdentifierFor(commandType);
                 _commandHandlers[identifier] = method;
             });
         }

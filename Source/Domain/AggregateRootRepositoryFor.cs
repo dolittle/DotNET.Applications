@@ -24,7 +24,7 @@ namespace Dolittle.Domain
         ICommandContextManager _commandContextManager;
         IEventStore _eventStore;
         IEventSourceVersions _eventSourceVersions;
-        IApplicationArtifactIdentifierToTypeMaps _aaiToTypeMaps;
+        IApplicationArtifactIdentifierAndTypeMaps _aaiToTypeMaps;
         readonly ILogger _logger;
 
         /// <summary>
@@ -33,13 +33,13 @@ namespace Dolittle.Domain
         /// <param name="commandContextManager"> <see cref="ICommandContextManager"/> to use for tracking </param>
         /// <param name="eventStore"><see cref="IEventStore"/> for getting <see cref="IEvent">events</see></param>
         /// <param name="eventSourceVersions"><see cref="IEventSourceVersions"/> for working with versioning of <see cref="AggregateRoot"/></param>
-        /// <param name="aaiToTypeMaps"><see cref="IApplicationArtifactIdentifierToTypeMaps"/> for being able to identify resources</param>
+        /// <param name="aaiToTypeMaps"><see cref="IApplicationArtifactIdentifierAndTypeMaps"/> for being able to identify resources</param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging</param>
         public AggregateRootRepositoryFor(
             ICommandContextManager commandContextManager,
             IEventStore eventStore,
             IEventSourceVersions eventSourceVersions,
-            IApplicationArtifactIdentifierToTypeMaps aaiToTypeMaps, 
+            IApplicationArtifactIdentifierAndTypeMaps aaiToTypeMaps, 
             ILogger logger)
         {
             _commandContextManager = commandContextManager;
@@ -75,7 +75,7 @@ namespace Dolittle.Domain
         void FastForward(ICommandContext commandContext, T aggregateRoot)
         {
             _logger.Trace($"FastForward - {typeof(T).AssemblyQualifiedName}");
-            var identifier = _aaiToTypeMaps.Map(typeof(T));
+            var identifier = _aaiToTypeMaps.GetIdentifierFor(typeof(T));
             _logger.Trace($"With identifier '{identifier?.ToString()??"<unknown identifier>"}'");
             
             var version = _eventSourceVersions.GetFor(identifier, aggregateRoot.EventSourceId);
@@ -84,7 +84,7 @@ namespace Dolittle.Domain
 
         void ReApplyEvents(ICommandContext commandContext, T aggregateRoot)
         {
-            var identifier = _aaiToTypeMaps.Map(typeof(T));
+            var identifier = _aaiToTypeMaps.GetIdentifierFor(typeof(T));
             var events = _eventStore.GetFor(identifier, aggregateRoot.EventSourceId);
             var stream = new CommittedEventStream(aggregateRoot.EventSourceId, events);
             if (stream.HasEvents)

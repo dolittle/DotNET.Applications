@@ -16,10 +16,10 @@ namespace Dolittle.Applications.for_ApplicationArtifactIdentifierToTypeMaps
         {
             type_1 = typeof(given.Register);
             type_2 = typeof(given.Delete);
-            result_identifier_for_Register = aai_to_type_maps.Map(type_1);
-            result_identifier_for_Delete = aai_to_type_maps.Map(type_2);
-            result_type_1 = aai_to_type_maps.Map(result_identifier_for_Register);
-            result_type_2 = aai_to_type_maps.Map(result_identifier_for_Delete);
+            result_identifier_for_Register = aai_to_type_maps.GetIdentifierFor(type_1);
+            result_identifier_for_Delete = aai_to_type_maps.GetIdentifierFor(type_2);
+            result_type_1 = aai_to_type_maps.GetTypeFor(result_identifier_for_Register);
+            result_type_2 = aai_to_type_maps.GetTypeFor(result_identifier_for_Delete);
         };
 
         It should_not_be_the_same = () => result_identifier_for_Delete.ShouldNotEqual(result_identifier_for_Register);

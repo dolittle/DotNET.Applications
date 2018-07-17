@@ -39,7 +39,7 @@ namespace Dolittle.Events.Processing
 
         List<IEventProcessor> _eventProcessors = new List<IEventProcessor>();
 
-        IApplicationArtifactIdentifierToTypeMaps _aaiToTypeMaps;
+        IApplicationArtifactIdentifierAndTypeMaps _aaiToTypeMaps;
         IApplicationArtifactIdentifierStringConverter _applicationArtifactIdentifierStringConverter;
         ITypeFinder _typeFinder;
         IContainer _container;
@@ -49,14 +49,14 @@ namespace Dolittle.Events.Processing
         /// <summary>
         /// Initializes a new instance of <see cref="ProcessMethodEventProcessors"/>
         /// </summary>
-        /// <param name="aaiToTypeMaps"><see cref="IApplicationArtifactIdentifierToTypeMaps"/> for identifying <see cref="IEvent">events</see> </param>
+        /// <param name="aaiToTypeMaps"><see cref="IApplicationArtifactIdentifierAndTypeMaps"/> for identifying <see cref="IEvent">events</see> </param>
         /// <param name="applicationArtifactIdentifierStringConverter"><see cref="IApplicationArtifactIdentifierStringConverter"/> for converting <see cref="IApplicationArtifactIdentifier"/> to and from different formats</param>
         /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering implementations of <see cref="ICanProcessEvents"/></param>
         /// <param name="container"><see cref="IContainer"/> for the implementation <see cref="ProcessMethodEventProcessor"/> when acquiring instances of implementations of <see cref="ICanProcessEvents"/></param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for timing <see cref="IEventProcessors"/></param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public ProcessMethodEventProcessors(
-            IApplicationArtifactIdentifierToTypeMaps aaiToTypeMaps,
+            IApplicationArtifactIdentifierAndTypeMaps aaiToTypeMaps,
             IApplicationArtifactIdentifierStringConverter applicationArtifactIdentifierStringConverter,
             ITypeFinder typeFinder,
             IContainer container,
@@ -101,7 +101,7 @@ namespace Dolittle.Events.Processing
                         typeof(IEvent).GetTypeInfo().IsAssignableFrom(parameters[0].ParameterType.GetTypeInfo());
                 });
 
-                var eventProcessorTypeIdentifier = _aaiToTypeMaps.Map(processor);
+                var eventProcessorTypeIdentifier = _aaiToTypeMaps.GetIdentifierFor(processor);
                 _logger.Trace($"Processor identified as '{eventProcessorTypeIdentifier}'");
 
                 foreach (var method in methods)
@@ -109,7 +109,7 @@ namespace Dolittle.Events.Processing
                     _logger.Trace($"Method found '{method}'");
 
                     var eventProcessorTypeIdentifierAsString = _applicationArtifactIdentifierStringConverter.AsString(eventProcessorTypeIdentifier);
-                    var eventIdentifier = _aaiToTypeMaps.Map(method.GetParameters()[0].ParameterType);
+                    var eventIdentifier = _aaiToTypeMaps.GetIdentifierFor(method.GetParameters()[0].ParameterType);
                     var eventIdentifierAsString = _applicationArtifactIdentifierStringConverter.AsString(eventIdentifier);
                     var eventProcessorIdentifier = (EventProcessorIdentifier)$"{eventProcessorTypeIdentifierAsString}{IdentifierSeparator}{eventIdentifierAsString}";
 

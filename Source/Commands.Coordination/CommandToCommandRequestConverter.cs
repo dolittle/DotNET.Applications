@@ -16,15 +16,15 @@ namespace Dolittle.Commands.Coordination
     /// </summary>
     public class CommandToCommandRequestConverter : ICommandToCommandRequestConverter
     {
-        readonly IApplicationArtifactIdentifierToTypeMaps _aaiToTypeMaps;
+        readonly IApplicationArtifactIdentifierAndTypeMaps _aaiToTypeMaps;
         readonly ISerializer _serializer;
 
         /// <summary>
         /// Initializes a new instance of <see cref="CommandToCommandRequestConverter"/>
         /// </summary>
-        /// <param name="aaiToTypeMaps">The <see cref="IApplicationArtifactIdentifierToTypeMaps"/> for mapping artifacts to types and oposite</param>
+        /// <param name="aaiToTypeMaps">The <see cref="IApplicationArtifactIdentifierAndTypeMaps"/> for mapping artifacts to types and oposite</param>
         /// <param name="serializer"></param>
-        public CommandToCommandRequestConverter(IApplicationArtifactIdentifierToTypeMaps aaiToTypeMaps, ISerializer serializer)
+        public CommandToCommandRequestConverter(IApplicationArtifactIdentifierAndTypeMaps aaiToTypeMaps, ISerializer serializer)
         {
             _aaiToTypeMaps = aaiToTypeMaps;
             _serializer = serializer;
@@ -36,7 +36,7 @@ namespace Dolittle.Commands.Coordination
             var commandAsJson = _serializer.ToJson(command);
             var commandAsDictionary = _serializer.GetKeyValuesFromJson(commandAsJson);
             //var commandAsDictionary = command.ToDictionary();
-            var applicationArtifactIdentifier = _aaiToTypeMaps.Map(command);
+            var applicationArtifactIdentifier = _aaiToTypeMaps.GetIdentifierFor(command);
             var commandRequest = new CommandRequest(correlationId, applicationArtifactIdentifier, commandAsDictionary);
             return commandRequest;
         }

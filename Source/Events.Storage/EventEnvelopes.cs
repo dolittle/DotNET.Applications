@@ -21,7 +21,7 @@ namespace Dolittle.Events.Storage
     /// </summary>
     public class EventEnvelopes : IEventEnvelopes
     {
-        IApplicationArtifactIdentifierToTypeMaps _aaiToTypeMaps;
+        IApplicationArtifactIdentifierAndTypeMaps _aaiToTypeMaps;
         ISystemClock _systemClock;
         IExecutionContext _executionContext;
         IEventMigrationHierarchyManager _eventMigrationHierarchyManager;
@@ -29,12 +29,12 @@ namespace Dolittle.Events.Storage
         /// <summary>
         /// Initializes a new instance of <see cref="EventEnvelopes"/>
         /// </summary>
-        /// <param name="aaiToTypeMaps"><see cref="IApplicationArtifactIdentifierToTypeMaps"/> for identifying artifacts</param>
+        /// <param name="aaiToTypeMaps"><see cref="IApplicationArtifactIdentifierAndTypeMaps"/> for identifying artifacts</param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for working with time</param>
         /// <param name="executionContext"><see cref="IExecutionContext"/> for working with metadata related to current execution context</param>
         /// <param name="eventMigrationHierarchyManager"><see cref="IEventMigrationHierarchyManager"/> for working with the migration levels of <see cref="IEvent">events</see></param>
         public EventEnvelopes(
-            IApplicationArtifactIdentifierToTypeMaps aaiToTypeMaps, 
+            IApplicationArtifactIdentifierAndTypeMaps aaiToTypeMaps, 
             ISystemClock systemClock, 
             IExecutionContext executionContext, 
             IEventMigrationHierarchyManager eventMigrationHierarchyManager)
@@ -54,9 +54,9 @@ namespace Dolittle.Events.Storage
                 EventSequenceNumber.Zero, 
                 EventSequenceNumber.Zero, 
                 _eventMigrationHierarchyManager.GetCurrentGenerationFor(@event.GetType()),
-                _aaiToTypeMaps.Map(@event),
+                _aaiToTypeMaps.GetIdentifierFor(@event),
                 eventSource.EventSourceId,
-                _aaiToTypeMaps.Map(eventSource),
+                _aaiToTypeMaps.GetIdentifierFor(eventSource),
                 version,
                 _executionContext.Principal.Identity.Name,
                 _systemClock.GetCurrentTime()
