@@ -1,11 +1,9 @@
-﻿using Dolittle.Applications;
-using Dolittle.Runtime.Commands;
-using Dolittle.Runtime.Commands.Coordination;
-using Dolittle.Runtime.Events;
+﻿using Dolittle.Runtime.Commands.Coordination;
 using Dolittle.Runtime.Events.Storage;
 using Dolittle.Logging;
 using Machine.Specifications;
 using Moq;
+using Dolittle.Artifacts;
 
 namespace Dolittle.Domain.for_AggregateRootRepositoryFor.given
 {
@@ -14,7 +12,7 @@ namespace Dolittle.Domain.for_AggregateRootRepositoryFor.given
         protected static Mock<ICommandContextManager> command_context_manager;
         protected static Mock<IEventSourceVersions> event_source_versions;
         protected static Mock<IEventStore> event_store;
-        protected static Mock<IApplicationArtifacts> application_artifacts;
+        protected static Mock<IArtifactTypeMap> artifact_type_map;
         protected static Mock<ILogger> logger;
 
         Establish context = () =>
@@ -22,7 +20,7 @@ namespace Dolittle.Domain.for_AggregateRootRepositoryFor.given
             command_context_manager = new Mock<ICommandContextManager>();
             event_source_versions = new Mock<IEventSourceVersions>();
             event_store = new Mock<IEventStore>();
-            application_artifacts = new Mock<IApplicationArtifacts>();
+            artifact_type_map = new Mock<IArtifactTypeMap>();
             logger = new Mock<ILogger>();
         };
     }

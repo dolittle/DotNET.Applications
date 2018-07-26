@@ -13,34 +13,16 @@ namespace Dolittle.Hosting
     /// </summary>
     public class HostBuilder : IHostBuilder
     {
-        readonly IApplicationBuilder _applicationBuilder;
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="HostBuilder"/>
-        /// </summary>
-        /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/> to use for building <see cref="IApplication"/></param>
-        public HostBuilder(IApplicationBuilder applicationBuilder)
-        {
-            _applicationBuilder = applicationBuilder;
-        }
-
-        /// <inheritdoc/>
-        public IHostBuilder Application(Func<IApplicationBuilder, IApplicationBuilder> callback)
-        {
-            return new HostBuilder(callback(_applicationBuilder));
-        }
-
         /// <inheritdoc/>
         public IHost Build()
         {
-            return new Host(_applicationBuilder.Build());
+            return new Host();
         }
-
 
         /// <inheritdoc/>
         public IHost Build(ILoggerFactory loggerFactory)
         {
-            return new Host(_applicationBuilder.Build(), loggerFactory);
+            return new Host(loggerFactory);
         }
         
     }

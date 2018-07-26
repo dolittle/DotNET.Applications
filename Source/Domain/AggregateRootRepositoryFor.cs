@@ -5,12 +5,12 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Dolittle.Logging;
+using Dolittle.Artifacts;
 using Dolittle.Events;
+using Dolittle.Logging;
+using Dolittle.Runtime.Commands.Coordination;
 using Dolittle.Runtime.Events;
 using Dolittle.Runtime.Events.Storage;
-using Dolittle.Runtime.Commands.Coordination;
-using Dolittle.Applications;
 
 namespace Dolittle.Domain
 {
@@ -18,13 +18,12 @@ namespace Dolittle.Domain
     /// Defines a concrete implementation of <see cref="IAggregateRootRepositoryFor{T}">IAggregatedRootRepository</see>
     /// </summary>
     /// <typeparam name="T">Type the repository is for</typeparam>
-    public class AggregateRootRepositoryFor<T> : IAggregateRootRepositoryFor<T>
-        where T : AggregateRoot
+    public class AggregateRootRepositoryFor<T> : IAggregateRootRepositoryFor<T> where T : AggregateRoot
     {
         ICommandContextManager _commandContextManager;
         IEventStore _eventStore;
         IEventSourceVersions _eventSourceVersions;
-        IApplicationArtifacts _applicationArtifacts;
+        IArtifactTypeMap _artifactTypeMap;
         readonly ILogger _logger;
 
         /// <summary>
@@ -33,24 +32,24 @@ namespace Dolittle.Domain
         /// <param name="commandContextManager"> <see cref="ICommandContextManager"/> to use for tracking </param>
         /// <param name="eventStore"><see cref="IEventStore"/> for getting <see cref="IEvent">events</see></param>
         /// <param name="eventSourceVersions"><see cref="IEventSourceVersions"/> for working with versioning of <see cref="AggregateRoot"/></param>
-        /// <param name="applicationArtifacts"><see cref="IApplicationArtifacts"/> for being able to identify resources</param>
+        /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for being able to identify resources</param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging</param>
         public AggregateRootRepositoryFor(
             ICommandContextManager commandContextManager,
             IEventStore eventStore,
             IEventSourceVersions eventSourceVersions,
-            IApplicationArtifacts applicationArtifacts, 
+            IArtifactTypeMap artifactTypeMap,
             ILogger logger)
         {
             _commandContextManager = commandContextManager;
             _eventStore = eventStore;
             _eventSourceVersions = eventSourceVersions;
-            _applicationArtifacts = applicationArtifacts;
+            _artifactTypeMap = artifactTypeMap;
             _logger = logger;
         }
 
         /// <inheritdoc/>
-		public T Get(EventSourceId id)
+        public T Get(EventSourceId id)
         {
             _logger.Trace($"Get '{typeof(T).AssemblyQualifiedName}' with Id of '{id?.Value.ToString() ?? "<unknown id>"}'");
 
@@ -75,16 +74,16 @@ namespace Dolittle.Domain
         void FastForward(ICommandContext commandContext, T aggregateRoot)
         {
             _logger.Trace($"FastForward - {typeof(T).AssemblyQualifiedName}");
-            var identifier = _applicationArtifacts.Identify(typeof(T));
+            var identifier = _artifactTypeMap.GetArtifactFor(typeof(T));
             _logger.Trace($"With identifier '{identifier?.ToString()??"<unknown identifier>"}'");
-            
+
             var version = _eventSourceVersions.GetFor(identifier, aggregateRoot.EventSourceId);
             aggregateRoot.FastForward(version);
         }
 
         void ReApplyEvents(ICommandContext commandContext, T aggregateRoot)
         {
-            var identifier = _applicationArtifacts.Identify(typeof(T));
+            var identifier = _artifactTypeMap.GetArtifactFor(typeof(T));
             var events = _eventStore.GetFor(identifier, aggregateRoot.EventSourceId);
             var stream = new CommittedEventStream(aggregateRoot.EventSourceId, events);
             if (stream.HasEvents)
@@ -93,7 +92,7 @@ namespace Dolittle.Domain
 
         T GetInstanceFrom(EventSourceId id, ConstructorInfo constructor)
         {
-            return (constructor.GetParameters()[0].ParameterType == typeof(EventSourceId) ?
+            return (constructor.GetParameters() [0].ParameterType == typeof(EventSourceId) ?
                 constructor.Invoke(new object[] { id }) :
                 constructor.Invoke(new object[] { id.Value })) as T;
         }
@@ -105,7 +104,7 @@ namespace Dolittle.Domain
                 var parameters = c.GetParameters();
                 return parameters.Length == 1 &&
                     (parameters[0].ParameterType == typeof(Guid) ||
-                    parameters[0].ParameterType == typeof(EventSourceId));
+                        parameters[0].ParameterType == typeof(EventSourceId));
             }).SingleOrDefault();
         }
 

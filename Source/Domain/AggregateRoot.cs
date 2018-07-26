@@ -19,7 +19,6 @@ namespace Dolittle.Domain
         /// <remarks>
         /// An <see cref="AggregateRoot"/> is a type of <see cref="IEventSource"/>
         /// </remarks>
-        protected AggregateRoot(EventSourceId id) : base(id)
-        {}
+        protected AggregateRoot(EventSourceId id) : base(id) { }
     }
 }

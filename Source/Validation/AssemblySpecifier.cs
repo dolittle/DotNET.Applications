@@ -13,13 +13,12 @@ namespace Dolittle.Validation
     /// </summary>
     public class AssemblySpecifier : ICanSpecifyAssemblies
     {
-#pragma warning disable 1591 // Xml Comments
+        /// <inheritdoc/>
         public void Specify(IAssemblyRuleBuilder builder)
         {
             builder.ExcludeAssembliesStartingWith(
                 "FluentValidation"
             );
         }
-#pragma warning disable 1591 // Xml Comments
     }
 }

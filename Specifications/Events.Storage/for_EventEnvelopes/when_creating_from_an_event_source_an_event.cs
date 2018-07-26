@@ -2,11 +2,11 @@
 using System.Security.Claims;
 using System.Security.Principal;
 using Dolittle.Applications;
+using Dolittle.Events;
 using Dolittle.Runtime.Transactions;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
-using Dolittle.Events;
 
 namespace Dolittle.Runtime.Events.Storage.for_EventEnvelopes
 {
@@ -49,19 +49,21 @@ namespace Dolittle.Runtime.Events.Storage.for_EventEnvelopes
             var application = new Mock<IApplication>();
             application.SetupGet(a => a.Name).Returns("Some Application");
             var segment = new Mock<IApplicationLocation>();
-            segment.SetupGet(a => a.Name).Returns((BoundedContextName)"Some Context");
+            segment.SetupGet(a => a.Name).Returns((BoundedContextName)
+                "Some Context");
             var resource = new Mock<IApplicationResource>();
             resource.SetupGet(r => r.Name).Returns("Some Resource");
 
             event_resource_identifier = new ApplicationResourceIdentifier(
-                application.Object, 
-                new IApplicationLocation[] { segment.Object }, 
+                application.Object,
+                new IApplicationLocation[] { segment.Object },
                 resource.Object);
 
             application_resources.Setup(a => a.Identify(@event.Object)).Returns(event_resource_identifier);
 
             segment = new Mock<IApplicationLocation>();
-            segment.SetupGet(a => a.Name).Returns((BoundedContextName)"Some Other Context");
+            segment.SetupGet(a => a.Name).Returns((BoundedContextName)
+                "Some Other Context");
             resource = new Mock<IApplicationResource>();
             resource.SetupGet(r => r.Name).Returns("Some Other Resource");
             event_source_resource_identifier = new ApplicationResourceIdentifier(

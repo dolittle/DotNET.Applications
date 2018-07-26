@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>Dolittle.SDK.Artifacts.Configuration</AssemblyName>
+    </PropertyGroup>
+    <Import Project="../../Build/MSBuild/default.props" />
+
+    <ItemGroup>
+        <PackageReference Include="Dolittle.Applications" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Artifacts" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Strings" Version="2.0.0-*" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Artifacts\Artifacts.csproj" />
+    </ItemGroup>
+
+</Project>
+
