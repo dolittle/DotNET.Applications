@@ -22,7 +22,19 @@ namespace Dolittle.SDK.Artifacts.Build
         /// <inheritdoc/>
         public override bool Execute()
         {
-            System.Console.WriteLine($"Consolidate for : {AssemblyFile.ItemSpec}");
+            //while( !System.Diagnostics.Debugger.IsAttached);
+            /*
+                - Read ../artifacts.json
+                - Read ../bounded-context.json
+                - Read ../topology.json
+
+                - Look for new artifacts by finding the ones not in structure
+                - New artifacts - add according to topology
+             */
+
+             Log.LogMessage(MessageImportance.High, $"Consolidate for : {AssemblyFile.ItemSpec}");
+
+            //System.Console.WriteLine($"Consolidate for : {AssemblyFile.ItemSpec}");
             return true;
         }
     }

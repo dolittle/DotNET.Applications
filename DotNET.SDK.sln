@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Applications.Configuration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artifacts.Build", "Source\Artifacts.Build\Artifacts.Build.csproj", "{F044E7F5-FC35-4CA6-A446-BFEE40A7D450}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDK", "AggregatedPackage\SDK.csproj", "{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -356,6 +358,18 @@ Global
 		{F044E7F5-FC35-4CA6-A446-BFEE40A7D450}.Release|x64.Build.0 = Release|Any CPU
 		{F044E7F5-FC35-4CA6-A446-BFEE40A7D450}.Release|x86.ActiveCfg = Release|Any CPU
 		{F044E7F5-FC35-4CA6-A446-BFEE40A7D450}.Release|x86.Build.0 = Release|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Debug|x64.Build.0 = Debug|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Debug|x86.Build.0 = Debug|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Release|x64.ActiveCfg = Release|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Release|x64.Build.0 = Release|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Release|x86.ActiveCfg = Release|Any CPU
+		{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8B5901C9-AA6A-4F12-95AC-1E77B4BD1EB3} = {0C821C01-43A8-4161-9C4C-568595210266}
