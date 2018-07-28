@@ -1,0 +1,5 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Target Name="ArtifactsAfterBuild" AfterTargets="AfterBuild">
+        <ConsolidateArtifacts AssemblyFile="$(OutputPath)\$(AssemblyName).dll" />  
+    </Target>   
+</Project>  

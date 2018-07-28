@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../Build/MSBuild/default.props" />
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>DolittleArtifactsBuild</AssemblyName>
+
+        <NoPackageAnalysis>true</NoPackageAnalysis>
+        <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Build.Framework" Version="15.3.409" />
+        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.3.409" />
+        <PackageReference Update="@(PackageReference)" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="DolittleArtifactsBuild.props" PackagePath="build\" />
+        <Content Include="DolittleArtifactsBuild.targets" PackagePath="build\" />
+    </ItemGroup>
+</Project>
