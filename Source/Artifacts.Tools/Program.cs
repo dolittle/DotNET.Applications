@@ -11,6 +11,8 @@ using Dolittle.Collections;
 using Dolittle.Commands;
 using Dolittle.Events;
 using Dolittle.Events.Processing;
+using Dolittle.Queries;
+using Dolittle.ReadModels;
 using Dolittle.Reflection;
 using Dolittle.Serialization.Json;
 using Dolittle.Types;
@@ -64,8 +66,12 @@ namespace Dolittle.Artifacts.Tools
                 newArtifacts += HandleArtifactOfType<IEvent>(artifactsConfiguration, features, types, "event", a => a.Events);
                 newArtifacts += HandleArtifactOfType<ICanProcessEvents>(artifactsConfiguration, features, types, "event processor", a => a.EventProcessors);
                 newArtifacts += HandleArtifactOfType<IEventSource>(artifactsConfiguration, features, types, "event source", a => a.EventSources);
+                newArtifacts += HandleArtifactOfType<IReadModel>(artifactsConfiguration, features, types, "read model", a => a.ReadModels);
+                newArtifacts += HandleArtifactOfType<IQuery>(artifactsConfiguration, features, types, "query", a => a.Queries);
 
-                _artifactsConfigurationManager.Save(artifactsConfiguration);
+                var hasChanges = newArtifacts > 0;
+                
+                if( hasChanges ) _artifactsConfigurationManager.Save(artifactsConfiguration);
 
                 var endTime = DateTime.UtcNow;
                 var deltaTime = endTime.Subtract(startTime);
@@ -87,7 +93,7 @@ namespace Dolittle.Artifacts.Tools
             var targetProperty = targetPropertyExpression.GetPropertyInfo();
 
             var newArtifacts = 0;
-            var commands = types.Where(_ => typeof(ICommand).IsAssignableFrom(_));
+            var commands = types.Where(_ => typeof(T).IsAssignableFrom(_));
             commands.ForEach(command =>
             {
                 var featureName = command.Namespace.Split(".").Last();
@@ -105,14 +111,14 @@ namespace Dolittle.Artifacts.Tools
                     }
 
                     var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
-                    if (!existingArtifacts.Any(_ => _.Type == command))
+                    if (!existingArtifacts.Any(_ => _.Type.GetActualType() == command))
                     {
                         var artifacts = new List<ArtifactDefinition>(existingArtifacts);
                         var artifactDefinition = new ArtifactDefinition
                         {
                             Artifact = ArtifactId.New(),
                             Generation = ArtifactGeneration.First,
-                            Type = command
+                            Type = ClrType.FromType(command)
                         };
                         Console.WriteLine($"Adding '{command.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
                         artifacts.Add(artifactDefinition);

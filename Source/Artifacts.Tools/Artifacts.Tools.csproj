@@ -19,5 +19,7 @@
         <ProjectReference Include="..\Commands.Validation\Commands.Validation.csproj" />
         <ProjectReference Include="..\Events\Events.csproj" />
         <ProjectReference Include="..\Events.Processing\Events.Processing.csproj" />
+        <ProjectReference Include="..\ReadModels\ReadModels.csproj" />
+        <ProjectReference Include="..\Queries\Queries.csproj" />
     </ItemGroup>
 </Project>
