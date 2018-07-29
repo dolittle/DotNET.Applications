@@ -16,7 +16,6 @@ namespace Dolittle.Applications
     {
         readonly IEnumerable<IStringFormat> _structureFormats;
 
-
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationStructureMapBuilder"/>
         /// </summary>

@@ -13,7 +13,10 @@ namespace Dolittle.Configuration
     /// </summary>
     public class JsonFile
     {
-        const string DolittleJson = "dolittle.json";
+        /// <summary>
+        /// The filename of the dolittle configuration file
+        /// </summary>
+        public static string DolittleJsonFileName = "dolittle.json";
 
         /// <summary>
         /// 
@@ -21,9 +24,9 @@ namespace Dolittle.Configuration
         /// <returns></returns>
         public static Config  GetConfig()
         {
-            if( !File.Exists(DolittleJson) ) return new Config();
+            if( !File.Exists(DolittleJsonFileName) ) return new Config();
 
-            var json = File.ReadAllText(DolittleJson);
+            var json = File.ReadAllText(DolittleJsonFileName);
             
             var config = JsonConvert.DeserializeObject(json, typeof(Config), new ConceptConverter()) as Config;
             return config;
