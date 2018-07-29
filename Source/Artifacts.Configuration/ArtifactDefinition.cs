@@ -7,7 +7,7 @@ using System;
 namespace Dolittle.Artifacts.Configuration
 {
     /// <summary>
-    /// Represents the definition of an artifact
+    /// Represents the definition of an artifact for configuration
     /// </summary>
     public class ArtifactDefinition
     {
