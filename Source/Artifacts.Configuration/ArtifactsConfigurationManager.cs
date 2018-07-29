@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.IO;
+using System.Runtime.Serialization.Formatters;
 using Dolittle.Concepts.Serialization.Json;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
@@ -34,7 +35,20 @@ namespace Dolittle.Artifacts.Configuration
             if( !File.Exists(path)) return new ArtifactsConfiguration();
 
             var json = File.ReadAllText(path);
-            var configuration = _serializer.FromJson<ArtifactsConfiguration>(json);
+
+            var serializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                Formatting = Formatting.Indented,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+            };
+            serializerSettings.Converters.Add(new TypeConverter());
+            serializerSettings.Converters.Add(new ConceptConverter());
+            serializerSettings.Converters.Add(new ConceptDictionaryConverter());
+
+            var configuration = JsonConvert.DeserializeObject<ArtifactsConfiguration>(json, serializerSettings);
+
+            //var configuration = _serializer.FromJson<ArtifactsConfiguration>(json);
             return configuration;
         }
 
@@ -45,8 +59,11 @@ namespace Dolittle.Artifacts.Configuration
 
             var serializerSettings = new JsonSerializerSettings
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                Formatting = Formatting.Indented,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
             };
+            serializerSettings.Converters.Add(new TypeConverter());
             serializerSettings.Converters.Add(new ConceptConverter());
 
             var json = JsonConvert.SerializeObject(configuration, serializerSettings);
