@@ -56,9 +56,24 @@ namespace Dolittle.Artifacts.Tools
 
                 var features = new List<FeatureDefinition>(boundedContextConfiguration.Topology.Features);
                 features.AddRange(boundedContextConfiguration.Topology.Modules.SelectMany(module => module.Features));
-
                 
-                // Find new features and add them to the topology
+
+                // Todo: 
+                // - Look for new features and add them to the topology. Base it off of the namespace by convention:
+                //   First segment of the namespace is the concern or tier segment and will be ignored, last segment is the feature name
+                //   Feature is required - no root level artifacts supported
+                //
+                //   When modules are set to "useModules=true", we use the second segment as the module
+                //   All segments after module when enabled, or after the tier segment is a feature and every segment represents a child of the previous
+                //   feature
+                //
+                // - Add support for warnings - when the console spits out a string with prefix "warning:" - the MSBuild task should output it as warning in the logger
+                //
+                // - When an artifact is no longer in the structure, we should display a warning saying it should be removed and a migrator might be necessary
+                //   Migrator is only necessary if the solution is already in production or running in dev/stage with the structure
+
+
+
                 var types = assembly.ExportedTypes;
                 var newArtifacts =0;
                 
