@@ -9,7 +9,7 @@ namespace Dolittle.Applications.Configuration
     /// <summary>
     /// Represents the topology of an <see cref="Application">application</see> and the current <see cref="BoundedContext">bounded context</see>
     /// </summary>
-    public class Topology
+    public class TopologyConfiguration
     {
         /// <summary>
         /// Gets or sets a <see cref="IEnumerable{ModuleDefinition}">collection</see> of <see cref="ModuleDefinition"/>
