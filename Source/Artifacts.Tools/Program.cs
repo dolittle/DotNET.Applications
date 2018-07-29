@@ -56,7 +56,6 @@ namespace Dolittle.Artifacts.Tools
 
                 var features = new List<FeatureDefinition>(boundedContextConfiguration.Topology.Features);
                 features.AddRange(boundedContextConfiguration.Topology.Modules.SelectMany(module => module.Features));
-                
 
                 // Todo: 
                 // - Look for new features and add them to the topology. Base it off of the namespace by convention:
@@ -71,8 +70,10 @@ namespace Dolittle.Artifacts.Tools
                 //
                 // - When an artifact is no longer in the structure, we should display a warning saying it should be removed and a migrator might be necessary
                 //   Migrator is only necessary if the solution is already in production or running in dev/stage with the structure
-
-
+                //
+                // - Consider having an option that can be passed in to say a base namespace. E.g. for Web projects (see Sentry) - we tend to have Features/ root folder.
+                //   This configuration should then be optional and default set to empty. The MSBuild task should expose a variable that can be set in a <PropertyGroup/>
+                //   The base namespace would be from the second segment - after tier segment
 
                 var types = assembly.ExportedTypes;
                 var newArtifacts =0;
