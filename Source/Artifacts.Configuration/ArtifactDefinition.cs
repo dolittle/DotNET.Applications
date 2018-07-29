@@ -14,16 +14,16 @@ namespace Dolittle.Artifacts.Configuration
         /// <summary>
         /// Gets or sets the <see cref="ArtifactId">unique artifact identifier</see>
         /// </summary>
-        public ArtifactId Artifact { get; set; }
+        public ArtifactId Artifact {  get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="ArtifactGeneration">generation number</see> for the artifact
         /// </summary>
-        public ArtifactGeneration   Generation { get; set; }
+        public ArtifactGeneration Generation {  get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Type"/> represented by the artifact
+        /// Gets or sets the <see cref="ClrType"/> represented by the artifact
         /// </summary>
-        public Type Type { get; set; }
+        public ClrType Type {  get; set; }
     }
 }

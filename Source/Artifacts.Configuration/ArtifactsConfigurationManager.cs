@@ -42,7 +42,7 @@ namespace Dolittle.Artifacts.Configuration
                 Formatting = Formatting.Indented,
                 TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
             };
-            serializerSettings.Converters.Add(new TypeConverter());
+            serializerSettings.Converters.Add(new ClrTypeConverter());
             serializerSettings.Converters.Add(new ConceptConverter());
             serializerSettings.Converters.Add(new ConceptDictionaryConverter());
 
@@ -63,7 +63,7 @@ namespace Dolittle.Artifacts.Configuration
                 Formatting = Formatting.Indented,
                 TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
             };
-            serializerSettings.Converters.Add(new TypeConverter());
+            serializerSettings.Converters.Add(new ClrTypeConverter());
             serializerSettings.Converters.Add(new ConceptConverter());
 
             var json = JsonConvert.SerializeObject(configuration, serializerSettings);

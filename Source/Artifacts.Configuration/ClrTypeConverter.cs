@@ -10,27 +10,27 @@ namespace Dolittle.Artifacts.Configuration
     /// <summary>
     /// Represents a <see cref="JsonConverter"/> for dealing with serialization of <see cref="Type"/>
     /// </summary>
-    public class TypeConverter : JsonConverter
+    public class ClrTypeConverter : JsonConverter
     {
         /// <inheritdoc/>
         public override bool CanConvert(Type objectType)
         {
-            return typeof(Type).IsAssignableFrom(objectType);
+            return typeof(ClrType).IsAssignableFrom(objectType);
         }
 
         /// <inheritdoc/>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var typeName = reader.Value.ToString();
-            return Type.GetType(typeName);
+            var clrType = new ClrType { TypeString = typeName };
+            return clrType;
         }
 
         /// <inheritdoc/>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var type = (Type)value;
-            var name = $"{type.FullName}, {type.Assembly.GetName().Name}";
-            writer.WriteValue(name);
+            var type = (ClrType)value;
+            writer.WriteValue(type.TypeString);
         }
     }
 }
