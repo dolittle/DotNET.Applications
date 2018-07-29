@@ -31,5 +31,15 @@ namespace Dolittle.Artifacts.Configuration
         /// Gets or sets the EventSource artifacts
         /// </summary>
         public IEnumerable<ArtifactDefinition> EventSources {  get; set; } = new ArtifactDefinition[0];
+
+        /// <summary>
+        /// Gets or sets the ReadModels artifacts
+        /// </summary>
+        public IEnumerable<ArtifactDefinition> ReadModels {  get; set; } = new ArtifactDefinition[0];
+
+        /// <summary>
+        /// Gets or sets the Queries artifacts
+        /// </summary>
+        public IEnumerable<ArtifactDefinition> Queries {  get; set; } = new ArtifactDefinition[0];
     }
 }
