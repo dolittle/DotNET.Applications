@@ -17,7 +17,7 @@ namespace Dolittle.Applications
     public class ApplicationStructureMap : IApplicationStructureMap
     {
         readonly IApplication _application;
-                readonly IEnumerable<IStringFormat> _formats;
+        readonly IEnumerable<IStringFormat> _formats;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationStructureMap"/>
@@ -61,14 +61,6 @@ namespace Dolittle.Applications
         void ThrowIfNoMatchingStructure(IEnumerable<Type> types, Type matchedType)
         {
             if (matchedType == null) throw new NoMatchingStructure(types);
-        }
-
-        void ThrowIfAmbiguousTypes(IApplicationArtifactIdentifier identifier, IEnumerable<Type> typesMatchingName)
-        {
-            if (typesMatchingName.Count() > 1) 
-            {
-                throw new AmbiguousTypes(identifier);
-            }
         }
     }
 }

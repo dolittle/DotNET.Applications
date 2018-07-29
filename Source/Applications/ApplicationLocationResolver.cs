@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Dolittle.Artifacts;
 using Dolittle.Collections;
+using Dolittle.Execution;
 using Dolittle.Strings;
 
 namespace Dolittle.Applications
@@ -15,6 +16,7 @@ namespace Dolittle.Applications
     /// <summary>
     /// Represents an implementation of <see cref="IApplicationLocationResolver"/>
     /// </summary>
+    [Singleton]
     public class ApplicationLocationResolver : IApplicationLocationResolver
     {
         /// <summary>
@@ -76,7 +78,6 @@ namespace Dolittle.Applications
             
             throw new UnableToResolveApplicationLocationForType(type);
         }
-
 
         IEnumerable<IApplicationLocationSegment> GetLocationSegmentsFrom(ISegmentMatches match)
         {
