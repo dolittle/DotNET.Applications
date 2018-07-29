@@ -14,45 +14,44 @@ using Microsoft.Extensions.DependencyModel.Resolution;
 namespace Dolittle.Artifacts.Tools
 {
     /// <summary>
-    /// 
-    /// From: https://www.codeproject.com/Articles/1194332/Resolving-Assemblies-in-NET-Core
+    /// Represents a system that is capable of loading assemblies out of current <see cref="AssemblyLoadContext"/>
+    /// Based on : https://www.codeproject.com/Articles/1194332/Resolving-Assemblies-in-NET-Core
     /// </summary>
-    public class AssemblyResolver : IDisposable
+    public class AssemblyLoader : IDisposable
     {
-        private readonly ICompilationAssemblyResolver assemblyResolver;
-        private readonly DependencyContext dependencyContext;
-        private readonly AssemblyLoadContext loadContext;
+        readonly ICompilationAssemblyResolver _assemblyResolver;
+        readonly DependencyContext _dependencyContext;
+        readonly AssemblyLoadContext _loadContext;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of <see cref="AssemblyLoader"/>
         /// </summary>
-        /// <param name="path"></param>
-        public AssemblyResolver(string path)
+        /// <param name="path">Path to the <see cref="Assembly"/> to load</param>
+        public AssemblyLoader(string path)
         {
-            this.Assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
-            this.dependencyContext = DependencyContext.Load(this.Assembly);
+            Assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+            _dependencyContext = DependencyContext.Load(Assembly);
 
-            this.assemblyResolver = new CompositeCompilationAssemblyResolver(new ICompilationAssemblyResolver[]
+            _assemblyResolver = new CompositeCompilationAssemblyResolver(new ICompilationAssemblyResolver[]
             {
                 new AppBaseCompilationAssemblyResolver(Path.GetDirectoryName(path)),
                     new ReferenceAssemblyPathResolver(),
                     new PackageCompilationAssemblyResolver()
             });
 
-            this.loadContext = AssemblyLoadContext.GetLoadContext(this.Assembly);
-            this.loadContext.Resolving += OnResolving;
+            _loadContext = AssemblyLoadContext.GetLoadContext(Assembly);
+            _loadContext.Resolving += OnResolving;
         }
 
         /// <summary>
-        /// 
+        /// Gets the loaded root assembly
         /// </summary>
-        /// <value></value>
         public Assembly Assembly { get; }
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            this.loadContext.Resolving -= this.OnResolving;
+            _loadContext.Resolving -= OnResolving;
         }
 
         Assembly OnResolving(AssemblyLoadContext context, AssemblyName name)
@@ -63,7 +62,7 @@ namespace Dolittle.Artifacts.Tools
             }
 
             RuntimeLibrary library =
-                this.dependencyContext.RuntimeLibraries.FirstOrDefault(NamesMatch);
+                _dependencyContext.RuntimeLibraries.FirstOrDefault(NamesMatch);
             if (library != null)
             {
                 var wrapper = new CompilationLibrary(
@@ -76,10 +75,10 @@ namespace Dolittle.Artifacts.Tools
                     library.Serviceable);
 
                 var assemblies = new List<string>();
-                this.assemblyResolver.TryResolveAssemblyPaths(wrapper, assemblies);
+                _assemblyResolver.TryResolveAssemblyPaths(wrapper, assemblies);
                 if (assemblies.Count > 0)
                 {
-                    return this.loadContext.LoadFromAssemblyPath(assemblies[0]);
+                    return _loadContext.LoadFromAssemblyPath(assemblies[0]);
                 }
             }
 

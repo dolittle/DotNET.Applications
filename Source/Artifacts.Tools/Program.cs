@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Loader;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Collections;
 using Dolittle.Commands;
+using Dolittle.Events;
+using Dolittle.Events.Processing;
+using Dolittle.Reflection;
 using Dolittle.Serialization.Json;
 using Dolittle.Types;
 
@@ -31,7 +35,7 @@ namespace Dolittle.Artifacts.Tools
                 var startTime = DateTime.UtcNow;
 
                 var container = new ActivatorContainer();
-                var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new []
+                var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new[]
                 {
                     new Dolittle.Concepts.Serialization.Json.ConverterProvider()
                 });
@@ -42,12 +46,8 @@ namespace Dolittle.Artifacts.Tools
 
                 //while (!System.Diagnostics.Debugger.IsAttached);
 
-                var resolver = new AssemblyResolver(args[0]);
+                var resolver = new AssemblyLoader(args[0]);
                 var assembly = resolver.Assembly;
-
-                //var assemblyName = AssemblyLoadContext.GetAssemblyName(args[0]);
-                //var assembly = Assembly.LoadFrom(args[0]);
-                //var assembly = Assembly.Load(assemblyName);
 
                 var boundedContextConfiguration = _boundedContextConfigurationManager.Load();
                 var artifactsConfiguration = _artifactsConfigurationManager.Load();
@@ -55,46 +55,15 @@ namespace Dolittle.Artifacts.Tools
                 var features = new List<FeatureDefinition>(boundedContextConfiguration.Topology.Features);
                 features.AddRange(boundedContextConfiguration.Topology.Modules.SelectMany(module => module.Features));
 
-                var newArtifacts = 0;
+                
                 // Find new features and add them to the topology
-
                 var types = assembly.ExportedTypes;
-                //var types = assembly.GetExportedTypes();
-                var commands = types.Where(_ => typeof(ICommand).IsAssignableFrom(_));
-                commands.ForEach(command =>
-                {
-                    var featureName = command.Namespace.Split(".").Last();
-                    var feature = features.SingleOrDefault(_ => _.Name == featureName);
-                    if (feature != null)
-                    {
-                        ArtifactsByTypeDefinition artifactsByTypeDefinition;
-
-                        if (artifactsConfiguration.Artifacts.ContainsKey(feature.Feature))
-                            artifactsByTypeDefinition = artifactsConfiguration.Artifacts[feature.Feature];
-                        else
-                        {
-                            artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
-                            artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
-                        }
-
-                        if (!artifactsByTypeDefinition.Commands.Any(_ => _.Type == command))
-                        {
-                            var artifacts = new List<ArtifactDefinition>(artifactsByTypeDefinition.Commands);
-                            var artifactDefinition = new ArtifactDefinition
-                            {
-                                Artifact = ArtifactId.New(),
-                                Generation = ArtifactGeneration.First,
-                                Type = command
-                            };
-                            Console.WriteLine($"Adding '{command.Name}' as a new command artifact with identifier '{artifactDefinition.Artifact}'");
-                            artifacts.Add(artifactDefinition);
-
-                            newArtifacts++;
-
-                            artifactsByTypeDefinition.Commands = artifacts;
-                        }
-                    }
-                });
+                var newArtifacts =0;
+                
+                newArtifacts += HandleArtifactOfType<ICommand>(artifactsConfiguration, features, types, "command", a => a.Commands);
+                newArtifacts += HandleArtifactOfType<IEvent>(artifactsConfiguration, features, types, "event", a => a.Events);
+                newArtifacts += HandleArtifactOfType<ICanProcessEvents>(artifactsConfiguration, features, types, "event processor", a => a.EventProcessors);
+                newArtifacts += HandleArtifactOfType<IEventSource>(artifactsConfiguration, features, types, "event source", a => a.EventSources);
 
                 _artifactsConfigurationManager.Save(artifactsConfiguration);
 
@@ -111,6 +80,50 @@ namespace Dolittle.Artifacts.Tools
             }
 
             return 0;
+        }
+
+        static int HandleArtifactOfType<T>(ArtifactsConfiguration artifactsConfiguration, List<FeatureDefinition> features, IEnumerable<Type> types, string typeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>>> targetPropertyExpression)
+        {
+            var targetProperty = targetPropertyExpression.GetPropertyInfo();
+
+            var newArtifacts = 0;
+            var commands = types.Where(_ => typeof(ICommand).IsAssignableFrom(_));
+            commands.ForEach(command =>
+            {
+                var featureName = command.Namespace.Split(".").Last();
+                var feature = features.SingleOrDefault(_ => _.Name == featureName);
+                if (feature != null)
+                {
+                    ArtifactsByTypeDefinition artifactsByTypeDefinition;
+
+                    if (artifactsConfiguration.Artifacts.ContainsKey(feature.Feature))
+                        artifactsByTypeDefinition = artifactsConfiguration.Artifacts[feature.Feature];
+                    else
+                    {
+                        artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
+                        artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
+                    }
+
+                    var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
+                    if (!existingArtifacts.Any(_ => _.Type == command))
+                    {
+                        var artifacts = new List<ArtifactDefinition>(existingArtifacts);
+                        var artifactDefinition = new ArtifactDefinition
+                        {
+                            Artifact = ArtifactId.New(),
+                            Generation = ArtifactGeneration.First,
+                            Type = command
+                        };
+                        Console.WriteLine($"Adding '{command.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
+                        artifacts.Add(artifactDefinition);
+
+                        newArtifacts++;
+
+                        targetProperty.SetValue(artifactsByTypeDefinition, artifacts);
+                    }
+                }
+            });
+            return newArtifacts;
         }
     }
 }
