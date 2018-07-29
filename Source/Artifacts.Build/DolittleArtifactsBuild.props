@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" TreatAsLocalProperty="TaskFolder;TaskAssembly">
     <PropertyGroup>
-        <TaskFolder>netstandard2.0</TaskFolder>
+        <TaskFolder>netcoreapp2.1</TaskFolder>
         <TaskAssembly>$(MSBuildThisFileDirectory)..\tasks\$(TaskFolder)\DolittleArtifactsBuild.dll</TaskAssembly>
     </PropertyGroup>
 
