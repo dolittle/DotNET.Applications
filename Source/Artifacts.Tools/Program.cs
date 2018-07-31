@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -73,6 +77,7 @@ namespace Dolittle.Artifacts.Tools
                 //
                 // - Validation of structure
                 //   Types that are artifacts sitting on a Module should not be allowed - we should either warn or flatout error about these
+                //   Look for duplicates on Id of features and modules - fail if duplicates
                 //   
 
                 var artifactTypes = new []
