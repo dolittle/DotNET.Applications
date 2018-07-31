@@ -100,7 +100,7 @@ namespace Dolittle.Artifacts.Tools
 
                 var newArtifacts = 0;
 
-                while(!System.Diagnostics.Debugger.IsAttached);
+                //while(!System.Diagnostics.Debugger.IsAttached);
 
                 var artifactPaths = new List<string>();
                 if( boundedContextConfiguration.UseModules ) 
@@ -168,9 +168,9 @@ namespace Dolittle.Artifacts.Tools
 
             var newArtifacts = 0;
             var artifacts = types.Where(_ => artifactType.IsAssignableFrom(_));
-            artifacts.ForEach(command =>
+            artifacts.ForEach(artifact =>
             {
-                var featureName = command.Namespace.Split(".").Last();
+                var featureName = artifact.Namespace.Split(".").Last();
                 var feature = features.SingleOrDefault(_ => _.Name == featureName);
                 if (feature != null)
                 {
@@ -185,16 +185,16 @@ namespace Dolittle.Artifacts.Tools
                     }
 
                     var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
-                    if (!existingArtifacts.Any(_ => _.Type.GetActualType() == command))
+                    if (!existingArtifacts.Any(_ => _.Type.GetActualType() == artifact))
                     {
                         var newAndExistingArtifacts = new List<ArtifactDefinition>(existingArtifacts);
                         var artifactDefinition = new ArtifactDefinition
                         {
                             Artifact = ArtifactId.New(),
                             Generation = ArtifactGeneration.First,
-                            Type = ClrType.FromType(command)
+                            Type = ClrType.FromType(artifact)
                         };
-                        Console.WriteLine($"Adding '{command.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
+                        Console.WriteLine($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
                         newAndExistingArtifacts.Add(artifactDefinition);
 
                         newArtifacts++;
