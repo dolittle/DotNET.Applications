@@ -23,7 +23,7 @@ namespace Dolittle.Applications.Configuration
         /// <summary>
         /// Gets or sets whether or not one is using <see cref="Module">modules</see>
         /// </summary>
-        public bool UsesModules { get; set; }
+        public bool UseModules { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="TopologyConfiguration"/> for the <see cref="BoundedContext"/>

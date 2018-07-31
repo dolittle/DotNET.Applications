@@ -25,6 +25,6 @@ namespace Dolittle.Applications.Configuration
         /// Gets or sets the <see cref="IEnumerable{FeatureDefinition}">collection of child</see> <see cref="FeatureDefinition">features</see>
         /// </summary>
         /// <value></value>
-        public IEnumerable<FeatureDefinition>   SubFeatures { get; set; }
+        public IEnumerable<FeatureDefinition>   SubFeatures { get; set; } = new FeatureDefinition[0];
     }
 }
