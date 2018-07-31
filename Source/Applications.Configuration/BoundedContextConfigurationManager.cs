@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.IO;
+using Dolittle.Execution;
 using Dolittle.Serialization.Json;
 
 namespace Dolittle.Applications.Configuration
@@ -10,10 +11,12 @@ namespace Dolittle.Applications.Configuration
     /// <summary>
     /// Represents an implementation of <see cref="IBoundedContextConfigurationManager"/>
     /// </summary>
+    [Singleton]
     public class BoundedContextConfigurationManager : IBoundedContextConfigurationManager
     {
         const string _path   = "../bounded-context.json";
         readonly ISerializer _serializer;
+        BoundedContextConfiguration _current;
 
         /// <summary>
         /// Initializes a new instance of <see cref="BoundedContextConfigurationManager"/>
@@ -22,6 +25,16 @@ namespace Dolittle.Applications.Configuration
         public BoundedContextConfigurationManager(ISerializer serializer)
         {
             _serializer = serializer;
+        }
+
+        /// <inheritdoc/>
+        public BoundedContextConfiguration Current 
+        { 
+            get
+            {
+                if( _current == null ) _current = Load();
+                return _current;
+            }
         }
 
         /// <inheritdoc/>

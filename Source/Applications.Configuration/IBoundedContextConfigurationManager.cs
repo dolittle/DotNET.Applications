@@ -10,6 +10,11 @@ namespace Dolittle.Applications.Configuration
     public interface IBoundedContextConfigurationManager 
     {
         /// <summary>
+        /// Gets the currently loaded <see cref="BoundedContextConfiguration"/>
+        /// </summary>
+        BoundedContextConfiguration Current { get; }
+
+        /// <summary>
         /// Load <see cref="BoundedContextConfiguration"/>
         /// </summary>
         /// <returns>The loaded <see cref="BoundedContextConfiguration"/></returns>
