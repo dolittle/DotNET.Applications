@@ -5,6 +5,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters;
 using Dolittle.Concepts.Serialization.Json;
+using Dolittle.Execution;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -14,6 +15,7 @@ namespace Dolittle.Artifacts.Configuration
     /// <summary>
     /// Represents an implementation of <see cref="IArtifactsConfigurationManager"/>
     /// </summary>
+    [Singleton]
     public class ArtifactsConfigurationManager : IArtifactsConfigurationManager
     {
         const string _path   = "../artifacts.json";
