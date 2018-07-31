@@ -83,11 +83,11 @@ namespace Dolittle.Artifacts.Tools
                 var artifactTypes = new []
                 {
                     new ArtifactType { Type = typeof(ICommand), TypeName = "command", TargetPropertyExpression = a => a.Commands },
-                    new ArtifactType { Type = typeof(IEvent), TypeName = "event", TargetPropertyExpression = a => a.Commands },
-                    new ArtifactType { Type = typeof(ICanProcessEvents), TypeName = "event processor", TargetPropertyExpression = a => a.Commands },
-                    new ArtifactType { Type = typeof(IEventSource), TypeName = "event source", TargetPropertyExpression = a => a.Commands },
-                    new ArtifactType { Type = typeof(IReadModel), TypeName = "read model", TargetPropertyExpression = a => a.Commands },
-                    new ArtifactType { Type = typeof(IQuery), TypeName = "query", TargetPropertyExpression = a => a.Commands }
+                    new ArtifactType { Type = typeof(IEvent), TypeName = "event", TargetPropertyExpression = a => a.Events },
+                    new ArtifactType { Type = typeof(ICanProcessEvents), TypeName = "event processor", TargetPropertyExpression = a => a.EventProcessors },
+                    new ArtifactType { Type = typeof(IEventSource), TypeName = "event source", TargetPropertyExpression = a => a.EventSources },
+                    new ArtifactType { Type = typeof(IReadModel), TypeName = "read model", TargetPropertyExpression = a => a.ReadModels },
+                    new ArtifactType { Type = typeof(IQuery), TypeName = "query", TargetPropertyExpression = a => a.Queries }
                 };
 
                 var types = assemblyLoader
