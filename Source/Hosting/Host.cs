@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Threading;
 using Dolittle.Assemblies;
+using Dolittle.Bootstrapping;
 using Dolittle.DependencyInversion;
 using Dolittle.Logging;
 using Microsoft.Extensions.Logging;
@@ -36,6 +37,8 @@ namespace Dolittle.Hosting
 
             var result = Dolittle.DependencyInversion.Bootstrap.Boot.Start(assemblies, typeFinder, logger, bindings);
             Container = result.Container;
+
+            Bootstrapper.Start(Container);
         }
 
         /// <inheritdoc/>
