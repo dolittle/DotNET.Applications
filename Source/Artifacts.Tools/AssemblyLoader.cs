@@ -20,8 +20,6 @@ namespace Dolittle.Artifacts.Tools
     public class AssemblyLoader : IDisposable
     {
         readonly ICompilationAssemblyResolver _assemblyResolver;
-        readonly DependencyContext _dependencyContext;
-        readonly AssemblyLoadContext _loadContext;
 
         /// <summary>
         /// Initializes a new instance of <see cref="AssemblyLoader"/>
@@ -30,7 +28,7 @@ namespace Dolittle.Artifacts.Tools
         public AssemblyLoader(string path)
         {
             Assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
-            _dependencyContext = DependencyContext.Load(Assembly);
+            this.DependencyContext = DependencyContext.Load(Assembly);
 
             _assemblyResolver = new CompositeCompilationAssemblyResolver(new ICompilationAssemblyResolver[]
             {
@@ -39,8 +37,8 @@ namespace Dolittle.Artifacts.Tools
                     new PackageCompilationAssemblyResolver()
             });
 
-            _loadContext = AssemblyLoadContext.GetLoadContext(Assembly);
-            _loadContext.Resolving += OnResolving;
+            this.AssemblyLoadContext = AssemblyLoadContext.GetLoadContext(Assembly);
+            this.AssemblyLoadContext.Resolving += OnResolving;
         }
 
         /// <summary>
@@ -48,10 +46,34 @@ namespace Dolittle.Artifacts.Tools
         /// </summary>
         public Assembly Assembly { get; }
 
+        /// <summary>
+        /// Gets the <see cref="DependencyContext"/> for the <see cref="Assembly"/>
+        /// </summary>
+        public DependencyContext DependencyContext { get; }
+
+        /// <summary>
+        /// Gets the <see cref="AssemblyLoadContext"/> for the <see cref="Assembly"/>
+        /// </summary>
+        public AssemblyLoadContext AssemblyLoadContext { get;}
+
+
+        /// <summary>
+        /// Get assemblies that are referenced as project references to the loaded assembly
+        /// </summary>
+        /// <returns>Project <see cref="IEnumerable{Assembly}">assemblies</see></returns>
+        public IEnumerable<Assembly>    GetProjectReferencedAssemblies()
+        {
+            var libraries = this.DependencyContext.RuntimeLibraries.Cast<RuntimeLibrary>()
+                    .Where(_ => _.RuntimeAssemblyGroups.Count() > 0 && _.Type.ToLowerInvariant() == "project");
+            return libraries
+                    .Select(_ => Assembly.Load(_.Name))
+                    .ToArray();
+        }
+
         /// <inheritdoc/>
         public void Dispose()
         {
-            _loadContext.Resolving -= OnResolving;
+            this.AssemblyLoadContext.Resolving -= OnResolving;
         }
 
         Assembly OnResolving(AssemblyLoadContext context, AssemblyName name)
@@ -61,8 +83,7 @@ namespace Dolittle.Artifacts.Tools
                 return string.Equals(runtime.Name, name.Name, StringComparison.OrdinalIgnoreCase);
             }
 
-            RuntimeLibrary library =
-                _dependencyContext.RuntimeLibraries.FirstOrDefault(NamesMatch);
+            var library = this.DependencyContext.RuntimeLibraries.FirstOrDefault(NamesMatch);
             if (library != null)
             {
                 var wrapper = new CompilationLibrary(
@@ -78,7 +99,7 @@ namespace Dolittle.Artifacts.Tools
                 _assemblyResolver.TryResolveAssemblyPaths(wrapper, assemblies);
                 if (assemblies.Count > 0)
                 {
-                    return _loadContext.LoadFromAssemblyPath(assemblies[0]);
+                    return this.AssemblyLoadContext.LoadFromAssemblyPath(assemblies[0]);
                 }
             }
 

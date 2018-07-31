@@ -48,8 +48,8 @@ namespace Dolittle.Artifacts.Tools
 
                 //while (!System.Diagnostics.Debugger.IsAttached);
 
-                var resolver = new AssemblyLoader(args[0]);
-                var assembly = resolver.Assembly;
+                var assemblyLoader = new AssemblyLoader(args[0]);
+                var assembly = assemblyLoader.Assembly;
 
                 var boundedContextConfiguration = _boundedContextConfigurationManager.Load();
                 var artifactsConfiguration = _artifactsConfigurationManager.Load();
@@ -75,7 +75,8 @@ namespace Dolittle.Artifacts.Tools
                 //   This configuration should then be optional and default set to empty. The MSBuild task should expose a variable that can be set in a <PropertyGroup/>
                 //   The base namespace would be from the second segment - after tier segment
 
-                var types = assembly.ExportedTypes;
+                var types = assemblyLoader.GetProjectReferencedAssemblies().SelectMany(_ => _.ExportedTypes);
+                
                 var newArtifacts =0;
                 
                 newArtifacts += HandleArtifactOfType<ICommand>(artifactsConfiguration, features, types, "command", a => a.Commands);
