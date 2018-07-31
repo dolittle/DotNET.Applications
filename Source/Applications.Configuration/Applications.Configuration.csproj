@@ -5,14 +5,12 @@
     </PropertyGroup>
     <Import Project="../../Build/MSBuild/default.props" />
 
-    <ItemGroup>
-        <ProjectReference Include="..\Artifacts.Configuration\Artifacts.Configuration.csproj" />
-        <ProjectReference Include="..\Configuration\Configuration.csproj" />
-    </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Dolittle.Applications" Version="2.0.0-*" />
         <PackageReference Include="Dolittle.Serialization.Json" Version="2.0.0-*" />
         <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Execution" Version="2.0.0-*" />
     </ItemGroup>
 </Project>
 
