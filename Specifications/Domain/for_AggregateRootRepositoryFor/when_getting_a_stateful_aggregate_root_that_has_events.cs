@@ -1,8 +1,8 @@
-﻿using Dolittle.Domain;
+﻿using System;
+using Dolittle.Domain;
 using Dolittle.Runtime.Events;
 using Machine.Specifications;
 using Moq;
-using System;
 using It = Machine.Specifications.It;
 
 namespace Dolittle.Domain.for_AggregateRootRepositoryFor
@@ -13,18 +13,17 @@ namespace Dolittle.Domain.for_AggregateRootRepositoryFor
         static EventSourceId event_source_id = Guid.NewGuid();
         static SimpleStatefulAggregateRoot stateful_aggregated_root;
         static EventSourceVersion expected_version;
-        
 
         Establish context = () =>
         {
             var @event = new SimpleEvent();
             var version = new EventSourceVersion(1, 1);
             var event_envelope = new Mock<IEventEnvelope>();
-            
-            event_envelope.SetupGet(e => e.Version).Returns(version);
-            event_store.Setup(e => e.GetFor(application_artifact_identifier.Object, event_source_id)).Returns(new[] { new EventAndEnvelope(event_envelope.Object, @event) });
 
-            expected_version = new EventSourceVersion(2,0);
+            event_envelope.SetupGet(e => e.Version).Returns(version);
+            event_store.Setup(e => e.GetFor(artifact, event_source_id)).Returns(new [] { new EventAndEnvelope(event_envelope.Object, @event) });
+
+            expected_version = new EventSourceVersion(2, 0);
         };
 
         Because of = () => stateful_aggregated_root = repository.Get(event_source_id);

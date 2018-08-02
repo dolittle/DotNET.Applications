@@ -6,10 +6,10 @@ using System;
 using System.Reflection;
 using Dolittle.DependencyInversion;
 using Dolittle.Time;
-using Dolittle.Applications;
 using Dolittle.Runtime.Events;
 using Dolittle.Runtime.Events.Processing;
 using Dolittle.Logging;
+using Dolittle.Artifacts;
 
 namespace Dolittle.Events.Processing
 {
@@ -31,14 +31,14 @@ namespace Dolittle.Events.Processing
         /// <param name="container"><see cref="IContainer"/> to use for getting instances of <see cref="ICanProcessEvents"/> implementation</param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for timing purposes</param>
         /// <param name="identifier"><see cref="EventProcessorIdentifier"/> that uniquely identifies the <see cref="ProcessMethodEventProcessor"/></param>
-        /// <param name="event"><see cref="IApplicationArtifactIdentifier">Identifier</see> for identifying the <see cref="IEvent"/></param>
+        /// <param name="event"><see cref="Artifact">Identifier</see> for identifying the <see cref="IEvent"/></param>
         /// <param name="methodInfo"><see cref="MethodInfo"/> for the actual process method</param>
         /// <param name="logger"></param>
         public ProcessMethodEventProcessor(
             IContainer container,
             ISystemClock systemClock,
             EventProcessorIdentifier identifier,
-            IApplicationArtifactIdentifier @event,
+            Artifact @event,
             MethodInfo methodInfo,
             ILogger logger)
         {
@@ -52,7 +52,7 @@ namespace Dolittle.Events.Processing
         }
 
         /// <inheritdoc/>
-        public IApplicationArtifactIdentifier Event { get; }
+        public Artifact Event { get; }
 
         /// <inheritdoc/>
         public EventProcessorIdentifier Identifier { get; }

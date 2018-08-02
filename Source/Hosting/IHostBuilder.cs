@@ -14,13 +14,6 @@ namespace Dolittle.Hosting
     public interface IHostBuilder
     {
         /// <summary>
-        /// Start building the <see cref="IApplication"/>
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <returns><see cref="IHostBuilder"/> to continue building</returns>
-        IHostBuilder Application(Func<IApplicationBuilder, IApplicationBuilder> callback);
-
-        /// <summary>
         /// Build the <see cref="IHost"/>
         /// </summary>
         /// <returns>An instance of a <see cref="IHost"/></returns>

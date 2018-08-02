@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Dolittle.Applications;
+using Dolittle.Artifacts;
 using Dolittle.Collections;
 using Dolittle.Concepts;
 using Dolittle.Runtime.Commands;
@@ -20,15 +20,15 @@ namespace Dolittle.Commands.Handling
     /// </summary>
     public class CommandRequestToCommandConverter : ICommandRequestToCommandConverter
     {
-        IApplicationArtifactResolver _applicationArtifactResolver;
+        IArtifactTypeMap _artifactTypeMap;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="applicationArtifactResolver"></param>
-        public CommandRequestToCommandConverter(IApplicationArtifactResolver applicationArtifactResolver)
+        /// <param name="artifactTypeMap"></param>
+        public CommandRequestToCommandConverter(IArtifactTypeMap artifactTypeMap)
         {
-            _applicationArtifactResolver = applicationArtifactResolver;
+            _artifactTypeMap = artifactTypeMap;
         }
 
         /// <inheritdoc/>
@@ -36,7 +36,7 @@ namespace Dolittle.Commands.Handling
         {
             // todo: Cache it per transaction / command context 
 
-            var type = _applicationArtifactResolver.Resolve(request.Type);
+            var type = _artifactTypeMap.GetTypeFor(request.Type);
 
             // todo: Verify that it is a an ICommand
             var instance = Activator.CreateInstance(type) as ICommand;

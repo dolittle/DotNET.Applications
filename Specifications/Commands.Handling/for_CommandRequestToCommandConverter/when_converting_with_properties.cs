@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Dolittle.Applications;
+using Dolittle.Artifacts;
 using Dolittle.Runtime.Commands;
 using Dolittle.Runtime.Transactions;
 using Machine.Specifications;
@@ -11,12 +11,11 @@ using It = Machine.Specifications.It;
 
 namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
 {
-
     public class when_converting_with_properties
     {
         static TransactionCorrelationId correlation_id;
-        static Mock<IApplicationArtifactResolver> application_artifact_resolver;
-        static Mock<IApplicationArtifactIdentifier> identifier;
+        static Mock<IArtifactTypeMap> artifact_type_map;
+        static Artifact identifier;
         static CommandRequest request;
         static IDictionary<string, object> content;
         static CommandRequestToCommandConverter converter;
@@ -43,7 +42,7 @@ namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
         Establish context = () => 
         {
             correlation_id = TransactionCorrelationId.New();
-            identifier = new Mock<IApplicationArtifactIdentifier>();
+            identifier = Artifact.New();
 
             content = new Dictionary<string, object> {
                 { "a_string", a_string},
@@ -62,12 +61,12 @@ namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
                 { "an_enumerable_of_guids", an_enumerable_of_guids }
             };
 
-            request = new CommandRequest(correlation_id, identifier.Object, content);
+            request = new CommandRequest(correlation_id, identifier, content);
 
-            application_artifact_resolver = new Mock<IApplicationArtifactResolver>();
-            application_artifact_resolver.Setup(_ => _.Resolve(identifier.Object)).Returns(typeof(command_with_all_property_types));
+            artifact_type_map = new Mock<IArtifactTypeMap>();
+            artifact_type_map.Setup(_ => _.GetTypeFor(identifier)).Returns(typeof(command_with_all_property_types));
 
-            converter = new CommandRequestToCommandConverter(application_artifact_resolver.Object);
+            converter = new CommandRequestToCommandConverter(artifact_type_map.Object);
         };
 
         Because of = () => result = converter.Convert(request) as command_with_all_property_types;

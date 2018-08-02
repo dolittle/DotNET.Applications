@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Dolittle.Applications;
+using Dolittle.Artifacts;
 using Dolittle.Runtime.Commands;
 using Dolittle.Runtime.Transactions;
 using Machine.Specifications;
@@ -22,11 +22,10 @@ namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
         }
 
         static TransactionCorrelationId correlation_id;
-        static Mock<IApplicationArtifactResolver> application_artifact_resolver;
-        static Mock<IApplicationArtifactIdentifier> identifier;
+        static Mock<IArtifactTypeMap> artifact_type_map;
+        static Artifact identifier;
         static CommandRequest request;
         static CommandRequestToCommandConverter converter;
-        
 
         static IDictionary<string, object> content;
 
@@ -35,18 +34,18 @@ namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
         Establish context = () =>
         {
             correlation_id = TransactionCorrelationId.New();
-            identifier = new Mock<IApplicationArtifactIdentifier>();
-            
+            identifier = Artifact.New();
+
             content = new Dictionary<string, object>
             { { "an_integer", an_integer }
             };
 
-            request = new CommandRequest(correlation_id, identifier.Object, content);
+            request = new CommandRequest(correlation_id, identifier, content);
 
-            application_artifact_resolver = new Mock<IApplicationArtifactResolver>();
-            application_artifact_resolver.Setup(_ => _.Resolve(identifier.Object)).Returns(typeof(sub));
+            artifact_type_map = new Mock<IArtifactTypeMap>();
+            artifact_type_map.Setup(_ => _.GetTypeFor(identifier)).Returns(typeof(sub));
 
-            converter = new CommandRequestToCommandConverter(application_artifact_resolver.Object);
+            converter = new CommandRequestToCommandConverter(artifact_type_map.Object);
         };
 
         Because of = () => result = converter.Convert(request) as sub;

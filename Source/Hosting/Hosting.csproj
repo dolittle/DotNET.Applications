@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Configuration\Configuration.csproj" />
+        <ProjectReference Include="..\Bootstrapping\Bootstrapping.csproj" />
     </ItemGroup>
 
 </Project>

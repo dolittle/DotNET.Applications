@@ -1,15 +1,15 @@
 ﻿using System.Dynamic;
 using System.Linq;
+using Dolittle.Artifacts;
 using Dolittle.Commands;
-using Dolittle.Runtime.Commands;
 using Dolittle.Commands.Validation;
-using Dolittle.Validation;
-using Dolittle.Applications;
+using Dolittle.Runtime.Commands;
+using Dolittle.Runtime.Commands.Validation;
 using Dolittle.Runtime.Transactions;
+using Dolittle.Validation;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
-using Dolittle.Runtime.Commands.Validation;
 
 namespace Dolittle.FluentValidation.Commands.for_CommandValidator
 {
@@ -24,12 +24,13 @@ namespace Dolittle.FluentValidation.Commands.for_CommandValidator
 
         Establish context = () =>
         {
-            command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationArtifactIdentifier>(), new ExpandoObject());
+            command = new CommandRequest(TransactionCorrelationId.NotSet, Artifact.New(), new ExpandoObject());
             command_instance = Mock.Of<ICommand>();
             command_request_converter.Setup(c => c.Convert(command)).Returns(command_instance);
             command_input_validator = new Mock<ICommandInputValidator>();
-            command_input_validator.Setup(c => c.ValidateFor(command_instance)).Returns(new[] {
-                new ValidationResult(ErrorMessage,new[] { ModelRule<object>.ModelRulePropertyName })
+            command_input_validator.Setup(c => c.ValidateFor(command_instance)).Returns(new []
+            {
+                new ValidationResult(ErrorMessage, new [] { ModelRule<object>.ModelRulePropertyName })
             });
 
             command_validator_provider_mock.Setup(c => c.GetInputValidatorFor(command_instance)).Returns(command_input_validator.Object);

@@ -6,15 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Dolittle.Artifacts;
 using Dolittle.Collections;
-using Dolittle.Execution;
 using Dolittle.DependencyInversion;
-using Dolittle.Reflection;
-using Dolittle.Types;
+using Dolittle.Execution;
 using Dolittle.Logging;
-using Dolittle.Applications;
-using Dolittle.Runtime.Commands.Handling;
 using Dolittle.Runtime.Commands;
+using Dolittle.Runtime.Commands.Handling;
+using Dolittle.Types;
 
 namespace Dolittle.Commands.Handling
 {
@@ -30,10 +29,10 @@ namespace Dolittle.Commands.Handling
 
         readonly ITypeFinder _typeFinder;
         readonly IContainer _container;
-        readonly IApplicationArtifacts _applicationArtifacts;
+        readonly IArtifactTypeMap _artifactTypeMap;
         readonly ICommandRequestToCommandConverter _converter;
         readonly ILogger _logger;
-        readonly Dictionary<IApplicationArtifactIdentifier, MethodInfo> _commandHandlers = new Dictionary<IApplicationArtifactIdentifier, MethodInfo>();
+        readonly Dictionary<Artifact, MethodInfo> _commandHandlers = new Dictionary<Artifact, MethodInfo>();
         readonly object _initializationLock = new object();
         bool _initialized;
 
@@ -42,19 +41,19 @@ namespace Dolittle.Commands.Handling
         /// </summary>
         /// <param name="typeFinder">A <see cref="ITypeFinder"/> to use for discovering <see cref="ICanHandleCommands">command handlers</see></param>
         /// <param name="container">A <see cref="IContainer"/> to use for getting instances of objects</param>
-        /// <param name="applicationArtifacts"><see cref="IApplicationArtifacts"/> for identifying resources</param>
+        /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for identifying resources</param>
         /// <param name="converter"><see cref="ICommandRequestToCommandConverter"/> for converting to actual <see cref="ICommand"/> instances</param>
         /// <param name="logger"><see cref="ILogger"/> used for logging</param>
         public CommandHandlerInvoker(
             ITypeFinder typeFinder,
             IContainer container,
-            IApplicationArtifacts applicationArtifacts,
+            IArtifactTypeMap artifactTypeMap,
             ICommandRequestToCommandConverter converter,
             ILogger logger)
         {
             _typeFinder = typeFinder;
             _container = container;
-            _applicationArtifacts = applicationArtifacts;
+            _artifactTypeMap = artifactTypeMap;
             _converter = converter;
             _logger = logger;
             _initialized = false;
@@ -75,12 +74,12 @@ namespace Dolittle.Commands.Handling
                 .Where(m => m.IsPublic || !m.IsStatic)
                 .Where(m => m.Name.Equals(HandleMethodName))
                 .Where(m => m.GetParameters().Length == 1)
-                .Where(m => typeof(ICommand).GetTypeInfo().IsAssignableFrom(m.GetParameters()[0].ParameterType));
+                .Where(m => typeof(ICommand).GetTypeInfo().IsAssignableFrom(m.GetParameters() [0].ParameterType));
 
             handleMethods.ForEach(method =>
             {
-                var commandType = method.GetParameters()[0].ParameterType;
-                var identifier = _applicationArtifacts.Identify(commandType);
+                var commandType = method.GetParameters() [0].ParameterType;
+                var identifier = _artifactTypeMap.GetArtifactFor(commandType);
                 _commandHandlers[identifier] = method;
             });
         }
@@ -92,7 +91,7 @@ namespace Dolittle.Commands.Handling
 
             _logger.Information($"Trying to invoke command handlers for {command.Type}");
 
-            if( _commandHandlers.Count == 0  ) return false;
+            if (_commandHandlers.Count == 0) return false;
 
             var handlerKey = _commandHandlers.Keys.First();
             var handler = _commandHandlers.First();
@@ -105,11 +104,10 @@ namespace Dolittle.Commands.Handling
                 var method = _commandHandlers[command.Type];
                 var commandInstance = _converter.Convert(command);
 
-
                 _logger.Trace($"Invoke");
                 try
                 {
-                    method.Invoke(commandHandler, new[] { commandInstance });
+                    method.Invoke(commandHandler, new [] { commandInstance });
                 }
                 catch (Exception ex)
                 {
@@ -129,7 +127,7 @@ namespace Dolittle.Commands.Handling
         {
             if (_initialized) return;
 
-            lock (_initializationLock)
+            lock(_initializationLock)
             {
                 if (!_initialized) Initialize();
                 _initialized = true;

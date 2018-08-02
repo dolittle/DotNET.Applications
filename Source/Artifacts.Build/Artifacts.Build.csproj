@@ -1,0 +1,44 @@
+<!-- Inspired by : https://github.com/madskristensen/BundlerMinifier/blob/e66ec7c85ad6c291fcd5bf55e7f426485e2e2d38/src/BundlerMinifier/BundlerMinifier.csproj -->
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../Build/MSBuild/default.props" />
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <AssemblyName>DolittleArtifactsBuild</AssemblyName>
+
+        <NoPackageAnalysis>true</NoPackageAnalysis>
+        <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
+        <!--<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>-->
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Build.Framework" Version="15.3.409" />
+        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.3.409" />
+        <PackageReference Update="@(PackageReference)" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Artifacts.Tools\Artifacts.Tools.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="DolittleArtifactsBuild.props" PackagePath="build\" />
+        <Content Include="DolittleArtifactsBuild.targets" PackagePath="build\" />
+    </ItemGroup>
+
+    <!--
+        The include needs to happen after output has been copied to build output folder
+        but before NuGet generates a nuspec. See https://github.com/NuGet/Home/issues/4704.
+        -->
+
+    <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
+        <ItemGroup>
+            <_PackageFiles Include="..\Artifacts.Tools\bin\$(Configuration)\*\Dolittle*">
+                <PackagePath>tasks\%(RecursiveDir)</PackagePath>
+                <Visible>false</Visible>
+                <BuildAction>Content</BuildAction>
+            </_PackageFiles>
+        </ItemGroup>
+    </Target>
+
+</Project>

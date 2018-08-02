@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
+using Dolittle.Artifacts;
 using Dolittle.Commands;
-using Dolittle.Runtime.Commands;
 using Dolittle.Commands.Validation;
-using Dolittle.Validation;
-using Dolittle.Applications;
+using Dolittle.Runtime.Commands;
+using Dolittle.Runtime.Commands.Validation;
 using Dolittle.Runtime.Transactions;
+using Dolittle.Validation;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
-using Dolittle.Runtime.Commands.Validation;
 
 namespace Dolittle.FluentValidation.Commands.for_CommandValidator
 {
@@ -25,12 +25,12 @@ namespace Dolittle.FluentValidation.Commands.for_CommandValidator
         Establish context = () =>
         {
             business_validation_errors = new List<ValidationResult>()
-                                          {
-                                              new ValidationResult("first failed input", new[] { "AProperty" }),
-                                              new ValidationResult("second failed input", new[] { "AnotherProperty" })
-                                          };
+            {
+            new ValidationResult("first failed input", new [] { "AProperty" }),
+            new ValidationResult("second failed input", new [] { "AnotherProperty" })
+            };
 
-            command = new CommandRequest(TransactionCorrelationId.NotSet, Mock.Of<IApplicationArtifactIdentifier>(), new ExpandoObject());
+            command = new CommandRequest(TransactionCorrelationId.NotSet, Artifact.New(), new ExpandoObject());
             command_instance = Mock.Of<ICommand>();
             command_request_converter.Setup(c => c.Convert(command)).Returns(command_instance);
 

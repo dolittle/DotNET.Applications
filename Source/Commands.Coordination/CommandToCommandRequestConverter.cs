@@ -2,9 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Dolittle.Applications;
-using Dolittle.Commands;
-using Dolittle.Reflection;
+using Dolittle.Artifacts;
 using Dolittle.Runtime.Commands;
 using Dolittle.Runtime.Transactions;
 using Dolittle.Serialization.Json;
@@ -16,17 +14,17 @@ namespace Dolittle.Commands.Coordination
     /// </summary>
     public class CommandToCommandRequestConverter : ICommandToCommandRequestConverter
     {
-        readonly IApplicationArtifacts _applicationArtifacts;
+        readonly IArtifactTypeMap _artifactsTypeMap;
         readonly ISerializer _serializer;
 
         /// <summary>
         /// Initializes a new instance of <see cref="CommandToCommandRequestConverter"/>
         /// </summary>
-        /// <param name="applicationArtifacts">The <see cref="IApplicationArtifacts"/> for identifying artifacts</param>
+        /// <param name="artifactsTypeMap">The <see cref="IArtifactTypeMap"/> for identifying artifacts</param>
         /// <param name="serializer"></param>
-        public CommandToCommandRequestConverter(IApplicationArtifacts applicationArtifacts, ISerializer serializer)
+        public CommandToCommandRequestConverter(IArtifactTypeMap artifactsTypeMap, ISerializer serializer)
         {
-            _applicationArtifacts = applicationArtifacts;
+            _artifactsTypeMap = artifactsTypeMap;
             _serializer = serializer;
         }
 
@@ -36,7 +34,7 @@ namespace Dolittle.Commands.Coordination
             var commandAsJson = _serializer.ToJson(command);
             var commandAsDictionary = _serializer.GetKeyValuesFromJson(commandAsJson);
             //var commandAsDictionary = command.ToDictionary();
-            var applicationArtifactIdentifier = _applicationArtifacts.Identify(command);
+            var applicationArtifactIdentifier = _artifactsTypeMap.GetArtifactFor(command.GetType());
             var commandRequest = new CommandRequest(correlationId, applicationArtifactIdentifier, commandAsDictionary);
             return commandRequest;
         }
