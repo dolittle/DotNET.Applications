@@ -32,7 +32,7 @@ namespace Dolittle.Artifacts.Tools
         {
             if (args.Length != 1)
             {
-                Console.Error.WriteLine("Error consolidating artifacts; missing argument for name of assembly to consolidate");
+                LogError("Error consolidating artifacts; missing argument for name of assembly to consolidate");
                 return 1;
             }
 
@@ -202,7 +202,7 @@ namespace Dolittle.Artifacts.Tools
                             Generation = ArtifactGeneration.First,
                             Type = ClrType.FromType(artifact)
                         };
-                        Console.WriteLine($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
+                        LogInfo($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
                         newAndExistingArtifacts.Add(artifactDefinition);
 
                         newArtifacts++;
