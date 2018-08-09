@@ -23,7 +23,7 @@ namespace Dolittle.Applications.Configuration
         /// <summary>
         /// Gets or sets the <see cref="BoundedContextName"/> 
         /// </summary>
-        public BoundedContextName Name {get; set;}
+        public BoundedContextName BoundedContextName {get; set;}
 
         /// <summary>
         /// Gets or sets whether or not one is using <see cref="Module">modules</see>
