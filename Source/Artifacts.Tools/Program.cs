@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Loader;
+
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Collections;
@@ -20,6 +21,7 @@ using Dolittle.ReadModels;
 using Dolittle.Reflection;
 using Dolittle.Serialization.Json;
 using Dolittle.Types;
+using Microsoft.Extensions.Logging;
 
 namespace Dolittle.Artifacts.Tools
 {
@@ -28,36 +30,35 @@ namespace Dolittle.Artifacts.Tools
         static IBoundedContextConfigurationManager _boundedContextConfigurationManager;
         static IArtifactsConfigurationManager _artifactsConfigurationManager;
 
+        static BoundedContextConfiguration _boundedContextConfiguration;
+
         static int Main(string[] args)
         {
+            
             if (args.Length != 1)
             {
-                Console.Error.WriteLine("Error consolidating artifacts; missing argument for name of assembly to consolidate");
+                ConsoleLogger.LogError("Error consolidating artifacts; missing argument for name of assembly to consolidate");
                 return 1;
             }
-
             try
             {
                 var startTime = DateTime.UtcNow;
 
-                var container = new ActivatorContainer();
-                var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new []
-                {
-                    new Dolittle.Concepts.Serialization.Json.ConverterProvider()
-                });
-
-                var serializer = new Serializer(container, converterProviders);
-                _boundedContextConfigurationManager = new BoundedContextConfigurationManager(serializer);
-                _artifactsConfigurationManager = new ArtifactsConfigurationManager(serializer);
+                SetupConfigurationManagers();
 
                 var assemblyLoader = new AssemblyLoader(args[0]);
                 var assembly = assemblyLoader.Assembly;
 
-                var boundedContextConfiguration = _boundedContextConfigurationManager.Load();
+                while(!System.Diagnostics.Debugger.IsAttached)
+                {
+                    System.Threading.Thread.Sleep(10);
+                }
+
+                var boundedContextConfigurationRetrievalResult = BoundedContextConfigurationUtilities.RetrieveConfiguration(_boundedContextConfigurationManager, out _boundedContextConfiguration);
                 var artifactsConfiguration = _artifactsConfigurationManager.Load();
 
-                var features = new List<FeatureDefinition>(boundedContextConfiguration.Topology.Features);
-                features.AddRange(boundedContextConfiguration.Topology.Modules.SelectMany(module => module.Features));
+                var features = new List<FeatureDefinition>(_boundedContextConfiguration.Topology.Features);
+                features.AddRange(_boundedContextConfiguration.Topology.Modules.SelectMany(module => module.Features));
 
                 // Todo: 
                 // - Look for new features and add them to the topology. Base it off of the namespace by convention:
@@ -100,17 +101,14 @@ namespace Dolittle.Artifacts.Tools
 
                 var newArtifacts = 0;
 
-                //while(!System.Diagnostics.Debugger.IsAttached);
-
                 var artifactPaths = new List<string>();
-                if( boundedContextConfiguration.UseModules ) 
-                    boundedContextConfiguration.Topology.Modules.ForEach(_ => 
+                if (_boundedContextConfiguration.UseModules ) 
+                    _boundedContextConfiguration.Topology.Modules.ForEach(_ => 
                         artifactPaths.AddRange(
                             GetArtifactPathsFor(_.Features, _.Name).Where(path => path.IndexOf(".") > 0)
                         )
                     );
-
-                artifactPaths.AddRange(GetArtifactPathsFor(boundedContextConfiguration.Topology.Features));
+                artifactPaths.AddRange(GetArtifactPathsFor(_boundedContextConfiguration.Topology.Features));
 
                 var typePaths = types.Select(_ => string.Join(".", _.Namespace.Split(".").Skip(1))).Where(_ => _.Length > 0).Distinct().ToArray();
                 var missingPaths = typePaths.Where(_ => !artifactPaths.Any(ap => ap == _)).ToArray();
@@ -133,16 +131,32 @@ namespace Dolittle.Artifacts.Tools
                 var endTime = DateTime.UtcNow;
                 var deltaTime = endTime.Subtract(startTime);
 
-                if (newArtifacts > 0) LogInfo($"Added {newArtifacts} artifacts to the map (Took {deltaTime.TotalSeconds} seconds)");
-                else LogInfo($"No new artifacts added to the map (Took {deltaTime.TotalSeconds} seconds)");
+                if (newArtifacts > 0) 
+                    ConsoleLogger.LogInfo($"Added {newArtifacts} artifacts to the map (Took {deltaTime.TotalSeconds} seconds)");
+                else 
+                    ConsoleLogger.LogInfo($"No new artifacts added to the map (Took {deltaTime.TotalSeconds} seconds)");
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                ConsoleLogger.LogError("Error consolidating artifacts;");
+                ConsoleLogger.LogError(ex.Message);
                 return 1;
             }
 
             return 0;
+        }
+
+        static void SetupConfigurationManagers()
+        {
+            var container = new ActivatorContainer();
+            var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new []
+            {
+                new Dolittle.Concepts.Serialization.Json.ConverterProvider()
+            });
+
+            var serializer = new Serializer(container, converterProviders);
+            _boundedContextConfigurationManager = new BoundedContextConfigurationManager(serializer);
+            _artifactsConfigurationManager = new ArtifactsConfigurationManager(serializer);
         }
 
         static IEnumerable<string> GetArtifactPathsFor(IEnumerable<FeatureDefinition> features, string parent = "")
@@ -205,22 +219,5 @@ namespace Dolittle.Artifacts.Tools
             });
             return newArtifacts;
         }
-
-        static void LogInfo(string message)
-        {
-            Console.WriteLine(message);
-        }
-
-        static void LogWarning(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(message);
-        }
-
-        static void LogError(string message)
-        {
-            Console.Error.WriteLine(message);
-        }
-
     }
 }
