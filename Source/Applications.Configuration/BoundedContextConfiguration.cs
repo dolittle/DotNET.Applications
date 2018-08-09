@@ -21,6 +21,11 @@ namespace Dolittle.Applications.Configuration
         public BoundedContext BoundedContext { get; set; }
 
         /// <summary>
+        /// Gets or sets the <see cref="BoundedContextName"/> 
+        /// </summary>
+        public BoundedContextName Name {get; set;}
+
+        /// <summary>
         /// Gets or sets whether or not one is using <see cref="Module">modules</see>
         /// </summary>
         public bool UseModules { get; set; }
