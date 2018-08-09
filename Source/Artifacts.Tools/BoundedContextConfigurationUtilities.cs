@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Applications.Configuration;
+using Dolittle.Collections;
 
 namespace Dolittle.Artifacts.Tools
 {
@@ -28,14 +31,43 @@ namespace Dolittle.Artifacts.Tools
             return BoundedContextRetrievalResult.HasTopology;
         }
 
-        
+        /// <summary>
+        /// Retrieves a list of <see cref="FeatureDefinition"/> from the <see cref="BoundedContextConfiguration"/>
+        /// </summary>
+        /// <exception cref="DuplicateFeature"/>
+        /// <param name="configuration"></param>
+        internal static IEnumerable<FeatureDefinition> RetrieveFeatures(BoundedContextConfiguration configuration)
+        {
+            var featureMap = new Dictionary<Guid, FeatureDefinition>();
+            if (configuration.UseModules)
+            {
+                configuration.Topology.Modules.SelectMany(module => module.Features)
+                    .ForEach(feature => 
+                    {
+                        if (featureMap.ContainsKey(feature.Feature)) throw new DuplicateFeature(feature);
+                        featureMap.Add(feature.Feature, feature);
+
+                    });
+                return featureMap.Values;
+            }
+            else
+            {
+                configuration.Topology.Features.ForEach(feature => 
+                {
+                    if (featureMap.ContainsKey(feature.Feature)) throw new DuplicateFeature(feature);
+                        featureMap.Add(feature.Feature, feature);
+                });
+
+                return featureMap.Values;
+            }
+        }
 
         static void ThrowBoundedContextConfigurationIsInvalid(BoundedContextConfiguration config)
         {
-            if (config.Application == null || config.Application.Value.Equals(System.Guid.Empty)) 
+            if (config.Application == null || config.Application.Value.Equals(Guid.Empty)) 
                 throw new InvalidBoundedContextConfiguration("Application is required and must cannot be an empty Guid");
             
-            if (config.BoundedContext == null || config.BoundedContext.Value.Equals(System.Guid.Empty))
+            if (config.BoundedContext == null || config.BoundedContext.Value.Equals(Guid.Empty))
                 throw new InvalidBoundedContextConfiguration("BoundedContext is required and must cannot be an empty Guid");
                 
             
