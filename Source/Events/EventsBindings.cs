@@ -3,6 +3,7 @@ namespace Dolittle.Events
     using Dolittle.DependencyInversion;
     using Dolittle.Runtime.Events.Coordination;
     using Dolittle.Events.Coordination;
+    using System;
 
     /// <summary>
     /// Bindings for hooking Events implementations to Runtime Interfaces

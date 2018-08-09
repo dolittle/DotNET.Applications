@@ -32,7 +32,7 @@ namespace Dolittle.Events.Coordination
         /// <summary>
         /// Initializes an instance of a <see cref="UncommittedEventStreamCoordinator"/>
         /// </summary>
-        /// <param name="eventStore"><see cref="IEventStore"/> to use for saving the events</param>
+        /// <param name="eventStore">An instance of <see cref="IEventStore" /> to persist events</param>
         /// <param name="artifactMap">An instance of <see cref="IArtifactTypeMap" /> to get the artifact for Event Source and Events</param>
         /// <param name="logger"><see cref="ILogger"/> for doing logging</param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for getting the time</param>
@@ -41,11 +41,13 @@ namespace Dolittle.Events.Coordination
             IArtifactTypeMap artifactMap,
             ILogger logger,
             ISystemClock systemClock)
+            //IEventHorizon
         {
             _eventStore = eventStore;
             _logger = logger;
             _artifactMap = artifactMap;
             _systemClock = systemClock;
+            //_eventHorizon = eventHorizon;
         }
 
         /// <inheritdoc/>
@@ -57,13 +59,14 @@ namespace Dolittle.Events.Coordination
             _logger.Trace("Committing the events");
             var committed = _eventStore.Commit(uncommitted);
             _logger.Trace("And we need to dispatch...");
+            //_eventHorizon.PassThrough(committed);
         }
 
         Dolittle.Runtime.Events.Store.UncommittedEventStream BuildUncommitted(Dolittle.Runtime.Events.UncommittedEventStream uncommittedEventStream, CorrelationId correlationId)
         {
             var versionedEventSource = ToVersionedEventSource(uncommittedEventStream);
             return BuildFrom(versionedEventSource,correlationId,_systemClock.GetCurrentTime(),uncommittedEventStream.EventsAndVersion.Select(e => e.Event));
-            
+
         }
 
         VersionedEventSource ToVersionedEventSource(Dolittle.Runtime.Events.UncommittedEventStream uncommittedEventStream)
