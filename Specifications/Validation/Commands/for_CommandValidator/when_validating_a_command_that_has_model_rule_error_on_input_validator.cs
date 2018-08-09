@@ -24,7 +24,8 @@ namespace Dolittle.FluentValidation.Commands.for_CommandValidator
 
         Establish context = () =>
         {
-            command = new CommandRequest(TransactionCorrelationId.NotSet, Artifact.New(), new ExpandoObject());
+            var artifact = Artifact.New();
+            command = new CommandRequest(TransactionCorrelationId.NotSet, artifact.Id, artifact.Generation, new ExpandoObject());
             command_instance = Mock.Of<ICommand>();
             command_request_converter.Setup(c => c.Convert(command)).Returns(command_instance);
             command_input_validator = new Mock<ICommandInputValidator>();

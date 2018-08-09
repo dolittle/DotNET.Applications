@@ -34,8 +34,8 @@ namespace Dolittle.Commands.Coordination
             var commandAsJson = _serializer.ToJson(command);
             var commandAsDictionary = _serializer.GetKeyValuesFromJson(commandAsJson);
             //var commandAsDictionary = command.ToDictionary();
-            var applicationArtifactIdentifier = _artifactsTypeMap.GetArtifactFor(command.GetType());
-            var commandRequest = new CommandRequest(correlationId, applicationArtifactIdentifier, commandAsDictionary);
+            var artifact = _artifactsTypeMap.GetArtifactFor(command.GetType());
+            var commandRequest = new CommandRequest(correlationId, artifact.Id, artifact.Generation, commandAsDictionary);
             return commandRequest;
         }
     }
