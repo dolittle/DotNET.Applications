@@ -32,7 +32,7 @@ namespace Dolittle.Artifacts.Tools
         {
             if (args.Length != 1)
             {
-                Console.Error.WriteLine("Error consolidating artifacts; missing argument for name of assembly to consolidate");
+                LogError("Error consolidating artifacts; missing argument for name of assembly to consolidate");
                 return 1;
             }
 
@@ -78,7 +78,15 @@ namespace Dolittle.Artifacts.Tools
                 // - Validation of structure
                 //   Types that are artifacts sitting on a Module should not be allowed - we should either warn or flatout error about these
                 //   Look for duplicates on Id of features and modules - fail if duplicates
-                //   
+                //
+                // - Artifact Shape definition validation - could be done as Roslyn extension so that we can break the build and IDEs/Editors will have squigglies
+                //   Validation rules differ on artifact type (Commands, Events, Readmodels...)
+                //   For Events:
+                //      validation - shouldn't allow complex types
+                //      warn when types change
+                //   General: warn when shape changes and there is not a migrator in place
+                // 
+                // - BoundedContextConfigurationManager - Parse for name of bounded context
 
                 var artifactTypes = new []
                 {
@@ -194,7 +202,7 @@ namespace Dolittle.Artifacts.Tools
                             Generation = ArtifactGeneration.First,
                             Type = ClrType.FromType(artifact)
                         };
-                        Console.WriteLine($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
+                        LogInfo($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
                         newAndExistingArtifacts.Add(artifactDefinition);
 
                         newArtifacts++;
