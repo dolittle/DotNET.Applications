@@ -9,7 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Loader;
-
+using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Collections;
@@ -85,8 +85,6 @@ namespace Dolittle.Artifacts.Tools
                 SetupConfigurationManagers();
 
                 var boundedContextConfigurationRetrievalResult = BoundedContextConfigurationUtilities.RetrieveConfiguration(_boundedContextConfigurationManager, out boundedContextConfiguration);
-                
-                var features = BoundedContextConfigurationUtilities.RetrieveFeatures(boundedContextConfiguration);
 
                 var types = assemblyLoader
                     .GetProjectReferencedAssemblies()
@@ -109,18 +107,22 @@ namespace Dolittle.Artifacts.Tools
                 
                 var newArtifacts = 0;
 
-                var artifactPaths = new List<string>();
-                if (boundedContextConfiguration.UseModules ) 
-                    boundedContextConfiguration.Topology.Modules.ForEach(_ => 
-                        artifactPaths.AddRange(
-                            GetArtifactPathsFor(_.Features, _.Name).Where(path => path.IndexOf(NamespaceSeperator) > 0)
-                        )
-                    );
-                artifactPaths.AddRange(GetArtifactPathsFor(boundedContextConfiguration.Topology.Features));
+                var existingArtifactPaths = new List<string>();
 
-                var missingPaths = typePaths.Where(_ => !artifactPaths.Any(ap => ap == _)).ToArray();
+                if (boundedContextConfigurationRetrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.HasTopology)
+                {
+                    AddExistingArtifactPaths(boundedContextConfiguration, ref existingArtifactPaths);
+                }
 
+                var missingPaths = boundedContextConfigurationRetrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.NewBoundedContextConfig? 
+                    typePaths // Optimization 
+                    : typePaths.Where(_ => !existingArtifactPaths.Any(ap => ap == _)).ToArray();
+
+                if (missingPaths.Any())
+                    AddPathsToBoundedContextConfiguration(missingPaths, boundedContextConfigurationRetrievalResult, ref boundedContextConfiguration);
                 
+                var features = BoundedContextConfigurationUtilities.RetrieveFeatures(boundedContextConfiguration);
+
                 var artifactsConfiguration = _artifactsConfigurationManager.Load();
                 _artifactTypes.ForEach(artifactType =>
                     newArtifacts += HandleArtifactOfType(
@@ -135,7 +137,7 @@ namespace Dolittle.Artifacts.Tools
 
                 var hasChanges = newArtifacts > 0;
 
-                if (hasChanges) _artifactsConfigurationManager.Save(artifactsConfiguration);
+                // if (hasChanges) _artifactsConfigurationManager.Save(artifactsConfiguration);
 
                 var endTime = DateTime.UtcNow;
                 var deltaTime = endTime.Subtract(startTime);
@@ -155,7 +157,7 @@ namespace Dolittle.Artifacts.Tools
             return 0;
         }
 
-        private static void ThrowIfArtifactWithNoModuleOrFeature(Type[] types)
+        static void ThrowIfArtifactWithNoModuleOrFeature(Type[] types)
         {
             foreach(var type in types)
             {
@@ -188,7 +190,24 @@ namespace Dolittle.Artifacts.Tools
             _artifactsConfigurationManager = new ArtifactsConfigurationManager(serializer);
         }
 
-        static IEnumerable<string> GetArtifactPathsFor(IEnumerable<FeatureDefinition> features, string parent = "")
+        static void AddExistingArtifactPaths(BoundedContextConfiguration boundedContextConfiguration, ref List<string> existingArtifactPaths)
+        {
+            if (boundedContextConfiguration.UseModules )
+            {
+               foreach (var module in boundedContextConfiguration.Topology.Modules)
+               {
+                   var paths = GetArtifactPathsFor(module.Features, module.Name);
+                   existingArtifactPaths.AddRange(paths);
+               }
+            }
+            else 
+            {
+                var paths = boundedContextConfiguration.Topology.Features;
+                existingArtifactPaths.AddRange(GetArtifactPathsFor(paths));
+            }
+                
+        }
+        static IList<string> GetArtifactPathsFor(IEnumerable<FeatureDefinition> features, string parent = "")
         {
             var paths = new List<string>();
             features.ForEach(_ =>
@@ -202,7 +221,114 @@ namespace Dolittle.Artifacts.Tools
             });
 
             return paths;
+        }
 
+        static void AddPathsToBoundedContextConfiguration(string[] missingPaths, BoundedContextConfigurationUtilities.BoundedContextRetrievalResult retrievalResult, ref BoundedContextConfiguration config)
+        {
+            if (retrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.HasTopology)
+                AddModulesAndFeatures(missingPaths, ref config);
+            else
+                AddFeatures(missingPaths, ref config);
+        }
+
+        static void AddModulesAndFeatures(string[] missingPaths, ref BoundedContextConfiguration config)
+        {
+            var modules = new List<ModuleDefinition>(config.Topology.Modules);
+
+            foreach(var path in missingPaths)
+            {
+                modules.Add(GetModuleFromPath(path));
+            }
+
+            config.Topology.Modules = CollapseModules(modules.GroupBy(module => module.Name));
+        }
+
+        static void AddFeatures(string[] missingPaths, ref BoundedContextConfiguration config)
+        {
+            var features = new List<FeatureDefinition>(config.Topology.Features);
+            foreach (var path in missingPaths)
+            {
+                features.Add(GetFeatureFromPath(path));
+            }
+
+            config.Topology.Features = CollapseFeatures(features.GroupBy(feature => feature.Name));
+        }
+
+        static ModuleDefinition GetModuleFromPath(string path)
+        {
+            var splitPath = path.Split(NamespaceSeperator);
+            var moduleName = splitPath.First();
+            var module = new ModuleDefinition()
+            {
+                Module = Guid.NewGuid(),
+                Name = moduleName
+            };
+            
+            var featurePath = string.Join(NamespaceSeperator, splitPath.Skip(1));
+            if (!string.IsNullOrEmpty(featurePath))
+            {
+                module.Features = new List<FeatureDefinition>()
+                {
+                    GetFeatureFromPath(featurePath)
+                };
+            }
+
+            return module;
+        }
+        static FeatureDefinition GetFeatureFromPath(string path)
+        {
+            var stringSegmentsReversed = path.Split(NamespaceSeperator).Reverse().ToArray();
+            if (stringSegmentsReversed.Count() == 0) throw new Exception("Could not get feature from path");
+            
+            var currentFeature = new FeatureDefinition()
+            {
+                Feature = Guid.NewGuid(), 
+                Name = stringSegmentsReversed[0]
+            };
+            foreach (var featureName in stringSegmentsReversed.Skip(1))
+            {
+                var parentFeature = new FeatureDefinition()
+                {
+                    Feature = Guid.NewGuid(),
+                    Name = featureName,
+                };
+                parentFeature.SubFeatures = new List<FeatureDefinition>(){currentFeature};
+                currentFeature = parentFeature;
+            }
+
+            return currentFeature;
+        }
+
+        static IList<ModuleDefinition> CollapseModules(IEnumerable<IGrouping<ModuleName, ModuleDefinition>> moduleGroups)
+        {
+            var modules = new List<ModuleDefinition>();
+
+            foreach (var group in moduleGroups)
+            {
+                var module = group.ElementAt(0);
+                var features = new List<FeatureDefinition>(module.Features);
+                features.AddRange(group.Skip(1).SelectMany(_ => _.Features));
+                module.Features = CollapseFeatures(features.GroupBy(_ => _.Name));
+
+                modules.Add(module);
+            }
+
+            return modules;
+        }
+        static IList<FeatureDefinition> CollapseFeatures(IEnumerable<IGrouping<FeatureName, FeatureDefinition>> featureGroups)
+        {
+            var features = new List<FeatureDefinition>();
+
+            foreach (var group in featureGroups)
+            {
+                var feature = group.ElementAt(0);
+                var subFeatures = new List<FeatureDefinition>(feature.SubFeatures);
+                subFeatures.AddRange(group.Skip(1));
+                feature.SubFeatures = CollapseFeatures(subFeatures.GroupBy(_ => _.Name));
+
+                features.Add(feature);
+            }
+            return features;
         }
 
         static int HandleArtifactOfType(Type artifactType, ArtifactsConfiguration artifactsConfiguration, List<FeatureDefinition> features, IEnumerable<Type> types, string typeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression)
