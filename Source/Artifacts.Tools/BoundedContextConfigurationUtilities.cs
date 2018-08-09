@@ -11,6 +11,11 @@ namespace Dolittle.Artifacts.Tools
             HasTopology
         } 
 
+        /// <summary>
+        /// Loads inn the <see cref="BoundedContextConfiguration"/> and validates the basic structure of the <see cref="BoundedContextConfiguration"/>
+        /// </summary>
+        /// <param name="manager">The <see cref="BoundedContextConfigurationManager"/> responsible for loading inn the <see cref="BoundedContextConfiguration"/></param>
+        /// <param name="configuration">Outgoing <see cref="BoundedContextConfiguration"/></param>
         internal static BoundedContextRetrievalResult RetrieveConfiguration(IBoundedContextConfigurationManager manager, out BoundedContextConfiguration configuration)
         {
             configuration = manager.Load();
@@ -22,6 +27,8 @@ namespace Dolittle.Artifacts.Tools
             ThrowIfTopologyIsInvalid(configuration.UseModules, configuration.Topology);
             return BoundedContextRetrievalResult.HasTopology;
         }
+
+        
 
         static void ThrowBoundedContextConfigurationIsInvalid(BoundedContextConfiguration config)
         {
