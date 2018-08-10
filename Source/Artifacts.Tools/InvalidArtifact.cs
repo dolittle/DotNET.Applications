@@ -4,6 +4,9 @@ namespace Dolittle.Artifacts.Tools
 {
     internal class InvalidArtifact : Exception
     {
+        internal InvalidArtifact() 
+            : base("Invalid Artifacts was discovered") 
+        { }
         internal InvalidArtifact(Type type)
             : base($"Artifact {type.Name} with namespace = {type.Namespace} is invalid")
         { }

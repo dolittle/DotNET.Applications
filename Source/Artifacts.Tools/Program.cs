@@ -46,6 +46,8 @@ namespace Dolittle.Artifacts.Tools
     // - Validation of structure
     //   Types that are artifacts sitting on a Module should not be allowed - we should either warn or flatout error about these
     //   Look for duplicates on Id of features and modules - fail if duplicates
+
+    // - Be able to skip prefixes in namespace
     //   
     class Program
     {
@@ -84,8 +86,12 @@ namespace Dolittle.Artifacts.Tools
                 var assemblyLoader = new AssemblyLoader(args[0]);
                 SetupConfigurationManagers();
 
-                var boundedContextConfigurationRetrievalResult = BoundedContextConfigurationUtilities.RetrieveConfiguration(_boundedContextConfigurationManager, out boundedContextConfiguration);
+                var artifactsConfiguration = _artifactsConfigurationManager.Load();
 
+                var boundedContextConfigurationRetrievalResult = BoundedContextConfigurationUtilities.RetrieveConfiguration(_boundedContextConfigurationManager, out boundedContextConfiguration);
+                if (boundedContextConfigurationRetrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.NewBoundedContextConfig)
+                    boundedContextConfiguration.Topology = new TopologyConfiguration();
+                
                 var types = assemblyLoader
                     .GetProjectReferencedAssemblies()
                     .SelectMany(_ => _.ExportedTypes)
@@ -94,7 +100,7 @@ namespace Dolittle.Artifacts.Tools
                         .Any(at => at.Type.IsAssignableFrom(_)))
                     .ToArray();
 
-                // ThrowIfArtifactWithNoModuleOrFeature(types);
+                ThrowIfArtifactWithNoModuleOrFeature(types);
 
                 var typePaths = types
                     .Select(_ => 
@@ -103,7 +109,7 @@ namespace Dolittle.Artifacts.Tools
                     .Distinct()
                     .ToArray();
                 
-                // ThrowIfContainsInvalidTypePath(typePaths, boundedContextConfiguration.UseModules);
+                ThrowIfContainsInvalidTypePath(typePaths, boundedContextConfiguration.UseModules);
                 
                 var newArtifacts = 0;
 
@@ -119,17 +125,14 @@ namespace Dolittle.Artifacts.Tools
                     : typePaths.Where(_ => !existingArtifactPaths.Any(ap => ap == _)).ToArray();
 
                 if (missingPaths.Any())
-                    AddPathsToBoundedContextConfiguration(missingPaths, boundedContextConfigurationRetrievalResult, ref boundedContextConfiguration);
-                
-                var features = BoundedContextConfigurationUtilities.RetrieveFeatures(boundedContextConfiguration);
+                    AddPathsToBoundedContextConfiguration(missingPaths, ref boundedContextConfiguration);
 
-                var artifactsConfiguration = _artifactsConfigurationManager.Load();
                 _artifactTypes.ForEach(artifactType =>
                     newArtifacts += HandleArtifactOfType(
                         artifactType.Type,
                         artifactsConfiguration,
-                        features.ToList(),
                         types,
+                        boundedContextConfiguration,
                         artifactType.TypeName,
                         artifactType.TargetPropertyExpression
                     )
@@ -137,7 +140,8 @@ namespace Dolittle.Artifacts.Tools
 
                 var hasChanges = newArtifacts > 0;
 
-                // if (hasChanges) _artifactsConfigurationManager.Save(artifactsConfiguration);
+                if (missingPaths.Any()) _boundedContextConfigurationManager.Save(boundedContextConfiguration); 
+                if (hasChanges) _artifactsConfigurationManager.Save(artifactsConfiguration);
 
                 var endTime = DateTime.UtcNow;
                 var deltaTime = endTime.Subtract(startTime);
@@ -159,21 +163,31 @@ namespace Dolittle.Artifacts.Tools
 
         static void ThrowIfArtifactWithNoModuleOrFeature(Type[] types)
         {
+            bool hasInvalidArtifact = false;
             foreach(var type in types)
             {
                 var numSegments = type.Namespace.Split(NamespaceSeperator).Count();
                 if (numSegments < 1) 
-                    throw new InvalidArtifact(type);       
+                {
+                    hasInvalidArtifact = true;
+                    ConsoleLogger.LogError($"Artifact {type.Name} with namespace = {type.Namespace} is invalid");
+                }
             }
+            if (hasInvalidArtifact) throw new InvalidArtifact();
         }
 
         static void ThrowIfContainsInvalidTypePath(string[] typePaths, bool useModules)
         {
+            bool hasInvalidTypePath = false;
             foreach(var path in typePaths)
             {
                 var numSegments = path.Split(NamespaceSeperator).Count();
                 if (useModules && numSegments < 2) 
-                    throw new InvalidArtifact(path);
+                {
+                    hasInvalidTypePath = true;
+                    ConsoleLogger.LogError($"Artifact with type path (a Module name + Feature names composition) {path} is invalid");
+                }
+                if (hasInvalidTypePath) throw new InvalidArtifact();
             }
         }
 
@@ -223,9 +237,9 @@ namespace Dolittle.Artifacts.Tools
             return paths;
         }
 
-        static void AddPathsToBoundedContextConfiguration(string[] missingPaths, BoundedContextConfigurationUtilities.BoundedContextRetrievalResult retrievalResult, ref BoundedContextConfiguration config)
+        static void AddPathsToBoundedContextConfiguration(string[] missingPaths, ref BoundedContextConfiguration config)
         {
-            if (retrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.HasTopology)
+            if (config.UseModules)
                 AddModulesAndFeatures(missingPaths, ref config);
             else
                 AddFeatures(missingPaths, ref config);
@@ -323,7 +337,7 @@ namespace Dolittle.Artifacts.Tools
             {
                 var feature = group.ElementAt(0);
                 var subFeatures = new List<FeatureDefinition>(feature.SubFeatures);
-                subFeatures.AddRange(group.Skip(1));
+                subFeatures.AddRange(group.Skip(1).SelectMany(_ => _.SubFeatures));
                 feature.SubFeatures = CollapseFeatures(subFeatures.GroupBy(_ => _.Name));
 
                 features.Add(feature);
@@ -331,16 +345,16 @@ namespace Dolittle.Artifacts.Tools
             return features;
         }
 
-        static int HandleArtifactOfType(Type artifactType, ArtifactsConfiguration artifactsConfiguration, List<FeatureDefinition> features, IEnumerable<Type> types, string typeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression)
+        static int HandleArtifactOfType(Type artifactType, ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types, BoundedContextConfiguration boundedContextConfiguration, string typeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression)
         {
             var targetProperty = targetPropertyExpression.GetPropertyInfo();
 
             var newArtifacts = 0;
             var artifacts = types.Where(_ => artifactType.IsAssignableFrom(_));
+            
             artifacts.ForEach(artifact =>
             {
-                var featureName = artifact.Namespace.Split(NamespaceSeperator).Last();
-                var feature = features.SingleOrDefault(_ => _.Name == featureName);
+                var feature = FindMatchingFeature(artifact.Namespace, boundedContextConfiguration);
                 if (feature != null)
                 {
                     ArtifactsByTypeDefinition artifactsByTypeDefinition;
@@ -373,6 +387,38 @@ namespace Dolittle.Artifacts.Tools
                 }
             });
             return newArtifacts;
+        }
+
+        static FeatureDefinition FindMatchingFeature(string @namespace, BoundedContextConfiguration boundedContextConfiguration)
+        {
+            var segments = @namespace.Split(NamespaceSeperator).Skip(1).ToArray();
+            
+            if (boundedContextConfiguration.UseModules)
+            {
+                var matchingModule = boundedContextConfiguration.Topology.Modules
+                    .SingleOrDefault(module => module.Name.Value.Equals(segments[0]));
+                
+                //TODO: matchingModule == null => Module not found, error
+                if (segments.Count() < 2) throw new Exception("This should not happen");//TODO: Better exception
+                return FindMatchingFeature(segments.Skip(1).ToArray(), matchingModule.Features);
+            }
+            
+            return FindMatchingFeature(segments, boundedContextConfiguration.Topology.Features);
+        }
+        static FeatureDefinition FindMatchingFeature(string[] segments, IEnumerable<FeatureDefinition> features)
+        {
+            var featureName = segments.Count() > 0? segments[0] : "";
+            if (string.IsNullOrEmpty(featureName)) 
+                throw new Exception("Missing feature");//TODO: throw new MissingFeature
+            
+            var matchingFeature = features.SingleOrDefault(feature => feature.Name.Value.Equals(segments[0]));
+
+            if (matchingFeature == null) 
+                throw new Exception("Missing feature");//TODO: throw new MissingFeature
+
+            if (segments.Count() == 1) return matchingFeature;
+
+            return FindMatchingFeature(segments.Skip(1).ToArray(), matchingFeature.SubFeatures);
         }
     }
 }

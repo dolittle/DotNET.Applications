@@ -34,32 +34,12 @@ namespace Dolittle.Artifacts.Tools
         /// <summary>
         /// Retrieves a list of <see cref="FeatureDefinition"/> from the <see cref="BoundedContextConfiguration"/>
         /// </summary>
-        /// <exception cref="DuplicateFeature"/>
         /// <param name="configuration"></param>
         internal static IEnumerable<FeatureDefinition> RetrieveFeatures(BoundedContextConfiguration configuration)
         {
-            var featureMap = new Dictionary<Guid, FeatureDefinition>();
-            if (configuration.UseModules)
-            {
-                configuration.Topology.Modules.SelectMany(module => module.Features)
-                    .ForEach(feature => 
-                    {
-                        if (featureMap.ContainsKey(feature.Feature)) throw new DuplicateFeature(feature);
-                        featureMap.Add(feature.Feature, feature);
-
-                    });
-                return featureMap.Values;
-            }
-            else
-            {
-                configuration.Topology.Features.ForEach(feature => 
-                {
-                    if (featureMap.ContainsKey(feature.Feature)) throw new DuplicateFeature(feature);
-                        featureMap.Add(feature.Feature, feature);
-                });
-
-                return featureMap.Values;
-            }
+            if (configuration.UseModules) return configuration.Topology.Modules.SelectMany(_ => _.Features);     
+            else return  configuration.Topology.Features;
+            
         }
 
         static void ThrowBoundedContextConfigurationIsInvalid(BoundedContextConfiguration config)
@@ -80,7 +60,6 @@ namespace Dolittle.Artifacts.Tools
 
         static void ThrowIfTopologyIsInvalid(bool useModules, TopologyConfiguration topology)
         {
-            // QUESTION: Throw if empty topology?
             if (useModules)
             {
                 if (HasFeatures(topology))
