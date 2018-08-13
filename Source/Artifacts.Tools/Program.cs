@@ -37,7 +37,7 @@ namespace Dolittle.Artifacts.Tools
     //
     class Program
     {
-        const string NamespaceSeperator = ".";
+        internal const string NamespaceSeperator = ".";
         static IBoundedContextConfigurationManager _boundedContextConfigurationManager;
         static IArtifactsConfigurationManager _artifactsConfigurationManager;
 
@@ -239,10 +239,10 @@ namespace Dolittle.Artifacts.Tools
 
             foreach(var path in missingPaths)
             {
-                modules.Add(GetModuleFromPath(path));
+                modules.Add(path.GetModuleFromPath());
             }
 
-            config.Topology.Modules = CollapseModules(modules.GroupBy(module => module.Name));
+            config.Topology.Modules = config.Topology.GetCollapsedModules();
         }
 
         static void AddFeatures(string[] missingPaths, ref BoundedContextConfiguration config)
@@ -250,87 +250,10 @@ namespace Dolittle.Artifacts.Tools
             var features = new List<FeatureDefinition>(config.Topology.Features);
             foreach (var path in missingPaths)
             {
-                features.Add(GetFeatureFromPath(path));
+                features.Add(path.GetFeatureFromPath());
             }
 
-            config.Topology.Features = CollapseFeatures(features.GroupBy(feature => feature.Name));
-        }
-
-        static ModuleDefinition GetModuleFromPath(string path)
-        {
-            var splitPath = path.Split(NamespaceSeperator);
-            var moduleName = splitPath.First();
-            var module = new ModuleDefinition()
-            {
-                Module = Guid.NewGuid(),
-                Name = moduleName
-            };
-            
-            var featurePath = string.Join(NamespaceSeperator, splitPath.Skip(1));
-            if (!string.IsNullOrEmpty(featurePath))
-            {
-                module.Features = new List<FeatureDefinition>()
-                {
-                    GetFeatureFromPath(featurePath)
-                };
-            }
-
-            return module;
-        }
-        static FeatureDefinition GetFeatureFromPath(string path)
-        {
-            var stringSegmentsReversed = path.Split(NamespaceSeperator).Reverse().ToArray();
-            if (stringSegmentsReversed.Count() == 0) throw new Exception("Could not get feature from path");
-            
-            var currentFeature = new FeatureDefinition()
-            {
-                Feature = Guid.NewGuid(), 
-                Name = stringSegmentsReversed[0]
-            };
-            foreach (var featureName in stringSegmentsReversed.Skip(1))
-            {
-                var parentFeature = new FeatureDefinition()
-                {
-                    Feature = Guid.NewGuid(),
-                    Name = featureName,
-                };
-                parentFeature.SubFeatures = new List<FeatureDefinition>(){currentFeature};
-                currentFeature = parentFeature;
-            }
-
-            return currentFeature;
-        }
-
-        static IList<ModuleDefinition> CollapseModules(IEnumerable<IGrouping<ModuleName, ModuleDefinition>> moduleGroups)
-        {
-            var modules = new List<ModuleDefinition>();
-
-            foreach (var group in moduleGroups)
-            {
-                var module = group.ElementAt(0);
-                var features = new List<FeatureDefinition>(module.Features);
-                features.AddRange(group.Skip(1).SelectMany(_ => _.Features));
-                module.Features = CollapseFeatures(features.GroupBy(_ => _.Name));
-
-                modules.Add(module);
-            }
-
-            return modules;
-        }
-        static IList<FeatureDefinition> CollapseFeatures(IEnumerable<IGrouping<FeatureName, FeatureDefinition>> featureGroups)
-        {
-            var features = new List<FeatureDefinition>();
-
-            foreach (var group in featureGroups)
-            {
-                var feature = group.ElementAt(0);
-                var subFeatures = new List<FeatureDefinition>(feature.SubFeatures);
-                subFeatures.AddRange(group.Skip(1).SelectMany(_ => _.SubFeatures));
-                feature.SubFeatures = CollapseFeatures(subFeatures.GroupBy(_ => _.Name));
-
-                features.Add(feature);
-            }
-            return features;
+            config.Topology.Features = config.Topology.GetCollapsedFeatures();
         }
 
         static int HandleArtifactOfType(Type artifactType, ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types, BoundedContextConfiguration boundedContextConfiguration, string typeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression)
@@ -342,7 +265,7 @@ namespace Dolittle.Artifacts.Tools
             
             artifacts.ForEach(artifact =>
             {
-                var feature = FindMatchingFeature(artifact.Namespace, boundedContextConfiguration);
+                var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace);
                 if (feature != null)
                 {
                     ArtifactsByTypeDefinition artifactsByTypeDefinition;
@@ -375,38 +298,6 @@ namespace Dolittle.Artifacts.Tools
                 }
             });
             return newArtifacts;
-        }
-
-        static FeatureDefinition FindMatchingFeature(string @namespace, BoundedContextConfiguration boundedContextConfiguration)
-        {
-            var segments = @namespace.Split(NamespaceSeperator).Skip(1).ToArray();
-            
-            if (boundedContextConfiguration.UseModules)
-            {
-                var matchingModule = boundedContextConfiguration.Topology.Modules
-                    .SingleOrDefault(module => module.Name.Value.Equals(segments[0]));
-                
-                //TODO: matchingModule == null => Module not found, error
-                if (segments.Count() < 2) throw new Exception("This should not happen");//TODO: Better exception
-                return FindMatchingFeature(segments.Skip(1).ToArray(), matchingModule.Features);
-            }
-            
-            return FindMatchingFeature(segments, boundedContextConfiguration.Topology.Features);
-        }
-        static FeatureDefinition FindMatchingFeature(string[] segments, IEnumerable<FeatureDefinition> features)
-        {
-            var featureName = segments.Count() > 0? segments[0] : "";
-            if (string.IsNullOrEmpty(featureName)) 
-                throw new Exception("Missing feature");//TODO: throw new MissingFeature
-            
-            var matchingFeature = features.SingleOrDefault(feature => feature.Name.Value.Equals(segments[0]));
-
-            if (matchingFeature == null) 
-                throw new Exception("Missing feature");//TODO: throw new MissingFeature
-
-            if (segments.Count() == 1) return matchingFeature;
-
-            return FindMatchingFeature(segments.Skip(1).ToArray(), matchingFeature.SubFeatures);
         }
 
         static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration)
