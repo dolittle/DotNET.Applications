@@ -422,7 +422,7 @@ namespace Dolittle.Artifacts.Tools
                     
                     var artifactDefinitions = artifactsConfiguration.GetAllArtifactDefinitions();
                     foreach (var definition in artifactDefinitions)
-                        Console.WriteLine($"\tArtifact: {definition.Artifact.Value} CLR-type: {definition.Type.TypeString}@{definition.Generation.Value}");
+                        Console.WriteLine($"\tArtifact: {definition.Artifact.Value} CLR-type: {definition.Type.TypeString} @{definition.Generation.Value}");
                     
                 }
             }
@@ -441,7 +441,7 @@ namespace Dolittle.Artifacts.Tools
                 ConsoleLogger.LogWarning("There are artifacts that are not found in the Bounded Context structure anymore. You may have to write migrators for them:");
                 Console.WriteLine("Artifacts:");
                 foreach (var artifactDefinition in artifactDefinitions)
-                    Console.WriteLine($"\tArtifact: {artifactDefinition.Artifact.Value} CLR-type: {artifactDefinition.Type.TypeString}@{artifactDefinition.Generation.Value}");
+                    Console.WriteLine($"\tArtifact: {artifactDefinition.Artifact.Value} CLR-type: {artifactDefinition.Type.TypeString} @{artifactDefinition.Generation.Value}");
             }
         }
     }
