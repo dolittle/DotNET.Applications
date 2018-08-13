@@ -28,14 +28,6 @@ using Microsoft.Extensions.Logging;
 namespace Dolittle.Artifacts.Tools
 {
     // Todo: 
-    // - Look for new features and add them to the topology. Base it off of the namespace by convention:
-    //   First segment of the namespace is the concern or tier segment and will be ignored, last segment is the feature name
-    //   Feature is required - no root level artifacts supported
-    //
-    //   When modules are set to "useModules=true", we use the second segment as the module
-    //   All segments after module when enabled, or after the tier segment is a feature and every segment represents a child of the previous
-    //   feature
-    //
     // - When an artifact is no longer in the structure, we should display a warning saying it should be removed and a migrator might be necessary
     //   Migrator is only necessary if the solution is already in production or running in dev/stage with the structure
     //
@@ -43,15 +35,9 @@ namespace Dolittle.Artifacts.Tools
     //   This configuration should then be optional and default set to empty. The MSBuild task should expose a variable that can be set in a <PropertyGroup/>
     //   The base namespace would be from the second segment - after tier segment
     //
-    // - Validation of structure
-    //   Types that are artifacts sitting on a Module should not be allowed - we should either warn or flatout error about these
-    //   Look for duplicates on Id of features and modules - fail if duplicates
-
-    // - Be able to skip prefixes in namespace
-    //   
     class Program
     {
-        static string NamespaceSeperator = ".";
+        const string NamespaceSeperator = ".";
         static IBoundedContextConfigurationManager _boundedContextConfigurationManager;
         static IArtifactsConfigurationManager _artifactsConfigurationManager;
 
@@ -67,7 +53,6 @@ namespace Dolittle.Artifacts.Tools
 
         static int Main(string[] args)
         {
-            
             if (args.Length != 1)
             {
                 ConsoleLogger.LogError("Error consolidating artifacts; missing argument for name of assembly to consolidate");
@@ -116,16 +101,17 @@ namespace Dolittle.Artifacts.Tools
                 var existingArtifactPaths = new List<string>();
 
                 if (boundedContextConfigurationRetrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.HasTopology)
-                {
                     AddExistingArtifactPaths(boundedContextConfiguration, ref existingArtifactPaths);
-                }
+                
 
                 var missingPaths = boundedContextConfigurationRetrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.NewBoundedContextConfig? 
-                    typePaths // Optimization 
+                    typePaths
                     : typePaths.Where(_ => !existingArtifactPaths.Any(ap => ap == _)).ToArray();
 
                 if (missingPaths.Any())
                     AddPathsToBoundedContextConfiguration(missingPaths, ref boundedContextConfiguration);
+
+                BoundedContextConfigurationUtilities.ValidateTopology(boundedContextConfiguration);
 
                 _artifactTypes.ForEach(artifactType =>
                     newArtifacts += HandleArtifactOfType(
@@ -137,9 +123,11 @@ namespace Dolittle.Artifacts.Tools
                         artifactType.TargetPropertyExpression
                     )
                 );
-
+                WarnIfFeatureMissingFromTopology(artifactsConfiguration, boundedContextConfiguration);
+                WarnIfArtifactNoLongerInStructure(artifactsConfiguration, types);
                 var hasChanges = newArtifacts > 0;
 
+                
                 if (missingPaths.Any()) _boundedContextConfigurationManager.Save(boundedContextConfiguration); 
                 if (hasChanges) _artifactsConfigurationManager.Save(artifactsConfiguration);
 
@@ -219,8 +207,8 @@ namespace Dolittle.Artifacts.Tools
                 var paths = boundedContextConfiguration.Topology.Features;
                 existingArtifactPaths.AddRange(GetArtifactPathsFor(paths));
             }
-                
         }
+        
         static IList<string> GetArtifactPathsFor(IEnumerable<FeatureDefinition> features, string parent = "")
         {
             var paths = new List<string>();
@@ -365,9 +353,9 @@ namespace Dolittle.Artifacts.Tools
                     {
                         artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
                         artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
-                    }
-
+                    } 
                     var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
+                    
                     if (!existingArtifacts.Any(_ => _.Type.GetActualType() == artifact))
                     {
                         var newAndExistingArtifacts = new List<ArtifactDefinition>(existingArtifacts);
@@ -419,6 +407,42 @@ namespace Dolittle.Artifacts.Tools
             if (segments.Count() == 1) return matchingFeature;
 
             return FindMatchingFeature(segments.Skip(1).ToArray(), matchingFeature.SubFeatures);
+        }
+
+        static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration)
+        {
+            Dictionary<Feature, FeatureName> featureMap = BoundedContextConfigurationUtilities.RetrieveAllFeatureIds(boundedContextConfiguration);
+
+            foreach (var artifact in artifactsConfiguration.Artifacts)
+            {
+                if (!featureMap.ContainsKey(artifact.Key))
+                {
+                    ConsoleLogger.LogWarning($"Found artifacts under a Feature that does not exist in the topology. Feature: {artifact.Key}");
+                    Console.WriteLine("Artifacts:");
+                    
+                    var artifactDefinitions = artifactsConfiguration.GetAllArtifactDefinitions();
+                    foreach (var definition in artifactDefinitions)
+                        Console.WriteLine($"\tArtifact: {definition.Artifact.Value} CLR-type: {definition.Type.TypeString}@{definition.Generation.Value}");
+                    
+                }
+            }
+        }
+        static void WarnIfArtifactNoLongerInStructure(ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types)
+        {
+            var artifactDefinitions = new List<ArtifactDefinition>();
+            foreach (var artifactDefinition in artifactsConfiguration.GetAllArtifactDefinitions())
+            {
+                if (!types.Contains(artifactDefinition.Type.GetActualType()))
+                    artifactDefinitions.Add(artifactDefinition);
+                
+            }
+            if (artifactDefinitions.Any())
+            {
+                ConsoleLogger.LogWarning("There are artifacts that are not found in the Bounded Context structure anymore. You may have to write migrators for them:");
+                Console.WriteLine("Artifacts:");
+                foreach (var artifactDefinition in artifactDefinitions)
+                    Console.WriteLine($"\tArtifact: {artifactDefinition.Artifact.Value} CLR-type: {artifactDefinition.Type.TypeString}@{artifactDefinition.Generation.Value}");
+            }
         }
     }
 }

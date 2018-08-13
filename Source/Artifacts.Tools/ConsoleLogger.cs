@@ -7,19 +7,19 @@ namespace Dolittle.Artifacts.Tools
         internal static void LogInfo(string message)
         {
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(message);
+            Console.WriteLine("Info: " + message);
         }
 
         internal static void LogWarning(string message)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(message);
+            Console.WriteLine("Warning: " + message);
         }
 
         internal static void LogError(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Error.WriteLine(message);
+            Console.Error.WriteLine("Error: " + message);
         }
     }
 }
