@@ -28,9 +28,6 @@ using Microsoft.Extensions.Logging;
 namespace Dolittle.Artifacts.Tools
 {
     // Todo: 
-    // - When an artifact is no longer in the structure, we should display a warning saying it should be removed and a migrator might be necessary
-    //   Migrator is only necessary if the solution is already in production or running in dev/stage with the structure
-    //
     // - Consider having an option that can be passed in to say a base namespace. E.g. for Web projects (see Sentry) - we tend to have Features/ root folder.
     //   This configuration should then be optional and default set to empty. The MSBuild task should expose a variable that can be set in a <PropertyGroup/>
     //   The base namespace would be from the second segment - after tier segment
@@ -122,8 +119,11 @@ namespace Dolittle.Artifacts.Tools
                         artifactType.TargetPropertyExpression
                     )
                 );
+
+                ThrowIfDuplicateArtifacts(artifactsConfiguration);
                 WarnIfFeatureMissingFromTopology(artifactsConfiguration, boundedContextConfiguration);
                 WarnIfArtifactNoLongerInStructure(artifactsConfiguration, types);
+
                 var hasChanges = newArtifacts > 0;
 
                 
@@ -147,7 +147,6 @@ namespace Dolittle.Artifacts.Tools
 
             return 0;
         }
-
         static void ThrowIfArtifactWithNoModuleOrFeature(Type[] types)
         {
             bool hasInvalidArtifact = false;
@@ -299,5 +298,27 @@ namespace Dolittle.Artifacts.Tools
                     Console.WriteLine($"\tArtifact: {artifactDefinition.Artifact.Value} CLR-type: {artifactDefinition.Type.TypeString} @{artifactDefinition.Generation.Value}");
             }
         }
+
+        static void ThrowIfDuplicateArtifacts(ArtifactsConfiguration artifactsConfiguration)
+        {
+            var idMap = new Dictionary<ArtifactId, ClrType>();
+            bool foundDuplicate = false;
+            foreach (var artifactDefinition in artifactsConfiguration.GetAllArtifactDefinitions())
+            {
+                if (idMap.ContainsKey(artifactDefinition.Artifact))
+                {
+                    foundDuplicate = true;
+                    var artifactId = artifactDefinition.Artifact;
+                    var clrType = idMap[artifactDefinition.Artifact];
+                    
+                    ConsoleLogger.LogError($"An artifact with ArtifactId: {artifactId.Value} already exists.");
+                    ConsoleLogger.LogInfo($"Artifact with Type: {clrType.TypeString} and artifact with Type {artifactDefinition.Type.TypeString} has the same ArtifactId.");
+                }
+                else 
+                    idMap.Add(artifactDefinition.Artifact, artifactDefinition.Type);
+            }
+            if (foundDuplicate) throw new DuplicateArtifact();
+        }
+
     }
 }
