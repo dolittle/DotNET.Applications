@@ -23,7 +23,7 @@ namespace Dolittle.Artifacts.Tools
         internal static BoundedContextRetrievalResult RetrieveConfiguration(IBoundedContextConfigurationManager manager, out BoundedContextConfiguration configuration)
         {
             configuration = manager.Load();
-            ThrowBoundedContextConfigurationIsInvalid(configuration);
+            ThrowIfBoundedContextConfigurationIsInvalid(configuration);
 
             if (IsNewConfiguration(configuration)) 
                 return BoundedContextRetrievalResult.NewBoundedContextConfig;
@@ -31,99 +31,38 @@ namespace Dolittle.Artifacts.Tools
             ThrowIfTopologyIsInvalid(configuration.UseModules, configuration.Topology);
             return BoundedContextRetrievalResult.HasTopology;
         }
-
-        /// <summary>
-        /// Retrieves a list of <see cref="FeatureDefinition"/> from the <see cref="BoundedContextConfiguration"/>
-        /// </summary>
-        /// <param name="configuration"></param>
-        internal static IEnumerable<FeatureDefinition> RetrieveFeatures(BoundedContextConfiguration configuration)
+        internal static void AddPathsToBoundedContextConfiguration(string[] missingPaths, ref BoundedContextConfiguration config)
         {
-            if (configuration.UseModules) return configuration.Topology.Modules.SelectMany(_ => _.Features);     
-            else return  configuration.Topology.Features;
-            
+            if (config.UseModules)
+                AddModulesAndFeatures(missingPaths, ref config);
+            else
+                AddFeatures(missingPaths, ref config);
         }
 
-        internal static Dictionary<Feature, FeatureName> RetrieveAllFeatureIds(BoundedContextConfiguration configuration)
-        {
-            var featureMap = new Dictionary<Feature, FeatureName>();
-            
-            AddAllFeaturesToMap(RetrieveFeatures(configuration), ref featureMap);
 
-            return featureMap;
-        }
-
-        static void AddAllFeaturesToMap(IEnumerable<FeatureDefinition> features, ref Dictionary<Feature, FeatureName> map)
+        static void AddModulesAndFeatures(string[] missingPaths, ref BoundedContextConfiguration config)
         {
-            foreach (var feature in features)
+            var modules = new List<ModuleDefinition>(config.Topology.Modules);
+
+            foreach(var path in missingPaths)
             {
-                map.Add(feature.Feature, feature.Name);
-                AddAllFeaturesToMap(feature.SubFeatures, ref map);
+                modules.Add(path.GetModuleFromPath());
             }
+            config.Topology.Modules = modules.GetCollapsedModules();
         }
 
-        internal static void ValidateTopology(BoundedContextConfiguration configuration)
+        static void AddFeatures(string[] missingPaths, ref BoundedContextConfiguration config)
         {
-            ThrowIfDuplicateId(configuration);
-        }
-
-        static void ThrowIfDuplicateId(BoundedContextConfiguration configuration)
-        {
-            var idMap = new Dictionary<Guid, string>();
-            bool hasDuplicateId = false;
-
-            if (configuration.UseModules)
+            var features = new List<FeatureDefinition>(config.Topology.Features);
+            foreach (var path in missingPaths)
             {
-                foreach (var module in configuration.Topology.Modules)
-                {
-                    if (idMap.ContainsKey(module.Module))
-                    {
-                        hasDuplicateId = true;
-                        var name = idMap[module.Module];
-
-                        ConsoleLogger.LogError(
-                            $"Duplicate id found in bounded-context topology.\n" +
-                            $"The id: {module.Module.Value} is already occupied by the Module/Feature: {name} ");
-                    }
-                    else
-                    {
-                        idMap.Add(module.Module, module.Name);
-                    }
-                    ThrowIfDuplicateId(module.Features, ref idMap, ref hasDuplicateId);
-                }
-            }
-            else 
-            {
-                ThrowIfDuplicateId(configuration.Topology.Features, ref idMap, ref hasDuplicateId);
+                features.Add(path.GetFeatureFromPath());
             }
 
-            if (hasDuplicateId)
-            {
-                throw new InvalidTopology("Bounded context topology has one or more Features/Modules with the same ID");
-            }
+            config.Topology.Features = features.GetCollapsedFeatures();
         }
-
-        static void ThrowIfDuplicateId(IEnumerable<FeatureDefinition> features, ref Dictionary<Guid, string> idMap, ref bool hasDuplicateId)
-        {
-            foreach (var feature in features)
-            {
-                if (idMap.ContainsKey(feature.Feature))
-                {
-
-                    hasDuplicateId = true;
-                    var name = idMap[feature.Feature];
-                    
-                    ConsoleLogger.LogError(
-                        $"Duplicate id found in bounded-context topology.\n" +
-                        $"The id: {feature.Feature.Value} is already occupied by the Module/Feature: {name} ");
-                }
-                else
-                {
-                    idMap.Add(feature.Feature, feature.Name);
-                }
-                ThrowIfDuplicateId(feature.SubFeatures, ref idMap, ref hasDuplicateId);
-            }
-        }
-        static void ThrowBoundedContextConfigurationIsInvalid(BoundedContextConfiguration config)
+        
+        static void ThrowIfBoundedContextConfigurationIsInvalid(BoundedContextConfiguration config)
         {
             if (config.Application == null || config.Application.Value.Equals(Guid.Empty)) 
                 throw new InvalidBoundedContextConfiguration("Application is required and must cannot be an empty Guid");

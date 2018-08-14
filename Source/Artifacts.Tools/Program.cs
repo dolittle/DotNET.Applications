@@ -60,16 +60,15 @@ namespace Dolittle.Artifacts.Tools
             }
             try
             {
-                BoundedContextConfiguration boundedContextConfiguration;
-
                 while(!System.Diagnostics.Debugger.IsAttached)
                 {
                     System.Threading.Thread.Sleep(10);
                 }
-                var startTime = DateTime.UtcNow;
-
-                var assemblyLoader = new AssemblyLoader(args[0]);
                 SetupConfigurationManagers();
+
+                BoundedContextConfiguration boundedContextConfiguration;                
+                var startTime = DateTime.UtcNow;
+                var assemblyLoader = new AssemblyLoader(args[0]);
 
                 var artifactsConfiguration = _artifactsConfigurationManager.Load();
 
@@ -109,9 +108,9 @@ namespace Dolittle.Artifacts.Tools
                     : typePaths.Where(_ => !existingArtifactPaths.Any(ap => ap == _)).ToArray();
 
                 if (missingPaths.Any())
-                    AddPathsToBoundedContextConfiguration(missingPaths, ref boundedContextConfiguration);
+                    BoundedContextConfigurationUtilities.AddPathsToBoundedContextConfiguration(missingPaths, ref boundedContextConfiguration);
 
-                BoundedContextConfigurationUtilities.ValidateTopology(boundedContextConfiguration);
+                boundedContextConfiguration.ValidateTopology();
 
                 _artifactTypes.ForEach(artifactType =>
                     newArtifacts += HandleArtifactOfType(
@@ -194,19 +193,15 @@ namespace Dolittle.Artifacts.Tools
 
         static void AddExistingArtifactPaths(BoundedContextConfiguration boundedContextConfiguration, ref List<string> existingArtifactPaths)
         {
-            if (boundedContextConfiguration.UseModules )
+            if (boundedContextConfiguration.UseModules ) 
             {
                foreach (var module in boundedContextConfiguration.Topology.Modules)
-               {
-                   var paths = GetArtifactPathsFor(module.Features, module.Name);
-                   existingArtifactPaths.AddRange(paths);
-               }
+                   existingArtifactPaths.AddRange(GetArtifactPathsFor(module.Features, module.Name));
             }
+               
             else 
-            {
-                var paths = boundedContextConfiguration.Topology.Features;
-                existingArtifactPaths.AddRange(GetArtifactPathsFor(paths));
-            }
+                existingArtifactPaths.AddRange(GetArtifactPathsFor(boundedContextConfiguration.Topology.Features));
+            
         }
         
         static IList<string> GetArtifactPathsFor(IEnumerable<FeatureDefinition> features, string parent = "")
@@ -223,37 +218,6 @@ namespace Dolittle.Artifacts.Tools
             });
 
             return paths;
-        }
-
-        static void AddPathsToBoundedContextConfiguration(string[] missingPaths, ref BoundedContextConfiguration config)
-        {
-            if (config.UseModules)
-                AddModulesAndFeatures(missingPaths, ref config);
-            else
-                AddFeatures(missingPaths, ref config);
-        }
-
-        static void AddModulesAndFeatures(string[] missingPaths, ref BoundedContextConfiguration config)
-        {
-            var modules = new List<ModuleDefinition>(config.Topology.Modules);
-
-            foreach(var path in missingPaths)
-            {
-                modules.Add(path.GetModuleFromPath());
-            }
-
-            config.Topology.Modules = config.Topology.GetCollapsedModules();
-        }
-
-        static void AddFeatures(string[] missingPaths, ref BoundedContextConfiguration config)
-        {
-            var features = new List<FeatureDefinition>(config.Topology.Features);
-            foreach (var path in missingPaths)
-            {
-                features.Add(path.GetFeatureFromPath());
-            }
-
-            config.Topology.Features = config.Topology.GetCollapsedFeatures();
         }
 
         static int HandleArtifactOfType(Type artifactType, ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types, BoundedContextConfiguration boundedContextConfiguration, string typeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression)
@@ -302,7 +266,7 @@ namespace Dolittle.Artifacts.Tools
 
         static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration)
         {
-            Dictionary<Feature, FeatureName> featureMap = BoundedContextConfigurationUtilities.RetrieveAllFeatureIds(boundedContextConfiguration);
+            Dictionary<Feature, FeatureName> featureMap = boundedContextConfiguration.RetrieveAllFeatureIds();
 
             foreach (var artifact in artifactsConfiguration.Artifacts)
             {

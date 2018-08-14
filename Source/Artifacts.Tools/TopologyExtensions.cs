@@ -7,51 +7,36 @@ namespace Dolittle.Artifacts.Tools
 {
     internal static class TopologyExtensions
     {
-        internal static IList<ModuleDefinition> GetCollapsedModules(this TopologyConfiguration topology)
+        internal static IList<ModuleDefinition> GetCollapsedModules(this IEnumerable<ModuleDefinition> modules)
         {
-            var modules = new List<ModuleDefinition>();
+            var collapsedModules = new List<ModuleDefinition>();
 
-            foreach (var group in topology.Modules.GroupBy(_ => _.Name))
+            foreach (var group in modules.GroupBy(_ => _.Name))
             {
                 var module = group.ElementAt(0);
                 var features = new List<FeatureDefinition>(module.Features);
                 features.AddRange(group.Skip(1).SelectMany(_ => _.Features));
-                module.Features = CollapseFeatures(features.GroupBy(_ => _.Name));
+                module.Features = features.GetCollapsedFeatures();
 
-                modules.Add(module);
+                collapsedModules.Add(module);
             }
 
-            return modules;
+            return collapsedModules;
         }
-        internal static IList<FeatureDefinition> GetCollapsedFeatures(this TopologyConfiguration topology)
+        internal static IList<FeatureDefinition> GetCollapsedFeatures(this IEnumerable<FeatureDefinition> features)
         {
-            var features = new List<FeatureDefinition>();
+            var collapsedFeatures = new List<FeatureDefinition>();
 
-            foreach (var group in topology.Features.GroupBy(_ => _.Name))
+            foreach (var group in features.GroupBy(_ => _.Name))
             {
                 var feature = group.ElementAt(0);
                 var subFeatures = new List<FeatureDefinition>(feature.SubFeatures);
                 subFeatures.AddRange(group.Skip(1).SelectMany(_ => _.SubFeatures));
-                feature.SubFeatures = CollapseFeatures(subFeatures.GroupBy(_ => _.Name));
+                feature.SubFeatures = subFeatures.GetCollapsedFeatures();
 
-                features.Add(feature);
+                collapsedFeatures.Add(feature);
             }
-            return features;
-        }
-        static IList<FeatureDefinition> CollapseFeatures(IEnumerable<IGrouping<FeatureName, FeatureDefinition>> featureGroups)
-        {
-            var features = new List<FeatureDefinition>();
-
-            foreach (var group in featureGroups)
-            {
-                var feature = group.ElementAt(0);
-                var subFeatures = new List<FeatureDefinition>(feature.SubFeatures);
-                subFeatures.AddRange(group.Skip(1).SelectMany(_ => _.SubFeatures));
-                feature.SubFeatures = CollapseFeatures(subFeatures.GroupBy(_ => _.Name));
-
-                features.Add(feature);
-            }
-            return features;
+            return collapsedFeatures;
         }
     }
 }
