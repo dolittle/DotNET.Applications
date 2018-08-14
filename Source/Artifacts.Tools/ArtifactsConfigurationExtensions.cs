@@ -11,20 +11,38 @@ namespace Dolittle.Artifacts.Tools
     {
         internal static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration configuration)
         {
-            var featureDefinitions = new List<ArtifactDefinition>();
+            var artifactDefinitions = new List<ArtifactDefinition>();
 
             foreach (var artifactEntry in configuration.Artifacts)
             {
-                featureDefinitions.AddRange(artifactEntry.Value.Commands);
-                featureDefinitions.AddRange(artifactEntry.Value.EventProcessors);
-                featureDefinitions.AddRange(artifactEntry.Value.Events);
-                featureDefinitions.AddRange(artifactEntry.Value.EventSources);
-                featureDefinitions.AddRange(artifactEntry.Value.Queries);
-                featureDefinitions.AddRange(artifactEntry.Value.ReadModels);
+                artifactDefinitions.AddRange(artifactEntry.Value.Commands);
+                artifactDefinitions.AddRange(artifactEntry.Value.EventProcessors);
+                artifactDefinitions.AddRange(artifactEntry.Value.Events);
+                artifactDefinitions.AddRange(artifactEntry.Value.EventSources);
+                artifactDefinitions.AddRange(artifactEntry.Value.Queries);
+                artifactDefinitions.AddRange(artifactEntry.Value.ReadModels);
                 
             }
-            return featureDefinitions;
+            return artifactDefinitions;
         }
+
+        internal static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration configuration, Feature id)
+        {
+            var artifactDefinitions = new List<ArtifactDefinition>();
+
+            var artifacts = configuration.Artifacts[id];
+            
+            artifactDefinitions.AddRange(artifacts.Commands);
+            artifactDefinitions.AddRange(artifacts.EventProcessors);
+            artifactDefinitions.AddRange(artifacts.Events);
+            artifactDefinitions.AddRange(artifacts.EventSources);
+            artifactDefinitions.AddRange(artifacts.Queries);
+            artifactDefinitions.AddRange(artifacts.ReadModels);
+            
+            return artifactDefinitions;
+        }
+
+        
         internal static void ValidateArtifacts(this ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration, Type[] types)
         {
             ThrowIfDuplicateArtifacts(artifactsConfiguration);
@@ -63,7 +81,7 @@ namespace Dolittle.Artifacts.Tools
                     ConsoleLogger.LogWarning($"Found artifacts under a Feature that does not exist in the topology. Feature: {artifact.Key}");
                     Console.WriteLine("Artifacts:");
                     
-                    var artifactDefinitions = artifactsConfiguration.GetAllArtifactDefinitions();
+                    var artifactDefinitions = artifactsConfiguration.GetAllArtifactDefinitions(artifact.Key);
                     foreach (var definition in artifactDefinitions)
                         Console.WriteLine($"\tArtifact: {definition.Artifact.Value} CLR-type: {definition.Type.TypeString} @{definition.Generation.Value}");
                     
