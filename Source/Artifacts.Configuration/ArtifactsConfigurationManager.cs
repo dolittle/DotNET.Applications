@@ -18,7 +18,7 @@ namespace Dolittle.Artifacts.Configuration
     [Singleton]
     public class ArtifactsConfigurationManager : IArtifactsConfigurationManager
     {
-        const string _path   = "../artifacts.json";
+        const string _path   = "artifacts.json";
         readonly ISerializer _serializer;
 
         /// <summary>

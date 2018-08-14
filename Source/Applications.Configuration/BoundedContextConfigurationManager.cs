@@ -17,7 +17,7 @@ namespace Dolittle.Applications.Configuration
     [Singleton]
     public class BoundedContextConfigurationManager : IBoundedContextConfigurationManager
     {
-        const string _path   = "../bounded-context.json";
+        const string _path   = "bounded-context.json";
         readonly ISerializer _serializer;
         BoundedContextConfiguration _current;
 
