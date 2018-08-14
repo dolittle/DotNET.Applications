@@ -51,7 +51,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Applications.Configuration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artifacts.Build", "Source\Artifacts.Build\Artifacts.Build.csproj", "{F044E7F5-FC35-4CA6-A446-BFEE40A7D450}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDK", "AggregatedPackage\SDK.csproj", "{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDK", "Source\AggregatedPackage\SDK.csproj", "{36B9AA6B-832D-40BD-997F-D6B8791F3CDB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{840334B6-083B-43C4-9D5F-B2787BBA0F9A}"
 EndProject
