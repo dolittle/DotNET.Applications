@@ -8,7 +8,6 @@
   <ItemGroup>
     <PackageReference Include="Dolittle.Applications" Version="2.0.0-*" />
     <PackageReference Include="Dolittle.Artifacts" Version="2.0.0-*" />
-    <PackageReference Include="Dolittle.Strings" Version="2.0.0-*" />
   </ItemGroup>   
 
     <ItemGroup>

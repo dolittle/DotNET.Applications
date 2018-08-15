@@ -1,5 +1,4 @@
 ﻿using System;
-using Dolittle.Strings;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
