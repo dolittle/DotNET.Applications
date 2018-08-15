@@ -32,8 +32,17 @@ namespace Dolittle.Artifacts.Tools
 
         internal static FeatureDefinition FindMatchingFeature(this BoundedContextConfiguration boundedContextConfiguration, string @namespace)
         {
+            var area = new Area(){Value = @namespace.Split(NamespaceSeperator).First()};
             var segments = @namespace.Split(NamespaceSeperator).Skip(1).ToArray();
             
+            if (boundedContextConfiguration.ExcludedNamespaceMap.ContainsKey(area))
+            {
+                var newSegments = new List<string>(segments);
+                foreach (var segment in boundedContextConfiguration.ExcludedNamespaceMap[area]) 
+                    newSegments.Remove(segment);
+                segments = newSegments.ToArray();
+            }
+
             if (boundedContextConfiguration.UseModules)
             {
                 var matchingModule = boundedContextConfiguration.Topology.Modules
@@ -44,7 +53,7 @@ namespace Dolittle.Artifacts.Tools
                 return FindMatchingFeature(segments.Skip(1).ToArray(), matchingModule.Features);
             }
             
-            return FindMatchingFeature(segments, boundedContextConfiguration.Topology.Features);
+            return FindMatchingFeature(segments,boundedContextConfiguration.Topology.Features);
         }
         internal static void ValidateTopology(this BoundedContextConfiguration configuration)
         {
@@ -102,7 +111,6 @@ namespace Dolittle.Artifacts.Tools
             {
                 if (idMap.ContainsKey(feature.Feature))
                 {
-
                     hasDuplicateId = true;
                     var name = idMap[feature.Feature];
                     

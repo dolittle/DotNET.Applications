@@ -39,15 +39,13 @@ namespace Dolittle.Artifacts.Tools
                 AddFeatures(missingPaths, ref config);
         }
 
-
         static void AddModulesAndFeatures(string[] missingPaths, ref BoundedContextConfiguration config)
         {
             var modules = new List<ModuleDefinition>(config.Topology.Modules);
 
             foreach(var path in missingPaths)
-            {
                 modules.Add(path.GetModuleFromPath());
-            }
+
             config.Topology.Modules = modules.GetCollapsedModules();
         }
 
@@ -55,13 +53,11 @@ namespace Dolittle.Artifacts.Tools
         {
             var features = new List<FeatureDefinition>(config.Topology.Features);
             foreach (var path in missingPaths)
-            {
                 features.Add(path.GetFeatureFromPath());
-            }
 
             config.Topology.Features = features.GetCollapsedFeatures();
         }
-        
+
         static void ThrowIfBoundedContextConfigurationIsInvalid(BoundedContextConfiguration config)
         {
             if (config.Application == null || config.Application.Value.Equals(Guid.Empty)) 
@@ -70,12 +66,24 @@ namespace Dolittle.Artifacts.Tools
             if (config.BoundedContext == null || config.BoundedContext.Value.Equals(Guid.Empty))
                 throw new InvalidBoundedContextConfiguration("BoundedContext is required and must cannot be an empty Guid");
                 
+            if (config.ExcludedNamespaceMap.Any())
+                ThrowIfExcludedNamespaceMapHasEmptyValue(config.ExcludedNamespaceMap);
             
             if (config.BoundedContextName == null 
                 || string.IsNullOrEmpty(config.BoundedContextName)
                 || string.IsNullOrWhiteSpace(config.BoundedContextName)
                 )
                 throw new InvalidBoundedContextConfiguration("BoundedContextName is required and must cannot be an empty string or whitespace");
+        }
+
+        static void ThrowIfExcludedNamespaceMapHasEmptyValue(Dictionary<Area, IEnumerable<string>> excludedNamespaceMap)
+        {
+            foreach (var entry in excludedNamespaceMap) 
+            {
+                if (!entry.Value.Any() || entry.Value.Any(@namespace => string.IsNullOrEmpty(@namespace)))
+                    throw new InvalidExcludedNamespaceMap($"A mapping of an excluded namespace cannot contain an empty namespace value.  Area {entry.Key.Value} has empty values.");
+                
+            }
         }
 
         static void ThrowIfTopologyIsInvalid(bool useModules, TopologyConfiguration topology)

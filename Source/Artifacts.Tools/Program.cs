@@ -57,7 +57,7 @@ namespace Dolittle.Artifacts.Tools
             }
             try
             {
-                while(!System.Diagnostics.Debugger.IsAttached)
+                while (!System.Diagnostics.Debugger.IsAttached)
                 {
                     System.Threading.Thread.Sleep(10);
                 }
@@ -77,7 +77,7 @@ namespace Dolittle.Artifacts.Tools
 
                 ThrowIfArtifactWithNoModuleOrFeature(types);
 
-                var typePaths = ExtractTypePaths(types);
+                var typePaths = ExtractTypePaths(types, boundedContextConfiguration.ExcludedNamespaceMap);
                 
                 ThrowIfContainsInvalidTypePath(typePaths, boundedContextConfiguration.UseModules);
                 
@@ -146,15 +146,7 @@ namespace Dolittle.Artifacts.Tools
             _boundedContextConfigurationManager = new BoundedContextConfigurationManager(serializer);
             _artifactsConfigurationManager = new ArtifactsConfigurationManager(serializer);
         }
-        private static string[] ExtractTypePaths(Type[] types)
-        {
-            return types
-                .Select(_ => 
-                string.Join(NamespaceSeperator, _.Namespace.Split(NamespaceSeperator).Skip(1)))
-                .Where(_ => _.Length > 0)
-                .Distinct()
-                .ToArray();
-        }
+        
 
         static Type[] GetArtifactsFromAssembly(AssemblyLoader assemblyLoader)
         {
@@ -167,6 +159,27 @@ namespace Dolittle.Artifacts.Tools
                 .ToArray();
         }
 
+        static string[] ExtractTypePaths(Type[] types, Dictionary<Area, IEnumerable<string>> excludeMap)
+        {
+            return types
+                .Select(type => ExtractTypePath(type, excludeMap))
+                .Where(_ => _.Length > 0)
+                .Distinct()
+                .ToArray();
+        }
+        static string ExtractTypePath(Type type, Dictionary<Area, IEnumerable<string>> excludeMap)
+        {
+            var area = new Area(){Value = type.Namespace.Split(NamespaceSeperator).First()};
+            var segmentList = type.Namespace.Split(NamespaceSeperator).Skip(1).ToList();
+            if (excludeMap.ContainsKey(area))
+            {
+                foreach (var segment in excludeMap[area]) 
+                    segmentList.Remove(segment);
+            }
+            
+            return string.Join(NamespaceSeperator, segmentList);
+        }
+        
         static void ThrowIfArtifactWithNoModuleOrFeature(Type[] types)
         {
             bool hasInvalidArtifact = false;

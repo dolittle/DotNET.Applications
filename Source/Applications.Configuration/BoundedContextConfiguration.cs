@@ -3,6 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+using System.Collections.Generic;
+
 namespace Dolittle.Applications.Configuration
 {
     /// <summary>
@@ -29,6 +31,11 @@ namespace Dolittle.Applications.Configuration
         /// Gets or sets whether or not one is using <see cref="Module">modules</see>
         /// </summary>
         public bool UseModules { get; set; }
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<Area, IEnumerable<string>> ExcludedNamespaceMap {get; set;} = new Dictionary<Area, IEnumerable<string>>();
 
         /// <summary>
         /// Gets or sets the <see cref="TopologyConfiguration"/> for the <see cref="BoundedContext"/>

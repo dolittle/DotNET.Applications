@@ -59,7 +59,6 @@ namespace Dolittle.Applications.Configuration
 
             var serializerSettings = new JsonSerializerSettings
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 Formatting = Formatting.Indented,
                 TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
             };
