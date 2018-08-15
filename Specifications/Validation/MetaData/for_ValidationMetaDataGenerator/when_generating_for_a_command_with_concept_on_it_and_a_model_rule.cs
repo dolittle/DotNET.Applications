@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Dolittle.Strings;
 using Dolittle.Validation;
+using Dolittle.Strings;
 using Dolittle.Validation.MetaData;
 using Machine.Specifications;
 

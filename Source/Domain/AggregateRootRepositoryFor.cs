@@ -3,14 +3,16 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dolittle.Artifacts;
 using Dolittle.Events;
+using Dolittle.PropertyBags;
 using Dolittle.Logging;
 using Dolittle.Runtime.Commands.Coordination;
 using Dolittle.Runtime.Events;
-using Dolittle.Runtime.Events.Storage;
+using Dolittle.Runtime.Events.Store;
 
 namespace Dolittle.Domain
 {
@@ -22,30 +24,30 @@ namespace Dolittle.Domain
     {
         ICommandContextManager _commandContextManager;
         IEventStore _eventStore;
-        IEventSourceVersions _eventSourceVersions;
         IArtifactTypeMap _artifactTypeMap;
         readonly ILogger _logger;
+        readonly IObjectFactory _objectFactory;
 
         /// <summary>
         /// Initializes a new instance of <see cref="AggregateRootRepositoryFor{T}">AggregatedRootRepository</see>
         /// </summary>
         /// <param name="commandContextManager"> <see cref="ICommandContextManager"/> to use for tracking </param>
         /// <param name="eventStore"><see cref="IEventStore"/> for getting <see cref="IEvent">events</see></param>
-        /// <param name="eventSourceVersions"><see cref="IEventSourceVersions"/> for working with versioning of <see cref="AggregateRoot"/></param>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for being able to identify resources</param>
+        /// <param name="objectFactory"><see cref="IObjectFactory"/> to construct an instance of a Type from a <see cref="PropertyBag" /></param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging</param>
         public AggregateRootRepositoryFor(
             ICommandContextManager commandContextManager,
             IEventStore eventStore,
-            IEventSourceVersions eventSourceVersions,
             IArtifactTypeMap artifactTypeMap,
+            IObjectFactory objectFactory,
             ILogger logger)
         {
             _commandContextManager = commandContextManager;
             _eventStore = eventStore;
-            _eventSourceVersions = eventSourceVersions;
             _artifactTypeMap = artifactTypeMap;
             _logger = logger;
+            _objectFactory = objectFactory;
         }
 
         /// <inheritdoc/>
@@ -61,31 +63,31 @@ namespace Dolittle.Domain
             var aggregateRoot = GetInstanceFrom(id, constructor);
             if (null != aggregateRoot)
             {
-                if (!aggregateRoot.IsStateless())
+                //if (!aggregateRoot.IsStateless())
                     ReApplyEvents(commandContext, aggregateRoot);
-                else
-                    FastForward(commandContext, aggregateRoot);
+                //else
+                //    FastForward(commandContext, aggregateRoot);
             }
             commandContext.RegisterForTracking(aggregateRoot);
 
             return aggregateRoot;
         }
 
-        void FastForward(ICommandContext commandContext, T aggregateRoot)
-        {
-            _logger.Trace($"FastForward - {typeof(T).AssemblyQualifiedName}");
-            var identifier = _artifactTypeMap.GetArtifactFor(typeof(T));
-            _logger.Trace($"With identifier '{identifier?.ToString()??"<unknown identifier>"}'");
+        // void FastForward(ICommandContext commandContext, T aggregateRoot)
+        // {
+        //     _logger.Trace($"FastForward - {typeof(T).AssemblyQualifiedName}");
+        //     var identifier = _artifactTypeMap.GetArtifactFor(typeof(T));
+        //     _logger.Trace($"With identifier '{identifier?.ToString()??"<unknown identifier>"}'");
 
-            var version = _eventSourceVersions.GetFor(identifier, aggregateRoot.EventSourceId);
-            aggregateRoot.FastForward(version);
-        }
+        //     var version = _eventSourceVersions.GetFor(identifier, aggregateRoot.EventSourceId);
+        //     aggregateRoot.FastForward(version);
+        // }
 
         void ReApplyEvents(ICommandContext commandContext, T aggregateRoot)
         {
             var identifier = _artifactTypeMap.GetArtifactFor(typeof(T));
-            var events = _eventStore.GetFor(identifier, aggregateRoot.EventSourceId);
-            var stream = new CommittedEventStream(aggregateRoot.EventSourceId, events);
+            var eventStoreCommittedEvents = _eventStore.Fetch(aggregateRoot.EventSourceId);
+            var stream = new Dolittle.Runtime.Events.CommittedEventStream(aggregateRoot.EventSourceId,FromCommittedEventStream(eventStoreCommittedEvents));
             if (stream.HasEvents)
                 aggregateRoot.ReApply(stream);
         }
@@ -111,6 +113,48 @@ namespace Dolittle.Domain
         void ThrowIfConstructorIsInvalid(Type type, ConstructorInfo constructor)
         {
             if (constructor == null) throw new InvalidAggregateRootConstructorSignature(type);
+        }
+
+        IEnumerable<EventAndEnvelope> FromCommittedEventStream(Dolittle.Runtime.Events.Store.CommittedEvents commits)
+        {
+            var events = new List<EventAndEnvelope>();
+
+            foreach(var commit in commits)
+            {
+                foreach(var @event in commit.Events)
+                {
+                    events.Add(ToEventAndEnvelope(@event));
+                }
+            }
+            return events;
+        }
+
+        EventAndEnvelope ToEventAndEnvelope(Runtime.Events.Store.EventEnvelope @event)
+        {
+            var eventType = _artifactTypeMap.GetTypeFor(@event.Metadata.Artifact);
+            var eventInstance = _objectFactory.Build(eventType,@event.Event) as IEvent;
+            var envelope = ToEnvelope(@event.Metadata, @event.Id);
+            return new EventAndEnvelope(envelope,eventInstance);
+        }
+
+        private Dolittle.Runtime.Events.EventEnvelope ToEnvelope(EventMetadata metadata, EventId id)
+        {
+            return new Dolittle.Runtime.Events.EventEnvelope(
+                metadata.CorrelationId.Value,
+                id,
+                new EventSequenceNumber{ Value = metadata.VersionedEventSource.Version.Sequence },
+                new EventSequenceNumber{ Value = metadata.VersionedEventSource.Version.Sequence },
+                new EventGeneration { Value = metadata.Artifact.Generation },
+                metadata.Artifact,
+                metadata.VersionedEventSource.EventSource,
+                _artifactTypeMap.GetArtifactFor(typeof(T)),
+                new Dolittle.Runtime.Events.EventSourceVersion(
+                    (int)Convert.ChangeType(metadata.VersionedEventSource.Version.Commit,typeof(int)),
+                    (int)Convert.ChangeType(metadata.VersionedEventSource.Version.Sequence,typeof(int))
+                ),
+                metadata.CausedBy,
+                metadata.Occurred
+            );
         }
     }
 }
