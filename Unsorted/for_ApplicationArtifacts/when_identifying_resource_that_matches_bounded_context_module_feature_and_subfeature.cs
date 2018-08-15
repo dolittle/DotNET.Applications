@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Dolittle.Strings;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
