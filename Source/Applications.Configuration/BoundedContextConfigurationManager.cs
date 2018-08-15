@@ -34,7 +34,8 @@ namespace Dolittle.Applications.Configuration
         {
             var path = GetPath();
             if( !File.Exists(path)) throw new MissingBoundedContextConfiguration();
-
+            
+            
             var json = File.ReadAllText(path);
             var serializerSettings = GetSerializerSettings();
             var configuration = JsonConvert.DeserializeObject<BoundedContextConfiguration>(json, serializerSettings);
@@ -46,7 +47,7 @@ namespace Dolittle.Applications.Configuration
         {
             var path = GetPath();
             var serializerSettings = GetSerializerSettings();
-            var json = JsonConvert.SerializeObject(configuration);
+            var json = JsonConvert.SerializeObject(configuration, serializerSettings);
             File.WriteAllText(path, json);
         }
 
