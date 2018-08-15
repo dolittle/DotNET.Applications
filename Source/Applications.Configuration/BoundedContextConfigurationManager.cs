@@ -3,8 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.IO;
+using Dolittle.Concepts.Serialization.Json;
 using Dolittle.Execution;
 using Dolittle.Serialization.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Dolittle.Applications.Configuration
 {
@@ -14,7 +17,7 @@ namespace Dolittle.Applications.Configuration
     [Singleton]
     public class BoundedContextConfigurationManager : IBoundedContextConfigurationManager
     {
-        const string _path   = "../bounded-context.json";
+        const string _path   = "bounded-context.json";
         readonly ISerializer _serializer;
         BoundedContextConfiguration _current;
 
@@ -42,7 +45,8 @@ namespace Dolittle.Applications.Configuration
         {
             var path = GetPath();
             if( !File.Exists(path)) throw new MissingBoundedContextConfiguration();
-
+            
+            
             var json = File.ReadAllText(path);
             var configuration = _serializer.FromJson<BoundedContextConfiguration>(json);
             return configuration;
@@ -52,7 +56,14 @@ namespace Dolittle.Applications.Configuration
         public void Save(BoundedContextConfiguration configuration)
         {
             var path = GetPath();
-            var json = _serializer.ToJson(configuration);
+
+            var serializerSettings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+            };
+            serializerSettings.Converters.Add(new ConceptConverter());
+            var json = JsonConvert.SerializeObject(configuration, serializerSettings);
             File.WriteAllText(path, json);
         }
 

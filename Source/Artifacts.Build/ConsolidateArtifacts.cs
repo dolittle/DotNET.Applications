@@ -25,7 +25,7 @@ namespace Dolittle.Artifacts.Build
 
         /// <inheritdoc/>
         protected override string ToolName => "Dolittle.SDK.Artifacts.Tools.dll";
-
+        
         /// <inheritdoc/>
         protected override string GenerateFullPathToTool()
         {
