@@ -143,7 +143,7 @@ namespace Dolittle.Artifacts.Tools
             });
 
             var serializer = new Serializer(container, converterProviders);
-            _boundedContextConfigurationManager = new BoundedContextConfigurationManager(serializer);
+            _boundedContextConfigurationManager = new BoundedContextConfigurationManager();
             _artifactsConfigurationManager = new ArtifactsConfigurationManager(serializer);
         }
         
