@@ -57,10 +57,10 @@ namespace Dolittle.Artifacts.Tools
             }
             try
             {
-                while (!System.Diagnostics.Debugger.IsAttached)
-                {
-                    System.Threading.Thread.Sleep(10);
-                }
+                //while (!System.Diagnostics.Debugger.IsAttached)
+                //{
+                //    System.Threading.Thread.Sleep(10);
+                //}
                 SetupConfigurationManagers();
 
                 BoundedContextConfiguration boundedContextConfiguration;                
