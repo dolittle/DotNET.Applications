@@ -15,6 +15,7 @@ using Dolittle.Events.Processing;
 using Dolittle.Serialization.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
+using Dolittle.Build.Topology;
 
 namespace Dolittle.Build
 {
@@ -59,6 +60,8 @@ namespace Dolittle.Build
                 
                 var types = GetArtifactsFromAssembly(assemblyLoader);
                 ThrowIfArtifactWithNoModuleOrFeature(types);
+
+                var topologyBuilder = new TopologyBuilder(types, _logger);
                 
                 var endTime = DateTime.UtcNow;
                 var deltaTime = endTime.Subtract(startTime);

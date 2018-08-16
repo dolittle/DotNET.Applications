@@ -12,7 +12,7 @@ namespace Dolittle.Build
     /// Represents a very simplementation of <see cref="IContainer"/> that is not capable of resolving
     /// dependencies at all
     /// </summary>
-    public class ActivatorContainer : IContainer
+    internal class ActivatorContainer : IContainer
     {
         /// <inheritdoc/>
         public T Get<T>()

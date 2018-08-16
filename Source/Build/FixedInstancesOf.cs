@@ -13,7 +13,7 @@ namespace Dolittle.Build
     /// but holds a fixed collection of the given type
     /// </summary>
     /// <typeparam name="T">Type of objects to get instances for</typeparam>
-    public class FixedInstancesOf<T> : IInstancesOf<T> where T : class
+    internal class FixedInstancesOf<T> : IInstancesOf<T> where T : class
     {
         readonly IEnumerable<T> _collection;
 
