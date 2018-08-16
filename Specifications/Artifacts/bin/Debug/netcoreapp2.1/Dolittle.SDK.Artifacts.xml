@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Dolittle.SDK.Artifacts</name>
+    </assembly>
+    <members>
+        <member name="T:Dolittle.Artifacts.ArtifactTypeMap">
+            <summary>
+            Represents an implementation of <see cref="T:Dolittle.Artifacts.IArtifactTypeMap"/>
+            </summary>
+        </member>
+        <member name="M:Dolittle.Artifacts.ArtifactTypeMap.GetArtifactFor``1">
+            <inheritdoc/>
+        </member>
+        <member name="M:Dolittle.Artifacts.ArtifactTypeMap.GetArtifactFor(System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Dolittle.Artifacts.ArtifactTypeMap.GetTypeFor(Dolittle.Artifacts.Artifact)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Dolittle.Artifacts.ArtifactTypeMap.Register(Dolittle.Artifacts.Artifact,System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Dolittle.Artifacts.IArtifactTypeMap">
+            <summary>
+            Defines the mapper between an <see cref="T:Dolittle.Artifacts.Artifact"/> and a <see cref="T:System.Type"/>
+            </summary>
+        </member>
+        <member name="M:Dolittle.Artifacts.IArtifactTypeMap.GetArtifactFor``1">
+            <summary>
+            Get an <see cref="T:Dolittle.Artifacts.Artifact"/> from a given type
+            </summary>
+            <typeparam name="T">CLR type of the artifact</typeparam>
+            <returns><see cref="T:Dolittle.Artifacts.Artifact"/></returns>
+        </member>
+        <member name="M:Dolittle.Artifacts.IArtifactTypeMap.GetArtifactFor(System.Type)">
+            <summary>
+            Get an <see cref="T:Dolittle.Artifacts.Artifact"/> from a given type
+            </summary>
+            <param name="type">CLR type of the artifact</param>
+            <returns><see cref="T:Dolittle.Artifacts.Artifact"/></returns>
+        </member>
+        <member name="M:Dolittle.Artifacts.IArtifactTypeMap.GetTypeFor(Dolittle.Artifacts.Artifact)">
+            <summary>
+            Get a CLR <see cref="T:System.Type"/> for a specific <see cref="T:Dolittle.Artifacts.Artifact"/>
+            </summary>
+            <param name="artifact"><see cref="T:Dolittle.Artifacts.Artifact"/> to get for</param>
+            <returns><see cref="T:System.Type"/></returns>
+        </member>
+        <member name="M:Dolittle.Artifacts.IArtifactTypeMap.Register(Dolittle.Artifacts.Artifact,System.Type)">
+            <summary>
+            Register an relationship between a <see cref="T:Dolittle.Artifacts.Artifact"/> and a <see cref="T:System.Type"/>
+            </summary>
+            <param name="artifact"></param>
+            <param name="type"></param>
+        </member>
+    </members>
+</doc>

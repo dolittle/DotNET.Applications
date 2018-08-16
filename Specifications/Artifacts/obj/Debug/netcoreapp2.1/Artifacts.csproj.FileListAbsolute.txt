@@ -1,0 +1,16 @@
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/bin/Debug/netcoreapp2.1/Machine.TestAdapter.dll
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/bin/Debug/netcoreapp2.1/Dolittle.Runtime.Artifacts.Specs.deps.json
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/bin/Debug/netcoreapp2.1/Dolittle.Runtime.Artifacts.Specs.runtimeconfig.json
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/bin/Debug/netcoreapp2.1/Dolittle.Runtime.Artifacts.Specs.runtimeconfig.dev.json
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/bin/Debug/netcoreapp2.1/Dolittle.Runtime.Artifacts.Specs.dll
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/bin/Debug/netcoreapp2.1/Dolittle.Runtime.Artifacts.Specs.pdb
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/bin/Debug/netcoreapp2.1/Dolittle.SDK.Artifacts.dll
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/bin/Debug/netcoreapp2.1/Dolittle.SDK.Artifacts.pdb
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/bin/Debug/netcoreapp2.1/Dolittle.SDK.Artifacts.xml
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/obj/Debug/netcoreapp2.1/Artifacts.csprojAssemblyReference.cache
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/obj/Debug/netcoreapp2.1/Artifacts.csproj.CoreCompileInputs.cache
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/obj/Debug/netcoreapp2.1/Artifacts.AssemblyInfoInputs.cache
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/obj/Debug/netcoreapp2.1/Artifacts.AssemblyInfo.cs
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/obj/Debug/netcoreapp2.1/Artifacts.csproj.CopyComplete
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/obj/Debug/netcoreapp2.1/Dolittle.Runtime.Artifacts.Specs.dll
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Specifications/Artifacts/obj/Debug/netcoreapp2.1/Dolittle.Runtime.Artifacts.Specs.pdb

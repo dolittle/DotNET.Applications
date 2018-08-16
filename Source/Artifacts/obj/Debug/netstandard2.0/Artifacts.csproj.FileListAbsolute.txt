@@ -1,0 +1,10 @@
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Source/Artifacts/bin/Debug/netstandard2.0/Dolittle.SDK.Artifacts.deps.json
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Source/Artifacts/bin/Debug/netstandard2.0/Dolittle.SDK.Artifacts.dll
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Source/Artifacts/bin/Debug/netstandard2.0/Dolittle.SDK.Artifacts.pdb
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Source/Artifacts/bin/Debug/netstandard2.0/Dolittle.SDK.Artifacts.xml
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Source/Artifacts/obj/Debug/netstandard2.0/Artifacts.csprojAssemblyReference.cache
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Source/Artifacts/obj/Debug/netstandard2.0/Artifacts.csproj.CoreCompileInputs.cache
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Source/Artifacts/obj/Debug/netstandard2.0/Artifacts.AssemblyInfoInputs.cache
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Source/Artifacts/obj/Debug/netstandard2.0/Artifacts.AssemblyInfo.cs
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Source/Artifacts/obj/Debug/netstandard2.0/Dolittle.SDK.Artifacts.dll
+/Users/woksin/Documents/Dolittle/DotNET.SDK/Source/Artifacts/obj/Debug/netstandard2.0/Dolittle.SDK.Artifacts.pdb
