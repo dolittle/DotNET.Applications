@@ -18,7 +18,13 @@ namespace Dolittle.Artifacts.Configuration
     [Singleton]
     public class ArtifactsConfigurationManager : IArtifactsConfigurationManager
     {
-        const string _path   = "artifacts.json";
+        const string _path = "artifacts.json";
+
+        static readonly ISerializationOptions _serializationOptions = SerializationOptions.Custom(SerializationOptionsFlags.UseCamelCase, new JsonConverter[]
+        {
+            new ClrTypeConverter()
+        });
+
         readonly ISerializer _serializer;
 
         /// <summary>
@@ -34,23 +40,10 @@ namespace Dolittle.Artifacts.Configuration
         public ArtifactsConfiguration Load()
         {
             var path = GetPath();
-            if( !File.Exists(path)) return new ArtifactsConfiguration();
+            if (!File.Exists(path)) return new ArtifactsConfiguration();
 
             var json = File.ReadAllText(path);
-
-            var serializerSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                Formatting = Formatting.Indented,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
-            };
-            serializerSettings.Converters.Add(new ClrTypeConverter());
-            serializerSettings.Converters.Add(new ConceptConverter());
-            serializerSettings.Converters.Add(new ConceptDictionaryConverter());
-
-            var configuration = JsonConvert.DeserializeObject<ArtifactsConfiguration>(json, serializerSettings);
-
-            //var configuration = _serializer.FromJson<ArtifactsConfiguration>(json);
+            var configuration = _serializer.FromJson<ArtifactsConfiguration>(json, _serializationOptions);
             return configuration;
         }
 
@@ -58,25 +51,13 @@ namespace Dolittle.Artifacts.Configuration
         public void Save(ArtifactsConfiguration configuration)
         {
             var path = GetPath();
-
-            var serializerSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                Formatting = Formatting.Indented,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
-            };
-            serializerSettings.Converters.Add(new ClrTypeConverter());
-            serializerSettings.Converters.Add(new ConceptConverter());
-
-            var json = JsonConvert.SerializeObject(configuration, serializerSettings);
-            //_serializer.ToJson(configuration);
+            var json = _serializer.ToJson(configuration, _serializationOptions);
             File.WriteAllText(path, json);
         }
 
-
         string GetPath()
         {
-            return Path.Combine(Directory.GetCurrentDirectory(),_path);
+            return Path.Combine(Directory.GetCurrentDirectory(), _path);
         }
     }
 }
