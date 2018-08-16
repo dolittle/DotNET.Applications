@@ -18,13 +18,13 @@ namespace Dolittle.Applications.Configuration
     public class BoundedContextConfigurationManager : IBoundedContextConfigurationManager
     {
         const string _path   = "bounded-context.json";
-        readonly ISerializer _serializer;
         BoundedContextConfiguration _current;
+        readonly ISerializer _serializer;
 
         /// <summary>
         /// Initializes a new instance of <see cref="BoundedContextConfigurationManager"/>
         /// </summary>
-        /// <param name="serializer"></param>
+        /// <param name="serializer"><see cref="ISerializer"/> to use for working with configuration as JSON</param>
         public BoundedContextConfigurationManager(ISerializer serializer)
         {
             _serializer = serializer;
@@ -39,6 +39,7 @@ namespace Dolittle.Applications.Configuration
                 return _current;
             }
         }
+
 
         /// <inheritdoc/>
         public BoundedContextConfiguration Load()
@@ -56,14 +57,7 @@ namespace Dolittle.Applications.Configuration
         public void Save(BoundedContextConfiguration configuration)
         {
             var path = GetPath();
-
-            var serializerSettings = new JsonSerializerSettings
-            {
-                Formatting = Formatting.Indented,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
-            };
-            serializerSettings.Converters.Add(new ConceptConverter());
-            var json = JsonConvert.SerializeObject(configuration, serializerSettings);
+            var json = _serializer.ToJson(configuration, SerializationOptions.CamelCase);
             File.WriteAllText(path, json);
         }
 

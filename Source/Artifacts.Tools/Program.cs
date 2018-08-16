@@ -14,6 +14,7 @@ using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Collections;
 using Dolittle.Commands;
+using Dolittle.Concepts.Serialization.Json;
 using Dolittle.Events;
 using Dolittle.Events.Processing;
 using Dolittle.Queries;
@@ -23,7 +24,7 @@ using Dolittle.Serialization.Json;
 using Dolittle.Types;
 
 using Microsoft.Extensions.Logging;
-
+using Microsoft.Extensions.Logging.Console;
 
 namespace Dolittle.Artifacts.Tools
 {
@@ -57,10 +58,10 @@ namespace Dolittle.Artifacts.Tools
             }
             try
             {
-                while (!System.Diagnostics.Debugger.IsAttached)
-                {
-                    System.Threading.Thread.Sleep(10);
-                }
+                //while (!System.Diagnostics.Debugger.IsAttached)
+                //{
+                //    System.Threading.Thread.Sleep(10);
+                //}
                 SetupConfigurationManagers();
 
                 BoundedContextConfiguration boundedContextConfiguration;                
@@ -136,10 +137,18 @@ namespace Dolittle.Artifacts.Tools
 
         static void SetupConfigurationManagers()
         {
+            var loggerFactory = new LoggerFactory(new ILoggerProvider[]
+            {
+                new ConsoleLoggerProvider((s, l) => true, true)
+            });
+
+            var appenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory);
+            var logger = new Dolittle.Logging.Logger(appenders);
+
             var container = new ActivatorContainer();
             var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new []
             {
-                new Dolittle.Concepts.Serialization.Json.ConverterProvider()
+                new ConverterProvider(logger)
             });
 
             var serializer = new Serializer(container, converterProviders);
