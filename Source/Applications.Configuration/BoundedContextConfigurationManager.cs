@@ -5,6 +5,7 @@
 using System.IO;
 using Dolittle.Concepts.Serialization.Json;
 using Dolittle.Execution;
+using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -18,6 +19,16 @@ namespace Dolittle.Applications.Configuration
     {
         const string _path   = "bounded-context.json";
         BoundedContextConfiguration _current;
+        readonly ISerializer _serializer;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="BoundedContextConfigurationManager"/>
+        /// </summary>
+        /// <param name="serializer"><see cref="ISerializer"/> to use for working with configuration as JSON</param>
+        public BoundedContextConfigurationManager(ISerializer serializer)
+        {
+            _serializer = serializer;
+        }
 
         /// <inheritdoc/>
         public BoundedContextConfiguration Current 
@@ -29,6 +40,7 @@ namespace Dolittle.Applications.Configuration
             }
         }
 
+
         /// <inheritdoc/>
         public BoundedContextConfiguration Load()
         {
@@ -37,8 +49,7 @@ namespace Dolittle.Applications.Configuration
             
             
             var json = File.ReadAllText(path);
-            var serializerSettings = GetSerializerSettings();
-            var configuration = JsonConvert.DeserializeObject<BoundedContextConfiguration>(json, serializerSettings);
+            var configuration = _serializer.FromJson<BoundedContextConfiguration>(json);
             return configuration;
         }
 
@@ -46,27 +57,13 @@ namespace Dolittle.Applications.Configuration
         public void Save(BoundedContextConfiguration configuration)
         {
             var path = GetPath();
-            var serializerSettings = GetSerializerSettings();
-            var json = JsonConvert.SerializeObject(configuration, serializerSettings);
+            var json = _serializer.ToJson(configuration, SerializationOptions.CamelCase);
             File.WriteAllText(path, json);
         }
 
         string GetPath()
         {
             return Path.Combine(Directory.GetCurrentDirectory(),_path);
-        }
-
-        JsonSerializerSettings GetSerializerSettings()
-        {
-            var serializerSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                Formatting = Formatting.Indented,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
-            };
-            serializerSettings.Converters.Add(new ConceptConverter());
-            serializerSettings.Converters.Add(new ConceptDictionaryConverter());
-            return serializerSettings;
         }
     }
 }
