@@ -24,7 +24,7 @@ using Dolittle.Serialization.Json;
 using Dolittle.Types;
 
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
+// using Microsoft.Extensions.Logging.Console;
 
 namespace Dolittle.Artifacts.Tools
 {
@@ -33,264 +33,264 @@ namespace Dolittle.Artifacts.Tools
     //   This configuration should then be optional and default set to empty. The MSBuild task should expose a variable that can be set in a <PropertyGroup/>
     //   The base namespace would be from the second segment - after tier segment
     //
-    class Program
-    {
-        internal const string NamespaceSeperator = ".";
-        static IBoundedContextConfigurationManager _boundedContextConfigurationManager;
-        static IArtifactsConfigurationManager _artifactsConfigurationManager;
+    // class Program
+    // {
+    //     internal const string NamespaceSeperator = ".";
+    //     static IBoundedContextConfigurationManager _boundedContextConfigurationManager;
+    //     static IArtifactsConfigurationManager _artifactsConfigurationManager;
 
-        static readonly ArtifactType[] _artifactTypes = new ArtifactType[]
-        {
-            new ArtifactType { Type = typeof(ICommand), TypeName = "command", TargetPropertyExpression = a => a.Commands },
-            new ArtifactType { Type = typeof(IEvent), TypeName = "event", TargetPropertyExpression = a => a.Events },
-            new ArtifactType { Type = typeof(ICanProcessEvents), TypeName = "event processor", TargetPropertyExpression = a => a.EventProcessors },
-            new ArtifactType { Type = typeof(IEventSource), TypeName = "event source", TargetPropertyExpression = a => a.EventSources },
-            new ArtifactType { Type = typeof(IReadModel), TypeName = "read model", TargetPropertyExpression = a => a.ReadModels },
-            new ArtifactType { Type = typeof(IQuery), TypeName = "query", TargetPropertyExpression = a => a.Queries }
-        };
+    //     static readonly ArtifactType[] _artifactTypes = new ArtifactType[]
+    //     {
+    //         new ArtifactType { Type = typeof(ICommand), TypeName = "command", TargetPropertyExpression = a => a.Commands },
+    //         new ArtifactType { Type = typeof(IEvent), TypeName = "event", TargetPropertyExpression = a => a.Events },
+    //         new ArtifactType { Type = typeof(ICanProcessEvents), TypeName = "event processor", TargetPropertyExpression = a => a.EventProcessors },
+    //         new ArtifactType { Type = typeof(IEventSource), TypeName = "event source", TargetPropertyExpression = a => a.EventSources },
+    //         new ArtifactType { Type = typeof(IReadModel), TypeName = "read model", TargetPropertyExpression = a => a.ReadModels },
+    //         new ArtifactType { Type = typeof(IQuery), TypeName = "query", TargetPropertyExpression = a => a.Queries }
+    //     };
 
-        static int Main(string[] args)
-        {
-            if (args.Length != 1)
-            {
-                ConsoleLogger.LogError("Error consolidating artifacts; missing argument for name of assembly to consolidate");
-                return 1;
-            }
-            try
-            {
-                //while (!System.Diagnostics.Debugger.IsAttached)
-                //{
-                //    System.Threading.Thread.Sleep(10);
-                //}
-                SetupConfigurationManagers();
+    //     static int Main(string[] args)
+    //     {
+    //         if (args.Length != 1)
+    //         {
+    //             ConsoleLogger.LogError("Error consolidating artifacts; missing argument for name of assembly to consolidate");
+    //             return 1;
+    //         }
+    //         try
+    //         {
+    //             //while (!System.Diagnostics.Debugger.IsAttached)
+    //             //{
+    //             //    System.Threading.Thread.Sleep(10);
+    //             //}
+    //             SetupConfigurationManagers();
 
-                BoundedContextConfiguration boundedContextConfiguration;                
-                var startTime = DateTime.UtcNow;
-                var assemblyLoader = new AssemblyLoader(args[0]);
+    //             BoundedContextConfiguration boundedContextConfiguration;                
+    //             var startTime = DateTime.UtcNow;
+    //             var assemblyLoader = new AssemblyLoader(args[0]);
 
-                var artifactsConfiguration = _artifactsConfigurationManager.Load();
+    //             var artifactsConfiguration = _artifactsConfigurationManager.Load();
 
-                var boundedContextConfigurationRetrievalResult = BoundedContextConfigurationUtilities.RetrieveConfiguration(_boundedContextConfigurationManager, out boundedContextConfiguration);
-                if (boundedContextConfigurationRetrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.NewBoundedContextConfig)
-                    boundedContextConfiguration.Topology = new TopologyConfiguration();
+    //             var boundedContextConfigurationRetrievalResult = BoundedContextConfigurationUtilities.RetrieveConfiguration(_boundedContextConfigurationManager, out boundedContextConfiguration);
+    //             if (boundedContextConfigurationRetrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.NewBoundedContextConfig)
+    //                 boundedContextConfiguration.Topology = new TopologyConfiguration();
                 
-                var types = GetArtifactsFromAssembly(assemblyLoader);
+    //             var types = GetArtifactsFromAssembly(assemblyLoader);
 
-                ThrowIfArtifactWithNoModuleOrFeature(types);
+    //             ThrowIfArtifactWithNoModuleOrFeature(types);
 
-                var typePaths = ExtractTypePaths(types, boundedContextConfiguration.ExcludedNamespaceMap);
+    //             var typePaths = ExtractTypePaths(types, boundedContextConfiguration.ExcludedNamespaceMap);
                 
-                ThrowIfContainsInvalidTypePath(typePaths, boundedContextConfiguration.UseModules);
+    //             ThrowIfContainsInvalidTypePath(typePaths, boundedContextConfiguration.UseModules);
                 
-                var newArtifacts = 0;
+    //             var newArtifacts = 0;
 
-                var existingArtifactPaths = new List<string>();
+    //             var existingArtifactPaths = new List<string>();
 
-                if (boundedContextConfigurationRetrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.HasTopology)
-                    AddExistingArtifactPaths(boundedContextConfiguration, ref existingArtifactPaths);
+    //             if (boundedContextConfigurationRetrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.HasTopology)
+    //                 AddExistingArtifactPaths(boundedContextConfiguration, ref existingArtifactPaths);
                 
 
-                var missingPaths = boundedContextConfigurationRetrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.NewBoundedContextConfig? 
-                    typePaths
-                    : typePaths.Where(_ => !existingArtifactPaths.Any(ap => ap == _)).ToArray();
+    //             var missingPaths = boundedContextConfigurationRetrievalResult == BoundedContextConfigurationUtilities.BoundedContextRetrievalResult.NewBoundedContextConfig? 
+    //                 typePaths
+    //                 : typePaths.Where(_ => !existingArtifactPaths.Any(ap => ap == _)).ToArray();
 
-                if (missingPaths.Any())
-                    BoundedContextConfigurationUtilities.AddPathsToBoundedContextConfiguration(missingPaths, ref boundedContextConfiguration);
+    //             if (missingPaths.Any())
+    //                 BoundedContextConfigurationUtilities.AddPathsToBoundedContextConfiguration(missingPaths, ref boundedContextConfiguration);
 
-                boundedContextConfiguration.ValidateTopology();
+    //             boundedContextConfiguration.ValidateTopology();
 
-                _artifactTypes.ForEach(artifactType =>
-                    newArtifacts += HandleArtifactOfType(
-                        artifactType.Type,
-                        artifactsConfiguration,
-                        types,
-                        boundedContextConfiguration,
-                        artifactType.TypeName,
-                        artifactType.TargetPropertyExpression
-                    )
-                );
+    //             _artifactTypes.ForEach(artifactType =>
+    //                 newArtifacts += HandleArtifactOfType(
+    //                     artifactType.Type,
+    //                     artifactsConfiguration,
+    //                     types,
+    //                     boundedContextConfiguration,
+    //                     artifactType.TypeName,
+    //                     artifactType.TargetPropertyExpression
+    //                 )
+    //             );
 
-                artifactsConfiguration.ValidateArtifacts(boundedContextConfiguration, types);
+    //             artifactsConfiguration.ValidateArtifacts(boundedContextConfiguration, types);
 
-                var hasChanges = newArtifacts > 0;
+    //             var hasChanges = newArtifacts > 0;
 
-                if (missingPaths.Any()) _boundedContextConfigurationManager.Save(boundedContextConfiguration); 
-                if (hasChanges) _artifactsConfigurationManager.Save(artifactsConfiguration);
+    //             if (missingPaths.Any()) _boundedContextConfigurationManager.Save(boundedContextConfiguration); 
+    //             if (hasChanges) _artifactsConfigurationManager.Save(artifactsConfiguration);
 
-                var endTime = DateTime.UtcNow;
-                var deltaTime = endTime.Subtract(startTime);
+    //             var endTime = DateTime.UtcNow;
+    //             var deltaTime = endTime.Subtract(startTime);
 
-                if (newArtifacts > 0) 
-                    ConsoleLogger.LogInfo($"Added {newArtifacts} artifacts to the map (Took {deltaTime.TotalSeconds} seconds)");
-                else 
-                    ConsoleLogger.LogInfo($"No new artifacts added to the map (Took {deltaTime.TotalSeconds} seconds)");
-            }
-            catch (Exception ex)
-            {
-                ConsoleLogger.LogError("Error consolidating artifacts;");
-                ConsoleLogger.LogError(ex.Message);
-                return 1;
-            }
+    //             if (newArtifacts > 0) 
+    //                 ConsoleLogger.LogInfo($"Added {newArtifacts} artifacts to the map (Took {deltaTime.TotalSeconds} seconds)");
+    //             else 
+    //                 ConsoleLogger.LogInfo($"No new artifacts added to the map (Took {deltaTime.TotalSeconds} seconds)");
+    //         }
+    //         catch (Exception ex)
+    //         {
+    //             ConsoleLogger.LogError("Error consolidating artifacts;");
+    //             ConsoleLogger.LogError(ex.Message);
+    //             return 1;
+    //         }
 
-            return 0;
-        }
+    //         return 0;
+    //     }
 
-        static void SetupConfigurationManagers()
-        {
-            var loggerFactory = new LoggerFactory(new ILoggerProvider[]
-            {
-                new ConsoleLoggerProvider((s, l) => true, true)
-            });
+    //     static void SetupConfigurationManagers()
+    //     {
+    //         var loggerFactory = new LoggerFactory(new ILoggerProvider[]
+    //         {
+    //             new ConsoleLoggerProvider((s, l) => true, true)
+    //         });
 
-            var appenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory);
-            var logger = new Dolittle.Logging.Logger(appenders);
+    //         var appenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory);
+    //         var logger = new Dolittle.Logging.Logger(appenders);
 
-            var container = new ActivatorContainer();
-            var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new []
-            {
-                new ConverterProvider(logger)
-            });
+    //         var container = new ActivatorContainer();
+    //         var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new []
+    //         {
+    //             new ConverterProvider(logger)
+    //         });
 
-            var serializer = new Serializer(container, converterProviders);
-            _boundedContextConfigurationManager = new BoundedContextConfigurationManager(serializer);
-            _artifactsConfigurationManager = new ArtifactsConfigurationManager(serializer);
-        }
+    //         var serializer = new Serializer(container, converterProviders);
+    //         _boundedContextConfigurationManager = new BoundedContextConfigurationManager(serializer);
+    //         _artifactsConfigurationManager = new ArtifactsConfigurationManager(serializer);
+    //     }
         
 
-        static Type[] GetArtifactsFromAssembly(AssemblyLoader assemblyLoader)
-        {
-            return assemblyLoader
-                .GetProjectReferencedAssemblies()
-                .SelectMany(_ => _.ExportedTypes)
-                .Where(_ =>
-                    _artifactTypes
-                    .Any(at => at.Type.IsAssignableFrom(_)))
-                .ToArray();
-        }
+    //     static Type[] GetArtifactsFromAssembly(AssemblyLoader assemblyLoader)
+    //     {
+    //         return assemblyLoader
+    //             .GetProjectReferencedAssemblies()
+    //             .SelectMany(_ => _.ExportedTypes)
+    //             .Where(_ =>
+    //                 _artifactTypes
+    //                 .Any(at => at.Type.IsAssignableFrom(_)))
+    //             .ToArray();
+    //     }
 
-        static string[] ExtractTypePaths(Type[] types, Dictionary<Area, IEnumerable<string>> excludeMap)
-        {
-            return types
-                .Select(type => ExtractTypePath(type, excludeMap))
-                .Where(_ => _.Length > 0)
-                .Distinct()
-                .ToArray();
-        }
-        static string ExtractTypePath(Type type, Dictionary<Area, IEnumerable<string>> excludeMap)
-        {
-            var area = new Area(){Value = type.Namespace.Split(NamespaceSeperator).First()};
-            var segmentList = type.Namespace.Split(NamespaceSeperator).Skip(1).ToList();
-            if (excludeMap.ContainsKey(area))
-            {
-                foreach (var segment in excludeMap[area]) 
-                    segmentList.Remove(segment);
-            }
+    //     static string[] ExtractTypePaths(Type[] types, Dictionary<Area, IEnumerable<string>> excludeMap)
+    //     {
+    //         return types
+    //             .Select(type => ExtractTypePath(type, excludeMap))
+    //             .Where(_ => _.Length > 0)
+    //             .Distinct()
+    //             .ToArray();
+    //     }
+    //     static string ExtractTypePath(Type type, Dictionary<Area, IEnumerable<string>> excludeMap)
+    //     {
+    //         var area = new Area(){Value = type.Namespace.Split(NamespaceSeperator).First()};
+    //         var segmentList = type.Namespace.Split(NamespaceSeperator).Skip(1).ToList();
+    //         if (excludeMap.ContainsKey(area))
+    //         {
+    //             foreach (var segment in excludeMap[area]) 
+    //                 segmentList.Remove(segment);
+    //         }
             
-            return string.Join(NamespaceSeperator, segmentList);
-        }
+    //         return string.Join(NamespaceSeperator, segmentList);
+    //     }
         
-        static void ThrowIfArtifactWithNoModuleOrFeature(Type[] types)
-        {
-            bool hasInvalidArtifact = false;
-            foreach(var type in types)
-            {
-                var numSegments = type.Namespace.Split(NamespaceSeperator).Count();
-                if (numSegments < 1) 
-                {
-                    hasInvalidArtifact = true;
-                    ConsoleLogger.LogError($"Artifact {type.Name} with namespace = {type.Namespace} is invalid");
-                }
-            }
-            if (hasInvalidArtifact) throw new InvalidArtifact();
-        }
+    //     static void ThrowIfArtifactWithNoModuleOrFeature(Type[] types)
+    //     {
+    //         bool hasInvalidArtifact = false;
+    //         foreach(var type in types)
+    //         {
+    //             var numSegments = type.Namespace.Split(NamespaceSeperator).Count();
+    //             if (numSegments < 1) 
+    //             {
+    //                 hasInvalidArtifact = true;
+    //                 ConsoleLogger.LogError($"Artifact {type.Name} with namespace = {type.Namespace} is invalid");
+    //             }
+    //         }
+    //         if (hasInvalidArtifact) throw new InvalidArtifact();
+    //     }
 
-        static void ThrowIfContainsInvalidTypePath(string[] typePaths, bool useModules)
-        {
-            bool hasInvalidTypePath = false;
-            foreach(var path in typePaths)
-            {
-                var numSegments = path.Split(NamespaceSeperator).Count();
-                if (useModules && numSegments < 2) 
-                {
-                    hasInvalidTypePath = true;
-                    ConsoleLogger.LogError($"Artifact with type path (a Module name + Feature names composition) {path} is invalid");
-                }
-                if (hasInvalidTypePath) throw new InvalidArtifact();
-            }
-        }
+    //     static void ThrowIfContainsInvalidTypePath(string[] typePaths, bool useModules)
+    //     {
+    //         bool hasInvalidTypePath = false;
+    //         foreach(var path in typePaths)
+    //         {
+    //             var numSegments = path.Split(NamespaceSeperator).Count();
+    //             if (useModules && numSegments < 2) 
+    //             {
+    //                 hasInvalidTypePath = true;
+    //                 ConsoleLogger.LogError($"Artifact with type path (a Module name + Feature names composition) {path} is invalid");
+    //             }
+    //             if (hasInvalidTypePath) throw new InvalidArtifact();
+    //         }
+    //     }
 
-        static void AddExistingArtifactPaths(BoundedContextConfiguration boundedContextConfiguration, ref List<string> existingArtifactPaths)
-        {
-            if (boundedContextConfiguration.UseModules ) 
-            {
-               foreach (var module in boundedContextConfiguration.Topology.Modules)
-                   existingArtifactPaths.AddRange(GetArtifactPathsFor(module.Features, module.Name));
-            }
+    //     static void AddExistingArtifactPaths(BoundedContextConfiguration boundedContextConfiguration, ref List<string> existingArtifactPaths)
+    //     {
+    //         if (boundedContextConfiguration.UseModules ) 
+    //         {
+    //            foreach (var module in boundedContextConfiguration.Topology.Modules)
+    //                existingArtifactPaths.AddRange(GetArtifactPathsFor(module.Features, module.Name));
+    //         }
                
-            else 
-                existingArtifactPaths.AddRange(GetArtifactPathsFor(boundedContextConfiguration.Topology.Features));
+    //         else 
+    //             existingArtifactPaths.AddRange(GetArtifactPathsFor(boundedContextConfiguration.Topology.Features));
             
-        }
+    //     }
         
-        static IList<string> GetArtifactPathsFor(IEnumerable<FeatureDefinition> features, string parent = "")
-        {
-            var paths = new List<string>();
-            features.ForEach(_ =>
-            {
-                var featurePath = new List<string>();
-                if( !string.IsNullOrEmpty(parent) ) featurePath.Add($"{parent}");
-                featurePath.Add(_.Name);
-                var featurePathAsString = string.Join(NamespaceSeperator, featurePath);
-                paths.Add(featurePathAsString);
-                paths.AddRange(GetArtifactPathsFor(_.SubFeatures, featurePathAsString));
-            });
+    //     static IList<string> GetArtifactPathsFor(IEnumerable<FeatureDefinition> features, string parent = "")
+    //     {
+    //         var paths = new List<string>();
+    //         features.ForEach(_ =>
+    //         {
+    //             var featurePath = new List<string>();
+    //             if( !string.IsNullOrEmpty(parent) ) featurePath.Add($"{parent}");
+    //             featurePath.Add(_.Name);
+    //             var featurePathAsString = string.Join(NamespaceSeperator, featurePath);
+    //             paths.Add(featurePathAsString);
+    //             paths.AddRange(GetArtifactPathsFor(_.SubFeatures, featurePathAsString));
+    //         });
 
-            return paths;
-        }
+    //         return paths;
+    //     }
 
-        static int HandleArtifactOfType(Type artifactType, ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types, BoundedContextConfiguration boundedContextConfiguration, string typeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression)
-        {
-            var targetProperty = targetPropertyExpression.GetPropertyInfo();
+    //     static int HandleArtifactOfType(Type artifactType, ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types, BoundedContextConfiguration boundedContextConfiguration, string typeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression)
+    //     {
+    //         var targetProperty = targetPropertyExpression.GetPropertyInfo();
 
-            var newArtifacts = 0;
-            var artifacts = types.Where(_ => artifactType.IsAssignableFrom(_));
+    //         var newArtifacts = 0;
+    //         var artifacts = types.Where(_ => artifactType.IsAssignableFrom(_));
             
-            artifacts.ForEach(artifact =>
-            {
-                var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace);
-                if (feature != null)
-                {
-                    ArtifactsByTypeDefinition artifactsByTypeDefinition;
+    //         artifacts.ForEach(artifact =>
+    //         {
+    //             var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace);
+    //             if (feature != null)
+    //             {
+    //                 ArtifactsByTypeDefinition artifactsByTypeDefinition;
 
-                    if (artifactsConfiguration.Artifacts.ContainsKey(feature.Feature))
-                        artifactsByTypeDefinition = artifactsConfiguration.Artifacts[feature.Feature];
-                    else
-                    {
-                        artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
-                        artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
-                    } 
-                    var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
+    //                 if (artifactsConfiguration.Artifacts.ContainsKey(feature.Feature))
+    //                     artifactsByTypeDefinition = artifactsConfiguration.Artifacts[feature.Feature];
+    //                 else
+    //                 {
+    //                     artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
+    //                     artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
+    //                 } 
+    //                 var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
                     
-                    if (!existingArtifacts.Any(_ => _.Type.GetActualType() == artifact))
-                    {
-                        var newAndExistingArtifacts = new List<ArtifactDefinition>(existingArtifacts);
-                        var artifactDefinition = new ArtifactDefinition
-                        {
-                            Artifact = ArtifactId.New(),
-                            Generation = ArtifactGeneration.First,
-                            Type = ClrType.FromType(artifact)
-                        };
-                        Console.WriteLine($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
-                        newAndExistingArtifacts.Add(artifactDefinition);
+    //                 if (!existingArtifacts.Any(_ => _.Type.GetActualType() == artifact))
+    //                 {
+    //                     var newAndExistingArtifacts = new List<ArtifactDefinition>(existingArtifacts);
+    //                     var artifactDefinition = new ArtifactDefinition
+    //                     {
+    //                         Artifact = ArtifactId.New(),
+    //                         Generation = ArtifactGeneration.First,
+    //                         Type = ClrType.FromType(artifact)
+    //                     };
+    //                     Console.WriteLine($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
+    //                     newAndExistingArtifacts.Add(artifactDefinition);
 
-                        newArtifacts++;
+    //                     newArtifacts++;
 
-                        targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
-                    }
+    //                     targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
+    //                 }
                     
-                }
-            });
-            return newArtifacts;
-        }
-    }
+    //             }
+    //         });
+    //         return newArtifacts;
+    //     }
+    // }
 }

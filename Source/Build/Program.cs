@@ -3,9 +3,18 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-
+using System.Linq;
+using Dolittle.Applications.Configuration;
+using Dolittle.Artifacts.Configuration;
+using Dolittle.Commands;
+using Dolittle.Events;
+using Dolittle.Queries;
+using Dolittle.ReadModels;
+using Dolittle.Concepts.Serialization.Json;
+using Dolittle.Events.Processing;
+using Dolittle.Serialization.Json;
 using Microsoft.Extensions.Logging;
-
+using Microsoft.Extensions.Logging.Console;
 
 namespace Dolittle.Build
 {
@@ -16,45 +25,69 @@ namespace Dolittle.Build
     //
     class Program
     {
+        const string NamespaceSeperator = ".";
+        static IBoundedContextConfigurationManager _boundedContextConfigurationManager;
+        static IArtifactsConfigurationManager _artifactsConfigurationManager;
+        static Dolittle.Logging.ILogger _logger;
+
+        readonly static ArtifactType[] _artifactTypes = new ArtifactType[]
+        {
+            new ArtifactType { Type = typeof(ICommand), TypeName = "command", TargetPropertyExpression = a => a.Commands },
+            new ArtifactType { Type = typeof(IEvent), TypeName = "event", TargetPropertyExpression = a => a.Events },
+            new ArtifactType { Type = typeof(ICanProcessEvents), TypeName = "event processor", TargetPropertyExpression = a => a.EventProcessors },
+            new ArtifactType { Type = typeof(IEventSource), TypeName = "event source", TargetPropertyExpression = a => a.EventSources },
+            new ArtifactType { Type = typeof(IReadModel), TypeName = "read model", TargetPropertyExpression = a => a.ReadModels },
+            new ArtifactType { Type = typeof(IQuery), TypeName = "query", TargetPropertyExpression = a => a.Queries }
+        };
         static int Main(string[] args)
         {
             if (args.Length != 1)
             {
-                Console.WriteLine("Error consolidating artifacts; missing argument for name of assembly to consolidate");
+                _logger.Error("Error consolidating artifacts; missing argument for name of assembly to consolidate");
                 return 1;
             }
             try
             {
+                // For debugging, comment out or remove when not debugging
                 while (!System.Diagnostics.Debugger.IsAttached)
-                {
                     System.Threading.Thread.Sleep(10);
-                }
-                SetupConfigurationManagers();
 
-                
+                _logger.Information("Build process started");
+                var startTime = DateTime.UtcNow;
+                InitialSetup();
+                var assemblyLoader = new AssemblyLoader(args[0]);
                 
                 var types = GetArtifactsFromAssembly(assemblyLoader);
-
-                var typePaths = ExtractTypePaths(types, boundedContextConfiguration.ExcludedNamespaceMap);
+                ThrowIfArtifactWithNoModuleOrFeature(types);
                 
-                
+                var endTime = DateTime.UtcNow;
+                var deltaTime = endTime.Subtract(startTime);
+                _logger.Information($"Finished build process. (Took {deltaTime.TotalSeconds} seconds)");
             }
             catch (Exception ex)
             {
-                ConsoleLogger.LogError("Error consolidating artifacts;");
-                ConsoleLogger.LogError(ex.Message);
+                _logger.Error("Error consolidating artifacts;");
+                _logger.Error(ex.Message);
                 return 1;
             }
 
             return 0;
         }
 
-        static void SetupConfigurationManagers()
+        static void InitialSetup()
         {
+             var loggerFactory = new LoggerFactory(new ILoggerProvider[]
+            {
+                new ConsoleLoggerProvider((s, l) => true, true)
+            });
+
+            var appenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory);
+            _logger = new Dolittle.Logging.Logger(appenders);
+
             var container = new ActivatorContainer();
             var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new []
             {
-                new Dolittle.Concepts.Serialization.Json.ConverterProvider()
+                new ConverterProvider(_logger)
             });
 
             var serializer = new Serializer(container, converterProviders);
@@ -74,27 +107,6 @@ namespace Dolittle.Build
                 .ToArray();
         }
 
-        static string[] ExtractTypePaths(Type[] types, Dictionary<Area, IEnumerable<string>> excludeMap)
-        {
-            return types
-                .Select(type => ExtractTypePath(type, excludeMap))
-                .Where(_ => _.Length > 0)
-                .Distinct()
-                .ToArray();
-        }
-        static string ExtractTypePath(Type type, Dictionary<Area, IEnumerable<string>> excludeMap)
-        {
-            var area = new Area(){Value = type.Namespace.Split(NamespaceSeperator).First()};
-            var segmentList = type.Namespace.Split(NamespaceSeperator).Skip(1).ToList();
-            if (excludeMap.ContainsKey(area))
-            {
-                foreach (var segment in excludeMap[area]) 
-                    segmentList.Remove(segment);
-            }
-            
-            return string.Join(NamespaceSeperator, segmentList);
-        }
-        
         static void ThrowIfArtifactWithNoModuleOrFeature(Type[] types)
         {
             bool hasInvalidArtifact = false;
@@ -104,99 +116,10 @@ namespace Dolittle.Build
                 if (numSegments < 1) 
                 {
                     hasInvalidArtifact = true;
-                    ConsoleLogger.LogError($"Artifact {type.Name} with namespace = {type.Namespace} is invalid");
+                    _logger.Error($"Artifact {type.Name} with namespace = {type.Namespace} is invalid");
                 }
             }
             if (hasInvalidArtifact) throw new InvalidArtifact();
-        }
-
-        static void ThrowIfContainsInvalidTypePath(string[] typePaths, bool useModules)
-        {
-            bool hasInvalidTypePath = false;
-            foreach(var path in typePaths)
-            {
-                var numSegments = path.Split(NamespaceSeperator).Count();
-                if (useModules && numSegments < 2) 
-                {
-                    hasInvalidTypePath = true;
-                    ConsoleLogger.LogError($"Artifact with type path (a Module name + Feature names composition) {path} is invalid");
-                }
-                if (hasInvalidTypePath) throw new InvalidArtifact();
-            }
-        }
-
-        static void AddExistingArtifactPaths(BoundedContextConfiguration boundedContextConfiguration, ref List<string> existingArtifactPaths)
-        {
-            if (boundedContextConfiguration.UseModules ) 
-            {
-               foreach (var module in boundedContextConfiguration.Topology.Modules)
-                   existingArtifactPaths.AddRange(GetArtifactPathsFor(module.Features, module.Name));
-            }
-               
-            else 
-                existingArtifactPaths.AddRange(GetArtifactPathsFor(boundedContextConfiguration.Topology.Features));
-            
-        }
-        
-        static IList<string> GetArtifactPathsFor(IEnumerable<FeatureDefinition> features, string parent = "")
-        {
-            var paths = new List<string>();
-            features.ForEach(_ =>
-            {
-                var featurePath = new List<string>();
-                if( !string.IsNullOrEmpty(parent) ) featurePath.Add($"{parent}");
-                featurePath.Add(_.Name);
-                var featurePathAsString = string.Join(NamespaceSeperator, featurePath);
-                paths.Add(featurePathAsString);
-                paths.AddRange(GetArtifactPathsFor(_.SubFeatures, featurePathAsString));
-            });
-
-            return paths;
-        }
-
-        static int HandleArtifactOfType(Type artifactType, ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types, BoundedContextConfiguration boundedContextConfiguration, string typeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression)
-        {
-            var targetProperty = targetPropertyExpression.GetPropertyInfo();
-
-            var newArtifacts = 0;
-            var artifacts = types.Where(_ => artifactType.IsAssignableFrom(_));
-            
-            artifacts.ForEach(artifact =>
-            {
-                var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace);
-                if (feature != null)
-                {
-                    ArtifactsByTypeDefinition artifactsByTypeDefinition;
-
-                    if (artifactsConfiguration.Artifacts.ContainsKey(feature.Feature))
-                        artifactsByTypeDefinition = artifactsConfiguration.Artifacts[feature.Feature];
-                    else
-                    {
-                        artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
-                        artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
-                    } 
-                    var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
-                    
-                    if (!existingArtifacts.Any(_ => _.Type.GetActualType() == artifact))
-                    {
-                        var newAndExistingArtifacts = new List<ArtifactDefinition>(existingArtifacts);
-                        var artifactDefinition = new ArtifactDefinition
-                        {
-                            Artifact = ArtifactId.New(),
-                            Generation = ArtifactGeneration.First,
-                            Type = ClrType.FromType(artifact)
-                        };
-                        Console.WriteLine($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
-                        newAndExistingArtifacts.Add(artifactDefinition);
-
-                        newArtifacts++;
-
-                        targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
-                    }
-                    
-                }
-            });
-            return newArtifacts;
         }
     }
 }
