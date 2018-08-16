@@ -40,7 +40,8 @@ namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
             { { "an_integer", an_integer }
             };
 
-            request = new CommandRequest(correlation_id, identifier.Id, identifier.Generation, content);
+            // request = new CommandRequest(correlation_id, identifier.Id, identifier.Generation, content);
+            request = new CommandRequest(correlation_id, identifier, content);
 
             artifact_type_map = new Mock<IArtifactTypeMap>();
             artifact_type_map.Setup(_ => _.GetTypeFor(identifier)).Returns(typeof(sub));

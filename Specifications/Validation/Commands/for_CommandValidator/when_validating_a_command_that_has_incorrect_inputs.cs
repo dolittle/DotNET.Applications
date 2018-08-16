@@ -31,7 +31,9 @@ namespace Dolittle.FluentValidation.Commands.for_CommandValidator
             };
 
             var artifact = Artifact.New();
-            command = new CommandRequest(TransactionCorrelationId.NotSet, artifact.Id, artifact.Generation, new ExpandoObject());
+            // command = new CommandRequest(TransactionCorrelationId.NotSet, artifact.Id, artifact.Generation, new ExpandoObject());
+            command = new CommandRequest(TransactionCorrelationId.NotSet, artifact, new ExpandoObject());
+
             command_instance = Mock.Of<ICommand>();
             command_request_converter.Setup(c => c.Convert(command)).Returns(command_instance);
 
