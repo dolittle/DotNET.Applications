@@ -11,12 +11,12 @@ namespace Dolittle.Build.Artifact
         readonly ILogger _logger;
 
         readonly IArtifactsConfigurationManager _artifactsConfigurationManager;
-        internal ArtifactsBuilder(Type[] artifactsTypes, ILogger logger, ISerializer serializer)
+        internal ArtifactsBuilder(Type[] artifactsTypes, IArtifactsConfigurationManager artifactsConfigurationManager, ILogger logger)
         {
             _artifactTypes = artifactsTypes;
             _logger = logger;
 
-            _artifactsConfigurationManager = new ArtifactsConfigurationManager(serializer);
+            _artifactsConfigurationManager = artifactsConfigurationManager;
 
         }
 

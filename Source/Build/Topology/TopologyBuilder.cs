@@ -12,12 +12,12 @@ namespace Dolittle.Build.Topology
         readonly IBoundedContextConfigurationManager _boundedContextConfigurationManager;
 
 
-        internal TopologyBuilder(Type[] artifactsTypes, ILogger logger, ISerializer serializer)
+        internal TopologyBuilder(Type[] artifactsTypes, IBoundedContextConfigurationManager boundedContextConfigurationManager, ILogger logger)
         {
             _artifactTypes = artifactsTypes;
             _logger = logger;
 
-            _boundedContextConfigurationManager = new BoundedContextConfigurationManager(serializer);
+            _boundedContextConfigurationManager = boundedContextConfigurationManager;
         }
 
         internal BoundedContextConfiguration BuildTopology()
