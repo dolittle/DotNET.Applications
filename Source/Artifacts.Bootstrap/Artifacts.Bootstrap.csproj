@@ -6,8 +6,12 @@
     <Import Project="../../Build/MSBuild/default.props" />
 
     <ItemGroup>
+        <PackageReference Include="Dolittle.Bootstrapping" Version="2.0.0-*" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="../Artifacts.Configuration/Artifacts.Configuration.csproj" />
-        <ProjectReference Include="../Bootstrapping/Bootstrapping.csproj" />
+        
     </ItemGroup>
 </Project>
 
