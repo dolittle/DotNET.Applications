@@ -13,7 +13,7 @@ namespace Dolittle.Build
     /// <summary>
     /// 
     /// </summary>
-    internal class ArtifactType
+    public class ArtifactType
     {
         /// <summary>
         /// Gets the type of <see cref="Artifact"/>

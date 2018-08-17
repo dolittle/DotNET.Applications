@@ -9,22 +9,33 @@ using Dolittle.Serialization.Json;
 
 namespace Dolittle.Build.Topology
 {
-    internal class TopologyBuilder
+    /// <summary>
+    /// Represents a class that can build a valid <see cref="BoundedContextConfiguration"/>
+    /// </summary>     
+    public class TopologyBuilder
     {
         readonly Type[] _artifactTypes;
         readonly ILogger _logger;
 
         BoundedContextConfiguration _configuration;
 
-
-        internal TopologyBuilder(Type[] artifactsTypes, BoundedContextConfiguration boundedContextConfiguration, ILogger logger)
+        /// <summary>
+        /// Instantiates an instance of <see cref="TopologyBuilder"/>
+        /// </summary>
+        /// <param name="artifactsTypes">The discovered types of artifacts in the Bounded Context's assemblies</param>
+        /// <param name="boundedContextConfiguration">The <see cref="BoundedContextConfiguration"/> that will be modified, validated and returned from Build</param>
+        /// <param name="logger"></param>
+        public TopologyBuilder(Type[] artifactsTypes, BoundedContextConfiguration boundedContextConfiguration, ILogger logger)
         {
             _artifactTypes = artifactsTypes;
             _logger = logger;
             _configuration = boundedContextConfiguration;
         }
-
-        internal BoundedContextConfiguration Build()
+        /// <summary>
+        /// Builds a valid <see cref="BoundedContextConfiguration"/>
+        /// </summary>
+        /// <returns></returns>
+        public BoundedContextConfiguration Build()
         {
             _logger.Information("Building topology");
             var startTime = DateTime.UtcNow;
@@ -43,8 +54,11 @@ namespace Dolittle.Build.Topology
                     typePaths
                     : typePaths.Where(_ => !existingArtifactPaths.Any(ap => ap == _)).ToArray();
 
-            if (missingPaths.Any())
+            if (missingPaths.Any()) 
+            {
+                Program.NewTopology = true;
                 AddPathsToBoundedContextConfiguration(missingPaths);
+            }
 
             _configuration.Topology.ValidateTopology(_configuration.UseModules, _logger);
 

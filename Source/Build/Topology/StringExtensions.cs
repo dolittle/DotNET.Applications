@@ -5,9 +5,15 @@ using Dolittle.Applications.Configuration;
 
 namespace Dolittle.Build.Topology
 {
-    internal static class StringExtensions
+    /// <summary>
+    /// Extensions for <see cref="string"/> that's specific for the Dolittle.Build.Topology namespace
+    /// </summary>
+    public static class StringExtensions
     {
-        internal static ModuleDefinition GetModuleFromPath(this string path)
+        /// <summary>
+        /// Extracts a <see cref="ModuleDefinition"/> from the string path
+        /// </summary>
+        public static ModuleDefinition GetModuleFromPath(this string path)
         {
             var splitPath = path.Split(".");
             var moduleName = splitPath.First();
@@ -28,7 +34,10 @@ namespace Dolittle.Build.Topology
 
             return module;
         }
-        internal static FeatureDefinition GetFeatureFromPath(this string path)
+        /// <summary>
+        /// Extracts a <see cref="FeatureDefinition"/> from the string path
+        /// </summary>
+        public static FeatureDefinition GetFeatureFromPath(this string path)
         {
             var stringSegmentsReversed = path.Split(".").Reverse().ToArray();
             if (stringSegmentsReversed.Count() == 0) throw new Exception("Could not get feature from path");

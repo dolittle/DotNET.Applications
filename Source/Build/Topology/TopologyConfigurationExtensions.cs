@@ -6,9 +6,15 @@ using Dolittle.Logging;
 
 namespace Dolittle.Build.Topology
 {
-    internal static class TopologyExtensions
+    /// <summary>
+    /// Extensions for the topology of a <see cref="BoundedContextConfiguration"/>
+    /// </summary>
+    public static class TopologyConfigurationExtensions
     {
-        internal static IReadOnlyList<ModuleDefinition> GetCollapsedModules(this IEnumerable<ModuleDefinition> modules)
+        /// <summary>
+        /// Returns a collapsed list of <see cref="ModuleDefinition"/> 
+        /// </summary>
+        public static IReadOnlyList<ModuleDefinition> GetCollapsedModules(this IEnumerable<ModuleDefinition> modules)
         {
             var collapsedModules = new List<ModuleDefinition>();
 
@@ -24,7 +30,10 @@ namespace Dolittle.Build.Topology
 
             return collapsedModules;
         }
-        internal static IReadOnlyList<FeatureDefinition> GetCollapsedFeatures(this IEnumerable<FeatureDefinition> features)
+        /// <summary>
+        /// Returns a collapsed list of <see cref="FeatureDefinition"/> 
+        /// </summary>
+        public static IReadOnlyList<FeatureDefinition> GetCollapsedFeatures(this IEnumerable<FeatureDefinition> features)
         {
             var collapsedFeatures = new List<FeatureDefinition>();
 
@@ -39,7 +48,10 @@ namespace Dolittle.Build.Topology
             }
             return collapsedFeatures;
         }
-        internal static void ValidateTopology(this TopologyConfiguration topology, bool useModules, ILogger logger)
+        /// <summary>
+        /// Validates the <see cref="TopologyConfiguration"/>
+        /// </summary>
+        public static void ValidateTopology(this TopologyConfiguration topology, bool useModules, ILogger logger)
         {
             ThrowIfDuplicateId(topology, useModules, logger);
         }

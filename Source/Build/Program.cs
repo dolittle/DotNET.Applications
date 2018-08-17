@@ -27,9 +27,12 @@ namespace Dolittle.Build
     //
     class Program
     {
-        const string NamespaceSeperator = ".";
         static Dolittle.Logging.ILogger _logger;
         static TopologyConfigurationHandler _topologyConfigurationHandler;
+        static ArtifactsConfigurationHandler _artifactsConfigurationHandler;
+
+        internal static bool NewTopology = false;
+        internal static bool NewArtifacts = false;
 
         readonly static ArtifactType[] _artifactTypes = new ArtifactType[]
         {
@@ -103,6 +106,7 @@ namespace Dolittle.Build
             var serializer = new Serializer(container, converterProviders);
 
             _topologyConfigurationHandler = new TopologyConfigurationHandler(serializer);
+            _artifactsConfigurationHandler = new ArtifactsConfigurationHandler(serializer, _artifactTypes);
 
         }
         static Type[] DiscoverArtifacts(AssemblyLoader assemblyLoader)
@@ -129,7 +133,7 @@ namespace Dolittle.Build
             bool hasInvalidArtifact = false;
             foreach(var type in types)
             {
-                var numSegments = type.Namespace.Split(NamespaceSeperator).Count();
+                var numSegments = type.Namespace.Split(".").Count();
                 if (numSegments < 1) 
                 {
                     hasInvalidArtifact = true;

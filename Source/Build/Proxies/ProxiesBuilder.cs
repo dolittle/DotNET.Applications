@@ -3,18 +3,28 @@ using Dolittle.Logging;
 
 namespace Dolittle.Build.Proxies
 {
-     internal class ProxiesBuilder
+    /// <summary>
+    /// 
+    /// </summary>
+     public class ProxiesBuilder
     {
         readonly Type[] _artifactTypes;
         readonly ILogger _logger;
 
-        internal ProxiesBuilder(Type[] artifactsTypes, ILogger logger)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="artifactsTypes"></param>
+        /// <param name="logger"></param>
+        public ProxiesBuilder(Type[] artifactsTypes, ILogger logger)
         {
             _artifactTypes = artifactsTypes;
             _logger = logger;
         }
-
-        internal void Build()
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Build()
         {
             _logger.Information("Building proxies");
              var startTime = DateTime.UtcNow;
