@@ -20,7 +20,7 @@ namespace Dolittle.Build.Artifact
 
         }
 
-        internal ArtifactsConfiguration BuildArtifacts()
+        internal ArtifactsConfiguration Build()
         {
             var artifactsConfiguration = _artifactsConfigurationManager.Load();
 

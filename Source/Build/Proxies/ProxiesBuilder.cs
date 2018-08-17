@@ -14,7 +14,7 @@ namespace Dolittle.Build.Proxies
             _logger = logger;
         }
 
-        internal void BuildProxies()
+        internal void Build()
         {
             _logger.Information("Building proxies");
              var startTime = DateTime.UtcNow;

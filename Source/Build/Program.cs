@@ -28,9 +28,8 @@ namespace Dolittle.Build
     class Program
     {
         const string NamespaceSeperator = ".";
-        static IBoundedContextConfigurationManager _boundedContextConfigurationManager;
-        static IArtifactsConfigurationManager _artifactsConfigurationManager;
         static Dolittle.Logging.ILogger _logger;
+        static TopologyConfigurationHandler _topologyConfigurationHandler;
 
         readonly static ArtifactType[] _artifactTypes = new ArtifactType[]
         {
@@ -54,17 +53,13 @@ namespace Dolittle.Build
                 while (!System.Diagnostics.Debugger.IsAttached)
                     System.Threading.Thread.Sleep(10);
 
+                InitialSetup();
+
                 _logger.Information("Build process started");
                 var startTime = DateTime.UtcNow;
-                InitialSetup();
                 var assemblyLoader = new AssemblyLoader(args[0]);
                 
-                var types = GetArtifactsFromAssembly(assemblyLoader);
-                ThrowIfArtifactWithNoModuleOrFeature(types);
-
-                var topologyBuilder = new TopologyBuilder(types, _boundedContextConfigurationManager, _logger);
-                
-                var artifactsBuilder = new ArtifactsBuilder(types, _artifactsConfigurationManager, _logger);
+                var types = DiscoverArtifacts(assemblyLoader); 
                 
                 var endTime = DateTime.UtcNow;
                 var deltaTime = endTime.Subtract(startTime);
@@ -82,14 +77,23 @@ namespace Dolittle.Build
 
         static void InitialSetup()
         {
-             var loggerFactory = new LoggerFactory(new ILoggerProvider[]
+            SetupLogger();
+            SetupHandlers();
+        }
+        
+        static void SetupLogger()
+        {
+            var loggerFactory = new LoggerFactory(new ILoggerProvider[]
             {
                 new ConsoleLoggerProvider((s, l) => true, true)
             });
 
             var appenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory);
             _logger = new Dolittle.Logging.Logger(appenders);
-
+        }
+        
+        static void SetupHandlers()
+        {
             var container = new ActivatorContainer();
             var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new []
             {
@@ -97,11 +101,18 @@ namespace Dolittle.Build
             });
 
             var serializer = new Serializer(container, converterProviders);
-            _boundedContextConfigurationManager = new BoundedContextConfigurationManager(serializer);
-            _artifactsConfigurationManager = new ArtifactsConfigurationManager(serializer);
-        }
-        
 
+            _topologyConfigurationHandler = new TopologyConfigurationHandler(serializer);
+
+        }
+        static Type[] DiscoverArtifacts(AssemblyLoader assemblyLoader)
+        {
+            var types = GetArtifactsFromAssembly(assemblyLoader);
+
+            ThrowIfArtifactWithNoModuleOrFeature(types);
+
+            return types;
+        }
         static Type[] GetArtifactsFromAssembly(AssemblyLoader assemblyLoader)
         {
             return assemblyLoader
