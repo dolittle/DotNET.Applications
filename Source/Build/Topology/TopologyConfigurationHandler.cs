@@ -14,9 +14,10 @@ namespace Dolittle.Build.Topology
             _configurationManager = new BoundedContextConfigurationManager(configurationSerializer);
         }
 
-        internal BoundedContextConfiguration Build(Type[] types, IBoundedContextConfigurationManager boundedContextConfigurationManager, ILogger logger)
+        internal BoundedContextConfiguration Build(Type[] types, ILogger logger)
         {
-            return new TopologyBuilder(types, boundedContextConfigurationManager, logger).Build();
+            var boundedContextConfiguration = _configurationManager.Load();
+            return new TopologyBuilder(types, boundedContextConfiguration, logger).Build();
         }
     }
 }

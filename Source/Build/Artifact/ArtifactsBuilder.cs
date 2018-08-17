@@ -10,20 +10,19 @@ namespace Dolittle.Build.Artifact
         readonly Type[] _artifactTypes;
         readonly ILogger _logger;
 
-        readonly IArtifactsConfigurationManager _artifactsConfigurationManager;
-        internal ArtifactsBuilder(Type[] artifactsTypes, IArtifactsConfigurationManager artifactsConfigurationManager, ILogger logger)
+        ArtifactsConfiguration _artifactsConfiguration;
+
+        internal ArtifactsBuilder(Type[] artifactsTypes, ArtifactsConfiguration artifactsConfiguration, ILogger logger)
         {
             _artifactTypes = artifactsTypes;
             _logger = logger;
 
-            _artifactsConfigurationManager = artifactsConfigurationManager;
+            _artifactsConfiguration = artifactsConfiguration;
 
         }
 
         internal ArtifactsConfiguration Build()
         {
-            var artifactsConfiguration = _artifactsConfigurationManager.Load();
-
             _logger.Information("Building artifacts");
              var startTime = DateTime.UtcNow;
 
@@ -32,7 +31,7 @@ namespace Dolittle.Build.Artifact
             var deltaTime = endTime.Subtract(startTime);
             _logger.Information($"Finished artifacts build process. (Took {deltaTime.TotalSeconds} seconds)");
             
-            return artifactsConfiguration;
+            return _artifactsConfiguration;
         }
     }
 }

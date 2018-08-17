@@ -13,24 +13,21 @@ namespace Dolittle.Build.Topology
     {
         readonly Type[] _artifactTypes;
         readonly ILogger _logger;
-        readonly IBoundedContextConfigurationManager _boundedContextConfigurationManager;
 
         BoundedContextConfiguration _configuration;
 
 
-        internal TopologyBuilder(Type[] artifactsTypes, IBoundedContextConfigurationManager boundedContextConfigurationManager, ILogger logger)
+        internal TopologyBuilder(Type[] artifactsTypes, BoundedContextConfiguration boundedContextConfiguration, ILogger logger)
         {
             _artifactTypes = artifactsTypes;
             _logger = logger;
-            _boundedContextConfigurationManager = boundedContextConfigurationManager;
+            _configuration = boundedContextConfiguration;
         }
 
         internal BoundedContextConfiguration Build()
         {
             _logger.Information("Building topology");
             var startTime = DateTime.UtcNow;
-
-            _configuration = _boundedContextConfigurationManager.Load();
 
             ThrowIfLoadedConfigurationIsInvalid();  
             var isNewConfiguration = IsNewConfiguration();

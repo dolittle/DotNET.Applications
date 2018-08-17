@@ -16,7 +16,8 @@ namespace Dolittle.Build.Artifact
 
         internal ArtifactsConfiguration Build(Type[] types, ILogger logger)
         {
-            return new ArtifactsBuilder(types, _configurationManager, logger).Build();
+            var artifactsConfiguration = _configurationManager.Load();
+            return new ArtifactsBuilder(types, artifactsConfiguration, logger).Build();
         }
     }
 }
