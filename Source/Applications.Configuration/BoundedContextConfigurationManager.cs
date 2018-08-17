@@ -47,7 +47,6 @@ namespace Dolittle.Applications.Configuration
             var path = GetPath();
             if( !File.Exists(path)) throw new MissingBoundedContextConfiguration();
             
-            
             var json = File.ReadAllText(path);
             var configuration = _serializer.FromJson<BoundedContextConfiguration>(json);
             return configuration;

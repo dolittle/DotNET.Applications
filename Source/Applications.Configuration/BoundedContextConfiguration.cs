@@ -35,7 +35,7 @@ namespace Dolittle.Applications.Configuration
         /// <summary>
         /// Gets or sets a mapping from <see cref="Area"/> to a string representing a segment in the namespace that the user wishes to exclude from the Module/Feature
         /// </summary>
-        public Dictionary<Area, IEnumerable<string>> ExcludedNamespaceMap {get; set;} = new Dictionary<Area, IEnumerable<string>>();
+        public Dictionary<Area, IEnumerable<string>> NamespaceSegmentsToStrip {get; set;} = new Dictionary<Area, IEnumerable<string>>();
 
         /// <summary>
         /// Gets or sets the <see cref="TopologyConfiguration"/> for the <see cref="BoundedContext"/>
