@@ -64,6 +64,12 @@ namespace Dolittle.Build
                 
                 var types = DiscoverArtifacts(assemblyLoader); 
                 
+                var boundedContextConfiguration = _topologyConfigurationHandler.Build(types, _logger);
+                var artifactsConfiguration = _artifactsConfigurationHandler.Build(types, boundedContextConfiguration, _logger);
+                
+                if (NewTopology) _topologyConfigurationHandler.Save(boundedContextConfiguration);
+                if (NewArtifacts) _artifactsConfigurationHandler.Save(artifactsConfiguration);
+                
                 var endTime = DateTime.UtcNow;
                 var deltaTime = endTime.Subtract(startTime);
                 _logger.Information($"Finished build process. (Took {deltaTime.TotalSeconds} seconds)");
