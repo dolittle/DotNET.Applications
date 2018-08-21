@@ -45,7 +45,7 @@ namespace Dolittle.Events.Processing
         readonly ISystemClock _systemClock;
         readonly IObjectFactory _objectFactory;
         readonly ILogger _logger;
-        
+
 
         /// <summary>
         /// Initializes a new instance of <see cref="ProcessMethodEventProcessors"/>
@@ -69,9 +69,9 @@ namespace Dolittle.Events.Processing
             _container = container;
             _systemClock = systemClock;
             _logger = logger;
+            _objectFactory = objectFactory;
 
             PopulateEventProcessors();
-            _objectFactory = objectFactory;
         }
 
         /// <inheritdoc/>
