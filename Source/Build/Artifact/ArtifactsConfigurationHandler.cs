@@ -6,8 +6,11 @@ using System;
 using System.Collections.Generic;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts.Configuration;
+using Dolittle.Concepts.Serialization.Json;
 using Dolittle.Logging;
 using Dolittle.Serialization.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Dolittle.Build.Artifact
 {
@@ -18,16 +21,29 @@ namespace Dolittle.Build.Artifact
     {
         readonly ArtifactsConfigurationManager _configurationManager;
         readonly IEnumerable<ArtifactType> _artifactTypes;
+        readonly ILogger _logger;
+
+        readonly static ISerializationOptions _serializationOptions = SerializationOptions
+            .Custom(SerializationOptionsFlags.None, 
+            new JsonConverter[] {},
+            serializer => {
+                serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                serializer.Formatting = Formatting.Indented;
+                serializer.TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple;
+                serializer.Converters.Add(new ConceptConverter());
+            });
         
         /// <summary>
         /// Initializes an instance of <see cref="ArtifactsConfigurationHandler"/>
         /// </summary>
         /// <param name="configurationSerializer">The serializer for the <see cref="ArtifactsConfigurationManager"/></param>
         /// <param name="artifactTypes">A list of <see cref="ArtifactType"/> which represents the different artifact types</param>
-        public ArtifactsConfigurationHandler(ISerializer configurationSerializer, IEnumerable<ArtifactType> artifactTypes)
+        /// <param name="logger"></param>
+        public ArtifactsConfigurationHandler(ISerializer configurationSerializer, IEnumerable<ArtifactType> artifactTypes, ILogger logger)
         {
-            _configurationManager = new ArtifactsConfigurationManager(configurationSerializer);
+            _configurationManager = new ArtifactsConfigurationManager(configurationSerializer, _serializationOptions, logger);
             _artifactTypes = artifactTypes;
+            _logger = logger;
         }
 
         /// <summary>
@@ -35,11 +51,10 @@ namespace Dolittle.Build.Artifact
         /// </summary>
         /// <param name="types">The discovered artifact types from the bounded context's assemblies</param>
         /// <param name="boundedContextConfiguration">The <see cref="BoundedContextConfiguration"/> that's used for building the <see cref="ArtifactsConfiguration"/></param>
-        /// <param name="logger"></param>
-        public ArtifactsConfiguration Build(Type[] types, BoundedContextConfiguration boundedContextConfiguration, ILogger logger)
+        public ArtifactsConfiguration Build(Type[] types, BoundedContextConfiguration boundedContextConfiguration)
         {
             var artifactsConfiguration = _configurationManager.Load();
-            return new ArtifactsConfigurationBuilder(types, artifactsConfiguration, _artifactTypes, logger).Build(boundedContextConfiguration);
+            return new ArtifactsConfigurationBuilder(types, artifactsConfiguration, _artifactTypes, _logger).Build(boundedContextConfiguration);
         }
         internal void Save(ArtifactsConfiguration config)
         {

@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters;
 using Dolittle.Concepts.Serialization.Json;
 using Dolittle.Execution;
+using Dolittle.Logging;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -20,20 +21,20 @@ namespace Dolittle.Artifacts.Configuration
     {
         const string _path = "artifacts.json";
 
-        static readonly ISerializationOptions _serializationOptions = SerializationOptions.Custom(SerializationOptionsFlags.UseCamelCase, new JsonConverter[]
-        {
-            new ClrTypeConverter()
-        });
-
+        readonly ISerializationOptions _serializationOptions;
         readonly ISerializer _serializer;
-
+        readonly ILogger _logger;
         /// <summary>
         /// Initializes a new instance of <see cref="ArtifactsConfigurationManager"/>
         /// </summary>
         /// <param name="serializer"><see cref="ISerializer"/> to use</param>
-        public ArtifactsConfigurationManager(ISerializer serializer)
+        /// <param name="serializationOptions"></param>
+        /// <param name="logger"></param>
+        public ArtifactsConfigurationManager(ISerializer serializer, ISerializationOptions serializationOptions, ILogger logger)
         {
             _serializer = serializer;
+            _logger = logger;
+            _serializationOptions = serializationOptions;
         }
 
         /// <inheritdoc/>
@@ -51,6 +52,7 @@ namespace Dolittle.Artifacts.Configuration
         public void Save(ArtifactsConfiguration configuration)
         {
             var path = GetPath();
+
             var json = _serializer.ToJson(configuration, _serializationOptions);
             File.WriteAllText(path, json);
         }

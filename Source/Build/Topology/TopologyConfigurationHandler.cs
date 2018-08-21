@@ -4,8 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using Dolittle.Applications.Configuration;
+using Dolittle.Concepts.Serialization.Json;
 using Dolittle.Logging;
 using Dolittle.Serialization.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Dolittle.Build.Topology
 {
@@ -15,26 +18,36 @@ namespace Dolittle.Build.Topology
     public class TopologyConfigurationHandler
     {
         readonly BoundedContextConfigurationManager _configurationManager;
+        readonly ILogger _logger;
         
+        readonly static ISerializationOptions _serializationOptions = SerializationOptions
+            .Custom(SerializationOptionsFlags.None, 
+            new JsonConverter[] {},
+            serializer => {
+                serializer.ContractResolver = new CamelCaseExceptDictionaryResolver();
+                serializer.Formatting = Formatting.Indented;
+                serializer.TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple;
+                serializer.Converters.Add(new ConceptConverter());
+            });
         /// <summary>
         /// Instantiates an instance of <see cref="TopologyConfigurationHandler"/> 
         /// </summary>
         /// <param name="configurationSerializer"></param>
-        public TopologyConfigurationHandler(ISerializer configurationSerializer)
+        /// <param name="logger"></param>
+        public TopologyConfigurationHandler(ISerializer configurationSerializer, ILogger logger)
         {
-            _configurationManager = new BoundedContextConfigurationManager(configurationSerializer);
+            _configurationManager = new BoundedContextConfigurationManager(configurationSerializer, _serializationOptions, logger);
+            _logger = logger;
         }
 
         /// <summary>
         /// Loads the <see cref="BoundedContextConfiguration"/> from file and uses it to build the <see cref="BoundedContextConfiguration"/> using the <see cref="TopologyBuilder"/>
         /// </summary>
         /// <param name="types">The discovered artifact types from the bounded context's assemblies</param>
-        /// <param name="logger"></param>
-        /// <returns></returns>
-        public BoundedContextConfiguration Build(Type[] types, ILogger logger)
+        public BoundedContextConfiguration Build(Type[] types)
         {
             var boundedContextConfiguration = _configurationManager.Load();
-            return new TopologyBuilder(types, boundedContextConfiguration, logger).Build();
+            return new TopologyBuilder(types, boundedContextConfiguration, _logger).Build();
         }
 
         internal void Save(BoundedContextConfiguration config)

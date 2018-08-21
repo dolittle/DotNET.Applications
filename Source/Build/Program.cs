@@ -64,12 +64,12 @@ namespace Dolittle.Build
                 
                 var types = DiscoverArtifacts(assemblyLoader); 
                 
-                var boundedContextConfiguration = _topologyConfigurationHandler.Build(types, _logger);
-                var artifactsConfiguration = _artifactsConfigurationHandler.Build(types, boundedContextConfiguration, _logger);
+                var boundedContextConfiguration = _topologyConfigurationHandler.Build(types);
+                var artifactsConfiguration = _artifactsConfigurationHandler.Build(types, boundedContextConfiguration);
                 
                 if (NewTopology) _topologyConfigurationHandler.Save(boundedContextConfiguration);
                 if (NewArtifacts) _artifactsConfigurationHandler.Save(artifactsConfiguration);
-                
+
                 var endTime = DateTime.UtcNow;
                 var deltaTime = endTime.Subtract(startTime);
                 _logger.Information($"Finished build process. (Took {deltaTime.TotalSeconds} seconds)");
@@ -77,7 +77,7 @@ namespace Dolittle.Build
             catch (Exception ex)
             {
                 _logger.Error("Error consolidating artifacts;");
-                _logger.Error(ex.Message);
+                _logger.Debug(ex.Message);
                 return 1;
             }
 
@@ -104,15 +104,12 @@ namespace Dolittle.Build
         static void SetupHandlers()
         {
             var container = new ActivatorContainer();
-            var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new []
-            {
-                new ConverterProvider(_logger)
-            });
+            var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new ICanProvideConverters[]{});
 
             var serializer = new Serializer(container, converterProviders);
 
-            _topologyConfigurationHandler = new TopologyConfigurationHandler(serializer);
-            _artifactsConfigurationHandler = new ArtifactsConfigurationHandler(serializer, _artifactTypes);
+            _topologyConfigurationHandler = new TopologyConfigurationHandler(serializer, _logger);
+            _artifactsConfigurationHandler = new ArtifactsConfigurationHandler(serializer, _artifactTypes, _logger);
 
         }
         static Type[] DiscoverArtifacts(AssemblyLoader assemblyLoader)

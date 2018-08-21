@@ -5,6 +5,7 @@
 using System.IO;
 using Dolittle.Concepts.Serialization.Json;
 using Dolittle.Execution;
+using Dolittle.Logging;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -20,14 +21,20 @@ namespace Dolittle.Applications.Configuration
         const string _path   = "bounded-context.json";
         BoundedContextConfiguration _current;
         readonly ISerializer _serializer;
+        readonly ILogger _logger;
 
+        readonly ISerializationOptions _serializationOptions;
         /// <summary>
         /// Initializes a new instance of <see cref="BoundedContextConfigurationManager"/>
         /// </summary>
         /// <param name="serializer"><see cref="ISerializer"/> to use for working with configuration as JSON</param>
-        public BoundedContextConfigurationManager(ISerializer serializer)
+        /// <param name="serializationOptions"></param>
+        /// <param name="logger"></param>
+        public BoundedContextConfigurationManager(ISerializer serializer, ISerializationOptions serializationOptions, ILogger logger)
         {
             _serializer = serializer;
+            _logger = logger;
+            _serializationOptions = serializationOptions;
         }
 
         /// <inheritdoc/>
@@ -40,7 +47,6 @@ namespace Dolittle.Applications.Configuration
             }
         }
 
-
         /// <inheritdoc/>
         public BoundedContextConfiguration Load()
         {
@@ -48,7 +54,7 @@ namespace Dolittle.Applications.Configuration
             if( !File.Exists(path)) throw new MissingBoundedContextConfiguration();
             
             var json = File.ReadAllText(path);
-            var configuration = _serializer.FromJson<BoundedContextConfiguration>(json);
+            var configuration = _serializer.FromJson<BoundedContextConfiguration>(json, _serializationOptions);
             return configuration;
         }
 
@@ -56,7 +62,8 @@ namespace Dolittle.Applications.Configuration
         public void Save(BoundedContextConfiguration configuration)
         {
             var path = GetPath();
-            var json = _serializer.ToJson(configuration, SerializationOptions.CamelCase);
+            var json = _serializer.ToJson(configuration, _serializationOptions);
+            
             File.WriteAllText(path, json);
         }
 
