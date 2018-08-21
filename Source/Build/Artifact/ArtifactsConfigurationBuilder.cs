@@ -69,7 +69,7 @@ namespace Dolittle.Build.Artifact
             if (nonMatchingArtifacts.Any())
             {
                 foreach (var artifactNamespace in nonMatchingArtifacts)
-                    _logger.Information($"An artifact with namespace = {artifactNamespace} could not be matched with any feature in the Bounded Context Configuration's topology");
+                    _logger.Warning($"An artifact with namespace = {artifactNamespace} could not be matched with any feature in the Bounded Context Configuration's topology");
                 
                 throw new NonMatchingArtifact();
             }
@@ -82,12 +82,12 @@ namespace Dolittle.Build.Artifact
             if (newArtifacts > 0)
             {
                 Program.NewArtifacts = true;
-                _logger.Information($"Added {newArtifacts} artifacts to the map (Took {deltaTime.TotalSeconds} seconds)");
+                _logger.Information($"Added {newArtifacts} artifacts to the map.");
             }
             else 
-                _logger.Information($"No new artifacts added to the map (Took {deltaTime.TotalSeconds} seconds)");
+                _logger.Information($"No new artifacts added to the map.");
 
-            _logger.Information($"Finished artifacts build process.");
+            _logger.Information($"Finished artifacts build process. (Took {deltaTime.TotalSeconds} seconds)");
             
             return _artifactsConfiguration;
         }
@@ -124,7 +124,7 @@ namespace Dolittle.Build.Artifact
                             Generation = ArtifactGeneration.First,
                             Type = ClrType.FromType(artifact)
                         };
-                        Console.WriteLine($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
+                        _logger.Debug($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
                         newAndExistingArtifacts.Add(artifactDefinition);
 
                         newArtifacts++;

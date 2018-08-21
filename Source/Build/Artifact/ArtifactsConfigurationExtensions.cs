@@ -114,7 +114,7 @@ namespace Dolittle.Build.Artifact
             }
             if (artifactDefinitions.Any())
             {
-                logger.Warning("There are artifacts that are not found in the Bounded Context structure anymore. You may have to write migrators for them:");
+                logger.Warning("There are artifacts that are not found in the Bounded Context structure anymore. You may have to write migrators for them.");
                 logger.Debug("Artifacts:");
                 foreach (var artifactDefinition in artifactDefinitions)
                     logger.Debug($"\tArtifact: {artifactDefinition.Artifact.Value} CLR-type: {artifactDefinition.Type.TypeString} @{artifactDefinition.Generation.Value}");
