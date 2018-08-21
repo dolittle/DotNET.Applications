@@ -8,6 +8,7 @@ using Dolittle.Artifacts;
 using Dolittle.DependencyInversion;
 using Dolittle.Logging;
 using Dolittle.PropertyBags;
+using Dolittle.Reflection;
 using Dolittle.Runtime.Events;
 using Dolittle.Runtime.Events.Processing;
 using Dolittle.Time;
@@ -68,7 +69,10 @@ namespace Dolittle.Events.Processing
             try
             {
                 var processor = _container.Get(_methodInfo.DeclaringType);
-                var @event = _objectFactory.Build(_eventType, eventEnvelope.Event);
+                object @event;
+                if( _eventType.HasDefaultConstructor() ) @event = Activator.CreateInstance(_eventType);
+                else  @event = _objectFactory.Build(_eventType, eventEnvelope.Event);
+                
                 _methodInfo.Invoke(processor, new[] { @event });
             }
             catch (Exception exception)
