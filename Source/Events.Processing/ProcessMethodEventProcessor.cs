@@ -4,12 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Reflection;
+using Dolittle.Artifacts;
 using Dolittle.DependencyInversion;
-using Dolittle.Time;
+using Dolittle.Logging;
+using Dolittle.PropertyBags;
 using Dolittle.Runtime.Events;
 using Dolittle.Runtime.Events.Processing;
-using Dolittle.Logging;
-using Dolittle.Artifacts;
+using Dolittle.Time;
 
 namespace Dolittle.Events.Processing
 {
@@ -20,35 +21,39 @@ namespace Dolittle.Events.Processing
     /// </summary>
     public class ProcessMethodEventProcessor : IEventProcessor
     {
+        readonly IObjectFactory _objectFactory;
         readonly IContainer _container;
         readonly MethodInfo _methodInfo;
-        readonly ISystemClock _systemClock;
         readonly ILogger _logger;
+        readonly Type _eventType;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ProcessMethodEventProcessor"/>
         /// </summary>
+        /// <param name="objectFactory"><see cref="IObjectFactory"/> for going between <see cref="PropertyBag"/> and instances of types</param>
         /// <param name="container"><see cref="IContainer"/> to use for getting instances of <see cref="ICanProcessEvents"/> implementation</param>
-        /// <param name="systemClock"><see cref="ISystemClock"/> for timing purposes</param>
         /// <param name="identifier"><see cref="EventProcessorIdentifier"/> that uniquely identifies the <see cref="ProcessMethodEventProcessor"/></param>
-        /// <param name="event"><see cref="Artifact">Identifier</see> for identifying the <see cref="IEvent"/></param>
+        /// <param name="eventIdentifier"><see cref="Artifact">Identifier</see> for identifying the <see cref="IEvent"/></param>
+        /// <param name="eventType"><see cref="Type"/> type of <see cref="IEvent"/>></param>
         /// <param name="methodInfo"><see cref="MethodInfo"/> for the actual process method</param>
         /// <param name="logger"></param>
         public ProcessMethodEventProcessor(
+            IObjectFactory objectFactory,
             IContainer container,
-            ISystemClock systemClock,
             EventProcessorIdentifier identifier,
-            Artifact @event,
+            Artifact eventIdentifier,
+            Type eventType,
             MethodInfo methodInfo,
             ILogger logger)
         {
-            Identifier = identifier;
-            Event = @event;
             _container = container;
-            _systemClock = systemClock;
+            Identifier = identifier;
+            _eventType = eventType;
+            Event = eventIdentifier;
             _methodInfo = methodInfo;
             _logger = logger;
-            _logger.Trace($"ProcessMethodEventProcessor for '{@event}' exists on type '{methodInfo}'");
+            _logger.Trace($"ProcessMethodEventProcessor for '{eventIdentifier}' exists on type '{methodInfo}'");
+            _objectFactory = objectFactory;
         }
 
         /// <inheritdoc/>
@@ -58,35 +63,18 @@ namespace Dolittle.Events.Processing
         public EventProcessorIdentifier Identifier { get; }
 
         /// <inheritdoc/>
-        public IEventProcessingResult Process(IEventEnvelope envelope, IEvent @event)
+        public void Process(Dolittle.Runtime.Events.Store.EventEnvelope eventEnvelope)
         {
-            _logger.Trace($"Process through a process method");
-            var status = EventProcessingStatus.Success;
-            var messages = new EventProcessingMessage[0];
-
-            _logger.Trace("Get current time");
-            var start = _systemClock.GetCurrentTime();
-
-            _logger.Trace($"Start : {start}");
-
             try
             {
-                _logger.Trace($"Process event using {_methodInfo}");
                 var processor = _container.Get(_methodInfo.DeclaringType);
-                _logger.Trace("Invoke method");
-                _methodInfo.Invoke(processor, new[] { @event });
+                var @event = _objectFactory.Build(_eventType, eventEnvelope.Event);
+                _methodInfo.Invoke(processor, new[] { @event });
             }
             catch (Exception exception)
             {
                 _logger.Error(exception, "Failed processing");
-                status = EventProcessingStatus.Failed;
-                messages = new[] {
-                    new EventProcessingMessage(EventProcessingMessageSeverity.Error, exception.Message, exception.StackTrace.Split(Environment.NewLine.ToCharArray()))
-                };
             }
-            var end = _systemClock.GetCurrentTime();
-
-            return new EventProcessingResult(envelope.CorrelationId, this, status, start, end, messages);
         }
     }
 }

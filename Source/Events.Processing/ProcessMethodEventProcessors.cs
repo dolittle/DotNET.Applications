@@ -13,6 +13,7 @@ using Dolittle.Types;
 using Dolittle.Runtime.Events.Processing;
 using Dolittle.Logging;
 using Dolittle.Artifacts;
+using Dolittle.PropertyBags;
 
 namespace Dolittle.Events.Processing
 {
@@ -39,21 +40,25 @@ namespace Dolittle.Events.Processing
 
         List<IEventProcessor> _eventProcessors = new List<IEventProcessor>();
         IArtifactTypeMap _artifactTypeMap;
-        ITypeFinder _typeFinder;
-        IContainer _container;
-        ISystemClock _systemClock;
-        private readonly ILogger _logger;
+        readonly ITypeFinder _typeFinder;
+        readonly IContainer _container;
+        readonly ISystemClock _systemClock;
+        readonly IObjectFactory _objectFactory;
+        readonly ILogger _logger;
+        
 
         /// <summary>
         /// Initializes a new instance of <see cref="ProcessMethodEventProcessors"/>
         /// </summary>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for identifying <see cref="IEvent">events</see> </param>
+        /// <param name="objectFactory"><see cref="IObjectFactory"/> for going between <see cref="PropertyBag"/> and instances of types</param>
         /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering implementations of <see cref="ICanProcessEvents"/></param>
         /// <param name="container"><see cref="IContainer"/> for the implementation <see cref="ProcessMethodEventProcessor"/> when acquiring instances of implementations of <see cref="ICanProcessEvents"/></param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for timing <see cref="IEventProcessors"/></param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public ProcessMethodEventProcessors(
             IArtifactTypeMap artifactTypeMap,
+            IObjectFactory objectFactory,
             ITypeFinder typeFinder,
             IContainer container,
             ISystemClock systemClock,
@@ -66,6 +71,7 @@ namespace Dolittle.Events.Processing
             _logger = logger;
 
             PopulateEventProcessors();
+            _objectFactory = objectFactory;
         }
 
         /// <inheritdoc/>
@@ -109,7 +115,15 @@ namespace Dolittle.Events.Processing
 
                     _logger.Trace($"EventProcessor identifier '{eventProcessorIdentifier}'");
 
-                    var processMethodEventProcessor = new ProcessMethodEventProcessor(_container, _systemClock, eventProcessorIdentifier, eventIdentifier, method, _logger);
+                    var processMethodEventProcessor = new ProcessMethodEventProcessor(
+                                                            _objectFactory,
+                                                            _container, 
+                                                            eventProcessorIdentifier, 
+                                                            eventIdentifier,
+                                                            parameterType,
+                                                            method, 
+                                                            _logger);
+
                     _eventProcessors.Add(processMethodEventProcessor);
                 }
             }
