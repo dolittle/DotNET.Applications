@@ -24,7 +24,7 @@ namespace Dolittle.Artifacts.Build
         public ITaskItem AssemblyFile { get; set; }
 
         /// <inheritdoc/>
-        protected override string ToolName => "Dolittle.SDK.Artifacts.Tools.dll";
+        protected override string ToolName => "Dolittle.SDK.Build.dll";
         
         /// <inheritdoc/>
         protected override string GenerateFullPathToTool()

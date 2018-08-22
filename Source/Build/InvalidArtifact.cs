@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 
-namespace Dolittle.Artifacts.Tools
+namespace Dolittle.Build
 {
     internal class InvalidArtifact : Exception
     {

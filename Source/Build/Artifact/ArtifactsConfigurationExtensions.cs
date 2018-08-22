@@ -7,13 +7,21 @@ using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
+using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
+using Dolittle.Logging;
 
-namespace Dolittle.Artifacts.Tools
+namespace Dolittle.Build.Artifact
 {
-    internal static class ArtifactsConfigurationExtensions
+    /// <summary>
+    /// Extensions for <see cref="ArtifactsConfiguration"/> that's specific for the Build.Artifact namespace
+    /// </summary>
+    public static class ArtifactsConfigurationExtensions
     {
-        internal static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration configuration)
+        /// <summary>
+        /// Returns all <see cref="ArtifactDefinition"/> instances in the <see cref="ArtifactsConfiguration"/>
+        /// </summary>
+        public static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration configuration)
         {
             var artifactDefinitions = new List<ArtifactDefinition>();
 
@@ -29,8 +37,10 @@ namespace Dolittle.Artifacts.Tools
             }
             return artifactDefinitions;
         }
-
-        internal static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration configuration, Feature id)
+        /// <summary>
+        /// Returns all <see cref="ArtifactDefinition"/> instances with a specific <see cref="Feature"/> (id) in the <see cref="ArtifactsConfiguration"/>
+        /// </summary>
+        public static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration configuration, Feature id)
         {
             var artifactDefinitions = new List<ArtifactDefinition>();
 
@@ -45,16 +55,17 @@ namespace Dolittle.Artifacts.Tools
             
             return artifactDefinitions;
         }
-
-        
-        internal static void ValidateArtifacts(this ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration, Type[] types)
+        /// <summary>
+        /// Validates the <see cref="ArtifactsConfiguration"/> based on the bounded context's topology and the discoved artifact types in the assemblies of the bounded context
+        /// </summary>
+        public static void ValidateArtifacts(this ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration, Type[] types, ILogger logger)
         {
-            ThrowIfDuplicateArtifacts(artifactsConfiguration);
-            WarnIfFeatureMissingFromTopology(artifactsConfiguration, boundedContextConfiguration);
-            WarnIfArtifactNoLongerInStructure(artifactsConfiguration, types);
+            ThrowIfDuplicateArtifacts(artifactsConfiguration, logger);
+            WarnIfFeatureMissingFromTopology(artifactsConfiguration, boundedContextConfiguration, logger);
+            WarnIfArtifactNoLongerInStructure(artifactsConfiguration, types, logger);
         }
 
-        static void ThrowIfDuplicateArtifacts(ArtifactsConfiguration artifactsConfiguration)
+        static void ThrowIfDuplicateArtifacts(ArtifactsConfiguration artifactsConfiguration, ILogger logger)
         {
             var idMap = new Dictionary<ArtifactId, ClrType>();
             bool foundDuplicate = false;
@@ -66,15 +77,15 @@ namespace Dolittle.Artifacts.Tools
                     var artifactId = artifactDefinition.Artifact;
                     var clrType = idMap[artifactDefinition.Artifact];
                     
-                    ConsoleLogger.LogError($"An artifact with ArtifactId: {artifactId.Value} already exists.");
-                    ConsoleLogger.LogInfo($"Artifact with Type: {clrType.TypeString} and artifact with Type {artifactDefinition.Type.TypeString} has the same ArtifactId.");
+                    logger.Error($"An artifact with ArtifactId: {artifactId.Value} already exists.");
+                    logger.Debug($"Artifact with Type: {clrType.TypeString} and artifact with Type {artifactDefinition.Type.TypeString} has the same ArtifactId.");
                 }
                 else 
                     idMap.Add(artifactDefinition.Artifact, artifactDefinition.Type);
             }
             if (foundDuplicate) throw new DuplicateArtifact();
         }
-        static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration)
+        static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration, ILogger logger)
         {
             Dictionary<Feature, FeatureName> featureMap = boundedContextConfiguration.RetrieveAllFeatureIds();
 
@@ -82,17 +93,17 @@ namespace Dolittle.Artifacts.Tools
             {
                 if (!featureMap.ContainsKey(artifact.Key))
                 {
-                    ConsoleLogger.LogWarning($"Found artifacts under a Feature that does not exist in the topology. Feature: {artifact.Key}");
-                    Console.WriteLine("Artifacts:");
+                    logger.Warning($"Found artifacts under a Feature that does not exist in the topology. Feature: {artifact.Key}");
+                    logger.Debug("Artifacts:");
                     
                     var artifactDefinitions = artifactsConfiguration.GetAllArtifactDefinitions(artifact.Key);
                     foreach (var definition in artifactDefinitions)
-                        Console.WriteLine($"\tArtifact: {definition.Artifact.Value} CLR-type: {definition.Type.TypeString} @{definition.Generation.Value}");
+                        logger.Debug($"\tArtifact: {definition.Artifact.Value} CLR-type: {definition.Type.TypeString} @{definition.Generation.Value}");
                     
                 }
             }
         }
-        static void WarnIfArtifactNoLongerInStructure(ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types)
+        static void WarnIfArtifactNoLongerInStructure(ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types, ILogger logger)
         {
             var artifactDefinitions = new List<ArtifactDefinition>();
             foreach (var artifactDefinition in artifactsConfiguration.GetAllArtifactDefinitions())
@@ -103,10 +114,10 @@ namespace Dolittle.Artifacts.Tools
             }
             if (artifactDefinitions.Any())
             {
-                ConsoleLogger.LogWarning("There are artifacts that are not found in the Bounded Context structure anymore. You may have to write migrators for them:");
-                Console.WriteLine("Artifacts:");
+                logger.Warning("There are artifacts that are not found in the Bounded Context structure anymore. You may have to write migrators for them.");
+                logger.Debug("Artifacts:");
                 foreach (var artifactDefinition in artifactDefinitions)
-                    Console.WriteLine($"\tArtifact: {artifactDefinition.Artifact.Value} CLR-type: {artifactDefinition.Type.TypeString} @{artifactDefinition.Generation.Value}");
+                    logger.Debug($"\tArtifact: {artifactDefinition.Artifact.Value} CLR-type: {artifactDefinition.Type.TypeString} @{artifactDefinition.Generation.Value}");
             }
         }
 
