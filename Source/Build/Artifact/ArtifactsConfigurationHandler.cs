@@ -30,7 +30,6 @@ namespace Dolittle.Build.Artifact
                 serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 serializer.Formatting = Formatting.Indented;
                 serializer.TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple;
-                serializer.Converters.Add(new ConceptConverter());
             });
         
         /// <summary>

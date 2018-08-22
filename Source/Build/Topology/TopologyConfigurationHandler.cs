@@ -24,10 +24,8 @@ namespace Dolittle.Build.Topology
             .Custom(SerializationOptionsFlags.None, 
             new JsonConverter[] {},
             serializer => {
-                serializer.ContractResolver = new CamelCaseExceptDictionaryResolver();
+                serializer.ContractResolver = new CamelCaseExceptDictionaryKeyResolver();
                 serializer.Formatting = Formatting.Indented;
-                serializer.TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple;
-                serializer.Converters.Add(new ConceptConverter());
             });
         /// <summary>
         /// Instantiates an instance of <see cref="TopologyConfigurationHandler"/> 
