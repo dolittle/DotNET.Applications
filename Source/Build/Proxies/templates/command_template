@@ -1,0 +1,24 @@
+import { Command } from  '@dolittle/commands/Command';
+
+export class {{CommandName}} extends Command
+{
+    {{#each Properties}}
+    _{{PropertyName}}:{{PropertyDefaultValue}}
+    {{/each}}
+
+    constructor() {
+        super();
+        this.type = '{{ArtifactId}}';
+    }
+    
+    {{#each Properties}}
+    get {{PropertyName}}() {
+        return _{{PropertyName}}
+    }
+
+    set {{PropertyName}}(value) {
+        _{{PropertyName}} = value;
+    }
+
+    {{/each}}
+}

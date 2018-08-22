@@ -55,6 +55,12 @@ namespace Dolittle.Build.Artifact
             
             return artifactDefinitions;
         }
+        public static ArtifactDefinition GetMatchingArtifactDefinition(this ArtifactsConfiguration artifactsConfiguration, Type artifact)
+        {
+            var artifactDefinitions = artifactsConfiguration.GetAllArtifactDefinitions();
+
+            return artifactDefinitions.Single(_ => _.Type.GetActualType().Equals(artifact));
+        }
         /// <summary>
         /// Validates the <see cref="ArtifactsConfiguration"/> based on the bounded context's topology and the discoved artifact types in the assemblies of the bounded context
         /// </summary>

@@ -3,59 +3,120 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
+using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
+using Dolittle.Build.Artifact;
+using Dolittle.Collections;
 using Dolittle.Logging;
+using Dolittle.Reflection;
+using HandlebarsDotNet;
 
 namespace Dolittle.Build.Proxies
 {
     /// <summary>
     /// 
     /// </summary>
-     public class ProxiesBuilder
+    public class ProxiesBuilder
     {
+        readonly TemplateLoader _templateLoader;
         readonly Type[] _artifacts;
-        readonly ArtifactsConfiguration _artifactsConfiguration;
-        readonly BoundedContextConfiguration _boundedContextConfiguration;
-        readonly ArtifactType[] _artifactTypes;
+        readonly DolittleArtifactTypes _artifactTypes;
         readonly ILogger _logger;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
-        /// <param name="artifactsConfiguration"></param>
-        /// <param name="boundedContextConfiguration"></param>
-        /// <param name="artifactTypes">A list of <see cref="ArtifactType"/> which represents the different artifact types</param>
+        /// <param name="artifactTypes"><</param>
         /// <param name="logger"></param>
-        public ProxiesBuilder(Type[] artifacts, ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration, ArtifactType[] artifactTypes, ILogger logger)
+        public ProxiesBuilder(TemplateLoader templateLoader, Type[] artifacts, DolittleArtifactTypes artifactTypes, ILogger logger)
         {
+            _templateLoader = templateLoader;
             _artifacts = artifacts;
-            _artifactsConfiguration = artifactsConfiguration;
-            _boundedContextConfiguration = boundedContextConfiguration; 
             _artifactTypes = artifactTypes;
             _logger = logger;
         }
         /// <summary>
         /// 
         /// </summary>
-        public void Build()
+        public void Build(ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration)
         {
             _logger.Information("Building proxies");
             var startTime = DateTime.UtcNow;
-            CreateCommands();
+            var proxies = new List<Proxy>();
+
+            CreateCommands(artifactsConfiguration, boundedContextConfiguration, ref proxies);
+
             var endTime = DateTime.UtcNow;
             var deltaTime = endTime.Subtract(startTime);
             _logger.Information($"Finished proxies build process. (Took {deltaTime.TotalSeconds} seconds)");
         }
 
-        void CreateCommands()
+        void CreateCommands(ArtifactsConfiguration artifactsConfig, BoundedContextConfiguration boundedContextConfiguration, ref List<Proxy> proxies)
         {
-            var commandArtifactType = _artifactTypes.Single(_ => _.TypeName.Equals("command")).Type;
+            var template = Handlebars.Compile(_templateLoader.CommandProxyTemplate);
+
+            var commandArtifactType = _artifactTypes.ArtifactTypes.Single(_ => _.TypeName.Equals("command")).Type;
             var commandArtifacts = _artifacts.Where(_ => commandArtifactType.IsAssignableFrom(_));
 
+            foreach (var artifact in commandArtifacts)
+                GenerateCommandProxy(artifact, artifactsConfig, boundedContextConfiguration, template, ref proxies);
             
+        }
+
+        void GenerateCommandProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BoundedContextConfiguration boundedContextConfiguration, Func<object, string> template, ref List<Proxy> proxies)
+        {
+            var artifactId = GetArtifactId(artifact, artifactsConfig);
+
+            if (artifact.HasVisibleProperties())
+            {
+                _logger.Information($"Creating command proxy for {ClrType.FromType(artifact).TypeString}");
+                var propertiesInfo = artifact.GetProperties();
+
+                var handlebarsCommand = new HandlebarsCommand()
+                {
+                    CommandName = artifact.Name,
+                    ArtifactId = artifactId.Value.ToString()
+                };
+                AddCommandProxyProperties(propertiesInfo, ref handlebarsCommand);
+                var fileContent = template(handlebarsCommand);
+                var filePath = GenerateFilePath(artifact, boundedContextConfiguration, artifact.Name + ".js");
+
+                proxies.Add(new Proxy(){Content = fileContent, FilePath = filePath});
+            }
+            else
+            {
+                _logger.Information($"No visible properties for {ClrType.FromType(artifact).TypeString}");
+            }
+        }
+
+        string GenerateFilePath(Type artifact, BoundedContextConfiguration config, string filename)
+        {
+            var @namespace = artifact.StripExcludedNamespaceSegments(config);
+            return @namespace.Replace('.', '/') + "/" + filename;
+        }
+
+        void AddCommandProxyProperties(PropertyInfo[] properties, ref HandlebarsCommand command)
+        {
+            foreach (var prop in properties)
+            {
+                var proxyProperty = new ProxyProperty()
+                {
+                    PropertyName = prop.Name,
+                    PropertyDefaultValue = prop.PropertyType.GetDefaultValue()
+                };
+                command.Properties.Add(proxyProperty);
+            }
+        }
+
+        ArtifactId GetArtifactId(Type artifact, ArtifactsConfiguration config)
+        {
+            return config.GetMatchingArtifactDefinition(artifact).Artifact;
         }
     }
 }

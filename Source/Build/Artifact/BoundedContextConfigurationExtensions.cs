@@ -36,7 +36,16 @@ namespace Dolittle.Build.Artifact
 
             return featureMap;
         }
-
+        /// <summary>
+        /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextConfiguration">BoundedContextConfiguration's </see> topology 
+        /// </summary>
+        public static FeatureDefinition FindMatchingFeature(this BoundedContextConfiguration boundedContextConfiguration, string @namespace)
+        {
+            var nonMatchingList = new List<string>();
+            var featureDef = boundedContextConfiguration.FindMatchingFeature(@namespace, ref nonMatchingList);
+            if (featureDef == null) throw new NonMatchingArtifact();
+            return featureDef;
+        }
         /// <summary>
         /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextConfiguration">BoundedContextConfiguration's </see> topology 
         /// </summary>
