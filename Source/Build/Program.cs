@@ -48,8 +48,8 @@ namespace Dolittle.Build
             try
             {
                 // For debugging, comment out or remove when not debugging
-                while (!System.Diagnostics.Debugger.IsAttached)
-                    System.Threading.Thread.Sleep(10);
+                //while (!System.Diagnostics.Debugger.IsAttached)
+                //    System.Threading.Thread.Sleep(10);
 
                 InitialSetup();
 
