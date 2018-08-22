@@ -33,6 +33,9 @@ namespace Dolittle.Artifacts.Bootstrap
         }
 
         /// <inheritdoc/>
+        public bool CanPerform() => true;
+
+        /// <inheritdoc/>
         public void Perform()
         {
             var config = _artifactsConfigurationManager.Load();
