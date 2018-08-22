@@ -25,10 +25,10 @@ namespace Dolittle.Build
         /// <param name="assemblyPath"></param>
         /// <param name="artifactTypes"></param>
         /// <param name="logger"></param>
-        public ArtifactsDiscoverer(string assemblyPath, ArtifactType[] artifactTypes, ILogger logger)
+        public ArtifactsDiscoverer(string assemblyPath, DolittleArtifactTypes artifactTypes, ILogger logger)
         {
             _assemblyLoader = new AssemblyLoader(assemblyPath);
-            _artifactTypes = artifactTypes;
+            _artifactTypes = artifactTypes.ArtifactTypes;
             _logger = logger;
 
             Artifacts = DiscoverArtifacts();
