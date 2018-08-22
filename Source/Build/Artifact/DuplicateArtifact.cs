@@ -5,14 +5,23 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Dolittle.Artifacts.Tools
+namespace Dolittle.Build.Artifact
 {
-    internal class DuplicateArtifact : Exception
+    /// <summary>
+    /// Exception that gets thrown when a duplicate artifact is found
+    /// </summary>
+    public class DuplicateArtifact : Exception
     {
+        /// <summary>
+        /// Instantiates an instance of <see cref="DuplicateArtifact"/>
+        /// </summary>
         public DuplicateArtifact() : base("Duplicate artifacts was found. Are you missing a migrator? ")
         {
         }
 
+        /// <summary>
+        /// Instantiates an instance of <see cref="DuplicateArtifact"/>
+        /// </summary>
         public DuplicateArtifact(string message) : base(message)
         {
         }

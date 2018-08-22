@@ -7,14 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Applications.Configuration;
 
-namespace Dolittle.Artifacts.Tools
+namespace Dolittle.Build.Topology
 {
-    internal static class StringExtensions
+    /// <summary>
+    /// Extensions for <see cref="string"/> that's specific for the Dolittle.Build.Topology namespace
+    /// </summary>
+    public static class StringExtensions
     {
-        const string NamespaceSeperator = Program.NamespaceSeperator;
-        internal static ModuleDefinition GetModuleFromPath(this string path)
+        /// <summary>
+        /// Extracts a <see cref="ModuleDefinition"/> from the string path
+        /// </summary>
+        public static ModuleDefinition GetModuleFromPath(this string path)
         {
-            var splitPath = path.Split(NamespaceSeperator);
+            var splitPath = path.Split(".");
             var moduleName = splitPath.First();
             var module = new ModuleDefinition()
             {
@@ -22,7 +27,7 @@ namespace Dolittle.Artifacts.Tools
                 Name = moduleName
             };
             
-            var featurePath = string.Join(NamespaceSeperator, splitPath.Skip(1));
+            var featurePath = string.Join(".", splitPath.Skip(1));
             if (!string.IsNullOrEmpty(featurePath))
             {
                 module.Features = new List<FeatureDefinition>()
@@ -33,9 +38,12 @@ namespace Dolittle.Artifacts.Tools
 
             return module;
         }
-        internal static FeatureDefinition GetFeatureFromPath(this string path)
+        /// <summary>
+        /// Extracts a <see cref="FeatureDefinition"/> from the string path
+        /// </summary>
+        public static FeatureDefinition GetFeatureFromPath(this string path)
         {
-            var stringSegmentsReversed = path.Split(NamespaceSeperator).Reverse().ToArray();
+            var stringSegmentsReversed = path.Split(".").Reverse().ToArray();
             if (stringSegmentsReversed.Count() == 0) throw new Exception("Could not get feature from path");
             
             var currentFeature = new FeatureDefinition()

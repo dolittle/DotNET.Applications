@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Artifacts.Tools\Artifacts.Tools.csproj" />
+        <ProjectReference Include="..\Build\Build.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -33,7 +33,7 @@
 
     <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
         <ItemGroup>
-            <_PackageFiles Include="..\Artifacts.Tools\bin\$(Configuration)\*\Dolittle*">
+            <_PackageFiles Include="..\Build\bin\$(Configuration)\*\Dolittle*">
                 <PackagePath>tasks\%(RecursiveDir)</PackagePath>
                 <Visible>false</Visible>
                 <BuildAction>Content</BuildAction>

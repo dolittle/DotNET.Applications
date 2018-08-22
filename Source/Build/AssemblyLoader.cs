@@ -11,13 +11,13 @@ using System.Runtime.Loader;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.DependencyModel.Resolution;
 
-namespace Dolittle.Artifacts.Tools
+namespace Dolittle.Build
 {
     /// <summary>
     /// Represents a system that is capable of loading assemblies out of current <see cref="AssemblyLoadContext"/>
     /// Based on : https://www.codeproject.com/Articles/1194332/Resolving-Assemblies-in-NET-Core
     /// </summary>
-    public class AssemblyLoader : IDisposable
+    internal class AssemblyLoader : IDisposable
     {
         readonly ICompilationAssemblyResolver _assemblyResolver;
 
