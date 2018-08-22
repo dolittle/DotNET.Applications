@@ -23,7 +23,7 @@ namespace Dolittle.Build.Artifact
     {
         readonly Type[] _artifacts;
         readonly ILogger _logger;
-        readonly IEnumerable<ArtifactType> _artifactTypes;
+        readonly DolittleArtifactTypes _artifactTypes;
         ArtifactsConfiguration _artifactsConfiguration;
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Dolittle.Build.Artifact
         /// <param name="artifactsConfiguration">The <see cref="ArtifactsConfiguration"/> that will be modified, validated and returned from Build</param>
         /// <param name="artifactTypes">A list of <see cref="ArtifactType"/> which represents the different artifact types</param>
         /// <param name="logger"></param>
-        public ArtifactsConfigurationBuilder(Type[] artifacts, ArtifactsConfiguration artifactsConfiguration, IEnumerable<ArtifactType> artifactTypes, ILogger logger)
+        public ArtifactsConfigurationBuilder(Type[] artifacts, ArtifactsConfiguration artifactsConfiguration, DolittleArtifactTypes artifactTypes, ILogger logger)
         {
             _artifacts = artifacts;
             _logger = logger;
@@ -56,7 +56,7 @@ namespace Dolittle.Build.Artifact
             var newArtifacts = 0;
 
             var nonMatchingArtifacts = new List<string>();
-            foreach (var artifactType in _artifactTypes) 
+            foreach (var artifactType in _artifactTypes.ArtifactTypes) 
             {
                 newArtifacts += HandleArtifactOfType(
                     artifactType.Type,

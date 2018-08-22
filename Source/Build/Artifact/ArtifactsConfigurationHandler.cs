@@ -19,28 +19,20 @@ namespace Dolittle.Build.Artifact
     /// </summary>
     public class ArtifactsConfigurationHandler
     {
-        readonly ArtifactsConfigurationManager _configurationManager;
-        readonly IEnumerable<ArtifactType> _artifactTypes;
+        readonly IArtifactsConfigurationManager _configurationManager;
+        readonly DolittleArtifactTypes _artifactTypes;
         readonly ILogger _logger;
 
-        readonly static ISerializationOptions _serializationOptions = SerializationOptions
-            .Custom(SerializationOptionsFlags.None, 
-            new JsonConverter[] {},
-            serializer => {
-                serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                serializer.Formatting = Formatting.Indented;
-                serializer.TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple;
-            });
         
         /// <summary>
         /// Initializes an instance of <see cref="ArtifactsConfigurationHandler"/>
         /// </summary>
-        /// <param name="configurationSerializer">The serializer for the <see cref="ArtifactsConfigurationManager"/></param>
+        /// <param name="configurationManager"></param>
         /// <param name="artifactTypes">A list of <see cref="ArtifactType"/> which represents the different artifact types</param>
         /// <param name="logger"></param>
-        public ArtifactsConfigurationHandler(ISerializer configurationSerializer, IEnumerable<ArtifactType> artifactTypes, ILogger logger)
+        public ArtifactsConfigurationHandler(IArtifactsConfigurationManager configurationManager, DolittleArtifactTypes artifactTypes, ILogger logger)
         {
-            _configurationManager = new ArtifactsConfigurationManager(configurationSerializer, _serializationOptions, logger);
+            _configurationManager = configurationManager;
             _artifactTypes = artifactTypes;
             _logger = logger;
         }

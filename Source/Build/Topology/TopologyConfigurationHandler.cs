@@ -17,24 +17,17 @@ namespace Dolittle.Build.Topology
     /// </summary>
     public class TopologyConfigurationHandler
     {
-        readonly BoundedContextConfigurationManager _configurationManager;
+        readonly IBoundedContextConfigurationManager _configurationManager;
         readonly ILogger _logger;
         
-        readonly static ISerializationOptions _serializationOptions = SerializationOptions
-            .Custom(SerializationOptionsFlags.None, 
-            new JsonConverter[] {},
-            serializer => {
-                serializer.ContractResolver = new CamelCaseExceptDictionaryKeyResolver();
-                serializer.Formatting = Formatting.Indented;
-            });
         /// <summary>
         /// Instantiates an instance of <see cref="TopologyConfigurationHandler"/> 
         /// </summary>
-        /// <param name="configurationSerializer"></param>
+        /// <param name="configurationManager"></param>
         /// <param name="logger"></param>
-        public TopologyConfigurationHandler(ISerializer configurationSerializer, ILogger logger)
+        public TopologyConfigurationHandler(IBoundedContextConfigurationManager configurationManager, ILogger logger)
         {
-            _configurationManager = new BoundedContextConfigurationManager(configurationSerializer, _serializationOptions, logger);
+            _configurationManager = configurationManager;
             _logger = logger;
         }
 

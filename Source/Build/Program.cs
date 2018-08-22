@@ -17,6 +17,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Dolittle.Build.Topology;
 using Dolittle.Build.Artifact;
+using Dolittle.Hosting;
+using Dolittle.Types;
 
 namespace Dolittle.Build
 {
@@ -31,18 +33,11 @@ namespace Dolittle.Build
         static TopologyConfigurationHandler _topologyConfigurationHandler;
         static ArtifactsConfigurationHandler _artifactsConfigurationHandler;
         static ArtifactsDiscoverer _artifactsDiscoverer;
+        static IHost _host;
+        static DolittleArtifactTypes _artifactTypes;
         internal static bool NewTopology = false;
         internal static bool NewArtifacts = false;
 
-        readonly static ArtifactType[] _artifactTypes = new ArtifactType[]
-        {
-            new ArtifactType { Type = typeof(ICommand), TypeName = "command", TargetPropertyExpression = a => a.Commands },
-            new ArtifactType { Type = typeof(IEvent), TypeName = "event", TargetPropertyExpression = a => a.Events },
-            new ArtifactType { Type = typeof(ICanProcessEvents), TypeName = "event processor", TargetPropertyExpression = a => a.EventProcessors },
-            new ArtifactType { Type = typeof(IEventSource), TypeName = "event source", TargetPropertyExpression = a => a.EventSources },
-            new ArtifactType { Type = typeof(IReadModel), TypeName = "read model", TargetPropertyExpression = a => a.ReadModels },
-            new ArtifactType { Type = typeof(IQuery), TypeName = "query", TargetPropertyExpression = a => a.Queries }
-        };
         static int Main(string[] args)
         {
             if (args.Length != 1)
@@ -86,32 +81,28 @@ namespace Dolittle.Build
 
         static void InitialSetup()
         {
-            SetupLogger();
-            SetupHandlers();
+            SetupHost();
+            AssignBindings();
         }
-        
-        static void SetupLogger()
+
+        static void SetupHost()
         {
             var loggerFactory = new LoggerFactory(new ILoggerProvider[]
             {
                 new ConsoleLoggerProvider((s, l) => true, true)
             });
+            _host = new HostBuilder().Build(loggerFactory);
 
-            var appenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory);
-            _logger = new Dolittle.Logging.Logger(appenders);
         }
         
-        static void SetupHandlers()
+        static void AssignBindings()
         {
-            var container = new ActivatorContainer();
-            var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new ICanProvideConverters[]{new ConverterProvider(_logger)});
+            _logger = _host.Container.Get<Dolittle.Logging.ILogger>();
 
-            var serializer = new Serializer(container, converterProviders);
-
-            _topologyConfigurationHandler = new TopologyConfigurationHandler(serializer, _logger);
-            _artifactsConfigurationHandler = new ArtifactsConfigurationHandler(serializer, _artifactTypes, _logger);
+            _artifactTypes = _host.Container.Get<DolittleArtifactTypes>();
+            _topologyConfigurationHandler = _host.Container.Get<TopologyConfigurationHandler>();
+            _artifactsConfigurationHandler = _host.Container.Get<ArtifactsConfigurationHandler>();
 
         }
-        
     }
 }
