@@ -16,14 +16,16 @@ namespace Dolittle.Hosting
         /// <summary>
         /// Build the <see cref="IHost"/>
         /// </summary>
+        /// <param name="skipBootProcedures">Whether or not to skip starting bootprocedures</param>
         /// <returns>An instance of a <see cref="IHost"/></returns>
-        IHost Build();
+        IHost Build(bool skipBootProcedures=false);
 
         /// <summary>
         /// Build the <see cref="IHost"/>
         /// </summary>
         /// <param name="loggerFactory"><see cref="ILoggerFactory"/> for logging</param>
+        /// <param name="skipBootProcedures">Whether or not to skip starting bootprocedures</param>
         /// <returns>An instance of a <see cref="IHost"/></returns>
-        IHost Build(ILoggerFactory loggerFactory);
+        IHost Build(ILoggerFactory loggerFactory,bool skipBootProcedures=false);
     }
 }

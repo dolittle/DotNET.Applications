@@ -19,7 +19,7 @@ namespace Dolittle.Hosting
         /// <summary>
         /// Initializes a new instance of <see cref="Host"/>
         /// </summary>
-        public Host(ILoggerFactory loggerFactory = null)
+        public Host(ILoggerFactory loggerFactory = null, bool skipBootProcedures=false)
         {
             if( loggerFactory == null ) loggerFactory = new LoggerFactory();
             var logAppenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory);
@@ -38,7 +38,7 @@ namespace Dolittle.Hosting
             var result = Dolittle.DependencyInversion.Bootstrap.Boot.Start(assemblies, typeFinder, logger, bindings);
             Container = result.Container;
 
-            Bootstrapper.Start(Container);
+            if( !skipBootProcedures ) Bootstrapper.Start(Container);
         }
 
         /// <inheritdoc/>
