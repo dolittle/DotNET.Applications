@@ -30,7 +30,7 @@ namespace Dolittle.Build
         static Dolittle.Logging.ILogger _logger;
         static TopologyConfigurationHandler _topologyConfigurationHandler;
         static ArtifactsConfigurationHandler _artifactsConfigurationHandler;
-
+        static ArtifactsDiscoverer _artifactsDiscoverer;
         internal static bool NewTopology = false;
         internal static bool NewArtifacts = false;
 
@@ -60,9 +60,9 @@ namespace Dolittle.Build
 
                 _logger.Information("Build process started");
                 var startTime = DateTime.UtcNow;
-                var assemblyLoader = new AssemblyLoader(args[0]);
+                _artifactsDiscoverer = new ArtifactsDiscoverer(args[0], _artifactTypes, _logger);
                 
-                var types = DiscoverArtifacts(assemblyLoader); 
+                var types = _artifactsDiscoverer.Artifacts;
                 
                 var boundedContextConfiguration = _topologyConfigurationHandler.Build(types);
                 var artifactsConfiguration = _artifactsConfigurationHandler.Build(types, boundedContextConfiguration);
@@ -104,7 +104,7 @@ namespace Dolittle.Build
         static void SetupHandlers()
         {
             var container = new ActivatorContainer();
-            var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new ICanProvideConverters[]{});
+            var converterProviders = new FixedInstancesOf<ICanProvideConverters>(new ICanProvideConverters[]{new ConverterProvider(_logger)});
 
             var serializer = new Serializer(container, converterProviders);
 
@@ -112,38 +112,6 @@ namespace Dolittle.Build
             _artifactsConfigurationHandler = new ArtifactsConfigurationHandler(serializer, _artifactTypes, _logger);
 
         }
-        static Type[] DiscoverArtifacts(AssemblyLoader assemblyLoader)
-        {
-            var types = GetArtifactsFromAssembly(assemblyLoader);
-
-            ThrowIfArtifactWithNoModuleOrFeature(types);
-
-            return types;
-        }
-        static Type[] GetArtifactsFromAssembly(AssemblyLoader assemblyLoader)
-        {
-            return assemblyLoader
-                .GetProjectReferencedAssemblies()
-                .SelectMany(_ => _.ExportedTypes)
-                .Where(_ =>
-                    _artifactTypes
-                    .Any(at => at.Type.IsAssignableFrom(_)))
-                .ToArray();
-        }
-
-        static void ThrowIfArtifactWithNoModuleOrFeature(Type[] types)
-        {
-            bool hasInvalidArtifact = false;
-            foreach(var type in types)
-            {
-                var numSegments = type.Namespace.Split(".").Count();
-                if (numSegments < 1) 
-                {
-                    hasInvalidArtifact = true;
-                    _logger.Error($"Artifact {type.Name} with namespace = {type.Namespace} is invalid");
-                }
-            }
-            if (hasInvalidArtifact) throw new InvalidArtifact();
-        }
+        
     }
 }
