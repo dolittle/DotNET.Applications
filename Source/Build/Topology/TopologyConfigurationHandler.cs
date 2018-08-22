@@ -21,8 +21,7 @@ namespace Dolittle.Build.Topology
         readonly ILogger _logger;
         
         readonly static ISerializationOptions _serializationOptions = SerializationOptions
-            .Custom(SerializationOptionsFlags.None, 
-            new JsonConverter[] {},
+            .Custom(callback:
             serializer => {
                 serializer.ContractResolver = new CamelCaseExceptDictionaryKeyResolver();
                 serializer.Formatting = Formatting.Indented;

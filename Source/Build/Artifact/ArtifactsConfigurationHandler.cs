@@ -24,8 +24,7 @@ namespace Dolittle.Build.Artifact
         readonly ILogger _logger;
 
         readonly static ISerializationOptions _serializationOptions = SerializationOptions
-            .Custom(SerializationOptionsFlags.None, 
-            new JsonConverter[] {},
+            .Custom(callback:
             serializer => {
                 serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 serializer.Formatting = Formatting.Indented;
