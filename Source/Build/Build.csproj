@@ -27,4 +27,9 @@
         <ProjectReference Include="..\Queries\Queries.csproj" />
         <ProjectReference Include="..\Hosting\Hosting.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Proxies/templates/command_template"/>
+    </ItemGroup>
+    
 </Project>
