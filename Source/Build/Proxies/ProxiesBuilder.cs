@@ -19,7 +19,7 @@ using HandlebarsDotNet;
 namespace Dolittle.Build.Proxies
 {
     /// <summary>
-    /// 
+    /// Represents a class that handles the generation of proxies
     /// </summary>
     public class ProxiesBuilder
     {
@@ -29,10 +29,11 @@ namespace Dolittle.Build.Proxies
         readonly ILogger _logger;
 
         /// <summary>
-        /// 
+        /// Instantiates an instance of <see cref="ProxiesBuilder"/>
         /// </summary>
+        /// <param name="templateLoader"></param>
         /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
-        /// <param name="artifactTypes"><</param>
+        /// <param name="artifactTypes"></param>
         /// <param name="logger"></param>
         public ProxiesBuilder(TemplateLoader templateLoader, Type[] artifacts, DolittleArtifactTypes artifactTypes, ILogger logger)
         {
@@ -42,9 +43,9 @@ namespace Dolittle.Build.Proxies
             _logger = logger;
         }
         /// <summary>
-        /// 
+        /// Generates all proxies for all relevant artifacts and writes them as files in their corresponding feature structure
         /// </summary>
-        public void Build(ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration)
+        public void GenerateProxies(ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration)
         {
             _logger.Information("Building proxies");
             var startTime = DateTime.UtcNow;
@@ -59,7 +60,7 @@ namespace Dolittle.Build.Proxies
 
         void CreateCommands(ArtifactsConfiguration artifactsConfig, BoundedContextConfiguration boundedContextConfiguration, ref List<Proxy> proxies)
         {
-            var template = Handlebars.Compile(_templateLoader.CommandProxyTemplate);
+            var template = _templateLoader.CommandProxyTemplate;
 
             var commandArtifactType = _artifactTypes.ArtifactTypes.Single(_ => _.TypeName.Equals("command")).Type;
             var commandArtifacts = _artifacts.Where(_ => commandArtifactType.IsAssignableFrom(_));
@@ -85,9 +86,9 @@ namespace Dolittle.Build.Proxies
                 };
                 AddCommandProxyProperties(propertiesInfo, ref handlebarsCommand);
                 var fileContent = template(handlebarsCommand);
-                var filePath = GenerateFilePath(artifact, boundedContextConfiguration, artifact.Name + ".js");
+                var filePath = GenerateFilePath(artifact, boundedContextConfiguration, artifact.Name);
 
-                proxies.Add(new Proxy(){Content = fileContent, FilePath = filePath});
+                proxies.Add(new Proxy(){Content = fileContent, FullFilePath = filePath});
             }
             else
             {
@@ -95,10 +96,10 @@ namespace Dolittle.Build.Proxies
             }
         }
 
-        string GenerateFilePath(Type artifact, BoundedContextConfiguration config, string filename)
+        string GenerateFilePath(Type artifact, BoundedContextConfiguration config, string artifactName)
         {
             var @namespace = artifact.StripExcludedNamespaceSegments(config);
-            return @namespace.Replace('.', '/') + "/" + filename;
+            return @namespace.Replace('.', '/') + "/" + artifactName+ ".js";
         }
 
         void AddCommandProxyProperties(PropertyInfo[] properties, ref HandlebarsCommand command)

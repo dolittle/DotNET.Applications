@@ -55,6 +55,9 @@ namespace Dolittle.Build.Artifact
             
             return artifactDefinitions;
         }
+        /// <summary>
+        /// Gets a <see cref="ArtifactDefinition"/> that corresponds to the artifact's <see cref="Type"/>
+        /// </summary>
         public static ArtifactDefinition GetMatchingArtifactDefinition(this ArtifactsConfiguration artifactsConfiguration, Type artifact)
         {
             var artifactDefinitions = artifactsConfiguration.GetAllArtifactDefinitions();

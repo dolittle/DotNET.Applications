@@ -1,19 +1,22 @@
 
 namespace Dolittle.Build.Proxies
 {
+    /// <summary>
+    /// Represents a class that contains all the information needed to create a proxy file
+    /// </summary>
     public class Proxy
     {
         /// <summary>
-        /// The ES content of the proxy
+        /// Gets and sets the EcmaScript (Javascript) content of the proxy
         /// </summary>
         /// <value></value>
         public string Content {get; set;}
+        
         /// <summary>
-        /// The actual filepath
+        /// Gets and sets the full filepath of the proxy file
         /// </summary>
         /// <value></value>
-        public string FilePath {get; set;}
-
+        public string FullFilePath {get; set;}
 
     }
 }
