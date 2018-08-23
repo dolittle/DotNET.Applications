@@ -1,15 +1,17 @@
 /*---------------------------------------------------------------------------------------------
- *  This file is an automatically generated Command Proxy
+ *  This file is an automatically generated ReadModel Proxy
  *  
  *--------------------------------------------------------------------------------------------*/
-import { Command } from  '@dolittle/commands';
+import { ReadModel } from  '@dolittle/readModels';
 
-export class {{CommandName}} extends Command
+export class {{ReadModelName}} extends ReadModel
 {
     constructor() {
         super();
-        this.type = '{{ArtifactId}}';
-
+        this.artifact = {
+           id: '{{ReadModelArtifactId}}',
+           generation: '{{ReadModelGeneration}}'
+        };
         {{#each Properties}}
         this.{{PropertyName}} = {{PropertyDefaultValue}};
         {{/each}}

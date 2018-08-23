@@ -1,14 +1,15 @@
 /*---------------------------------------------------------------------------------------------
- *  This file is an automatically generated Command Proxy
+ *  This file is an automatically generated Query Proxy
  *  
  *--------------------------------------------------------------------------------------------*/
-import { Command } from  '@dolittle/commands';
+import { Query } from  '@dolittle/queries';
 
-export class {{CommandName}} extends Command
+export class {{QueryName}} extends Query
 {
     constructor() {
         super();
-        this.type = '{{ArtifactId}}';
+        this.nameOfQuery = '{{QueryName}}';
+        this.generatedFrom = '{{ClrType}}';
 
         {{#each Properties}}
         this.{{PropertyName}} = {{PropertyDefaultValue}};

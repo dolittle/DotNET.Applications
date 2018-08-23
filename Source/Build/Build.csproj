@@ -30,6 +30,8 @@
 
     <ItemGroup>
         <EmbeddedResource Include="Proxies/templates/command_template.js"/>
+        <EmbeddedResource Include="Proxies/templates/query_template.js"/>
+        <EmbeddedResource Include="Proxies/templates/readmodel_template.js"/>
     </ItemGroup>
     
 </Project>

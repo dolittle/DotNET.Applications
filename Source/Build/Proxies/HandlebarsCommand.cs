@@ -3,7 +3,7 @@ using Dolittle.Artifacts;
 namespace Dolittle.Build.Proxies
 {
     /// <summary>
-    /// The actual command proxy that's fed into the Handlebars templating engine
+    /// The command proxy that's fed into the Handlebars templating engine
     /// </summary>
     public class HandlebarsCommand
     {
@@ -12,13 +12,13 @@ namespace Dolittle.Build.Proxies
         /// </summary>
         public string CommandName {get; set;}
         /// <summary>
-        /// Gets and sets the <see cref="ArtifactId"/> of the Command 
+        /// Gets and sets the string representation of <see cref="ArtifactId"/> of the Command 
         /// </summary>
         /// <value></value>
         public string ArtifactId {get; set;}
         /// <summary>
-        /// Gets and sets a list of <see cref="ProxyProperty"/> that represents the Command's properties
+        /// Gets and sets the list of <see cref="ProxyProperty"/>that represents the Properties or Arguments of the proxy
         /// </summary>
-        public IList<ProxyProperty> Properties {get; set;} = new List<ProxyProperty>();
+        public IEnumerable<ProxyProperty> Properties {get; set;} = new List<ProxyProperty>();
     }
 }

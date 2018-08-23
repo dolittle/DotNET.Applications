@@ -15,12 +15,21 @@ namespace Dolittle.Build.Proxies
         static Assembly Assembly = typeof(Program).Assembly;
         const string ResourcePrefix = "Build.Proxies.templates.";
         const string CommandTemplateName = "command_template.js";
+        const string QueryTemplateName = "query_template.js";
+        const string ReadModelTemplateName = "readmodel_template.js";
 
         /// <summary>
         /// Handlebars template for command proxies
         /// </summary>
-        /// <value></value>
         public Func<object, string> CommandProxyTemplate {get; }
+        /// <summary>
+        /// Handlebars template for query proxies
+        /// </summary>
+        public Func<object, string> QueryProxyTemplate {get; }
+        /// <summary>
+        /// Handlebars template for read model proxies
+        /// </summary>
+        public Func<object, string> ReadModelProxyTemplate {get;}
 
         /// <summary>
         /// Instantiates the singleton instance of <see cref="TemplateLoader"/>. Templates are read and compiled at construction
@@ -28,6 +37,8 @@ namespace Dolittle.Build.Proxies
         public TemplateLoader()
         {
             CommandProxyTemplate = Handlebars.Compile(ReadTemplate(CommandTemplateName));
+            QueryProxyTemplate = Handlebars.Compile(ReadTemplate(QueryTemplateName));
+            ReadModelProxyTemplate = Handlebars.Compile(ReadTemplate(ReadModelTemplateName));
         }
 
         string ReadTemplate(string templateName)
