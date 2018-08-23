@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Dolittle.Applications.Configuration;
+using Dolittle.Concepts;
 using Dolittle.Reflection;
 
 namespace Dolittle.Build.Proxies
@@ -16,9 +17,17 @@ namespace Dolittle.Build.Proxies
         /// <param name="type"></param>
         public static object GetDefaultValue(this Type type)
         {
+            if (type == null) throw new ArgumentNullException("type");  
             if (type.IsAPrimitiveType())
             {
-                Activator.CreateInstance(type);
+                if (type.Equals(typeof(string)) || type.Equals(typeof(String))) return "";
+                if (type.Equals(typeof(Guid))) return Guid.Empty.ToString();
+                if (type.Equals(typeof(void))) return null;
+                return Activator.CreateInstance(type);
+            }
+            if (type.IsConcept())
+            {
+                return type.GetConceptValueType().GetDefaultValue();
             }
             return null;
         }

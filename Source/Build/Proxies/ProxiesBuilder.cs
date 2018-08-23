@@ -4,8 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts;
@@ -14,6 +16,7 @@ using Dolittle.Build.Artifact;
 using Dolittle.Collections;
 using Dolittle.Logging;
 using Dolittle.Reflection;
+using Dolittle.Strings;
 using HandlebarsDotNet;
 
 namespace Dolittle.Build.Proxies
@@ -53,6 +56,7 @@ namespace Dolittle.Build.Proxies
 
             CreateCommands(artifactsConfiguration, boundedContextConfiguration, ref proxies);
 
+            WriteProxiesToFile(proxies.ToArray());
             var endTime = DateTime.UtcNow;
             var deltaTime = endTime.Subtract(startTime);
             _logger.Information($"Finished proxies build process. (Took {deltaTime.TotalSeconds} seconds)");
@@ -106,15 +110,36 @@ namespace Dolittle.Build.Proxies
         {
             foreach (var prop in properties)
             {
+                var defaultValue = prop.PropertyType.GetDefaultValue();
+                
                 var proxyProperty = new ProxyProperty()
                 {
-                    PropertyName = prop.Name,
-                    PropertyDefaultValue = prop.PropertyType.GetDefaultValue()
+                    PropertyName = prop.Name.ToCamelCase(),
+                    PropertyDefaultValue = TranslateDefaultValueToJavascript(defaultValue)
                 };
                 command.Properties.Add(proxyProperty);
             }
         }
 
+        void WriteProxiesToFile(Proxy[] proxies)
+        {
+            foreach (var proxy in proxies)
+            {
+                var fileInfo = new FileInfo(proxy.FullFilePath);
+                if (! fileInfo.Directory.Exists) System.IO.Directory.CreateDirectory(fileInfo.DirectoryName);
+                using (var streamWriter = new StreamWriter(proxy.FullFilePath, false, Encoding.UTF8, 65536))
+                {
+                    streamWriter.Write(proxy.Content);
+                }
+            }
+        }
+        object TranslateDefaultValueToJavascript(object defaultValue)
+        {
+                if (defaultValue is string) defaultValue = $"'{defaultValue}'";
+                else if (defaultValue == null) defaultValue = "null";
+
+                return defaultValue;
+        }
         ArtifactId GetArtifactId(Type artifact, ArtifactsConfiguration config)
         {
             return config.GetMatchingArtifactDefinition(artifact).Artifact;

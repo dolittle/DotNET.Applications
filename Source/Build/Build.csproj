@@ -29,7 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Proxies/templates/command_template"/>
+        <EmbeddedResource Include="Proxies/templates/command_template.js"/>
     </ItemGroup>
     
 </Project>

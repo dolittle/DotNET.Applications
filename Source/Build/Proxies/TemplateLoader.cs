@@ -13,8 +13,8 @@ namespace Dolittle.Build.Proxies
     public class TemplateLoader
     {
         static Assembly Assembly = typeof(Program).Assembly;
-        const string ResourcePrefix = "Build.";
-        const string CommandTemplateName = "command_template";
+        const string ResourcePrefix = "Build.Proxies.templates.";
+        const string CommandTemplateName = "command_template.js";
 
         /// <summary>
         /// Handlebars template for command proxies
@@ -27,10 +27,6 @@ namespace Dolittle.Build.Proxies
         /// </summary>
         public TemplateLoader()
         {
-            var resourceNames = Assembly.GetManifestResourceNames();
-            foreach (var name in resourceNames)
-                Console.WriteLine(name);
-                
             CommandProxyTemplate = Handlebars.Compile(ReadTemplate(CommandTemplateName));
         }
 

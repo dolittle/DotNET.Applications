@@ -3,7 +3,7 @@ import { Command } from  '@dolittle/commands/Command';
 export class {{CommandName}} extends Command
 {
     {{#each Properties}}
-    _{{PropertyName}}:{{PropertyDefaultValue}}
+    _{{PropertyName}}: {{PropertyDefaultValue}}
     {{/each}}
 
     constructor() {
@@ -13,11 +13,11 @@ export class {{CommandName}} extends Command
     
     {{#each Properties}}
     get {{PropertyName}}() {
-        return _{{PropertyName}}
+        return this._{{PropertyName}}
     }
 
     set {{PropertyName}}(value) {
-        _{{PropertyName}} = value;
+        this._{{PropertyName}} = value;
     }
 
     {{/each}}
