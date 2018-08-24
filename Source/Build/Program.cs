@@ -19,6 +19,7 @@ using Dolittle.Build.Topology;
 using Dolittle.Build.Artifact;
 using Dolittle.Hosting;
 using Dolittle.Types;
+using Dolittle.Build.Proxies;
 
 namespace Dolittle.Build
 {
@@ -32,9 +33,11 @@ namespace Dolittle.Build
         static Dolittle.Logging.ILogger _logger;
         static TopologyConfigurationHandler _topologyConfigurationHandler;
         static ArtifactsConfigurationHandler _artifactsConfigurationHandler;
+        static ProxiesHandler _proxiesHandler;
         static ArtifactsDiscoverer _artifactsDiscoverer;
         static IHost _host;
         static DolittleArtifactTypes _artifactTypes;
+
         internal static bool NewTopology = false;
         internal static bool NewArtifacts = false;
 
@@ -47,23 +50,24 @@ namespace Dolittle.Build
             }
             try
             {
-                // For debugging, comment out or remove when not debugging
-                //while (!System.Diagnostics.Debugger.IsAttached)
-                //    System.Threading.Thread.Sleep(10);
-
                 InitialSetup();
 
                 _logger.Information("Build process started");
                 var startTime = DateTime.UtcNow;
                 _artifactsDiscoverer = new ArtifactsDiscoverer(args[0], _artifactTypes, _logger);
                 
-                var types = _artifactsDiscoverer.Artifacts;
+                var artifacts = _artifactsDiscoverer.Artifacts;
                 
-                var boundedContextConfiguration = _topologyConfigurationHandler.Build(types);
-                var artifactsConfiguration = _artifactsConfigurationHandler.Build(types, boundedContextConfiguration);
-                
+                var boundedContextConfiguration = _topologyConfigurationHandler.Build(artifacts);
+                var artifactsConfiguration = _artifactsConfigurationHandler.Build(artifacts, boundedContextConfiguration);
+
+                                
                 if (NewTopology) _topologyConfigurationHandler.Save(boundedContextConfiguration);
                 if (NewArtifacts) _artifactsConfigurationHandler.Save(artifactsConfiguration);
+                
+                //TODO: Generating the proxies should be optional
+                _proxiesHandler = _host.Container.Get<ProxiesHandler>();
+                _proxiesHandler.CreateProxies(artifacts, boundedContextConfiguration, artifactsConfiguration);
 
                 var endTime = DateTime.UtcNow;
                 var deltaTime = endTime.Subtract(startTime);
@@ -102,7 +106,6 @@ namespace Dolittle.Build
             _artifactTypes = _host.Container.Get<DolittleArtifactTypes>();
             _topologyConfigurationHandler = _host.Container.Get<TopologyConfigurationHandler>();
             _artifactsConfigurationHandler = _host.Container.Get<ArtifactsConfigurationHandler>();
-
         }
     }
 }

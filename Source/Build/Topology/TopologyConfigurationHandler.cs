@@ -13,7 +13,7 @@ using Newtonsoft.Json.Serialization;
 namespace Dolittle.Build.Topology
 {
     /// <summary>
-    /// Represents a class that basically handles the interations with a <see cref="BoundedContextConfiguration"/>
+    /// Represents a class that handles the interations with a <see cref="BoundedContextConfiguration"/>
     /// </summary>
     public class TopologyConfigurationHandler
     {
