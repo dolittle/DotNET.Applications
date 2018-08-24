@@ -14,15 +14,15 @@ namespace Dolittle.Hosting
     public class HostBuilder : IHostBuilder
     {
         /// <inheritdoc/>
-        public IHost Build()
+        public IHost Build(bool skipBootProcedures=false)
         {
             return new Host();
         }
 
         /// <inheritdoc/>
-        public IHost Build(ILoggerFactory loggerFactory)
+        public IHost Build(ILoggerFactory loggerFactory, bool skipBootProcedures=false)
         {
-            return new Host(loggerFactory);
+            return new Host(loggerFactory, skipBootProcedures);
         }
         
     }
