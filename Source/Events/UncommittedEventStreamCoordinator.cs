@@ -31,7 +31,7 @@ namespace Dolittle.Events.Coordination
         readonly IArtifactTypeMap _artifactMap;
         readonly ISystemClock _systemClock;
         readonly IEventProcessors _eventProcessors;
-        private readonly IEventHorizon _eventHorizon;
+        readonly IEventHorizon _eventHorizon;
 
         /// <summary>
         /// Initializes an instance of a <see cref="UncommittedEventStreamCoordinator"/>
