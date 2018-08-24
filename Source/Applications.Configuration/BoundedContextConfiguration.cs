@@ -31,7 +31,12 @@ namespace Dolittle.Applications.Configuration
         /// Gets or sets whether or not one is using <see cref="Module">modules</see>
         /// </summary>
         public bool UseModules { get; set; }
-       
+
+        /// <summary>
+        /// Gets or sets the base path for proxies
+        /// </summary>
+        public string ProxiesBasePath {get; set;}
+
         /// <summary>
         /// Gets or sets a mapping from <see cref="Area"/> to a string representing a segment in the namespace that the user wishes to exclude from the Module/Feature
         /// </summary>
