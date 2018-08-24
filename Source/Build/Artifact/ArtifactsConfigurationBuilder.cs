@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
@@ -117,11 +118,15 @@ namespace Dolittle.Build.Artifact
                     
                     if (!existingArtifacts.Any(_ => _.Type.GetActualType() == artifact))
                     {
+                        var artifactObject = new Dolittle.Artifacts.Artifact(ArtifactId.New(), ArtifactGeneration.First);
+                        if (artifact.HasAttribute<ArtifactAttribute>())
+                            artifactObject = (artifact.GetTypeInfo().GetCustomAttributes(typeof(ArtifactAttribute), false).First() as ArtifactAttribute).Artifact;
+                        
                         var newAndExistingArtifacts = new List<ArtifactDefinition>(existingArtifacts);
                         var artifactDefinition = new ArtifactDefinition
                         {
-                            Artifact = ArtifactId.New(),
-                            Generation = ArtifactGeneration.First,
+                            Artifact = artifactObject.Id,
+                            Generation = artifactObject.Generation,
                             Type = ClrType.FromType(artifact)
                         };
                         _logger.Debug($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
@@ -130,6 +135,36 @@ namespace Dolittle.Build.Artifact
                         newArtifacts++;
 
                         targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
+                    }
+                    else
+                    {
+                        if (artifact.HasAttribute<ArtifactAttribute>())
+                        {
+                            var artifactObject = (artifact.GetTypeInfo().GetCustomAttributes(typeof(ArtifactAttribute), false).First() as ArtifactAttribute).Artifact;
+                            
+                            var existingArtifact = existingArtifacts.Single(_ => _.Type.GetActualType() == artifact);
+
+                            if (existingArtifact.Artifact.Value.Equals(artifactObject.Id.Value)
+                                && existingArtifact.Generation.Value.Equals(artifactObject.Generation.Value))
+                            {
+                                return newArtifacts;
+                            }
+                            
+                            var newAndExistingArtifacts = new List<ArtifactDefinition>(existingArtifacts);
+                            var artifactDefinition = new ArtifactDefinition
+                            {
+                                Artifact = artifactObject.Id,
+                                Generation = artifactObject.Generation,
+                                Type = ClrType.FromType(artifact)
+                            };
+                            _logger.Debug($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
+                            newAndExistingArtifacts.Add(artifactDefinition);
+
+                            newArtifacts++;
+
+                            targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
+                            
+                        }
                     }
                 }
             }

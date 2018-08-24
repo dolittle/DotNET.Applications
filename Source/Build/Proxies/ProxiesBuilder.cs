@@ -106,7 +106,6 @@ namespace Dolittle.Build.Proxies
         }
         Proxy GenereateQueryProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BoundedContextConfiguration boundedContextConfig, Func<object, string> template)
         {
-
             _logger.Information($"Creating query proxy for {ClrType.FromType(artifact).TypeString}");
             var handlebarsQuery = new HandlebarsQuery()
             {
@@ -122,7 +121,6 @@ namespace Dolittle.Build.Proxies
         }
         Proxy GenerateReadModelProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BoundedContextConfiguration boundedContextConfig, Func<object, string> template)
         {
-
             _logger.Information($"Creating read model proxy for {ClrType.FromType(artifact).TypeString}");
             var artifactDefinition = GetArtifactDefinition(artifact, artifactsConfig);
             var handlebarsReadmodel = new HandlebarsReadmodel()
