@@ -150,12 +150,12 @@ namespace Dolittle.Build.Proxies
             var proxyProperties = new List<ProxyProperty>();
             foreach (var prop in properties)
             {
-                var defaultValue = prop.PropertyType.GetDefaultValue();
+                var defaultValue = prop.PropertyType.GetDefaultValueAsString();
                 
                 var proxyProperty = new ProxyProperty()
                 {
                     PropertyName = prop.Name.ToCamelCase(),
-                    PropertyDefaultValue = TranslateDefaultValueToJavascript(defaultValue)
+                    PropertyDefaultValue = defaultValue
                 };
                 proxyProperties.Add(proxyProperty);
             }
@@ -179,13 +179,6 @@ namespace Dolittle.Build.Proxies
                     streamWriter.Write(proxy.Content);
                 }
             }
-        }
-        object TranslateDefaultValueToJavascript(object defaultValue)
-        {
-                if (defaultValue is string) defaultValue = $"'{defaultValue}'";
-                else if (defaultValue == null) defaultValue = "null";
-
-                return defaultValue;
         }
         ArtifactId GetArtifactId(Type artifact, ArtifactsConfiguration config)
         {

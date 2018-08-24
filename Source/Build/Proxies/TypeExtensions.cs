@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using Dolittle.Applications.Configuration;
 using Dolittle.Concepts;
@@ -15,21 +16,24 @@ namespace Dolittle.Build.Proxies
         /// Gets the default value of a type
         /// </summary>
         /// <param name="type"></param>
-        public static object GetDefaultValue(this Type type)
+        public static string GetDefaultValueAsString(this Type type)
         {
             if (type == null) throw new ArgumentNullException("type");  
             if (type.IsAPrimitiveType())
             {
-                if (type.Equals(typeof(string)) || type.Equals(typeof(String))) return "";
-                if (type.Equals(typeof(Guid))) return Guid.Empty.ToString();
-                if (type.Equals(typeof(void))) return null;
-                return Activator.CreateInstance(type);
+                if (type.Equals(typeof(string)) || type.Equals(typeof(String))) return "''";
+                if (type.Equals(typeof(Guid))) return $"'{Guid.Empty.ToString()}'";
+                if (type.Equals(typeof(void))) return "{}";
+                if (type.Equals(typeof(bool))|| type.Equals(typeof(Boolean))) return "false";
+
+                return Activator.CreateInstance(type).ToString();
             }
-            if (type.IsConcept())
-            {
-                return type.GetConceptValueType().GetDefaultValue();
-            }
-            return null;
+            if (type.IsConcept()) return type.GetConceptValueType().GetDefaultValueAsString();
+            
+            if (typeof(IEnumerable).IsAssignableFrom(type)) return "[]";
+            if (typeof(IDictionary).IsAssignableFrom(type)) return "{}}";
+            //TODO: Perhaps in the future we can generate an object with keys and default values when type is a class that can be represented as a key/value set
+            return "{}";
         }
         /// <summary>
         /// Returns a string that represents the namespace of the given <see cref="Type"/> where the NamespaceToStrip-segments are removed from the namespace
