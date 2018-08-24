@@ -50,10 +50,6 @@ namespace Dolittle.Build
             }
             try
             {
-                // For debugging, comment out or remove when not debugging
-                while (!System.Diagnostics.Debugger.IsAttached)
-                    System.Threading.Thread.Sleep(10);
-
                 InitialSetup();
 
                 _logger.Information("Build process started");
@@ -110,8 +106,6 @@ namespace Dolittle.Build
             _artifactTypes = _host.Container.Get<DolittleArtifactTypes>();
             _topologyConfigurationHandler = _host.Container.Get<TopologyConfigurationHandler>();
             _artifactsConfigurationHandler = _host.Container.Get<ArtifactsConfigurationHandler>();
-            
-
         }
     }
 }
