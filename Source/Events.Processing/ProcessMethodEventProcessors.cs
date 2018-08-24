@@ -38,9 +38,9 @@ namespace Dolittle.Events.Processing
         /// </summary>
         public const string ProcessMethodName = "Process";
 
-        List<IEventProcessor> _eventProcessors = new List<IEventProcessor>();
-        IArtifactTypeMap _artifactTypeMap;
-        readonly ITypeFinder _typeFinder;
+        readonly List<IEventProcessor> _eventProcessors = new List<IEventProcessor>();
+        readonly IArtifactTypeMap _artifactTypeMap;
+        readonly IImplementationsOf<ICanProcessEvents> _processors;
         readonly IContainer _container;
         readonly ISystemClock _systemClock;
         readonly IObjectFactory _objectFactory;
@@ -52,26 +52,24 @@ namespace Dolittle.Events.Processing
         /// </summary>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for identifying <see cref="IEvent">events</see> </param>
         /// <param name="objectFactory"><see cref="IObjectFactory"/> for going between <see cref="PropertyBag"/> and instances of types</param>
-        /// <param name="typeFinder"><see cref="ITypeFinder"/> for discovering implementations of <see cref="ICanProcessEvents"/></param>
+        /// <param name="processors"><see cref="IImplementationsOf{ICanProcessEvents}"/> for discovering implementations of <see cref="ICanProcessEvents"/></param>
         /// <param name="container"><see cref="IContainer"/> for the implementation <see cref="ProcessMethodEventProcessor"/> when acquiring instances of implementations of <see cref="ICanProcessEvents"/></param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for timing <see cref="IEventProcessors"/></param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public ProcessMethodEventProcessors(
             IArtifactTypeMap artifactTypeMap,
             IObjectFactory objectFactory,
-            ITypeFinder typeFinder,
+            IImplementationsOf<ICanProcessEvents> processors,
             IContainer container,
             ISystemClock systemClock,
             ILogger logger)
         {
             _artifactTypeMap = artifactTypeMap;
-            _typeFinder = typeFinder;
+            _processors = processors;
             _container = container;
             _systemClock = systemClock;
             _logger = logger;
             _objectFactory = objectFactory;
-
-            PopulateEventProcessors();
         }
 
         /// <inheritdoc/>
@@ -86,10 +84,13 @@ namespace Dolittle.Events.Processing
             return _eventProcessors.GetEnumerator();
         }
 
-        void PopulateEventProcessors()
+
+        /// <summary>
+        /// Populates from in process event processors through discovery
+        /// </summary>
+        public void Populate()
         {
-            var processors = _typeFinder.FindMultiple<ICanProcessEvents>();
-            foreach (var processor in processors)
+            foreach (var processor in _processors)
             {
                 _logger.Trace($"Processor '{processor.AssemblyQualifiedName}'");
 
@@ -127,6 +128,8 @@ namespace Dolittle.Events.Processing
                     _eventProcessors.Add(processMethodEventProcessor);
                 }
             }
+
         }
+
     }
 }
