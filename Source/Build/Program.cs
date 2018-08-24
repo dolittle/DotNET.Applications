@@ -75,7 +75,7 @@ namespace Dolittle.Build
             }
             catch (Exception ex)
             {
-                _logger.Error("Error consolidating artifacts;");
+                _logger.Error(ex, "Error consolidating artifacts;");
                 _logger.Debug(ex.Message);
                 return 1;
             }
@@ -95,7 +95,7 @@ namespace Dolittle.Build
             {
                 new ConsoleLoggerProvider((s, l) => true, true)
             });
-            _host = new HostBuilder().Build(loggerFactory);
+            _host = new HostBuilder().Build(loggerFactory, true);
 
         }
         

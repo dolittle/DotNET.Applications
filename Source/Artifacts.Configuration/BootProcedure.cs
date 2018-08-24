@@ -9,28 +9,36 @@ using Dolittle.Artifacts.Configuration;
 using Dolittle.Bootstrapping;
 using Dolittle.Collections;
 
-namespace Dolittle.Artifacts.Bootstrap
+namespace Dolittle.Artifacts.Configuration
 {
     /// <summary>
     /// Represents the <see cref="ICanPerformBootProcedure">boot procedure</see> for artifacts
     /// </summary>
-    public class ConfigurationProcedure : ICanPerformBootProcedure
+    public class BootProcedure : ICanPerformBootProcedure
     {
+        /// <summary>
+        /// Gets whether or not this <see cref="ICanPerformBootProcedure">boot procedure</see> has performed
+        /// </summary>
+        public static bool HasPerformed { get; private set; }
+
         readonly IArtifactsConfigurationManager _artifactsConfigurationManager;
         readonly IArtifactTypeMap _artifactTypeMap;
 
         readonly IEnumerable<PropertyInfo>  _artifactProperties = typeof(ArtifactsByTypeDefinition).GetProperties().Where(_ => _.PropertyType == typeof(IEnumerable<ArtifactDefinition>));
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ConfigurationProcedure"/>
+        /// Initializes a new instance of <see cref="BootProcedure"/>
         /// </summary>
         /// <param name="artifactsConfigurationManager"><see cref="IArtifactsConfigurationManager"/></param>
         /// <param name="artifactTypeMap"></param>
-        public ConfigurationProcedure(IArtifactsConfigurationManager artifactsConfigurationManager, IArtifactTypeMap artifactTypeMap)
+        public BootProcedure(IArtifactsConfigurationManager artifactsConfigurationManager, IArtifactTypeMap artifactTypeMap)
         {
             _artifactsConfigurationManager = artifactsConfigurationManager;
             _artifactTypeMap = artifactTypeMap;
         }
+
+        /// <inheritdoc/>
+        public bool CanPerform() => true;
 
         /// <inheritdoc/>
         public void Perform()
@@ -43,6 +51,8 @@ namespace Dolittle.Artifacts.Bootstrap
             });
 
             artifacts.ForEach(_ => _artifactTypeMap.Register(new Artifact(_.Artifact, _.Generation), _.Type.GetActualType()));
+
+            HasPerformed = true;
         }
     }
 }
