@@ -142,7 +142,7 @@ namespace Dolittle.Build.Proxies
         string GenerateFilePath(Type artifact, BoundedContextConfiguration config, string artifactName)
         {
             var @namespace = artifact.StripExcludedNamespaceSegments(config);
-            return config.ProxiesBasePath + @namespace.Replace('.', '/') + "/" + artifactName+ ".js";
+            return Path.Join(config.ProxiesBasePath, @namespace.Replace('.', '/'), $"{artifactName}.js");
         }
 
         IEnumerable<ProxyProperty> CreateProxyProperties(PropertyInfo[] properties)
