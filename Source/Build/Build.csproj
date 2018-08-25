@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../Build/MSBuild/default.props" />
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <AssemblyName>Dolittle.SDK.Build</AssemblyName>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Handlebars.Net" Version="1.9.5" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.0.4" />
+        <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="2.0.0-alpha2*" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Applications.Configuration\Applications.Configuration.csproj" />
+        <ProjectReference Include="..\Artifacts.Configuration\Artifacts.Configuration.csproj" />
+        <ProjectReference Include="..\Commands\Commands.csproj" />
+        <ProjectReference Include="..\Commands.Handling\Commands.Handling.csproj" />
+        <ProjectReference Include="..\Commands.Validation\Commands.Validation.csproj" />
+        <ProjectReference Include="..\Events\Events.csproj" />
+        <ProjectReference Include="..\Events.Processing\Events.Processing.csproj" />
+        <ProjectReference Include="..\ReadModels\ReadModels.csproj" />
+        <ProjectReference Include="..\Queries\Queries.csproj" />
+        <ProjectReference Include="..\Hosting\Hosting.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Proxies/templates/command_template.js"/>
+        <EmbeddedResource Include="Proxies/templates/query_template.js"/>
+        <EmbeddedResource Include="Proxies/templates/readmodel_template.js"/>
+    </ItemGroup>
+    
+</Project>
