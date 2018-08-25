@@ -15,6 +15,10 @@ namespace Dolittle.Applications.Configuration
         /// Initializes a new instance of <see cref="MissingBoundedContextConfiguration"/>
         /// </summary>
         public MissingBoundedContextConfiguration() : base("Missing configuration for the bounded context - looking for file 'bounded-context.json'") {}
-
+        /// <summary>
+        /// Initializes a new instance of <see cref="MissingBoundedContextConfiguration"/> with path
+        /// </summary>
+        /// <param name="path"></param>
+        public MissingBoundedContextConfiguration(string path) : base($"Missing configuration for the bounded context - looking for config file at path {path}") {}
     }
 }

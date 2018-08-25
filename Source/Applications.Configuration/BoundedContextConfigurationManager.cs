@@ -18,7 +18,7 @@ namespace Dolittle.Applications.Configuration
     [Singleton]
     public class BoundedContextConfigurationManager : IBoundedContextConfigurationManager
     {
-        const string _path   = "bounded-context.json";
+        static string _path   = Path.Combine(".dolittle","bounded-context.json");
         BoundedContextConfiguration _current;
         readonly ISerializer _serializer;
         readonly ILogger _logger;
@@ -51,7 +51,7 @@ namespace Dolittle.Applications.Configuration
         public BoundedContextConfiguration Load()
         {
             var path = GetPath();
-            if( !File.Exists(path)) throw new MissingBoundedContextConfiguration();
+            if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(_path);
             
             var json = File.ReadAllText(path);
             var configuration = _serializer.FromJson<BoundedContextConfiguration>(json, _serializationOptions);
@@ -62,6 +62,7 @@ namespace Dolittle.Applications.Configuration
         public void Save(BoundedContextConfiguration configuration)
         {
             var path = GetPath();
+            if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(_path);
             var json = _serializer.ToJson(configuration, _serializationOptions);
             
             File.WriteAllText(path, json);
@@ -69,7 +70,7 @@ namespace Dolittle.Applications.Configuration
 
         string GetPath()
         {
-            return Path.Combine(Directory.GetCurrentDirectory(),_path);
+            return Path.Combine(Directory.GetCurrentDirectory(), _path);
         }
     }
 }
