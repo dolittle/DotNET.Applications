@@ -18,15 +18,6 @@ namespace Dolittle.Build
         public void Provide(IBindingProviderBuilder builder)
         {
             builder.Bind<DolittleArtifactTypes>().To(new DolittleArtifactTypes());
-            builder.Bind<ISerializationOptions>().To(SerializationOptions
-                .Custom(callback:
-                    serializer => {
-                        serializer.ContractResolver = new CamelCaseExceptDictionaryKeyResolver();
-                        serializer.Formatting = Formatting.Indented;
-                    }
-                )
-            );
-            
         }
     }
 }
