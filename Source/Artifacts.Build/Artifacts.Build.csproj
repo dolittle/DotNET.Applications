@@ -31,9 +31,14 @@
         but before NuGet generates a nuspec. See https://github.com/NuGet/Home/issues/4704.
         -->
 
-    <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
+    <Target Name="PublishBuildCLI" BeforeTargets="GenerateNuspec">
+        <Exec Command="dotnet publish" WorkingDirectory="..\Build"/>
+    </Target>
+
+    <Target Name="PackTaskDependencies" AfterTargets="PublishBuildCLI">
+        
         <ItemGroup>
-            <_PackageFiles Include="..\Build\bin\$(Configuration)\*\Dolittle*">
+            <_PackageFiles Include="..\Build\bin\$(Configuration)\*\publish\**\*">
                 <PackagePath>tasks\%(RecursiveDir)</PackagePath>
                 <Visible>false</Visible>
                 <BuildAction>Content</BuildAction>
