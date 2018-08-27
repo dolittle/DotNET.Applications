@@ -129,7 +129,7 @@ namespace Dolittle.Build.Artifact
                             Generation = artifactObject.Generation,
                             Type = ClrType.FromType(artifact)
                         };
-                        _logger.Debug($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
+                        _logger.Trace($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
                         newAndExistingArtifacts.Add(artifactDefinition);
 
                         newArtifacts++;
@@ -157,7 +157,7 @@ namespace Dolittle.Build.Artifact
                                 Generation = artifactObject.Generation,
                                 Type = ClrType.FromType(artifact)
                             };
-                            _logger.Debug($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
+                            _logger.Trace($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
                             newAndExistingArtifacts.Add(artifactDefinition);
 
                             newArtifacts++;

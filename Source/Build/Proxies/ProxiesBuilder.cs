@@ -87,7 +87,7 @@ namespace Dolittle.Build.Proxies
 
             if (artifact.HasVisibleProperties())
             {
-                _logger.Information($"Creating command proxy for {ClrType.FromType(artifact).TypeString}");
+                _logger.Trace($"Creating command proxy for {ClrType.FromType(artifact).TypeString}");
                 var propertiesInfo = artifact.GetProperties();
 
                 var handlebarsCommand = new HandlebarsCommand()
@@ -100,13 +100,13 @@ namespace Dolittle.Build.Proxies
             }
             else
             {
-                _logger.Information($"No visible properties for {ClrType.FromType(artifact).TypeString}");
+                _logger.Trace($"No visible properties for {ClrType.FromType(artifact).TypeString}");
                 return null;
             }
         }
         Proxy GenereateQueryProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BoundedContextConfiguration boundedContextConfig, Func<object, string> template)
         {
-            _logger.Information($"Creating query proxy for {ClrType.FromType(artifact).TypeString}");
+            _logger.Trace($"Creating query proxy for {ClrType.FromType(artifact).TypeString}");
             var handlebarsQuery = new HandlebarsQuery()
             {
                 ClrType = artifact.FullName,
@@ -121,7 +121,7 @@ namespace Dolittle.Build.Proxies
         }
         Proxy GenerateReadModelProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BoundedContextConfiguration boundedContextConfig, Func<object, string> template)
         {
-            _logger.Information($"Creating read model proxy for {ClrType.FromType(artifact).TypeString}");
+            _logger.Trace($"Creating read model proxy for {ClrType.FromType(artifact).TypeString}");
             var artifactDefinition = GetArtifactDefinition(artifact, artifactsConfig);
             var handlebarsReadmodel = new HandlebarsReadmodel()
             {
