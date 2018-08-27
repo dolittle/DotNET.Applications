@@ -21,20 +21,26 @@ namespace Dolittle.Artifacts.Configuration
     {
         static string _path = Path.Combine(".dolittle", "artifacts.json");
 
-        readonly ISerializationOptions _serializationOptions;
+        readonly ISerializationOptions _serializationOptions = SerializationOptions.Custom(callback:
+            serializer =>
+            {
+                serializer.ContractResolver = new CamelCaseExceptDictionaryKeyResolver();
+                serializer.Formatting = Formatting.Indented;
+            }
+        );
+
         readonly ISerializer _serializer;
         readonly ILogger _logger;
+
         /// <summary>
         /// Initializes a new instance of <see cref="ArtifactsConfigurationManager"/>
         /// </summary>
         /// <param name="serializer"><see cref="ISerializer"/> to use</param>
-        /// <param name="serializationOptions"></param>
-        /// <param name="logger"></param>
-        public ArtifactsConfigurationManager(ISerializer serializer, ISerializationOptions serializationOptions, ILogger logger)
+        /// <param name="logger"><see cref="ILogger"/> for logging</param>
+        public ArtifactsConfigurationManager(ISerializer serializer, ILogger logger)
         {
             _serializer = serializer;
             _logger = logger;
-            _serializationOptions = serializationOptions;
         }
 
         /// <inheritdoc/>
