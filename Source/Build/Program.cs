@@ -96,13 +96,12 @@ namespace Dolittle.Build
                 new ConsoleLoggerProvider((s, l) => true, true)
             });
             _host = new HostBuilder().Build(loggerFactory, true);
-
         }
         
         static void AssignBindings()
         {
             _logger = _host.Container.Get<Dolittle.Logging.ILogger>();
-
+            
             _artifactTypes = _host.Container.Get<DolittleArtifactTypes>();
             _topologyConfigurationHandler = _host.Container.Get<TopologyConfigurationHandler>();
             _artifactsConfigurationHandler = _host.Container.Get<ArtifactsConfigurationHandler>();
