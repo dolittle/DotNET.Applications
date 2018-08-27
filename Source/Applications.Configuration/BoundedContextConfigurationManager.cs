@@ -23,18 +23,22 @@ namespace Dolittle.Applications.Configuration
         readonly ISerializer _serializer;
         readonly ILogger _logger;
 
-        readonly ISerializationOptions _serializationOptions;
+        readonly ISerializationOptions _serializationOptions = SerializationOptions.Custom(callback:
+            serializer =>
+            {
+                serializer.ContractResolver = new CamelCaseExceptDictionaryKeyResolver();
+                serializer.Formatting = Formatting.Indented;
+            }
+        );
         /// <summary>
         /// Initializes a new instance of <see cref="BoundedContextConfigurationManager"/>
         /// </summary>
         /// <param name="serializer"><see cref="ISerializer"/> to use for working with configuration as JSON</param>
-        /// <param name="serializationOptions"></param>
         /// <param name="logger"></param>
-        public BoundedContextConfigurationManager(ISerializer serializer, ISerializationOptions serializationOptions, ILogger logger)
+        public BoundedContextConfigurationManager(ISerializer serializer, ILogger logger)
         {
             _serializer = serializer;
             _logger = logger;
-            _serializationOptions = serializationOptions;
         }
 
         /// <inheritdoc/>
