@@ -32,7 +32,7 @@
         -->
 
     <Target Name="PublishBuildCLI" BeforeTargets="GenerateNuspec">
-        <Exec Command="dotnet publish" WorkingDirectory="..\Build"/>
+        <Exec Command="dotnet publish -c $(Configuration)" WorkingDirectory="..\Build"/>
     </Target>
 
     <Target Name="PackTaskDependencies" AfterTargets="PublishBuildCLI">
