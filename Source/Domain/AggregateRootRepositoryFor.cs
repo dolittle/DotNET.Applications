@@ -86,10 +86,10 @@ namespace Dolittle.Domain
         void ReApplyEvents(ICommandContext commandContext, T aggregateRoot)
         {
             var identifier = _artifactTypeMap.GetArtifactFor(typeof(T));
-            var eventStoreCommittedEvents = _eventStore.Fetch(aggregateRoot.EventSourceId);
-            var stream = new Dolittle.Runtime.Events.CommittedEventStream(aggregateRoot.EventSourceId,FromCommittedEventStream(eventStoreCommittedEvents));
-            if (stream.HasEvents)
-                aggregateRoot.ReApply(stream);
+            var commits = _eventStore.Fetch(aggregateRoot.EventSourceId);
+            var committedEvents = new CommittedEvents(aggregateRoot.EventSourceId,FromCommits(commits));
+            if (committedEvents.HasEvents)
+                aggregateRoot.ReApply(committedEvents);
         }
 
         T GetInstanceFrom(EventSourceId id, ConstructorInfo constructor)
@@ -115,46 +115,26 @@ namespace Dolittle.Domain
             if (constructor == null) throw new InvalidAggregateRootConstructorSignature(type);
         }
 
-        IEnumerable<EventAndEnvelope> FromCommittedEventStream(Dolittle.Runtime.Events.Store.CommittedEvents commits)
+        IEnumerable<CommittedEvent> FromCommits(Commits commits)
         {
-            var events = new List<EventAndEnvelope>();
+            var events = new List<CommittedEvent>();
 
             foreach(var commit in commits)
             {
                 foreach(var @event in commit.Events)
                 {
-                    events.Add(ToEventAndEnvelope(@event));
+                    events.Add(ToCommittedEvent(commit.Sequence,@event));
                 }
             }
             return events;
         }
 
-        EventAndEnvelope ToEventAndEnvelope(Runtime.Events.Store.EventEnvelope @event)
+        CommittedEvent ToCommittedEvent(CommitSequenceNumber commitSequenceNumber, EventEnvelope @event)
         {
             var eventType = _artifactTypeMap.GetTypeFor(@event.Metadata.Artifact);
             var eventInstance = _objectFactory.Build(eventType,@event.Event) as IEvent;
-            var envelope = ToEnvelope(@event.Metadata, @event.Id);
-            return new EventAndEnvelope(envelope,eventInstance);
-        }
-
-        private Dolittle.Runtime.Events.EventEnvelope ToEnvelope(EventMetadata metadata, EventId id)
-        {
-            return new Dolittle.Runtime.Events.EventEnvelope(
-                metadata.CorrelationId.Value,
-                id,
-                new EventSequenceNumber{ Value = metadata.VersionedEventSource.Version.Sequence },
-                new EventSequenceNumber{ Value = metadata.VersionedEventSource.Version.Sequence },
-                new EventGeneration { Value = metadata.Artifact.Generation },
-                metadata.Artifact,
-                metadata.VersionedEventSource.EventSource,
-                _artifactTypeMap.GetArtifactFor(typeof(T)),
-                new Dolittle.Runtime.Events.EventSourceVersion(
-                    (int)Convert.ChangeType(metadata.VersionedEventSource.Version.Commit,typeof(int)),
-                    (int)Convert.ChangeType(metadata.VersionedEventSource.Version.Sequence,typeof(int))
-                ),
-                metadata.CausedBy,
-                metadata.Occurred
-            );
+            var committedEventVersion = new CommittedEventVersion(commitSequenceNumber,@event.Metadata.VersionedEventSource.Version.Commit,@event.Metadata.VersionedEventSource.Version.Sequence);
+            return new CommittedEvent(committedEventVersion,@event.Metadata,@event.Id, eventInstance);
         }
     }
 }

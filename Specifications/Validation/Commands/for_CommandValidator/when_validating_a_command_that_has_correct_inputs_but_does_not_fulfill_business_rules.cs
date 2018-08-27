@@ -5,7 +5,7 @@ using Dolittle.Commands;
 using Dolittle.Commands.Validation;
 using Dolittle.Runtime.Commands;
 using Dolittle.Runtime.Commands.Validation;
-using Dolittle.Runtime.Transactions;
+using Dolittle.Execution;
 using Dolittle.Validation;
 using Machine.Specifications;
 using Moq;
@@ -31,7 +31,7 @@ namespace Dolittle.FluentValidation.Commands.for_CommandValidator
             };
 
             var artifact = Artifact.New();
-            command = new CommandRequest(TransactionCorrelationId.NotSet, artifact.Id, artifact.Generation, new ExpandoObject());
+            command = new CommandRequest(CorrelationId.Empty, artifact.Id, artifact.Generation, new ExpandoObject());
             command_instance = Mock.Of<ICommand>();
             command_request_converter.Setup(c => c.Convert(command)).Returns(command_instance);
 

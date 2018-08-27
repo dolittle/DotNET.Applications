@@ -11,13 +11,13 @@ namespace Dolittle.Domain.for_AggregateRootRepositoryFor
         }
 
         public bool ReApplyCalled = false;
-        public CommittedEventStream EventStreamApplied;
+        public CommittedEvents EventsApplied;
 
-        public override void ReApply(CommittedEventStream eventStream)
+        public override void ReApply(CommittedEvents committedEvents)
         {
             ReApplyCalled = true;
-            EventStreamApplied = eventStream;
-            base.ReApply(eventStream);
+            EventsApplied = committedEvents;
+            base.ReApply(committedEvents);
         }
     }
 }

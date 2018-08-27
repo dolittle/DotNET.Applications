@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using Dolittle.Commands;
 using Dolittle.Runtime.Commands;
-using Dolittle.Runtime.Transactions;
+using Dolittle.Execution;
 
 namespace Dolittle.Commands.Coordination
 {
@@ -30,7 +30,7 @@ namespace Dolittle.Commands.Coordination
         /// <inheritdoc/>
         public CommandResult Handle(ICommand command)
         {
-            var correlationId = TransactionCorrelationId.New();
+            var correlationId = CorrelationId.New();
             var request = _converter.Convert(correlationId, command);
             var result = _runtimeCommandCoordinator.Handle(request);
             return result;
