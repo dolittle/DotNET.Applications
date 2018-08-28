@@ -33,6 +33,11 @@ namespace Dolittle.Applications.Configuration
         public bool UseModules { get; set; }
 
         /// <summary>
+        /// Gets or sets whether or not one wants to generate proxies
+        /// </summary>
+        public bool GenerateProxies {get; set;}
+        
+        /// <summary>
         /// Gets or sets the base path for proxies
         /// </summary>
         public string ProxiesBasePath {get; set;}
