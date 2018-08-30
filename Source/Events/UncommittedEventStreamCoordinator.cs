@@ -60,11 +60,11 @@ namespace Dolittle.Events.Coordination
         }
 
         /// <inheritdoc/>
-        public void Commit(TransactionCorrelationId correlationId, Dolittle.Runtime.Events.UncommittedEventStream uncommittedEventStream)
+        public void Commit(CorrelationId correlationId, UncommittedEvents uncommittedEvents)
         {
             _logger.Information($"Committing uncommitted event stream with correlationId '{correlationId}'");
             _logger.Trace("Building the Event Store uncommitted event stream");
-            var uncommitted = BuildUncommitted(uncommittedEventStream,correlationId.Value);
+            var uncommitted = BuildUncommitted(uncommittedEvents,correlationId.Value);
             _logger.Trace("Committing the events");
             var committed = _eventStore.Commit(uncommitted);
             _logger.Trace("Process events in same bounded context");
@@ -73,21 +73,21 @@ namespace Dolittle.Events.Coordination
             _eventHorizon.PassThrough(committed);
         }
 
-        Dolittle.Runtime.Events.Store.UncommittedEventStream BuildUncommitted(Dolittle.Runtime.Events.UncommittedEventStream uncommittedEventStream, CorrelationId correlationId)
+        UncommittedEventStream BuildUncommitted(UncommittedEvents uncommittedEvents, CorrelationId correlationId)
         {
-            var versionedEventSource = ToVersionedEventSource(uncommittedEventStream);
-            return BuildFrom(versionedEventSource,correlationId,_systemClock.GetCurrentTime(),uncommittedEventStream.EventsAndVersion.Select(e => e.Event));
+            var versionedEventSource = ToVersionedEventSource(uncommittedEvents);
+            return BuildFrom(versionedEventSource,correlationId,_systemClock.GetCurrentTime(),uncommittedEvents.Events.Select(e => e.Event));
 
         }
 
-        VersionedEventSource ToVersionedEventSource(Dolittle.Runtime.Events.UncommittedEventStream uncommittedEventStream)
+        VersionedEventSource ToVersionedEventSource(UncommittedEvents uncommittedEvents)
         {
-            var commit = Convert.ToUInt64(uncommittedEventStream.EventSource.Version.Commit);
-            var sequence = Convert.ToUInt32(uncommittedEventStream.EventSource.Version.Sequence);
-            return new VersionedEventSource(new Dolittle.Runtime.Events.Store.EventSourceVersion(commit,sequence),uncommittedEventStream.EventSource.EventSourceId, _artifactMap.GetArtifactFor(uncommittedEventStream.EventSource.GetType()).Id) ;
+            var commit = Convert.ToUInt64(uncommittedEvents.EventSource.Version.Commit);
+            var sequence = Convert.ToUInt32(uncommittedEvents.EventSource.Version.Sequence);
+            return new VersionedEventSource(new EventSourceVersion(commit,sequence),uncommittedEvents.EventSource.EventSourceId, _artifactMap.GetArtifactFor(uncommittedEvents.EventSource.GetType()).Id) ;
         }
 
-        Dolittle.Runtime.Events.Store.UncommittedEventStream BuildFrom(VersionedEventSource version, CorrelationId correlationId, DateTimeOffset committed, IEnumerable<IEvent> events)
+        UncommittedEventStream BuildFrom(VersionedEventSource version, CorrelationId correlationId, DateTimeOffset committed, IEnumerable<IEvent> events)
         {
             var envelopes = events.Select(e => e.ToEnvelope(EventId.New(),BuildEventMetadata(e, version, correlationId, committed))).ToList();
             if(envelopes == null || !envelopes.Any())
@@ -100,13 +100,13 @@ namespace Dolittle.Events.Coordination
             return new EventMetadata(versionedEventSource, correlationId, _artifactMap.GetArtifactFor(@event.GetType()), "A Test", committed);
         }
 
-        Dolittle.Runtime.Events.Store.UncommittedEventStream BuildStreamFrom(EventStream stream)
+        UncommittedEventStream BuildStreamFrom(EventStream stream)
         {
             var now = DateTimeOffset.UtcNow;
             var lastEvent = stream.Last();
             var versionedEventSource = lastEvent.Metadata.VersionedEventSource;
             var correlationId = lastEvent.Metadata.CorrelationId;
-            return new Dolittle.Runtime.Events.Store.UncommittedEventStream(CommitId.New(), correlationId, versionedEventSource, now, stream);
+            return new UncommittedEventStream(CommitId.New(), correlationId, versionedEventSource, now, stream);
         }
     }
 }

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using Dolittle.Artifacts;
 using Dolittle.Runtime.Commands;
-using Dolittle.Runtime.Transactions;
+using Dolittle.Execution;
 using Dolittle.Serialization.Json;
 
 namespace Dolittle.Commands.Coordination
@@ -29,7 +29,7 @@ namespace Dolittle.Commands.Coordination
         }
 
         /// <inheritdoc/>
-        public CommandRequest Convert(TransactionCorrelationId correlationId, ICommand command)
+        public CommandRequest Convert(CorrelationId correlationId, ICommand command)
         {
             var commandAsJson = _serializer.ToJson(command);
             var commandAsDictionary = _serializer.GetKeyValuesFromJson(commandAsJson);

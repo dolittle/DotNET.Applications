@@ -64,14 +64,13 @@ namespace Dolittle.Events.Processing
         public EventProcessorIdentifier Identifier { get; }
 
         /// <inheritdoc/>
-        public void Process(Dolittle.Runtime.Events.Store.EventEnvelope eventEnvelope)
+        public void Process(EventEnvelope eventEnvelope)
         {
             try
             {
                 var processor = _container.Get(_methodInfo.DeclaringType);
                 object @event;
-                if( _eventType.HasDefaultConstructor() ) @event = Activator.CreateInstance(_eventType);
-                else  @event = _objectFactory.Build(_eventType, eventEnvelope.Event);
+                @event = _objectFactory.Build(_eventType, eventEnvelope.Event);
                 
                 _methodInfo.Invoke(processor, new[] { @event });
             }

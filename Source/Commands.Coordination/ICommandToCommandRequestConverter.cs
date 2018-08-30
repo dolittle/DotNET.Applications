@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using Dolittle.Commands;
 using Dolittle.Runtime.Commands;
-using Dolittle.Runtime.Transactions;
+using Dolittle.Execution;
 
 namespace Dolittle.Commands.Coordination
 {
@@ -16,9 +16,9 @@ namespace Dolittle.Commands.Coordination
         /// <summary>
         /// Convert a <see cref="ICommand"/> to <see cref="CommandRequest"/>
         /// </summary>
-        /// <param name="correlationId">The <see cref="TransactionCorrelationId">correlation id</see> of the request</param>
+        /// <param name="correlationId">The <see cref="CorrelationId">correlation id</see> of the request</param>
         /// <param name="command"><see cref="ICommand"/> to convert</param>
         /// <returns>Converted <see cref="CommandRequest"/></returns>
-        CommandRequest Convert(TransactionCorrelationId correlationId, ICommand command);
+        CommandRequest Convert(CorrelationId correlationId, ICommand command);
     }
 }

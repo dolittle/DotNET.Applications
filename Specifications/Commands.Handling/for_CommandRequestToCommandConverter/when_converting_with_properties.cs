@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Dolittle.Artifacts;
 using Dolittle.Runtime.Commands;
-using Dolittle.Runtime.Transactions;
+using Dolittle.Execution;
 using Machine.Specifications;
 using Moq;
 using Newtonsoft.Json;
@@ -13,7 +13,7 @@ namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
 {
     public class when_converting_with_properties
     {
-        static TransactionCorrelationId correlation_id;
+        static CorrelationId correlation_id;
         static Mock<IArtifactTypeMap> artifact_type_map;
         static Artifact identifier;
         static CommandRequest request;
@@ -41,7 +41,7 @@ namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
 
         Establish context = () => 
         {
-            correlation_id = TransactionCorrelationId.New();
+            correlation_id = CorrelationId.New();
             identifier = Artifact.New();
 
             content = new Dictionary<string, object> {
