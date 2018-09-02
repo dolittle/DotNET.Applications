@@ -75,13 +75,13 @@ other purposes and for future expansion.
 
 ## File names
 
-All files should be lower cased. In case of multiple words and concepts that would be in codefiles **CamelCase** you **MUST** seperate
-with underscore **_** instead. For instance: [*csharp_coding_styles.md*](chsarp_coding_styles.md).
+All files should be lower cased. In case of multiple words and concepts that would be in codefiles **CamelCase** you **MUST** separate
+with underscore **_** instead. For instance: [*csharp_coding_styles.md*](csharp_coding_styles.md).
 
 ## DocFX
 
 For processing all the documentation we're using [DocFX](http://dotnet.github.io/docfx/).
-It takes the API documentation and all the markdown articles and genereates HTML for us and it gets published during
+It takes the API documentation and all the markdown articles and generates HTML for us and it gets published during
 the continuous build running.
 
 
