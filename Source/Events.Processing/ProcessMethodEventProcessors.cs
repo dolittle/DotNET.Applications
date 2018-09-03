@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Dolittle.Execution;
 using Dolittle.DependencyInversion;
 using Dolittle.Time;
 using Dolittle.Types;
@@ -14,6 +13,7 @@ using Dolittle.Runtime.Events.Processing;
 using Dolittle.Logging;
 using Dolittle.Artifacts;
 using Dolittle.PropertyBags;
+using Dolittle.Lifecycle;
 
 namespace Dolittle.Events.Processing
 {

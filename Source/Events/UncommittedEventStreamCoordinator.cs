@@ -6,16 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Execution;
-using Dolittle.Runtime.Transactions;
 using Dolittle.Logging;
 using Dolittle.Runtime.Events;
 using Dolittle.Runtime.Events.Coordination;
 using Dolittle.Runtime.Events.Store;
-using Dolittle.Events;
 using Dolittle.Time;
 using Dolittle.Artifacts;
 using Dolittle.Runtime.Events.Processing;
 using Dolittle.Runtime.Events.Relativity;
+using Dolittle.Lifecycle;
 
 namespace Dolittle.Events.Coordination
 {

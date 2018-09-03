@@ -3,13 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.IO;
-using System.Runtime.Serialization.Formatters;
-using Dolittle.Concepts.Serialization.Json;
-using Dolittle.Execution;
+using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Dolittle.Artifacts.Configuration
 {
