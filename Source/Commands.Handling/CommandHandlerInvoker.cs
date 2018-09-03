@@ -9,7 +9,7 @@ using System.Reflection;
 using Dolittle.Artifacts;
 using Dolittle.Collections;
 using Dolittle.DependencyInversion;
-using Dolittle.Execution;
+using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Runtime.Commands;
 using Dolittle.Runtime.Commands.Handling;

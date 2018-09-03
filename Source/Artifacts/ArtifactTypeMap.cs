@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
-using Dolittle.Execution;
+using Dolittle.Lifecycle;
 
 namespace Dolittle.Artifacts
 {

@@ -4,13 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
-using Dolittle.Commands;
 using Dolittle.Runtime.Commands;
-using Dolittle.Execution;
 using Dolittle.Validation;
 using Dolittle.Runtime.Commands.Validation;
 using Dolittle.Commands.Coordination;
 using Dolittle.Commands.Handling;
+using Dolittle.Lifecycle;
 
 namespace Dolittle.Commands.Validation
 {

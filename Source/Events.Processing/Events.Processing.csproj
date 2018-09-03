@@ -7,6 +7,7 @@
     <ItemGroup>
         <PackageReference Include="Dolittle.Artifacts" Version="2.0.0-*" />
         <PackageReference Include="Dolittle.Bootstrapping" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Lifecycle" Version="2.0.0-*" />
         <PackageReference Include="Dolittle.Runtime.Events" Version="2.0.0-*" />
     </ItemGroup>
 
