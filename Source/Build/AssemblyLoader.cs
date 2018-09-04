@@ -28,17 +28,20 @@ namespace Dolittle.Build
         public AssemblyLoader(string path)
         {
             Assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
-            this.DependencyContext = DependencyContext.Load(Assembly);
+            DependencyContext = DependencyContext.Load(Assembly);
 
             _assemblyResolver = new CompositeCompilationAssemblyResolver(new ICompilationAssemblyResolver[]
             {
                 new AppBaseCompilationAssemblyResolver(Path.GetDirectoryName(path)),
                     new ReferenceAssemblyPathResolver(),
-                    new PackageCompilationAssemblyResolver()
+                    new PackageCompilationAssemblyResolver(),
+                    new PackageRuntimeStoreAssemblyResolver()
             });
 
-            this.AssemblyLoadContext = AssemblyLoadContext.GetLoadContext(Assembly);
-            this.AssemblyLoadContext.Resolving += OnResolving;
+            
+
+            AssemblyLoadContext = AssemblyLoadContext.GetLoadContext(Assembly);
+            AssemblyLoadContext.Resolving += OnResolving;
         }
 
         /// <summary>
@@ -49,57 +52,60 @@ namespace Dolittle.Build
         /// <summary>
         /// Gets the <see cref="DependencyContext"/> for the <see cref="Assembly"/>
         /// </summary>
-        public DependencyContext DependencyContext { get; }
+        public DependencyContext DependencyContext {  get; }
 
         /// <summary>
         /// Gets the <see cref="AssemblyLoadContext"/> for the <see cref="Assembly"/>
         /// </summary>
-        public AssemblyLoadContext AssemblyLoadContext { get;}
-
+        public AssemblyLoadContext AssemblyLoadContext {  get; }
 
         /// <summary>
         /// Get assemblies that are referenced as project references to the loaded assembly
         /// </summary>
         /// <returns>Project <see cref="IEnumerable{Assembly}">assemblies</see></returns>
-        public IEnumerable<Assembly>    GetProjectReferencedAssemblies()
+        public IEnumerable<Assembly> GetProjectReferencedAssemblies()
         {
-            var libraries = this.DependencyContext.RuntimeLibraries.Cast<RuntimeLibrary>()
-                    .Where(_ => _.RuntimeAssemblyGroups.Count() > 0 && _.Type.ToLowerInvariant() == "project");
+            var libraries = DependencyContext.RuntimeLibraries.Cast<RuntimeLibrary>()
+                .Where(_ => _.RuntimeAssemblyGroups.Count() > 0 && _.Type.ToLowerInvariant() == "project");
             return libraries
-                    .Select(_ => Assembly.Load(_.Name))
-                    .ToArray();
+                .Select(_ => Assembly.Load(_.Name))
+                .ToArray();
         }
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            this.AssemblyLoadContext.Resolving -= OnResolving;
+            AssemblyLoadContext.Resolving -= OnResolving;
         }
 
         Assembly OnResolving(AssemblyLoadContext context, AssemblyName name)
         {
-            bool NamesMatch(RuntimeLibrary runtime)
+            bool NamesMatch(Library runtime)
             {
                 return string.Equals(runtime.Name, name.Name, StringComparison.OrdinalIgnoreCase);
             }
 
-            var library = this.DependencyContext.RuntimeLibraries.FirstOrDefault(NamesMatch);
+            var library = DependencyContext.RuntimeLibraries.FirstOrDefault(NamesMatch);
             if (library != null)
             {
-                var wrapper = new CompilationLibrary(
-                    library.Type,
-                    library.Name,
-                    library.Version,
-                    library.Hash,
-                    library.RuntimeAssemblyGroups.SelectMany(g => g.AssetPaths),
-                    library.Dependencies,
-                    library.Serviceable);
+                var compileLibrary = DependencyContext.CompileLibraries.FirstOrDefault(NamesMatch);
+                if (compileLibrary == null)
+                {
+                    compileLibrary = new CompilationLibrary(
+                        library.Type,
+                        library.Name,
+                        library.Version,
+                        library.Hash,
+                        library.RuntimeAssemblyGroups.SelectMany(g => g.AssetPaths),
+                        library.Dependencies,
+                        library.Serviceable);
+                }
 
                 var assemblies = new List<string>();
-                _assemblyResolver.TryResolveAssemblyPaths(wrapper, assemblies);
+                _assemblyResolver.TryResolveAssemblyPaths(compileLibrary, assemblies);
                 if (assemblies.Count > 0)
                 {
-                    return this.AssemblyLoadContext.LoadFromAssemblyPath(assemblies[0]);
+                    return AssemblyLoadContext.LoadFromAssemblyPath(assemblies[0]);
                 }
             }
 
