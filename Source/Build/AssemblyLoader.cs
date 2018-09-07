@@ -28,20 +28,20 @@ namespace Dolittle.Build
         public AssemblyLoader(string path)
         {
             Assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+            AssemblyLoadContext = AssemblyLoadContext.GetLoadContext(Assembly);
+            AssemblyLoadContext.Resolving += OnResolving;
+
             DependencyContext = DependencyContext.Load(Assembly);
+
+            var basePath = Path.GetDirectoryName(path);
 
             _assemblyResolver = new CompositeCompilationAssemblyResolver(new ICompilationAssemblyResolver[]
             {
-                new AppBaseCompilationAssemblyResolver(Path.GetDirectoryName(path)),
-                    new ReferenceAssemblyPathResolver(),
-                    new PackageCompilationAssemblyResolver(),
-                    new PackageRuntimeStoreAssemblyResolver()
+                new AppBaseCompilationAssemblyResolver(basePath),
+                new ReferenceAssemblyPathResolver(),
+                new PackageCompilationAssemblyResolver(),
+                new PackageRuntimeStoreAssemblyResolver()
             });
-
-            
-
-            AssemblyLoadContext = AssemblyLoadContext.GetLoadContext(Assembly);
-            AssemblyLoadContext.Resolving += OnResolving;
         }
 
         /// <summary>
@@ -88,18 +88,14 @@ namespace Dolittle.Build
             var library = DependencyContext.RuntimeLibraries.FirstOrDefault(NamesMatch);
             if (library != null)
             {
-                var compileLibrary = DependencyContext.CompileLibraries.FirstOrDefault(NamesMatch);
-                if (compileLibrary == null)
-                {
-                    compileLibrary = new CompilationLibrary(
-                        library.Type,
-                        library.Name,
-                        library.Version,
-                        library.Hash,
-                        library.RuntimeAssemblyGroups.SelectMany(g => g.AssetPaths),
-                        library.Dependencies,
-                        library.Serviceable);
-                }
+                var compileLibrary = new CompilationLibrary(
+                    library.Type,
+                    library.Name,
+                    library.Version,
+                    library.Hash,
+                    library.RuntimeAssemblyGroups.SelectMany(g => g.AssetPaths),
+                    library.Dependencies,
+                    library.Serviceable);
 
                 var assemblies = new List<string>();
                 _assemblyResolver.TryResolveAssemblyPaths(compileLibrary, assemblies);
