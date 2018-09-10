@@ -88,8 +88,17 @@ namespace Dolittle.Build
 
         static void InitialSetup()
         {
+            try 
+            {
             SetupHost();
             AssignBindings();
+            } 
+            catch(Exception ex)
+            {
+                Console.WriteLine($"{ex} Error while doing initial setup");
+                Console.WriteLine(ex.Message);
+                Environment.Exit(1);
+            }
         }
 
         static void SetupHost()
