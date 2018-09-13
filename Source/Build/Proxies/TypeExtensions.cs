@@ -6,9 +6,11 @@
 using System;
 using System.Collections;
 using System.Linq;
+using System.Reflection;
 using Dolittle.Applications.Configuration;
 using Dolittle.Concepts;
 using Dolittle.Reflection;
+
 
 namespace Dolittle.Build.Proxies
 {
@@ -26,6 +28,8 @@ namespace Dolittle.Build.Proxies
             if (type == null) throw new ArgumentNullException("type");  
             if (type.IsAPrimitiveType())
             {
+                if (type.IsNullable()) return Nullable.GetUnderlyingType(type).GetDefaultValueAsString();
+                if (type.Equals(typeof(DateTime)) || type.Equals(typeof(DateTimeOffset)) || type.Equals(typeof(TimeSpan))) return "new Date()";
                 if (type.Equals(typeof(string)) || type.Equals(typeof(String))) return "''";
                 if (type.Equals(typeof(Guid))) return $"'{Guid.Empty.ToString()}'";
                 if (type.Equals(typeof(void))) return "{}";
@@ -33,6 +37,8 @@ namespace Dolittle.Build.Proxies
 
                 return Activator.CreateInstance(type).ToString();
             }
+
+            if (type.IsNullable()) return Nullable.GetUnderlyingType(type).GetDefaultValueAsString();
             if (type.IsConcept()) return type.GetConceptValueType().GetDefaultValueAsString();
             
             if (typeof(IEnumerable).IsAssignableFrom(type)) return "[]";
