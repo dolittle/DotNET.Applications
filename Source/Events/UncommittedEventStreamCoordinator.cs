@@ -15,6 +15,7 @@ using Dolittle.Artifacts;
 using Dolittle.Runtime.Events.Processing;
 using Dolittle.Runtime.Events.Relativity;
 using Dolittle.Lifecycle;
+using Dolittle.DependencyInversion;
 
 namespace Dolittle.Events.Coordination
 {
@@ -25,33 +26,33 @@ namespace Dolittle.Events.Coordination
     [Singleton]
     public class UncommittedEventStreamCoordinator : IUncommittedEventStreamCoordinator
     {
-        readonly IEventStore _eventStore;
+        readonly FactoryFor<IEventStore> _getEventStore;
         readonly ILogger _logger;
         readonly IArtifactTypeMap _artifactMap;
         readonly ISystemClock _systemClock;
-        readonly IEventProcessors _eventProcessors;
+        readonly IScopedEventProcessingHub _eventProcessorHub;
         readonly IEventHorizon _eventHorizon;
 
         /// <summary>
         /// Initializes an instance of a <see cref="UncommittedEventStreamCoordinator"/>
         /// </summary>
-        /// <param name="eventStore">An instance of <see cref="IEventStore" /> to persist events</param>
-        /// <param name="eventProcessors"><see cref="IEventProcessors"/> for processing in same bounded context</param>
+        /// <param name="getEventStore">A <see cref="FactoryFor{IEventStore}" /> to return a correctly scoped instance of <see cref="IEventStore" /></param>
+        /// <param name="eventProcessorHub"><see cref="IScopedEventProcessingHub"/> for processing in same bounded context</param>
         /// <param name="eventHorizon"><see cref="IEventHorizon"/> to pass events through to</param>
         /// <param name="artifactMap">An instance of <see cref="IArtifactTypeMap" /> to get the artifact for Event Source and Events</param>
         /// <param name="logger"><see cref="ILogger"/> for doing logging</param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for getting the time</param>
         public UncommittedEventStreamCoordinator(
-            IEventStore eventStore,
-            IEventProcessors eventProcessors,
+            FactoryFor<IEventStore> getEventStore,
+            IScopedEventProcessingHub eventProcessorHub,
             IEventHorizon eventHorizon,
             IArtifactTypeMap artifactMap,
             ILogger logger,
             ISystemClock systemClock)
             
         {
-            _eventStore = eventStore;
-            _eventProcessors = eventProcessors;
+            _getEventStore = getEventStore;
+            _eventProcessorHub = eventProcessorHub;
             _eventHorizon = eventHorizon;
             _logger = logger;
             _artifactMap = artifactMap;
@@ -65,9 +66,13 @@ namespace Dolittle.Events.Coordination
             _logger.Trace("Building the Event Store uncommitted event stream");
             var uncommitted = BuildUncommitted(uncommittedEvents,correlationId.Value);
             _logger.Trace("Committing the events");
-            var committed = _eventStore.Commit(uncommitted);
+            CommittedEventStream committed;
+            using(var eventStore = _getEventStore())
+            {
+                committed = eventStore.Commit(uncommitted);
+            }
             _logger.Trace("Process events in same bounded context");
-            _eventProcessors.Process(committed);
+            _eventProcessorHub.Process(committed);
             _logger.Trace("Passing committed events through event horizon");
             _eventHorizon.PassThrough(committed);
         }

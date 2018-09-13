@@ -11,6 +11,7 @@ using Dolittle.PropertyBags;
 using Dolittle.Reflection;
 using Dolittle.Runtime.Events;
 using Dolittle.Runtime.Events.Processing;
+using Dolittle.Runtime.Events.Store;
 using Dolittle.Time;
 
 namespace Dolittle.Events.Processing
@@ -33,7 +34,7 @@ namespace Dolittle.Events.Processing
         /// </summary>
         /// <param name="objectFactory"><see cref="IObjectFactory"/> for going between <see cref="PropertyBag"/> and instances of types</param>
         /// <param name="container"><see cref="IContainer"/> to use for getting instances of <see cref="ICanProcessEvents"/> implementation</param>
-        /// <param name="identifier"><see cref="EventProcessorIdentifier"/> that uniquely identifies the <see cref="ProcessMethodEventProcessor"/></param>
+        /// <param name="identifier"><see cref="EventProcessorId"/> that uniquely identifies the <see cref="ProcessMethodEventProcessor"/></param>
         /// <param name="eventIdentifier"><see cref="Artifact">Identifier</see> for identifying the <see cref="IEvent"/></param>
         /// <param name="eventType"><see cref="Type"/> type of <see cref="IEvent"/>></param>
         /// <param name="methodInfo"><see cref="MethodInfo"/> for the actual process method</param>
@@ -41,7 +42,7 @@ namespace Dolittle.Events.Processing
         public ProcessMethodEventProcessor(
             IObjectFactory objectFactory,
             IContainer container,
-            EventProcessorIdentifier identifier,
+            EventProcessorId identifier,
             Artifact eventIdentifier,
             Type eventType,
             MethodInfo methodInfo,
@@ -61,10 +62,10 @@ namespace Dolittle.Events.Processing
         public Artifact Event { get; }
 
         /// <inheritdoc/>
-        public EventProcessorIdentifier Identifier { get; }
+        public EventProcessorId Identifier { get; }
 
         /// <inheritdoc/>
-        public void Process(EventEnvelope eventEnvelope)
+        public void Process(CommittedEventEnvelope eventEnvelope)
         {
             try
             {

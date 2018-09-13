@@ -29,7 +29,7 @@ namespace Dolittle.Events.Processing
     public class ProcessMethodEventProcessors : IKnowAboutEventProcessors
     {
         /// <summary>
-        /// The separator used in the <see cref="EventProcessorIdentifier"/> between the type and the event it handles
+        /// The separator used in the <see cref="EventProcessorId"/> between the type and the event it handles
         /// </summary>
         public const string IdentifierSeparator = "|";
 
@@ -112,7 +112,7 @@ namespace Dolittle.Events.Processing
 
                     var parameterType = method.GetParameters()[0].ParameterType;
                     var eventIdentifier = _artifactTypeMap.GetArtifactFor(parameterType);
-                    var eventProcessorIdentifier = (EventProcessorIdentifier)$"{processor.Name}{IdentifierSeparator}{parameterType.Name}";
+                    var eventProcessorIdentifier = (EventProcessorId)$"{processor.Name}{IdentifierSeparator}{parameterType.Name}";
 
                     _logger.Trace($"EventProcessor identifier '{eventProcessorIdentifier}'");
 
