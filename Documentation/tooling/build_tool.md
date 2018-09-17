@@ -4,6 +4,9 @@ description: Describes the Dolittle Build Tool for the .NET SDK
 keywords: General, tooling, Build Tool
 author: woksin
 ---
+The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”,
+“RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in
+[RFC 2119](https://tools.ietf.org/html/rfc2119).
 
 ## Background
 One of our main visions is to enable developers to build Line of Business products with high productivity while also building products that are scalable and easy to maintain. With tooling we can provide developers with functionalities that enables a better development experience by automatically doing some of the work that is tedious and / or error prone. We can also give a better development experience by providing guidance, tips and squiggly lines by, for example, for .Net utilizing the Roslyn compiler to give the developers warnings and suggestions when they are doing something that does not work well when developing products on our platform or to provide with tips and suggestions for improvements when they aren't utilizing the different tools that we're providing for them to write maintainable code. The DotNET Build Tool is one such tool. This tool is rather important not only for its quality of life functions, but first and foremost for automatically generating and maintaining vital information of the *Bounded Context* for the platform. 
@@ -99,6 +102,11 @@ When the *Build Tool* has ran its course it will output a topology that would lo
   }
 }
 ```
+The *Topology* json object will sit in its own file, topology.json, inside a .dolittle folder somewhere in the root of the source code for the *Bounded Context*.
+{{% notice note %}}
+If your *Bounded Context* has a Web-interaction layer, then the .doltitle folder would be sitting in that folder.
+{{% /notice %}}
+
 #### Structuring; Modules and Features
 We currently support two ways of structuring a *Bounded Context*; one is with *Modules* (the topology definition above is the result of building a *Bounded Context* with topology defined with modules), the other way is with *Features* only.
 {{% notice note %}}
@@ -148,6 +156,7 @@ If this was the only *Artifact* in the *Bounded Context* the topology would look
 {{% notice note %}}
 Note that the "Domain" part of the namespace is completely ignored. This is because the *Build Tool* is by convention ignoring the first segment of the namespace. This is because we think that the first part of the namespace is reserved to indicate the domain area of the type, i.e. "Domain", "Events", "Events.OtherBoundedContext", "Read", "Web", "Policy", etc...
 {{% /notice %}}
+
 ##### "namespaceSegmentsToStrip"
 namespaceSegmentsToStrip can be useful when you want a namespace to have a specific prefix, or if you have a namespace that has a namespace segment which is '.' separated, like for example "Events.Shop".
 
@@ -193,4 +202,157 @@ which is obviously not right, we would want the *Build Tool* to fail because we 
 then the *Build Tool* would fail saying that the *Artifact* IAmAnEventFromAnotherBoundedContext does not fit in the topology.
 
 ## Artifacts
-TODO:
+After the *Topology* of the Bounded Context has been created, the *Build Tool* will start the process of building the artifacts.json file. The artifacts.json file contains arguably the most vital and fragile information meant for the platform, the collection of all the *Artifacts* of the *Bounded Context*. These *Artifacts* are language-agnostic meant for the *Runtime*, they all contain the three following pieces of information:
+{{% notice warning %}}
+The definition of an *Artifact* may be subject to change.
+{{% /notice %}}
+
+* artifact - An ID that is unique throughout the *Application*
+* generation - The generation of the *Artifact* represented as an integer
+* type - A human readable string that will uniquely identify the *Artifact* in the *Bounded Context* and should give an idea of where it is located.
+
+Given a list of all CLR types and the bounded context configuration, the *Build Tool* will create the artifacts.json file which contains a single object called "artifacts". "artifacts" will essentially be a dictionary where the *Key* is a *Feature* Id and the *Value* is a dictionary where the *Key* is the *Artifact* type as a string and the *Value* is a list of *Artifacts*. That object will look something like this:
+{{% notice warning %}}
+The set of *Artifact* types may be subject to change.
+{{% /notice %}}
+
+```json
+{
+  "artifacts": {
+    "<The Feature's Id>": {
+      "commands": [
+        {
+          "artifact": "<The Artifact's Id>",
+          "generation": 1,
+          "type": "<A human readable string that will uniquely identify, and be used to locate, the Artifact within the Bounded Context>"
+        }
+      ],
+      "events": ["<List of Event-Artifacts>"],
+      "eventProcessors": ["<List of EventProcessor-Artifacts>"],
+      "eventSources": ["<List of EventSource-Artifacts>"],
+      "readModels": ["<List of ReadModel-Artifacts>"],
+      "queries": ["<List of Query-Artifacts>"]
+    }
+  }
+}
+```
+And here is an example of a artifacts.json configuration after the *Build Tools* has outputted the configuration files.
+artifacts.json:
+```json
+{
+  "artifacts": {
+    "80f5e1a2-a2bc-4403-b7ec-8bd90920cf2a": {
+      "commands": [
+        {
+          "artifact": "8f75772f-6282-4854-86aa-4cbcbf47867a",
+          "generation": 1,
+          "type": "Domain.Carts.Shopping.AddItemToCart, Domain"
+        }
+      ],
+      "events": [
+        {
+          "artifact": "ae6e7f74-7991-46bd-881b-941c6d87fbb8",
+          "generation": 1,
+          "type": "Events.Carts.Shopping.ItemAddedToCart, Events"
+        }
+      ],
+      "eventProcessors": [],
+      "eventSources": [
+        {
+          "artifact": "b25d8657-dffe-40e6-ba45-71dbfe09d98f",
+          "generation": 1,
+          "type": "Domain.Carts.Shopping.Cart, Domain"
+        }
+      ],
+      "readModels": [],
+      "queries": []
+    },
+    "728459c2-fab1-40c1-9ead-7122a1a890ea": {
+      "commands": [],
+      "events": [
+        {
+          "artifact": "64808183-4bf1-4b87-8144-84f85da5676f",
+          "generation": 1,
+          "type": "Events.SomeModule.SomeFeature.StockChanged, Events.Warehouse"
+        }
+      ],
+      "eventProcessors": [],
+      "eventSources": [],
+      "readModels": [],
+      "queries": []
+    },
+    "05b89f06-19c3-4502-b349-873ef7761a21": {
+      "commands": [],
+      "events": [],
+      "eventProcessors": [],
+      "eventSources": [],
+      "readModels": [
+        {
+          "artifact": "a3041218-0d14-4fae-a349-32d791c6149b",
+          "generation": 1,
+          "type": "Read.Catalog.Listing.Product, Read"
+        }
+      ],
+      "queries": [
+        {
+          "artifact": "46ee11e1-041c-4fab-92fd-8a683a6d1696",
+          "generation": 1,
+          "type": "Read.Catalog.Listing.ListingByCategory, Read"
+        }
+      ]
+    }
+  }
+}
+```
+The process for generating this configuration goes as follows:
+{{< mermaid align="left" >}}
+    graph TD
+    A[Create new Artifacts configuration]
+    B{Are there more Artifacts?}
+    B1[Pick next Artifact]
+    B2{Are there any Artifacts<br/> not matching to a Feature?}
+    C[Find matching Feature]
+    D{Found matching Feature?}
+    D1[Create and add Artifact to configuration<br/> if it's not already there]
+    D2[Add Artifact to a list of non-matching Artifacts]
+    E[Log the errors and fail the Build-process]
+    F{Artifacts are valid?}
+    F1[Finished the Artifacts process]
+    F2{Duplicate Ids?}
+    G[Log warnings]
+    
+    A -->|List of Artifacts<br/>New Topology<br/>Existing Artifacts configuration|B
+    B --> |No| B2
+    B2 --> |Yes| E
+    B2 --> |No| F
+    F --> |Yes| F1
+    F --> |No| F2
+    F2 --> |Yes| E
+    F2 --> |No| G
+    G --> F1
+
+    B -->|Yes| B1
+    B1 -->|The Artifact| C
+    C --> D
+    D --> |Yes| D1
+    D1 --> B
+    D -->|No| D2
+    D2 --> B
+
+
+{{< /mermaid >}}
+#### Artifacts Validation
+
+The validation process after the new configuration is created will inform the user if anything has gone wrong. The validation process consists of the following steps:
+
+* It will go through every *Artifact* in the configuration and check if there is any duplication of *Artifact* Id. If so, the *Build Tool* will tell you that an *Artifact* with that *Artifact* Id already exists. This error is incredibly important to discover because it will jeopardize the whole system if this error were to occur. Since the *Artifact* Id must uniquely identify each and every one of the *Artifacts* in an *Application* the platform would identify *Artifact* A and *Artifact* B as the same if it had the same Id.
+
+* It will go through every *Artifact* in the configuration and check whether or not the *Feature* Id it sits under exists in the topology. If so, the *Build Tool* will tell you that there are *Artifacts* under a *Feature* that doesn't exist. This is an indicator that you have built the application before and that there are left-over artifacts from a *Feature* that you have removed.
+
+* It will go through every *Artifact* in the configuration and check if there are any *Artifacts* that cannot be mapped up to an actual CLR type. If so, the *Build Tool* will tell you that there are *Artifacts* than cannot be found in current *Bounded Context* topology structure and that you probably have to write a [migrator for that *Artifact*.]**(LINK TO ARTIFACT MIGRATION)**. This is an indicator that you had an *Artifact* that now has been changed. 
+
+## Proxy generation
+
+When the *Bounded Context* is supposed to provide a web-interaction layer it probably has to deal with the *Command*, *ReadModel* and *Query* *Artifacts*. Since we already have discovered all the CLR types of the *Artifacts*, we can automatically create proxies for these *Artifacts* and output them as Javascript classes to be used in the web-interaction layer.
+
+If the *Bounded Context* is configured with "generateProxies": true, the *Build Tool* will use the discovered *Artifacts* to find all *Commands*, *ReadModels* and *Queries* and create proxies for them based on their public, settable properties and the default values of each property's type. The generated proxies will have a path that corresponds the the Module / Feature hierarchy that's associated with the *Artifact*. You can provide the relative path where the proxies will be outputted to by setting the "proxiesBasePath" variable in the *Bounded Context* configuration. 
