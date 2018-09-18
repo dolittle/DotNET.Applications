@@ -4,6 +4,7 @@
  * --------------------------------------------------------------------------------------------*/
 
 using System;
+using Dolittle.Runtime.Events.Processing;
 
 namespace Dolittle.Events.Processing
 {
@@ -13,7 +14,11 @@ namespace Dolittle.Events.Processing
     [AttributeUsage(AttributeTargets.Method)]
     public class EventProcessorAttribute : Attribute
     {
-        public Guid Id { get; }
+        /// <summary>
+        /// The unique id for this event processor
+        /// </summary>
+        /// <value></value>
+        public EventProcessorId Id { get; }
 
         /// <summary>
         /// Instantiates an instance of the <see cref="EventProcessorAttribute" />
