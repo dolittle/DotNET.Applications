@@ -57,7 +57,7 @@ namespace Dolittle.Build.Artifact
             var newArtifacts = 0;
 
             var nonMatchingArtifacts = new List<string>();
-            foreach (var artifactType in _artifactTypes.ArtifactTypes) 
+            foreach (var artifactType in _artifactTypes.ArtifactTypes.Where(_ => !_.Type.Equals(typeof(Dolittle.Events.Processing.ICanProcessEvents)))) 
             {
                 newArtifacts += HandleArtifactOfType(
                     artifactType.Type,
@@ -67,6 +67,7 @@ namespace Dolittle.Build.Artifact
                     ref nonMatchingArtifacts
                 );
             }
+            newArtifacts += HandleEventProcessors(boundedContextConfiguration, ref nonMatchingArtifacts);
             if (nonMatchingArtifacts.Any())
             {
                 foreach (var artifactNamespace in nonMatchingArtifacts)
@@ -93,8 +94,10 @@ namespace Dolittle.Build.Artifact
             return _artifactsConfiguration;
         }
 
-        int HandleArtifactOfType(Type artifactType, BoundedContextConfiguration boundedContextConfiguration, string typeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression, ref List<string> nonMatchingArtifacts)
+        int HandleArtifactOfType(Type artifactType, BoundedContextConfiguration boundedContextConfiguration, string artifactTypeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression, ref List<string> nonMatchingArtifacts)
         {
+            if (artifactType.Equals(typeof(Dolittle.Events.Processing.ICanProcessEvents))) throw new ArgumentException("Eventprocessor artifacts should be handled differently ", "artifactType");
+            
             var targetProperty = targetPropertyExpression.GetPropertyInfo();
 
             var newArtifacts = 0;
@@ -122,19 +125,8 @@ namespace Dolittle.Build.Artifact
                         if (artifact.HasAttribute<ArtifactAttribute>())
                             artifactObject = (artifact.GetTypeInfo().GetCustomAttributes(typeof(ArtifactAttribute), false).First() as ArtifactAttribute).Artifact;
                         
-                        var newAndExistingArtifacts = new List<ArtifactDefinition>(existingArtifacts);
-                        var artifactDefinition = new ArtifactDefinition
-                        {
-                            Artifact = artifactObject.Id,
-                            Generation = artifactObject.Generation,
-                            Type = ClrType.FromType(artifact)
-                        };
-                        _logger.Trace($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
-                        newAndExistingArtifacts.Add(artifactDefinition);
-
+                        SetNewAndExistingArtifacts(artifactObject, artifact, artifactsByTypeDefinition, targetProperty, existingArtifacts, artifactTypeName);
                         newArtifacts++;
-
-                        targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
                     }
                     else
                     {
@@ -144,31 +136,89 @@ namespace Dolittle.Build.Artifact
                             
                             var existingArtifact = existingArtifacts.Single(_ => _.Type.GetActualType() == artifact);
 
-                            if (existingArtifact.Artifact.Value.Equals(artifactObject.Id.Value)
-                                && existingArtifact.Generation.Value.Equals(artifactObject.Generation.Value))
+                            if (
+                                ! ( existingArtifact.Artifact.Value.Equals(artifactObject.Id.Value)
+                                && existingArtifact.Generation.Value.Equals(artifactObject.Generation.Value) )
+                                )
                             {
-                                return newArtifacts;
+                                SetNewAndExistingArtifacts(artifactObject, artifact, artifactsByTypeDefinition, targetProperty, existingArtifacts, artifactTypeName);
+                                newArtifacts++;
                             }
-                            
-                            var newAndExistingArtifacts = new List<ArtifactDefinition>(existingArtifacts);
-                            var artifactDefinition = new ArtifactDefinition
-                            {
-                                Artifact = artifactObject.Id,
-                                Generation = artifactObject.Generation,
-                                Type = ClrType.FromType(artifact)
-                            };
-                            _logger.Trace($"Adding '{artifact.Name}' as a new {typeName} artifact with identifier '{artifactDefinition.Artifact}'");
-                            newAndExistingArtifacts.Add(artifactDefinition);
-
-                            newArtifacts++;
-
-                            targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
-                            
                         }
                     }
                 }
             }
             return newArtifacts;
+        }
+        int HandleEventProcessors(BoundedContextConfiguration boundedContextConfiguration, ref List<string> nonMatchingArtifacts)
+        {
+            var targetProperty = _artifactTypes.ArtifactTypes.SingleOrDefault(_ => _.Type.Equals(typeof(Dolittle.Events.Processing.ICanProcessEvents)))
+                                                                .TargetPropertyExpression.GetPropertyInfo();
+            var artifactType = typeof(Dolittle.Events.Processing.ICanProcessEvents);
+            var artifactTypeName = "event processor";
+
+            var newArtifacts = 0;
+            var artifacts = _artifacts.Where(_ => artifactType.IsAssignableFrom(_));
+            
+            foreach (var artifact in artifacts)
+            {
+                var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace, ref nonMatchingArtifacts);
+                if (feature != null)
+                {
+                    ArtifactsByTypeDefinition artifactsByTypeDefinition;
+
+                    IEnumerable<(MethodInfo method, Dolittle.Events.Processing.EventProcessorAttribute attribute)> eventProcessors = new List<(MethodInfo method, Dolittle.Events.Processing.EventProcessorAttribute attribute)>();
+
+                    artifact.GetMethods().ForEach(method => 
+                    {
+                        var attribute = method.GetCustomAttribute<Dolittle.Events.Processing.EventProcessorAttribute>(false);
+                        if (attribute != null)
+                            eventProcessors.Append((method, attribute));
+                    });
+
+                    if (! eventProcessors.Any())
+                    {
+                        _logger.Warning($"There are not Event Processor methods in {artifact.FullName}. Only methods with the {typeof(Dolittle.Events.Processing.EventProcessorAttribute).FullName} can process Events");
+                        continue;
+                    }
+
+                    if (_artifactsConfiguration.Artifacts.ContainsKey(feature.Feature))
+                        artifactsByTypeDefinition = _artifactsConfiguration.Artifacts[feature.Feature];
+                    else
+                    {
+                        artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
+                        _artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
+                    } 
+                    var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
+
+                    foreach ((MethodInfo method, Dolittle.Events.Processing.EventProcessorAttribute attribute) in eventProcessors)
+                    {
+                        if (! existingArtifacts.Any(_ => _.Artifact.Value.Equals(attribute.Id))
+                            || existingArtifacts.Any(_ => _.Artifact.Value.Equals(_.Artifact.Value.Equals(attribute.Id) && _.Type.TypeString != ClrType.FromType(artifact).TypeString)))
+                        {
+                            var artifactObject = new Dolittle.Artifacts.Artifact(attribute.Id, ArtifactGeneration.First);
+                            SetNewAndExistingArtifacts(artifactObject, artifact, artifactsByTypeDefinition, targetProperty, existingArtifacts, artifactTypeName);
+                            newArtifacts++;
+                        }
+                    }
+                }
+            }
+            return newArtifacts;
+        }
+
+        void SetNewAndExistingArtifacts(Artifacts.Artifact artifactObject, Type artifact, ArtifactsByTypeDefinition artifactsByTypeDefinition, PropertyInfo targetProperty, IEnumerable<ArtifactDefinition> existingArtifacts, string artifactTypeName)
+        {
+            var newAndExistingArtifacts = new List<ArtifactDefinition>(existingArtifacts);
+            var artifactDefinition = new ArtifactDefinition
+            {
+                Artifact = artifactObject.Id,
+                Generation = artifactObject.Generation,
+                Type = ClrType.FromType(artifact)
+            };
+            _logger.Trace($"Adding '{artifact.Name}' as a new {artifactTypeName} artifact with identifier '{artifactDefinition.Artifact}'");
+            newAndExistingArtifacts.Add(artifactDefinition);
+
+            targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
         }
     }
 }
