@@ -5,7 +5,7 @@ namespace Dolittle.Events.Processing.for_ProcessMethodEventProcessor.when_creati
     using Machine.Specifications;
 
     [Subject(typeof(ProcessMethodEventProcessor), "Create")]
-    public class an_invoker_for_the_invalid_signature_return_type : given.an_event_processor
+    public class an_invoker_for_the_invalid_signature_return_type : given.event_processors
     {
         static Exception exception;
         static ProcessMethodEventProcessor result;

@@ -2,6 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ using Dolittle.Logging;
 using Dolittle.Artifacts;
 using Dolittle.PropertyBags;
 using Dolittle.Lifecycle;
+using Dolittle.Collections;
 
 namespace Dolittle.Events.Processing
 {
@@ -93,33 +95,22 @@ namespace Dolittle.Events.Processing
             foreach (var processor in _processors)
             {
                 _logger.Trace($"Processor '{processor.AssemblyQualifiedName}'");
-
-                var methods = processor.GetTypeInfo().GetMethods(BindingFlags.Public | BindingFlags.Instance).Where(m =>
-                {
-                    var parameters = m.GetParameters();
-                    return
-                        m.Name.Equals(ProcessMethodName) &&
-                        parameters.Length == 1 &&
-                        typeof(IEvent).GetTypeInfo().IsAssignableFrom(parameters[0].ParameterType.GetTypeInfo());
-                });
-
-                var eventProcessorTypeIdentifier = _artifactTypeMap.GetArtifactFor(processor);
-                _logger.Trace($"Processor identified as '{eventProcessorTypeIdentifier}'");
-
+                processor.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).ToList().ForEach(_ => _logger.Trace($"{_.Name} {_.EventProcessorId()}"));
+                var methods = processor.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(m => m.EventProcessorId().Value != Guid.Empty).ToList();
                 foreach (var method in methods)
                 {
-                    _logger.Trace($"Method found '{method}'");
+                    _logger.Trace($"Method found '{method} {method:EventProcessorId()}'");
 
                     var parameterType = method.GetParameters()[0].ParameterType;
                     var eventIdentifier = _artifactTypeMap.GetArtifactFor(parameterType);
-                    var eventProcessorIdentifier = (EventProcessorId)$"{processor.Name}{IdentifierSeparator}{parameterType.Name}";
+                    var eventProcessorId = method.EventProcessorId();
 
-                    _logger.Trace($"EventProcessor identifier '{eventProcessorIdentifier}'");
+                    _logger.Trace($"EventProcessor identifier '{eventProcessorId}'");
 
                     var processMethodEventProcessor = new ProcessMethodEventProcessor(
                                                             _objectFactory,
                                                             _container, 
-                                                            eventProcessorIdentifier, 
+                                                            eventProcessorId, 
                                                             eventIdentifier,
                                                             parameterType,
                                                             method, 
@@ -128,8 +119,6 @@ namespace Dolittle.Events.Processing
                     _eventProcessors.Add(processMethodEventProcessor);
                 }
             }
-
         }
-
     }
 }

@@ -5,7 +5,7 @@
     using Machine.Specifications;
 
     [Subject(typeof(ProcessMethodEventProcessor), "Create")]
-    public class an_invoker_for_just_the_event_signature : given.an_event_processor
+    public class an_invoker_for_just_the_event_signature : given.event_processors
     {
         static ProcessMethodEventProcessor result;
 

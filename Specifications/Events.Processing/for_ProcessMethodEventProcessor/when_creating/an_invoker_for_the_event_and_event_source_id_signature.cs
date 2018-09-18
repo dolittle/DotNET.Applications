@@ -5,7 +5,7 @@ namespace Dolittle.Events.Processing.for_ProcessMethodEventProcessor.when_creati
     using Machine.Specifications;
 
     [Subject(typeof(ProcessMethodEventProcessor), "Create")]
-    public class an_invoker_for_the_event_and_event_source_id_signature : given.an_event_processor
+    public class an_invoker_for_the_event_and_event_source_id_signature : given.event_processors
     {
         static ProcessMethodEventProcessor result;
 

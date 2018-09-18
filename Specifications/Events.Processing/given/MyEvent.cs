@@ -7,7 +7,7 @@ using Machine.Specifications;
 using System.Reflection;
 using System.Linq;
 
-namespace Dolittle.Events.Processing.for_ProcessMethodEventProcessor.given
+namespace Dolittle.Events.Processing.given
 {
 
     public class MyEvent : IEvent 
