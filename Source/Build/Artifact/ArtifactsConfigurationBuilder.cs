@@ -159,28 +159,18 @@ namespace Dolittle.Build.Artifact
 
             var newArtifacts = 0;
             var artifacts = _artifacts.Where(_ => artifactType.IsAssignableFrom(_));
-            
+
+            Dictionary<Guid, ClrType> usedEventProcessorIds = new Dictionary<Guid, ClrType>(); 
+
+            var oldExistingEventProcessors = _artifactsConfiguration.GetAllArtifactDefinitions(targetProperty);
+
             foreach (var artifact in artifacts)
             {
                 var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace, ref nonMatchingArtifacts);
                 if (feature != null)
                 {
                     ArtifactsByTypeDefinition artifactsByTypeDefinition;
-
-                    IEnumerable<(MethodInfo method, Dolittle.Events.Processing.EventProcessorAttribute attribute)> eventProcessors = new List<(MethodInfo method, Dolittle.Events.Processing.EventProcessorAttribute attribute)>();
-
-                    artifact.GetMethods().ForEach(method => 
-                    {
-                        var attribute = method.GetCustomAttribute<Dolittle.Events.Processing.EventProcessorAttribute>(false);
-                        if (attribute != null)
-                            eventProcessors.Append((method, attribute));
-                    });
-
-                    if (! eventProcessors.Any())
-                    {
-                        _logger.Warning($"There are not Event Processor methods in {artifact.FullName}. Only methods with the {typeof(Dolittle.Events.Processing.EventProcessorAttribute).FullName} can process Events");
-                        continue;
-                    }
+                    List<ArtifactDefinition> eventProcessorMethods = new List<ArtifactDefinition>();
 
                     if (_artifactsConfiguration.Artifacts.ContainsKey(feature.Feature))
                         artifactsByTypeDefinition = _artifactsConfiguration.Artifacts[feature.Feature];
@@ -188,22 +178,72 @@ namespace Dolittle.Build.Artifact
                     {
                         artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
                         _artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
-                    } 
-                    var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
+                    }
 
-                    foreach ((MethodInfo method, Dolittle.Events.Processing.EventProcessorAttribute attribute) in eventProcessors)
+                    var existingArtifactsInFeature = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
+
+                    artifact.GetMethods().ForEach(method => 
                     {
-                        if (! existingArtifacts.Any(_ => _.Artifact.Value.Equals(attribute.Id))
-                            || existingArtifacts.Any(_ => _.Artifact.Value.Equals(_.Artifact.Value.Equals(attribute.Id) && _.Type.TypeString != ClrType.FromType(artifact).TypeString)))
+                        var attribute = method.GetCustomAttribute<Dolittle.Events.Processing.EventProcessorAttribute>(false);
+
+                        if (attribute != null) 
                         {
                             var artifactObject = new Dolittle.Artifacts.Artifact(attribute.Id, ArtifactGeneration.First);
-                            SetNewAndExistingArtifacts(artifactObject, artifact, artifactsByTypeDefinition, targetProperty, existingArtifacts, artifactTypeName);
-                            newArtifacts++;
+                            var clrType = ClrType.FromType(artifact);
+                            
+                            if (usedEventProcessorIds.ContainsKey(attribute.Id))
+                            {
+                                var otherEventprocessor = usedEventProcessorIds[attribute.Id];
+                                throw new DuplicateArtifact($"The Event Processor Id '{attribute.Id.ToString()}' used for Event Processor with ClrType: {clrType.TypeString} is already used by another Event Processor with ClrType: '{otherEventprocessor.TypeString}'");
+                            }
+
+                            if (! existingArtifactsInFeature.Any(_ => 
+                                                                    _.Type.GetActualType().Equals(artifact) 
+                                                                    && _.Artifact.Value.Equals(artifactObject.Id.Value)
+                                                                    && _.Generation.Value.Equals(artifactObject.Generation.Value))
+                                )
+                            {
+                                eventProcessorMethods.Add(new ArtifactDefinition()
+                                {
+                                    Artifact = artifactObject.Id,
+                                    Generation = artifactObject.Generation,
+                                    Type = clrType
+                                });
+                                usedEventProcessorIds.Add(artifactObject.Id.Value, clrType);
+                                newArtifacts++;
+                            }
+                        }
+                    });
+
+                    if (! eventProcessorMethods.Any())
+                    {
+                        _logger.Warning($"There are not Event Processor methods in {artifact.FullName}. Only methods with the {typeof(Dolittle.Events.Processing.EventProcessorAttribute).FullName} can process Events");
+                        continue;
+                    }
+                    
+                    foreach (var artifactDefinition in eventProcessorMethods)
+                    {
+                        if (oldExistingEventProcessors.Any(_ => _.Artifact.Value.Equals(artifactDefinition.Artifact.Value)))
+                        {
+                            var oldEventProcessorArtifact = oldExistingEventProcessors.First(_ => _.Artifact.Value.Equals(artifactDefinition.Artifact.Value));
+                            _logger.Warning($"There is an old Artifact definition for an Event Processor with ClrType {oldEventProcessorArtifact.Type.TypeString} that has the same Artifact Id as Event Processor with ClrType {artifactDefinition.Type.TypeString}. The Id is {artifactDefinition.Artifact.Value.ToString()}");
                         }
                     }
+
+                    foreach (var artifactDefinition in eventProcessorMethods)
+                        _logger.Trace($"Adding '{artifact.Name}' as a new {artifactTypeName} artifact with identifier '{artifactDefinition.Artifact}'");
+                    
+                    eventProcessorMethods.AddRange(existingArtifactsInFeature);
+                    SetNewAndExistingArtifacts(eventProcessorMethods, artifact, artifactsByTypeDefinition, targetProperty, artifactTypeName);
                 }
             }
+
+
             return newArtifacts;
+        }
+        void SetNewAndExistingArtifacts(IEnumerable<ArtifactDefinition> newAndExistingArtifacts, Type artifact, ArtifactsByTypeDefinition artifactsByTypeDefinition, PropertyInfo targetProperty, string artifactTypeName)
+        {
+            targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
         }
 
         void SetNewAndExistingArtifacts(Artifacts.Artifact artifactObject, Type artifact, ArtifactsByTypeDefinition artifactsByTypeDefinition, PropertyInfo targetProperty, IEnumerable<ArtifactDefinition> existingArtifacts, string artifactTypeName)

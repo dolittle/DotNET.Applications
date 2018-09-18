@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts;
@@ -35,6 +36,18 @@ namespace Dolittle.Build.Artifact
                 artifactDefinitions.AddRange(artifactEntry.Value.ReadModels);
                 
             }
+            return artifactDefinitions;
+        }
+        /// <summary>
+        /// Returns all <see cref="ArtifactDefinition"/> instances in the <see cref="ArtifactsConfiguration"/> by retrieving the <see cref="ArtifactDefinition"/> lists with the <see cref="PropertyInfo"/>
+        /// </summary>
+        public static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration configuration, PropertyInfo targetProperty)
+        {
+            var artifactDefinitions = new List<ArtifactDefinition>();
+
+            foreach (var artifactEntry in configuration.Artifacts)
+                artifactDefinitions.AddRange(targetProperty.GetValue(artifactEntry.Value) as IEnumerable<ArtifactDefinition>);
+
             return artifactDefinitions;
         }
         /// <summary>
