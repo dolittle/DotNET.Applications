@@ -57,7 +57,7 @@ namespace Dolittle.Build.Artifact
             var newArtifacts = 0;
 
             var nonMatchingArtifacts = new List<string>();
-            foreach (var artifactType in _artifactTypes.ArtifactTypes.Where(_ => !_.Type.Equals(typeof(Dolittle.Events.Processing.ICanProcessEvents)))) 
+            foreach (var artifactType in _artifactTypes.ArtifactTypes) 
             {
                 newArtifacts += HandleArtifactOfType(
                     artifactType.Type,
@@ -67,7 +67,7 @@ namespace Dolittle.Build.Artifact
                     ref nonMatchingArtifacts
                 );
             }
-            newArtifacts += HandleEventProcessors(boundedContextConfiguration, ref nonMatchingArtifacts);
+            // newArtifacts += HandleEventProcessors(boundedContextConfiguration, ref nonMatchingArtifacts);
             if (nonMatchingArtifacts.Any())
             {
                 foreach (var artifactNamespace in nonMatchingArtifacts)
@@ -150,101 +150,101 @@ namespace Dolittle.Build.Artifact
             }
             return newArtifacts;
         }
-        int HandleEventProcessors(BoundedContextConfiguration boundedContextConfiguration, ref List<string> nonMatchingArtifacts)
-        {
-            var targetProperty = _artifactTypes.ArtifactTypes.SingleOrDefault(_ => _.Type.Equals(typeof(Dolittle.Events.Processing.ICanProcessEvents)))
-                                                                .TargetPropertyExpression.GetPropertyInfo();
-            var artifactType = typeof(Dolittle.Events.Processing.ICanProcessEvents);
-            var artifactTypeName = "event processor";
+        // int HandleEventProcessors(BoundedContextConfiguration boundedContextConfiguration, ref List<string> nonMatchingArtifacts)
+        // {
+        //     var targetProperty = _artifactTypes.ArtifactTypes.SingleOrDefault(_ => _.Type.Equals(typeof(Dolittle.Events.Processing.ICanProcessEvents)))
+        //                                                         .TargetPropertyExpression.GetPropertyInfo();
+        //     var artifactType = typeof(Dolittle.Events.Processing.ICanProcessEvents);
+        //     var artifactTypeName = "event processor";
 
-            var newArtifacts = 0;
-            var artifacts = _artifacts.Where(_ => artifactType.IsAssignableFrom(_));
+        //     var newArtifacts = 0;
+        //     var artifacts = _artifacts.Where(_ => artifactType.IsAssignableFrom(_));
 
-            Dictionary<Guid, ClrType> usedEventProcessorIds = new Dictionary<Guid, ClrType>(); 
+        //     Dictionary<Guid, ClrType> usedEventProcessorIds = new Dictionary<Guid, ClrType>(); 
 
-            var oldExistingEventProcessors = _artifactsConfiguration.GetAllArtifactDefinitions(targetProperty);
+        //     var oldExistingEventProcessors = _artifactsConfiguration.GetAllArtifactDefinitions(targetProperty);
 
-            foreach (var artifact in artifacts)
-            {
-                var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace, ref nonMatchingArtifacts);
-                if (feature != null)
-                {
-                    ArtifactsByTypeDefinition artifactsByTypeDefinition;
-                    List<ArtifactDefinition> eventProcessorMethods = new List<ArtifactDefinition>();
+        //     foreach (var artifact in artifacts)
+        //     {
+        //         var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace, ref nonMatchingArtifacts);
+        //         if (feature != null)
+        //         {
+        //             ArtifactsByTypeDefinition artifactsByTypeDefinition;
+        //             List<ArtifactDefinition> eventProcessorMethods = new List<ArtifactDefinition>();
 
-                    if (_artifactsConfiguration.Artifacts.ContainsKey(feature.Feature))
-                        artifactsByTypeDefinition = _artifactsConfiguration.Artifacts[feature.Feature];
-                    else
-                    {
-                        artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
-                        _artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
-                    }
+        //             if (_artifactsConfiguration.Artifacts.ContainsKey(feature.Feature))
+        //                 artifactsByTypeDefinition = _artifactsConfiguration.Artifacts[feature.Feature];
+        //             else
+        //             {
+        //                 artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
+        //                 _artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
+        //             }
 
-                    var existingArtifactsInFeature = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
+        //             var existingArtifactsInFeature = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
 
-                    artifact.GetMethods().ForEach(method => 
-                    {
-                        var attribute = method.GetCustomAttribute<Dolittle.Events.Processing.EventProcessorAttribute>(false);
+        //             artifact.GetMethods().ForEach(method => 
+        //             {
+        //                 var attribute = method.GetCustomAttribute<Dolittle.Events.Processing.EventProcessorAttribute>(false);
 
-                        if (attribute != null) 
-                        {
-                            var artifactObject = new Dolittle.Artifacts.Artifact(attribute.Id, ArtifactGeneration.First);
-                            var clrType = ClrType.FromType(artifact);
+        //                 if (attribute != null) 
+        //                 {
+        //                     var artifactObject = new Dolittle.Artifacts.Artifact(attribute.Id, ArtifactGeneration.First);
+        //                     var clrType = ClrType.FromType(artifact);
                             
-                            if (usedEventProcessorIds.ContainsKey(attribute.Id))
-                            {
-                                var otherEventprocessor = usedEventProcessorIds[attribute.Id];
-                                throw new DuplicateArtifact($"The Event Processor Id '{attribute.Id.ToString()}' used for Event Processor with ClrType: {clrType.TypeString} is already used by another Event Processor with ClrType: '{otherEventprocessor.TypeString}'");
-                            }
+        //                     if (usedEventProcessorIds.ContainsKey(attribute.Id))
+        //                     {
+        //                         var otherEventprocessor = usedEventProcessorIds[attribute.Id];
+        //                         throw new DuplicateArtifact($"The Event Processor Id '{attribute.Id.ToString()}' used for Event Processor with ClrType: {clrType.TypeString} is already used by another Event Processor with ClrType: '{otherEventprocessor.TypeString}'");
+        //                     }
 
-                            if (! existingArtifactsInFeature.Any(_ => 
-                                                                    _.Type.GetActualType().Equals(artifact) 
-                                                                    && _.Artifact.Value.Equals(artifactObject.Id.Value)
-                                                                    && _.Generation.Value.Equals(artifactObject.Generation.Value))
-                                )
-                            {
-                                eventProcessorMethods.Add(new ArtifactDefinition()
-                                {
-                                    Artifact = artifactObject.Id,
-                                    Generation = artifactObject.Generation,
-                                    Type = clrType
-                                });
-                                usedEventProcessorIds.Add(artifactObject.Id.Value, clrType);
-                                newArtifacts++;
-                            }
-                        }
-                    });
+        //                     if (! existingArtifactsInFeature.Any(_ => 
+        //                                                             _.Type.GetActualType().Equals(artifact) 
+        //                                                             && _.Artifact.Value.Equals(artifactObject.Id.Value)
+        //                                                             && _.Generation.Value.Equals(artifactObject.Generation.Value))
+        //                         )
+        //                     {
+        //                         eventProcessorMethods.Add(new ArtifactDefinition()
+        //                         {
+        //                             Artifact = artifactObject.Id,
+        //                             Generation = artifactObject.Generation,
+        //                             Type = clrType
+        //                         });
+        //                         usedEventProcessorIds.Add(artifactObject.Id.Value, clrType);
+        //                         newArtifacts++;
+        //                     }
+        //                 }
+        //             });
 
-                    if (! eventProcessorMethods.Any())
-                    {
-                        _logger.Warning($"There are not Event Processor methods in {artifact.FullName}. Only methods with the {typeof(Dolittle.Events.Processing.EventProcessorAttribute).FullName} can process Events");
-                        continue;
-                    }
+        //             if (! eventProcessorMethods.Any())
+        //             {
+        //                 _logger.Warning($"There are not Event Processor methods in {artifact.FullName}. Only methods with the {typeof(Dolittle.Events.Processing.EventProcessorAttribute).FullName} can process Events");
+        //                 continue;
+        //             }
                     
-                    foreach (var artifactDefinition in eventProcessorMethods)
-                    {
-                        if (oldExistingEventProcessors.Any(_ => _.Artifact.Value.Equals(artifactDefinition.Artifact.Value)))
-                        {
-                            var oldEventProcessorArtifact = oldExistingEventProcessors.First(_ => _.Artifact.Value.Equals(artifactDefinition.Artifact.Value));
-                            _logger.Warning($"There is an old Artifact definition for an Event Processor with ClrType {oldEventProcessorArtifact.Type.TypeString} that has the same Artifact Id as Event Processor with ClrType {artifactDefinition.Type.TypeString}. The Id is {artifactDefinition.Artifact.Value.ToString()}");
-                        }
-                    }
+        //             foreach (var artifactDefinition in eventProcessorMethods)
+        //             {
+        //                 if (oldExistingEventProcessors.Any(_ => _.Artifact.Value.Equals(artifactDefinition.Artifact.Value)))
+        //                 {
+        //                     var oldEventProcessorArtifact = oldExistingEventProcessors.First(_ => _.Artifact.Value.Equals(artifactDefinition.Artifact.Value));
+        //                     _logger.Warning($"There is an old Artifact definition for an Event Processor with ClrType {oldEventProcessorArtifact.Type.TypeString} that has the same Artifact Id as Event Processor with ClrType {artifactDefinition.Type.TypeString}. The Id is {artifactDefinition.Artifact.Value.ToString()}");
+        //                 }
+        //             }
 
-                    foreach (var artifactDefinition in eventProcessorMethods)
-                        _logger.Trace($"Adding '{artifact.Name}' as a new {artifactTypeName} artifact with identifier '{artifactDefinition.Artifact}'");
+        //             foreach (var artifactDefinition in eventProcessorMethods)
+        //                 _logger.Trace($"Adding '{artifact.Name}' as a new {artifactTypeName} artifact with identifier '{artifactDefinition.Artifact}'");
                     
-                    eventProcessorMethods.AddRange(existingArtifactsInFeature);
-                    SetNewAndExistingArtifacts(eventProcessorMethods, artifact, artifactsByTypeDefinition, targetProperty, artifactTypeName);
-                }
-            }
+        //             eventProcessorMethods.AddRange(existingArtifactsInFeature);
+        //             SetNewAndExistingArtifacts(eventProcessorMethods, artifact, artifactsByTypeDefinition, targetProperty, artifactTypeName);
+        //         }
+        //     }
 
 
-            return newArtifacts;
-        }
-        void SetNewAndExistingArtifacts(IEnumerable<ArtifactDefinition> newAndExistingArtifacts, Type artifact, ArtifactsByTypeDefinition artifactsByTypeDefinition, PropertyInfo targetProperty, string artifactTypeName)
-        {
-            targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
-        }
+        //     return newArtifacts;
+        // }
+        // void SetNewAndExistingArtifacts(IEnumerable<ArtifactDefinition> newAndExistingArtifacts, Type artifact, ArtifactsByTypeDefinition artifactsByTypeDefinition, PropertyInfo targetProperty, string artifactTypeName)
+        // {
+        //     targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
+        // }
 
         void SetNewAndExistingArtifacts(Artifacts.Artifact artifactObject, Type artifact, ArtifactsByTypeDefinition artifactsByTypeDefinition, PropertyInfo targetProperty, IEnumerable<ArtifactDefinition> existingArtifacts, string artifactTypeName)
         {
