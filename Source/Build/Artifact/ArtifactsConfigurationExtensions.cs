@@ -29,7 +29,6 @@ namespace Dolittle.Build.Artifact
             foreach (var artifactEntry in configuration.Artifacts)
             {
                 artifactDefinitions.AddRange(artifactEntry.Value.Commands);
-                artifactDefinitions.AddRange(artifactEntry.Value.EventProcessors);
                 artifactDefinitions.AddRange(artifactEntry.Value.Events);
                 artifactDefinitions.AddRange(artifactEntry.Value.EventSources);
                 artifactDefinitions.AddRange(artifactEntry.Value.Queries);
@@ -60,7 +59,6 @@ namespace Dolittle.Build.Artifact
             var artifacts = configuration.Artifacts[id];
             
             artifactDefinitions.AddRange(artifacts.Commands);
-            artifactDefinitions.AddRange(artifacts.EventProcessors);
             artifactDefinitions.AddRange(artifacts.Events);
             artifactDefinitions.AddRange(artifacts.EventSources);
             artifactDefinitions.AddRange(artifacts.Queries);
