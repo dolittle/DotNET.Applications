@@ -55,7 +55,7 @@ namespace Dolittle.Build
             }
             try
             {
-                while(!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(10);
+                // while(!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(10);
                 InitialSetup();
 
                 _logger.Information("Build process started");
@@ -159,9 +159,9 @@ namespace Dolittle.Build
             {
                 foreach (var entry in duplicateEventProcessors)
                 {
-                    _logger.Error($"Found duplication of Event Processor Id '{entry.Key.Value.ToString()}:'");
+                    _logger.Error($"Found duplication of Event Processor Id '{entry.Key.Value.ToString()}'");
                     foreach (var eventProcessor in entry.Value)
-                        _logger.Trace($"\tId: '{entry.Key.Value.ToString()}. Type FullName: {eventProcessor.DeclaringType.FullName}'");
+                        _logger.Trace($"\tId: '{entry.Key.Value.ToString()} Method Name: {eventProcessor.Name} Type FullName: '{eventProcessor.DeclaringType.FullName}'");
                 }
                 throw new DuplicateEventProcessor();
             }
