@@ -55,7 +55,7 @@ namespace Dolittle.Build
             }
             try
             {
-                // while(!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(10);
+                //while(!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(10);
                 InitialSetup();
 
                 _logger.Information("Build process started");
