@@ -20,6 +20,10 @@ using Dolittle.Build.Artifact;
 using Dolittle.Hosting;
 using Dolittle.Types;
 using Dolittle.Build.Proxies;
+using System.Collections.Generic;
+using System.Reflection;
+using Dolittle.Runtime.Events.Processing;
+using Dolittle.Collections;
 
 namespace Dolittle.Build
 {
@@ -35,6 +39,7 @@ namespace Dolittle.Build
         static ArtifactsConfigurationHandler _artifactsConfigurationHandler;
         static ProxiesHandler _proxiesHandler;
         static ArtifactsDiscoverer _artifactsDiscoverer;
+        static EventProcessorDiscoverer _eventProcessorDiscoverer;
         static IHost _host;
         static DolittleArtifactTypes _artifactTypes;
 
@@ -50,18 +55,21 @@ namespace Dolittle.Build
             }
             try
             {
-                //while(!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(10);
+                // while(!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(10);
                 InitialSetup();
 
                 _logger.Information("Build process started");
                 var startTime = DateTime.UtcNow;
-                _artifactsDiscoverer = new ArtifactsDiscoverer(args[0], _artifactTypes, _logger);
+                var assemblyLoader = new AssemblyLoader(args[0]);
+                _artifactsDiscoverer = new ArtifactsDiscoverer(assemblyLoader, _artifactTypes, _logger);
+                _eventProcessorDiscoverer = new EventProcessorDiscoverer(assemblyLoader, _logger);
                 
                 var artifacts = _artifactsDiscoverer.Artifacts;
                 
                 var boundedContextConfiguration = _topologyConfigurationHandler.Build(artifacts);
                 var artifactsConfiguration = _artifactsConfigurationHandler.Build(artifacts, boundedContextConfiguration);
 
+                ValidateEventProcessors(_eventProcessorDiscoverer.GetAllEventProcessors());
                                 
                 if (NewTopology) _topologyConfigurationHandler.Save(boundedContextConfiguration);
                 if (NewArtifacts) _artifactsConfigurationHandler.Save(artifactsConfiguration);
@@ -85,6 +93,7 @@ namespace Dolittle.Build
 
             return 0;
         }
+
 
         static void InitialSetup()
         {
@@ -117,6 +126,45 @@ namespace Dolittle.Build
             _artifactTypes = _host.Container.Get<DolittleArtifactTypes>();
             _topologyConfigurationHandler = _host.Container.Get<TopologyConfigurationHandler>();
             _artifactsConfigurationHandler = _host.Container.Get<ArtifactsConfigurationHandler>();
+        }
+
+
+        static void ValidateEventProcessors(IEnumerable<MethodInfo> eventProcessors)
+        {
+            ThrowIfMultipleEventProcessorsWithId(eventProcessors);
+        }
+
+        static void ThrowIfMultipleEventProcessorsWithId(IEnumerable<MethodInfo> eventProcessors)
+        {
+            var idMap = new Dictionary<EventProcessorId, MethodInfo>();
+            var duplicateEventProcessors = new Dictionary<EventProcessorId, List<MethodInfo>>();
+            eventProcessors.ForEach(method =>
+            {
+                var eventProcessorId = method.EventProcessorId();
+                if (eventProcessorId.Value == null || eventProcessorId.Value.Equals(Guid.Empty))
+                    throw new ArgumentException("Found a event processor with empty Id.", "eventProcessors");
+                if (idMap.ContainsKey(eventProcessorId))
+                {
+                    if (! duplicateEventProcessors.ContainsKey(eventProcessorId))
+                        duplicateEventProcessors.Add(eventProcessorId, new List<MethodInfo>(){idMap[eventProcessorId]});
+                    
+                    duplicateEventProcessors[eventProcessorId].Add(method);
+                }
+                else 
+                {
+                    idMap.Add(eventProcessorId, method);
+                }
+            });
+            if (duplicateEventProcessors.Any())
+            {
+                foreach (var entry in duplicateEventProcessors)
+                {
+                    _logger.Error($"Found duplication of Event Processor Id '{entry.Key.Value.ToString()}'");
+                    foreach (var eventProcessor in entry.Value)
+                        _logger.Trace($"\tId: '{entry.Key.Value.ToString()} Method Name: {eventProcessor.Name} Type FullName: '{eventProcessor.DeclaringType.FullName}'");
+                }
+                throw new DuplicateEventProcessor();
+            }
         }
     }
 }

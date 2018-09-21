@@ -23,11 +23,6 @@ namespace Dolittle.Artifacts.Configuration
         public IEnumerable<ArtifactDefinition> Events {  get; set; } = new ArtifactDefinition[0];
 
         /// <summary>
-        /// Gets or sets the EventProcessor artifacts
-        /// </summary>
-        public IEnumerable<ArtifactDefinition> EventProcessors {  get; set; } = new ArtifactDefinition[0];
-
-        /// <summary>
         /// Gets or sets the EventSource artifacts
         /// </summary>
         public IEnumerable<ArtifactDefinition> EventSources {  get; set; } = new ArtifactDefinition[0];

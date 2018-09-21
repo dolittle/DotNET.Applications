@@ -17,7 +17,7 @@ namespace Dolittle.Build
     /// Represents a system that is capable of loading assemblies out of current <see cref="AssemblyLoadContext"/>
     /// Based on : https://www.codeproject.com/Articles/1194332/Resolving-Assemblies-in-NET-Core
     /// </summary>
-    internal class AssemblyLoader : IDisposable
+    public class AssemblyLoader : IDisposable
     {
         readonly ICompilationAssemblyResolver _assemblyResolver;
 

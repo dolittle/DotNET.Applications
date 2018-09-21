@@ -77,7 +77,6 @@ namespace Dolittle.Build.Artifact
                     return null;
                 }
             }
-
             try 
             {
                 return FindMatchingFeature(segments, boundedContextConfiguration.Topology.Features);
