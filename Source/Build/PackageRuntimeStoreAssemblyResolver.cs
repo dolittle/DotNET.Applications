@@ -34,17 +34,18 @@ namespace Dolittle.Build
             var cpuBasePath = Path.Combine(basePath,RuntimeInformation.ProcessArchitecture.ToString().ToLowerInvariant());
             var found = false;
 
-            // Todo: this should be fixed - can't figure out how we could detect this - it can't be hardcoded like this
-            var targetFrameworkBasePath = Path.Combine(cpuBasePath,"netcoreapp2.0");
-            var libraryBasePath = Path.Combine(targetFrameworkBasePath,library.Path);
-            library.Assemblies.ForEach(assembly => 
+            Directory.GetDirectories(cpuBasePath).ForEach(targetFrameworkBasePath => 
             {
-                var assemblyPath = Path.Combine(libraryBasePath, assembly);
-                if( File.Exists(assemblyPath))
+                var libraryBasePath = Path.Combine(targetFrameworkBasePath,library.Path);
+                library.Assemblies.ForEach(assembly => 
                 {
-                    assemblies.Add(assemblyPath);
-                    found = true;
-                }
+                    var assemblyPath = Path.Combine(libraryBasePath, assembly);
+                    if( File.Exists(assemblyPath))
+                    {
+                        assemblies.Add(assemblyPath);
+                        found = true;
+                    }
+                });
             });
 
             return found;
