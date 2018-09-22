@@ -42,7 +42,7 @@ namespace Dolittle.Applications.Configuration
         public Topology Load()
         {
             var path = GetPath();
-            if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(_path);
+            if( !File.Exists(path)) return new Topology();
             
             var json = File.ReadAllText(path);
             var configuration = _serializer.FromJson<Topology>(json, _serializationOptions);
