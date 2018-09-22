@@ -4,7 +4,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.1</TargetFramework>
-        <AssemblyName>DolittleArtifactsBuild</AssemblyName>
+        <AssemblyName>Dolittle.Build</AssemblyName>
 
         <NoPackageAnalysis>true</NoPackageAnalysis>
         <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
@@ -22,8 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="DolittleArtifactsBuild.props" PackagePath="build\" />
-        <Content Include="DolittleArtifactsBuild.targets" PackagePath="build\" />
+        <Content Include="Dolittle.Build.props" PackagePath="build\" />
+        <Content Include="Dolittle.Build.targets" PackagePath="build\" />
     </ItemGroup>
 
     <!--
