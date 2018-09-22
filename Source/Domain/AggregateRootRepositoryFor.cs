@@ -134,7 +134,7 @@ namespace Dolittle.Domain
             var eventType = _artifactTypeMap.GetTypeFor(@event.Metadata.Artifact);
             var eventInstance = _objectFactory.Build(eventType,@event.Event) as IEvent;
             var committedEventVersion = new CommittedEventVersion(commitSequenceNumber,@event.Metadata.VersionedEventSource.Version.Commit,@event.Metadata.VersionedEventSource.Version.Sequence);
-            return new CommittedEvent(committedEventVersion,@event.Metadata,@event.Id, eventInstance);
+            return new CommittedEvent(committedEventVersion,@event.Metadata, eventInstance);
         }
     }
 }
