@@ -53,7 +53,7 @@ namespace Dolittle.Applications.Configuration
         public void Save(Topology configuration)
         {
             var path = GetPath();
-            if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(_path);
+            
             var json = _serializer.ToJson(configuration, _serializationOptions);
             
             File.WriteAllText(path, json);
