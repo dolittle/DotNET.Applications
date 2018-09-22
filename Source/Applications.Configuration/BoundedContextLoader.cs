@@ -10,13 +10,12 @@ using Newtonsoft.Json;
 
 namespace Dolittle.Applications.Configuration
 {
-    /// <summary>
-    /// Represents an implementation of <see cref="ITopologyConfigurationManager"/>
-    /// </summary>
+    /// <inheritdoc/>
     [Singleton]
-    public class TopologyConfigurationManager : ITopologyConfigurationManager
+    public class BoundedContextLoader : IBoundedContextLoader
     {
-        readonly static string _path = Path.Combine(".dolittle", "topology.json");
+        const string _path = "bounded-context.json";
+
         readonly ISerializer _serializer;
         readonly ILogger _logger;
 
@@ -27,41 +26,30 @@ namespace Dolittle.Applications.Configuration
                 serializer.Formatting = Formatting.Indented;
             }
         );
+
         /// <summary>
-        /// Initializes a new instance of <see cref="TopologyConfigurationManager"/>
+        /// Initializes a new instance of <see cref="BoundedContextLoader"/>
         /// </summary>
         /// <param name="serializer"><see cref="ISerializer"/> to use for working with configuration as JSON</param>
         /// <param name="logger"></param>
-        public TopologyConfigurationManager(ISerializer serializer, ILogger logger)
+        public BoundedContextLoader(ISerializer serializer, ILogger logger)
         {
             _serializer = serializer;
             _logger = logger;
         }
-
         /// <inheritdoc/>
-        public TopologyConfiguration Load()
+        public BoundedContextConfiguration Load(string solutionDirPath)
         {
-            var path = GetPath();
+            var path = GetPath(solutionDirPath);
             if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(_path);
             
             var json = File.ReadAllText(path);
-            var configuration = _serializer.FromJson<TopologyConfiguration>(json, _serializationOptions);
+            var configuration = _serializer.FromJson<BoundedContextConfiguration>(json, _serializationOptions);
             return configuration;
         }
-
-        /// <inheritdoc/>
-        public void Save(TopologyConfiguration configuration)
+        string GetPath(string solutionDirPath)
         {
-            var path = GetPath();
-            if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(_path);
-            var json = _serializer.ToJson(configuration, _serializationOptions);
-            
-            File.WriteAllText(path, json);
-        }
-
-        string GetPath()
-        {
-            return Path.Combine(Directory.GetCurrentDirectory(), _path);
+            return Path.Combine(solutionDirPath, _path);
         }
     }
 }
