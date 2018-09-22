@@ -5,20 +5,20 @@
 namespace Dolittle.Applications.Configuration
 {
     /// <summary>
-    /// Defines the configuration manager for <see cref="TopologyConfiguration"/>
+    /// Defines the configuration manager for <see cref="Topology"/>
     /// </summary>
     public interface ITopologyConfigurationManager 
     {
         /// <summary>
-        /// Load the <see cref="TopologyConfiguration"/>
+        /// Load the <see cref="Topology"/>
         /// </summary>
-        /// <returns>The loaded <see cref="TopologyConfiguration"/></returns>
-        TopologyConfiguration Load();
+        /// <returns>The loaded <see cref="Topology"/></returns>
+        Topology Load();
 
         /// <summary>
-        /// Save the <see cref="TopologyConfiguration"/>
+        /// Save the <see cref="Topology"/>
         /// </summary>
-        /// <param name="configuration"><see cref="TopologyConfiguration"/> to save</param>
-        void Save(TopologyConfiguration configuration);
+        /// <param name="configuration"><see cref="Topology"/> to save</param>
+        void Save(Topology configuration);
     }
 }

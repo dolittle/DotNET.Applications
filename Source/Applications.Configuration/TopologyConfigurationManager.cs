@@ -39,18 +39,18 @@ namespace Dolittle.Applications.Configuration
         }
 
         /// <inheritdoc/>
-        public TopologyConfiguration Load()
+        public Topology Load()
         {
             var path = GetPath();
             if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(_path);
             
             var json = File.ReadAllText(path);
-            var configuration = _serializer.FromJson<TopologyConfiguration>(json, _serializationOptions);
+            var configuration = _serializer.FromJson<Topology>(json, _serializationOptions);
             return configuration;
         }
 
         /// <inheritdoc/>
-        public void Save(TopologyConfiguration configuration)
+        public void Save(Topology configuration)
         {
             var path = GetPath();
             if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(_path);
