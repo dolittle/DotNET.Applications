@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts.Configuration;
+using Dolittle.Build.Topology;
 using Dolittle.Concepts.Serialization.Json;
 using Dolittle.Logging;
 using Dolittle.Serialization.Json;
@@ -41,11 +42,13 @@ namespace Dolittle.Build.Artifact
         /// Loads the <see cref="ArtifactsConfiguration"/> from file and uses it to build the <see cref="ArtifactsConfiguration"/> using the <see cref="ArtifactsConfigurationBuilder"/>
         /// </summary>
         /// <param name="types">The discovered artifact types from the bounded context's assemblies</param>
-        /// <param name="boundedContextConfiguration">The <see cref="BoundedContextConfiguration"/> that's used for building the <see cref="ArtifactsConfiguration"/></param>
-        public ArtifactsConfiguration Build(Type[] types, BoundedContextConfiguration boundedContextConfiguration)
+        /// <param name="topology">The <see cref="Applications.Configuration.Topology"/> that's used for building the <see cref="ArtifactsConfiguration"/></param>
+        /// <param name="parsingResults"></param>
+        public ArtifactsConfiguration Build(Type[] types, Applications.Configuration.Topology topology, BuildToolArgumentsParsingResult parsingResults)
         {
             var artifactsConfiguration = _configurationManager.Load();
-            return new ArtifactsConfigurationBuilder(types, artifactsConfiguration, _artifactTypes, _logger).Build(boundedContextConfiguration);
+            var boundedContextTopology = new BoundedContextTopology(topology, parsingResults.UseModules, parsingResults.NamespaceSegmentsToStrip);
+            return new ArtifactsConfigurationBuilder(types, artifactsConfiguration, _artifactTypes, _logger).Build(boundedContextTopology);
         }
         internal void Save(ArtifactsConfiguration config)
         {

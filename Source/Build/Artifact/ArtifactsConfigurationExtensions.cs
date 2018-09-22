@@ -10,6 +10,7 @@ using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
+using Dolittle.Build.Topology;
 using Dolittle.Logging;
 
 namespace Dolittle.Build.Artifact
@@ -78,10 +79,10 @@ namespace Dolittle.Build.Artifact
         /// <summary>
         /// Validates the <see cref="ArtifactsConfiguration"/> based on the bounded context's topology and the discoved artifact types in the assemblies of the bounded context
         /// </summary>
-        public static void ValidateArtifacts(this ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration, Type[] types, ILogger logger)
+        public static void ValidateArtifacts(this ArtifactsConfiguration artifactsConfiguration, BoundedContextTopology boundedContextTopology, Type[] types, ILogger logger)
         {
             ThrowIfDuplicateArtifacts(artifactsConfiguration, logger);
-            WarnIfFeatureMissingFromTopology(artifactsConfiguration, boundedContextConfiguration, logger);
+            WarnIfFeatureMissingFromTopology(artifactsConfiguration, boundedContextTopology, logger);
             WarnIfArtifactNoLongerInStructure(artifactsConfiguration, types, logger);
         }
 
@@ -105,9 +106,9 @@ namespace Dolittle.Build.Artifact
             }
             if (foundDuplicate) throw new DuplicateArtifact();
         }
-        static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration, ILogger logger)
+        static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifactsConfiguration, BoundedContextTopology boundedContextTopology, ILogger logger)
         {
-            Dictionary<Feature, FeatureName> featureMap = boundedContextConfiguration.RetrieveAllFeatureIds();
+            Dictionary<Feature, FeatureName> featureMap = boundedContextTopology.RetrieveAllFeatureIds();
 
             foreach (var artifact in artifactsConfiguration.Artifacts)
             {

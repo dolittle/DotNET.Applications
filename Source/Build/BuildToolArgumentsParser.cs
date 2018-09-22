@@ -1,3 +1,7 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +15,7 @@ namespace Dolittle.Build
         static readonly Regex argumentRegex = new Regex(@"--(\w*)=(.*)", RegexOptions.Compiled); 
         public static BuildToolArgumentsParsingResult Parse(string[] args)
         {
+            if (args.Length < 5 ) throw new ArgumentException($"The number of arguments to the Build Tool was not correct. It should be 5, it was {args.Length}");
             var assemblyPath = args[0];
             args = args.Skip(1).ToArray();
             var useModules = HandleUseModules(args);

@@ -27,11 +27,6 @@ using Dolittle.Collections;
 
 namespace Dolittle.Build
 {
-    // Todo: 
-    // - Consider having an option that can be passed in to say a base namespace. E.g. for Web projects (see Sentry) - we tend to have Features/ root folder.
-    //   This configuration should then be optional and default set to empty. The MSBuild task should expose a variable that can be set in a <PropertyGroup/>
-    //   The base namespace would be from the second segment - after tier segment
-    //
     class Program
     {
         static Dolittle.Logging.ILogger _logger;
@@ -48,23 +43,9 @@ namespace Dolittle.Build
 
         static int Main(string[] args)
         {
-
-            while(!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(10);
-            
-            if (args.Length < 1)
-            {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("Error consolidating artifacts; missing argument for name of assembly to consolidate");
-                return 1;
-            }
-            if (args.Length < 5)
-            {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("Error consolidating artifacts; missing argument for useModules, namespaceSegmentsToStrip, genereateProxies or proxiesBasePath ");
-                return 1;
-            }
             try
             {
+                while(!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(10);
                 InitialSetup();
 
                 _logger.Information("Build process started");
@@ -76,21 +57,20 @@ namespace Dolittle.Build
                 _eventProcessorDiscoverer = new EventProcessorDiscoverer(assemblyLoader, _logger);
                 
                 var artifacts = _artifactsDiscoverer.Artifacts;
-                
-                System.Environment.Exit(0);
 
-                var boundedContextConfiguration = _topologyConfigurationHandler.Build(artifacts);
-                var artifactsConfiguration = _artifactsConfigurationHandler.Build(artifacts, boundedContextConfiguration);
+                var topology = _topologyConfigurationHandler.Build(artifacts, parsingResults);
+
+                var artifactsConfiguration = _artifactsConfigurationHandler.Build(artifacts, topology, parsingResults);
 
                 ValidateEventProcessors(_eventProcessorDiscoverer.GetAllEventProcessors());
                                 
-                if (NewTopology) _topologyConfigurationHandler.Save(boundedContextConfiguration);
+                if (NewTopology) _topologyConfigurationHandler.Save(topology);
                 if (NewArtifacts) _artifactsConfigurationHandler.Save(artifactsConfiguration);
                 
-                if (boundedContextConfiguration.GenerateProxies)
+                if (parsingResults.GenerateProxies)
                 {
                     _proxiesHandler = _host.Container.Get<ProxiesHandler>();
-                    _proxiesHandler.CreateProxies(artifacts, boundedContextConfiguration, artifactsConfiguration);
+                    _proxiesHandler.CreateProxies(artifacts, parsingResults, artifactsConfiguration);
                 }
 
                 var endTime = DateTime.UtcNow;

@@ -35,12 +35,12 @@ namespace Dolittle.Build.Proxies
         /// Creates the proxies given a list of artifacts and configurations
         /// </summary>
         /// <param name="artifacts"></param>
-        /// <param name="boundedContextConfiguration"></param>
+        /// <param name="parsingResults"></param>
         /// <param name="artifactsConfiguration"></param>
-        public void CreateProxies(Type[] artifacts, BoundedContextConfiguration boundedContextConfiguration, ArtifactsConfiguration artifactsConfiguration)
+        public void CreateProxies(Type[] artifacts, BuildToolArgumentsParsingResult parsingResults, ArtifactsConfiguration artifactsConfiguration)
         {
             var builder = new ProxiesBuilder(_templateLoader, artifacts, _artifactTypes, _logger);
-            builder.GenerateProxies(artifactsConfiguration, boundedContextConfiguration);
+            builder.GenerateProxies(artifactsConfiguration, parsingResults);
         }
     }
 }

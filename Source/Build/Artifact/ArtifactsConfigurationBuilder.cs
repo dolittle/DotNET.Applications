@@ -10,6 +10,7 @@ using System.Reflection;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
+using Dolittle.Build.Topology;
 using Dolittle.Collections;
 using Dolittle.Logging;
 using Dolittle.Reflection;
@@ -45,11 +46,11 @@ namespace Dolittle.Build.Artifact
         }
 
         /// <summary>
-        /// Builds a valid <see cref="ArtifactsConfiguration"/> based on a <see cref="BoundedContextConfiguration"/> 
+        /// Builds a valid <see cref="ArtifactsConfiguration"/> based on a <see cref="BoundedContextTopology"/> 
         /// </summary>
-        /// <param name="boundedContextConfiguration"></param>
+        /// <param name="boundedContextTopology"></param>
         /// <returns></returns>
-        public ArtifactsConfiguration Build(BoundedContextConfiguration boundedContextConfiguration)
+        public ArtifactsConfiguration Build(BoundedContextTopology boundedContextTopology)
         {
             _logger.Information("Building artifacts");
             var startTime = DateTime.UtcNow;
@@ -61,7 +62,7 @@ namespace Dolittle.Build.Artifact
             {
                 newArtifacts += HandleArtifactOfType(
                     artifactType.Type,
-                    boundedContextConfiguration,
+                    boundedContextTopology,
                     artifactType.TypeName,
                     artifactType.TargetPropertyExpression,
                     ref nonMatchingArtifacts
@@ -76,7 +77,7 @@ namespace Dolittle.Build.Artifact
                 throw new NonMatchingArtifact();
             }
             
-            _artifactsConfiguration.ValidateArtifacts(boundedContextConfiguration, _artifacts, _logger);
+            _artifactsConfiguration.ValidateArtifacts(boundedContextTopology, _artifacts, _logger);
 
             var endTime = DateTime.UtcNow;
             var deltaTime = endTime.Subtract(startTime);
@@ -94,7 +95,7 @@ namespace Dolittle.Build.Artifact
             return _artifactsConfiguration;
         }
 
-        int HandleArtifactOfType(Type artifactType, BoundedContextConfiguration boundedContextConfiguration, string artifactTypeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression, ref List<string> nonMatchingArtifacts)
+        int HandleArtifactOfType(Type artifactType, BoundedContextTopology boundedContextConfiguration, string artifactTypeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression, ref List<string> nonMatchingArtifacts)
         {
             if (artifactType.Equals(typeof(Dolittle.Events.Processing.ICanProcessEvents))) throw new ArgumentException("Eventprocessor artifacts should be handled differently ", "artifactType");
             

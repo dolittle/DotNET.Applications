@@ -21,33 +21,31 @@ namespace Dolittle.Build.Topology
         readonly Type[] _artifactTypes;
         readonly ILogger _logger;
 
-        BoundedContextConfiguration _configuration;
+        BoundedContextTopology _configuration;
 
         /// <summary>
         /// Instantiates an instance of <see cref="TopologyBuilder"/>
         /// </summary>
         /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
-        /// <param name="boundedContextConfiguration">The <see cref="BoundedContextConfiguration"/> that will be modified, validated and returned from Build</param>
+        /// <param name="boundedContextTopoplogy">The <see cref="BoundedContextConfiguration"/> that will be modified, validated and returned from Build</param>
         /// <param name="logger"></param>
-        public TopologyBuilder(Type[] artifacts, BoundedContextConfiguration boundedContextConfiguration, ILogger logger)
+        public TopologyBuilder(Type[] artifacts, BoundedContextTopology boundedContextTopoplogy, ILogger logger)
         {
             _artifactTypes = artifacts;
             _logger = logger;
-            _configuration = boundedContextConfiguration;
+            _configuration = boundedContextTopoplogy;
         }
         /// <summary>
         /// Builds a valid <see cref="BoundedContextConfiguration"/>
         /// </summary>
         /// <returns></returns>
-        public BoundedContextConfiguration Build()
+        public Applications.Configuration.Topology Build()
         {
             _logger.Information("Building topology");
             var startTime = DateTime.UtcNow;
 
             ThrowIfLoadedConfigurationIsInvalid();  
             var isNewConfiguration = IsNewConfiguration();
-            if (isNewConfiguration)
-                _configuration.Topology = new TopologyConfiguration();
 
             var typePaths = ExtractTypePaths(_artifactTypes);
             ThrowIfContainsInvalidTypePath(typePaths);
@@ -70,7 +68,7 @@ namespace Dolittle.Build.Topology
             var deltaTime = endTime.Subtract(startTime);
             _logger.Information($"Finished topology build process. (Took {deltaTime.TotalSeconds} seconds)");
 
-            return _configuration;
+            return _configuration.Topology;
         }
 
         string[] ExtractTypePaths(Type[] types)
@@ -155,27 +153,15 @@ namespace Dolittle.Build.Topology
         }
 
         void ThrowIfLoadedConfigurationIsInvalid()
-        {
-            if (_configuration.Application == null || _configuration.Application.Value.Equals(Guid.Empty)) 
-                throw new InvalidBoundedContextConfiguration("Application is required and must cannot be an empty Guid");
-            
-            if (_configuration.BoundedContext == null || _configuration.BoundedContext.Value.Equals(Guid.Empty))
-                throw new InvalidBoundedContextConfiguration("BoundedContext is required and must cannot be an empty Guid");
-                
+        {       
             if (_configuration.NamespaceSegmentsToStrip.Any())
                 ThrowIfNamespaceSegmentsToStripHasEmptyValue();
-            
-            if (_configuration.BoundedContextName == null 
-                || string.IsNullOrEmpty(_configuration.BoundedContextName)
-                || string.IsNullOrWhiteSpace(_configuration.BoundedContextName)
-                )
-                throw new InvalidBoundedContextConfiguration("BoundedContextName is required and must cannot be an empty string or whitespace");
-            
+
             if (!IsNewConfiguration())
                 ThrowIfLoadedTopologyIsInvalid(_configuration.UseModules, _configuration.Topology);
         }
 
-        void ThrowIfLoadedTopologyIsInvalid(bool useModules, TopologyConfiguration topology)
+        void ThrowIfLoadedTopologyIsInvalid(bool useModules, Applications.Configuration.Topology topology)
         {
             if (useModules)
             {
@@ -223,10 +209,10 @@ namespace Dolittle.Build.Topology
             _configuration.Topology == null 
             || (! HasModules(_configuration.Topology) && ! HasFeatures(_configuration.Topology));
 
-        static bool HasFeatures(TopologyConfiguration topology) => 
+        static bool HasFeatures(Applications.Configuration.Topology topology) => 
             topology.Features != null && topology.Features.Any();
 
-        static bool HasModules(TopologyConfiguration topology) => 
+        static bool HasModules(Applications.Configuration.Topology topology) => 
             topology.Modules != null && topology.Modules.Any();
     }
 }

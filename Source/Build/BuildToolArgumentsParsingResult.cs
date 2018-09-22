@@ -1,3 +1,7 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using Dolittle.Applications.Configuration;
 
@@ -6,7 +10,7 @@ namespace Dolittle.Build
     /// <summary>
     /// Represents a class holding the parsing results for the Dolittle.Build Command Line Tool
     /// </summary>
-    internal class BuildToolArgumentsParsingResult
+    public class BuildToolArgumentsParsingResult
     {
         /// <summary>
         /// The path of the Assembly to load from
