@@ -38,6 +38,8 @@ namespace Dolittle.Build
         static IHost _host;
         static DolittleArtifactTypes _artifactTypes;
 
+        static IBoundedContextLoader _boundedContextLoader;
+
         internal static bool NewTopology = false;
         internal static bool NewArtifacts = false;
 
@@ -45,12 +47,14 @@ namespace Dolittle.Build
         {
             try
             {
-                while(!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(10);
+                while (!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(10);
                 InitialSetup();
 
                 _logger.Information("Build process started");
                 var startTime = DateTime.UtcNow;
                 var parsingResults = BuildToolArgumentsParser.Parse(args);
+
+                var boundedContextConfig = _boundedContextLoader.Load(parsingResults.BoundedContextConfigRelativePath);
 
                 var assemblyLoader = new AssemblyLoader(parsingResults.AssemblyPath);
                 _artifactsDiscoverer = new ArtifactsDiscoverer(assemblyLoader, _artifactTypes, _logger);
@@ -119,6 +123,7 @@ namespace Dolittle.Build
             _artifactTypes = _host.Container.Get<DolittleArtifactTypes>();
             _topologyConfigurationHandler = _host.Container.Get<TopologyConfigurationHandler>();
             _artifactsConfigurationHandler = _host.Container.Get<ArtifactsConfigurationHandler>();
+            _boundedContextLoader = _host.Container.Get<IBoundedContextLoader>();
         }
 
 
