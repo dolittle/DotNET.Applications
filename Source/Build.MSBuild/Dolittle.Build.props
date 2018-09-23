@@ -1,8 +1,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" TreatAsLocalProperty="TaskFolder;TaskAssembly">
     <PropertyGroup>
-        <DolittleUseModules>"True"</DolittleUseModules>
-        <DolittleNamespaceSegmentsToStrip>""</DolittleNamespaceSegmentsToStrip>
-        <DolittleGenerateProxies>"False"</DolittleGenerateProxies>
-        <DolittleProxiesBasePath>""</DolittleProxiesBasePath>
+        <DolittleUseModules>True</DolittleUseModules>
+        <DolittleNamespaceSegmentsToStrip></DolittleNamespaceSegmentsToStrip>
+        <DolittleGenerateProxies>False</DolittleGenerateProxies>
+        <DolittleProxiesBasePath></DolittleProxiesBasePath>
     </PropertyGroup>
 </Project>

@@ -1,5 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Target Name="ArtifactsAfterBuild" AfterTargets="AfterBuild">
-        <Exec Command="dotnet $(MSBuildThisFileDirectory)../tasks/netcoreapp2.1/publish/Dolittle.SDK.Build.dll $(ProjectDir)$(OutputPath)$(AssemblyName).dll --useModules=$(DolittleUseModules) --namespaceSegmentsToStrip=$(DolittleNamespaceSegmentsToStrip) --generateProxies=$(DolittleGenerateProxies) --proxiesBasePath=$(DolittleProxiesBasePath)" />
+        <Exec Command="dotnet $(MSBuildThisFileDirectory)../tasks/netcoreapp2.1/publish/Dolittle.SDK.Build.dll $(ProjectDir)$(OutputPath)$(AssemblyName).dll --useModules='$(DolittleUseModules)' --namespaceSegmentsToStrip='$(DolittleNamespaceSegmentsToStrip)' --generateProxies='$(DolittleGenerateProxies)' --proxiesBasePath='$(DolittleProxiesBasePath)'" />
     </Target>   
 </Project>  
