@@ -30,8 +30,7 @@ namespace Dolittle.Build
         {
             var value = GetArgValue(args, "useModules");
 
-            return bool.Parse(value);
-            
+            return ParseBoolValue(value);
         }
 
         static Dictionary<Area, IEnumerable<string>> HandleNamespaceSegmentsToStrip(string[] args)
@@ -45,7 +44,7 @@ namespace Dolittle.Build
         {
             var value = GetArgValue(args, "generateProxies");
 
-            return bool.Parse(value);
+            return ParseBoolValue(value);
         }
 
         static string HandleProxiesBasePath(string[] args)
@@ -61,10 +60,25 @@ namespace Dolittle.Build
                 var currentArgumentName = match.Groups[1].Value;
                 
                 if (currentArgumentName == argumentName)
-                    return match.Groups.Count == 3? match.Groups[2].Value : "";
+                    return match.Groups.Count == 3? match.Groups[2].Value.Trim() : "";
                 
             }
             throw new ArgumentException($"The argument '{argumentName}' was was not present in the arguments to Dolittle Build Tool");
+        }
+
+        static bool ParseBoolValue(string value)
+        {
+            if (string.IsNullOrEmpty(value)) 
+                throw new ArgumentException("Error while parsing boolean value. The value is null or empty");
+
+            var result = false;
+            if (bool.TryParse(value, out result))
+                return result;
+
+            value = value.First().ToString().ToUpper();
+            if (bool.TryParse(value, out result))
+                return result;
+            throw new ArgumentException("Error while parsing boolean value. The value was not a valid boolean value. It should be either True, true, False or false");
         }
         
         static Dictionary<Area, IEnumerable<string>> ParseValueAsNamespaceSegmentsToStrip(string value)
