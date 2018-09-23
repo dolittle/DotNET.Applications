@@ -49,15 +49,15 @@ namespace Dolittle.Build.Proxies
         /// <summary>
         /// Generates all proxies for all relevant artifacts and writes them as files in their corresponding feature structure
         /// </summary>
-        public void GenerateProxies(ArtifactsConfiguration artifactsConfiguration, BoundedContextConfiguration boundedContextConfiguration)
+        public void GenerateProxies(ArtifactsConfiguration artifactsConfiguration, BuildToolArgumentsParsingResult parsingResults)
         {
             _logger.Information("Building proxies");
             var startTime = DateTime.UtcNow;
             var proxies = new List<Proxy>();
 
-            GenerateProxies(artifactsConfiguration, boundedContextConfiguration, _templateLoader.CommandProxyTemplate, "command", GenerateCommandProxy, ref proxies);
-            GenerateProxies(artifactsConfiguration, boundedContextConfiguration, _templateLoader.QueryProxyTemplate, "query", GenereateQueryProxy, ref proxies);
-            GenerateProxies(artifactsConfiguration, boundedContextConfiguration, _templateLoader.ReadModelProxyTemplate, "read model", GenerateReadModelProxy, ref proxies);
+            GenerateProxies(artifactsConfiguration, parsingResults, _templateLoader.CommandProxyTemplate, "command", GenerateCommandProxy, ref proxies);
+            GenerateProxies(artifactsConfiguration, parsingResults, _templateLoader.QueryProxyTemplate, "query", GenereateQueryProxy, ref proxies);
+            GenerateProxies(artifactsConfiguration, parsingResults, _templateLoader.ReadModelProxyTemplate, "read model", GenerateReadModelProxy, ref proxies);
             WriteProxiesToFile(proxies.ToArray());
             var endTime = DateTime.UtcNow;
             var deltaTime = endTime.Subtract(startTime);
@@ -66,10 +66,10 @@ namespace Dolittle.Build.Proxies
 
         void GenerateProxies(
             ArtifactsConfiguration artifactsConfiguration, 
-            BoundedContextConfiguration boundedContextConfiguration, 
+            BuildToolArgumentsParsingResult parsingResults, 
             Func<object, string> template, 
             string artifactTypeName, 
-            Func<Type, ArtifactsConfiguration, BoundedContextConfiguration, Func<object, string>, Proxy> ProxyGeneratorFunction,
+            Func<Type, ArtifactsConfiguration, BuildToolArgumentsParsingResult, Func<object, string>, Proxy> ProxyGeneratorFunction,
             ref List<Proxy> proxies)
         {
             var artifactType = _artifactTypes.ArtifactTypes.Single(_ => _.TypeName.Equals(artifactTypeName)).Type;
@@ -77,11 +77,11 @@ namespace Dolittle.Build.Proxies
 
             foreach (var artifact in artifacts)
             {
-                var proxy = ProxyGeneratorFunction(artifact, artifactsConfiguration, boundedContextConfiguration, template);
+                var proxy = ProxyGeneratorFunction(artifact, artifactsConfiguration, parsingResults, template);
                 if (proxy !=  null) proxies.Add(proxy);
             }
         }
-        Proxy GenerateCommandProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BoundedContextConfiguration boundedContextConfig, Func<object, string> template)
+        Proxy GenerateCommandProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildToolArgumentsParsingResult parsingResults, Func<object, string> template)
         {
             var artifactId = GetArtifactId(artifact, artifactsConfig);
 
@@ -96,7 +96,7 @@ namespace Dolittle.Build.Proxies
                     ArtifactId = artifactId.Value.ToString()
                 };
                 handlebarsCommand.Properties = CreateProxyProperties(propertiesInfo);
-                return CreateProxy(artifact, template(handlebarsCommand), boundedContextConfig);
+                return CreateProxy(artifact, template(handlebarsCommand), parsingResults);
             }
             else
             {
@@ -104,7 +104,7 @@ namespace Dolittle.Build.Proxies
                 return null;
             }
         }
-        Proxy GenereateQueryProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BoundedContextConfiguration boundedContextConfig, Func<object, string> template)
+        Proxy GenereateQueryProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildToolArgumentsParsingResult parsingResults, Func<object, string> template)
         {
             _logger.Trace($"Creating query proxy for {ClrType.FromType(artifact).TypeString}");
             var handlebarsQuery = new HandlebarsQuery()
@@ -116,10 +116,10 @@ namespace Dolittle.Build.Proxies
             if (setableProperties.Any())
                 handlebarsQuery.Properties = CreateProxyProperties(setableProperties);
             
-            return CreateProxy(artifact, template(handlebarsQuery), boundedContextConfig);
+            return CreateProxy(artifact, template(handlebarsQuery), parsingResults);
             
         }
-        Proxy GenerateReadModelProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BoundedContextConfiguration boundedContextConfig, Func<object, string> template)
+        Proxy GenerateReadModelProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildToolArgumentsParsingResult parsingResults, Func<object, string> template)
         {
             _logger.Trace($"Creating read model proxy for {ClrType.FromType(artifact).TypeString}");
             var artifactDefinition = GetArtifactDefinition(artifact, artifactsConfig);
@@ -133,14 +133,14 @@ namespace Dolittle.Build.Proxies
             if (setableProperties.Any())
                 handlebarsReadmodel.Properties = CreateProxyProperties(setableProperties);
             
-            return CreateProxy(artifact, template(handlebarsReadmodel), boundedContextConfig);
+            return CreateProxy(artifact, template(handlebarsReadmodel), parsingResults);
             
         }
 
-        string GenerateFilePath(Type artifact, BoundedContextConfiguration config, string artifactName)
+        string GenerateFilePath(Type artifact, BuildToolArgumentsParsingResult parsingResults, string artifactName)
         {
-            var @namespace = artifact.StripExcludedNamespaceSegments(config);
-            return Path.Join(config.ProxiesBasePath, @namespace.Replace('.', '/'), $"{artifactName}.js");
+            var @namespace = artifact.StripExcludedNamespaceSegments(parsingResults);
+            return Path.Join(parsingResults.ProxiesBasePath, @namespace.Replace('.', '/'), $"{artifactName}.js");
         }
 
         IEnumerable<ProxyProperty> CreateProxyProperties(PropertyInfo[] properties)
@@ -160,9 +160,9 @@ namespace Dolittle.Build.Proxies
             return proxyProperties;
         }
 
-        Proxy CreateProxy(Type artifact, string fileContent, BoundedContextConfiguration boundedContextConfig)
+        Proxy CreateProxy(Type artifact, string fileContent, BuildToolArgumentsParsingResult parsingResults)
         {
-            var filePath = GenerateFilePath(artifact, boundedContextConfig, artifact.Name);
+            var filePath = GenerateFilePath(artifact, parsingResults, artifact.Name);
 
             return (new Proxy(){Content = fileContent, FullFilePath = filePath});
         }

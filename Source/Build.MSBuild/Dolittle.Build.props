@@ -1,0 +1,9 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" TreatAsLocalProperty="TaskFolder;TaskAssembly">
+    <PropertyGroup>
+        <DolittleBoundedContextConfigPath>../bounded-context.json</DolittleBoundedContextConfigPath>
+        <DolittleUseModules>True</DolittleUseModules>
+        <DolittleNamespaceSegmentsToStrip></DolittleNamespaceSegmentsToStrip>
+        <DolittleGenerateProxies>False</DolittleGenerateProxies>
+        <DolittleProxiesBasePath></DolittleProxiesBasePath>
+    </PropertyGroup>
+</Project>

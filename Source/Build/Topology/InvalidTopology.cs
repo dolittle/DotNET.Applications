@@ -8,7 +8,7 @@ using Dolittle.Applications.Configuration;
 namespace Dolittle.Build.Topology
 {
     /// <summary>
-    /// Exception that gets thrown when the <see cref="TopologyConfiguration"/> of the <see cref="BoundedContextConfiguration"/> that's loaded in is invalid
+    /// Exception that gets thrown when the <see cref="Applications.Configuration.Topology"/> of the <see cref="BoundedContextConfiguration"/> that's loaded in is invalid
     /// </summary>
     public class InvalidTopology : Exception
     {

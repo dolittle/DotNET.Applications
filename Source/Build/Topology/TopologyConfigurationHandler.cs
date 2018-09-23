@@ -17,7 +17,7 @@ namespace Dolittle.Build.Topology
     /// </summary>
     public class TopologyConfigurationHandler
     {
-        readonly IBoundedContextConfigurationManager _configurationManager;
+        readonly ITopologyConfigurationManager _configurationManager;
         readonly ILogger _logger;
         
         /// <summary>
@@ -25,7 +25,7 @@ namespace Dolittle.Build.Topology
         /// </summary>
         /// <param name="configurationManager"></param>
         /// <param name="logger"></param>
-        public TopologyConfigurationHandler(IBoundedContextConfigurationManager configurationManager, ILogger logger)
+        public TopologyConfigurationHandler(ITopologyConfigurationManager configurationManager, ILogger logger)
         {
             _configurationManager = configurationManager;
             _logger = logger;
@@ -35,15 +35,17 @@ namespace Dolittle.Build.Topology
         /// Loads the <see cref="BoundedContextConfiguration"/> from file and uses it to build the <see cref="BoundedContextConfiguration"/> using the <see cref="TopologyBuilder"/>
         /// </summary>
         /// <param name="types">The discovered artifact types from the bounded context's assemblies</param>
-        public BoundedContextConfiguration Build(Type[] types)
+        /// <param name="parsingResults"></param>
+        public Applications.Configuration.Topology Build(Type[] types, BuildToolArgumentsParsingResult parsingResults)
         {
-            var boundedContextConfiguration = _configurationManager.Load();
-            return new TopologyBuilder(types, boundedContextConfiguration, _logger).Build();
+            var topology = _configurationManager.Load();
+            var boundedContextTopology = new BoundedContextTopology(topology, parsingResults.UseModules, parsingResults.NamespaceSegmentsToStrip);
+            return new TopologyBuilder(types, boundedContextTopology, _logger).Build();
         }
 
-        internal void Save(BoundedContextConfiguration config)
+        internal void Save(Applications.Configuration.Topology topology)
         {
-            _configurationManager.Save(config);
+            _configurationManager.Save(topology);
         }
     }
 }

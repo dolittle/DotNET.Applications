@@ -11,13 +11,12 @@ using Newtonsoft.Json;
 namespace Dolittle.Applications.Configuration
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IBoundedContextConfigurationManager"/>
+    /// Represents an implementation of <see cref="ITopologyConfigurationManager"/>
     /// </summary>
     [Singleton]
-    public class BoundedContextConfigurationManager : IBoundedContextConfigurationManager
+    public class TopologyConfigurationManager : ITopologyConfigurationManager
     {
-        static string _path   = Path.Combine(".dolittle","bounded-context.json");
-        BoundedContextConfiguration _current;
+        readonly static string _path = Path.Combine(".dolittle", "topology.json");
         readonly ISerializer _serializer;
         readonly ILogger _logger;
 
@@ -29,42 +28,32 @@ namespace Dolittle.Applications.Configuration
             }
         );
         /// <summary>
-        /// Initializes a new instance of <see cref="BoundedContextConfigurationManager"/>
+        /// Initializes a new instance of <see cref="TopologyConfigurationManager"/>
         /// </summary>
         /// <param name="serializer"><see cref="ISerializer"/> to use for working with configuration as JSON</param>
         /// <param name="logger"></param>
-        public BoundedContextConfigurationManager(ISerializer serializer, ILogger logger)
+        public TopologyConfigurationManager(ISerializer serializer, ILogger logger)
         {
             _serializer = serializer;
             _logger = logger;
         }
 
         /// <inheritdoc/>
-        public BoundedContextConfiguration Current 
-        { 
-            get
-            {
-                if( _current == null ) _current = Load();
-                return _current;
-            }
-        }
-
-        /// <inheritdoc/>
-        public BoundedContextConfiguration Load()
+        public Topology Load()
         {
             var path = GetPath();
-            if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(_path);
+            if( !File.Exists(path)) return new Topology();
             
             var json = File.ReadAllText(path);
-            var configuration = _serializer.FromJson<BoundedContextConfiguration>(json, _serializationOptions);
+            var configuration = _serializer.FromJson<Topology>(json, _serializationOptions);
             return configuration;
         }
 
         /// <inheritdoc/>
-        public void Save(BoundedContextConfiguration configuration)
+        public void Save(Topology configuration)
         {
             var path = GetPath();
-            if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(_path);
+            
             var json = _serializer.ToJson(configuration, _serializationOptions);
             
             File.WriteAllText(path, json);

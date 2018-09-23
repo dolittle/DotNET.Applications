@@ -50,16 +50,16 @@ namespace Dolittle.Build.Proxies
         /// Returns a string that represents the namespace of the given <see cref="Type"/> where the NamespaceToStrip-segments are removed from the namespace
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="config"></param>
+        /// <param name="parsingResults"></param>
         /// <returns></returns>
-        public static string StripExcludedNamespaceSegments(this Type type, BoundedContextConfiguration config)
+        public static string StripExcludedNamespaceSegments(this Type type, BuildToolArgumentsParsingResult parsingResults)
         {
             var area = new Area(){Value = type.Namespace.Split(".").First()};
             var segmentList = type.Namespace.Split(".").Skip(1).ToList();
             
-            if (config.NamespaceSegmentsToStrip.ContainsKey(area))
+            if (parsingResults.NamespaceSegmentsToStrip.ContainsKey(area))
             {
-                foreach (var segment in config.NamespaceSegmentsToStrip[area]) 
+                foreach (var segment in parsingResults.NamespaceSegmentsToStrip[area]) 
                     segmentList.Remove(segment);
             }
             

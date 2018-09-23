@@ -7,18 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
+using Dolittle.Build.Topology;
 
 namespace Dolittle.Build.Artifact
 {
     /// <summary>
-    /// Extensions for <see cref="BoundedContextConfiguration"/> that's specific for the Build.Artifact namespace
+    /// Extensions for <see cref="BoundedContextTopology"/> that's specific for the Build.Artifact namespace
     /// </summary>
     public static class BoundedContextConfigurationExtensions
     {
         /// <summary>
-        /// Returns all <see cref="FeatureDefinition"/> from the <see cref="BoundedContextConfiguration"/>
+        /// Returns all <see cref="FeatureDefinition"/> from the <see cref="Applications.Configuration.Topology"/>
         /// </summary>
-        public static IEnumerable<FeatureDefinition> RetrieveFeatures(this BoundedContextConfiguration configuration)
+        public static IEnumerable<FeatureDefinition> RetrieveFeatures(this BoundedContextTopology configuration)
         {
             if (configuration.UseModules) return configuration.Topology.Modules.SelectMany(_ => _.Features);     
             else return  configuration.Topology.Features;
@@ -26,9 +27,9 @@ namespace Dolittle.Build.Artifact
         }
 
         /// <summary>
-        /// Returns a <see cref="Dictionary{Feature, FeatureName}"/> where Key is the Feature (id) and Value is the FeatureName of all <see cref="FeatureDefinition"/> in <see cref="BoundedContextConfiguration"/>
+        /// Returns a <see cref="Dictionary{Feature, FeatureName}"/> where Key is the Feature (id) and Value is the FeatureName of all <see cref="FeatureDefinition"/> in <see cref="Applications.Configuration.Topology"/>
         /// </summary>
-        public static Dictionary<Feature, FeatureName> RetrieveAllFeatureIds(this BoundedContextConfiguration configuration)
+        public static Dictionary<Feature, FeatureName> RetrieveAllFeatureIds(this BoundedContextTopology configuration)
         {
             var featureMap = new Dictionary<Feature, FeatureName>();
             
@@ -37,9 +38,9 @@ namespace Dolittle.Build.Artifact
             return featureMap;
         }
         /// <summary>
-        /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextConfiguration">BoundedContextConfiguration's </see> topology 
+        /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextTopology">BoundedContextConfiguration's </see> topology 
         /// </summary>
-        public static FeatureDefinition FindMatchingFeature(this BoundedContextConfiguration boundedContextConfiguration, string @namespace)
+        public static FeatureDefinition FindMatchingFeature(this BoundedContextTopology boundedContextConfiguration, string @namespace)
         {
             var nonMatchingList = new List<string>();
             var featureDef = boundedContextConfiguration.FindMatchingFeature(@namespace, ref nonMatchingList);
@@ -47,9 +48,9 @@ namespace Dolittle.Build.Artifact
             return featureDef;
         }
         /// <summary>
-        /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextConfiguration">BoundedContextConfiguration's </see> topology 
+        /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextTopology">BoundedContextConfiguration's </see> topology 
         /// </summary>
-        public static FeatureDefinition FindMatchingFeature(this BoundedContextConfiguration boundedContextConfiguration, string @namespace, ref List<string> nonMatchingArtifacts)
+        public static FeatureDefinition FindMatchingFeature(this BoundedContextTopology boundedContextConfiguration, string @namespace, ref List<string> nonMatchingArtifacts)
         {
             var area = new Area(){Value = @namespace.Split(".").First()};
             var segments = @namespace.Split(".").Skip(1).ToArray();

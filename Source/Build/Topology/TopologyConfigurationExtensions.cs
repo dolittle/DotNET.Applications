@@ -53,14 +53,14 @@ namespace Dolittle.Build.Topology
             return collapsedFeatures;
         }
         /// <summary>
-        /// Validates the <see cref="TopologyConfiguration"/>
+        /// Validates the <see cref="Applications.Configuration.Topology"/>
         /// </summary>
-        public static void ValidateTopology(this TopologyConfiguration topology, bool useModules, ILogger logger)
+        public static void ValidateTopology(this Applications.Configuration.Topology topology, bool useModules, ILogger logger)
         {
             ThrowIfDuplicateId(topology, useModules, logger);
         }
 
-        static void ThrowIfDuplicateId(TopologyConfiguration topology, bool useModules, ILogger logger)
+        static void ThrowIfDuplicateId(Applications.Configuration.Topology topology, bool useModules, ILogger logger)
         {
             var idMap = new Dictionary<Guid, string>();
             bool hasDuplicateId = false;

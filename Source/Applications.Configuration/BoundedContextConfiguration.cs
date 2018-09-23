@@ -26,30 +26,15 @@ namespace Dolittle.Applications.Configuration
         /// Gets or sets the <see cref="BoundedContextName"/> 
         /// </summary>
         public BoundedContextName BoundedContextName {get; set;}
+        /// <summary>
+        /// Gets or sets the <see cref="BackendConfiguration"/>
+        /// </summary>
+        public BackendConfiguration Backend {get; set;}
+        /// <summary>
+        /// Gets or sets the <see cref="InteractionLayerConfiguration"/> list
+        /// </summary>
+        /// <value></value>
+        public IEnumerable<InteractionLayerConfiguration> Interaction {get; set;} = new InteractionLayerConfiguration[0];
 
-        /// <summary>
-        /// Gets or sets whether or not one is using <see cref="Module">modules</see>
-        /// </summary>
-        public bool UseModules { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether or not one wants to generate proxies
-        /// </summary>
-        public bool GenerateProxies {get; set;}
-        
-        /// <summary>
-        /// Gets or sets the base path for proxies
-        /// </summary>
-        public string ProxiesBasePath {get; set;}
-
-        /// <summary>
-        /// Gets or sets a mapping from <see cref="Area"/> to a string representing a segment in the namespace that the user wishes to exclude from the Module/Feature
-        /// </summary>
-        public Dictionary<Area, IEnumerable<string>> NamespaceSegmentsToStrip {get; set;} = new Dictionary<Area, IEnumerable<string>>();
-
-        /// <summary>
-        /// Gets or sets the <see cref="TopologyConfiguration"/> for the <see cref="BoundedContext"/>
-        /// </summary>
-        public TopologyConfiguration Topology { get; set; }
     }
 }
