@@ -18,12 +18,18 @@ namespace Dolittle.Build
             if (args.Length < 5 ) throw new ArgumentException($"The number of arguments to the Build Tool was not correct. It should be 5, it was {args.Length}");
             var assemblyPath = args[0];
             args = args.Skip(1).ToArray();
+            var boundedContextConfigRelativePath = HandleBoundedContextConfigPath(args);
             var useModules = HandleUseModules(args);
             var namespaceSegmentsToStrip = HandleNamespaceSegmentsToStrip(args);
             var generateProxies = HandleGenerateProxies(args);
             var proxiesBasePath = HandleProxiesBasePath(args);
 
-            return new BuildToolArgumentsParsingResult(assemblyPath, useModules, namespaceSegmentsToStrip, generateProxies, proxiesBasePath);
+            return new BuildToolArgumentsParsingResult(assemblyPath, boundedContextConfigRelativePath, useModules, namespaceSegmentsToStrip, generateProxies, proxiesBasePath);
+        }
+
+        static string HandleBoundedContextConfigPath(string[] args)
+        {
+            return GetArgValue(args, "boundedContextConfigPath");
         }
 
         static bool HandleUseModules(string[] args)

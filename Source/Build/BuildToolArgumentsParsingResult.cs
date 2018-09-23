@@ -17,6 +17,11 @@ namespace Dolittle.Build
         /// </summary>
         public string AssemblyPath {get; }
         /// <summary>
+        /// The relative path to the bounded-context.json configuration file
+        /// </summary>
+        /// <value></value>
+        public string BoundedContextConfigRelativePath {get; }
+        /// <summary>
         /// Whether or not the Topology should build using Modules or not
         /// </summary>
         public bool UseModules {get; }
@@ -37,13 +42,15 @@ namespace Dolittle.Build
         /// Instantiates an instance of <see cref="BuildToolArgumentsParsingResult"/>
         /// </summary>
         /// <param name="assemblyPath"></param>
+        /// <param name="boundedContextConfigRelativePath"/>
         /// <param name="useModules"></param>
         /// <param name="namespaceSegmentsToStrip"></param>
         /// <param name="generateProxies"></param>
         /// <param name="proxiesBasePath"></param>
-        public BuildToolArgumentsParsingResult(string assemblyPath, bool useModules, Dictionary<Area, IEnumerable<string>> namespaceSegmentsToStrip, bool generateProxies, string proxiesBasePath)
+        public BuildToolArgumentsParsingResult(string assemblyPath, string boundedContextConfigRelativePath, bool useModules, Dictionary<Area, IEnumerable<string>> namespaceSegmentsToStrip, bool generateProxies, string proxiesBasePath)
         {
             AssemblyPath = assemblyPath;
+            BoundedContextConfigRelativePath = boundedContextConfigRelativePath;
             UseModules = useModules;
             NamespaceSegmentsToStrip = namespaceSegmentsToStrip;
             GenerateProxies = generateProxies;
