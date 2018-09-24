@@ -93,6 +93,9 @@ namespace Dolittle.Build
 
             var namespaceSegmentsToStrip = new Dictionary<Area, IEnumerable<string>>();
 
+            if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
+                return namespaceSegmentsToStrip;
+
             var segments = value.Split(separator);
 
             foreach (var segment in segments)
