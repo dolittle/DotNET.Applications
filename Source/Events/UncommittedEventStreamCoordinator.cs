@@ -32,6 +32,7 @@ namespace Dolittle.Events.Coordination
         readonly ISystemClock _systemClock;
         readonly IScopedEventProcessingHub _eventProcessorHub;
         readonly IEventHorizon _eventHorizon;
+        readonly IExecutionContextManager _executionContextManager;
 
         /// <summary>
         /// Initializes an instance of a <see cref="UncommittedEventStreamCoordinator"/>
@@ -42,13 +43,16 @@ namespace Dolittle.Events.Coordination
         /// <param name="artifactMap">An instance of <see cref="IArtifactTypeMap" /> to get the artifact for Event Source and Events</param>
         /// <param name="logger"><see cref="ILogger"/> for doing logging</param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for getting the time</param>
+        /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for accessing the current <see cref="ExecutionContext" /></param>
+
         public UncommittedEventStreamCoordinator(
             FactoryFor<IEventStore> getEventStore,
             IScopedEventProcessingHub eventProcessorHub,
             IEventHorizon eventHorizon,
             IArtifactTypeMap artifactMap,
             ILogger logger,
-            ISystemClock systemClock)
+            ISystemClock systemClock,
+            IExecutionContextManager executionContextManager)
             
         {
             _getEventStore = getEventStore;
@@ -57,6 +61,7 @@ namespace Dolittle.Events.Coordination
             _logger = logger;
             _artifactMap = artifactMap;
             _systemClock = systemClock;
+            _executionContextManager = executionContextManager;
         }
 
         /// <inheritdoc/>
@@ -93,15 +98,15 @@ namespace Dolittle.Events.Coordination
 
         UncommittedEventStream BuildFrom(VersionedEventSource version, CorrelationId correlationId, DateTimeOffset committed, IEnumerable<IEvent> events)
         {
-            var envelopes = events.Select(e => e.ToEnvelope(EventId.New(),BuildEventMetadata(e, version, correlationId, committed))).ToList();
+            var envelopes = events.Select(e => e.ToEnvelope(BuildEventMetadata(e, EventId.New(),version, correlationId, committed))).ToList();
             if(envelopes == null || !envelopes.Any())
                 throw new ApplicationException("There are no envelopes");
             return BuildStreamFrom(EventStream.From(envelopes));
         }
 
-        EventMetadata BuildEventMetadata(IEvent @event, VersionedEventSource versionedEventSource, CorrelationId correlationId, DateTimeOffset committed)
+        EventMetadata BuildEventMetadata(IEvent @event, EventId id, VersionedEventSource versionedEventSource, CorrelationId correlationId, DateTimeOffset committed)
         {
-            return new EventMetadata(versionedEventSource, correlationId, _artifactMap.GetArtifactFor(@event.GetType()), "A Test", committed);
+            return new EventMetadata(id, versionedEventSource, correlationId, _artifactMap.GetArtifactFor(@event.GetType()), committed, _executionContextManager.Current);
         }
 
         UncommittedEventStream BuildStreamFrom(EventStream stream)
