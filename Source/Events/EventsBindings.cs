@@ -13,7 +13,7 @@ namespace Dolittle.Events
         /// <inheritdoc />
         public void Provide(IBindingProviderBuilder builder)
         {
-            new BindingBuilder(Binding.For(typeof(IUncommittedEventStreamCoordinator))).To<Dolittle.Events.Coordination.UncommittedEventStreamCoordinator>().Build();
+            builder.Bind<IUncommittedEventStreamCoordinator>().To<UncommittedEventStreamCoordinator>();            
         }
     }
 }
