@@ -52,9 +52,6 @@ namespace Dolittle.Build.Artifact
         /// <returns></returns>
         public ArtifactsConfiguration Build(BoundedContextTopology boundedContextTopology)
         {
-            _logger.Information("Building artifacts");
-            var startTime = DateTime.UtcNow;
-            
             var newArtifacts = 0;
 
             var nonMatchingArtifacts = new List<string>();
@@ -79,9 +76,6 @@ namespace Dolittle.Build.Artifact
             
             _artifactsConfiguration.ValidateArtifacts(boundedContextTopology, _artifacts, _logger);
 
-            var endTime = DateTime.UtcNow;
-            var deltaTime = endTime.Subtract(startTime);
-
             if (newArtifacts > 0)
             {
                 Program.NewArtifacts = true;
@@ -89,8 +83,6 @@ namespace Dolittle.Build.Artifact
             }
             else 
                 _logger.Information($"No new artifacts added to the map.");
-
-            _logger.Information($"Finished artifacts build process. (Took {deltaTime.TotalSeconds} seconds)");
             
             return _artifactsConfiguration;
         }

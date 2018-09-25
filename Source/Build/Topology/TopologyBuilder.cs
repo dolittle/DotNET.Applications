@@ -41,9 +41,6 @@ namespace Dolittle.Build.Topology
         /// <returns></returns>
         public Applications.Configuration.Topology Build()
         {
-            _logger.Information("Building topology");
-            var startTime = DateTime.UtcNow;
-
             ThrowIfLoadedConfigurationIsInvalid();  
             var isNewConfiguration = IsNewConfiguration();
 
@@ -63,10 +60,6 @@ namespace Dolittle.Build.Topology
             }
 
             _configuration.Topology.ValidateTopology(_configuration.UseModules, _logger);
-
-            var endTime = DateTime.UtcNow;
-            var deltaTime = endTime.Subtract(startTime);
-            _logger.Information($"Finished topology build process. (Took {deltaTime.TotalSeconds} seconds)");
 
             return _configuration.Topology;
         }
