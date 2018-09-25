@@ -139,36 +139,47 @@ namespace Dolittle.Build
             var events = artifacts.Where(_ => _artifactTypes.ArtifactTypes.Where(artifactType => artifactType.TypeName == "event").First().Type.IsAssignableFrom(_));
 
             ValidateEventsAreImmutable(events);
+            
             ValidateEventsPropertiesMatchConstructorParameter(events);
             
         }
 
         static void ValidateEventsPropertiesMatchConstructorParameter(IEnumerable<Type> events)
         {
-            var invalidEvents = new List<Type>();
+            var eventsWithoutNonDefaultConstructor = new List<Type>();
+            var eventsWithConstructorParameterNameMismatch = new List<(Type @event, string propName)>();
             events.ForEach(@event => {
                 var eventConstructor = @event.GetNonDefaultConstructorWithGreatestNumberOfParameters();
                 var publicProperties = @event.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                
-                ValidateEventPropertyAndConstructorParameterNameMatch(eventConstructor, publicProperties, @event);
+
+                if (eventConstructor == null && publicProperties.Count() > 0) eventsWithoutNonDefaultConstructor.Add(@event);
+                else if (eventConstructor != null) ValidateEventPropertyAndConstructorParameterNameMatch(eventConstructor, publicProperties, @event, eventsWithConstructorParameterNameMismatch);
             });
+            bool throwException = false;
+            if (eventsWithoutNonDefaultConstructor.Any())
+            {
+                throwException = true;
+                _logger.Error("Discovered events with state but without a custom constructor.");
+                eventsWithoutNonDefaultConstructor.ForEach(invalidEvent => _logger.Trace($"Event {invalidEvent.FullName} has properties but does not have a custom constructor."));
+            }
+            if (eventsWithConstructorParameterNameMismatch.Any())
+            {
+                throwException = true;
+                _logger.Error("Discovered events with incorrect constructors. All constructor parameter names should be camelCase and match the property name which it sets, which should be PascalCase");
+                eventsWithConstructorParameterNameMismatch.ForEach(invalidEvent => _logger.Trace($"Event {invalidEvent.@event.FullName}'s constructor with the most parameters is invalid. Expected a constructor parameter name to be {invalidEvent.propName.ToCamelCase()}"));
+            }
+
+            if (throwException) throw new InvalidEvent("There are critical errors on events");
         }
 
-        static void ValidateEventPropertyAndConstructorParameterNameMatch(ConstructorInfo eventConstructor, PropertyInfo[] publicProperties, Type @event)
-        {
-            var invalidEvents = new List<Type>();   
 
+        static void ValidateEventPropertyAndConstructorParameterNameMatch(ConstructorInfo eventConstructor, PropertyInfo[] publicProperties, Type @event, IList<(Type @event, string propName)> invalidEvents)
+        {
             var constructorPropertyNames = eventConstructor.GetParameters().Select(_ => _.Name);
             publicProperties.Select(_ => _.Name).ForEach(propName => {
-                if (! constructorPropertyNames.Any(paramName => paramName == propName.ToCamelCase())) invalidEvents.Add(@event);
+                if (! constructorPropertyNames.Any(paramName => paramName == propName.ToCamelCase())) 
+                    invalidEvents.Add((@event, propName));
             });
-
-            if (invalidEvents.Any())
-            {
-                _logger.Error("Discovered events with incorrect constructors. All constructor parameter names should be camelCase and match the property name which it sets, which should be PascalCase");
-                invalidEvents.ForEach(invalidEvent => _logger.Trace($"Event {invalidEvent.FullName}'s constructor with the most parameters is invalid. The constructor parameter names must be camelCase and match the property it sets, which must be PascalCase"));
-                throw new InvalidEvent("Discovered event(s) with constructor parameters that did not match the naming of a property");
-            }
         }
 
         static void ValidateEventsAreImmutable(IEnumerable<Type> events)
