@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using Dolittle.Runtime.Events.Processing;
 using Dolittle.Collections;
+using Dolittle.Reflection;
+using Dolittle.Strings;
 
 namespace Dolittle.Build
 {
@@ -37,7 +39,6 @@ namespace Dolittle.Build
         static EventProcessorDiscoverer _eventProcessorDiscoverer;
         static IHost _host;
         static DolittleArtifactTypes _artifactTypes;
-
         static IBoundedContextLoader _boundedContextLoader;
 
         internal static bool NewTopology = false;
@@ -61,11 +62,13 @@ namespace Dolittle.Build
                 
                 var artifacts = _artifactsDiscoverer.Artifacts;
 
+                
                 var topology = _topologyConfigurationHandler.Build(artifacts, parsingResults);
 
                 var artifactsConfiguration = _artifactsConfigurationHandler.Build(artifacts, topology, parsingResults);
 
                 ValidateEventProcessors(_eventProcessorDiscoverer.GetAllEventProcessors());
+                ValidateEvents(artifacts);
                                 
                 if (NewTopology) _topologyConfigurationHandler.Save(topology);
                 if (NewArtifacts) _artifactsConfigurationHandler.Save(artifactsConfiguration);
@@ -129,6 +132,56 @@ namespace Dolittle.Build
         static void ValidateEventProcessors(IEnumerable<MethodInfo> eventProcessors)
         {
             ThrowIfMultipleEventProcessorsWithId(eventProcessors);
+        }
+
+        static void ValidateEvents(IEnumerable<Type> artifacts)
+        {
+            var events = artifacts.Where(_ => _artifactTypes.ArtifactTypes.Where(artifactType => artifactType.TypeName == "event").First().Type.IsAssignableFrom(_));
+
+            ValidateEventsAreImmutable(events);
+            ValidateEventsPropertiesMatchConstructorParameter(events);
+            
+        }
+
+        static void ValidateEventsPropertiesMatchConstructorParameter(IEnumerable<Type> events)
+        {
+            var invalidEvents = new List<Type>();
+            events.ForEach(@event => {
+                var eventConstructor = @event.GetNonDefaultConstructorWithGreatestNumberOfParameters();
+                var publicProperties = @event.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                
+                ValidateEventPropertyAndConstructorParameterNameMatch(eventConstructor, publicProperties, @event);
+            });
+        }
+
+        static void ValidateEventPropertyAndConstructorParameterNameMatch(ConstructorInfo eventConstructor, PropertyInfo[] publicProperties, Type @event)
+        {
+            var invalidEvents = new List<Type>();   
+
+            var constructorPropertyNames = eventConstructor.GetParameters().Select(_ => _.Name);
+            publicProperties.Select(_ => _.Name).ForEach(propName => {
+                if (! constructorPropertyNames.Any(paramName => paramName == propName.ToCamelCase())) invalidEvents.Add(@event);
+            });
+
+            if (invalidEvents.Any())
+            {
+                _logger.Error("Discovered events with incorrect constructors. All constructor parameter names should be camelCase and match the property name which it sets, which should be PascalCase");
+                invalidEvents.ForEach(invalidEvent => _logger.Trace($"Event {invalidEvent.FullName}'s constructor with the most parameters is invalid. The constructor parameter names must be camelCase and match the property it sets, which must be PascalCase"));
+                throw new InvalidEvent("Discovered event(s) with constructor parameters that did not match the naming of a property");
+            }
+        }
+
+        static void ValidateEventsAreImmutable(IEnumerable<Type> events)
+        {
+            var mutableEvents = new List<Type>();
+            events.ForEach(@event => {
+                if (! @event.IsImmutable()) mutableEvents.Add(@event);
+            });
+            if (mutableEvents.Any())
+            {
+                _logger.Warning("Discovered mutable events. They should, by design, be immutable");
+                mutableEvents.ForEach(@event => _logger.Trace($"Event {@event.FullName} is not immutable. It should not have any settable properties and should only be constructed with a constructor"));
+            }
         }
 
         static void ThrowIfMultipleEventProcessorsWithId(IEnumerable<MethodInfo> eventProcessors)
