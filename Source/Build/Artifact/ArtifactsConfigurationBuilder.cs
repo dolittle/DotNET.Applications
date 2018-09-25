@@ -136,12 +136,9 @@ namespace Dolittle.Build.Artifact
                             var artifactObject = (artifact.GetTypeInfo().GetCustomAttributes(typeof(ArtifactAttribute), false).First() as ArtifactAttribute).Artifact;
                             
                             var existingArtifact = existingArtifacts.Single(_ => _.Type.GetActualType() == artifact);
-
-                            if (
-                                ! ( existingArtifact.Artifact.Value.Equals(artifactObject.Id.Value)
-                                && existingArtifact.Generation.Value.Equals(artifactObject.Generation.Value) )
-                                )
+                            if (! existingArtifact.Artifact.Value.Equals(artifactObject.Id.Value))
                             {
+                                existingArtifacts = existingArtifacts.Where(_ => _.Artifact.Value != existingArtifact.Artifact.Value);
                                 SetNewAndExistingArtifacts(artifactObject, artifact, artifactsByTypeDefinition, targetProperty, existingArtifacts, artifactTypeName);
                                 newArtifacts++;
                             }
