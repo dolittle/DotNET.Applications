@@ -40,16 +40,11 @@ namespace Dolittle.Build
 
         Type[] DiscoverArtifacts()
         {
-            _logger.Information("Discovering Artifacts");
             
             var startTime = DateTime.UtcNow;
             var types = GetArtifactsFromAssembly();
 
             ThrowIfArtifactWithNoModuleOrFeature(types);
-            
-            var endTime = DateTime.UtcNow;
-            var deltaTime = endTime.Subtract(startTime);
-            _logger.Information($"Finished artifact discovery process. (Took {deltaTime.TotalSeconds} seconds)");
             
             return types;
         }

@@ -48,9 +48,6 @@ namespace Dolittle.Build
         }
         MethodInfo[] DiscoverEventProcessors()
         {
-            _logger.Information("Discovering Event Processors");
-            
-            var startTime = DateTime.UtcNow;
             var types = GetTypesHoldingEventProcessorsFromAssembly();
 
             IList<MethodInfo> eventProcessors = new List<MethodInfo>();
@@ -70,10 +67,6 @@ namespace Dolittle.Build
                 if (! found)
                     _logger.Warning($"No event processor methods found in Event Processor collection class '{type.FullName}'. All methods that'll process events has to be marked with {typeof(EventProcessorAttribute).FullName} giving it a unique Event Processor Id.");
             }
-            
-            var endTime = DateTime.UtcNow;
-            var deltaTime = endTime.Subtract(startTime);
-            _logger.Information($"Finished event processor discovery process. (Took {deltaTime.TotalSeconds} seconds)");
             
             return eventProcessors.ToArray();
         }

@@ -51,17 +51,12 @@ namespace Dolittle.Build.Proxies
         /// </summary>
         public void GenerateProxies(ArtifactsConfiguration artifactsConfiguration, BuildToolArgumentsParsingResult parsingResults)
         {
-            _logger.Information("Building proxies");
-            var startTime = DateTime.UtcNow;
             var proxies = new List<Proxy>();
 
             GenerateProxies(artifactsConfiguration, parsingResults, _templateLoader.CommandProxyTemplate, "command", GenerateCommandProxy, ref proxies);
             GenerateProxies(artifactsConfiguration, parsingResults, _templateLoader.QueryProxyTemplate, "query", GenereateQueryProxy, ref proxies);
             GenerateProxies(artifactsConfiguration, parsingResults, _templateLoader.ReadModelProxyTemplate, "read model", GenerateReadModelProxy, ref proxies);
             WriteProxiesToFile(proxies.ToArray());
-            var endTime = DateTime.UtcNow;
-            var deltaTime = endTime.Subtract(startTime);
-            _logger.Information($"Finished proxies build process. (Took {deltaTime.TotalSeconds} seconds)");
         }
 
         void GenerateProxies(
