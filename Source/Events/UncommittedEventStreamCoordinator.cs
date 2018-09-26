@@ -79,7 +79,7 @@ namespace Dolittle.Events.Coordination
             _logger.Trace("Process events in same bounded context");
             _eventProcessorHub.Process(committed);
             _logger.Trace("Passing committed events through event horizon");
-            _eventHorizon.PassThrough(committed);
+            _eventHorizon.PassThrough(new CommittedEventStreamWithContext(committed,_executionContextManager.Current));
         }
 
         UncommittedEventStream BuildUncommitted(UncommittedEvents uncommittedEvents, CorrelationId correlationId)
