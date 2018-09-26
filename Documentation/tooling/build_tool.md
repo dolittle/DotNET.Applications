@@ -11,12 +11,60 @@ The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL 
 ## Background
 One of our main visions is to enable developers to build Line of Business products with high productivity while also building products that are scalable and easy to maintain. With tooling we can provide developers with functionalities that enables a better development experience by automatically doing some of the work that is tedious and / or error prone. We can also give a better development experience by providing guidance, tips and squiggly lines by, for example, for .Net utilizing the Roslyn compiler to give the developers warnings and suggestions when they are doing something that does not work well when developing products on our platform or to provide with tips and suggestions for improvements when they aren't utilizing the different tools that we're providing for them to write maintainable code. The DotNET Build Tool is one such tool. This tool is rather important not only for its quality of life functions, but first and foremost for automatically generating and maintaining vital information of the *Bounded Context* for the platform. 
 
-The Dolittle platform needs to know several things related to the [*Application* and *Bounded Contexts*](https://dolittle.io/overview/bounded_context). The whole functionality of a *Bounded Context* is defined by its [*Artifacts*]**(LINK TO ARTIFACTS DOCS)**. These *Artifacts* are extremely vital and central to our platform, everything is dependent on them; the functionality of the *Bounded Context* itself, interaction with other *Bounded Contexts*, interaction with other *Applications* and several other important aspects. Because these *Artifacts* are so important we cannot rely on human to keep track of this, that's why we have a tool that does this for us. This is just one of the current functionalities of the Build Tool, later we'll explain this in more detail.
+The Dolittle platform needs to know several things related to the [*Application* and *Bounded Contexts*](https://dolittle.io/overview/bounded_context). The whole functionality of a *Bounded Context* is defined by its [*Artifacts*](https://dolittle.io/overview/articles/artifacts/). These *Artifacts* are extremely vital and central to our platform, everything is dependent on them; the functionality of the *Bounded Context* itself, interaction with other *Bounded Contexts*, interaction with other *Applications* and several other important aspects. Because these *Artifacts* are so important we cannot rely on human to keep track of this, that's why we have a tool that does this for us. This is just one of the current functionalities of the Build Tool, later we'll explain this in more detail.
 
-The .Net Build Tool can be found [here](https://github.com/dolittle/dotnet.sdk/tree/master/Source/Build). It's basically a .NetCore application that is executed each time a build is performed in the .csproj that has a reference to the *Build Tool* "entrypoint" defined [here](https://github.com/dolittle/DotNET.SDK/tree/master/Source/Artifacts.Build).
+The .Net Build Tool can be found [here](https://github.com/dolittle/dotnet.sdk/tree/master/Source/Build). It's basically a .NetCore application that is executed each time a build is performed in the .csproj that has a reference to the *Build Tool* "entrypoint" defined [here](https://github.com/dolittle/DotNET.SDK/tree/master/Source/Build.MSBuild).
+
+## Setting it up
+Setting up the *Dolittle* for a project should be pretty straight forward. In the interaction layer of the *Bounded Context* it should have a .csproj file that looks something like this:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DolittleUseModules>True</DolittleUseModules>
+    <DolittleNamespaceSegmentsToStrip>Web=Features|Events=External</DolittleNamespaceSegmentsToStrip>
+    <DolittleGenerateProxies>True</DolittleGenerateProxies>
+    <DolittleProxiesBasePath>../InteractionLayer/Proxies/</DolittleProxiesBasePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Dolittle.Build" Version="2.0.0-alpha2*" />
+    
+    <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="2.0.0-alpha2*" />
+    <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="2.0.0-alpha2.*" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
+    <PackageReference Include="Dolittle.SDK" Version="2.0.0-alpha2*" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Concepts\Concepts.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Events\Events.csproj" />
+    <ProjectReference Include="..\Read\Read.csproj" />
+  </ItemGroup>
+</Project>
+```
+The important parts is:
+```xml
+<PropertyGroup>
+  <DolittleUseModules>True</DolittleUseModules>
+  <DolittleNamespaceSegmentsToStrip></DolittleNamespaceSegmentsToStrip>
+  <DolittleGenerateProxies>True</DolittleGenerateProxies>
+  <DolittleProxiesBasePath>../InteractionLayer/Proxies/</DolittleProxiesBasePath>
+</PropertyGroup>
+```
+and
+```xml
+<ItemGroup>
+  <PackageReference Include="Dolittle.Build" Version="2.0.0-alpha2*" />
+</ItemGroup>
+```
+
+Having the Dolittle.Build reference will trigger the *Build Tool* given the Properties defined above as configuration arguments to the tool. We'll talk more about that later
 
 ## The Bounded Context configuration
-When you first set up a *Bounded Context* project you need to provide the platform with a few vital pieces of information. The *Build Tool* is expecting a bounded-context.json file describing the configuration in the root folder of the *Bounded Context's* source code. The bounded-context.json configuration needs the following information:
+When you first set up a *Bounded Context* project you need to provide the platform with a few vital pieces of information. The *Build Tool* is expecting a bounded-context.json file describing the configuration in the root folder of the *Bounded Context's* source code (at the same level as the solution file). The bounded-context.json configuration needs the following information:
 {{% notice warning %}}
 May be subject to change
 {{% /notice%}}
@@ -27,23 +75,21 @@ bounded-context.json:
   "application": "0d577eb8-a70b-4e38-aca8-f85b3166bdc2",
   "boundedContext": "f660966d-3a74-44e6-8268-a9aefbae6115",
   "boundedContextName": "Shop",
-  "useModules": true,
-  "generateProxies": true,
-  "proxiesBasePath": "Features",
-  "namespaceSegmentsToStrip": {}
+  "backend": {
+    "language" "csharp"
+  }
 }
 ```
 
 * application - The GUID of the Application that this *Bounded Context* belongs to
 * boundedContext - The GUID of the *Bounded Context*
-* useModules - Whether or not the 'Bounded Context' topology structure is Module-based or Feature-based. If it’s Module-based then the *Topology* will consist of a list of [*Modules*](https://dolittle.io/overview/bounded_context) with a list of [*Features*](https://dolittle.io/overview/bounded_context). If it’s Feature-based it’ll consist of just a list of *Features*.
-* generateProxies - Whether or not we should generate, at the moment, ReadModel and Query proxy classes for the web interaction layer.
-* proxiesBasePath - The base path relative to the path where the build is performed from where the proxies will be created.
-* namespaceSegmentsToStrip - A dictionary of where the Value is a list of namespace-segments to strip from the namespace when creating the Artifacts when the first segment of the namespace is equal to the Key.
+* boundedContextName - The name of the *Bounded Context*
+* backend - Configuration of the backend
+* backend.language - The language of the backend configuration, very important for the dolittle cli tool. Only supports 'csharp' for now
 
 
 ## Topology
-One important aspect of *Bounded Contexts* is its topology. The platform needs to have some metadata for *Artifacts*, which *Feature* it belongs to is one such. To be able to map out a *Bounded Context's* *Features* we need to first define its *Topology*. When the *Build Tool* is referenced in a .csproj it will take the assembly and referenced assemblies and it will start discovering *Artifacts*. After it has discovered all the *Artifacts* of the *Bounded Context* it will try define the topology of the *Bounded Structure*. Based on the "useModules" and "namespaceSegmentsToStrip" options in the configuration the *Build Tool* will look at the type paths of the *Artifact* CLR types and create a topology structure based on this type path where *Artifacts* 
+One important aspect of *Bounded Contexts* is its topology. The platform needs to have some metadata for *Artifacts*, which *Feature* it belongs to is one such. To be able to map out a *Bounded Context's* *Features* we need to first define its *Topology*. When the *Build Tool* is referenced in a .csproj it will take the assembly and referenced assemblies and it will start discovering *Artifacts*. After it has discovered all the *Artifacts* of the *Bounded Context* it will try define the topology of the *Bounded Structure*. Based on "DolittleUseModules" and "DolittleNamespaceSegmentsToStrip" options in the configuration the *Build Tool* will look at the type paths of the *Artifact* CLR types and create a topology structure based on this type path.
 
 {{% notice warning %}}
 For the *Build Tool* to work you actually also have to reference to Dolittle.DependencyInversion.Autofac in order for the assembly discovery and the IoC container mechanisms to work. You should get a runtime error in the *Build Tool* dll if this is not in place.
@@ -157,10 +203,10 @@ If this was the only *Artifact* in the *Bounded Context* the topology would look
 Note that the "Domain" part of the namespace is completely ignored. This is because the *Build Tool* is by convention ignoring the first segment of the namespace. This is because we think that the first part of the namespace is reserved to indicate the domain area of the type, i.e. "Domain", "Events", "Events.OtherBoundedContext", "Read", "Web", "Policy", etc...
 {{% /notice %}}
 
-##### "namespaceSegmentsToStrip"
-namespaceSegmentsToStrip can be useful when you want a namespace to have a specific prefix, or if you have a namespace that has a namespace segment which is '.' separated, like for example "Events.Shop".
+##### "DolittleNamespaceSegmentsToStrip"
+DolittleNamespaceSegmentsToStrip can be useful when you want a namespace to have a specific prefix, or if you have a namespace that has a namespace segment which is '.' separated, like for example "Events.Shop".
 
-If you didn't provide any namespaceSegmentsToString Key-value pairs, useModules is true and you had this *Artifact*:
+If you didn't provide any DolittleNamespaceSegmentsToStrip Key-value pairs, DolittleUseModules is 'True' and you had this *Artifact*:
 ```csharp
 namespace Events.OtherBoundedContext.TheModule
 {
@@ -190,14 +236,9 @@ the *Build Tool* would not throw any errors and the topology would look like thi
   }
 }
 ```
-which is obviously not right, we would want the *Build Tool* to fail because we have not given the *Artifact* a real *Feature*. To fix this we could in the bounded-context.json file add namespaceSegmentsToStrip with the following definition:
-```json
- {
-  "namespaceSegmentsToStrip": {
-    "Events": [
-      "OtherBoundedContext"
-    ]
-}
+which is obviously not right, we would want the *Build Tool* to fail because we have not given the *Artifact* a real *Feature*. To fix this we could in the .csproj containing the configuration of the build tool add a namespaceSegmentsToStrip with the following definition:
+```xml
+<DolittleNamespaceSegmentsToStrip>Events=OtherBoundedContext</DolittleNamespaceSegmentsToStrip>
 ```
 then the *Build Tool* would fail saying that the *Artifact* IAmAnEventFromAnotherBoundedContext does not fit in the topology.
 
@@ -228,7 +269,6 @@ The set of *Artifact* types may be subject to change.
         }
       ],
       "events": ["<List of Event-Artifacts>"],
-      "eventProcessors": ["<List of EventProcessor-Artifacts>"],
       "eventSources": ["<List of EventSource-Artifacts>"],
       "readModels": ["<List of ReadModel-Artifacts>"],
       "queries": ["<List of Query-Artifacts>"]
@@ -256,7 +296,6 @@ artifacts.json:
           "type": "Events.Carts.Shopping.ItemAddedToCart, Events"
         }
       ],
-      "eventProcessors": [],
       "eventSources": [
         {
           "artifact": "b25d8657-dffe-40e6-ba45-71dbfe09d98f",
@@ -276,7 +315,6 @@ artifacts.json:
           "type": "Events.SomeModule.SomeFeature.StockChanged, Events.Warehouse"
         }
       ],
-      "eventProcessors": [],
       "eventSources": [],
       "readModels": [],
       "queries": []
@@ -284,7 +322,6 @@ artifacts.json:
     "05b89f06-19c3-4502-b349-873ef7761a21": {
       "commands": [],
       "events": [],
-      "eventProcessors": [],
       "eventSources": [],
       "readModels": [
         {
@@ -349,10 +386,17 @@ The validation process after the new configuration is created will inform the us
 
 * It will go through every *Artifact* in the configuration and check whether or not the *Feature* Id it sits under exists in the topology. If so, the *Build Tool* will tell you that there are *Artifacts* under a *Feature* that doesn't exist. This is an indicator that you have built the application before and that there are left-over artifacts from a *Feature* that you have removed.
 
-* It will go through every *Artifact* in the configuration and check if there are any *Artifacts* that cannot be mapped up to an actual CLR type. If so, the *Build Tool* will tell you that there are *Artifacts* than cannot be found in current *Bounded Context* topology structure and that you probably have to write a [migrator for that *Artifact*.]**(LINK TO ARTIFACT MIGRATION)**. This is an indicator that you had an *Artifact* that now has been changed. 
+* It will go through every *Artifact* in the configuration and check if there are any *Artifacts* that cannot be mapped up to an actual CLR type. If so, the *Build Tool* will tell you that there are *Artifacts* than cannot be found in current *Bounded Context* topology structure and that you probably have to write a [migrator for that *Artifact*.]**(LINK TO ARTIFACT MIGRATION)**. This is an indicator that you had an *Artifact* that now has been changed.
 
 ## Proxy generation
 
 When the *Bounded Context* is supposed to provide a web-interaction layer it probably has to deal with the *Command*, *ReadModel* and *Query* *Artifacts*. Since we already have discovered all the CLR types of the *Artifacts*, we can automatically create proxies for these *Artifacts* and output them as Javascript classes to be used in the web-interaction layer.
 
 If the *Bounded Context* is configured with "generateProxies": true, the *Build Tool* will use the discovered *Artifacts* to find all *Commands*, *ReadModels* and *Queries* and create proxies for them based on their public, settable properties and the default values of each property's type. The generated proxies will have a path that corresponds the the Module / Feature hierarchy that's associated with the *Artifact*. You can provide the relative path where the proxies will be outputted to by setting the "proxiesBasePath" variable in the *Bounded Context* configuration. 
+
+## .csproj Configuration Properties
+* ```<DolittleUseModules>```: A boolean, True/False, indicating whether or not to generate using a Module or a Feature topology structure. Default value = True
+* ```<DolittleBoundedContextConfigPath>```: A string path pointing to the *Bounded Context's* bounded-context.json file. Default value = ../bounded-context.json
+* ```<DolittleNamespaceSegmentsToStrip```: A '|' separated key-value list separated by '=' where Key represents the first segment of a namespace that you want to strip the namespace of, and Value is the segment that you actually want to strip from the namespace generation / topology creation. Default value = " "
+* ```<DolittleGenerateProxies>```: A boolean, True/False, indicating whether or not to generate query, read model and command proxies for the interaction layer. Default value = False
+* ```<DolittleProxiesBasePath>```: a string path pointing to the location where proxies should be generated if generated. Default value = " "
