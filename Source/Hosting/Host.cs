@@ -6,6 +6,7 @@ using System.Threading;
 using Dolittle.Assemblies;
 using Dolittle.Bootstrapping;
 using Dolittle.DependencyInversion;
+using Dolittle.Execution;
 using Dolittle.Logging;
 using Microsoft.Extensions.Logging;
 
@@ -21,6 +22,8 @@ namespace Dolittle.Hosting
         /// </summary>
         public Host(ILoggerFactory loggerFactory = null, bool skipBootProcedures=false)
         {
+            ExecutionContextManager.SetInitialExecutionContext();
+            
             if( loggerFactory == null ) loggerFactory = new LoggerFactory();
             var logAppenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory);
             var logger = new Logger(logAppenders);
