@@ -139,6 +139,7 @@ namespace Dolittle.Build.Artifact
                 logger.Debug("Artifacts:");
                 foreach (var artifactDefinition in artifactDefinitions)
                     logger.Debug($"\tArtifact: {artifactDefinition.Artifact.Value} CLR-type: {artifactDefinition.Type.TypeString} @{artifactDefinition.Generation.Value}");
+                throw new ArtifactNoLongerInStructure();
             }
         }
 
