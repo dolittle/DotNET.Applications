@@ -3,6 +3,7 @@ title: .NET Core SDK
 description: The home of the .NET Core SDK
 keywords: General
 author: einari
+weight: 3
 ---
 The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”,
 “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in
