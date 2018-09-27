@@ -31,7 +31,7 @@ namespace MyNamespace
     {
     }
 }
-````
+```
 
 Once you have a class marked with this interface, you **MUST** implement a method for the event you want to
 process. Since the `ICanProcessEvents` does not require you to implement anything - it means that this is
@@ -83,4 +83,4 @@ namespace MyNamespace
         }
     }
 }
-````
+```
