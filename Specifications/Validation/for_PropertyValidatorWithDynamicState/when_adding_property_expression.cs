@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+using System.Linq;
 using Machine.Specifications;
 
 namespace Dolittle.FluentValidation.for_PropertyValidatorWithDynamicState

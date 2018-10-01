@@ -1,4 +1,8 @@
-﻿using Machine.Specifications;
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+using Machine.Specifications;
 
 namespace Dolittle.FluentValidation.for_BusinessValidator
 {

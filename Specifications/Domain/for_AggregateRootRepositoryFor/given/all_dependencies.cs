@@ -1,4 +1,8 @@
-﻿using Dolittle.Runtime.Commands.Coordination;
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+using Dolittle.Runtime.Commands.Coordination;
 using Dolittle.Logging;
 using Machine.Specifications;
 using Moq;
