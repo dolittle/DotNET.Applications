@@ -49,7 +49,6 @@ namespace Dolittle.Build
             try
             {
                 InitialSetup();
-
                 _logger.Information("Build process started");
                 var startTime = DateTime.UtcNow;
                 var parsingResults = BuildToolArgumentsParser.Parse(args);
