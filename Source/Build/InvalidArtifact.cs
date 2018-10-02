@@ -6,15 +6,29 @@ using System;
 
 namespace Dolittle.Build
 {
-    internal class InvalidArtifact : Exception
+    /// <summary>
+    /// The exception that gets thrown when an invalid artifact is discovered
+    /// </summary>
+    public class InvalidArtifact : Exception
     {
-        internal InvalidArtifact() 
+        /// <summary>
+        /// Instantiates an instance of <see cref="InvalidArtifact"/>
+        /// </summary>
+        public InvalidArtifact() 
             : base("Invalid Artifacts was discovered") 
         { }
-        internal InvalidArtifact(Type type)
+
+        /// <summary>
+        /// Instantiates an instance of <see cref="InvalidArtifact"/>
+        /// </summary>
+        public InvalidArtifact(Type type)
             : base($"Artifact {type.Name} with namespace = {type.Namespace} is invalid")
         { }
-        internal InvalidArtifact(string typePath)
+
+        /// <summary>
+        /// Instantiates an instance of <see cref="InvalidArtifact"/>
+        /// </summary>
+        public InvalidArtifact(string typePath)
             : base($"Artifact with type path (a Module name + Feature names composition) {typePath} is invalid")
         { }
     }
