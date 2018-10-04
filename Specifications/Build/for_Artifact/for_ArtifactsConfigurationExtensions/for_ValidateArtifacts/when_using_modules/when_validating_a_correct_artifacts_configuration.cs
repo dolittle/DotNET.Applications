@@ -8,21 +8,21 @@ using System.Linq;
 using Dolittle.Artifacts.Configuration;
 using Machine.Specifications;
 
-namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensions.for_ValidateArtifacts.when_not_using_modules
+namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensions.for_ValidateArtifacts.when_using_modules
 {
     public class when_validating_a_correct_artifacts_configuration : given.an_ArtifactsConfiguration
     {
         static readonly Type[] all_used_types = new []
         {
-            typeof(Specs.Feature.TheCommand), typeof(Specs.Feature.TheEvent),
-            typeof(Specs.Feature.TheQuery), typeof(Specs.Feature.TheReadModel),
-            typeof(Specs.Feature.TheEventSource), typeof(Specs.Feature3.TheCommand), 
-            typeof(Specs.Feature3.TheEvent), typeof(Specs.Feature3.TheQuery),
-            typeof(Specs.Feature3.TheReadModel), typeof(Specs.Feature3.TheEventSource),
+            typeof(Specs.Module.Feature.TheCommand), typeof(Specs.Module.Feature.TheEvent),
+            typeof(Specs.Module.Feature.TheQuery), typeof(Specs.Module.Feature.TheReadModel),
+            typeof(Specs.Module.Feature.TheEventSource), typeof(Specs.Module.Feature3.TheCommand), 
+            typeof(Specs.Module.Feature3.TheEvent), typeof(Specs.Module.Feature3.TheQuery),
+            typeof(Specs.Module.Feature3.TheReadModel), typeof(Specs.Module.Feature3.TheEventSource),
         };
         static readonly Type[] too_few_types = new []
         {
-            typeof(Specs.Feature.TheCommand), typeof(Specs.Feature.TheEvent),
+            typeof(Specs.Module.Feature.TheCommand), typeof(Specs.Module.Feature.TheEvent),
         };
         static Exception exception_when_validating_with_all_used_types; 
         static Exception exception_when_validating_with_too_few_types; 

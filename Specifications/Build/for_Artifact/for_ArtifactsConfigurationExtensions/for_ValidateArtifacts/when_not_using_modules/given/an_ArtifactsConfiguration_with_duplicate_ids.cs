@@ -12,9 +12,9 @@ using Machine.Specifications;
 
 namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensions.for_ValidateArtifacts.when_not_using_modules.given
 {
-    public class an_ArtifactsConfiguration : given.a_bounded_context_config
+    public class an_ArtifactsConfiguration_with_duplicate_ids : given.a_bounded_context_config
     {
-        
+        protected readonly static ArtifactId duplicate_id = Guid.NewGuid();
         protected static ArtifactsConfiguration artifacts_configuration = new ArtifactsConfiguration();
 
         static readonly ArtifactsByTypeDefinition feature1_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
@@ -25,7 +25,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
             if (is_established) return;
             is_established = true;
 
-            var command_artifact_1 = new ArtifactDefinition(){Artifact = Guid.NewGuid(), Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Feature.TheCommand))};
+            var command_artifact_1 = new ArtifactDefinition(){Artifact = duplicate_id, Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Feature.TheCommand))};
             var command_artifact_2 = new ArtifactDefinition(){Artifact = Guid.NewGuid(), Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Feature3.TheCommand))};
             
             var event_artifact_1 = new ArtifactDefinition(){Artifact = Guid.NewGuid(), Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Feature.TheEvent))};
@@ -34,7 +34,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
             var query_artifact_1 = new ArtifactDefinition(){Artifact = Guid.NewGuid(), Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Feature.TheQuery))};
             var query_artifact_2 = new ArtifactDefinition(){Artifact = Guid.NewGuid(), Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Feature3.TheQuery))};
             
-            var read_model_artifact_1 = new ArtifactDefinition(){Artifact = Guid.NewGuid(), Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Feature.TheReadModel))};
+            var read_model_artifact_1 = new ArtifactDefinition(){Artifact = duplicate_id, Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Feature.TheReadModel))};
             var read_model_artifact_2 = new ArtifactDefinition(){Artifact = Guid.NewGuid(), Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Feature3.TheReadModel))};
             
             var event_source_artifact_1 = new ArtifactDefinition(){Artifact = Guid.NewGuid(), Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Feature.TheEventSource))};
