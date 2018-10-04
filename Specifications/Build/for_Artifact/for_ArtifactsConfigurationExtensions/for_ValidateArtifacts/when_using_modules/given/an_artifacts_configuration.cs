@@ -12,13 +12,13 @@ using Machine.Specifications;
 
 namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensions.for_ValidateArtifacts.when_using_modules.given
 {
-    public class an_ArtifactsConfiguration : given.a_bounded_context_config
+    public class an_artifacts_configuration : given.a_bounded_context_config
     {
         
         protected static ArtifactsConfiguration artifacts_configuration = new ArtifactsConfiguration();
 
-        static readonly ArtifactsByTypeDefinition feature1_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
-        static readonly ArtifactsByTypeDefinition feature2_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
+        static readonly ArtifactsByTypeDefinition first_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
+        static readonly ArtifactsByTypeDefinition second_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
         static bool is_established = false;
         Establish context = () => 
         {
@@ -40,22 +40,22 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
             var event_source_artifact_1 = new ArtifactDefinition(){Artifact = Guid.NewGuid(), Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Module.Feature.TheEventSource))};
             var event_source_artifact_2 = new ArtifactDefinition(){Artifact = Guid.NewGuid(), Generation = ArtifactGeneration.First, Type = ClrType.FromType(typeof(Specs.Module.Feature3.TheEventSource))};
             
-            feature1_artifacts_definition_by_type.Commands = new []{command_artifact_1};
-            feature1_artifacts_definition_by_type.Events = new []{event_artifact_1};
-            feature1_artifacts_definition_by_type.Queries = new []{query_artifact_1};
-            feature1_artifacts_definition_by_type.ReadModels = new []{read_model_artifact_1};
-            feature1_artifacts_definition_by_type.EventSources = new []{event_source_artifact_1};
+            first_feature_artifacts_definition_by_type.Commands = new []{command_artifact_1};
+            first_feature_artifacts_definition_by_type.Events = new []{event_artifact_1};
+            first_feature_artifacts_definition_by_type.Queries = new []{query_artifact_1};
+            first_feature_artifacts_definition_by_type.ReadModels = new []{read_model_artifact_1};
+            first_feature_artifacts_definition_by_type.EventSources = new []{event_source_artifact_1};
 
 
-            feature2_artifacts_definition_by_type.Commands = new []{command_artifact_2};
-            feature2_artifacts_definition_by_type.Events = new []{event_artifact_2};
-            feature2_artifacts_definition_by_type.Queries = new []{query_artifact_2};
-            feature2_artifacts_definition_by_type.ReadModels = new []{read_model_artifact_2};
-            feature2_artifacts_definition_by_type.EventSources = new []{event_source_artifact_2};
+            second_feature_artifacts_definition_by_type.Commands = new []{command_artifact_2};
+            second_feature_artifacts_definition_by_type.Events = new []{event_artifact_2};
+            second_feature_artifacts_definition_by_type.Queries = new []{query_artifact_2};
+            second_feature_artifacts_definition_by_type.ReadModels = new []{read_model_artifact_2};
+            second_feature_artifacts_definition_by_type.EventSources = new []{event_source_artifact_2};
             
-            artifacts_configuration.Artifacts.Add(feature1, feature1_artifacts_definition_by_type);
+            artifacts_configuration.Artifacts.Add(feature1, first_feature_artifacts_definition_by_type);
 
-            artifacts_configuration.Artifacts.Add(feature2, feature2_artifacts_definition_by_type);
+            artifacts_configuration.Artifacts.Add(feature2, second_feature_artifacts_definition_by_type);
         };   
     }
 }

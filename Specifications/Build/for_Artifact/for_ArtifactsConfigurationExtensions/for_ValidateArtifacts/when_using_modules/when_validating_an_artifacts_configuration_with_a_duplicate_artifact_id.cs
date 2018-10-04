@@ -10,7 +10,7 @@ using Machine.Specifications;
 
 namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensions.for_ValidateArtifacts.when_using_modules
 {
-    public class when_validating_an_artifacts_configuration_with_a_duplicate_artifact_id : given.an_ArtifactsConfiguration_with_duplicate_ids
+    public class when_validating_an_artifacts_configuration_with_a_duplicate_artifact_id : given.an_artifacts_configuration_with_duplicate_ids
     {
         static readonly Type[] all_used_types = new []
         {
@@ -21,11 +21,10 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
             typeof(Specs.Module.Feature3.TheReadModel), typeof(Specs.Module.Feature3.TheEventSource),
         };
         static Exception exception_result; 
-        Because of = () => 
-        {
+        Because of_validating_with_duplicate_artifact_ids = () => 
             exception_result = Catch.Exception( () => artifacts_configuration.ValidateArtifacts(bounded_context_config, all_used_types, logger));
-        };
-        It should_not_throw_exception_when_validating_with_all_used_types = () => exception_result.ShouldNotBeNull();
+            
+        It should_throw_exception = () => exception_result.ShouldNotBeNull();
         It should_throw_DuplicateArtifact = () => exception_result.ShouldBeOfExactType(typeof(DuplicateArtifact));
     }
 }

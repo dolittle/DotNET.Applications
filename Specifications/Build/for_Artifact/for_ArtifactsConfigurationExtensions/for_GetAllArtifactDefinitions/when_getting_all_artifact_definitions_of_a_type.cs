@@ -10,7 +10,7 @@ using Machine.Specifications;
 
 namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensions.for_GetAllArtifactDefinitions
 {
-    public class when_getting_all_artifact_definitions_of_a_type: given.an_ArtifactConfiguration_with_two_features
+    public class when_getting_all_artifact_definitions_of_a_type: given.an_artifact_configuration_with_two_features
     {
         static IEnumerable<ArtifactDefinition> result_command_artifact_definitions;
         static IEnumerable<ArtifactDefinition> result_event_artifact_definitions;

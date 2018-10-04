@@ -8,7 +8,7 @@ using Dolittle.Artifacts.Configuration;
 using Machine.Specifications;
 namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensions.for_GetAllArtifactDefinitions
 {
-    public class when_getting_all_artifact_definitions: given.an_ArtifactConfiguration_with_two_features
+    public class when_getting_all_artifact_definitions: given.an_artifact_configuration_with_two_features
     {
         static IEnumerable<ArtifactDefinition> result_artifact_definitions;
 

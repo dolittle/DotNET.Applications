@@ -14,11 +14,8 @@ using Machine.Specifications;
 
 namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensions.for_ValidateArtifacts.when_using_modules.given
 {
-    public class a_bounded_context_config : Dolittle.Build.given.an_ILogger
+    public class a_bounded_context_config : all_dependencies
     {
-        protected static readonly Module module = Guid.NewGuid();
-        protected static readonly Feature feature1 = Guid.NewGuid();
-        protected static readonly Feature feature2 = Guid.NewGuid();
         protected static BoundedContextTopology bounded_context_config;
         Establish context = () => 
         {

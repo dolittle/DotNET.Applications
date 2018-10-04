@@ -10,7 +10,7 @@ using Machine.Specifications;
 
 namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensions.for_ValidateArtifacts.when_not_using_modules
 {
-    public class when_validating_a_correct_artifacts_configuration : given.an_ArtifactsConfiguration
+    public class when_validating_a_correct_artifacts_configuration : given.an_artifacts_configuration
     {
         static readonly Type[] all_used_types = new []
         {
@@ -20,19 +20,10 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
             typeof(Specs.Feature3.TheEvent), typeof(Specs.Feature3.TheQuery),
             typeof(Specs.Feature3.TheReadModel), typeof(Specs.Feature3.TheEventSource),
         };
-        static readonly Type[] too_few_types = new []
-        {
-            typeof(Specs.Feature.TheCommand), typeof(Specs.Feature.TheEvent),
-        };
         static Exception exception_when_validating_with_all_used_types; 
-        static Exception exception_when_validating_with_too_few_types; 
-        Because of = () => 
-        {
+        Because of_validating_configuration_with_all_used_types = () => 
             exception_when_validating_with_all_used_types = Catch.Exception( () => artifacts_configuration.ValidateArtifacts(bounded_context_config, all_used_types, logger));
-            exception_when_validating_with_too_few_types = Catch.Exception(() => artifacts_configuration.ValidateArtifacts(bounded_context_config, too_few_types, logger));
-        };
-        It should_not_throw_exception_when_validating_with_all_used_types = () => exception_when_validating_with_all_used_types.ShouldBeNull();
-        It should_throw_an_exception_when_validating_with_too_few_types = () => exception_when_validating_with_too_few_types.ShouldNotBeNull();
-        It should_throw_ArtifactNoLongerInStructure_when_validating_with_too_few_types = () => exception_when_validating_with_too_few_types.ShouldBeOfExactType(typeof(ArtifactNoLongerInStructure));
+        
+        It should_not_throw_exception = () => exception_when_validating_with_all_used_types.ShouldBeNull();
     }
 }
