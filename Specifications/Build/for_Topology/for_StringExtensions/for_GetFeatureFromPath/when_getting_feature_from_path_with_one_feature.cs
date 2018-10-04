@@ -22,10 +22,10 @@ namespace Dolittle.Build.Topology.for_Topology.for_StringExtensions.for_GetFeatu
             
         };
 
-        It should_generate_a_FeatureDefinition = () => feature_definition.ShouldNotBeNull();
-        It should_should_have_first_FeatureDefinition_with_correct_name = () => feature_definition.Name.ShouldEqual((FeatureName)feature1_name);
-        It should_should_have_first_FeatureDefinition_with_valid_feature_id = () => feature_definition.Feature.ShouldNotEqual((Feature)Guid.Empty);
-        It should_should_have_first_FeatureDefinition_with_no_sub_features = () => feature_definition.SubFeatures.Count().ShouldEqual(0);
+        It should_generate_a_feature_definition = () => feature_definition.ShouldNotBeNull();
+        It should_should_have_first_feature_definition_with_correct_name = () => feature_definition.Name.ShouldEqual((FeatureName)feature1_name);
+        It should_should_have_first_feature_definition_with_valid_feature_id = () => feature_definition.Feature.ShouldNotEqual((Feature)Guid.Empty);
+        It should_should_have_first_feature_definition_with_no_sub_features = () => feature_definition.SubFeatures.Count().ShouldEqual(0);
 
     }
 }

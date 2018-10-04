@@ -25,9 +25,9 @@ namespace Dolittle.Build.Topology.for_Topology.for_StringExtensions.for_GetModul
         It should_have_a_valid_module_id = () => module_definition.Module.ShouldNotEqual((Module)Guid.Empty);
         It should_have_one_feature = () => module_definition.Features.Count().ShouldEqual(1);
         
-        It should_should_have_first_FeatureDefinition_with_correct_name = () => module_definition.Features.First().Name.ShouldEqual((FeatureName)feature1_name);
-        It should_should_have_first_FeatureDefinition_with_valid_feature_id = () => module_definition.Features.First().Feature.ShouldNotEqual((Feature)Guid.Empty);
-        It should_should_have_first_FeatureDefinition_with_no_sub_features = () => module_definition.Features.First().SubFeatures.Count().ShouldEqual(0);
+        It should_should_have_first_feature_definition_with_correct_name = () => module_definition.Features.First().Name.ShouldEqual((FeatureName)feature1_name);
+        It should_should_have_first_feature_definition_with_valid_feature_id = () => module_definition.Features.First().Feature.ShouldNotEqual((Feature)Guid.Empty);
+        It should_should_have_first_feature_definition_with_no_sub_features = () => module_definition.Features.First().SubFeatures.Count().ShouldEqual(0);
         
     }
 }

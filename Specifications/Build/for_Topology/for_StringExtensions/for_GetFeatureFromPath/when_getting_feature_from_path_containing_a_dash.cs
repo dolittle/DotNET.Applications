@@ -10,15 +10,14 @@ using Machine.Specifications;
 
 namespace Dolittle.Build.Topology.for_Topology.for_StringExtensions.for_GetFeatureFromPath
 {
-    public class when_getting_feature_from_path_with_no_feature
+    public class when_getting_feature_from_path_containing_a_dash
     {
-        static readonly string empty_path = "";
-        static Exception exception_result_for_empty_path;
-
-        Because of_getting_feature_defintion = () => 
-            exception_result_for_empty_path = Catch.Exception(() => empty_path.GetFeatureFromPath());
-
-        It should_throw_an_exception = () => exception_result_for_empty_path.ShouldNotBeNull();
+        static readonly string path_containing_dash = "Invalid-Feature";
+        static Exception exception_result_for_path_containing_dash;
+        Because of_getting_feature_definition = () => 
+            exception_result_for_path_containing_dash = Catch.Exception(() => path_containing_dash.GetFeatureFromPath());
+        
+        It should_throw_an_exception = () => exception_result_for_path_containing_dash.ShouldNotBeNull();
 
     }
 }
