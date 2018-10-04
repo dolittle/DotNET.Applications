@@ -12,22 +12,19 @@ using Dolittle.Artifacts.Configuration;
 using Dolittle.Build.Topology;
 using Machine.Specifications;
 
-namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactConfigurationBuilder.when_using_modules.given
+namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactConfigurationBuilder.when_using_modules_modules.given
 {
-    public class a_bounded_context_config : Dolittle.Build.given.an_ILogger
+    public class a_bounded_context_config : all_dependencies
     {
-        protected static readonly Module module = Guid.NewGuid();
-        protected static readonly Feature feature1 = Guid.NewGuid();
-        protected static readonly Feature feature2 = Guid.NewGuid();
-        protected static BoundedContextTopology bounded_context_config;
+         protected static BoundedContextTopology bounded_context_config;
         Establish context = () => 
         {
             var modules = new []
             {
                 new ModuleDefinition(){Module = Guid.NewGuid(), Name = "Module", Features = new []
                 {
-                    new FeatureDefinition(){Feature = feature1, Name = "Feature"},
-                    new FeatureDefinition(){Feature = feature2, Name = "Feature3"}
+                    new FeatureDefinition(){Feature = first_feature, Name = "Feature"},
+                    new FeatureDefinition(){Feature = second_feature, Name = "Feature3"}
                 }}
             };
             var topology = new Applications.Configuration.Topology(){Modules = modules};

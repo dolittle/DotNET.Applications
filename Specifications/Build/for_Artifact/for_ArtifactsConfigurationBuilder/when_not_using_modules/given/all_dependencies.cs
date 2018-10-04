@@ -14,18 +14,10 @@ using Machine.Specifications;
 
 namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactConfigurationBuilder.when_not_using_modules.given
 {
-    public class a_bounded_context_config : all_dependencies
+    public class all_dependencies : Dolittle.Build.given.an_ILogger
     {
-        protected static BoundedContextTopology bounded_context_config;
-        Establish context = () => 
-        {
-            var topology = new Applications.Configuration.Topology(){Features = new []
-            {
-                new FeatureDefinition(){Feature = first_feature, Name = "Feature"},
-                new FeatureDefinition(){Feature = second_feature, Name = "Feature3"}
-            }};
-            
-            bounded_context_config = new BoundedContextTopology(topology, false, new Dictionary<Area, IEnumerable<string>>());
-        };
+        protected static readonly Feature first_feature = Guid.NewGuid();
+        protected static readonly Feature second_feature = Guid.NewGuid();
+        
     }
 }

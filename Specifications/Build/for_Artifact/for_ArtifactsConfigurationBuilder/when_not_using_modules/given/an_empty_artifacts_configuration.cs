@@ -6,9 +6,9 @@
 using Dolittle.Artifacts.Configuration;
 using Machine.Specifications;
 
-namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactConfigurationBuilder.when_using_modules.given
+namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactConfigurationBuilder.when_not_using_modules.given
 {
-    public class an_empty_ArtifactsConfiguration : given.a_bounded_context_config
+    public class an_empty_artifacts_configuration : given.a_bounded_context_config
     {
         protected readonly static DolittleArtifactTypes artifact_types = new DolittleArtifactTypes();
         protected static ArtifactsConfiguration artifacts_configuration;
