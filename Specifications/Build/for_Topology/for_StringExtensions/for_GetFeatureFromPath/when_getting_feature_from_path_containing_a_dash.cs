@@ -19,5 +19,7 @@ namespace Dolittle.Build.Topology.for_Topology.for_StringExtensions.for_GetFeatu
         
         It should_throw_an_exception = () => exception_result_for_path_containing_dash.ShouldNotBeNull();
 
+        It should_throw_ArgumentException = () => exception_result_for_path_containing_dash.ShouldBeOfExactType<ArgumentException>();
+
     }
 }

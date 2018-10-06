@@ -17,5 +17,7 @@ namespace Dolittle.Build.Topology.for_Topology.for_StringExtensions.for_GetModul
          Because of = () => result_exception = Catch.Exception(() => path.GetModuleFromPath());
 
          It should_throw_an_exception = () => result_exception.ShouldNotBeNull();
+         It should_throw_ArgumentException = () => result_exception.ShouldBeOfExactType<ArgumentException>();
+        
     }
 }

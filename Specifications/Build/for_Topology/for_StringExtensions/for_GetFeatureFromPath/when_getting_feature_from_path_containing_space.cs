@@ -18,6 +18,7 @@ namespace Dolittle.Build.Topology.for_Topology.for_StringExtensions.for_GetFeatu
             exception_result_for_path_containing_whitespace = Catch.Exception(() => path_containing_whitespace.GetFeatureFromPath());
         
         It should_throw_an_exception = () => exception_result_for_path_containing_whitespace.ShouldNotBeNull();
+        It should_throw_ArgumentException = () => exception_result_for_path_containing_whitespace.ShouldBeOfExactType<ArgumentException>();
         
     }
 }

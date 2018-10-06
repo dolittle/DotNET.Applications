@@ -19,6 +19,8 @@ namespace Dolittle.Build.Topology.for_Topology.for_StringExtensions.for_GetFeatu
             exception_result_for_empty_path = Catch.Exception(() => empty_path.GetFeatureFromPath());
 
         It should_throw_an_exception = () => exception_result_for_empty_path.ShouldNotBeNull();
+        It should_throw_ArgumentException = () => exception_result_for_empty_path.ShouldBeOfExactType<ArgumentException>();
+        
 
     }
 }
