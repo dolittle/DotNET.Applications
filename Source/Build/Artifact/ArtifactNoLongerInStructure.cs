@@ -7,8 +7,15 @@ using System.Runtime.Serialization;
 
 namespace Dolittle.Build.Artifact
 {
-    internal class ArtifactNoLongerInStructure : Exception
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ArtifactNoLongerInStructure : Exception
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ArtifactNoLongerInStructure() : base("Found artifacts that doesn't exist anymore. Since we have not formalized artifact migration yet the build has to fail")
         {
         }

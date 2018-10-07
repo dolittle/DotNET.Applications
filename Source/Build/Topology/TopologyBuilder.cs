@@ -27,13 +27,13 @@ namespace Dolittle.Build.Topology
         /// Instantiates an instance of <see cref="TopologyBuilder"/>
         /// </summary>
         /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
-        /// <param name="boundedContextTopoplogy">The <see cref="BoundedContextConfiguration"/> that will be modified, validated and returned from Build</param>
+        /// <param name="boundedContextTopology">The <see cref="BoundedContextConfiguration"/> that will be modified, validated and returned from Build</param>
         /// <param name="logger"></param>
-        public TopologyBuilder(Type[] artifacts, BoundedContextTopology boundedContextTopoplogy, ILogger logger)
+        public TopologyBuilder(Type[] artifacts, BoundedContextTopology boundedContextTopology, ILogger logger)
         {
             _artifactTypes = artifacts;
             _logger = logger;
-            _configuration = boundedContextTopoplogy;
+            _configuration = boundedContextTopology;
         }
         /// <summary>
         /// Builds a valid <see cref="BoundedContextConfiguration"/>
