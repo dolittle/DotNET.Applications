@@ -30,8 +30,8 @@ namespace Dolittle.Hosting
 
             var assemblies = Dolittle.Assemblies.Bootstrap.EntryPoint.Initialize(logger);
             var typeFinder = Dolittle.Types.Bootstrap.EntryPoint.Initialize(assemblies);
-
-
+            Dolittle.Resources.Configuration.Bootstrap.EntryPoint.Initialize(typeFinder);
+            
             var bindings = new[] {
                 new BindingBuilder(Binding.For(typeof(IAssemblies))).To(assemblies).Build(),
                 new BindingBuilder(Binding.For(typeof(Logging.ILogger))).To(logger).Build(),

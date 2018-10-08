@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using Dolittle.Resources;
 
 namespace Dolittle.Applications.Configuration
 {
@@ -27,6 +28,10 @@ namespace Dolittle.Applications.Configuration
         /// </summary>
         public BoundedContextName BoundedContextName {get; set;}
         /// <summary>
+        /// Gets or sets the Resource configurations
+        /// </summary>
+        public IDictionary<ResourceType, ResourceTypeImplementationConfiguration> Resources {get; set;} = new Dictionary<ResourceType, ResourceTypeImplementationConfiguration>();
+        /// <summary>
         /// Gets or sets the <see cref="BackendConfiguration"/>
         /// </summary>
         public BackendConfiguration Backend {get; set;}
@@ -35,6 +40,5 @@ namespace Dolittle.Applications.Configuration
         /// </summary>
         /// <value></value>
         public IEnumerable<InteractionLayerConfiguration> Interaction {get; set;} = new InteractionLayerConfiguration[0];
-
     }
 }

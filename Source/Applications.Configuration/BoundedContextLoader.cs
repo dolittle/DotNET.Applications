@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.IO;
+using Dolittle.Execution;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Serialization.Json;
@@ -25,6 +26,8 @@ namespace Dolittle.Applications.Configuration
             }
         );
 
+        BoundedContextConfiguration _instance;
+
         /// <summary>
         /// Initializes a new instance of <see cref="BoundedContextLoader"/>
         /// </summary>
@@ -35,16 +38,21 @@ namespace Dolittle.Applications.Configuration
             _serializer = serializer;
             _logger = logger;
         }
+
         /// <inheritdoc/>
         public BoundedContextConfiguration Load(string relativePath)
         {
+            if (_instance != null) return _instance;
+
             var path = GetPath(relativePath);
             if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(path);
             
             var json = File.ReadAllText(path);
             var configuration = _serializer.FromJson<BoundedContextConfiguration>(json, _serializationOptions);
+            _instance = configuration;
             return configuration;
         }
+        
         string GetPath(string relativePath)
         {
             return Path.Combine(Directory.GetCurrentDirectory(), relativePath);
