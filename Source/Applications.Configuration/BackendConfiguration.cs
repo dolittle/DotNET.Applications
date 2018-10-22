@@ -5,12 +5,12 @@
 namespace Dolittle.Applications.Configuration
 {
     /// <summary>
-    /// Represents the configuration for the <see cref="BoundedContext"/> backend
+    /// Represents the configuration for the <see cref="BoundedContext"/> core
     /// </summary>
-    public class BackendConfiguration
+    public class CoreConfiguration
     {
         /// <summary>
-        /// The backend programming language used in the backend
+        /// The core programming language used in the
         /// </summary>
         public string Language {get; set;}
         /// <summary>
