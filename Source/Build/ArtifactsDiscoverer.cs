@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dolittle.Logging;
+using Dolittle.Reflection;
 
 namespace Dolittle.Build
 {
@@ -54,8 +55,10 @@ namespace Dolittle.Build
                 .GetProjectReferencedAssemblies()
                 .SelectMany(_ => _.ExportedTypes)
                 .Where(_ =>
+                    !_.GetTypeInfo().IsAbstract && !_.ContainsGenericParameters
+                    && 
                     _artifactTypes
-                    .Any(at => !_.GetTypeInfo().IsAbstract && at.Type.IsAssignableFrom(_)))
+                    .Any(at => at.Type.IsAssignableFrom(_)))
                 .ToArray();
         }
 
