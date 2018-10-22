@@ -55,7 +55,7 @@ namespace Dolittle.Build
                 .SelectMany(_ => _.ExportedTypes)
                 .Where(_ =>
                     _artifactTypes
-                    .Any(at => at.Type.IsAssignableFrom(_)))
+                    .Any(at => !_.GetTypeInfo().IsAbstract && at.Type.IsAssignableFrom(_)))
                 .ToArray();
         }
 
