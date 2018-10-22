@@ -9,5 +9,9 @@
     <ItemGroup>
         <ProjectReference Include="../**/*.csproj" Exclude="../AggregatedPackage/SDK.csproj;../Build/Build.csproj;../Build.MSBuild/Build.MSBuild.csproj" />
     </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Dolittle.Serialization.Json" Version="2.0.0-*" />
+        <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="2.0.0-*" />
+    </ItemGroup>
 </Project>
 
