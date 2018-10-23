@@ -1,4 +1,4 @@
-namespace Dolittle.Build.Specs.for_ArtifactsDiscoverer.given
+namespace Dolittle.Build.for_ArtifactsDiscoverer.given
 {
     public class all : Dolittle.Build.given.an_ILogger
     {

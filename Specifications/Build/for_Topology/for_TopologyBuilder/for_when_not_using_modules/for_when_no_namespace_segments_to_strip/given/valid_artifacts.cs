@@ -14,6 +14,7 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_not_
     {
         protected static readonly Type[] artifacts = new []
         {
+            
             typeof(Specs.Feature.TheCommand),
             typeof(Specs.Feature.TheEvent),
             typeof(Specs.Feature.Feature2.TheEvent),

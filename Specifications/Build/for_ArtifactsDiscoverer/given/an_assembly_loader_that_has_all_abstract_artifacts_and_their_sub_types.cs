@@ -7,7 +7,7 @@ using Moq;
 
 using Specs.Feature;
 
-namespace Dolittle.Build.Specs.for_ArtifactsDiscoverer.given
+namespace Dolittle.Build.for_ArtifactsDiscoverer.given
 {
     public class an_assembly_loader_that_has_all_abstract_artifacts_and_their_sub_types : given.all
     {
@@ -27,11 +27,11 @@ namespace Dolittle.Build.Specs.for_ArtifactsDiscoverer.given
             typeof(ImplementationOfAbstractQuery),
             typeof(ImplementationOfAbstractReadModel),
         };
-        protected static Mock<AssemblyLoader> assembly_loader_mock;
+        protected static Mock<IAssemblyLoader> assembly_loader_mock;
 
         Establish context = () =>
         {
-            assembly_loader_mock = new Mock<AssemblyLoader>();
+            assembly_loader_mock = new Mock<IAssemblyLoader>();
 
             var assembly_mock = new Mock<Assembly>();
             assembly_mock.Setup(_ => _.ExportedTypes).Returns(abstract_types.Concat(non_abstract_subtypes_of_the_abstract_types));
