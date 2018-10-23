@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dolittle.Logging;
+using Dolittle.Reflection;
 
 namespace Dolittle.Build
 {
@@ -15,7 +16,7 @@ namespace Dolittle.Build
     /// </summary>
     public class ArtifactsDiscoverer
     {
-        readonly AssemblyLoader _assemblyLoader;
+        readonly IAssemblyLoader _assemblyLoader;
         readonly ArtifactType[] _artifactTypes;
         readonly ILogger _logger;
 
@@ -29,7 +30,7 @@ namespace Dolittle.Build
         /// <param name="assemblyLoader"></param>
         /// <param name="artifactTypes"></param>
         /// <param name="logger"></param>
-        public ArtifactsDiscoverer(AssemblyLoader assemblyLoader, DolittleArtifactTypes artifactTypes, ILogger logger)
+        public ArtifactsDiscoverer(IAssemblyLoader assemblyLoader, DolittleArtifactTypes artifactTypes, ILogger logger)
         {
             _assemblyLoader = assemblyLoader;
             _artifactTypes = artifactTypes.ArtifactTypes;
@@ -54,6 +55,8 @@ namespace Dolittle.Build
                 .GetProjectReferencedAssemblies()
                 .SelectMany(_ => _.ExportedTypes)
                 .Where(_ =>
+                    !_.GetTypeInfo().IsAbstract && !_.ContainsGenericParameters
+                    && 
                     _artifactTypes
                     .Any(at => at.Type.IsAssignableFrom(_)))
                 .ToArray();
