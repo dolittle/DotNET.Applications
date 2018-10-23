@@ -75,7 +75,7 @@ bounded-context.json:
   "application": "0d577eb8-a70b-4e38-aca8-f85b3166bdc2",
   "boundedContext": "f660966d-3a74-44e6-8268-a9aefbae6115",
   "boundedContextName": "Shop",
-  "backend": {
+  "core": {
     "language" "csharp"
   }
 }
@@ -84,8 +84,8 @@ bounded-context.json:
 * application - The GUID of the Application that this *Bounded Context* belongs to
 * boundedContext - The GUID of the *Bounded Context*
 * boundedContextName - The name of the *Bounded Context*
-* backend - Configuration of the backend
-* backend.language - The language of the backend configuration, very important for the dolittle cli tool. Only supports 'csharp' for now
+* core - Configuration of the core
+* core.language - The language of the core configuration, very important for the dolittle cli tool. Only supports 'csharp' for now
 
 
 ## Topology

@@ -32,9 +32,9 @@ namespace Dolittle.Applications.Configuration
         /// </summary>
         public IDictionary<ResourceType, ResourceTypeImplementationConfiguration> Resources {get; set;} = new Dictionary<ResourceType, ResourceTypeImplementationConfiguration>();
         /// <summary>
-        /// Gets or sets the <see cref="BackendConfiguration"/>
+        /// Gets or sets the <see cref="CoreConfiguration"/>
         /// </summary>
-        public BackendConfiguration Backend {get; set;}
+        public CoreConfiguration Core {get; set;}
         /// <summary>
         /// Gets or sets the <see cref="InteractionLayerConfiguration"/> list
         /// </summary>
