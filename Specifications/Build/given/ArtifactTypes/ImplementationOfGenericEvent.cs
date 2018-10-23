@@ -5,7 +5,7 @@
 
 using Dolittle.Events;
 
-namespace Specs
+namespace Specs.Feature
 {
     public class ImplementationOfGenericEvent : GenericEvent<int>
     {

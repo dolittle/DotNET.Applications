@@ -5,7 +5,7 @@
 
 using Dolittle.Events;
 
-namespace Specs
+namespace Specs.Feature
 {
     public abstract class AbstractEvent : IEvent
     {

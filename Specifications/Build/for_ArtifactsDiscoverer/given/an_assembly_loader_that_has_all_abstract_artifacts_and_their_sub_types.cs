@@ -5,7 +5,7 @@ using System.Reflection;
 using Machine.Specifications;
 using Moq;
 
-using Specs;
+using Specs.Feature;
 
 namespace Dolittle.Build.Specs.for_ArtifactsDiscoverer.given
 {

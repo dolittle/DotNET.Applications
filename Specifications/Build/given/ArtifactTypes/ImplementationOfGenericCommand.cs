@@ -5,7 +5,7 @@
 
 using Dolittle.Commands;
 
-namespace Specs
+namespace Specs.Feature
 {
     public class ImplementationOfGenericCommand : GenericCommand<int>
     {

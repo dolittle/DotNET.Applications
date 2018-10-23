@@ -5,7 +5,7 @@
 
 using Dolittle.Queries;
 
-namespace Specs
+namespace Specs.Feature
 {
     public class ImplementationOfGenericQuery : GenericQuery<int>
     {

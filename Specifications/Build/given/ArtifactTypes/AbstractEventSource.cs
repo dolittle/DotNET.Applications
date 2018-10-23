@@ -6,7 +6,7 @@
 using Dolittle.Events;
 using Dolittle.Runtime.Events;
 
-namespace Specs
+namespace Specs.Feature
 {
     public abstract class AbstractEventSource : IEventSource
     {

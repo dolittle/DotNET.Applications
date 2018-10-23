@@ -5,7 +5,7 @@
 
 using Dolittle.ReadModels;
 
-namespace Specs
+namespace Specs.Feature
 {
     public abstract class AbstractReadModel : IReadModel
     {
