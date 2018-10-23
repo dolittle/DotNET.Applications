@@ -13,11 +13,8 @@ using Microsoft.Extensions.DependencyModel.Resolution;
 
 namespace Dolittle.Build
 {
-    /// <summary>
-    /// Represents a system that is capable of loading assemblies out of current <see cref="AssemblyLoadContext"/>
-    /// Based on : https://www.codeproject.com/Articles/1194332/Resolving-Assemblies-in-NET-Core
-    /// </summary>
-    public class AssemblyLoader : IDisposable
+    /// <inheritdoc/>
+    public class AssemblyLoader : IAssemblyLoader
     {
         readonly ICompilationAssemblyResolver _assemblyResolver;
 
@@ -44,25 +41,16 @@ namespace Dolittle.Build
             });
         }
 
-        /// <summary>
-        /// Gets the loaded root assembly
-        /// </summary>
+        /// <inheritdoc/>
         public Assembly Assembly { get; }
 
-        /// <summary>
-        /// Gets the <see cref="DependencyContext"/> for the <see cref="Assembly"/>
-        /// </summary>
+        /// <inheritdoc/>
         public DependencyContext DependencyContext {  get; }
 
-        /// <summary>
-        /// Gets the <see cref="AssemblyLoadContext"/> for the <see cref="Assembly"/>
-        /// </summary>
+        /// <inheritdoc/>
         public AssemblyLoadContext AssemblyLoadContext {  get; }
 
-        /// <summary>
-        /// Get assemblies that are referenced as project references to the loaded assembly
-        /// </summary>
-        /// <returns>Project <see cref="IEnumerable{Assembly}">assemblies</see></returns>
+        /// <inheritdoc/>
         public IEnumerable<Assembly> GetProjectReferencedAssemblies()
         {
             var libraries = DependencyContext.RuntimeLibraries.Cast<RuntimeLibrary>()

@@ -16,7 +16,7 @@ namespace Dolittle.Build
     /// </summary>
     public class ArtifactsDiscoverer
     {
-        readonly AssemblyLoader _assemblyLoader;
+        readonly IAssemblyLoader _assemblyLoader;
         readonly ArtifactType[] _artifactTypes;
         readonly ILogger _logger;
 
@@ -30,7 +30,7 @@ namespace Dolittle.Build
         /// <param name="assemblyLoader"></param>
         /// <param name="artifactTypes"></param>
         /// <param name="logger"></param>
-        public ArtifactsDiscoverer(AssemblyLoader assemblyLoader, DolittleArtifactTypes artifactTypes, ILogger logger)
+        public ArtifactsDiscoverer(IAssemblyLoader assemblyLoader, DolittleArtifactTypes artifactTypes, ILogger logger)
         {
             _assemblyLoader = assemblyLoader;
             _artifactTypes = artifactTypes.ArtifactTypes;
