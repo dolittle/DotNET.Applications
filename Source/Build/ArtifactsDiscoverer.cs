@@ -76,7 +76,7 @@ namespace Dolittle.Build
                 if (numSegments < 1) 
                 {
                     hasInvalidArtifact = true;
-                    _logger.Error($"Artifact {type.Name} with namespace = {type.Namespace} is invalid. An artifact's namespace must consist of at least two.");
+                    _logger.Error($"Artifact {type.Name} with namespace = {type.Namespace} is invalid. An artifact's namespace must consist of at least two segments.");
                 }
             }
             if (hasInvalidArtifact) throw new InvalidArtifact();
