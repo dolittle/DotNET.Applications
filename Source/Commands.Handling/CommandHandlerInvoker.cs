@@ -112,6 +112,7 @@ namespace Dolittle.Commands.Handling
                 catch (Exception ex)
                 {
                     _logger.Error(ex, $"Failed invoking command handler '{commandHandlerType.AssemblyQualifiedName}' for command of type '{command.Type}'");
+                    return false;
                 }
                 return true;
             }
