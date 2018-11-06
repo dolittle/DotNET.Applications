@@ -51,7 +51,7 @@ namespace Dolittle.Build
                 InitialSetup();
                 _logger.Information("Build process started");
                 var startTime = DateTime.UtcNow;
-                var parsingResults = BuildToolArgumentsParser.Parse(args);
+                var parsingResults = ArgumentsParser.Parse(args);
 
                 var boundedContextConfig = _boundedContextLoader.Load(parsingResults.BoundedContextConfigRelativePath);
 

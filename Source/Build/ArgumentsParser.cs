@@ -10,10 +10,10 @@ using Dolittle.Applications.Configuration;
 
 namespace Dolittle.Build
 {
-    internal static class BuildToolArgumentsParser
+    internal static class ArgumentsParser
     {
         static readonly Regex argumentRegex = new Regex(@"--(\w*)=(.*)", RegexOptions.Compiled); 
-        public static BuildToolArgumentsParsingResult Parse(string[] args)
+        public static ArgumentsParsingResult Parse(string[] args)
         {
             if (args.Length < 5 ) throw new ArgumentException($"The number of arguments to the Build Tool was not correct. It should be 5, it was {args.Length}");
             var assemblyPath = args[0];
@@ -24,7 +24,7 @@ namespace Dolittle.Build
             var generateProxies = HandleGenerateProxies(args);
             var proxiesBasePath = HandleProxiesBasePath(args);
 
-            return new BuildToolArgumentsParsingResult(assemblyPath, boundedContextConfigRelativePath, useModules, namespaceSegmentsToStrip, generateProxies, proxiesBasePath);
+            return new ArgumentsParsingResult(assemblyPath, boundedContextConfigRelativePath, useModules, namespaceSegmentsToStrip, generateProxies, proxiesBasePath);
         }
 
         static string HandleBoundedContextConfigPath(string[] args)

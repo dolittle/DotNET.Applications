@@ -37,7 +37,7 @@ namespace Dolittle.Build.Proxies
         /// <param name="artifacts"></param>
         /// <param name="parsingResults"></param>
         /// <param name="artifactsConfiguration"></param>
-        public void CreateProxies(Type[] artifacts, BuildToolArgumentsParsingResult parsingResults, ArtifactsConfiguration artifactsConfiguration)
+        public void CreateProxies(Type[] artifacts, ArgumentsParsingResult parsingResults, ArtifactsConfiguration artifactsConfiguration)
         {
             var builder = new ProxiesBuilder(_templateLoader, artifacts, _artifactTypes, _logger);
             builder.GenerateProxies(artifactsConfiguration, parsingResults);

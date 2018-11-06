@@ -44,7 +44,7 @@ namespace Dolittle.Build.Artifact
         /// <param name="types">The discovered artifact types from the bounded context's assemblies</param>
         /// <param name="topology">The <see cref="Applications.Configuration.Topology"/> that's used for building the <see cref="ArtifactsConfiguration"/></param>
         /// <param name="parsingResults"></param>
-        public ArtifactsConfiguration Build(Type[] types, Applications.Configuration.Topology topology, BuildToolArgumentsParsingResult parsingResults)
+        public ArtifactsConfiguration Build(Type[] types, Applications.Configuration.Topology topology, ArgumentsParsingResult parsingResults)
         {
             var artifactsConfiguration = _configurationManager.Load();
             var boundedContextTopology = new BoundedContextTopology(topology, parsingResults.UseModules, parsingResults.NamespaceSegmentsToStrip);

@@ -10,7 +10,7 @@ namespace Dolittle.Build
     /// <summary>
     /// Represents a class holding the parsing results for the Dolittle.Build Command Line Tool
     /// </summary>
-    public class BuildToolArgumentsParsingResult
+    public class ArgumentsParsingResult
     {
         /// <summary>
         /// The path of the Assembly to load from
@@ -39,7 +39,7 @@ namespace Dolittle.Build
         public string ProxiesBasePath {get; }
         
         /// <summary>
-        /// Instantiates an instance of <see cref="BuildToolArgumentsParsingResult"/>
+        /// Instantiates an instance of <see cref="ArgumentsParsingResult"/>
         /// </summary>
         /// <param name="assemblyPath"></param>
         /// <param name="boundedContextConfigRelativePath"/>
@@ -47,7 +47,7 @@ namespace Dolittle.Build
         /// <param name="namespaceSegmentsToStrip"></param>
         /// <param name="generateProxies"></param>
         /// <param name="proxiesBasePath"></param>
-        public BuildToolArgumentsParsingResult(string assemblyPath, string boundedContextConfigRelativePath, bool useModules, Dictionary<Area, IEnumerable<string>> namespaceSegmentsToStrip, bool generateProxies, string proxiesBasePath)
+        public ArgumentsParsingResult(string assemblyPath, string boundedContextConfigRelativePath, bool useModules, Dictionary<Area, IEnumerable<string>> namespaceSegmentsToStrip, bool generateProxies, string proxiesBasePath)
         {
             AssemblyPath = assemblyPath;
             BoundedContextConfigRelativePath = boundedContextConfigRelativePath;
