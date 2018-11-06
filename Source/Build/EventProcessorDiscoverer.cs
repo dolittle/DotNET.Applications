@@ -9,7 +9,6 @@ using System.Reflection;
 using Dolittle.Collections;
 using Dolittle.Events.Processing;
 using Dolittle.Lifecycle;
-using Dolittle.Logging;
 
 namespace Dolittle.Build
 {
@@ -22,7 +21,7 @@ namespace Dolittle.Build
         readonly static Type EventProcessorCollectionType = typeof(ICanProcessEvents);
         
         readonly AssemblyLoader _assemblyLoader;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
 
         MethodInfo[] _eventProcessors;
 
@@ -45,7 +44,7 @@ namespace Dolittle.Build
         /// </summary>
         /// <param name="assemblyLoader"></param>
         /// <param name="logger"></param>
-        public EventProcessorDiscoverer(AssemblyLoader assemblyLoader, ILogger logger)
+        public EventProcessorDiscoverer(AssemblyLoader assemblyLoader, IBuildToolLogger logger)
         {
             _assemblyLoader = assemblyLoader;
             _logger = logger;

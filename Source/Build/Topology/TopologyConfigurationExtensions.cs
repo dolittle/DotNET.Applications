@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Applications.Configuration;
-using Dolittle.Logging;
 
 namespace Dolittle.Build.Topology
 {
@@ -55,12 +54,12 @@ namespace Dolittle.Build.Topology
         /// <summary>
         /// Validates the <see cref="Applications.Configuration.Topology"/>
         /// </summary>
-        public static void ValidateTopology(this Applications.Configuration.Topology topology, bool useModules, ILogger logger)
+        public static void ValidateTopology(this Applications.Configuration.Topology topology, bool useModules, IBuildToolLogger logger)
         {
             ThrowIfDuplicateId(topology, useModules, logger);
         }
 
-        static void ThrowIfDuplicateId(Applications.Configuration.Topology topology, bool useModules, ILogger logger)
+        static void ThrowIfDuplicateId(Applications.Configuration.Topology topology, bool useModules, IBuildToolLogger logger)
         {
             var idMap = new Dictionary<Guid, string>();
             bool hasDuplicateId = false;
@@ -95,7 +94,7 @@ namespace Dolittle.Build.Topology
                 throw new InvalidTopology("Bounded context topology has one or more Features/Modules with the same ID");
             }
         }
-        static void ThrowIfDuplicateId(IEnumerable<FeatureDefinition> features, ref Dictionary<Guid, string> idMap, ref bool hasDuplicateId, ILogger logger)
+        static void ThrowIfDuplicateId(IEnumerable<FeatureDefinition> features, ref Dictionary<Guid, string> idMap, ref bool hasDuplicateId, IBuildToolLogger logger)
         {
             foreach (var feature in features)
             {

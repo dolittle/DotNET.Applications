@@ -5,7 +5,6 @@
 using System;
 using Dolittle.Applications.Configuration;
 using Dolittle.Concepts.Serialization.Json;
-using Dolittle.Logging;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -18,14 +17,14 @@ namespace Dolittle.Build.Topology
     public class TopologyConfigurationHandler
     {
         readonly ITopologyConfigurationManager _configurationManager;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
         
         /// <summary>
         /// Instantiates an instance of <see cref="TopologyConfigurationHandler"/> 
         /// </summary>
         /// <param name="configurationManager"></param>
         /// <param name="logger"></param>
-        public TopologyConfigurationHandler(ITopologyConfigurationManager configurationManager, ILogger logger)
+        public TopologyConfigurationHandler(ITopologyConfigurationManager configurationManager, IBuildToolLogger logger)
         {
             _configurationManager = configurationManager;
             _logger = logger;

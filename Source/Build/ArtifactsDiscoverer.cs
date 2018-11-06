@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Dolittle.Logging;
 using Dolittle.Reflection;
 
 namespace Dolittle.Build
@@ -18,7 +17,7 @@ namespace Dolittle.Build
     {
         readonly IAssemblyLoader _assemblyLoader;
         readonly ArtifactType[] _artifactTypes;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
 
         /// <summary>
         /// Gets the list of discovered Artifacts
@@ -30,7 +29,7 @@ namespace Dolittle.Build
         /// <param name="assemblyLoader"></param>
         /// <param name="artifactTypes"></param>
         /// <param name="logger"></param>
-        public ArtifactsDiscoverer(IAssemblyLoader assemblyLoader, DolittleArtifactTypes artifactTypes, ILogger logger)
+        public ArtifactsDiscoverer(IAssemblyLoader assemblyLoader, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
         {
             _assemblyLoader = assemblyLoader;
             _artifactTypes = artifactTypes.ArtifactTypes;

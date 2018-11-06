@@ -1,40 +1,55 @@
+using System;
+using System.IO;
+using System.Runtime.CompilerServices;
+
 namespace Dolittle.Build
 {
-    public interface ILogger
+    /// <summary>
+    /// Defines a logger that's used in the Build Tool
+    /// </summary>
+    public interface IBuildToolLogger
     {
-        void Critical(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
-        {
-            throw new NotImplementedException();
-        }
 
-        void Debug(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Logs a critical message
+        /// </summary>
+        /// <param name="message"></param>
+        void Critical(string message);
 
-        void Error(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Logs a debug message
+        /// </summary>
+        /// <param name="message"></param>
+        void Debug(string message);
 
-        void Error(Exception exception, string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Logs an error message
+        /// </summary>
+        /// <param name="message"></param>
+        void Error(string message);
+        /// <summary>
+        /// Logs an error message
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <param name="message"></param>
+        void Error(Exception exception, string message);
+        
+        /// <summary>
+        /// Logs an information message
+        /// </summary>
+        /// <param name="message"></param>
+        void Information(string message);
 
-        void Information(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Logs a trace message
+        /// </summary>
+        /// <param name="message"></param>
+        void Trace(string message);
 
-        void Trace(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
-        {
-            throw new NotImplementedException();
-        }
-
-        void Warning(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Logs a warning message
+        /// </summary>
+        /// <param name="message"></param>
+        void Warning(string message);
     }
 }

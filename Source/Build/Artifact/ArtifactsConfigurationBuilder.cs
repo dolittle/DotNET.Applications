@@ -12,7 +12,6 @@ using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Build.Topology;
 using Dolittle.Collections;
-using Dolittle.Logging;
 using Dolittle.Reflection;
 using Dolittle.Serialization.Json;
 
@@ -24,7 +23,7 @@ namespace Dolittle.Build.Artifact
     public class ArtifactsConfigurationBuilder
     {
         readonly Type[] _artifacts;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
         readonly DolittleArtifactTypes _artifactTypes;
         ArtifactsConfiguration _artifactsConfiguration;
 
@@ -35,7 +34,7 @@ namespace Dolittle.Build.Artifact
         /// <param name="artifactsConfiguration">The <see cref="ArtifactsConfiguration"/> that will be modified, validated and returned from Build</param>
         /// <param name="artifactTypes">A list of <see cref="ArtifactType"/> which represents the different artifact types</param>
         /// <param name="logger"></param>
-        public ArtifactsConfigurationBuilder(Type[] artifacts, ArtifactsConfiguration artifactsConfiguration, DolittleArtifactTypes artifactTypes, ILogger logger)
+        public ArtifactsConfigurationBuilder(Type[] artifacts, ArtifactsConfiguration artifactsConfiguration, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
         {
             _artifacts = artifacts;
             _logger = logger;
@@ -65,7 +64,6 @@ namespace Dolittle.Build.Artifact
                     ref nonMatchingArtifacts
                 );
             }
-            // newArtifacts += HandleEventProcessors(boundedContextConfiguration, ref nonMatchingArtifacts);
             if (nonMatchingArtifacts.Any())
             {
                 foreach (var artifactNamespace in nonMatchingArtifacts)

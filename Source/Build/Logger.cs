@@ -1,44 +1,71 @@
 using System;
+using System.IO;
 using System.Runtime.CompilerServices;
 using Dolittle.Logging;
 
 namespace Dolittle.Build
 {
-    public class Logger : ILogger
+    /// <inheritdoc/>
+    public class BuildToolLogger : IBuildToolLogger
     {
-        public void Critical(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
+        TextWriter _writer = Console.Out;
+
+        
+        /// <inheritdoc/>
+        public void Critical(string message)
         {
-            throw new NotImplementedException();
+            LogWithCallerInformation(LogLevel.Critical, message);
+        }
+        
+        /// <inheritdoc/>
+        public void Debug(string message)
+        {
+            LogWithCallerInformation(LogLevel.Debug, message);
+        }
+        /// <inheritdoc/>
+        public void Error(string message)
+        {
+            LogWithCallerInformation(LogLevel.Error, message);
+        }
+        /// <inheritdoc/>
+        public void Error(Exception exception, string message)
+        {
+            LogWithCallerInformation(LogLevel.Error, message, exception);
+        }
+        /// <inheritdoc/>
+        public void Information(string message)
+        {
+            LogWithCallerInformation(LogLevel.Info, message);
+        }
+        /// <inheritdoc/>
+        public void Trace(string message)
+        {
+            LogWithCallerInformation(LogLevel.Trace, message);
+        }
+        /// <inheritdoc/>
+        public void Warning(string message)
+        {
+            LogWithCallerInformation(LogLevel.Warning, message);
         }
 
-        public void Debug(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
+        void ConfigureWriterAndConsole(LogLevel level)
         {
-            throw new NotImplementedException();
+            if (level == LogLevel.Error) _writer = Console.Error;
+            else _writer = Console.Out;
+
+            if (level == LogLevel.Debug || level == LogLevel.Info || level == LogLevel.Trace ) Console.ForegroundColor = ConsoleColor.White;
+            else if (level == LogLevel.Error || level == LogLevel.Critical) Console.ForegroundColor = ConsoleColor.Red;
+            else Console.ForegroundColor = ConsoleColor.Yellow;
         }
 
-        public void Error(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
+        void LogWithCallerInformation(LogLevel level, string message, Exception exception = null)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Error(Exception exception, string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Information(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Trace(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Warning(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string member = "")
-        {
-            throw new NotImplementedException();
+            ConfigureWriterAndConsole(level);   
+            
+            var logMessage = $"{message}";
+            if (exception != null)
+                logMessage += $"\nException: {exception.Message}\n StackTrace: {exception.StackTrace}";
+            _writer.WriteLine(logMessage);
         }
     }
 }

@@ -5,7 +5,6 @@
 using System;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts.Configuration;
-using Dolittle.Logging;
 
 namespace Dolittle.Build.Proxies
 {
@@ -16,7 +15,7 @@ namespace Dolittle.Build.Proxies
     {
         readonly TemplateLoader _templateLoader;
         readonly DolittleArtifactTypes _artifactTypes;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
 
         /// <summary>
         /// Instantiates a new instance of <see cref="ProxiesHandler"/>
@@ -24,7 +23,7 @@ namespace Dolittle.Build.Proxies
         /// <param name="templateLoader"></param>
         /// <param name="artifactTypes"></param>
         /// <param name="logger"></param>
-        public ProxiesHandler(TemplateLoader templateLoader, DolittleArtifactTypes artifactTypes, ILogger logger)
+        public ProxiesHandler(TemplateLoader templateLoader, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
         {
             _templateLoader = templateLoader;
             _artifactTypes = artifactTypes;

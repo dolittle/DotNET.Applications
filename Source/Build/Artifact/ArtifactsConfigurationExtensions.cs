@@ -11,7 +11,6 @@ using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Build.Topology;
-using Dolittle.Logging;
 
 namespace Dolittle.Build.Artifact
 {
@@ -79,14 +78,14 @@ namespace Dolittle.Build.Artifact
         /// <summary>
         /// Validates the <see cref="ArtifactsConfiguration"/> based on the bounded context's topology and the discoved artifact types in the assemblies of the bounded context
         /// </summary>
-        public static void ValidateArtifacts(this ArtifactsConfiguration artifactsConfiguration, BoundedContextTopology boundedContextTopology, Type[] types, ILogger logger)
+        public static void ValidateArtifacts(this ArtifactsConfiguration artifactsConfiguration, BoundedContextTopology boundedContextTopology, Type[] types, IBuildToolLogger logger)
         {
             ThrowIfDuplicateArtifacts(artifactsConfiguration, logger);
             WarnIfFeatureMissingFromTopology(artifactsConfiguration, boundedContextTopology, logger);
             WarnIfArtifactNoLongerInStructure(artifactsConfiguration, types, logger);
         }
 
-        static void ThrowIfDuplicateArtifacts(ArtifactsConfiguration artifactsConfiguration, ILogger logger)
+        static void ThrowIfDuplicateArtifacts(ArtifactsConfiguration artifactsConfiguration, IBuildToolLogger logger)
         {
             var idMap = new Dictionary<ArtifactId, ClrType>();
             bool foundDuplicate = false;
@@ -106,7 +105,7 @@ namespace Dolittle.Build.Artifact
             }
             if (foundDuplicate) throw new DuplicateArtifact();
         }
-        static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifactsConfiguration, BoundedContextTopology boundedContextTopology, ILogger logger)
+        static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifactsConfiguration, BoundedContextTopology boundedContextTopology, IBuildToolLogger logger)
         {
             Dictionary<Feature, FeatureName> featureMap = boundedContextTopology.RetrieveAllFeatureIds();
 
@@ -124,7 +123,7 @@ namespace Dolittle.Build.Artifact
                 }
             }
         }
-        static void WarnIfArtifactNoLongerInStructure(ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types, ILogger logger)
+        static void WarnIfArtifactNoLongerInStructure(ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types, IBuildToolLogger logger)
         {
             var artifactDefinitions = new List<ArtifactDefinition>();
             foreach (var artifactDefinition in artifactsConfiguration.GetAllArtifactDefinitions())

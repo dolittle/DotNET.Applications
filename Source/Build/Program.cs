@@ -31,7 +31,7 @@ namespace Dolittle.Build
 {
     class Program
     {
-        static Dolittle.Logging.ILogger _logger;
+        static readonly IBuildToolLogger _logger = new BuildToolLogger();
         static TopologyConfigurationHandler _topologyConfigurationHandler;
         static ArtifactsConfigurationHandler _artifactsConfigurationHandler;
         static ProxiesHandler _proxiesHandler;
@@ -84,8 +84,7 @@ namespace Dolittle.Build
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error consolidating artifacts;");
-                _logger.Debug(ex.Message);
+                _logger.Error(ex, "Error consolidating artifacts");
                 return 1;
             }
 
@@ -95,31 +94,21 @@ namespace Dolittle.Build
 
         static void InitialSetup()
         {
-            try 
-            {
             SetupHost();
-            AssignBindings();
-            } 
-            catch(Exception ex)
-            {
-                Console.WriteLine($"{ex} Error while doing initial setup");
-                Console.WriteLine(ex.Message);
-                Environment.Exit(1);
-            }
+            AssignBindings();            
         }
 
         static void SetupHost()
         {
             var loggerFactory = new LoggerFactory(new ILoggerProvider[]
             {
-                new ConsoleLoggerProvider((s, l) => true, true)
+                new NullLoggerProvider()   
             });
             _host = new HostBuilder().Build(loggerFactory, true);
         }
         
         static void AssignBindings()
         {
-            _logger = _host.Container.Get<Dolittle.Logging.ILogger>();
             
             _artifactTypes = _host.Container.Get<DolittleArtifactTypes>();
             _topologyConfigurationHandler = _host.Container.Get<TopologyConfigurationHandler>();

@@ -8,7 +8,6 @@ using System.Linq;
 using Dolittle.Applications.Configuration;
 
 using Dolittle.Collections;
-using Dolittle.Logging;
 using Dolittle.Serialization.Json;
 
 namespace Dolittle.Build.Topology
@@ -19,7 +18,7 @@ namespace Dolittle.Build.Topology
     public class TopologyBuilder
     {
         readonly Type[] _artifactTypes;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
 
         BoundedContextTopology _configuration;
 
@@ -29,7 +28,7 @@ namespace Dolittle.Build.Topology
         /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
         /// <param name="boundedContextTopology">The <see cref="BoundedContextConfiguration"/> that will be modified, validated and returned from Build</param>
         /// <param name="logger"></param>
-        public TopologyBuilder(Type[] artifacts, BoundedContextTopology boundedContextTopology, ILogger logger)
+        public TopologyBuilder(Type[] artifacts, BoundedContextTopology boundedContextTopology, IBuildToolLogger logger)
         {
             _artifactTypes = artifacts;
             _logger = logger;

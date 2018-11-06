@@ -14,7 +14,6 @@ using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Build.Artifact;
 using Dolittle.Collections;
-using Dolittle.Logging;
 using Dolittle.Queries;
 using Dolittle.Reflection;
 using Dolittle.Strings;
@@ -30,7 +29,7 @@ namespace Dolittle.Build.Proxies
         readonly TemplateLoader _templateLoader;
         readonly Type[] _artifacts;
         readonly DolittleArtifactTypes _artifactTypes;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
 
         /// <summary>
         /// Instantiates an instance of <see cref="ProxiesBuilder"/>
@@ -39,7 +38,7 @@ namespace Dolittle.Build.Proxies
         /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
         /// <param name="artifactTypes"></param>
         /// <param name="logger"></param>
-        public ProxiesBuilder(TemplateLoader templateLoader, Type[] artifacts, DolittleArtifactTypes artifactTypes, ILogger logger)
+        public ProxiesBuilder(TemplateLoader templateLoader, Type[] artifacts, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
         {
             _templateLoader = templateLoader;
             _artifacts = artifacts;
