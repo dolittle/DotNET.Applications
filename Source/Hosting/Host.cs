@@ -20,6 +20,51 @@ namespace Dolittle.Hosting
         readonly AsyncLocal<LoggingContext>  _currentLoggingContext = new AsyncLocal<LoggingContext>();
         IExecutionContextManager _executionContextManager;
         Dolittle.Execution.ExecutionContext _initialExecutionContext;
+        
+        /// <summary>
+        /// Initializes a new instance of <see cref="Host"/>
+        /// </summary>
+        public Host(ILoggerFactory loggerFactory = null, bool skipBootProcedures=false)
+        {
+            _initialExecutionContext = ExecutionContextManager.SetInitialExecutionContext();
+            
+            if( loggerFactory == null ) loggerFactory = new LoggerFactory();
+            var logAppenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory, GetCurrentLoggingContext, GetRunningEnvironment());
+            var logger = new Logger(logAppenders);
+
+            var assemblies = Dolittle.Assemblies.Bootstrap.EntryPoint.Initialize(logger);
+            var typeFinder = Dolittle.Types.Bootstrap.EntryPoint.Initialize(assemblies);
+            Dolittle.Resources.Configuration.Bootstrap.EntryPoint.Initialize(typeFinder);
+            
+            var bindings = new[] {
+                new BindingBuilder(Binding.For(typeof(IAssemblies))).To(assemblies).Build(),
+                new BindingBuilder(Binding.For(typeof(Logging.ILogger))).To(logger).Build(),
+                new BindingBuilder(Binding.For(typeof(IHost))).To(this).Build(),
+            };
+
+            var result = Dolittle.DependencyInversion.Bootstrap.Boot.Start(assemblies, typeFinder, logger, bindings);
+            Container = result.Container;
+
+            if( !skipBootProcedures ) Bootstrapper.Start(Container);
+        }
+        
+        /// <inheritdoc/>
+        public IContainer Container { get; }
+
+        /// <summary>
+        /// Create a <see cref="IHostBuilder"/> for building configuration for the host
+        /// </summary>
+        /// <returns><see cref="IHostBuilder"/> to build on</returns>
+        public static IHostBuilder CreateBuilder()
+        {
+            return new HostBuilder();
+        }
+
+        /// <inheritdoc/>
+        public void Run()
+        {
+            Thread.Sleep(Timeout.Infinite);
+        }
 
         LoggingContext GetCurrentLoggingContext()
         {
@@ -57,50 +102,20 @@ namespace Dolittle.Hosting
                 Environment = executionContext.Environment,
                 TenantId = executionContext.Tenant
             };
-        
-        /// <summary>
-        /// Initializes a new instance of <see cref="Host"/>
-        /// </summary>
-        public Host(ILoggerFactory loggerFactory = null, bool skipBootProcedures=false)
+
+        Dolittle.Execution.Environment GetRunningEnvironment()
         {
-            _initialExecutionContext = ExecutionContextManager.SetInitialExecutionContext();
-            
-            if( loggerFactory == null ) loggerFactory = new LoggerFactory();
-            var logAppenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory, GetCurrentLoggingContext);
-            var logger = new Logger(logAppenders);
+            var aspnetcoreEnvironment = System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")?.ToLower() ?? "undetermined";
 
-            var assemblies = Dolittle.Assemblies.Bootstrap.EntryPoint.Initialize(logger);
-            var typeFinder = Dolittle.Types.Bootstrap.EntryPoint.Initialize(assemblies);
-            Dolittle.Resources.Configuration.Bootstrap.EntryPoint.Initialize(typeFinder);
-            
-            var bindings = new[] {
-                new BindingBuilder(Binding.For(typeof(IAssemblies))).To(assemblies).Build(),
-                new BindingBuilder(Binding.For(typeof(Logging.ILogger))).To(logger).Build(),
-                new BindingBuilder(Binding.For(typeof(IHost))).To(this).Build(),
-            };
-
-            var result = Dolittle.DependencyInversion.Bootstrap.Boot.Start(assemblies, typeFinder, logger, bindings);
-            Container = result.Container;
-
-            if( !skipBootProcedures ) Bootstrapper.Start(Container);
-        }
-        
-        /// <inheritdoc/>
-        public IContainer Container { get; }
-
-        /// <summary>
-        /// Create a <see cref="IHostBuilder"/> for building configuration for the host
-        /// </summary>
-        /// <returns><see cref="IHostBuilder"/> to build on</returns>
-        public static IHostBuilder CreateBuilder()
-        {
-            return new HostBuilder();
-        }
-
-        /// <inheritdoc/>
-        public void Run()
-        {
-            Thread.Sleep(Timeout.Infinite);
+            switch(aspnetcoreEnvironment)
+            {
+                case "development":
+                    return "Development";
+                case "production":
+                    return "Production";
+                default:
+                    return Dolittle.Execution.Environment.Undetermined;
+            }
         }
     }
 }
