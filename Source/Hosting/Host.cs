@@ -20,8 +20,6 @@ namespace Dolittle.Hosting
         readonly AsyncLocal<LoggingContext>  _currentLoggingContext = new AsyncLocal<LoggingContext>();
         IExecutionContextManager _executionContextManager;
         Dolittle.Execution.ExecutionContext _initialExecutionContext;
-
-        
         
         /// <summary>
         /// Initializes a new instance of <see cref="Host"/>
@@ -30,7 +28,6 @@ namespace Dolittle.Hosting
         {
             _initialExecutionContext = ExecutionContextManager.SetInitialExecutionContext();
             
-
             if( loggerFactory == null ) loggerFactory = new LoggerFactory();
             var logAppenders = Dolittle.Logging.Bootstrap.EntryPoint.Initialize(loggerFactory, GetCurrentLoggingContext, GetRunningEnvironment());
             var logger = new Logger(logAppenders);
