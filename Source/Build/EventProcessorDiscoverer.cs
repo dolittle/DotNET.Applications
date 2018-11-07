@@ -68,7 +68,7 @@ namespace Dolittle.Build
                     }
                 });
                 if (! found)
-                    _logger.Warning($"No event processor methods found in Event Processor collection class '{type.FullName}'. All methods that'll process events has to be marked with {typeof(EventProcessorAttribute).FullName} giving it a unique Event Processor Id.");
+                    _logger.Warning($"No event processor methods found in Event Processor collection class '{type.FullName}'. All methods that'll process events has to be marked with '{typeof(EventProcessorAttribute).FullName}' giving it a unique Event Processor Id.");
             }
             
             return eventProcessors.ToArray();

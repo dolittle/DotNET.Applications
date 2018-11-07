@@ -97,8 +97,8 @@ namespace Dolittle.Build.Artifact
                     var artifactId = artifactDefinition.Artifact;
                     var clrType = idMap[artifactDefinition.Artifact];
                     
-                    logger.Error($"An artifact with ArtifactId: {artifactId.Value} already exists.");
-                    logger.Debug($"Artifact with Type: {clrType.TypeString} and artifact with Type {artifactDefinition.Type.TypeString} has the same ArtifactId.");
+                    logger.Error($"The artifacts '{clrType.TypeString}' and '{artifactDefinition.Type.TypeString}' has the same ArtifactId: '{artifactId}'");
+                    
                 }
                 else 
                     idMap.Add(artifactDefinition.Artifact, artifactDefinition.Type);
@@ -113,12 +113,12 @@ namespace Dolittle.Build.Artifact
             {
                 if (!featureMap.ContainsKey(artifact.Key))
                 {
-                    logger.Warning($"Found artifacts under a Feature that does not exist in the topology. Feature: {artifact.Key}");
-                    logger.Debug("Artifacts:");
+                    logger.Warning($"Found artifacts under a Feature that does not exist in the topology. Feature: '{artifact.Key}':");
+                    logger.Warning("Artifacts:");
                     
                     var artifactDefinitions = artifactsConfiguration.GetAllArtifactDefinitions(artifact.Key);
                     foreach (var definition in artifactDefinitions)
-                        logger.Debug($"\tArtifact: {definition.Artifact.Value} CLR-type: {definition.Type.TypeString} @{definition.Generation.Value}");
+                        logger.Warning($"\tArtifact: '{definition.Artifact.Value}' - '{definition.Type.TypeString} @{definition.Generation.Value}'");
                     
                 }
             }
@@ -134,10 +134,10 @@ namespace Dolittle.Build.Artifact
             }
             if (artifactDefinitions.Any())
             {
-                logger.Warning("There are artifacts that are not found in the Bounded Context structure anymore. You may have to write migrators for them.");
-                logger.Debug("Artifacts:");
+                logger.Warning("There are artifacts that are not found in the Bounded Context's artifacts file:");
+                logger.Warning("Artifacts:");
                 foreach (var artifactDefinition in artifactDefinitions)
-                    logger.Debug($"\tArtifact: {artifactDefinition.Artifact.Value} CLR-type: {artifactDefinition.Type.TypeString} @{artifactDefinition.Generation.Value}");
+                    logger.Warning($"\tArtifact: '{artifactDefinition.Artifact.Value}' - '{artifactDefinition.Type.TypeString} @{artifactDefinition.Generation.Value}'");
                 throw new ArtifactNoLongerInStructure();
             }
         }

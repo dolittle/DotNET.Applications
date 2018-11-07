@@ -68,14 +68,14 @@ namespace Dolittle.Build
             {
                 if (string.IsNullOrEmpty(type.Namespace) || type.Namespace == "null") 
                 {
-                    _logger.Error($"Artifact {type.FullName} is invalid. Artifact has no namespace");
+                    _logger.Error($"The artifact '{type.FullName}' is invalid. Artifact has no namespace");
                     hasInvalidArtifact = true;      
                 } 
                 var numSegments = type.Namespace.Split(".").Count();
                 if (numSegments < 1) 
                 {
                     hasInvalidArtifact = true;
-                    _logger.Error($"Artifact {type.Name} with namespace = {type.Namespace} is invalid. An artifact's namespace must consist of at least two segments.");
+                    _logger.Error($"The artifact '{type.FullName}' is invalid. An artifact's namespace must consist of at least two segments.");
                 }
             }
             if (hasInvalidArtifact) throw new InvalidArtifact();

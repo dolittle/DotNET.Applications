@@ -84,7 +84,7 @@ namespace Dolittle.Build
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error consolidating artifacts");
+                _logger.Error(ex, "Error consolidating artifacts;");
                 return 1;
             }
 
@@ -127,9 +127,20 @@ namespace Dolittle.Build
             var events = artifacts.Where(_ => _artifactTypes.ArtifactTypes.Where(artifactType => artifactType.TypeName == "event").First().Type.IsAssignableFrom(_));
 
             ValidateEventsAreImmutable(events);
-            
             ValidateEventsPropertiesMatchConstructorParameter(events);
             
+        }
+        static void ValidateEventsAreImmutable(IEnumerable<Type> events)
+        {
+            var mutableEvents = new List<Type>();
+            events.ForEach(@event => {
+                if (! @event.IsImmutable()) mutableEvents.Add(@event);
+            });
+            if (mutableEvents.Any())
+            {
+                _logger.Warning("Discovered mutable events. An event should not have any settable properties");
+                mutableEvents.ForEach(@event => _logger.Error($"The event '{@event.FullName}' is not immutable."));
+            }
         }
 
         static void ValidateEventsPropertiesMatchConstructorParameter(IEnumerable<Type> events)
@@ -147,14 +158,14 @@ namespace Dolittle.Build
             if (eventsWithoutNonDefaultConstructor.Any())
             {
                 throwException = true;
-                _logger.Error("Discovered events with state but without a custom constructor.");
-                eventsWithoutNonDefaultConstructor.ForEach(invalidEvent => _logger.Trace($"Event {invalidEvent.FullName} has properties but does not have a custom constructor."));
+                _logger.Error("Discovered events with state, but without a custom constructor.");
+                eventsWithoutNonDefaultConstructor.ForEach(invalidEvent => _logger.Error($"The event '{invalidEvent.FullName}' has properties, but does not have a custom constructor."));
             }
             if (eventsWithConstructorParameterNameMismatch.Any())
             {
                 throwException = true;
                 _logger.Error("Discovered events with incorrect constructors. All constructor parameter names should be camelCase and match the property name which it sets, which should be PascalCase");
-                eventsWithConstructorParameterNameMismatch.ForEach(invalidEvent => _logger.Trace($"Event {invalidEvent.@event.FullName}'s constructor with the most parameters is invalid. Expected a constructor parameter name to be {invalidEvent.propName.ToCamelCase()}"));
+                eventsWithConstructorParameterNameMismatch.ForEach(invalidEvent => _logger.Error($"The event '{invalidEvent.@event.FullName}''s constructor with the most parameters is invalid. Expected a constructor parameter name to be '{invalidEvent.propName.ToCamelCase()}'"));
             }
 
             if (throwException) throw new InvalidEvent("There are critical errors on events");
@@ -170,18 +181,6 @@ namespace Dolittle.Build
             });
         }
 
-        static void ValidateEventsAreImmutable(IEnumerable<Type> events)
-        {
-            var mutableEvents = new List<Type>();
-            events.ForEach(@event => {
-                if (! @event.IsImmutable()) mutableEvents.Add(@event);
-            });
-            if (mutableEvents.Any())
-            {
-                _logger.Warning("Discovered mutable events. They should, by design, be immutable");
-                mutableEvents.ForEach(@event => _logger.Trace($"Event {@event.FullName} is not immutable. It should not have any settable properties and should only be constructed with a constructor"));
-            }
-        }
 
         static void ThrowIfMultipleEventProcessorsWithId(IEnumerable<MethodInfo> eventProcessors)
         {
@@ -210,7 +209,7 @@ namespace Dolittle.Build
                 {
                     _logger.Error($"Found duplication of Event Processor Id '{entry.Key.Value.ToString()}'");
                     foreach (var eventProcessor in entry.Value)
-                        _logger.Trace($"\tId: '{entry.Key.Value.ToString()} Method Name: {eventProcessor.Name} Type FullName: '{eventProcessor.DeclaringType.FullName}'");
+                        _logger.Error($"\tId: '{entry.Key.Value.ToString()}' Method Name: '{eventProcessor.Name}' Type FullName: '{eventProcessor.DeclaringType.FullName}'");
                 }
                 throw new DuplicateEventProcessor();
             }

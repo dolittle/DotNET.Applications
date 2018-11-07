@@ -94,7 +94,7 @@ namespace Dolittle.Build.Proxies
             }
             else
             {
-                _logger.Trace($"No visible properties for {ClrType.FromType(artifact).TypeString}");
+                _logger.Warning($"No visible properties for {ClrType.FromType(artifact).TypeString}");
                 return null;
             }
         }
