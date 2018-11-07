@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 
-using Dolittle.Logging;
+
 
 namespace Dolittle.Build.given
 {
     public class an_ILogger
     {
-        protected static readonly ILogger logger = Moq.Mock.Of<ILogger>();
+        protected static readonly IBuildToolLogger logger = Moq.Mock.Of<IBuildToolLogger>();
     }
 }
