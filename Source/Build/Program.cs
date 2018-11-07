@@ -26,6 +26,7 @@ using Dolittle.Runtime.Events.Processing;
 using Dolittle.Collections;
 using Dolittle.Reflection;
 using Dolittle.Strings;
+using Dolittle.Concepts;
 
 namespace Dolittle.Build
 {
@@ -67,7 +68,9 @@ namespace Dolittle.Build
                 var artifactsConfiguration = _artifactsConfigurationHandler.Build(artifacts, topology, parsingResults);
 
                 ValidateEventProcessors(_eventProcessorDiscoverer.GetAllEventProcessors());
-                ValidateEvents(artifacts);
+
+                var events = artifacts.Where(_ => _artifactTypes.ArtifactTypes.Where(artifactType => artifactType.TypeName == "event").First().Type.IsAssignableFrom(_));
+                ValidateEvents(events);
                                 
                 if (NewTopology) _topologyConfigurationHandler.Save(topology);
                 if (NewArtifacts) _artifactsConfigurationHandler.Save(artifactsConfiguration);
@@ -116,20 +119,56 @@ namespace Dolittle.Build
             _boundedContextLoader = _host.Container.Get<IBoundedContextLoader>();
         }
 
-
         static void ValidateEventProcessors(IEnumerable<MethodInfo> eventProcessors)
         {
             ThrowIfMultipleEventProcessorsWithId(eventProcessors);
         }
 
-        static void ValidateEvents(IEnumerable<Type> artifacts)
+        static void ThrowIfMultipleEventProcessorsWithId(IEnumerable<MethodInfo> eventProcessors)
         {
-            var events = artifacts.Where(_ => _artifactTypes.ArtifactTypes.Where(artifactType => artifactType.TypeName == "event").First().Type.IsAssignableFrom(_));
+            var idMap = new Dictionary<EventProcessorId, MethodInfo>();
+            var duplicateEventProcessors = new Dictionary<EventProcessorId, List<MethodInfo>>();
+            eventProcessors.ForEach(method =>
+            {
+                var eventProcessorId = method.EventProcessorId();
+                if (eventProcessorId.Value == null || eventProcessorId.Value.Equals(Guid.Empty))
+                    throw new ArgumentException("Found a event processor with empty Id.", "eventProcessors");
+                if (idMap.ContainsKey(eventProcessorId))
+                {
+                    if (! duplicateEventProcessors.ContainsKey(eventProcessorId))
+                        duplicateEventProcessors.Add(eventProcessorId, new List<MethodInfo>(){idMap[eventProcessorId]});
+                    
+                    duplicateEventProcessors[eventProcessorId].Add(method);
+                }
+                else 
+                {
+                    idMap.Add(eventProcessorId, method);
+                }
+            });
+            if (duplicateEventProcessors.Any())
+            {
+                foreach (var entry in duplicateEventProcessors)
+                {
+                    _logger.Error($"Found duplication of Event Processor Id '{entry.Key.Value.ToString()}'");
+                    foreach (var eventProcessor in entry.Value)
+                        _logger.Error($"\tId: '{entry.Key.Value.ToString()}' Method Name: '{eventProcessor.Name}' Type FullName: '{eventProcessor.DeclaringType.FullName}'");
+                }
+                throw new DuplicateEventProcessor();
+            }
+        }
 
+        static void ValidateEvents(IEnumerable<Type> events, int depthLevel = 0)
+        {
+            if (depthLevel >= 3) 
+            {
+                _logger.Error($"Event validation reached a too deep depth level, meaning that your events are way too complex!. Be aware of complex types on events.");
+                throw new InvalidEvent("There are critical errors on events");
+            }
             ValidateEventsAreImmutable(events);
             ValidateEventsPropertiesMatchConstructorParameter(events);
-            
+            ValidateEventContent(events, depthLevel);
         }
+
         static void ValidateEventsAreImmutable(IEnumerable<Type> events)
         {
             var mutableEvents = new List<Type>();
@@ -140,6 +179,8 @@ namespace Dolittle.Build
             {
                 _logger.Warning("Discovered mutable events. An event should not have any settable properties");
                 mutableEvents.ForEach(@event => _logger.Error($"The event '{@event.FullName}' is not immutable."));
+
+                throw new InvalidEvent("There are critical errors on events");
             }
         }
 
@@ -181,38 +222,52 @@ namespace Dolittle.Build
             });
         }
 
-
-        static void ThrowIfMultipleEventProcessorsWithId(IEnumerable<MethodInfo> eventProcessors)
+        static void ValidateEventContent(IEnumerable<Type> events, int depthLevel)
         {
-            var idMap = new Dictionary<EventProcessorId, MethodInfo>();
-            var duplicateEventProcessors = new Dictionary<EventProcessorId, List<MethodInfo>>();
-            eventProcessors.ForEach(method =>
+            ThrowIfEventsWithInvalidComplexProperties(events, depthLevel);
+        }
+
+
+        static void ThrowIfEventsWithInvalidComplexProperties(IEnumerable<Type> events, int depthLevel)
+        {
+            var invalidProperties = new List<PropertyInfo>();
+            foreach (var @event in events) 
             {
-                var eventProcessorId = method.EventProcessorId();
-                if (eventProcessorId.Value == null || eventProcessorId.Value.Equals(Guid.Empty))
-                    throw new ArgumentException("Found a event processor with empty Id.", "eventProcessors");
-                if (idMap.ContainsKey(eventProcessorId))
+                var publicProperties = @event.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                foreach(var prop in publicProperties)
                 {
-                    if (! duplicateEventProcessors.ContainsKey(eventProcessorId))
-                        duplicateEventProcessors.Add(eventProcessorId, new List<MethodInfo>(){idMap[eventProcessorId]});
+                    var propType = prop.PropertyType;
+                    if (propType.IsEnumerable()) 
+                        propType = propType.GetEnumerableElementType();
                     
-                    duplicateEventProcessors[eventProcessorId].Add(method);
+                    if (propType.IsNullable()) 
+                        invalidProperties.Add(prop);
+                    else if (IsEvent(propType))
+                        invalidProperties.Add(prop);
+                    else if (propType.IsConcept()) 
+                        invalidProperties.Add(prop);
+
+                    else if (! propType.IsAPrimitiveType() && propType != typeof(Guid)) 
+                    {
+                        if (propType.Module != prop.DeclaringType.Module)
+                            invalidProperties.Add(prop);
+                        else ValidateEvents(new []{propType}, depthLevel + 1);
+
+                    }
                 }
-                else 
-                {
-                    idMap.Add(eventProcessorId, method);
-                }
-            });
-            if (duplicateEventProcessors.Any())
-            {
-                foreach (var entry in duplicateEventProcessors)
-                {
-                    _logger.Error($"Found duplication of Event Processor Id '{entry.Key.Value.ToString()}'");
-                    foreach (var eventProcessor in entry.Value)
-                        _logger.Error($"\tId: '{entry.Key.Value.ToString()}' Method Name: '{eventProcessor.Name}' Type FullName: '{eventProcessor.DeclaringType.FullName}'");
-                }
-                throw new DuplicateEventProcessor();
             }
+            if (invalidProperties.Any())
+            {
+                _logger.Error($"Discovered events with invalid content.\n\tAn event cannot contain a Nullable type.\n\tAn event cannot contain a Concept.\n\tAn event cannot contain another Event.\n\tAn Event cannot contain complex types from other projects.\n\tAn event cannot contain a Complex Type that has a too deep type reference structure.");
+                invalidProperties.ForEach(prop => _logger.Error($"The property '{prop.Name}' of Type '{prop.PropertyType.FullName}' on the event '{prop.DeclaringType.FullName}' is invalid. "));
+
+                throw new InvalidEvent("There are critical errors on events");
+            }
+            
+        }
+        static bool IsEvent(Type type)
+        {
+            return _artifactTypes.ArtifactTypes.Where(artifactType => artifactType.TypeName == "event").First().Type.IsAssignableFrom(type);
         }
     }
 }
