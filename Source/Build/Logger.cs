@@ -1,3 +1,5 @@
+
+
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -53,10 +55,9 @@ namespace Dolittle.Build
             if (level == LogLevel.Error) _writer = Console.Error;
             else _writer = Console.Out;
 
-            if (level == LogLevel.Debug || level == LogLevel.Info || level == LogLevel.Trace ) Console.ForegroundColor = ConsoleColor.White;
-            else if (level == LogLevel.Error || level == LogLevel.Critical) Console.ForegroundColor = ConsoleColor.Red;
-            else Console.ForegroundColor = ConsoleColor.Yellow;
+
         }
+
 
         void LogWithCallerInformation(LogLevel level, string message, Exception exception = null)
         {
@@ -64,8 +65,14 @@ namespace Dolittle.Build
             
             var logMessage = $"{message}";
             if (exception != null)
-                logMessage += $"\nException: {exception.Message}\n StackTrace: {exception.StackTrace}";
+                logMessage += $"\nException: {exception.Message}";
+
+            if (level == LogLevel.Debug || level == LogLevel.Info || level == LogLevel.Trace ) logMessage = logMessage.ToWhiteString();
+            else if (level == LogLevel.Error || level == LogLevel.Critical) logMessage = logMessage.ToRedString();
+            else logMessage = logMessage.ToYellowString();
+
             _writer.WriteLine(logMessage);
+            
         }
     }
 }
