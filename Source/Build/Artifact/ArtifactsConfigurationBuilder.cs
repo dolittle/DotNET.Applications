@@ -12,7 +12,6 @@ using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Build.Topology;
 using Dolittle.Collections;
-using Dolittle.Logging;
 using Dolittle.Reflection;
 using Dolittle.Serialization.Json;
 
@@ -24,7 +23,7 @@ namespace Dolittle.Build.Artifact
     public class ArtifactsConfigurationBuilder
     {
         readonly Type[] _artifacts;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
         readonly DolittleArtifactTypes _artifactTypes;
         ArtifactsConfiguration _artifactsConfiguration;
 
@@ -35,7 +34,7 @@ namespace Dolittle.Build.Artifact
         /// <param name="artifactsConfiguration">The <see cref="ArtifactsConfiguration"/> that will be modified, validated and returned from Build</param>
         /// <param name="artifactTypes">A list of <see cref="ArtifactType"/> which represents the different artifact types</param>
         /// <param name="logger"></param>
-        public ArtifactsConfigurationBuilder(Type[] artifacts, ArtifactsConfiguration artifactsConfiguration, DolittleArtifactTypes artifactTypes, ILogger logger)
+        public ArtifactsConfigurationBuilder(Type[] artifacts, ArtifactsConfiguration artifactsConfiguration, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
         {
             _artifacts = artifacts;
             _logger = logger;
@@ -65,11 +64,10 @@ namespace Dolittle.Build.Artifact
                     ref nonMatchingArtifacts
                 );
             }
-            // newArtifacts += HandleEventProcessors(boundedContextConfiguration, ref nonMatchingArtifacts);
             if (nonMatchingArtifacts.Any())
             {
                 foreach (var artifactNamespace in nonMatchingArtifacts)
-                    _logger.Warning($"An artifact with namespace = {artifactNamespace} could not be matched with any feature in the Bounded Context Configuration's topology");
+                    _logger.Warning($"An artifact with namespace: '{artifactNamespace}' could not be matched with any feature in the Bounded Context's topology");
                 
                 throw new NonMatchingArtifact();
             }
@@ -79,7 +77,7 @@ namespace Dolittle.Build.Artifact
             if (newArtifacts > 0)
             {
                 Program.NewArtifacts = true;
-                _logger.Information($"Added {newArtifacts} artifacts to the map.");
+                _logger.Information($"Added {newArtifacts} new artifacts to the map.");
             }
             else 
                 _logger.Information($"No new artifacts added to the map.");
@@ -89,8 +87,6 @@ namespace Dolittle.Build.Artifact
 
         int HandleArtifactOfType(Type artifactType, BoundedContextTopology boundedContextConfiguration, string artifactTypeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression, ref List<string> nonMatchingArtifacts)
         {
-            if (artifactType.Equals(typeof(Dolittle.Events.Processing.ICanProcessEvents))) throw new ArgumentException("Eventprocessor artifacts should be handled differently ", "artifactType");
-            
             var targetProperty = targetPropertyExpression.GetPropertyInfo();
 
             var newArtifacts = 0;

@@ -5,7 +5,6 @@
 using System;
 using Dolittle.Applications.Configuration;
 using Dolittle.Concepts.Serialization.Json;
-using Dolittle.Logging;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -18,14 +17,14 @@ namespace Dolittle.Build.Topology
     public class TopologyConfigurationHandler
     {
         readonly ITopologyConfigurationManager _configurationManager;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
         
         /// <summary>
         /// Instantiates an instance of <see cref="TopologyConfigurationHandler"/> 
         /// </summary>
         /// <param name="configurationManager"></param>
         /// <param name="logger"></param>
-        public TopologyConfigurationHandler(ITopologyConfigurationManager configurationManager, ILogger logger)
+        public TopologyConfigurationHandler(ITopologyConfigurationManager configurationManager, IBuildToolLogger logger)
         {
             _configurationManager = configurationManager;
             _logger = logger;
@@ -36,7 +35,7 @@ namespace Dolittle.Build.Topology
         /// </summary>
         /// <param name="types">The discovered artifact types from the bounded context's assemblies</param>
         /// <param name="parsingResults"></param>
-        public Applications.Configuration.Topology Build(Type[] types, BuildToolArgumentsParsingResult parsingResults)
+        public Applications.Configuration.Topology Build(Type[] types, ArgumentsParsingResult parsingResults)
         {
             var topology = _configurationManager.Load();
             var boundedContextTopology = new BoundedContextTopology(topology, parsingResults.UseModules, parsingResults.NamespaceSegmentsToStrip);

@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Dolittle.Logging;
 using Dolittle.Reflection;
 
 namespace Dolittle.Build
@@ -18,7 +17,7 @@ namespace Dolittle.Build
     {
         readonly IAssemblyLoader _assemblyLoader;
         readonly ArtifactType[] _artifactTypes;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
 
         /// <summary>
         /// Gets the list of discovered Artifacts
@@ -30,7 +29,7 @@ namespace Dolittle.Build
         /// <param name="assemblyLoader"></param>
         /// <param name="artifactTypes"></param>
         /// <param name="logger"></param>
-        public ArtifactsDiscoverer(IAssemblyLoader assemblyLoader, DolittleArtifactTypes artifactTypes, ILogger logger)
+        public ArtifactsDiscoverer(IAssemblyLoader assemblyLoader, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
         {
             _assemblyLoader = assemblyLoader;
             _artifactTypes = artifactTypes.ArtifactTypes;
@@ -69,14 +68,14 @@ namespace Dolittle.Build
             {
                 if (string.IsNullOrEmpty(type.Namespace) || type.Namespace == "null") 
                 {
-                    _logger.Error($"Artifact {type.FullName} is invalid. Artifact has no namespace");
+                    _logger.Error($"The artifact '{type.FullName}' is invalid. Artifact has no namespace");
                     hasInvalidArtifact = true;      
                 } 
                 var numSegments = type.Namespace.Split(".").Count();
                 if (numSegments < 1) 
                 {
                     hasInvalidArtifact = true;
-                    _logger.Error($"Artifact {type.Name} with namespace = {type.Namespace} is invalid. An artifact's namespace must consist of at least two segments.");
+                    _logger.Error($"The artifact '{type.FullName}' is invalid. An artifact's namespace must consist of at least two segments.");
                 }
             }
             if (hasInvalidArtifact) throw new InvalidArtifact();

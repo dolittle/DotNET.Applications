@@ -22,14 +22,14 @@ namespace Dolittle.Build
         /// Instantiates an instance of <see cref="InvalidArtifact"/>
         /// </summary>
         public InvalidArtifact(Type type)
-            : base($"Artifact {type.Name} with namespace = {type.Namespace} is invalid")
+            : base($"The Artifact '{type.FullName}' is invalid")
         { }
 
         /// <summary>
         /// Instantiates an instance of <see cref="InvalidArtifact"/>
         /// </summary>
         public InvalidArtifact(string typePath)
-            : base($"Artifact with type path (a Module name + Feature names composition) {typePath} is invalid")
+            : base($"Artifact with type path (a Module name + Feature names composition) '{typePath}' is invalid")
         { }
     }
 }

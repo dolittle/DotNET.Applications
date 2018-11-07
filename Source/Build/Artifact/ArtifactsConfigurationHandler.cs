@@ -8,7 +8,6 @@ using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Build.Topology;
 using Dolittle.Concepts.Serialization.Json;
-using Dolittle.Logging;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -22,7 +21,7 @@ namespace Dolittle.Build.Artifact
     {
         readonly IArtifactsConfigurationManager _configurationManager;
         readonly DolittleArtifactTypes _artifactTypes;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
 
         
         /// <summary>
@@ -31,7 +30,7 @@ namespace Dolittle.Build.Artifact
         /// <param name="configurationManager"></param>
         /// <param name="artifactTypes">A list of <see cref="ArtifactType"/> which represents the different artifact types</param>
         /// <param name="logger"></param>
-        public ArtifactsConfigurationHandler(IArtifactsConfigurationManager configurationManager, DolittleArtifactTypes artifactTypes, ILogger logger)
+        public ArtifactsConfigurationHandler(IArtifactsConfigurationManager configurationManager, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
         {
             _configurationManager = configurationManager;
             _artifactTypes = artifactTypes;
@@ -44,7 +43,7 @@ namespace Dolittle.Build.Artifact
         /// <param name="types">The discovered artifact types from the bounded context's assemblies</param>
         /// <param name="topology">The <see cref="Applications.Configuration.Topology"/> that's used for building the <see cref="ArtifactsConfiguration"/></param>
         /// <param name="parsingResults"></param>
-        public ArtifactsConfiguration Build(Type[] types, Applications.Configuration.Topology topology, BuildToolArgumentsParsingResult parsingResults)
+        public ArtifactsConfiguration Build(Type[] types, Applications.Configuration.Topology topology, ArgumentsParsingResult parsingResults)
         {
             var artifactsConfiguration = _configurationManager.Load();
             var boundedContextTopology = new BoundedContextTopology(topology, parsingResults.UseModules, parsingResults.NamespaceSegmentsToStrip);

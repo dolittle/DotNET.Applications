@@ -52,7 +52,7 @@ namespace Dolittle.Build.Proxies
         /// <param name="type"></param>
         /// <param name="parsingResults"></param>
         /// <returns></returns>
-        public static string StripExcludedNamespaceSegments(this Type type, BuildToolArgumentsParsingResult parsingResults)
+        public static string StripExcludedNamespaceSegments(this Type type, ArgumentsParsingResult parsingResults)
         {
             var area = new Area(){Value = type.Namespace.Split(".").First()};
             var segmentList = type.Namespace.Split(".").Skip(1).ToList();

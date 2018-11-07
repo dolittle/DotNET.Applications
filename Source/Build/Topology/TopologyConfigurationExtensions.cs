@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Applications.Configuration;
-using Dolittle.Logging;
 
 namespace Dolittle.Build.Topology
 {
@@ -55,12 +54,12 @@ namespace Dolittle.Build.Topology
         /// <summary>
         /// Validates the <see cref="Applications.Configuration.Topology"/>
         /// </summary>
-        public static void ValidateTopology(this Applications.Configuration.Topology topology, bool useModules, ILogger logger)
+        public static void ValidateTopology(this Applications.Configuration.Topology topology, bool useModules, IBuildToolLogger logger)
         {
             ThrowIfDuplicateId(topology, useModules, logger);
         }
 
-        static void ThrowIfDuplicateId(Applications.Configuration.Topology topology, bool useModules, ILogger logger)
+        static void ThrowIfDuplicateId(Applications.Configuration.Topology topology, bool useModules, IBuildToolLogger logger)
         {
             var idMap = new Dictionary<Guid, string>();
             bool hasDuplicateId = false;
@@ -76,7 +75,7 @@ namespace Dolittle.Build.Topology
 
                         logger.Error(
                             $"Duplicate id found in bounded-context topology.\n" +
-                            $"The id: {module.Module.Value} is already occupied by the Module/Feature: {name} ");
+                            $"The id: '{module.Module.Value}' is already occupied by the Module/Feature: '{name}' ");
                     }
                     else
                     {
@@ -92,10 +91,10 @@ namespace Dolittle.Build.Topology
 
             if (hasDuplicateId)
             {
-                throw new InvalidTopology("Bounded context topology has one or more Features/Modules with the same ID");
+                throw new InvalidTopology("Bounded context topology has one or more Features/Modules with the same Id");
             }
         }
-        static void ThrowIfDuplicateId(IEnumerable<FeatureDefinition> features, ref Dictionary<Guid, string> idMap, ref bool hasDuplicateId, ILogger logger)
+        static void ThrowIfDuplicateId(IEnumerable<FeatureDefinition> features, ref Dictionary<Guid, string> idMap, ref bool hasDuplicateId, IBuildToolLogger logger)
         {
             foreach (var feature in features)
             {
@@ -106,7 +105,7 @@ namespace Dolittle.Build.Topology
                     
                     logger.Error(
                         $"Duplicate id found in bounded-context topology.\n" +
-                        $"The id: {feature.Feature.Value} is already occupied by the Module/Feature: {name} ");
+                        $"The id: '{feature.Feature.Value}' is already occupied by the Module/Feature: '{name}' ");
                 }
                 else
                 {

@@ -8,7 +8,6 @@ using System.Linq;
 using Dolittle.Applications.Configuration;
 
 using Dolittle.Collections;
-using Dolittle.Logging;
 using Dolittle.Serialization.Json;
 
 namespace Dolittle.Build.Topology
@@ -19,7 +18,7 @@ namespace Dolittle.Build.Topology
     public class TopologyBuilder
     {
         readonly Type[] _artifactTypes;
-        readonly ILogger _logger;
+        readonly IBuildToolLogger _logger;
 
         BoundedContextTopology _configuration;
 
@@ -29,7 +28,7 @@ namespace Dolittle.Build.Topology
         /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
         /// <param name="boundedContextTopology">The <see cref="BoundedContextConfiguration"/> that will be modified, validated and returned from Build</param>
         /// <param name="logger"></param>
-        public TopologyBuilder(Type[] artifacts, BoundedContextTopology boundedContextTopology, ILogger logger)
+        public TopologyBuilder(Type[] artifacts, BoundedContextTopology boundedContextTopology, IBuildToolLogger logger)
         {
             _artifactTypes = artifacts;
             _logger = logger;
@@ -159,18 +158,18 @@ namespace Dolittle.Build.Topology
             if (useModules)
             {
                 if (HasFeatures(topology))
-                    throw new InvalidTopology("Topology cannot have root level Features when UseModules is true");
+                    throw new InvalidTopology("Topology cannot have root level Features when DolittleUseModules is true");
                 
                 if (topology.Modules == null)
-                    throw new InvalidTopology("Topology must define a Modules list when UseModules is true");
+                    throw new InvalidTopology("Topology must define a Modules list when DolittleUseModules is true");
             }
             else 
             {
                 if (topology.Features == null)
-                    throw new InvalidTopology("Topology must define a Feature list when UseModules is false");
+                    throw new InvalidTopology("Topology must define a Feature list when DolittleUseModules is false");
 
                 if (HasModules(topology))
-                    throw new InvalidTopology("Topology cannot have Modules when UseModules is false");
+                    throw new InvalidTopology("Topology cannot have Modules when DolittleUseModules is false");
             }
         }
         void ThrowIfNamespaceSegmentsToStripHasEmptyValue()
@@ -178,7 +177,7 @@ namespace Dolittle.Build.Topology
             foreach (var entry in _configuration.NamespaceSegmentsToStrip) 
             {
                 if (!entry.Value.Any() || entry.Value.Any(@namespace => string.IsNullOrEmpty(@namespace)))
-                    throw new InvalidBoundedContextConfiguration($"A mapping of an excluded namespace cannot contain an empty namespace value.  Area {entry.Key.Value} has empty values.");
+                    throw new InvalidBoundedContextConfiguration($"A mapping of an excluded namespace cannot contain an empty namespace value.  Area '{entry.Key.Value}' has empty values.");
                 
             }
         }
@@ -192,7 +191,7 @@ namespace Dolittle.Build.Topology
                 if (_configuration.UseModules && numSegments < 2) 
                 {
                     invalidPaths.Add(path);
-                    _logger.Error($"Artifact with type path (a Module name + Feature names composition) {path} is invalid");
+                    _logger.Error($"Artifact with type path (a Module name + Feature names composition) '{path}' is invalid. When DolittleUseModules is True all artifacts has to belong to a Module and a Feature");
                 }
                 if (invalidPaths.Any()) throw new InvalidArtifact();
             }
