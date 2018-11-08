@@ -16,27 +16,53 @@ The Dolittle platform needs to know several things related to the [*Application*
 The .Net Build Tool can be found [here](https://github.com/dolittle/dotnet.sdk/tree/master/Source/Build). It's basically a .NetCore application that is executed each time a build is performed in the .csproj that has a reference to the *Build Tool* "entrypoint" defined [here](https://github.com/dolittle/DotNET.SDK/tree/master/Source/Build.MSBuild).
 
 ## Setting it up
-Setting up the *Dolittle* for a project should be pretty straight forward. In the interaction layer of the *Bounded Context* it should have a .csproj file that looks something like this:
+Setting up the *Dolittle* for a Web-based project should be pretty straight forward. The *Core* of the *Bounded Context* could have a .csproj like this for setting up a AspNet-based Web application with Swagger and MongoDB implementation of Event store and Read models:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
+
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
+
   <PropertyGroup>
+    <!-- The relative path from this .csproj file to the bounded-context.json configuration file. It is defaulted to ../bounded-context.json -->
+    <DolittleBoundedContextConfigPath>../bounded-context.json</DolittleBoundedContextConfigPath>
+    <!-- Whether or not to use modules or not when genreating bounded context topology structure -->
     <DolittleUseModules>True</DolittleUseModules>
+    <!--  A | separated Key/Value pair map of namespace segments to strip -->
     <DolittleNamespaceSegmentsToStrip>Web=Features|Events=External</DolittleNamespaceSegmentsToStrip>
+    <!-- Whether or not the build tool should generate proxies -->
     <DolittleGenerateProxies>True</DolittleGenerateProxies>
-    <DolittleProxiesBasePath>../InteractionLayer/Proxies/</DolittleProxiesBasePath>
+    <!-- The relative path to put proxies if generated-->
+    <DolittleProxiesBasePath>../InteractionLayer/Features</DolittleProxiesBasePath>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Dolittle.Build" Version="2.0.0-alpha2*" />
-    
-    <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="2.0.0-alpha2*" />
-    <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="2.0.0-alpha2.*" />
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
-    <PackageReference Include="Dolittle.SDK" Version="2.0.0-alpha2*" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
+    
+    <PackageReference Include="Dolittle.AspNetCore" Version="2.0.0-alpha2*" />
+    <PackageReference Include="Dolittle.Build" Version="2.0.0-alpha2*" />   
+    <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="2.0.0-alpha2.*" />
+    <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="2.0.0-alpha2*" />
+    <PackageReference Include="Dolittle.ReadModels.MongoDB" Version="2.0.0-alpha2*" />
+    <PackageReference Include="Dolittle.Resources.Configuration" Version="2.0.0-alpha2*" /> 
+    <PackageReference Include="Dolittle.Runtime.Events.MongoDB" Version="2.0.0-alpha2*" />   
+    <PackageReference Include="Dolittle.SDK" Version="2.0.0-alpha2*" />
+    <PackageReference Include="Dolittle.Serialization.Json" Version="2.0.0-alpha2.*" />
+    <PackageReference Include="Dolittle.Tenancy.Configuration" Version="2.0.0-alpha2*" />
+    
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+    
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.0.0" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Concepts\Concepts.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
@@ -46,19 +72,23 @@ Setting up the *Dolittle* for a project should be pretty straight forward. In th
 </Project>
 ```
 The important parts is:
-```xml
-<PropertyGroup>
-  <DolittleUseModules>True</DolittleUseModules>
-  <DolittleNamespaceSegmentsToStrip></DolittleNamespaceSegmentsToStrip>
-  <DolittleGenerateProxies>True</DolittleGenerateProxies>
-  <DolittleProxiesBasePath>../InteractionLayer/Proxies/</DolittleProxiesBasePath>
-</PropertyGroup>
+```xml  
+  <PropertyGroup>
+    <!-- The relative path from this .csproj file to the bounded-context.json configuration file -->
+    <DolittleBoundedContextConfigPath>../bounded-context.json</DolittleBoundedContextConfigPath>
+    <!-- Whether or not to use modules or not when genreating bounded context topology structure -->
+    <DolittleUseModules>False</DolittleUseModules>
+    <!--  A | separated Key/Value pair map of namespace segments to strip -->
+    <DolittleNamespaceSegmentsToStrip></DolittleNamespaceSegmentsToStrip>
+    <!-- Whether or not the build tool should generate proxies -->
+    <DolittleGenerateProxies>True</DolittleGenerateProxies>
+    <!-- The relative path to put proxies if generated-->
+    <DolittleProxiesBasePath>../Web/Features</DolittleProxiesBasePath>
+  </PropertyGroup>
 ```
 and
 ```xml
-<ItemGroup>
   <PackageReference Include="Dolittle.Build" Version="2.0.0-alpha2*" />
-</ItemGroup>
 ```
 
 Having the Dolittle.Build reference will trigger the *Build Tool* given the Properties defined above as configuration arguments to the tool. We'll talk more about that later
@@ -75,18 +105,27 @@ bounded-context.json:
   "application": "0d577eb8-a70b-4e38-aca8-f85b3166bdc2",
   "boundedContext": "f660966d-3a74-44e6-8268-a9aefbae6115",
   "boundedContextName": "Shop",
+  "resources": {
+    "readModels": {
+      "production": "MongoDB",
+      "development": "MongoDB"
+    },
+    "eventStore": {
+      "production": "MongoDB",
+      "development": "MongoDB"
+    }
+  },
   "core": {
-    "language" "csharp"
+    "language": "csharp"
   }
 }
 ```
-
-* application - The GUID of the Application that this *Bounded Context* belongs to
+* application - The GUID of the *Application* that this *Bounded Context* belongs to
 * boundedContext - The GUID of the *Bounded Context*
 * boundedContextName - The name of the *Bounded Context*
-* core - Configuration of the core
-* core.language - The language of the core configuration, very important for the dolittle cli tool. Only supports 'csharp' for now
-
+* resources - A configuration telling the Dolittle Runtime which implementations of the Read model and Event Store database to use for which environment
+* core - The core configuration
+* core.language - The core language used for the *Bounded Context* 
 
 ## Topology
 One important aspect of *Bounded Contexts* is its topology. The platform needs to have some metadata for *Artifacts*, which *Feature* it belongs to is one such. To be able to map out a *Bounded Context's* *Features* we need to first define its *Topology*. When the *Build Tool* is referenced in a .csproj it will take the assembly and referenced assemblies and it will start discovering *Artifacts*. After it has discovered all the *Artifacts* of the *Bounded Context* it will try define the topology of the *Bounded Structure*. Based on "DolittleUseModules" and "DolittleNamespaceSegmentsToStrip" options in the configuration the *Build Tool* will look at the type paths of the *Artifact* CLR types and create a topology structure based on this type path.
