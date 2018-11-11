@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation", "Specification
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands", "Source\Commands\Commands.csproj", "{BB6B4E6F-D318-4BAE-ADF6-A1BA04481AE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosting", "Source\Hosting\Hosting.csproj", "{B02FBD71-0F24-4FBA-BF61-D15222299B82}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Applications", "Source\Applications\Applications.csproj", "{E91C8142-CE3C-47EB-8B3B-21858CB52C1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands.Coordination", "Source\Commands.Coordination\Commands.Coordination.csproj", "{562C861F-F0A8-4785-AEE9-441197B14FB7}"
@@ -154,18 +152,6 @@ Global
 		{BB6B4E6F-D318-4BAE-ADF6-A1BA04481AE6}.Release|x64.Build.0 = Release|x64
 		{BB6B4E6F-D318-4BAE-ADF6-A1BA04481AE6}.Release|x86.ActiveCfg = Release|x86
 		{BB6B4E6F-D318-4BAE-ADF6-A1BA04481AE6}.Release|x86.Build.0 = Release|x86
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Debug|x64.ActiveCfg = Debug|x64
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Debug|x64.Build.0 = Debug|x64
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Debug|x86.ActiveCfg = Debug|x86
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Debug|x86.Build.0 = Debug|x86
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Release|x64.ActiveCfg = Release|x64
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Release|x64.Build.0 = Release|x64
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Release|x86.ActiveCfg = Release|x86
-		{B02FBD71-0F24-4FBA-BF61-D15222299B82}.Release|x86.Build.0 = Release|x86
 		{E91C8142-CE3C-47EB-8B3B-21858CB52C1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E91C8142-CE3C-47EB-8B3B-21858CB52C1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E91C8142-CE3C-47EB-8B3B-21858CB52C1E}.Debug|x64.ActiveCfg = Debug|x64
