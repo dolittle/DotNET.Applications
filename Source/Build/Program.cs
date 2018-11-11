@@ -4,29 +4,32 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq;
-using Dolittle.Applications.Configuration;
-using Dolittle.Artifacts.Configuration;
-using Dolittle.Commands;
-using Dolittle.Events;
-using Dolittle.Queries;
-using Dolittle.ReadModels;
-using Dolittle.Concepts.Serialization.Json;
-using Dolittle.Events.Processing;
-using Dolittle.Serialization.Json;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using Dolittle.Build.Topology;
-using Dolittle.Build.Artifact;
-using Dolittle.Hosting;
-using Dolittle.Types;
-using Dolittle.Build.Proxies;
 using System.Collections.Generic;
 using System.Reflection;
-using Dolittle.Runtime.Events.Processing;
+
+using Dolittle.Applications.Configuration;
+using Dolittle.Artifacts.Configuration;
+using Dolittle.Bootstrapping;
+using Dolittle.Build.Topology;
+using Dolittle.Build.Artifact;
+using Dolittle.Build.Proxies;
 using Dolittle.Collections;
-using Dolittle.Reflection;
-using Dolittle.Strings;
+using Dolittle.Commands;
 using Dolittle.Concepts;
+using Dolittle.Concepts.Serialization.Json;
+using Dolittle.Events;
+using Dolittle.Events.Processing;
+using Dolittle.Serialization.Json;
+using Dolittle.Queries;
+using Dolittle.ReadModels;
+using Dolittle.Reflection;
+using Dolittle.Runtime.Events.Processing;
+using Dolittle.Strings;
+using Dolittle.Types;
+
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+
 
 namespace Dolittle.Build
 {
@@ -38,9 +41,10 @@ namespace Dolittle.Build
         static ProxiesHandler _proxiesHandler;
         static ArtifactsDiscoverer _artifactsDiscoverer;
         static EventProcessorDiscoverer _eventProcessorDiscoverer;
-        static IHost _host;
         static DolittleArtifactTypes _artifactTypes;
         static IBoundedContextLoader _boundedContextLoader;
+
+        static BootloaderResult _bootLoaderResult;
 
         internal static bool NewTopology = false;
         internal static bool NewArtifacts = false;
@@ -77,7 +81,7 @@ namespace Dolittle.Build
                 
                 if (parsingResults.GenerateProxies)
                 {
-                    _proxiesHandler = _host.Container.Get<ProxiesHandler>();
+                    _proxiesHandler = _bootLoaderResult.Container.Get<ProxiesHandler>();
                     _proxiesHandler.CreateProxies(artifacts, parsingResults, artifactsConfiguration);
                 }
 
@@ -107,16 +111,18 @@ namespace Dolittle.Build
             {
                 new NullLoggerProvider()   
             });
-            _host = new HostBuilder().Build(loggerFactory, true);
+
+            _bootLoaderResult = Bootloader.Configure()
+                                            .UseLoggerFactory(loggerFactory)
+                                            .Start();
         }
         
         static void AssignBindings()
         {
-            
-            _artifactTypes = _host.Container.Get<DolittleArtifactTypes>();
-            _topologyConfigurationHandler = _host.Container.Get<TopologyConfigurationHandler>();
-            _artifactsConfigurationHandler = _host.Container.Get<ArtifactsConfigurationHandler>();
-            _boundedContextLoader = _host.Container.Get<IBoundedContextLoader>();
+            _artifactTypes = _bootLoaderResult.Container.Get<DolittleArtifactTypes>();
+            _topologyConfigurationHandler = _bootLoaderResult.Container.Get<TopologyConfigurationHandler>();
+            _artifactsConfigurationHandler = _bootLoaderResult.Container.Get<ArtifactsConfigurationHandler>();
+            _boundedContextLoader = _bootLoaderResult.Container.Get<IBoundedContextLoader>();
         }
 
         static void ValidateEventProcessors(IEnumerable<MethodInfo> eventProcessors)
