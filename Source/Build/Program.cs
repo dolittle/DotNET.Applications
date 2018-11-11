@@ -114,6 +114,7 @@ namespace Dolittle.Build
 
             _bootLoaderResult = Bootloader.Configure()
                                             .UseLoggerFactory(loggerFactory)
+                                            .UseLogAppender(new NullLogAppender())
                                             .Start();
         }
         
