@@ -85,7 +85,7 @@ namespace Dolittle.Events.Coordination
         UncommittedEventStream BuildUncommitted(UncommittedEvents uncommittedEvents, CorrelationId correlationId)
         {
             var versionedEventSource = ToVersionedEventSource(uncommittedEvents);
-            return BuildFrom(versionedEventSource,correlationId,_systemClock.GetCurrentTime(),uncommittedEvents.Events.Select(e => e.Event));
+            return BuildFrom(versionedEventSource,correlationId,_systemClock.GetCurrentTime(),uncommittedEvents.Events);
 
         }
 
@@ -96,9 +96,14 @@ namespace Dolittle.Events.Coordination
             return new VersionedEventSource(new EventSourceVersion(commit,sequence),uncommittedEvents.EventSource.EventSourceId, _artifactMap.GetArtifactFor(uncommittedEvents.EventSource.GetType()).Id) ;
         }
 
-        UncommittedEventStream BuildFrom(VersionedEventSource version, CorrelationId correlationId, DateTimeOffset committed, IEnumerable<IEvent> events)
+        VersionedEventSource ToVersionedEventSource(VersionedEvent versionedEvent, EventSourceId eventSourceId, ArtifactId artifact)
         {
-            var envelopes = events.Select(e => e.ToEnvelope(BuildEventMetadata(e, EventId.New(),version, correlationId, committed))).ToList();
+            return new VersionedEventSource(new EventSourceVersion(versionedEvent.Version.Commit,versionedEvent.Version.Sequence),eventSourceId, artifact) ;
+        }
+
+        UncommittedEventStream BuildFrom(VersionedEventSource version, CorrelationId correlationId, DateTimeOffset committed, IEnumerable<VersionedEvent> events)
+        {
+            var envelopes = events.Select(e => e.Event.ToEnvelope(BuildEventMetadata(e.Event, EventId.New(),ToVersionedEventSource(e,version.EventSource,version.Artifact), correlationId, committed))).ToList();
             if(envelopes == null || !envelopes.Any())
                 throw new ApplicationException("There are no envelopes");
             return BuildStreamFrom(EventStream.From(envelopes));
