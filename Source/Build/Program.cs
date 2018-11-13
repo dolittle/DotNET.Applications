@@ -29,7 +29,7 @@ using Dolittle.Types;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
-
+using System.Runtime.Loader;
 
 namespace Dolittle.Build
 {
@@ -53,14 +53,16 @@ namespace Dolittle.Build
         {
             try
             {
-                InitialSetup();
                 _logger.Information("Build process started");
+
                 var startTime = DateTime.UtcNow;
                 var parsingResults = ArgumentsParser.Parse(args);
+                var clientAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(parsingResults.AssemblyPath);
+                InitialSetup();
 
                 var boundedContextConfig = _boundedContextLoader.Load(parsingResults.BoundedContextConfigRelativePath);
 
-                var assemblyLoader = new AssemblyLoader(parsingResults.AssemblyPath);
+                var assemblyLoader = new AssemblyLoader(clientAssembly);
                 _artifactsDiscoverer = new ArtifactsDiscoverer(assemblyLoader, _artifactTypes, _logger);
                 _eventProcessorDiscoverer = new EventProcessorDiscoverer(assemblyLoader, _logger);
                 
@@ -115,6 +117,7 @@ namespace Dolittle.Build
             _bootLoaderResult = Bootloader.Configure()
                                             .UseLoggerFactory(loggerFactory)
                                             .UseLogAppender(new NullLogAppender())
+                                            .SkipBootprocedures()
                                             .Start();
         }
         
