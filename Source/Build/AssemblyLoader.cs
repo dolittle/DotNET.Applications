@@ -21,16 +21,16 @@ namespace Dolittle.Build
         /// <summary>
         /// Initializes a new instance of <see cref="AssemblyLoader"/>
         /// </summary>
-        /// <param name="path">Path to the <see cref="Assembly"/> to load</param>
-        public AssemblyLoader(string path)
+        /// <param name="assembly">Path to the <see cref="Assembly"/> to load</param>
+        public AssemblyLoader(Assembly assembly)
         {
-            Assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+            Assembly = assembly;
             AssemblyLoadContext = AssemblyLoadContext.GetLoadContext(Assembly);
             AssemblyLoadContext.Resolving += OnResolving;
 
             DependencyContext = DependencyContext.Load(Assembly);
 
-            var basePath = Path.GetDirectoryName(path);
+            var basePath = Path.GetDirectoryName(assembly.Location);
 
             _assemblyResolver = new CompositeCompilationAssemblyResolver(new ICompilationAssemblyResolver[]
             {
