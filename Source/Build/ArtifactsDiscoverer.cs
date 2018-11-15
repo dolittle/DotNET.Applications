@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Dolittle.Assemblies;
 using Dolittle.Reflection;
 
 namespace Dolittle.Build
@@ -15,7 +16,7 @@ namespace Dolittle.Build
     /// </summary>
     public class ArtifactsDiscoverer
     {
-        readonly IAssemblyLoader _assemblyLoader;
+        readonly IAssemblyContext _assemblyContext;
         readonly ArtifactType[] _artifactTypes;
         readonly IBuildToolLogger _logger;
 
@@ -26,12 +27,12 @@ namespace Dolittle.Build
         /// <summary>
         /// Instantiates and instance of <see cref="ArtifactsDiscoverer"/>
         /// </summary>
-        /// <param name="assemblyLoader"></param>
+        /// <param name="assemblyContext"></param>
         /// <param name="artifactTypes"></param>
         /// <param name="logger"></param>
-        public ArtifactsDiscoverer(IAssemblyLoader assemblyLoader, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
+        public ArtifactsDiscoverer(IAssemblyContext assemblyContext, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
         {
-            _assemblyLoader = assemblyLoader;
+            _assemblyContext = assemblyContext;
             _artifactTypes = artifactTypes.ArtifactTypes;
             _logger = logger;
 
@@ -50,7 +51,7 @@ namespace Dolittle.Build
         }
         Type[] GetArtifactsFromAssembly()
         {
-            return _assemblyLoader
+            return _assemblyContext
                 .GetProjectReferencedAssemblies()
                 .SelectMany(_ => _.ExportedTypes)
                 .Where(_ =>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Dolittle.Assemblies;
 using Dolittle.Collections;
 using Dolittle.Events.Processing;
 using Dolittle.Lifecycle;
@@ -20,7 +21,7 @@ namespace Dolittle.Build
     {
         readonly static Type EventProcessorCollectionType = typeof(ICanProcessEvents);
         
-        readonly AssemblyLoader _assemblyLoader;
+        readonly IAssemblyContext _assemblyContext;
         readonly IBuildToolLogger _logger;
 
         MethodInfo[] _eventProcessors;
@@ -42,11 +43,11 @@ namespace Dolittle.Build
         /// <summary>
         /// Instantiates and instance of <see cref="EventProcessorDiscoverer"/>
         /// </summary>
-        /// <param name="assemblyLoader"></param>
+        /// <param name="assemblyContext"></param>
         /// <param name="logger"></param>
-        public EventProcessorDiscoverer(AssemblyLoader assemblyLoader, IBuildToolLogger logger)
+        public EventProcessorDiscoverer(IAssemblyContext assemblyContext, IBuildToolLogger logger)
         {
-            _assemblyLoader = assemblyLoader;
+            _assemblyContext = assemblyContext;
             _logger = logger;
         }
         MethodInfo[] DiscoverEventProcessors()
@@ -75,7 +76,7 @@ namespace Dolittle.Build
         }
         IEnumerable<Type> GetTypesHoldingEventProcessorsFromAssembly()
         {
-            return _assemblyLoader
+            return _assemblyContext
                 .GetProjectReferencedAssemblies()
                 .SelectMany(_ => _.ExportedTypes)
                 .Where(_ =>

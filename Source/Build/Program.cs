@@ -9,6 +9,7 @@ using System.Reflection;
 
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts.Configuration;
+using Dolittle.Assemblies;
 using Dolittle.Bootstrapping;
 using Dolittle.Build.Topology;
 using Dolittle.Build.Artifact;
@@ -62,9 +63,10 @@ namespace Dolittle.Build
 
                 var boundedContextConfig = _boundedContextLoader.Load(parsingResults.BoundedContextConfigRelativePath);
 
-                var assemblyLoader = new AssemblyLoader(clientAssembly);
-                _artifactsDiscoverer = new ArtifactsDiscoverer(assemblyLoader, _artifactTypes, _logger);
-                _eventProcessorDiscoverer = new EventProcessorDiscoverer(assemblyLoader, _logger);
+                var assemblyContext = AssemblyContext.From(clientAssembly);
+               
+                _artifactsDiscoverer = new ArtifactsDiscoverer(assemblyContext, _artifactTypes, _logger);
+                _eventProcessorDiscoverer = new EventProcessorDiscoverer(assemblyContext, _logger);
                 
                 var artifacts = _artifactsDiscoverer.Artifacts;
 
