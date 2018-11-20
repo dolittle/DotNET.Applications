@@ -16,6 +16,7 @@
         <PackageReference Include="Dolittle.Assemblies" Version="2.0.0-alpha2*" />
         <PackageReference Include="Dolittle.Bootstrapping" Version="2.0.0-alpha2*" />
         <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="2.0.0-alpha2*" />
+        <PackageReference Include="Dolittle.Runtime.Applications.Configuration" Version="2.0.0-alpha2*" />
     </ItemGroup>
 
     <ItemGroup>
