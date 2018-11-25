@@ -54,6 +54,7 @@ namespace Dolittle.Build
         {
             try
             {
+                
                 _logger.Information("Build process started");
 
                 var startTime = DateTime.UtcNow;
@@ -64,6 +65,8 @@ namespace Dolittle.Build
                 var boundedContextConfig = _boundedContextLoader.Load(parsingResults.BoundedContextConfigRelativePath);
 
                 var assemblyContext = AssemblyContext.From(clientAssembly);
+
+                
                
                 _artifactsDiscoverer = new ArtifactsDiscoverer(assemblyContext, _artifactTypes, _logger);
                 _eventProcessorDiscoverer = new EventProcessorDiscoverer(assemblyContext, _logger);
