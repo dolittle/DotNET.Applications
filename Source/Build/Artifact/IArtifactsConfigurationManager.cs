@@ -2,9 +2,9 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using Dolittle.Artifacts.Configuration;
 
-
-namespace Dolittle.Artifacts.Configuration
+namespace Dolittle.Build.Artifact
 {
     /// <summary>
     /// Defines a system for working with <see cref="ArtifactsConfiguration"/>

@@ -21,19 +21,19 @@ namespace Dolittle.Artifacts.Configuration
         /// </summary>
         public static bool HasPerformed { get; private set; }
 
-        readonly IArtifactsConfigurationManager _artifactsConfigurationManager;
         readonly IArtifactTypeMap _artifactTypeMap;
 
         readonly IEnumerable<PropertyInfo>  _artifactProperties = typeof(ArtifactsByTypeDefinition).GetProperties().Where(_ => _.PropertyType == typeof(IEnumerable<ArtifactDefinition>));
+        readonly ArtifactsConfiguration _artifactsConfiguration;
 
         /// <summary>
         /// Initializes a new instance of <see cref="BootProcedure"/>
         /// </summary>
-        /// <param name="artifactsConfigurationManager"><see cref="IArtifactsConfigurationManager"/></param>
+        /// <param name="artifactsConfiguration">The <see cref="ArtifactsConfiguration"/> </param>
         /// <param name="artifactTypeMap"></param>
-        public BootProcedure(IArtifactsConfigurationManager artifactsConfigurationManager, IArtifactTypeMap artifactTypeMap)
+        public BootProcedure(ArtifactsConfiguration artifactsConfiguration, IArtifactTypeMap artifactTypeMap)
         {
-            _artifactsConfigurationManager = artifactsConfigurationManager;
+            _artifactsConfiguration = artifactsConfiguration;
             _artifactTypeMap = artifactTypeMap;
         }
 
@@ -43,9 +43,8 @@ namespace Dolittle.Artifacts.Configuration
         /// <inheritdoc/>
         public void Perform()
         {
-            var config = _artifactsConfigurationManager.Load();
             var artifacts = new List<ArtifactDefinition>();
-            config.Artifacts.Select(_ => _.Value).ForEach(artifactByType => 
+            _artifactsConfiguration.Artifacts.Select(_ => _.Value).ForEach(artifactByType => 
             {
                 _artifactProperties.ForEach(property => artifacts.AddRange(property.GetValue(artifactByType) as IEnumerable<ArtifactDefinition>));
             });

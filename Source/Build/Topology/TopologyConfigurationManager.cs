@@ -7,16 +7,19 @@ using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
+using Dolittle.Applications.Configuration;
 
-namespace Dolittle.Artifacts.Configuration
+namespace Dolittle.Build.Topology
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IArtifactsConfigurationManager"/>
+    /// Represents an implementation of <see cref="ITopologyConfigurationManager"/>
     /// </summary>
     [Singleton]
-    public class ArtifactsConfigurationManager : IArtifactsConfigurationManager
+    public class TopologyConfigurationManager : ITopologyConfigurationManager
     {
-        static string _path = Path.Combine(".dolittle", "artifacts.json");
+        readonly static string _path = Path.Combine(".dolittle", "topology.json");
+        readonly ISerializer _serializer;
+        readonly ILogger _logger;
 
         readonly ISerializationOptions _serializationOptions = SerializationOptions.Custom(callback:
             serializer =>
@@ -25,38 +28,35 @@ namespace Dolittle.Artifacts.Configuration
                 serializer.Formatting = Formatting.Indented;
             }
         );
-
-        readonly ISerializer _serializer;
-        readonly ILogger _logger;
-
         /// <summary>
-        /// Initializes a new instance of <see cref="ArtifactsConfigurationManager"/>
+        /// Initializes a new instance of <see cref="TopologyConfigurationManager"/>
         /// </summary>
-        /// <param name="serializer"><see cref="ISerializer"/> to use</param>
-        /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        public ArtifactsConfigurationManager(ISerializer serializer, ILogger logger)
+        /// <param name="serializer"><see cref="ISerializer"/> to use for working with configuration as JSON</param>
+        /// <param name="logger"></param>
+        public TopologyConfigurationManager(ISerializer serializer, ILogger logger)
         {
             _serializer = serializer;
             _logger = logger;
         }
 
         /// <inheritdoc/>
-        public ArtifactsConfiguration Load()
+        public Dolittle.Applications.Configuration.Topology Load()
         {
             var path = GetPath();
-            if (!File.Exists(path)) return new ArtifactsConfiguration();
-
+            if( !File.Exists(path)) return new Dolittle.Applications.Configuration.Topology(new ModuleDefinition[0], new FeatureDefinition[0]);
+            
             var json = File.ReadAllText(path);
-            var configuration = _serializer.FromJson<ArtifactsConfiguration>(json, _serializationOptions);
+            var configuration = _serializer.FromJson<Dolittle.Applications.Configuration.Topology>(json, _serializationOptions);
             return configuration;
         }
 
         /// <inheritdoc/>
-        public void Save(ArtifactsConfiguration configuration)
+        public void Save(Dolittle.Applications.Configuration.Topology configuration)
         {
             var path = GetPath();
-
+            
             var json = _serializer.ToJson(configuration, _serializationOptions);
+            
             File.WriteAllText(path, json);
         }
 

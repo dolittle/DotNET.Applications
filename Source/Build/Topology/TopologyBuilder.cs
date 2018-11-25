@@ -116,7 +116,7 @@ namespace Dolittle.Build.Topology
             foreach(var path in missingPaths)
                 modules.Add(path.GetModuleFromPath());
 
-            _configuration.Topology.Modules = modules.GetCollapsedModules();
+            _configuration.Topology = new Dolittle.Applications.Configuration.Topology(modules.GetCollapsedModules(), _configuration.Topology.Features);
         }
 
         void AddFeatures(string[] missingPaths)
@@ -125,7 +125,7 @@ namespace Dolittle.Build.Topology
             foreach (var path in missingPaths)
                 features.Add(path.GetFeatureFromPath());
 
-            _configuration.Topology.Features = features.GetCollapsedFeatures();
+            _configuration.Topology = new Dolittle.Applications.Configuration.Topology(_configuration.Topology.Modules, features.GetCollapsedFeatures());
         }
         static IEnumerable<string> GetArtifactPathsFor(IEnumerable<FeatureDefinition> features, string parent = "")
         {

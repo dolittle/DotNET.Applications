@@ -7,18 +7,19 @@ using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
+using Dolittle.Artifacts.Configuration;
+using Dolittle.Applications;
+using System.Collections.Generic;
 
-namespace Dolittle.Applications.Configuration
+namespace Dolittle.Build.Artifact
 {
     /// <summary>
-    /// Represents an implementation of <see cref="ITopologyConfigurationManager"/>
+    /// Represents an implementation of <see cref="IArtifactsConfigurationManager"/>
     /// </summary>
     [Singleton]
-    public class TopologyConfigurationManager : ITopologyConfigurationManager
+    public class ArtifactsConfigurationManager : IArtifactsConfigurationManager
     {
-        readonly static string _path = Path.Combine(".dolittle", "topology.json");
-        readonly ISerializer _serializer;
-        readonly ILogger _logger;
+        static string _path = Path.Combine(".dolittle", "artifacts.json");
 
         readonly ISerializationOptions _serializationOptions = SerializationOptions.Custom(callback:
             serializer =>
@@ -27,35 +28,38 @@ namespace Dolittle.Applications.Configuration
                 serializer.Formatting = Formatting.Indented;
             }
         );
+
+        readonly ISerializer _serializer;
+        readonly ILogger _logger;
+
         /// <summary>
-        /// Initializes a new instance of <see cref="TopologyConfigurationManager"/>
+        /// Initializes a new instance of <see cref="ArtifactsConfigurationManager"/>
         /// </summary>
-        /// <param name="serializer"><see cref="ISerializer"/> to use for working with configuration as JSON</param>
-        /// <param name="logger"></param>
-        public TopologyConfigurationManager(ISerializer serializer, ILogger logger)
+        /// <param name="serializer"><see cref="ISerializer"/> to use</param>
+        /// <param name="logger"><see cref="ILogger"/> for logging</param>
+        public ArtifactsConfigurationManager(ISerializer serializer, ILogger logger)
         {
             _serializer = serializer;
             _logger = logger;
         }
 
         /// <inheritdoc/>
-        public Topology Load()
+        public ArtifactsConfiguration Load()
         {
             var path = GetPath();
-            if( !File.Exists(path)) return new Topology();
-            
+            if (!File.Exists(path)) return new ArtifactsConfiguration(new Dictionary<Feature, ArtifactsByTypeDefinition>());
+
             var json = File.ReadAllText(path);
-            var configuration = _serializer.FromJson<Topology>(json, _serializationOptions);
+            var configuration = _serializer.FromJson<ArtifactsConfiguration>(json, _serializationOptions);
             return configuration;
         }
 
         /// <inheritdoc/>
-        public void Save(Topology configuration)
+        public void Save(ArtifactsConfiguration configuration)
         {
             var path = GetPath();
-            
+
             var json = _serializer.ToJson(configuration, _serializationOptions);
-            
             File.WriteAllText(path, json);
         }
 
