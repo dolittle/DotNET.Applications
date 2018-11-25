@@ -51,7 +51,7 @@ Setting up the *Dolittle* for a Web-based project should be pretty straight forw
     <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="2.0.0-alpha2.*" />
     <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="2.0.0-alpha2*" />
     <PackageReference Include="Dolittle.ReadModels.MongoDB" Version="2.0.0-alpha2*" />
-    <PackageReference Include="Dolittle.Resources.Configuration" Version="2.0.0-alpha2*" /> 
+    <PackageReference Include="Dolittle.ResourceTypes.Configuration" Version="2.0.0-alpha2*" /> 
     <PackageReference Include="Dolittle.Runtime.Events.MongoDB" Version="2.0.0-alpha2*" />   
     <PackageReference Include="Dolittle.SDK" Version="2.0.0-alpha2*" />
     <PackageReference Include="Dolittle.Serialization.Json" Version="2.0.0-alpha2.*" />
