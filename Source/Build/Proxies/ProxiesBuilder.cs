@@ -77,26 +77,20 @@ namespace Dolittle.Build.Proxies
         }
         Proxy GenerateCommandProxy(Type artifact, ArtifactsConfiguration artifactsConfig, ArgumentsParsingResult parsingResults, Func<object, string> template)
         {
+            _logger.Trace($"Creating command proxy for {ClrType.FromType(artifact).TypeString}");
+
             var artifactId = GetArtifactId(artifact, artifactsConfig);
-
-            if (artifact.HasVisibleProperties())
+            var handlebarsCommand = new HandlebarsCommand()
             {
-                _logger.Trace($"Creating command proxy for {ClrType.FromType(artifact).TypeString}");
-                var propertiesInfo = artifact.GetProperties();
+                CommandName = artifact.Name,
+                ArtifactId = artifactId.Value.ToString()
+            };
+            var setableProperties = artifact.GetSettableProperties();
+            
+            if (setableProperties.Any())
+                handlebarsCommand.Properties = CreateProxyProperties(setableProperties);
 
-                var handlebarsCommand = new HandlebarsCommand()
-                {
-                    CommandName = artifact.Name,
-                    ArtifactId = artifactId.Value.ToString()
-                };
-                handlebarsCommand.Properties = CreateProxyProperties(propertiesInfo);
-                return CreateProxy(artifact, template(handlebarsCommand), parsingResults);
-            }
-            else
-            {
-                _logger.Warning($"No visible properties for {ClrType.FromType(artifact).TypeString}");
-                return null;
-            }
+            return CreateProxy(artifact, template(handlebarsCommand), parsingResults);
         }
         Proxy GenereateQueryProxy(Type artifact, ArtifactsConfiguration artifactsConfig, ArgumentsParsingResult parsingResults, Func<object, string> template)
         {
@@ -107,6 +101,7 @@ namespace Dolittle.Build.Proxies
                 QueryName = artifact.Name
             };
             var setableProperties = artifact.GetSettableProperties();
+            
             if (setableProperties.Any())
                 handlebarsQuery.Properties = CreateProxyProperties(setableProperties);
             
