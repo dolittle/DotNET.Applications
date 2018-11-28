@@ -93,12 +93,13 @@ namespace Dolittle.Events.Coordination
         {
             var commit = Convert.ToUInt64(uncommittedEvents.EventSource.Version.Commit);
             var sequence = Convert.ToUInt32(uncommittedEvents.EventSource.Version.Sequence);
-            return new VersionedEventSource(new EventSourceVersion(commit,sequence),uncommittedEvents.EventSource.EventSourceId, _artifactMap.GetArtifactFor(uncommittedEvents.EventSource.GetType()).Id) ;
+            var key = new EventSourceKey(uncommittedEvents.EventSource.EventSourceId, _artifactMap.GetArtifactFor(uncommittedEvents.EventSource.GetType()).Id);
+            return new VersionedEventSource(new EventSourceVersion(commit,sequence),key);
         }
 
         VersionedEventSource ToVersionedEventSource(VersionedEvent versionedEvent, EventSourceId eventSourceId, ArtifactId artifact)
         {
-            return new VersionedEventSource(new EventSourceVersion(versionedEvent.Version.Commit,versionedEvent.Version.Sequence),eventSourceId, artifact) ;
+            return new VersionedEventSource(new EventSourceVersion(versionedEvent.Version.Commit,versionedEvent.Version.Sequence),new EventSourceKey(eventSourceId, artifact));
         }
 
         UncommittedEventStream BuildFrom(VersionedEventSource version, CorrelationId correlationId, DateTimeOffset committed, IEnumerable<VersionedEvent> events)
