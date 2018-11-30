@@ -31,6 +31,7 @@ using Dolittle.Types;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using System.Runtime.Loader;
+using Dolittle.Immutability;
 
 namespace Dolittle.Build
 {
