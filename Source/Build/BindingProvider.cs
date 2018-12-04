@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 
 namespace Dolittle.Build
 {
+
     /// <summary>
     /// A class providing the startup bindings
     /// </summary>
