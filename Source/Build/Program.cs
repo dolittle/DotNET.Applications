@@ -10,7 +10,7 @@ using System.Reflection;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Assemblies;
-using Dolittle.Bootstrapping;
+using Dolittle.Booting;
 using Dolittle.Build.Topology;
 using Dolittle.Build.Artifact;
 using Dolittle.Build.Proxies;
@@ -55,7 +55,6 @@ namespace Dolittle.Build
         {
             try
             {
-                
                 _logger.Information("Build process started");
 
                 var startTime = DateTime.UtcNow;
@@ -120,11 +119,11 @@ namespace Dolittle.Build
                 new NullLoggerProvider()   
             });
 
-            _bootLoaderResult = Bootloader.Configure()
-                                            .UseLoggerFactory(loggerFactory)
-                                            .UseLogAppender(new NullLogAppender())
-                                            .SkipBootprocedures()
-                                            .Start();
+            _bootLoaderResult = Bootloader.Configure(_ => _
+                .UseLoggerFactory(loggerFactory)
+                .UseLogAppender(new NullLogAppender())
+                .SkipBootprocedures()
+            ).Start();
         }
         
         static void AssignBindings()
