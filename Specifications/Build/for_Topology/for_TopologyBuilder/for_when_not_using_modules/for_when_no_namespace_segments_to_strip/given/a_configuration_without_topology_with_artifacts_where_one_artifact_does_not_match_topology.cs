@@ -10,7 +10,11 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_not_
 {
     public class a_configuration_without_topology_with_artifacts_where_one_artifact_does_not_match_topology : artifacts_where_one_artifact_does_not_match_topology
     {
-        protected static readonly BoundedContextTopology configuration = new BoundedContextTopology(new Applications.Configuration.Topology(), false, new Dictionary<Area, IEnumerable<string>>());
+        protected static readonly BoundedContextTopology configuration = new BoundedContextTopology(
+            new Applications.Configuration.Topology(
+                new ModuleDefinition[0],
+                new FeatureDefinition[0]
+            ), false, new Dictionary<Area, IEnumerable<string>>());
 
         protected static readonly TopologyBuilder topology_builder = new TopologyBuilder(artifacts, configuration, logger);
         

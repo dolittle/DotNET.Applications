@@ -6,10 +6,11 @@ using Machine.Specifications;
 using Moq;
 
 using Specs.Feature;
+using IAssemblyContext = Dolittle.Assemblies.IAssemblyContext;
 
 namespace Dolittle.Build.for_ArtifactsDiscoverer.given
 {
-    public class an_assembly_loader_that_has_all_abstract_artifacts_and_their_sub_types : given.all
+    public class all_abstract_artifacts_and_their_sub_types : all
     {
         protected static readonly IEnumerable<Type> abstract_types = new []
         {
@@ -27,15 +28,15 @@ namespace Dolittle.Build.for_ArtifactsDiscoverer.given
             typeof(ImplementationOfAbstractQuery),
             typeof(ImplementationOfAbstractReadModel),
         };
-        protected static Mock<IAssemblyLoader> assembly_loader_mock;
+        protected static Mock<IAssemblyContext> assembly_context;
 
         Establish context = () =>
         {
-            assembly_loader_mock = new Mock<IAssemblyLoader>();
+            assembly_context = new Mock<IAssemblyContext>();
 
-            var assembly_mock = new Mock<Assembly>();
-            assembly_mock.Setup(_ => _.ExportedTypes).Returns(abstract_types.Concat(non_abstract_subtypes_of_the_abstract_types));
-            assembly_loader_mock.Setup(_ => _.GetProjectReferencedAssemblies()).Returns(new []{assembly_mock.Object});
+            var assembly = new Mock<Assembly>();
+            assembly.Setup(_ => _.ExportedTypes).Returns(abstract_types.Concat(non_abstract_subtypes_of_the_abstract_types));
+            assembly_context.Setup(_ => _.GetProjectReferencedAssemblies()).Returns(new []{assembly.Object});
         };
     }
 }

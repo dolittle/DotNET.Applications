@@ -9,7 +9,8 @@ using System.Reflection;
 
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts.Configuration;
-using Dolittle.Bootstrapping;
+using Dolittle.Assemblies;
+using Dolittle.Booting;
 using Dolittle.Build.Topology;
 using Dolittle.Build.Artifact;
 using Dolittle.Build.Proxies;
@@ -30,6 +31,7 @@ using Dolittle.Types;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using System.Runtime.Loader;
+using Dolittle.Immutability;
 
 namespace Dolittle.Build
 {
@@ -62,9 +64,12 @@ namespace Dolittle.Build
 
                 var boundedContextConfig = _boundedContextLoader.Load(parsingResults.BoundedContextConfigRelativePath);
 
-                var assemblyLoader = new AssemblyLoader(clientAssembly);
-                _artifactsDiscoverer = new ArtifactsDiscoverer(assemblyLoader, _artifactTypes, _logger);
-                _eventProcessorDiscoverer = new EventProcessorDiscoverer(assemblyLoader, _logger);
+                var assemblyContext = AssemblyContext.From(clientAssembly);
+
+                
+               
+                _artifactsDiscoverer = new ArtifactsDiscoverer(assemblyContext, _artifactTypes, _logger);
+                _eventProcessorDiscoverer = new EventProcessorDiscoverer(assemblyContext, _logger);
                 
                 var artifacts = _artifactsDiscoverer.Artifacts;
 
@@ -114,11 +119,11 @@ namespace Dolittle.Build
                 new NullLoggerProvider()   
             });
 
-            _bootLoaderResult = Bootloader.Configure()
-                                            .UseLoggerFactory(loggerFactory)
-                                            .UseLogAppender(new NullLogAppender())
-                                            .SkipBootprocedures()
-                                            .Start();
+            _bootLoaderResult = Bootloader.Configure(_ => _
+                .UseLoggerFactory(loggerFactory)
+                .UseLogAppender(new NullLogAppender())
+                .SkipBootprocedures()
+            ).Start();
         }
         
         static void AssignBindings()

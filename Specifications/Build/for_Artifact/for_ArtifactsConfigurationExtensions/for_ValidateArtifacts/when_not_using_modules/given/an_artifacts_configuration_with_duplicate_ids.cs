@@ -15,7 +15,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
     public class an_artifacts_configuration_with_duplicate_ids : given.a_bounded_context_config
     {
         protected readonly static ArtifactId duplicate_id = Guid.NewGuid();
-        protected static ArtifactsConfiguration artifacts_configuration = new ArtifactsConfiguration();
+        protected static ArtifactsConfiguration artifacts_configuration = new ArtifactsConfiguration(new Dictionary<Feature, ArtifactsByTypeDefinition>());
 
         static readonly ArtifactsByTypeDefinition feature1_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
         static readonly ArtifactsByTypeDefinition feature2_artifacts_definition_by_type = new ArtifactsByTypeDefinition();

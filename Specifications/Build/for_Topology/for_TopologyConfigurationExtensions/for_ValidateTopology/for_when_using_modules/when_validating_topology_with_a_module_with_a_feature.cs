@@ -18,7 +18,7 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyConfigurationExtensio
         {
             var feature = new FeatureDefinition(){Feature = Guid.NewGuid(), Name = "Module"};
             var module = new ModuleDefinition(){Module = Guid.NewGuid(), Name = "Module", Features = new []{feature}};
-            topology = new Applications.Configuration.Topology() {Modules = new[]{module}};
+            topology = new Applications.Configuration.Topology(new[]{module}, new FeatureDefinition[0]);
         };
 
 

@@ -11,7 +11,7 @@ using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
 using Machine.Specifications;
 
-namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensions.given
+namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensions.for_GetAllArtifactDefinitions.given
 {
     public class an_artifact_configuration_with_two_features : Dolittle.Build.given.an_ILogger
     {
@@ -23,7 +23,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
         protected static readonly ArtifactsByTypeDefinition first_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
         protected static readonly ArtifactsByTypeDefinition second_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
         
-        protected static readonly ArtifactsConfiguration artifact_configuration = new ArtifactsConfiguration();
+        protected static readonly ArtifactsConfiguration artifact_configuration = new ArtifactsConfiguration(new Dictionary<Feature, ArtifactsByTypeDefinition>());
 
         protected static IEnumerable<ArtifactDefinition> all_artifact_definitions;
         protected static IEnumerable<ArtifactDefinition> all_artifact_definitions_of_first_feature;

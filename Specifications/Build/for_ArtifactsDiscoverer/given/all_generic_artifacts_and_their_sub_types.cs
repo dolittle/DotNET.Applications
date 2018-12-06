@@ -6,10 +6,11 @@ using Machine.Specifications;
 using Moq;
 
 using Specs.Feature;
+using IAssemblyContext = Dolittle.Assemblies.IAssemblyContext;
 
 namespace Dolittle.Build.for_ArtifactsDiscoverer.given
 {
-    public class an_assembly_loader_that_has_all_generic_artifacts_and_their_sub_types : given.all
+    public class all_generic_artifacts_and_their_sub_types : given.all
     {
         protected static readonly IEnumerable<Type> generic_types = new []
         {
@@ -27,15 +28,15 @@ namespace Dolittle.Build.for_ArtifactsDiscoverer.given
             typeof(ImplementationOfGenericQuery),
             typeof(ImplementationOfGenericReadModel),
         };
-        protected static Mock<IAssemblyLoader> assembly_loader_mock;
+        protected static Mock<IAssemblyContext> assemvly_context;
 
         Establish context = () =>
         {
-            assembly_loader_mock = new Mock<IAssemblyLoader>();
+            assemvly_context = new Mock<IAssemblyContext>();
 
             var assembly_mock = new Mock<Assembly>();
             assembly_mock.Setup(_ => _.ExportedTypes).Returns(generic_types.Concat(non_generic_subtypes_of_the_generic_types));
-            assembly_loader_mock.Setup(_ => _.GetProjectReferencedAssemblies()).Returns(new []{assembly_mock.Object});
+            assemvly_context.Setup(_ => _.GetProjectReferencedAssemblies()).Returns(new []{assembly_mock.Object});
         };
     }
 }

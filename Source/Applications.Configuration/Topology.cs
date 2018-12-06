@@ -3,22 +3,37 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
+using Dolittle.Configuration;
 
 namespace Dolittle.Applications.Configuration
 {
     /// <summary>
     /// Represents the topology of the current <see cref="BoundedContext">bounded context</see>
     /// </summary>
-    public class Topology
+    public class Topology : IConfigurationObject
     {
         /// <summary>
-        /// Gets or sets a <see cref="IEnumerable{ModuleDefinition}">collection</see> of <see cref="ModuleDefinition"/>
+        /// Initializes a new instance of <see cref="Topology"/>
         /// </summary>
-        public IEnumerable<ModuleDefinition> Modules { get; set; } = new ModuleDefinition[0];
+        /// <param name="modules">Collection of <see cref="ModuleDefinition">modules</see>></param>
+        /// <param name="features">Collection of <see cref="FeatureDefinition">features</see></param>
+        public Topology(
+            IEnumerable<ModuleDefinition> modules,
+            IEnumerable<FeatureDefinition> features)
+        {
+            Modules = modules;
+            Features = features;
+        }
+    
 
         /// <summary>
-        /// Gets or sets the <see cref="IEnumerable{FeatureDefinition}">features</see> that exists in the root
+        /// Gets a <see cref="IEnumerable{ModuleDefinition}">collection</see> of <see cref="ModuleDefinition"/>
         /// </summary>
-        public IEnumerable<FeatureDefinition> Features { get; set; } = new FeatureDefinition[0];
+        public IEnumerable<ModuleDefinition> Modules { get; }
+
+        /// <summary>
+        /// Gets the <see cref="IEnumerable{FeatureDefinition}">features</see> that exists in the root
+        /// </summary>
+        public IEnumerable<FeatureDefinition> Features { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
     public class an_artifacts_configuration : given.a_bounded_context_config
     {
         
-        protected static ArtifactsConfiguration artifacts_configuration = new ArtifactsConfiguration();
+        protected static ArtifactsConfiguration artifacts_configuration = new ArtifactsConfiguration(new Dictionary<Feature, ArtifactsByTypeDefinition>());
 
         static readonly ArtifactsByTypeDefinition first_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
         static readonly ArtifactsByTypeDefinition second_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition();

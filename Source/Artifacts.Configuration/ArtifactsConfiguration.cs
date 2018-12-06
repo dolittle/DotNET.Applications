@@ -4,17 +4,28 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using Dolittle.Applications;
+using Dolittle.Configuration;
 
 namespace Dolittle.Artifacts.Configuration
 {
     /// <summary>
     /// Represents the definition of features for configuration
     /// </summary>
-    public class ArtifactsConfiguration
+    [Name("artifacts")]
+    public class ArtifactsConfiguration : IConfigurationObject
     {
         /// <summary>
-        /// Gets or sets the dictionary of <see cref="ArtifactsByTypeDefinition"/> per <see cref="Feature"/>
+        /// Initializes a new instance of <see cref="ArtifactsConfiguration"/>
         /// </summary>
-        public Dictionary<Feature, ArtifactsByTypeDefinition>  Artifacts { get; set; } = new Dictionary<Feature, ArtifactsByTypeDefinition>();
+        /// <param name="artifacts"><see cref="IDictionary{TKey, TValue}"/> for artifacts per feature</param>
+        public ArtifactsConfiguration(IDictionary<Feature, ArtifactsByTypeDefinition> artifacts)
+        {
+            Artifacts = artifacts;
+        }
+
+        /// <summary>
+        /// Gets the dictionary of <see cref="ArtifactsByTypeDefinition"/> per <see cref="Feature"/>
+        /// </summary>
+        public IDictionary<Feature, ArtifactsByTypeDefinition>  Artifacts { get; }
     }
 }
