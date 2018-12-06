@@ -86,7 +86,7 @@ namespace Dolittle.Domain
         void ReApplyEvents(ICommandContext commandContext, T aggregateRoot)
         {
             var identifier = _artifactTypeMap.GetArtifactFor(typeof(T));
-            var commits = _eventStore.Fetch(aggregateRoot.EventSourceId);
+            var commits = _eventStore.Fetch(new EventSourceKey(aggregateRoot.EventSourceId, identifier.Id));
             var committedEvents = new CommittedEvents(aggregateRoot.EventSourceId,FromCommits(commits));
             if (committedEvents.HasEvents)
                 aggregateRoot.ReApply(committedEvents);
