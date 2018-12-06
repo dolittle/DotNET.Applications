@@ -12,12 +12,10 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_usin
 {
     public class when_building_topology_when_all_artifacts_are_without_module : given.a_configuration_without_topology_with_valid_artifacts_without_module
     {
-        static Exception exception_result;
+        static Exception result;
 
-        Because of = () => exception_result = Catch.Exception(() => topology_builder.Build());
+        Because of = () => result = Catch.Exception(() => topology_builder.Build());
 
-        It should_throw_an_exception = () => exception_result.ShouldNotBeNull();
-        It should_throw_InvalidTopology = () => exception_result.ShouldBeOfExactType(typeof(InvalidArtifact));
-        
+        It should_throw_invalid_artifact = () => result.ShouldBeOfExactType(typeof(InvalidArtifact));
     }
 }

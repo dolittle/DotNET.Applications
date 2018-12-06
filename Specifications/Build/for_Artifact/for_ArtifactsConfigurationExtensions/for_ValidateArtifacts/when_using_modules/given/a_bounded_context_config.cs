@@ -27,7 +27,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
                     new FeatureDefinition(){Feature = feature2, Name = "Feature3"}
                 }}
             };
-            var topology = new Applications.Configuration.Topology(){Modules = modules};
+            var topology = new Applications.Configuration.Topology(modules, new FeatureDefinition[0]);
             
             bounded_context_config = new BoundedContextTopology(topology, true, new Dictionary<Area, IEnumerable<string>>());
         };

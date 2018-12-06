@@ -19,7 +19,7 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyConfigurationExtensio
         {
             var feature_def_2 = new FeatureDefinition(){Feature = Guid.NewGuid(), Name = "Feature2"};
             var feature_def_1 = new FeatureDefinition(){Feature = Guid.NewGuid(), Name = "Feature1", SubFeatures = new []{feature_def_2}};
-            topology = new Applications.Configuration.Topology() {Features = new[]{feature_def_1}};
+            topology = new Applications.Configuration.Topology(new ModuleDefinition[0],new[]{feature_def_1});
         };
 
         Because of = () => exception_result = Catch.Exception(() => topology.ValidateTopology(false, logger));

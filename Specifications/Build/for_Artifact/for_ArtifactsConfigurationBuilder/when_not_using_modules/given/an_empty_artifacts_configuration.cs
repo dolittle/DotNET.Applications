@@ -3,6 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+using System.Collections.Generic;
+using Dolittle.Applications;
 using Dolittle.Artifacts.Configuration;
 using Machine.Specifications;
 
@@ -15,7 +17,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactConfigurationBuilder.
 
         Establish context = () => 
         {
-            artifacts_configuration = new ArtifactsConfiguration(){};
+            artifacts_configuration = new ArtifactsConfiguration(new Dictionary<Feature,ArtifactsByTypeDefinition>());
         };
     }
 }

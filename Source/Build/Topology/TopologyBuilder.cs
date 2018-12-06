@@ -182,18 +182,16 @@ namespace Dolittle.Build.Topology
             }
         }
 
-        void ThrowIfContainsInvalidTypePath(string[] typePaths)
+        void ThrowIfContainsInvalidTypePath(IEnumerable<string> typePaths)
         {
-            var invalidPaths = new List<string>();
             foreach(var path in typePaths)
             {
                 var numSegments = path.Split(".").Count();
                 if (_configuration.UseModules && numSegments < 2) 
                 {
-                    invalidPaths.Add(path);
                     _logger.Error($"Artifact with type path (a Module name + Feature names composition) '{path}' is invalid. When DolittleUseModules is True all artifacts has to belong to a Module and a Feature");
+                    throw new InvalidArtifact();
                 }
-                if (invalidPaths.Any()) throw new InvalidArtifact();
             }
         }
 

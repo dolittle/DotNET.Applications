@@ -10,7 +10,11 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_usin
 {
     public class a_configuration_without_topology_with_valid_artifacts_with_module : valid_artifacts_with_module
     {
-        protected static readonly BoundedContextTopology configuration = new BoundedContextTopology(new Applications.Configuration.Topology(), true, new Dictionary<Area, IEnumerable<string>>());
+        protected static readonly BoundedContextTopology configuration = new BoundedContextTopology(
+            new Applications.Configuration.Topology(
+                new ModuleDefinition[0],
+                new FeatureDefinition[0]
+            ), true, new Dictionary<Area, IEnumerable<string>>());
 
         protected static readonly TopologyBuilder topology_builder = new TopologyBuilder(artifacts, configuration, logger);
         
