@@ -54,7 +54,6 @@ namespace Dolittle.Build.Topology
 
             if (missingPaths.Any()) 
             {
-                Program.NewTopology = true;
                 AddPathsToBoundedContextConfiguration(missingPaths);
             }
 
