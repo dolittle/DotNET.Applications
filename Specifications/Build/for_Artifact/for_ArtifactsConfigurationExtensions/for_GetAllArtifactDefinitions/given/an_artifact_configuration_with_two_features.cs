@@ -23,7 +23,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
         protected static readonly ArtifactsByTypeDefinition first_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
         protected static readonly ArtifactsByTypeDefinition second_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
         
-        protected static readonly ArtifactsConfiguration artifact_configuration = new ArtifactsConfiguration(new Dictionary<Feature, ArtifactsByTypeDefinition>());
+        protected static ArtifactsConfiguration artifacts_configuration;
 
         protected static IEnumerable<ArtifactDefinition> all_artifact_definitions;
         protected static IEnumerable<ArtifactDefinition> all_artifact_definitions_of_first_feature;
@@ -91,10 +91,10 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
             second_feature_artifacts_definition_by_type.ReadModels = new []{read_model_artifact_2};
             second_feature_artifacts_definition_by_type.EventSources = new []{event_source_artifact_2};
 
-            artifact_configuration.Artifacts.Add(feature1, first_feature_artifacts_definition_by_type);
-
-            artifact_configuration.Artifacts.Add(feature2, second_feature_artifacts_definition_by_type);
-
+            artifacts_configuration = new ArtifactsConfiguration(new Dictionary<Feature, ArtifactsByTypeDefinition>{
+                {feature1, first_feature_artifacts_definition_by_type},
+                {feature2, second_feature_artifacts_definition_by_type}
+            });
         };
     }
 }

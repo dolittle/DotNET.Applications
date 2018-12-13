@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
@@ -25,23 +26,22 @@ namespace Dolittle.Build.Artifact
         readonly Type[] _artifacts;
         readonly IBuildToolLogger _logger;
         readonly DolittleArtifactTypes _artifactTypes;
-        ArtifactsConfiguration _artifactsConfiguration;
+        readonly ArtifactsConfiguration _currentArtifactsConfiguration;
 
         /// <summary>
         /// Instantiates an instance of <see cref="ArtifactsConfigurationBuilder"/>
         /// </summary>
         /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
-        /// <param name="artifactsConfiguration">The <see cref="ArtifactsConfiguration"/> that will be modified, validated and returned from Build</param>
+        /// <param name="currentArtifactsConfiguration">The current <see cref="ArtifactsConfiguration"/> that will be used as a base for building a valid updated configuration that is returned from Build</param>
         /// <param name="artifactTypes">A list of <see cref="ArtifactType"/> which represents the different artifact types</param>
         /// <param name="logger"></param>
-        public ArtifactsConfigurationBuilder(Type[] artifacts, ArtifactsConfiguration artifactsConfiguration, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
+        public ArtifactsConfigurationBuilder(Type[] artifacts, ArtifactsConfiguration currentArtifactsConfiguration, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
         {
             _artifacts = artifacts;
             _logger = logger;
 
-            _artifactsConfiguration = artifactsConfiguration;
             _artifactTypes = artifactTypes;
-
+            _currentArtifactsConfiguration = currentArtifactsConfiguration;
         }
 
         /// <summary>
@@ -52,7 +52,8 @@ namespace Dolittle.Build.Artifact
         public ArtifactsConfiguration Build(BoundedContextTopology boundedContextTopology)
         {
             var newArtifacts = 0;
-
+            
+            var artifactsDictionary = new Dictionary<Feature, ArtifactsByTypeDefinition>(_currentArtifactsConfiguration);
             var nonMatchingArtifacts = new List<string>();
             foreach (var artifactType in _artifactTypes.ArtifactTypes) 
             {
@@ -61,7 +62,8 @@ namespace Dolittle.Build.Artifact
                     boundedContextTopology,
                     artifactType.TypeName,
                     artifactType.TargetPropertyExpression,
-                    ref nonMatchingArtifacts
+                    artifactsDictionary,
+                    nonMatchingArtifacts
                 );
             }
             if (nonMatchingArtifacts.Any())
@@ -71,8 +73,9 @@ namespace Dolittle.Build.Artifact
                 
                 throw new NonMatchingArtifact();
             }
-            
-            _artifactsConfiguration.ValidateArtifacts(boundedContextTopology, _artifacts, _logger);
+
+            var updatedArtifactsConfiguration = new ArtifactsConfiguration(artifactsDictionary);
+            updatedArtifactsConfiguration.ValidateArtifacts(boundedContextTopology, _artifacts, _logger);
 
             if (newArtifacts > 0)
             {
@@ -81,10 +84,10 @@ namespace Dolittle.Build.Artifact
             else 
                 _logger.Information($"No new artifacts added to the map.");
             
-            return _artifactsConfiguration;
+            return updatedArtifactsConfiguration;
         }
 
-        int HandleArtifactOfType(Type artifactType, BoundedContextTopology boundedContextConfiguration, string artifactTypeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression, ref List<string> nonMatchingArtifacts)
+        int HandleArtifactOfType(Type artifactType, BoundedContextTopology boundedContextConfiguration, string artifactTypeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression, Dictionary<Feature, ArtifactsByTypeDefinition> artifactsDictionary, List<string> nonMatchingArtifacts)
         {
             var targetProperty = targetPropertyExpression.GetPropertyInfo();
 
@@ -98,12 +101,12 @@ namespace Dolittle.Build.Artifact
                 {
                     ArtifactsByTypeDefinition artifactsByTypeDefinition;
 
-                    if (_artifactsConfiguration.Artifacts.ContainsKey(feature.Feature))
-                        artifactsByTypeDefinition = _artifactsConfiguration.Artifacts[feature.Feature];
+                    if (artifactsDictionary.ContainsKey(feature.Feature))
+                        artifactsByTypeDefinition = artifactsDictionary[feature.Feature];
                     else
                     {
                         artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
-                        _artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
+                        artifactsDictionary[feature.Feature] = artifactsByTypeDefinition;
                     } 
                     var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
                     

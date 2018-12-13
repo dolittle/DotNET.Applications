@@ -12,7 +12,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
     {
         static IEnumerable<ArtifactDefinition> result_artifact_definitions;
 
-        Because of = () =>result_artifact_definitions = artifact_configuration.GetAllArtifactDefinitions();
+        Because of = () =>result_artifact_definitions = artifacts_configuration.GetAllArtifactDefinitions();
 
         It should_have_the_same_amount_of_artifacts = () => result_artifact_definitions.Count().ShouldEqual(all_artifact_definitions.Count());
         It should_have_all_the_artifact_definitions = () => result_artifact_definitions.ShouldContain(all_artifact_definitions);

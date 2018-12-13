@@ -38,7 +38,7 @@ namespace Dolittle.Build.Artifact
         }
 
         /// <summary>
-        /// Loads the <see cref="ArtifactsConfiguration"/> from file and uses it to build the <see cref="ArtifactsConfiguration"/> using the <see cref="ArtifactsConfigurationBuilder"/>
+        /// Loads the current <see cref="ArtifactsConfiguration"/> from file and uses it to build the updated <see cref="ArtifactsConfiguration"/> using the <see cref="ArtifactsConfigurationBuilder"/>
         /// </summary>
         /// <param name="types">The discovered artifact types from the bounded context's assemblies</param>
         /// <param name="topology">The <see cref="Applications.Configuration.Topology"/> that's used for building the <see cref="ArtifactsConfiguration"/></param>

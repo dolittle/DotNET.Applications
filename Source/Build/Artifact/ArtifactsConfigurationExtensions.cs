@@ -22,11 +22,11 @@ namespace Dolittle.Build.Artifact
         /// <summary>
         /// Returns all <see cref="ArtifactDefinition"/> instances in the <see cref="ArtifactsConfiguration"/>
         /// </summary>
-        public static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration configuration)
+        public static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration artifacts)
         {
             var artifactDefinitions = new List<ArtifactDefinition>();
 
-            foreach (var artifactEntry in configuration.Artifacts)
+            foreach (var artifactEntry in artifacts)
             {
                 artifactDefinitions.AddRange(artifactEntry.Value.Commands);
                 artifactDefinitions.AddRange(artifactEntry.Value.Events);
@@ -40,11 +40,11 @@ namespace Dolittle.Build.Artifact
         /// <summary>
         /// Returns all <see cref="ArtifactDefinition"/> instances in the <see cref="ArtifactsConfiguration"/> by retrieving the <see cref="ArtifactDefinition"/> lists with the <see cref="PropertyInfo"/>
         /// </summary>
-        public static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration configuration, PropertyInfo targetProperty)
+        public static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration artifacts, PropertyInfo targetProperty)
         {
             var artifactDefinitions = new List<ArtifactDefinition>();
 
-            foreach (var artifactEntry in configuration.Artifacts)
+            foreach (var artifactEntry in artifacts)
                 artifactDefinitions.AddRange(targetProperty.GetValue(artifactEntry.Value) as IEnumerable<ArtifactDefinition>);
 
             return artifactDefinitions;
@@ -52,44 +52,44 @@ namespace Dolittle.Build.Artifact
         /// <summary>
         /// Returns all <see cref="ArtifactDefinition"/> instances with a specific <see cref="Feature"/> (id) in the <see cref="ArtifactsConfiguration"/>
         /// </summary>
-        public static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration configuration, Feature id)
+        public static IEnumerable<ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration artifacts, Feature id)
         {
             var artifactDefinitions = new List<ArtifactDefinition>();
 
-            var artifacts = configuration.Artifacts[id];
+            var artifact = artifacts[id];
             
-            artifactDefinitions.AddRange(artifacts.Commands);
-            artifactDefinitions.AddRange(artifacts.Events);
-            artifactDefinitions.AddRange(artifacts.EventSources);
-            artifactDefinitions.AddRange(artifacts.Queries);
-            artifactDefinitions.AddRange(artifacts.ReadModels);
+            artifactDefinitions.AddRange(artifact.Commands);
+            artifactDefinitions.AddRange(artifact.Events);
+            artifactDefinitions.AddRange(artifact.EventSources);
+            artifactDefinitions.AddRange(artifact.Queries);
+            artifactDefinitions.AddRange(artifact.ReadModels);
             
             return artifactDefinitions;
         }
         /// <summary>
         /// Gets a <see cref="ArtifactDefinition"/> that corresponds to the artifact's <see cref="Type"/>
         /// </summary>
-        public static ArtifactDefinition GetMatchingArtifactDefinition(this ArtifactsConfiguration artifactsConfiguration, Type artifact)
+        public static ArtifactDefinition GetMatchingArtifactDefinition(this ArtifactsConfiguration artifacts, Type artifact)
         {
-            var artifactDefinitions = artifactsConfiguration.GetAllArtifactDefinitions();
+            var artifactDefinitions = artifacts.GetAllArtifactDefinitions();
 
             return artifactDefinitions.Single(_ => _.Type.GetActualType().Equals(artifact));
         }
         /// <summary>
         /// Validates the <see cref="ArtifactsConfiguration"/> based on the bounded context's topology and the discoved artifact types in the assemblies of the bounded context
         /// </summary>
-        public static void ValidateArtifacts(this ArtifactsConfiguration artifactsConfiguration, BoundedContextTopology boundedContextTopology, Type[] types, IBuildToolLogger logger)
+        public static void ValidateArtifacts(this ArtifactsConfiguration artifacts, BoundedContextTopology boundedContextTopology, Type[] types, IBuildToolLogger logger)
         {
-            ThrowIfDuplicateArtifacts(artifactsConfiguration, logger);
-            WarnIfFeatureMissingFromTopology(artifactsConfiguration, boundedContextTopology, logger);
-            WarnIfArtifactNoLongerInStructure(artifactsConfiguration, types, logger);
+            ThrowIfDuplicateArtifacts(artifacts, logger);
+            WarnIfFeatureMissingFromTopology(artifacts, boundedContextTopology, logger);
+            WarnIfArtifactNoLongerInStructure(artifacts, types, logger);
         }
 
-        static void ThrowIfDuplicateArtifacts(ArtifactsConfiguration artifactsConfiguration, IBuildToolLogger logger)
+        static void ThrowIfDuplicateArtifacts(ArtifactsConfiguration artifacts, IBuildToolLogger logger)
         {
             var idMap = new Dictionary<ArtifactId, ClrType>();
             bool foundDuplicate = false;
-            foreach (var artifactDefinition in artifactsConfiguration.GetAllArtifactDefinitions())
+            foreach (var artifactDefinition in artifacts.GetAllArtifactDefinitions())
             {
                 if (idMap.ContainsKey(artifactDefinition.Artifact))
                 {
@@ -105,28 +105,28 @@ namespace Dolittle.Build.Artifact
             }
             if (foundDuplicate) throw new DuplicateArtifact();
         }
-        static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifactsConfiguration, BoundedContextTopology boundedContextTopology, IBuildToolLogger logger)
+        static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifacts, BoundedContextTopology boundedContextTopology, IBuildToolLogger logger)
         {
             Dictionary<Feature, FeatureName> featureMap = boundedContextTopology.RetrieveAllFeatureIds();
 
-            foreach (var artifact in artifactsConfiguration.Artifacts)
+            foreach (var artifact in artifacts)
             {
                 if (!featureMap.ContainsKey(artifact.Key))
                 {
                     logger.Warning($"Found artifacts under a Feature that does not exist in the topology. Feature: '{artifact.Key}':");
                     logger.Warning("Artifacts:");
                     
-                    var artifactDefinitions = artifactsConfiguration.GetAllArtifactDefinitions(artifact.Key);
+                    var artifactDefinitions = artifacts.GetAllArtifactDefinitions(artifact.Key);
                     foreach (var definition in artifactDefinitions)
                         logger.Warning($"\tArtifact: '{definition.Artifact.Value}' - '{definition.Type.TypeString} @{definition.Generation.Value}'");
                     
                 }
             }
         }
-        static void WarnIfArtifactNoLongerInStructure(ArtifactsConfiguration artifactsConfiguration, IEnumerable<Type> types, IBuildToolLogger logger)
+        static void WarnIfArtifactNoLongerInStructure(ArtifactsConfiguration artifacts, IEnumerable<Type> types, IBuildToolLogger logger)
         {
             var artifactDefinitions = new List<ArtifactDefinition>();
-            foreach (var artifactDefinition in artifactsConfiguration.GetAllArtifactDefinitions())
+            foreach (var artifactDefinition in artifacts.GetAllArtifactDefinitions())
             {
                 if (!types.Contains(artifactDefinition.Type.GetActualType()))
                     artifactDefinitions.Add(artifactDefinition);

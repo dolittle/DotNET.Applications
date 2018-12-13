@@ -15,7 +15,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
     public class an_artifacts_configuration : given.a_bounded_context_config
     {
         
-        protected static ArtifactsConfiguration artifacts_configuration = new ArtifactsConfiguration(new Dictionary<Feature, ArtifactsByTypeDefinition>());
+        protected static ArtifactsConfiguration artifacts_configuration;
 
         static readonly ArtifactsByTypeDefinition first_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
         static readonly ArtifactsByTypeDefinition second_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition();
@@ -52,10 +52,11 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
             second_feature_artifacts_definition_by_type.Queries = new []{query_artifact_2};
             second_feature_artifacts_definition_by_type.ReadModels = new []{read_model_artifact_2};
             second_feature_artifacts_definition_by_type.EventSources = new []{event_source_artifact_2};
-            
-            artifacts_configuration.Artifacts.Add(feature1, first_feature_artifacts_definition_by_type);
 
-            artifacts_configuration.Artifacts.Add(feature2, second_feature_artifacts_definition_by_type);
+            artifacts_configuration = new ArtifactsConfiguration(new Dictionary<Feature, ArtifactsByTypeDefinition>{
+                {feature1, first_feature_artifacts_definition_by_type},
+                {feature2, second_feature_artifacts_definition_by_type}
+            });
         };   
     }
 }

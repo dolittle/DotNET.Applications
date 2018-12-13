@@ -24,7 +24,7 @@ namespace Dolittle.Artifacts.Configuration
         readonly IArtifactTypeMap _artifactTypeMap;
 
         readonly IEnumerable<PropertyInfo>  _artifactProperties = typeof(ArtifactsByTypeDefinition).GetProperties().Where(_ => _.PropertyType == typeof(IEnumerable<ArtifactDefinition>));
-        readonly ArtifactsConfiguration _artifactsConfiguration;
+        readonly ArtifactsConfiguration _artifacts;
 
         /// <summary>
         /// Initializes a new instance of <see cref="BootProcedure"/>
@@ -33,7 +33,7 @@ namespace Dolittle.Artifacts.Configuration
         /// <param name="artifactTypeMap"></param>
         public BootProcedure(ArtifactsConfiguration artifactsConfiguration, IArtifactTypeMap artifactTypeMap)
         {
-            _artifactsConfiguration = artifactsConfiguration;
+            _artifacts = artifactsConfiguration;
             _artifactTypeMap = artifactTypeMap;
         }
 
@@ -44,7 +44,7 @@ namespace Dolittle.Artifacts.Configuration
         public void Perform()
         {
             var artifacts = new List<ArtifactDefinition>();
-            _artifactsConfiguration.Artifacts.Select(_ => _.Value).ForEach(artifactByType => 
+            _artifacts.Select(_ => _.Value).ForEach(artifactByType => 
             {
                 _artifactProperties.ForEach(property => artifacts.AddRange(property.GetValue(artifactByType) as IEnumerable<ArtifactDefinition>));
             });

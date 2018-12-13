@@ -16,9 +16,9 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
 
         Because of = () => 
         {
-            result_artifact_definitions_for_feature1 = artifact_configuration.GetAllArtifactDefinitions(feature1);
+            result_artifact_definitions_for_feature1 = artifacts_configuration.GetAllArtifactDefinitions(feature1);
 
-            result_artifact_definitions_for_feature2 = artifact_configuration.GetAllArtifactDefinitions(feature2);
+            result_artifact_definitions_for_feature2 = artifacts_configuration.GetAllArtifactDefinitions(feature2);
         };
         It should_have_the_same_amount_of_artifacts_as_feature1 = () => result_artifact_definitions_for_feature1.Count().ShouldEqual(all_artifact_definitions_of_first_feature.Count());
         It should_have_all_the_artifact_definitions_of_feature1 = () => result_artifact_definitions_for_feature1.ShouldContain(all_artifact_definitions_of_first_feature);
