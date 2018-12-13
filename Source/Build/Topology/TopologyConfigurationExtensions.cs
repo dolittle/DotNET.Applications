@@ -5,7 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
+using Dolittle.Collections;
 
 namespace Dolittle.Build.Topology
 {
@@ -17,18 +19,18 @@ namespace Dolittle.Build.Topology
         /// <summary>
         /// Returns a collapsed list of <see cref="ModuleDefinition"/> 
         /// </summary>
-        public static IReadOnlyList<ModuleDefinition> GetCollapsedModules(this IEnumerable<ModuleDefinition> modules)
+        public static IDictionary<Module, ModuleDefinition> GetCollapsedModules(this IDictionary<Module,ModuleDefinition> modules)
         {
-            var collapsedModules = new List<ModuleDefinition>();
+            var collapsedModules = new Dictionary<Module,ModuleDefinition>();
 
-            foreach (var group in modules.GroupBy(_ => _.Name))
+            foreach (var group in modules.GroupBy(_ => _.Value.Name))
             {
                 var module = group.ElementAt(0);
-                var features = new List<FeatureDefinition>(module.Features);
-                features.AddRange(group.Skip(1).SelectMany(_ => _.Features));
-                module.Features = features.GetCollapsedFeatures();
+                var features = new Dictionary<Feature, FeatureDefinition>(module.Value.Features);
+                features = features.Concat(group.Skip(1).SelectMany(_ => _.Value.Features)).ToDictionary(_ => _.Key, _ => _.Value);
 
-                collapsedModules.Add(module);
+                var newModule = new ModuleDefinition(module.Value.Name, features.GetCollapsedFeatures());
+                collapsedModules[module.Key] = newModule;
             }
 
             return collapsedModules;
@@ -36,18 +38,17 @@ namespace Dolittle.Build.Topology
         /// <summary>
         /// Returns a collapsed list of <see cref="FeatureDefinition"/> 
         /// </summary>
-        public static IReadOnlyList<FeatureDefinition> GetCollapsedFeatures(this IEnumerable<FeatureDefinition> features)
+        public static IDictionary<Feature, FeatureDefinition> GetCollapsedFeatures(this IDictionary<Feature, FeatureDefinition> features)
         {
-            var collapsedFeatures = new List<FeatureDefinition>();
+            var collapsedFeatures = new Dictionary<Feature,FeatureDefinition>();
 
-            foreach (var group in features.GroupBy(_ => _.Name))
+            foreach (var group in features.GroupBy(_ => _.Value.Name))
             {
                 var feature = group.ElementAt(0);
-                var subFeatures = new List<FeatureDefinition>(feature.SubFeatures);
-                subFeatures.AddRange(group.Skip(1).SelectMany(_ => _.SubFeatures));
-                feature.SubFeatures = subFeatures.GetCollapsedFeatures();
-
-                collapsedFeatures.Add(feature);
+                var subFeatures = new Dictionary<Feature, FeatureDefinition>(feature.Value.SubFeatures);
+                subFeatures = subFeatures.Concat(group.Skip(1).SelectMany(_ => _.Value.SubFeatures)).ToDictionary(_ => _.Key, _ => _.Value);
+                var newFeature = new FeatureDefinition(feature.Value.Name, subFeatures);
+                collapsedFeatures[feature.Key] = newFeature;
             }
             return collapsedFeatures;
         }
@@ -68,20 +69,20 @@ namespace Dolittle.Build.Topology
             {
                 foreach (var module in topology.Modules)
                 {
-                    if (idMap.ContainsKey(module.Module))
+                    if (idMap.ContainsKey(module.Key))
                     {
                         hasDuplicateId = true;
-                        var name = idMap[module.Module];
+                        var name = idMap[module.Key];
 
                         logger.Error(
                             $"Duplicate id found in bounded-context topology.\n" +
-                            $"The id: '{module.Module.Value}' is already occupied by the Module/Feature: '{name}' ");
+                            $"The id: '{module.Key.Value}' is already occupied by the Module/Feature: '{name}' ");
                     }
                     else
                     {
-                        idMap.Add(module.Module, module.Name);
+                        idMap.Add(module.Key, module.Value.Name);
                     }
-                    ThrowIfDuplicateId(module.Features, ref idMap, ref hasDuplicateId, logger);
+                    ThrowIfDuplicateId(module.Value.Features, ref idMap, ref hasDuplicateId, logger);
                 }
             }
             else 
@@ -94,24 +95,24 @@ namespace Dolittle.Build.Topology
                 throw new InvalidTopology("Bounded context topology has one or more Features/Modules with the same Id");
             }
         }
-        static void ThrowIfDuplicateId(IEnumerable<FeatureDefinition> features, ref Dictionary<Guid, string> idMap, ref bool hasDuplicateId, IBuildToolLogger logger)
+        static void ThrowIfDuplicateId(IDictionary<Feature,FeatureDefinition> features, ref Dictionary<Guid, string> idMap, ref bool hasDuplicateId, IBuildToolLogger logger)
         {
             foreach (var feature in features)
             {
-                if (idMap.ContainsKey(feature.Feature))
+                if (idMap.ContainsKey(feature.Key))
                 {
                     hasDuplicateId = true;
-                    var name = idMap[feature.Feature];
+                    var name = idMap[feature.Key];
                     
                     logger.Error(
                         $"Duplicate id found in bounded-context topology.\n" +
-                        $"The id: '{feature.Feature.Value}' is already occupied by the Module/Feature: '{name}' ");
+                        $"The id: '{feature.Key.Value}' is already occupied by the Module/Feature: '{name}' ");
                 }
                 else
                 {
-                    idMap.Add(feature.Feature, feature.Name);
+                    idMap.Add(feature.Key, feature.Value.Name);
                 }
-                ThrowIfDuplicateId(feature.SubFeatures, ref idMap, ref hasDuplicateId, logger);
+                ThrowIfDuplicateId(feature.Value.SubFeatures, ref idMap, ref hasDuplicateId, logger);
             }
         }
     }

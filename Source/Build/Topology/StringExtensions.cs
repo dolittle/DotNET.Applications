@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 
 namespace Dolittle.Build.Topology
@@ -17,7 +18,7 @@ namespace Dolittle.Build.Topology
         /// <summary>
         /// Extracts a <see cref="ModuleDefinition"/> from the string path
         /// </summary>
-        public static ModuleDefinition GetModuleFromPath(this string path)
+        public static KeyValuePair<Module, ModuleDefinition> GetModuleFromPath(this string path)
         {
             if ( string.IsNullOrEmpty(path)
                 || path.Contains(' ')
@@ -25,51 +26,45 @@ namespace Dolittle.Build.Topology
                 throw new ArgumentException($"Could not get module from path: '{path}'. Path cannot be empty, contain spaces or dashes");
             var splitPath = path.Split(".");
             var moduleName = splitPath.First();
-            var module = new ModuleDefinition()
-            {
-                Module = Guid.NewGuid(),
-                Name = moduleName
-            };
-            
+
+            var features = new Dictionary<Feature, FeatureDefinition>();
             var featurePath = string.Join(".", splitPath.Skip(1));
             if (!string.IsNullOrEmpty(featurePath))
             {
-                module.Features = new List<FeatureDefinition>()
-                {
-                    featurePath.GetFeatureFromPath()
-                };
+                var feature = featurePath.GetFeatureFromPath();
+                features[feature.Key] = feature.Value;
             }
+            Module moduleId = Guid.NewGuid();
+            var module = new ModuleDefinition(moduleName, features);
 
-            return module;
+            return new KeyValuePair<Module, ModuleDefinition>(moduleId, module);
         }
         /// <summary>
         /// Extracts a <see cref="FeatureDefinition"/> from the string path
         /// </summary>
-        public static FeatureDefinition GetFeatureFromPath(this string path)
+        public static KeyValuePair<Feature, FeatureDefinition> GetFeatureFromPath(this string path)
         {
             if ( string.IsNullOrEmpty(path)
                 || path.Contains(' ')
                 || path.Contains('-')) 
                 throw new ArgumentException($"Could not get module from path: '{path}'. Path cannot be empty, contain spaces or dashes");
             var stringSegmentsReversed = path.Split(".").Reverse().ToArray();
+
+            FeatureDefinition currentFeature = null;
+            Feature currentFeatureId = null;
             
-            var currentFeature = new FeatureDefinition()
+            foreach (var featureName in stringSegmentsReversed )
             {
-                Feature = Guid.NewGuid(), 
-                Name = stringSegmentsReversed[0]
-            };
-            foreach (var featureName in stringSegmentsReversed.Skip(1))
-            {
-                var parentFeature = new FeatureDefinition()
+                var subFeatures = new Dictionary<Feature, FeatureDefinition>();
+                if( currentFeature != null )
                 {
-                    Feature = Guid.NewGuid(),
-                    Name = featureName,
-                };
-                parentFeature.SubFeatures = new List<FeatureDefinition>(){currentFeature};
-                currentFeature = parentFeature;
+                    subFeatures[currentFeatureId] = currentFeature;
+                }
+                currentFeatureId = Guid.NewGuid();
+                currentFeature = new FeatureDefinition(featureName, subFeatures);
             }
 
-            return currentFeature;
+            return new KeyValuePair<Feature, FeatureDefinition>(currentFeatureId, currentFeature);
         }
     }
 }

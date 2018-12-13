@@ -17,18 +17,20 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
     public class a_bounded_context_config : all_dependencies
     {
         protected static BoundedContextTopology bounded_context_config;
-        Establish context = () => 
+        Establish context = () =>
         {
-            var modules = new []
-            {
-                new ModuleDefinition(){Module = Guid.NewGuid(), Name = "Module", Features = new []
+            var topology = new Applications.Configuration.Topology(
+                new Dictionary<Module, ModuleDefinition>
                 {
-                    new FeatureDefinition(){Feature = feature1, Name = "Feature"},
-                    new FeatureDefinition(){Feature = feature2, Name = "Feature3"}
-                }}
-            };
-            var topology = new Applications.Configuration.Topology(modules, new FeatureDefinition[0]);
-            
+                    {
+                        Guid.NewGuid(),
+                            new ModuleDefinition("Module", new Dictionary<Feature, FeatureDefinition>
+                            { { feature1, new FeatureDefinition("Feature", new Dictionary<Feature, FeatureDefinition>()) },
+                                { feature2, new FeatureDefinition("Feature3", new Dictionary<Feature, FeatureDefinition>()) }
+                            })
+                    }
+                }, new Dictionary<Feature, FeatureDefinition>());
+
             bounded_context_config = new BoundedContextTopology(topology, true, new Dictionary<Area, IEnumerable<string>>());
         };
     }

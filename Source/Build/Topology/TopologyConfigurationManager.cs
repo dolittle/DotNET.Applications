@@ -8,6 +8,8 @@ using Dolittle.Logging;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
 using Dolittle.Applications.Configuration;
+using System.Collections.Generic;
+using Dolittle.Applications;
 
 namespace Dolittle.Build.Topology
 {
@@ -43,7 +45,9 @@ namespace Dolittle.Build.Topology
         public Dolittle.Applications.Configuration.Topology Load()
         {
             var path = GetPath();
-            if( !File.Exists(path)) return new Dolittle.Applications.Configuration.Topology(new ModuleDefinition[0], new FeatureDefinition[0]);
+            if( !File.Exists(path)) return new Dolittle.Applications.Configuration.Topology(
+                new Dictionary<Module, ModuleDefinition>(), 
+                new Dictionary<Feature, FeatureDefinition>());
             
             var json = File.ReadAllText(path);
             var configuration = _serializer.FromJson<Dolittle.Applications.Configuration.Topology>(json, _serializationOptions);
