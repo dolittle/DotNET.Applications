@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Dolittle.Artifacts.Configuration
 {
@@ -13,28 +14,46 @@ namespace Dolittle.Artifacts.Configuration
     public class ArtifactsByTypeDefinition
     {
         /// <summary>
-        /// Gets or sets the Command artifacts
+        /// Initializes a new instance of <see cref="ArtifactsByTypeDefinition"/>
         /// </summary>
-        public IEnumerable<ArtifactDefinition> Commands {  get; set; } = new ArtifactDefinition[0];
+        /// <param name="commands">Command artifacts</param>
+        /// <param name="events">Event artifacts</param>
+        /// <param name="eventSources">EventSource artifacts</param>
+        /// <param name="readModels">ReadModel artifacts</param>
+        /// <param name="queries">Query artifacts</param>
+        public ArtifactsByTypeDefinition(IDictionary<ArtifactId, ArtifactDefinition> commands, IDictionary<ArtifactId, ArtifactDefinition> events, IDictionary<ArtifactId, ArtifactDefinition> eventSources, IDictionary<ArtifactId, ArtifactDefinition> readModels, IDictionary<ArtifactId, ArtifactDefinition> queries)
+        {
+            Commands = new ReadOnlyDictionary<ArtifactId, ArtifactDefinition>(commands);
+            Events = new ReadOnlyDictionary<ArtifactId, ArtifactDefinition>(events);
+            EventSources = new ReadOnlyDictionary<ArtifactId, ArtifactDefinition>(eventSources);
+            ReadModels = new ReadOnlyDictionary<ArtifactId, ArtifactDefinition>(readModels);
+            Queries = new ReadOnlyDictionary<ArtifactId, ArtifactDefinition>(queries);
+        }
+
 
         /// <summary>
-        /// Gets or sets the Event artifacts
+        /// Gets the Command artifacts
         /// </summary>
-        public IEnumerable<ArtifactDefinition> Events {  get; set; } = new ArtifactDefinition[0];
+        public IReadOnlyDictionary<ArtifactId, ArtifactDefinition> Commands { get; }
 
         /// <summary>
-        /// Gets or sets the EventSource artifacts
+        /// Gets the Event artifacts
         /// </summary>
-        public IEnumerable<ArtifactDefinition> EventSources {  get; set; } = new ArtifactDefinition[0];
+        public IReadOnlyDictionary<ArtifactId, ArtifactDefinition> Events { get; }
 
         /// <summary>
-        /// Gets or sets the ReadModels artifacts
+        /// Gets the EventSource artifacts
         /// </summary>
-        public IEnumerable<ArtifactDefinition> ReadModels {  get; set; } = new ArtifactDefinition[0];
+        public IReadOnlyDictionary<ArtifactId, ArtifactDefinition> EventSources { get; }
 
         /// <summary>
-        /// Gets or sets the Queries artifacts
+        /// Gets the ReadModel artifacts
         /// </summary>
-        public IEnumerable<ArtifactDefinition> Queries {  get; set; } = new ArtifactDefinition[0];
+        public IReadOnlyDictionary<ArtifactId, ArtifactDefinition> ReadModels { get; }
+
+        /// <summary>
+        /// Gets the Query artifacts
+        /// </summary>
+        public IReadOnlyDictionary<ArtifactId, ArtifactDefinition> Queries { get; }
     }
 }

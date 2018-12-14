@@ -33,7 +33,7 @@ namespace Dolittle.Build.Artifact
         {
             var featureMap = new Dictionary<Feature, FeatureName>();
             
-            AddAllFeaturesToMap(RetrieveFeatures(configuration), ref featureMap);
+            AddAllFeaturesToMap(RetrieveFeatures(configuration), featureMap);
 
             return featureMap;
         }
@@ -43,14 +43,14 @@ namespace Dolittle.Build.Artifact
         public static FeatureDefinition FindMatchingFeature(this BoundedContextTopology boundedContextConfiguration, string @namespace)
         {
             var nonMatchingList = new List<string>();
-            var featureDef = boundedContextConfiguration.FindMatchingFeature(@namespace, ref nonMatchingList);
+            var featureDef = boundedContextConfiguration.FindMatchingFeature(@namespace, nonMatchingList);
             if (featureDef == null) throw new NonMatchingArtifact();
             return featureDef;
         }
         /// <summary>
         /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextTopology">BoundedContextConfiguration's </see> topology 
         /// </summary>
-        public static FeatureDefinition FindMatchingFeature(this BoundedContextTopology boundedContextConfiguration, string @namespace, ref List<string> nonMatchingArtifacts)
+        public static FeatureDefinition FindMatchingFeature(this BoundedContextTopology boundedContextConfiguration, string @namespace, List<string> nonMatchingArtifacts)
         {
             var area = new Area(){Value = @namespace.Split(".").First()};
             var segments = @namespace.Split(".").Skip(1).ToArray();
@@ -105,12 +105,12 @@ namespace Dolittle.Build.Artifact
             return FindMatchingFeature(segments.Skip(1).ToArray(), matchingFeature.SubFeatures);
         }
         
-        static void AddAllFeaturesToMap(IEnumerable<FeatureDefinition> features, ref Dictionary<Feature, FeatureName> map)
+        static void AddAllFeaturesToMap(IEnumerable<FeatureDefinition> features, Dictionary<Feature, FeatureName> map)
         {
             foreach (var feature in features)
             {
                 map.Add(feature.Feature, feature.Name);
-                AddAllFeaturesToMap(feature.SubFeatures, ref map);
+                AddAllFeaturesToMap(feature.SubFeatures, map);
             }
         }
     }

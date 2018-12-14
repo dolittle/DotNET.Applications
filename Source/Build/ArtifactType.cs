@@ -28,6 +28,6 @@ namespace Dolittle.Build
         /// <summary>
         /// Gets the expression for accessing the collection of <see cref="ArtifactDefinition"/> on the configuration object
         /// </summary>
-        public Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>>> TargetPropertyExpression { get; set; }
+        public Expression<Func<ArtifactsByTypeDefinition, IReadOnlyDictionary<ArtifactId, ArtifactDefinition>>> TargetPropertyExpression { get; set; }
     }
 }

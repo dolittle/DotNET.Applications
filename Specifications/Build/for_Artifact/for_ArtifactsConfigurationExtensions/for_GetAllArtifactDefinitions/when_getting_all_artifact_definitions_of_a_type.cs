@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
+using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Reflection;
 using Machine.Specifications;
@@ -12,11 +13,11 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
 {
     public class when_getting_all_artifact_definitions_of_a_type: given.an_artifact_configuration_with_two_features
     {
-        static IEnumerable<ArtifactDefinition> result_command_artifact_definitions;
-        static IEnumerable<ArtifactDefinition> result_event_artifact_definitions;
-        static IEnumerable<ArtifactDefinition> result_query_artifact_definitions;
-        static IEnumerable<ArtifactDefinition> result_read_model_artifact_definitions;
-        static IEnumerable<ArtifactDefinition> result_event_source_artifact_definitions;
+        static IDictionary<ArtifactId, ArtifactDefinition> result_command_artifact_definitions;
+        static IDictionary<ArtifactId, ArtifactDefinition> result_event_artifact_definitions;
+        static IDictionary<ArtifactId, ArtifactDefinition> result_query_artifact_definitions;
+        static IDictionary<ArtifactId, ArtifactDefinition> result_read_model_artifact_definitions;
+        static IDictionary<ArtifactId, ArtifactDefinition> result_event_source_artifact_definitions;
         
 
         Because of = () => 

@@ -23,7 +23,7 @@ namespace Dolittle.Artifacts.Configuration
 
         readonly IArtifactTypeMap _artifactTypeMap;
 
-        readonly IEnumerable<PropertyInfo>  _artifactProperties = typeof(ArtifactsByTypeDefinition).GetProperties().Where(_ => _.PropertyType == typeof(IEnumerable<ArtifactDefinition>));
+        readonly IEnumerable<PropertyInfo>  _artifactProperties = typeof(ArtifactsByTypeDefinition).GetProperties().Where(_ => _.PropertyType == typeof(IReadOnlyDictionary<ArtifactId, ArtifactDefinition>));
         readonly ArtifactsConfiguration _artifacts;
 
         /// <summary>
@@ -43,13 +43,17 @@ namespace Dolittle.Artifacts.Configuration
         /// <inheritdoc/>
         public void Perform()
         {
-            var artifacts = new List<ArtifactDefinition>();
             _artifacts.Select(_ => _.Value).ForEach(artifactByType => 
             {
-                _artifactProperties.ForEach(property => artifacts.AddRange(property.GetValue(artifactByType) as IEnumerable<ArtifactDefinition>));
+                _artifactProperties.ForEach(property => 
+                {
+                    var artifacts = property.GetValue(artifactByType) as IReadOnlyDictionary<ArtifactId, ArtifactDefinition>;
+                    artifacts.ForEach(artifactDefinitionEntry => _artifactTypeMap.Register(
+                        new Artifact(artifactDefinitionEntry.Key, artifactDefinitionEntry.Value.Generation),
+                        artifactDefinitionEntry.Value.Type.GetActualType()
+                    ));
+                });
             });
-
-            artifacts.ForEach(_ => _artifactTypeMap.Register(new Artifact(_.Artifact, _.Generation), _.Type.GetActualType()));
 
             HasPerformed = true;
         }

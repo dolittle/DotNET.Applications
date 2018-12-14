@@ -111,11 +111,12 @@ namespace Dolittle.Build.Proxies
         Proxy GenerateReadModelProxy(Type artifact, ArtifactsConfiguration artifactsConfig, ArgumentsParsingResult parsingResults, Func<object, string> template)
         {
             _logger.Trace($"Creating read model proxy for {ClrType.FromType(artifact).TypeString}");
+            var artifactId = GetArtifactId(artifact, artifactsConfig);
             var artifactDefinition = GetArtifactDefinition(artifact, artifactsConfig);
             var handlebarsReadmodel = new HandlebarsReadmodel()
             {
                 ReadModelName = artifact.Name,
-                ReadModelArtifactId = artifactDefinition.Artifact.Value.ToString(),
+                ReadModelArtifactId = artifactId.Value.ToString(),
                 ReadModelGeneration = artifactDefinition.Generation.Value.ToString()
             };
             var setableProperties = artifact.GetSettableProperties();
@@ -169,7 +170,7 @@ namespace Dolittle.Build.Proxies
         }
         ArtifactId GetArtifactId(Type artifact, ArtifactsConfiguration config)
         {
-            return GetArtifactDefinition(artifact, config).Artifact;
+            return config.GetMatchingArtifactId(artifact);
         }
         ArtifactDefinition GetArtifactDefinition(Type artifact, ArtifactsConfiguration config)
         {
