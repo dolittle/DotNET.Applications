@@ -82,17 +82,17 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
             first_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition(
                 new Dictionary<ArtifactId, ArtifactDefinition>(new [] {command_artifact_1}),
                 new Dictionary<ArtifactId, ArtifactDefinition>(new [] {event_artifact_1}),
-                new Dictionary<ArtifactId, ArtifactDefinition>(new [] {query_artifact_1}),
+                new Dictionary<ArtifactId, ArtifactDefinition>(new [] {event_source_artifact_1}),
                 new Dictionary<ArtifactId, ArtifactDefinition>(new [] {read_model_artifact_1}),
-                new Dictionary<ArtifactId, ArtifactDefinition>(new [] {event_source_artifact_1})
+                new Dictionary<ArtifactId, ArtifactDefinition>(new [] {query_artifact_1})
             );
 
             second_feature_artifacts_definition_by_type = new ArtifactsByTypeDefinition(
                 new Dictionary<ArtifactId, ArtifactDefinition>(new [] {command_artifact_2}),
                 new Dictionary<ArtifactId, ArtifactDefinition>(new [] {event_artifact_2}),
-                new Dictionary<ArtifactId, ArtifactDefinition>(new [] {query_artifact_2}),
+                new Dictionary<ArtifactId, ArtifactDefinition>(new [] {event_source_artifact_2}),
                 new Dictionary<ArtifactId, ArtifactDefinition>(new [] {read_model_artifact_2}),
-                new Dictionary<ArtifactId, ArtifactDefinition>(new [] {event_source_artifact_2})
+                new Dictionary<ArtifactId, ArtifactDefinition>(new [] {query_artifact_2})
             );
 
             artifacts_configuration = new ArtifactsConfiguration(new Dictionary<Feature, ArtifactsByTypeDefinition>{

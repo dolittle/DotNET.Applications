@@ -11,7 +11,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
 {
     public class when_getting_all_artifact_definitions: given.an_artifact_configuration_with_two_features
     {
-        static IDictionary<ArtifactId, ArtifactDefinition> result_artifact_definitions;
+        static IEnumerable<KeyValuePair<ArtifactId, ArtifactDefinition>> result_artifact_definitions;
 
         Because of = () => result_artifact_definitions = artifacts_configuration.GetAllArtifactDefinitions();
 
