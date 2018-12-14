@@ -23,7 +23,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactConfigurationBuilder.
             new Dictionary<Feature, FeatureDefinition>
             {
                 { first_feature, new FeatureDefinition( "Feature", new Dictionary<Feature, FeatureDefinition>()) },
-                { second_feature, new FeatureDefinition( "Feature 3", new Dictionary<Feature, FeatureDefinition>()) }
+                { second_feature, new FeatureDefinition( "Feature3", new Dictionary<Feature, FeatureDefinition>()) }
             });
             
             bounded_context_config = new BoundedContextTopology(topology, false, new Dictionary<Area, IEnumerable<string>>());

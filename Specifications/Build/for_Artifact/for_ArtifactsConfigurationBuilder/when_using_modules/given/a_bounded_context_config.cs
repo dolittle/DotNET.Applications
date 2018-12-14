@@ -19,11 +19,16 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactConfigurationBuilder.
         protected static BoundedContextTopology bounded_context_config;
         Establish context = () =>
         {
-            var topology = new Applications.Configuration.Topology(new Dictionary<Module, ModuleDefinition>(),
-                new Dictionary<Feature, FeatureDefinition>
-                { { first_feature, new FeatureDefinition("Feature", new Dictionary<Feature, FeatureDefinition>()) },
-                    { second_feature, new FeatureDefinition("Feature 3", new Dictionary<Feature, FeatureDefinition>()) }
-                });
+            var topology = new Applications.Configuration.Topology(new Dictionary<Module, ModuleDefinition>
+            {
+                { 
+                    Guid.NewGuid(), new ModuleDefinition("Module", new Dictionary<Feature, FeatureDefinition>
+                    { 
+                        { first_feature, new FeatureDefinition("Feature", new Dictionary<Feature, FeatureDefinition>()) },
+                        { second_feature, new FeatureDefinition("Feature3", new Dictionary<Feature, FeatureDefinition>()) }
+                    })
+                }
+            }, new Dictionary<Feature, FeatureDefinition>());
 
             bounded_context_config = new BoundedContextTopology(topology, true, new Dictionary<Area, IEnumerable<string>>());
         };
