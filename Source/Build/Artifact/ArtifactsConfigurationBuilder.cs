@@ -84,7 +84,12 @@ namespace Dolittle.Build.Artifact
             return _artifactsConfiguration;
         }
 
-        int HandleArtifactOfType(Type artifactType, BoundedContextTopology boundedContextConfiguration, string artifactTypeName, Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>> > targetPropertyExpression, ref List<string> nonMatchingArtifacts)
+        int HandleArtifactOfType(
+            Type artifactType,
+            BoundedContextTopology boundedContextConfiguration,
+            string artifactTypeName,
+            Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>>> targetPropertyExpression,
+            ref List<string> nonMatchingArtifacts)
         {
             var targetProperty = targetPropertyExpression.GetPropertyInfo();
 
@@ -94,16 +99,16 @@ namespace Dolittle.Build.Artifact
             foreach (var artifact in artifacts)
             {
                 var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace, ref nonMatchingArtifacts);
-                if (feature != null)
+                if (feature.Value != null)
                 {
                     ArtifactsByTypeDefinition artifactsByTypeDefinition;
 
-                    if (_artifactsConfiguration.Artifacts.ContainsKey(feature.Feature))
-                        artifactsByTypeDefinition = _artifactsConfiguration.Artifacts[feature.Feature];
+                    if (_artifactsConfiguration.Artifacts.ContainsKey(feature.Key))
+                        artifactsByTypeDefinition = _artifactsConfiguration.Artifacts[feature.Key];
                     else
                     {
                         artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
-                        _artifactsConfiguration.Artifacts[feature.Feature] = artifactsByTypeDefinition;
+                        _artifactsConfiguration.Artifacts[feature.Key] = artifactsByTypeDefinition;
                     } 
                     var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
                     

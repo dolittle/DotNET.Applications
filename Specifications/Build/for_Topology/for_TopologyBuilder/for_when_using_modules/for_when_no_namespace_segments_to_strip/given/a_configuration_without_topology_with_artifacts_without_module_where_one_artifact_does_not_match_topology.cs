@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 
 namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_using_modules.for_when_no_namespace_segments_to_strip.given
@@ -12,11 +13,11 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_usin
     {
         protected static readonly BoundedContextTopology configuration = new BoundedContextTopology(
             new Applications.Configuration.Topology(
-                new ModuleDefinition[0],
-                new FeatureDefinition[0]
+                new Dictionary<Module, ModuleDefinition>(),
+                new Dictionary<Feature, FeatureDefinition>()
             ), true, new Dictionary<Area, IEnumerable<string>>());
 
         protected static readonly TopologyBuilder topology_builder = new TopologyBuilder(artifacts, configuration, logger);
-        
+
     }
 }

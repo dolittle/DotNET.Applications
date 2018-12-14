@@ -4,6 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 using System;
+using System.Collections.Generic;
+using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 using Machine.Specifications;
 
@@ -17,10 +19,16 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyConfigurationExtensio
         Establish context = () => 
         {
             var feature_id = Guid.NewGuid();
-            var feature_def_2 = new FeatureDefinition(){Feature = feature_id, Name = "Feature2"};
-            var feature_def_1 = new FeatureDefinition(){Feature = feature_id, Name = "Feature1", SubFeatures = new []{feature_def_2}};
+            var feature_def_2 = new FeatureDefinition("Feature2", new Dictionary<Feature,FeatureDefinition>());
+            var feature_def_1 = new FeatureDefinition("Feature1", new Dictionary<Feature, FeatureDefinition>
+            {
+                {feature_id, feature_def_2}
+            });
 
-            topology = new Applications.Configuration.Topology(new ModuleDefinition[0], new[]{feature_def_1});
+            topology = new Applications.Configuration.Topology(new Dictionary<Module,ModuleDefinition>(), new Dictionary<Feature, FeatureDefinition>
+            {
+                {feature_id, feature_def_1}
+            });
         };
         Because of = () => exception_result = Catch.Exception(() => topology.ValidateTopology(false, logger));
 

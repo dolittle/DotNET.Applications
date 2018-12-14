@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
@@ -15,13 +16,13 @@ namespace Dolittle.Build.Topology.for_Topology.for_StringExtensions.for_GetModul
     {
          static readonly string path = $"{module_name}";
 
-        static ModuleDefinition module_definition;
+        static KeyValuePair<Module,ModuleDefinition> module_definition;
 
         Because of = () => module_definition = path.GetModuleFromPath();
 
         It should_get_a_module_definition = () => module_definition.ShouldNotBeNull();
-        It should_have_the_correct_module_name = () => module_definition.Name.ShouldEqual((ModuleName)module_name);
-        It should_have_a_valid_module_id = () => module_definition.Module.ShouldNotEqual((Module)Guid.Empty);
-        It should_have_one_feature = () => module_definition.Features.Count().ShouldEqual(0);
+        It should_have_the_correct_module_name = () => module_definition.Value.Name.ShouldEqual((ModuleName)module_name);
+        It should_have_a_valid_module_id = () => module_definition.Key.ShouldNotEqual((Module)Guid.Empty);
+        It should_have_one_feature = () => module_definition.Value.Features.Count().ShouldEqual(0);
     }
 }

@@ -4,6 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 using System;
+using System.Collections.Generic;
+using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 using Machine.Specifications;
 
@@ -16,9 +18,15 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyConfigurationExtensio
 
         Establish context = () => 
         {
-            var feature = new FeatureDefinition(){Feature = Guid.NewGuid(), Name = "Module"};
-            var module = new ModuleDefinition(){Module = Guid.NewGuid(), Name = "Module", Features = new []{feature}};
-            topology = new Applications.Configuration.Topology(new[]{module}, new FeatureDefinition[0]);
+            var feature = new FeatureDefinition("Feature", new Dictionary<Feature, FeatureDefinition>());
+            var module = new ModuleDefinition("Module", new Dictionary<Feature, FeatureDefinition>
+            {
+                {Guid.NewGuid(), feature}
+            });
+            topology = new Applications.Configuration.Topology(new Dictionary<Module, ModuleDefinition>
+            {
+                {Guid.NewGuid(), module}
+            }, new Dictionary<Feature, FeatureDefinition>());
         };
 
 
