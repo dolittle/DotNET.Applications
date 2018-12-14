@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Dolittle.Configuration;
 
 namespace Dolittle.Applications.Configuration
@@ -18,22 +19,21 @@ namespace Dolittle.Applications.Configuration
         /// <param name="modules">Collection of <see cref="ModuleDefinition">modules</see>></param>
         /// <param name="features">Collection of <see cref="FeatureDefinition">features</see></param>
         public Topology(
-            IEnumerable<ModuleDefinition> modules,
-            IEnumerable<FeatureDefinition> features)
+            IDictionary<Module, ModuleDefinition> modules,
+            IDictionary<Feature, FeatureDefinition> features)
         {
-            Modules = modules;
-            Features = features;
+            Modules = new ReadOnlyDictionary<Module, ModuleDefinition>(modules);
+            Features = new ReadOnlyDictionary<Feature, FeatureDefinition>(features);
         }
-    
 
         /// <summary>
         /// Gets a <see cref="IEnumerable{ModuleDefinition}">collection</see> of <see cref="ModuleDefinition"/>
         /// </summary>
-        public IEnumerable<ModuleDefinition> Modules { get; }
+        public ReadOnlyDictionary<Module, ModuleDefinition> Modules { get; }
 
         /// <summary>
         /// Gets the <see cref="IEnumerable{FeatureDefinition}">features</see> that exists in the root
         /// </summary>
-        public IEnumerable<FeatureDefinition> Features { get; }
+        public ReadOnlyDictionary<Feature,FeatureDefinition> Features { get; }
     }
 }

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 
 using Dolittle.Collections;
@@ -91,7 +92,7 @@ namespace Dolittle.Build.Topology
             if (_configuration.UseModules ) 
             {
                foreach (var module in _configuration.Topology.Modules)
-                   existingArtifactPaths.AddRange(GetArtifactPathsFor(module.Features, module.Name));
+                   existingArtifactPaths.AddRange(GetArtifactPathsFor(module.Value.Features, module.Value.Name));
             }
             else 
                 existingArtifactPaths.AddRange(GetArtifactPathsFor(_configuration.Topology.Features));
@@ -110,26 +111,32 @@ namespace Dolittle.Build.Topology
 
         void AddModulesAndFeatures(string[] missingPaths)
         {
-            var modules = new List<ModuleDefinition>(_configuration.Topology.Modules);
+            var modules = new Dictionary<Module, ModuleDefinition>(_configuration.Topology.Modules);
 
             foreach(var path in missingPaths)
-                modules.Add(path.GetModuleFromPath());
+            {
+                var keyValue = path.GetModuleFromPath();
+                modules.Add(keyValue.Key, keyValue.Value);
+            }
 
             _configuration.Topology = new Dolittle.Applications.Configuration.Topology(modules.GetCollapsedModules(), _configuration.Topology.Features);
         }
 
         void AddFeatures(string[] missingPaths)
         {
-            var features = new List<FeatureDefinition>(_configuration.Topology.Features);
+            var features = new Dictionary<Feature, FeatureDefinition>(_configuration.Topology.Features);
             foreach (var path in missingPaths)
-                features.Add(path.GetFeatureFromPath());
+            {
+                var keyValue = path.GetFeatureFromPath();
+                features.Add(keyValue.Key, keyValue.Value);
+            }
 
             _configuration.Topology = new Dolittle.Applications.Configuration.Topology(_configuration.Topology.Modules, features.GetCollapsedFeatures());
         }
-        static IEnumerable<string> GetArtifactPathsFor(IEnumerable<FeatureDefinition> features, string parent = "")
+        static IEnumerable<string> GetArtifactPathsFor(IDictionary<Feature,FeatureDefinition> features, string parent = "")
         {
             var paths = new List<string>();
-            features.ForEach(_ =>
+            features.Values.ForEach(_ =>
             {
                 var featurePath = new List<string>();
                 if( !string.IsNullOrEmpty(parent) ) featurePath.Add($"{parent}");

@@ -19,11 +19,10 @@ namespace Dolittle.Build.Artifact
         /// <summary>
         /// Returns all <see cref="FeatureDefinition"/> from the <see cref="Applications.Configuration.Topology"/>
         /// </summary>
-        public static IEnumerable<FeatureDefinition> RetrieveFeatures(this BoundedContextTopology configuration)
+        public static IDictionary<Feature, FeatureDefinition> RetrieveFeatures(this BoundedContextTopology configuration)
         {
-            if (configuration.UseModules) return configuration.Topology.Modules.SelectMany(_ => _.Features);     
+            if (configuration.UseModules) return configuration.Topology.Modules.SelectMany(_ => _.Value.Features).ToDictionary(_ => _.Key, _ => _.Value);
             else return  configuration.Topology.Features;
-            
         }
 
         /// <summary>
@@ -40,17 +39,17 @@ namespace Dolittle.Build.Artifact
         /// <summary>
         /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextTopology">BoundedContextConfiguration's </see> topology 
         /// </summary>
-        public static FeatureDefinition FindMatchingFeature(this BoundedContextTopology boundedContextConfiguration, string @namespace)
+        public static KeyValuePair<Feature, FeatureDefinition> FindMatchingFeature(this BoundedContextTopology boundedContextConfiguration, string @namespace)
         {
             var nonMatchingList = new List<string>();
             var featureDef = boundedContextConfiguration.FindMatchingFeature(@namespace, nonMatchingList);
-            if (featureDef == null) throw new NonMatchingArtifact();
+            if (featureDef.Key == null) throw new NonMatchingArtifact();
             return featureDef;
         }
         /// <summary>
         /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextTopology">BoundedContextConfiguration's </see> topology 
         /// </summary>
-        public static FeatureDefinition FindMatchingFeature(this BoundedContextTopology boundedContextConfiguration, string @namespace, List<string> nonMatchingArtifacts)
+        public static KeyValuePair<Feature, FeatureDefinition> FindMatchingFeature(this BoundedContextTopology boundedContextConfiguration, string @namespace, List<string> nonMatchingArtifacts)
         {
             var area = new Area(){Value = @namespace.Split(".").First()};
             var segments = @namespace.Split(".").Skip(1).ToArray();
@@ -66,16 +65,16 @@ namespace Dolittle.Build.Artifact
             if (boundedContextConfiguration.UseModules)
             {
                 var matchingModule = boundedContextConfiguration.Topology.Modules
-                    .SingleOrDefault(module => module.Name.Value.Equals(segments[0]));
+                    .SingleOrDefault(module => module.Value.Name.Value.Equals(segments[0]));
                 
                 try
                 {
-                    return FindMatchingFeature(segments.Skip(1).ToArray(), matchingModule.Features);
+                    return FindMatchingFeature(segments.Skip(1).ToArray(), matchingModule.Value.Features);
                 } 
                 catch (Exception)
                 {
                     nonMatchingArtifacts.Add(@namespace);
-                    return null;
+                    return new KeyValuePair<Feature, FeatureDefinition>(null, null);
                 }
             }
             try 
@@ -85,32 +84,32 @@ namespace Dolittle.Build.Artifact
             catch(Exception)
             {
                 nonMatchingArtifacts.Add(@namespace);
-                return null;
+                return new KeyValuePair<Feature, FeatureDefinition>(null, null);
             }
         }
 
-        static FeatureDefinition FindMatchingFeature(string[] segments, IEnumerable<FeatureDefinition> features)
+        static KeyValuePair<Feature, FeatureDefinition> FindMatchingFeature(string[] segments, IDictionary<Feature, FeatureDefinition> features)
         {
             var featureName = segments.Count() > 0? segments[0] : "";
             if (string.IsNullOrEmpty(featureName)) 
                 throw new Exception("Missing feature");
             
-            var matchingFeature = features.SingleOrDefault(feature => feature.Name.Value.Equals(segments[0]));
+            Func<KeyValuePair<Feature, FeatureDefinition>, bool>  predicate = (KeyValuePair<Feature, FeatureDefinition> feature) => feature.Value.Name.Value.Equals(segments[0]);
+            if( !features.Any(predicate) )  throw new Exception("Missing feature");
 
-            if (matchingFeature == null) 
-                throw new Exception("Missing feature");
+            var matchingFeature = features.SingleOrDefault(predicate);
 
             if (segments.Count() == 1) return matchingFeature;
 
-            return FindMatchingFeature(segments.Skip(1).ToArray(), matchingFeature.SubFeatures);
+            return FindMatchingFeature(segments.Skip(1).ToArray(), matchingFeature.Value.SubFeatures);
         }
         
-        static void AddAllFeaturesToMap(IEnumerable<FeatureDefinition> features, Dictionary<Feature, FeatureName> map)
+        static void AddAllFeaturesToMap(IDictionary<Feature,FeatureDefinition> features, Dictionary<Feature, FeatureName> map)
         {
             foreach (var feature in features)
             {
-                map.Add(feature.Feature, feature.Name);
-                AddAllFeaturesToMap(feature.SubFeatures, map);
+                map.Add(feature.Key, feature.Value.Name);
+                AddAllFeaturesToMap(feature.Value.SubFeatures, map);
             }
         }
     }

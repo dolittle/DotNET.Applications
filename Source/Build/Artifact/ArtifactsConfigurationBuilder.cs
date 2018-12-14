@@ -120,11 +120,11 @@ namespace Dolittle.Build.Artifact
             foreach (var artifact in artifacts)
             {
                 var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace, nonMatchingArtifacts);
-                if (feature != null)
+                if (feature.Value != null)
                 {
                     MutableArtifactsByTypeDictionary artifactsByType;
-                    if (!artifactsDictionary.TryGetValue(feature.Feature, out artifactsByType))
-                        artifactsByType = artifactsDictionary[feature.Feature] = new Dictionary<PropertyInfo, Dictionary<ArtifactId, ArtifactDefinition>>();
+                    if (!artifactsDictionary.TryGetValue(feature.Key, out artifactsByType))
+                        artifactsByType = artifactsDictionary[feature.Key] = new Dictionary<PropertyInfo, Dictionary<ArtifactId, ArtifactDefinition>>();
 
                     Dictionary<ArtifactId, ArtifactDefinition> mutableArtifacts;
                     if (!artifactsByType.TryGetValue(targetProperty, out mutableArtifacts))
