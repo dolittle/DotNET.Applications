@@ -92,7 +92,7 @@ namespace Dolittle.Build.Artifact
                 artifactsDictionary.Select(_ => {
                     var feature = _.Key;
                     var arguments = artifactsByTypeDefinitionConstructor.GetParameters().Select(arg => {
-                        return _.Value.SingleOrDefault(prop => arg.ParameterType.IsAssignableFrom(prop.Key.PropertyType) && arg.Name.Equals(prop.Key.Name, StringComparison.OrdinalIgnoreCase)).Value ?? new Dictionary<ArtifactId, ArtifactDefinition>();
+                        return _.Value.SingleOrDefault(prop => arg.Name.ToLower().Equals(prop.Key.Name.ToLower())).Value ?? new Dictionary<ArtifactId, ArtifactDefinition>();
                     }).ToArray();
                     var artifacts = artifactsByTypeDefinitionConstructor.Invoke(arguments) as ArtifactsByTypeDefinition;
                     return new KeyValuePair<Feature, ArtifactsByTypeDefinition>(feature, artifacts);
@@ -127,7 +127,7 @@ namespace Dolittle.Build.Artifact
                         artifactsByType = artifactsDictionary[feature.Feature] = new Dictionary<PropertyInfo, Dictionary<ArtifactId, ArtifactDefinition>>();
 
                     Dictionary<ArtifactId, ArtifactDefinition> mutableArtifacts;
-                    if (artifactsByType.TryGetValue(targetProperty, out mutableArtifacts))
+                    if (!artifactsByType.TryGetValue(targetProperty, out mutableArtifacts))
                         mutableArtifacts = artifactsByType[targetProperty] = new Dictionary<ArtifactId, ArtifactDefinition>();
                     
                     if (!mutableArtifacts.Any(_ => _.Value.Type.GetActualType() == artifact))

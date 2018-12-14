@@ -23,32 +23,31 @@ namespace Dolittle.Build.Artifact
         /// <summary>
         /// Returns all <see cref="ArtifactDefinition"/> instances in the <see cref="ArtifactsConfiguration"/>
         /// </summary>
-        public static IDictionary<ArtifactId, ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration artifacts)
+        public static IEnumerable<KeyValuePair<ArtifactId, ArtifactDefinition>> GetAllArtifactDefinitions(this ArtifactsConfiguration artifacts)
         {
-            var artifactDefinitions = new Dictionary<ArtifactId,ArtifactDefinition>();
+            var artifactDefinitions = new List<KeyValuePair<ArtifactId,ArtifactDefinition>>();
 
             foreach (var artifactEntry in artifacts)
             {
-                artifactEntry.Value.Commands.ForEach(_ => artifactDefinitions.Add(_.Key, _.Value));
-                artifactEntry.Value.Events.ForEach(_ => artifactDefinitions.Add(_.Key, _.Value));
-                artifactEntry.Value.EventSources.ForEach(_ => artifactDefinitions.Add(_.Key, _.Value));
-                artifactEntry.Value.Queries.ForEach(_ => artifactDefinitions.Add(_.Key, _.Value));
-                artifactEntry.Value.ReadModels.ForEach(_ => artifactDefinitions.Add(_.Key, _.Value));
-                
+                artifactDefinitions.AddRange(artifactEntry.Value.Commands);
+                artifactDefinitions.AddRange(artifactEntry.Value.Events);
+                artifactDefinitions.AddRange(artifactEntry.Value.EventSources);
+                artifactDefinitions.AddRange(artifactEntry.Value.Queries);
+                artifactDefinitions.AddRange(artifactEntry.Value.ReadModels);
             }
             return artifactDefinitions;
         }
         /// <summary>
         /// Returns all <see cref="ArtifactDefinition"/> instances in the <see cref="ArtifactsConfiguration"/> by retrieving the <see cref="ArtifactDefinition"/> dictionaries with the <see cref="PropertyInfo"/>
         /// </summary>
-        public static IDictionary<ArtifactId, ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration artifacts, PropertyInfo targetProperty)
+        public static IEnumerable<KeyValuePair<ArtifactId, ArtifactDefinition>> GetAllArtifactDefinitions(this ArtifactsConfiguration artifacts, PropertyInfo targetProperty)
         {
-            var artifactDefinitions = new Dictionary<ArtifactId,ArtifactDefinition>();
+            var artifactDefinitions = new List<KeyValuePair<ArtifactId,ArtifactDefinition>>();
 
             foreach (var artifactEntry in artifacts)
             {
                 var selectedArtifacts = targetProperty.GetValue(artifactEntry.Value) as IDictionary<ArtifactId,ArtifactDefinition>;
-                selectedArtifacts.ForEach(_ => artifactDefinitions.Add(_.Key, _.Value));
+                artifactDefinitions.AddRange(selectedArtifacts);
             }
 
             return artifactDefinitions;
@@ -56,17 +55,17 @@ namespace Dolittle.Build.Artifact
         /// <summary>
         /// Returns all <see cref="ArtifactDefinition"/> instances with a specific <see cref="Feature"/> (id) in the <see cref="ArtifactsConfiguration"/>
         /// </summary>
-        public static IDictionary<ArtifactId, ArtifactDefinition> GetAllArtifactDefinitions(this ArtifactsConfiguration artifacts, Feature id)
+        public static IEnumerable<KeyValuePair<ArtifactId, ArtifactDefinition>> GetAllArtifactDefinitions(this ArtifactsConfiguration artifacts, Feature id)
         {
-            var artifactDefinitions = new Dictionary<ArtifactId,ArtifactDefinition>();
+            var artifactDefinitions = new List<KeyValuePair<ArtifactId,ArtifactDefinition>>();
 
             var artifact = artifacts[id];
-            
-            artifact.Commands.ForEach(_ => artifactDefinitions.Add(_.Key, _.Value));
-            artifact.Events.ForEach(_ => artifactDefinitions.Add(_.Key, _.Value));
-            artifact.EventSources.ForEach(_ => artifactDefinitions.Add(_.Key, _.Value));
-            artifact.Queries.ForEach(_ => artifactDefinitions.Add(_.Key, _.Value));
-            artifact.ReadModels.ForEach(_ => artifactDefinitions.Add(_.Key, _.Value));
+
+            artifactDefinitions.AddRange(artifact.Commands);
+            artifactDefinitions.AddRange(artifact.Events);
+            artifactDefinitions.AddRange(artifact.EventSources);
+            artifactDefinitions.AddRange(artifact.Queries);
+            artifactDefinitions.AddRange(artifact.ReadModels);
             
             return artifactDefinitions;
         }
