@@ -22,13 +22,6 @@ namespace Dolittle.Artifacts.Configuration
             Type = type;
         }
 
-        /*
-        /// <summary>
-        /// Gets or sets the <see cref="ArtifactId">unique artifact identifier</see>
-        /// </summary>
-        public ArtifactId Artifact {  get; set; }
-        */
-
         /// <summary>
         /// Gets or sets the <see cref="ArtifactGeneration">generation number</see> for the artifact
         /// </summary>
