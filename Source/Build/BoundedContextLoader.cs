@@ -50,7 +50,11 @@ namespace Dolittle.Build
             if (_instance != null) return _instance;
 
             var path = GetPath(relativePath);
-            if( !File.Exists(path)) throw new MissingBoundedContextConfiguration(path);
+            if( !File.Exists(path)) 
+            {
+                _logger.Error($"Bounded context configuration expected at path {path} was not found");
+                throw new MissingBoundedContextConfiguration(path);
+            }
             
             var json = File.ReadAllText(path);
             var configuration = _serializer.FromJson<BoundedContextConfiguration>(json, _serializationOptions);

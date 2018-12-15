@@ -76,7 +76,6 @@ namespace Dolittle.Build.Artifact
 
             if (newArtifacts > 0)
             {
-                Program.NewArtifacts = true;
                 _logger.Information($"Added {newArtifacts} new artifacts to the map.");
             }
             else 

@@ -48,9 +48,6 @@ namespace Dolittle.Build
 
         static BootloaderResult _bootLoaderResult;
 
-        internal static bool NewTopology = false;
-        internal static bool NewArtifacts = false;
-
         static int Main(string[] args)
         {
             try
@@ -66,14 +63,11 @@ namespace Dolittle.Build
 
                 var assemblyContext = AssemblyContext.From(clientAssembly);
 
-                
-               
                 _artifactsDiscoverer = new ArtifactsDiscoverer(assemblyContext, _artifactTypes, _logger);
                 _eventProcessorDiscoverer = new EventProcessorDiscoverer(assemblyContext, _logger);
                 
                 var artifacts = _artifactsDiscoverer.Artifacts;
 
-                
                 var topology = _topologyConfigurationHandler.Build(artifacts, parsingResults);
 
                 var artifactsConfiguration = _artifactsConfigurationHandler.Build(artifacts, topology, parsingResults);
@@ -83,8 +77,8 @@ namespace Dolittle.Build
                 var events = artifacts.Where(_ => _artifactTypes.ArtifactTypes.Where(artifactType => artifactType.TypeName == "event").First().Type.IsAssignableFrom(_));
                 ValidateEvents(events);
                                 
-                if (NewTopology) _topologyConfigurationHandler.Save(topology);
-                if (NewArtifacts) _artifactsConfigurationHandler.Save(artifactsConfiguration);
+                _topologyConfigurationHandler.Save(topology);
+                _artifactsConfigurationHandler.Save(artifactsConfiguration);
                 
                 if (parsingResults.GenerateProxies)
                 {
