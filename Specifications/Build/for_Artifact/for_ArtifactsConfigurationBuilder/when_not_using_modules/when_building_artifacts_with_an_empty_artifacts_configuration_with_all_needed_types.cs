@@ -33,28 +33,28 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactConfigurationBuilder.
 
         It should_return_an_instance = () => result_configuration.ShouldNotBeNull();
         
-        It should_have_the_first_feature = () => result_configuration.Artifacts.ContainsKey(first_feature).ShouldBeTrue();
-        It should_have_the_first_feature_which_has_one_command = () => result_configuration.Artifacts[first_feature].Commands.Count().ShouldEqual(1);
-        It should_have_the_first_feature_which_has_one_event = () => result_configuration.Artifacts[first_feature].Events.Count().ShouldEqual(1);
-        It should_have_the_first_feature_which_has_one_query = () => result_configuration.Artifacts[first_feature].Queries.Count().ShouldEqual(1);
-        It should_have_the_first_feature_which_has_one_read_model = () => result_configuration.Artifacts[first_feature].ReadModels.Count().ShouldEqual(1);
-        It should_have_the_first_feature_which_has_one_event_source = () => result_configuration.Artifacts[first_feature].EventSources.Count().ShouldEqual(1);
-        It should_have_the_first_feature_which_has_one_command_with_the_correct_clr_type = () => result_configuration.Artifacts[first_feature].Commands.First().Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature.TheCommand)).TypeString);
-        It should_have_the_first_feature_which_has_one_event_with_the_correct_clr_type = () => result_configuration.Artifacts[first_feature].Events.First().Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature.TheEvent)).TypeString); 
-        It should_have_the_first_feature_which_has_one_query_with_the_correct_clr_type = () => result_configuration.Artifacts[first_feature].Queries.First().Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature.TheQuery)).TypeString); 
-        It should_have_the_first_feature_which_has_one_read_model_with_the_correct_clr_type = () => result_configuration.Artifacts[first_feature].ReadModels.First().Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature.TheReadModel)).TypeString); 
-        It should_have_the_first_feature_which_has_one_event_source_with_the_correct_clr_type = () => result_configuration.Artifacts[first_feature].EventSources.First().Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature.TheEventSource)).TypeString); 
+        It should_have_the_first_feature = () => result_configuration.ContainsKey(first_feature).ShouldBeTrue();
+        It should_have_the_first_feature_which_has_one_command = () => result_configuration[first_feature].Commands.Count().ShouldEqual(1);
+        It should_have_the_first_feature_which_has_one_event = () => result_configuration[first_feature].Events.Count().ShouldEqual(1);
+        It should_have_the_first_feature_which_has_one_query = () => result_configuration[first_feature].Queries.Count().ShouldEqual(1);
+        It should_have_the_first_feature_which_has_one_read_model = () => result_configuration[first_feature].ReadModels.Count().ShouldEqual(1);
+        It should_have_the_first_feature_which_has_one_event_source = () => result_configuration[first_feature].EventSources.Count().ShouldEqual(1);
+        It should_have_the_first_feature_which_has_one_command_with_the_correct_clr_type = () => result_configuration[first_feature].Commands.First().Value.Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature.TheCommand)).TypeString);
+        It should_have_the_first_feature_which_has_one_event_with_the_correct_clr_type = () => result_configuration[first_feature].Events.First().Value.Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature.TheEvent)).TypeString); 
+        It should_have_the_first_feature_which_has_one_query_with_the_correct_clr_type = () => result_configuration[first_feature].Queries.First().Value.Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature.TheQuery)).TypeString); 
+        It should_have_the_first_feature_which_has_one_read_model_with_the_correct_clr_type = () => result_configuration[first_feature].ReadModels.First().Value.Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature.TheReadModel)).TypeString); 
+        It should_have_the_first_feature_which_has_one_event_source_with_the_correct_clr_type = () => result_configuration[first_feature].EventSources.First().Value.Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature.TheEventSource)).TypeString); 
         
-        It should_have_the_second_feature = () => result_configuration.Artifacts.ContainsKey(second_feature).ShouldBeTrue();
-        It should_have_the_second_feature_which_has_one_command = () => result_configuration.Artifacts[second_feature].Commands.Count().ShouldEqual(1);
-        It should_have_the_second_feature_which_has_one_event = () => result_configuration.Artifacts[second_feature].Events.Count().ShouldEqual(1);
-        It should_have_the_second_feature_which_has_one_query = () => result_configuration.Artifacts[second_feature].Queries.Count().ShouldEqual(1);
-        It should_have_the_second_feature_which_has_one_read_model = () => result_configuration.Artifacts[second_feature].ReadModels.Count().ShouldEqual(1);
-        It should_have_the_second_feature_which_has_one_event_source = () => result_configuration.Artifacts[second_feature].EventSources.Count().ShouldEqual(1);
-        It should_have_the_second_feature_which_has_one_command_with_the_correct_clr_type = () => result_configuration.Artifacts[second_feature].Commands.First().Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature3.TheCommand)).TypeString);
-        It should_have_the_second_feature_which_has_one_event_with_the_correct_clr_type = () => result_configuration.Artifacts[second_feature].Events.First().Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature3.TheEvent)).TypeString); 
-        It should_have_the_second_feature_which_has_one_query_with_the_correct_clr_type = () => result_configuration.Artifacts[second_feature].Queries.First().Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature3.TheQuery)).TypeString); 
-        It should_have_the_second_feature_which_has_one_read_model_with_the_correct_clr_type = () => result_configuration.Artifacts[second_feature].ReadModels.First().Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature3.TheReadModel)).TypeString); 
-        It should_have_the_second_feature_which_has_one_event_source_with_the_correct_clr_type = () => result_configuration.Artifacts[second_feature].EventSources.First().Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature3.TheEventSource)).TypeString); 
+        It should_have_the_second_feature = () => result_configuration.ContainsKey(second_feature).ShouldBeTrue();
+        It should_have_the_second_feature_which_has_one_command = () => result_configuration[second_feature].Commands.Count().ShouldEqual(1);
+        It should_have_the_second_feature_which_has_one_event = () => result_configuration[second_feature].Events.Count().ShouldEqual(1);
+        It should_have_the_second_feature_which_has_one_query = () => result_configuration[second_feature].Queries.Count().ShouldEqual(1);
+        It should_have_the_second_feature_which_has_one_read_model = () => result_configuration[second_feature].ReadModels.Count().ShouldEqual(1);
+        It should_have_the_second_feature_which_has_one_event_source = () => result_configuration[second_feature].EventSources.Count().ShouldEqual(1);
+        It should_have_the_second_feature_which_has_one_command_with_the_correct_clr_type = () => result_configuration[second_feature].Commands.First().Value.Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature3.TheCommand)).TypeString);
+        It should_have_the_second_feature_which_has_one_event_with_the_correct_clr_type = () => result_configuration[second_feature].Events.First().Value.Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature3.TheEvent)).TypeString); 
+        It should_have_the_second_feature_which_has_one_query_with_the_correct_clr_type = () => result_configuration[second_feature].Queries.First().Value.Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature3.TheQuery)).TypeString); 
+        It should_have_the_second_feature_which_has_one_read_model_with_the_correct_clr_type = () => result_configuration[second_feature].ReadModels.First().Value.Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature3.TheReadModel)).TypeString); 
+        It should_have_the_second_feature_which_has_one_event_source_with_the_correct_clr_type = () => result_configuration[second_feature].EventSources.First().Value.Type.TypeString.ShouldEqual(ClrType.FromType(typeof(Specs.Feature3.TheEventSource)).TypeString); 
     }
 }

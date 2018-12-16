@@ -12,18 +12,24 @@ namespace Dolittle.Artifacts.Configuration
     public class ArtifactDefinition
     {
         /// <summary>
-        /// Gets or sets the <see cref="ArtifactId">unique artifact identifier</see>
+        /// Initializes a new instance of <see cref="ArtifactDefinition"/>
         /// </summary>
-        public ArtifactId Artifact {  get; set; }
+        /// <param name="generation">Generation of the artifact</param>
+        /// <param name="type">The CLR type of the arfifact</param>
+        public ArtifactDefinition(ArtifactGeneration generation, ClrType type)
+        {
+            Generation = generation;
+            Type = type;
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="ArtifactGeneration">generation number</see> for the artifact
         /// </summary>
-        public ArtifactGeneration Generation {  get; set; }
+        public ArtifactGeneration Generation { get; }
 
         /// <summary>
         /// Gets or sets the <see cref="ClrType"/> represented by the artifact
         /// </summary>
-        public ClrType Type {  get; set; }
+        public ClrType Type { get; }
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
@@ -17,31 +18,33 @@ using Dolittle.Serialization.Json;
 
 namespace Dolittle.Build.Artifact
 {
-   /// <summary>
-   /// Represents a class that can build a valid <see cref="ArtifactsConfiguration"/>
-   /// </summary>     
+    using MutableArtifactsByTypeDictionary = Dictionary<PropertyInfo, Dictionary<ArtifactId, ArtifactDefinition>>;
+    using MutableAritfactsDictionary = Dictionary<Feature, Dictionary<PropertyInfo, Dictionary<ArtifactId, ArtifactDefinition>>>;
+
+    /// <summary>
+    /// Represents a class that can build a valid <see cref="ArtifactsConfiguration"/>
+    /// </summary>     
     public class ArtifactsConfigurationBuilder
     {
         readonly Type[] _artifacts;
         readonly IBuildToolLogger _logger;
         readonly DolittleArtifactTypes _artifactTypes;
-        ArtifactsConfiguration _artifactsConfiguration;
+        readonly ArtifactsConfiguration _currentArtifactsConfiguration;
 
         /// <summary>
         /// Instantiates an instance of <see cref="ArtifactsConfigurationBuilder"/>
         /// </summary>
         /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
-        /// <param name="artifactsConfiguration">The <see cref="ArtifactsConfiguration"/> that will be modified, validated and returned from Build</param>
+        /// <param name="currentArtifactsConfiguration">The current <see cref="ArtifactsConfiguration"/> that will be used as a base for building a valid updated configuration that is returned from Build</param>
         /// <param name="artifactTypes">A list of <see cref="ArtifactType"/> which represents the different artifact types</param>
         /// <param name="logger"></param>
-        public ArtifactsConfigurationBuilder(Type[] artifacts, ArtifactsConfiguration artifactsConfiguration, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
+        public ArtifactsConfigurationBuilder(Type[] artifacts, ArtifactsConfiguration currentArtifactsConfiguration, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
         {
             _artifacts = artifacts;
             _logger = logger;
 
-            _artifactsConfiguration = artifactsConfiguration;
             _artifactTypes = artifactTypes;
-
+            _currentArtifactsConfiguration = currentArtifactsConfiguration;
         }
 
         /// <summary>
@@ -52,16 +55,26 @@ namespace Dolittle.Build.Artifact
         public ArtifactsConfiguration Build(BoundedContextTopology boundedContextTopology)
         {
             var newArtifacts = 0;
+            
+            var artifactsDictionary = new MutableAritfactsDictionary();
+            foreach (var (feature, featureArtifactsByType) in _currentArtifactsConfiguration)
+            {
+                var featureArtifacts = artifactsDictionary[feature] = new Dictionary<PropertyInfo, Dictionary<ArtifactId, ArtifactDefinition>>();
+                foreach (var artifactType in featureArtifactsByType.GetType().GetProperties())
+                {
+                    var existingArtifactsForFeatureType = artifactType.GetValue(featureArtifactsByType) as IReadOnlyDictionary<ArtifactId, ArtifactDefinition>;
+                    featureArtifacts[artifactType] = new Dictionary<ArtifactId, ArtifactDefinition>(existingArtifactsForFeatureType);
+                }
+            }
 
             var nonMatchingArtifacts = new List<string>();
             foreach (var artifactType in _artifactTypes.ArtifactTypes) 
             {
                 newArtifacts += HandleArtifactOfType(
-                    artifactType.Type,
+                    artifactType,
                     boundedContextTopology,
-                    artifactType.TypeName,
-                    artifactType.TargetPropertyExpression,
-                    ref nonMatchingArtifacts
+                    artifactsDictionary,
+                    nonMatchingArtifacts
                 );
             }
             if (nonMatchingArtifacts.Any())
@@ -71,8 +84,21 @@ namespace Dolittle.Build.Artifact
                 
                 throw new NonMatchingArtifact();
             }
-            
-            _artifactsConfiguration.ValidateArtifacts(boundedContextTopology, _artifacts, _logger);
+
+            //new Dictionary<Feature, ArtifactsByTypeDefinition>()
+            var artifactsByTypeDefinitionConstructor = typeof(ArtifactsByTypeDefinition).GetConstructors().Single(_ => _.GetParameters().All(p => p.ParameterType.Equals(typeof(IDictionary<ArtifactId, ArtifactDefinition>))));
+
+            var updatedArtifactsConfiguration = new ArtifactsConfiguration(new Dictionary<Feature, ArtifactsByTypeDefinition>(
+                artifactsDictionary.Select(_ => {
+                    var feature = _.Key;
+                    var arguments = artifactsByTypeDefinitionConstructor.GetParameters().Select(arg => {
+                        return _.Value.SingleOrDefault(prop => arg.Name.ToLower().Equals(prop.Key.Name.ToLower())).Value ?? new Dictionary<ArtifactId, ArtifactDefinition>();
+                    }).ToArray();
+                    var artifacts = artifactsByTypeDefinitionConstructor.Invoke(arguments) as ArtifactsByTypeDefinition;
+                    return new KeyValuePair<Feature, ArtifactsByTypeDefinition>(feature, artifacts);
+                })
+            ));
+            updatedArtifactsConfiguration.ValidateArtifacts(boundedContextTopology, _artifacts, _logger);
 
             if (newArtifacts > 0)
             {
@@ -81,44 +107,36 @@ namespace Dolittle.Build.Artifact
             else 
                 _logger.Information($"No new artifacts added to the map.");
             
-            return _artifactsConfiguration;
+            return updatedArtifactsConfiguration;
         }
 
-        int HandleArtifactOfType(
-            Type artifactType,
-            BoundedContextTopology boundedContextConfiguration,
-            string artifactTypeName,
-            Expression<Func<ArtifactsByTypeDefinition, IEnumerable<ArtifactDefinition>>> targetPropertyExpression,
-            ref List<string> nonMatchingArtifacts)
+        int HandleArtifactOfType(ArtifactType artifactType, BoundedContextTopology boundedContextConfiguration, MutableAritfactsDictionary artifactsDictionary, List<string> nonMatchingArtifacts)
         {
-            var targetProperty = targetPropertyExpression.GetPropertyInfo();
+            var targetProperty = artifactType.TargetPropertyExpression.GetPropertyInfo();
 
             var newArtifacts = 0;
-            var artifacts = _artifacts.Where(_ => artifactType.IsAssignableFrom(_));
+            var artifacts = _artifacts.Where(_ => artifactType.Type.IsAssignableFrom(_));
             
             foreach (var artifact in artifacts)
             {
-                var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace, ref nonMatchingArtifacts);
+                var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace, nonMatchingArtifacts);
                 if (feature.Value != null)
                 {
-                    ArtifactsByTypeDefinition artifactsByTypeDefinition;
+                    MutableArtifactsByTypeDictionary artifactsByType;
+                    if (!artifactsDictionary.TryGetValue(feature.Key, out artifactsByType))
+                        artifactsByType = artifactsDictionary[feature.Key] = new Dictionary<PropertyInfo, Dictionary<ArtifactId, ArtifactDefinition>>();
 
-                    if (_artifactsConfiguration.Artifacts.ContainsKey(feature.Key))
-                        artifactsByTypeDefinition = _artifactsConfiguration.Artifacts[feature.Key];
-                    else
-                    {
-                        artifactsByTypeDefinition = new ArtifactsByTypeDefinition();
-                        _artifactsConfiguration.Artifacts[feature.Key] = artifactsByTypeDefinition;
-                    } 
-                    var existingArtifacts = targetProperty.GetValue(artifactsByTypeDefinition) as IEnumerable<ArtifactDefinition>;
+                    Dictionary<ArtifactId, ArtifactDefinition> mutableArtifacts;
+                    if (!artifactsByType.TryGetValue(targetProperty, out mutableArtifacts))
+                        mutableArtifacts = artifactsByType[targetProperty] = new Dictionary<ArtifactId, ArtifactDefinition>();
                     
-                    if (!existingArtifacts.Any(_ => _.Type.GetActualType() == artifact))
+                    if (!mutableArtifacts.Any(_ => _.Value.Type.GetActualType() == artifact))
                     {
                         var artifactObject = new Dolittle.Artifacts.Artifact(ArtifactId.New(), ArtifactGeneration.First);
                         if (artifact.HasAttribute<ArtifactAttribute>())
                             artifactObject = (artifact.GetTypeInfo().GetCustomAttributes(typeof(ArtifactAttribute), false).First() as ArtifactAttribute).Artifact;
                         
-                        SetNewAndExistingArtifacts(artifactObject, artifact, artifactsByTypeDefinition, targetProperty, existingArtifacts, artifactTypeName);
+                        AddNewArtifact(artifactObject, artifact, mutableArtifacts, artifactType.TypeName);
                         newArtifacts++;
                     }
                     else
@@ -127,11 +145,11 @@ namespace Dolittle.Build.Artifact
                         {
                             var artifactObject = (artifact.GetTypeInfo().GetCustomAttributes(typeof(ArtifactAttribute), false).First() as ArtifactAttribute).Artifact;
                             
-                            var existingArtifact = existingArtifacts.Single(_ => _.Type.GetActualType() == artifact);
-                            if (! existingArtifact.Artifact.Value.Equals(artifactObject.Id.Value))
+                            var existingArtifact = mutableArtifacts.Single(_ => _.Value.Type.GetActualType() == artifact);
+                            if (! existingArtifact.Key.Value.Equals(artifactObject.Id.Value))
                             {
-                                existingArtifacts = existingArtifacts.Where(_ => _.Artifact.Value != existingArtifact.Artifact.Value);
-                                SetNewAndExistingArtifacts(artifactObject, artifact, artifactsByTypeDefinition, targetProperty, existingArtifacts, artifactTypeName);
+                                mutableArtifacts.Remove(existingArtifact.Key);
+                                AddNewArtifact(artifactObject, artifact, mutableArtifacts, artifactType.TypeName);
                                 newArtifacts++;
                             }
                         }
@@ -141,19 +159,11 @@ namespace Dolittle.Build.Artifact
             return newArtifacts;
         }
 
-        void SetNewAndExistingArtifacts(Artifacts.Artifact artifactObject, Type artifact, ArtifactsByTypeDefinition artifactsByTypeDefinition, PropertyInfo targetProperty, IEnumerable<ArtifactDefinition> existingArtifacts, string artifactTypeName)
+        void AddNewArtifact(Artifacts.Artifact artifactObject, Type artifact, IDictionary<ArtifactId, ArtifactDefinition> mutableArtifacts, string artifactTypeName)
         {
-            var newAndExistingArtifacts = new List<ArtifactDefinition>(existingArtifacts);
-            var artifactDefinition = new ArtifactDefinition
-            {
-                Artifact = artifactObject.Id,
-                Generation = artifactObject.Generation,
-                Type = ClrType.FromType(artifact)
-            };
-            _logger.Trace($"Adding '{artifact.Name}' as a new {artifactTypeName} artifact with identifier '{artifactDefinition.Artifact}'");
-            newAndExistingArtifacts.Add(artifactDefinition);
-
-            targetProperty.SetValue(artifactsByTypeDefinition, newAndExistingArtifacts);
+            var artifactDefinition = new ArtifactDefinition(artifactObject.Generation, ClrType.FromType(artifact));
+            _logger.Trace($"Adding '{artifact.Name}' as a new {artifactTypeName} artifact with identifier '{artifactObject.Id}'");
+            mutableArtifacts[artifactObject.Id] = artifactDefinition;
         }
     }
 }
