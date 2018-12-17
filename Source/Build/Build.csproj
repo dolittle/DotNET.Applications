@@ -13,12 +13,12 @@
         <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.0.4" />
-        <PackageReference Include="Dolittle.Assemblies" Version="2.0.0-alpha2*" />
-        <PackageReference Include="Dolittle.Booting" Version="2.0.0-alpha2*" />
-        <PackageReference Include="Dolittle.Configuration.Files" Version="2.0.0-alpha2*" />
-        <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="2.0.0-alpha2*" />
-        <PackageReference Include="Dolittle.DependencyInversion.Booting" Version="2.0.0-alpha2*" />
-        <PackageReference Include="Dolittle.Runtime.Applications.Configuration" Version="2.0.0-alpha2*" />
+        <PackageReference Include="Dolittle.Assemblies" Version="2.*" />
+        <PackageReference Include="Dolittle.Booting" Version="2.*" />
+        <PackageReference Include="Dolittle.Configuration.Files" Version="2.*" />
+        <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="2.*" />
+        <PackageReference Include="Dolittle.DependencyInversion.Booting" Version="2.*" />
+        <PackageReference Include="Dolittle.Runtime.Applications.Configuration" Version="2.*" />
     </ItemGroup>
 
     <ItemGroup>
