@@ -5,7 +5,7 @@
 using System;
 using Dolittle.Concepts;
 
-namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
+namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 {
     public class concept_as_guid : ConceptAs<Guid>
     {

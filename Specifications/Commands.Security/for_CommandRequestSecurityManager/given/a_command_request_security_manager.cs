@@ -1,6 +1,5 @@
 using Machine.Specifications;
 using Moq;
-using Dolittle.Commands.Handling;
 using Dolittle.Security;
 using Dolittle.Runtime.Commands;
 

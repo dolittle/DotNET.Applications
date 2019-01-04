@@ -10,7 +10,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
+namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 {
     public class when_converting_sub_class_with_properties_on_super
     {
