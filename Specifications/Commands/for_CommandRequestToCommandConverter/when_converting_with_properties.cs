@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
+namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 {
     public class when_converting_with_properties
     {

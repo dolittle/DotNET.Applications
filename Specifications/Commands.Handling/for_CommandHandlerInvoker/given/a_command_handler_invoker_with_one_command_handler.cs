@@ -2,31 +2,32 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+
 using Dolittle.Applications;
+using Dolittle.Artifacts;
 using Dolittle.Commands;
+using Dolittle.Runtime.Commands;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Runtime.Commands.for_CommandHandlerInvoker.given
+namespace Dolittle.Commands.Handling.for_CommandHandlerInvoker.given
 {
     public class a_command_handler_invoker_with_one_command_handler : a_command_handler_invoker_with_no_command_handlers
     {
         protected static CommandHandler handler;
-        protected static ApplicationResourceIdentifier command_type;
+        
 
         Establish context = () =>
                                 {
-                                    var application = new Mock<IApplication>();
-                                    application.SetupGet(a => a.Name).Returns("An Application");
-                                    var applicationResource = new Mock<IApplicationResource>();
-                                    applicationResource.SetupGet(a => a.Name).Returns("A Resource");
-                                    command_type = new ApplicationResourceIdentifier(application.Object, new IApplicationLocation[0], applicationResource.Object);
-                                    application_resources.Setup(a => a.Identify(typeof(Command))).Returns(command_type);
+                                    
+                                    artifact_type_map.Setup(a => a.GetArtifactFor(Moq.It.IsAny<System.Type>())).Returns(command_artifact);
                                     handler = new CommandHandler();
                                     type_finder.Setup(t => t.FindMultiple<ICanHandleCommands>()).Returns(new[]
                                                                                                               {typeof(CommandHandler)});
 
                                     container.Setup(c => c.Get(typeof (CommandHandler))).Returns(handler);
+
+                                    
                                 };
     }
 }

@@ -13,7 +13,7 @@ using Dolittle.Runtime.Commands;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Dolittle.Commands.Handling
+namespace Dolittle.Commands
 {
     /// <summary>
     /// Represents an implementation of <see cref="ICommandRequestToCommandConverter"/>

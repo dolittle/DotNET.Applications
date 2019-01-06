@@ -3,12 +3,16 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using Dolittle.Commands;
+using Dolittle.Concepts;
 
-namespace Dolittle.Runtime.Commands.for_CommandHandlerInvoker
+namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 {
-    public class Command : ICommand
+    public class concept_as_guid : ConceptAs<Guid>
     {
-        public Guid Id { get; set; }
+        public static implicit operator concept_as_guid(Guid guid)
+        {
+            return new concept_as_guid { Value = guid };
+        }
+
     }
 }
