@@ -11,7 +11,7 @@ namespace Dolittle.Commands.Security
     /// <summary>
     /// Bindings required for Commands.Security
     /// </summary>
-    public class SecurityDescriptorBindings : ICanProvideBindings
+    public class Bindings : ICanProvideBindings
     {
         /// <inheritdoc />
         public void Provide(IBindingProviderBuilder builder)
