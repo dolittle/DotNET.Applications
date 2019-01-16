@@ -15,7 +15,7 @@ using It = Machine.Specifications.It;
 
 namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 {
-    public class when_converting_with_properties
+    public class when_converting_with_properties : given.a_serializer
     {
         static CorrelationId correlation_id;
         static Mock<IArtifactTypeMap> artifact_type_map;
@@ -70,7 +70,7 @@ namespace Dolittle.Commands.for_CommandRequestToCommandConverter
             artifact_type_map = new Mock<IArtifactTypeMap>();
             artifact_type_map.Setup(_ => _.GetTypeFor(identifier)).Returns(typeof(command_with_all_property_types));
 
-            converter = new CommandRequestToCommandConverter(artifact_type_map.Object);
+            converter = new CommandRequestToCommandConverter(artifact_type_map.Object, serializer);
         };
 
         Because of = () => result = converter.Convert(request) as command_with_all_property_types;

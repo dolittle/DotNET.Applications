@@ -9,10 +9,11 @@ using Dolittle.Execution;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
+using Dolittle.Serialization.Json;
 
 namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 {
-    public class when_converting_sub_class_with_properties_on_super
+    public class when_converting_sub_class_with_properties_on_super : given.a_serializer
     {
         const int an_integer = 42;
         class super : ICommand
@@ -49,7 +50,7 @@ namespace Dolittle.Commands.for_CommandRequestToCommandConverter
             artifact_type_map = new Mock<IArtifactTypeMap>();
             artifact_type_map.Setup(_ => _.GetTypeFor(identifier)).Returns(typeof(sub));
 
-            converter = new CommandRequestToCommandConverter(artifact_type_map.Object);
+            converter = new CommandRequestToCommandConverter(artifact_type_map.Object, serializer);
         };
 
         Because of = () => result = converter.Convert(request) as sub;

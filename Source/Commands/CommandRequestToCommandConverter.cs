@@ -10,6 +10,7 @@ using Dolittle.Artifacts;
 using Dolittle.Collections;
 using Dolittle.Concepts;
 using Dolittle.Runtime.Commands;
+using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -20,15 +21,18 @@ namespace Dolittle.Commands
     /// </summary>
     public class CommandRequestToCommandConverter : ICommandRequestToCommandConverter
     {
-        IArtifactTypeMap _artifactTypeMap;
+        readonly IArtifactTypeMap _artifactTypeMap;
+        readonly ISerializer _serializer;
 
         /// <summary>
-        /// 
+        /// Initialize a new instance of <see cref="CommandRequestToCommandConverter"/>
         /// </summary>
-        /// <param name="artifactTypeMap"></param>
-        public CommandRequestToCommandConverter(IArtifactTypeMap artifactTypeMap)
+        /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for mapping between types and artifacts</param>
+        /// <param name="serializer"><see cref="ISerializer"/> for serialization</param>
+        public CommandRequestToCommandConverter(IArtifactTypeMap artifactTypeMap, ISerializer serializer)
         {
             _artifactTypeMap = artifactTypeMap;
+            _serializer = serializer;
         }
 
         /// <inheritdoc/>
@@ -69,7 +73,7 @@ namespace Dolittle.Commands
         {
             if (value is JArray ||  value is JObject)
             {
-                value = JsonConvert.DeserializeObject(value.ToString(), targetType);
+                value = _serializer.FromJson(targetType, value.ToString());
             }
             else if (targetType.IsConcept())
             {

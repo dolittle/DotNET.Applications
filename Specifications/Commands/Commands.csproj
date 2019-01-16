@@ -1,11 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="../../Build/MSBuild/specs.props"></Import>
+    <Import Project="../../Build/MSBuild/specs.props"/>
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.0</TargetFramework>
         <AssemblyName>Dolittle.SDK.Commands.Specs</AssemblyName>
     </PropertyGroup>
-      <ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="2.*" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="../../Source/Commands/Commands.csproj" />
     </ItemGroup>
 </Project>
