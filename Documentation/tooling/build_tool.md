@@ -58,7 +58,7 @@ Setting up the *Dolittle* for a Web-based project should be pretty straight forw
     <PackageReference Include="Dolittle.Tenancy.Configuration" Version="2.0.0-alpha2*" />
     
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.0.0" />
   </ItemGroup>
