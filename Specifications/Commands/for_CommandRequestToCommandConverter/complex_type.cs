@@ -2,17 +2,13 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using System;
-using Dolittle.Concepts;
-
-namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
+namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 {
-    public class concept_as_guid : ConceptAs<Guid>
+    public class complex_type
     {
-        public static implicit operator concept_as_guid(Guid guid)
-        {
-            return new concept_as_guid { Value = guid };
-        }
-
+        public string a_string {  get; set; }
+        public int an_integer {  get; set; }
+        public double a_double { get; set; }
+        public float a_float { get; set; }
     }
 }

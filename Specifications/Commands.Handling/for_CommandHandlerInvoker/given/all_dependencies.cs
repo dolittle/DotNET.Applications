@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using Dolittle.Applications;
+using Dolittle.Artifacts;
 using Dolittle.Commands;
 using Dolittle.DependencyInversion;
 using Dolittle.Execution;
@@ -12,15 +13,14 @@ using Dolittle.Types;
 using Machine.Specifications;
 using Moq;
 
-namespace Dolittle.Runtime.Commands.for_CommandHandlerInvoker.given
+namespace Dolittle.Commands.Handling.for_CommandHandlerInvoker.given
 {
     public class all_dependencies
     {
         protected static Mock<ITypeFinder> type_finder;
         protected static Mock<IContainer> container;
-        protected static Mock<IApplicationResources> application_resources;
-        protected static Mock<ICommandRequestConverter> command_request_converter;
-
+        protected static Mock<IArtifactTypeMap> artifact_type_map;
+        protected static Mock<ICommandRequestToCommandConverter> command_request_converter;
         protected static Mock<ILogger> logger;
 
         Establish context = () =>
@@ -28,8 +28,8 @@ namespace Dolittle.Runtime.Commands.for_CommandHandlerInvoker.given
             type_finder = new Mock<ITypeFinder>();
             type_finder.Setup(t => t.FindMultiple<ICanHandleCommands>()).Returns(new Type[0]);
             container = new Mock<IContainer>();
-            application_resources = new Mock<IApplicationResources>();
-            command_request_converter = new Mock<ICommandRequestConverter>();
+            artifact_type_map = new Mock<IArtifactTypeMap>();
+            command_request_converter = new Mock<ICommandRequestToCommandConverter>();
             logger = new Mock<ILogger>();
         };
     }

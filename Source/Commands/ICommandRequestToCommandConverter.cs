@@ -5,7 +5,7 @@
 using Dolittle.Commands;
 using Dolittle.Runtime.Commands;
 
-namespace Dolittle.Commands.Handling
+namespace Dolittle.Commands
 {
     /// <summary>
     /// Defines a converter that can convert between a <see cref="ICommand"/> and a <see cref="CommandRequest"/>

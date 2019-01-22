@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dolittle.Commands.Handling.for_CommandRequestToCommandConverter
+namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 {
     public class command_with_all_property_types : ICommand
     {
