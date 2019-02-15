@@ -76,10 +76,24 @@ namespace Dolittle.Events.Coordination
             {
                 committed = eventStore.Commit(uncommitted);
             }
-            _logger.Trace("Process events in same bounded context");
-            _eventProcessorHub.Process(committed);
-            _logger.Trace("Passing committed events through event horizon");
-            _eventHorizon.PassThrough(new CommittedEventStreamWithContext(committed,_executionContextManager.Current));
+            try
+            {
+                _logger.Trace("Process events in same bounded context");
+                _eventProcessorHub.Process(committed);
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex, $"Error processing CommittedEventStream within local event processors '{committed?.Sequence?.ToString() ??  "[NULL]"}'");
+            }
+            try
+            {
+                _logger.Trace("Passing committed events through event horizon");
+                _eventHorizon.PassThrough(new CommittedEventStreamWithContext(committed,_executionContextManager.Current));
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex, $"Error processing CommittedEventStream within event horizons '{committed?.Sequence?.ToString() ??  "[NULL]"}'");
+            }
         }
 
         UncommittedEventStream BuildUncommitted(UncommittedEvents uncommittedEvents, CorrelationId correlationId)
