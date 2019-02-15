@@ -2,7 +2,7 @@
     <Import Project="../../Build/MSBuild/specs.props"/>
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.0</TargetFramework>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
         <AssemblyName>Dolittle.SDK.Commands.Specs</AssemblyName>
     </PropertyGroup>
 
