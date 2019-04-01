@@ -4,14 +4,11 @@ description: Describes the Dolittle Build Tool for the .NET SDK
 keywords: General, tooling, Build Tool
 author: woksin
 ---
-The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”,
-“RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in
-[RFC 2119](https://tools.ietf.org/html/rfc2119).
 
 ## Background
 One of our main visions is to enable developers to build Line of Business products with high productivity while also building products that are scalable and easy to maintain. With tooling we can provide developers with functionalities that enables a better development experience by automatically doing some of the work that is tedious and / or error prone. We can also give a better development experience by providing guidance, tips and squiggly lines by, for example, for .Net utilizing the Roslyn compiler to give the developers warnings and suggestions when they are doing something that does not work well when developing products on our platform or to provide with tips and suggestions for improvements when they aren't utilizing the different tools that we're providing for them to write maintainable code. The DotNET Build Tool is one such tool. This tool is rather important not only for its quality of life functions, but first and foremost for automatically generating and maintaining vital information of the *Bounded Context* for the platform. 
 
-The Dolittle platform needs to know several things related to the [*Application* and *Bounded Contexts*](https://dolittle.io/overview/articles/domain_driven_design/bounded_context/). The whole functionality of a *Bounded Context* is defined by its [*Artifacts*](https://dolittle.io/overview/articles/artifacts/). These *Artifacts* are extremely vital and central to our platform, everything is dependent on them; the functionality of the *Bounded Context* itself, interaction with other *Bounded Contexts*, interaction with other *Applications* and several other important aspects. Because these *Artifacts* are so important we cannot rely on human to keep track of this, that's why we have a tool that does this for us. This is just one of the current functionalities of the Build Tool, later we'll explain this in more detail.
+The Dolittle platform needs to know several things related to the [*Application* and *Bounded Contexts*]({{< relref bounded_context >}}). The whole functionality of a *Bounded Context* is defined by its [*Artifacts*]({{< relref artifacts >}}). These *Artifacts* are extremely vital and central to our platform, everything is dependent on them; the functionality of the *Bounded Context* itself, interaction with other *Bounded Contexts*, interaction with other *Applications* and several other important aspects. Because these *Artifacts* are so important we cannot rely on human to keep track of this, that's why we have a tool that does this for us. This is just one of the current functionalities of the Build Tool, later we'll explain this in more detail.
 
 The .Net Build Tool can be found [here](https://github.com/dolittle/dotnet.sdk/tree/master/Source/Build). It's basically a .NetCore application that is executed each time a build is performed in the .csproj that has a reference to the *Build Tool* "entrypoint" defined [here](https://github.com/dolittle/DotNET.SDK/tree/master/Source/Build.MSBuild).
 
@@ -58,7 +55,7 @@ Setting up the *Dolittle* for a Web-based project should be pretty straight forw
     <PackageReference Include="Dolittle.Tenancy.Configuration" Version="2.0.0-alpha2*" />
     
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.0.0" />
   </ItemGroup>

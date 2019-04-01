@@ -4,9 +4,6 @@ description: This contains details on how event processors work in C#
 keywords: Events, Processors
 author: einari
 ---
-The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”,
-“RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in
-[RFC 2119](https://tools.ietf.org/html/rfc2119).
 
 Event processors are key to dealing acting on state changes represented as events coming through the system.
 Processing an even can mean pretty much anything - it is a reactive model that enables one to react and perform
