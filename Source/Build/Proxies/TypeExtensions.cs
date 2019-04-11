@@ -33,11 +33,12 @@ namespace Dolittle.Build.Proxies
                 if (type.Equals(typeof(string)) || type.Equals(typeof(String))) return "''";
                 if (type.Equals(typeof(Guid))) return $"'{Guid.Empty.ToString()}'";
                 if (type.Equals(typeof(void))) return "{}";
-                if (type.Equals(typeof(bool))|| type.Equals(typeof(Boolean))) return "false";
+                if (type.Equals(typeof(bool)) || type.Equals(typeof(Boolean))) return "false";
+                if (type.IsEnum) return "0";
 
                 return Activator.CreateInstance(type).ToString();
             }
-
+            if (type.IsEnum) return "0";
             if (type.IsNullable()) return Nullable.GetUnderlyingType(type).GetDefaultValueAsString();
             if (type.IsConcept()) return type.GetConceptValueType().GetDefaultValueAsString();
             
