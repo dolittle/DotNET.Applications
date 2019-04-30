@@ -22,7 +22,7 @@ namespace Dolittle.Build
         /// <inheritdoc/>
         public void Provide(IBindingProviderBuilder builder)
         {
-            builder.Bind<DolittleArtifactTypes>().To(new DolittleArtifactTypes());
+            builder.Bind<ArtifactTypes>().To(new ArtifactTypes());
         }
     }
 }

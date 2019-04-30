@@ -8,7 +8,7 @@ namespace Dolittle.Build.for_ArtifactsDiscoverer
     {
         static IEnumerable<Type> discovered_artifacts;
 
-        Because of = () => discovered_artifacts = new ArtifactsDiscoverer(assembly_context.Object, dolittle_artifact_types, logger).Artifacts;
+        Because of = () => discovered_artifacts = new ArtifactsDiscoverer(assembly_context.Object, dolittle_artifact_types, buildMessages).Artifacts;
 
         It should_not_contain_any_abstract_types = () => discovered_artifacts.ShouldNotContain(abstract_types);
         It should_contain_the_non_abstract_subtypes_of_the_abstract_types = () => discovered_artifacts.ShouldContain(non_abstract_subtypes_of_the_abstract_types);

@@ -16,7 +16,7 @@ namespace Dolittle.Build.Proxies
     [Singleton]
     public class TemplateLoader
     {
-        static Assembly Assembly = typeof(Program).Assembly;
+        static Assembly Assembly = typeof(TemplateLoader).Assembly;
         const string ResourcePrefix = "Build.Proxies.templates.";
         const string CommandTemplateName = "command_template.js";
         const string QueryTemplateName = "query_template.js";

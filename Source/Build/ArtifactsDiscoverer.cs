@@ -18,7 +18,7 @@ namespace Dolittle.Build
     {
         readonly IAssemblyContext _assemblyContext;
         readonly ArtifactType[] _artifactTypes;
-        readonly IBuildToolLogger _logger;
+        readonly IBuildMessages _buildMessages;
 
         /// <summary>
         /// Gets the list of discovered Artifacts
@@ -29,20 +29,18 @@ namespace Dolittle.Build
         /// </summary>
         /// <param name="assemblyContext"></param>
         /// <param name="artifactTypes"></param>
-        /// <param name="logger"></param>
-        public ArtifactsDiscoverer(IAssemblyContext assemblyContext, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
+        /// <param name="buildMessages"></param>
+        public ArtifactsDiscoverer(IAssemblyContext assemblyContext, ArtifactTypes artifactTypes, IBuildMessages buildMessages)
         {
             _assemblyContext = assemblyContext;
-            _artifactTypes = artifactTypes.ArtifactTypes;
-            _logger = logger;
+            _artifactTypes = artifactTypes.ToArray();
+            _buildMessages = buildMessages;
 
             Artifacts = DiscoverArtifacts();
         }
 
         Type[] DiscoverArtifacts()
-        {
-            
-            var startTime = DateTime.UtcNow;
+        {           
             var types = GetArtifactsFromAssembly();
 
             ThrowIfArtifactWithNoModuleOrFeature(types);
@@ -69,14 +67,14 @@ namespace Dolittle.Build
             {
                 if (string.IsNullOrEmpty(type.Namespace) || type.Namespace == "null") 
                 {
-                    _logger.Error($"The artifact '{type.FullName}' is invalid. Artifact has no namespace");
+                    _buildMessages.Error($"The artifact '{type.FullName}' is invalid. Artifact has no namespace");
                     hasInvalidArtifact = true;      
                 } 
                 var numSegments = type.Namespace.Split(".").Count();
                 if (numSegments < 1) 
                 {
                     hasInvalidArtifact = true;
-                    _logger.Error($"The artifact '{type.FullName}' is invalid. An artifact's namespace must consist of at least two segments.");
+                    _buildMessages.Error($"The artifact '{type.FullName}' is invalid. An artifact's namespace must consist of at least two segments.");
                 }
             }
             if (hasInvalidArtifact) throw new InvalidArtifact();

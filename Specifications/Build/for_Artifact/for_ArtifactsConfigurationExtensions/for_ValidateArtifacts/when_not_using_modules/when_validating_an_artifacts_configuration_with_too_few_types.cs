@@ -19,7 +19,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
         };
         static Exception exception_when_validating_with_too_few_types; 
         Because of_validating_configuration_with_too_few_types = () => 
-            exception_when_validating_with_too_few_types = Catch.Exception(() => artifacts_configuration.ValidateArtifacts(bounded_context_config, too_few_types, logger));
+            exception_when_validating_with_too_few_types = Catch.Exception(() => artifacts_configuration.ValidateArtifacts(bounded_context_config, too_few_types, buildMessages));
         
         It should_throw_an_exception = () => exception_when_validating_with_too_few_types.ShouldNotBeNull();
         It should_throw_ArtifactNoLongerInStructure = () => exception_when_validating_with_too_few_types.ShouldBeOfExactType(typeof(ArtifactNoLongerInStructure));

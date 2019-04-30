@@ -19,7 +19,7 @@ namespace Dolittle.Build.Topology
     public class TopologyBuilder
     {
         readonly Type[] _artifactTypes;
-        readonly IBuildToolLogger _logger;
+        readonly IBuildMessages _buildMessages;
 
         BoundedContextTopology _configuration;
 
@@ -28,11 +28,11 @@ namespace Dolittle.Build.Topology
         /// </summary>
         /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
         /// <param name="boundedContextTopology">The <see cref="BoundedContextConfiguration"/> that will be modified, validated and returned from Build</param>
-        /// <param name="logger"></param>
-        public TopologyBuilder(Type[] artifacts, BoundedContextTopology boundedContextTopology, IBuildToolLogger logger)
+        /// <param name="buildMessages"></param>
+        public TopologyBuilder(Type[] artifacts, BoundedContextTopology boundedContextTopology, IBuildMessages buildMessages)
         {
             _artifactTypes = artifacts;
-            _logger = logger;
+            _buildMessages = buildMessages;
             _configuration = boundedContextTopology;
         }
         /// <summary>
@@ -58,7 +58,7 @@ namespace Dolittle.Build.Topology
                 AddPathsToBoundedContextConfiguration(missingPaths);
             }
 
-            _configuration.Topology.ValidateTopology(_configuration.UseModules, _logger);
+            _configuration.Topology.ValidateTopology(_configuration.UseModules, _buildMessages);
 
             return _configuration.Topology;
         }
@@ -195,7 +195,7 @@ namespace Dolittle.Build.Topology
                 var numSegments = path.Split(".").Count();
                 if (_configuration.UseModules && numSegments < 2) 
                 {
-                    _logger.Error($"Artifact with type path (a Module name + Feature names composition) '{path}' is invalid. When DolittleUseModules is True all artifacts has to belong to a Module and a Feature");
+                    _buildMessages.Error($"Artifact with type path (a Module name + Feature names composition) '{path}' is invalid. When DolittleUseModules is True all artifacts has to belong to a Module and a Feature");
                     throw new InvalidArtifact();
                 }
             }

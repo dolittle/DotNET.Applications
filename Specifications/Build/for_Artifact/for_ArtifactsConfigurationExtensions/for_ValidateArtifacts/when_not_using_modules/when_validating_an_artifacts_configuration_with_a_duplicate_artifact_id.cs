@@ -22,7 +22,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
         };
         static Exception exception_result; 
         Because of_validating_with_duplicate_artifact_ids = () => 
-            exception_result = Catch.Exception( () => artifacts_configuration.ValidateArtifacts(bounded_context_config, all_used_types, logger));
+            exception_result = Catch.Exception( () => artifacts_configuration.ValidateArtifacts(bounded_context_config, all_used_types, buildMessages));
         
         It should_throw_exception = () => exception_result.ShouldNotBeNull();
         It should_throw_DuplicateArtifact = () => exception_result.ShouldBeOfExactType(typeof(DuplicateArtifact));

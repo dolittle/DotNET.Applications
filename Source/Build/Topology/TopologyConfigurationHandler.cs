@@ -17,29 +17,29 @@ namespace Dolittle.Build.Topology
     public class TopologyConfigurationHandler
     {
         readonly ITopologyConfigurationManager _configurationManager;
-        readonly IBuildToolLogger _logger;
+        readonly IBuildMessages _buildMessages;
         
         /// <summary>
         /// Instantiates an instance of <see cref="TopologyConfigurationHandler"/> 
         /// </summary>
         /// <param name="configurationManager"></param>
-        /// <param name="logger"></param>
-        public TopologyConfigurationHandler(ITopologyConfigurationManager configurationManager, IBuildToolLogger logger)
+        /// <param name="buildMessages"></param>
+        public TopologyConfigurationHandler(ITopologyConfigurationManager configurationManager, IBuildMessages buildMessages)
         {
             _configurationManager = configurationManager;
-            _logger = logger;
+            _buildMessages = buildMessages;
         }
 
         /// <summary>
         /// Loads the <see cref="BoundedContextConfiguration"/> from file and uses it to build the <see cref="BoundedContextConfiguration"/> using the <see cref="TopologyBuilder"/>
         /// </summary>
         /// <param name="types">The discovered artifact types from the bounded context's assemblies</param>
-        /// <param name="parsingResults"></param>
-        public Applications.Configuration.Topology Build(Type[] types, ArgumentsParsingResult parsingResults)
+        /// <param name="configuration"></param>
+        public Applications.Configuration.Topology Build(Type[] types, PostBuildPerformerConfiguration configuration)
         {
             var topology = _configurationManager.Load();
-            var boundedContextTopology = new BoundedContextTopology(topology, parsingResults.UseModules, parsingResults.NamespaceSegmentsToStrip);
-            return new TopologyBuilder(types, boundedContextTopology, _logger).Build();
+            var boundedContextTopology = new BoundedContextTopology(topology, configuration.UseModules, configuration.NamespaceSegmentsToStrip);
+            return new TopologyBuilder(types, boundedContextTopology, _buildMessages).Build();
         }
 
         internal void Save(Applications.Configuration.Topology topology)

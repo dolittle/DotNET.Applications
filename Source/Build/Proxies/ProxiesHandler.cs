@@ -14,32 +14,32 @@ namespace Dolittle.Build.Proxies
     public class ProxiesHandler
     {
         readonly TemplateLoader _templateLoader;
-        readonly DolittleArtifactTypes _artifactTypes;
-        readonly IBuildToolLogger _logger;
+        readonly ArtifactTypes _artifactTypes;
+        readonly IBuildMessages _buildMessages;
 
         /// <summary>
         /// Instantiates a new instance of <see cref="ProxiesHandler"/>
         /// </summary>
         /// <param name="templateLoader"></param>
         /// <param name="artifactTypes"></param>
-        /// <param name="logger"></param>
-        public ProxiesHandler(TemplateLoader templateLoader, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
+        /// <param name="buildMessages"></param>
+        public ProxiesHandler(TemplateLoader templateLoader, ArtifactTypes artifactTypes, IBuildMessages buildMessages)
         {
             _templateLoader = templateLoader;
             _artifactTypes = artifactTypes;
-            _logger = logger;
+            _buildMessages = buildMessages;
         }
 
         /// <summary>
         /// Creates the proxies given a list of artifacts and configurations
         /// </summary>
         /// <param name="artifacts"></param>
-        /// <param name="parsingResults"></param>
+        /// <param name="configuration"></param>
         /// <param name="artifactsConfiguration"></param>
-        public void CreateProxies(Type[] artifacts, ArgumentsParsingResult parsingResults, ArtifactsConfiguration artifactsConfiguration)
+        public void CreateProxies(Type[] artifacts, PostBuildPerformerConfiguration configuration, ArtifactsConfiguration artifactsConfiguration)
         {
-            var builder = new ProxiesBuilder(_templateLoader, artifacts, _artifactTypes, _logger);
-            builder.GenerateProxies(artifactsConfiguration, parsingResults);
+            var builder = new ProxiesBuilder(_templateLoader, artifacts, _artifactTypes, _buildMessages);
+            builder.GenerateProxies(artifactsConfiguration, configuration);
         }
     }
 }
