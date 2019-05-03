@@ -12,19 +12,19 @@ using Dolittle.Configuration;
 namespace Dolittle.Build
 {
     /// <summary>
-    /// Represents the configuration object for the <see cref="PostBuildPerformer"/>
+    /// Represents the configuration object for the <see cref="BuildTask"/>
     /// </summary>
-    public class PostBuildPerformerConfiguration : IConfigurationObject
+    public class BuildTaskConfiguration : IConfigurationObject
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="PostBuildPerformerConfiguration"/>
+        /// Initializes a new instance of <see cref="BuildTaskConfiguration"/>
         /// </summary>
         /// <param name="boundedContextConfigPath">Path to the 'bounded-context.json' file</param>
         /// <param name="useModules">Wether or not to use modules in topology</param>
         /// <param name="namespaceSegmentsToStrip">Namespace segments to strip</param>
         /// <param name="generateProxies">Wether or not to generate proxies</param>
         /// <param name="proxiesBasePath">Base path for proxy output</param>
-        public PostBuildPerformerConfiguration(
+        public BuildTaskConfiguration(
             string boundedContextConfigPath,
             bool useModules,
             string namespaceSegmentsToStrip,

@@ -53,10 +53,10 @@ namespace Dolittle.Build.Proxies
         /// <param name="type"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static string StripExcludedNamespaceSegments(this Type type, PostBuildPerformerConfiguration configuration)
+        public static string StripExcludedNamespaceSegments(this Type type, BuildTaskConfiguration configuration)
         {
-            var area = new Area(){Value = type.Namespace.Split(".").First()};
-            var segmentList = type.Namespace.Split(".").Skip(1).ToList();
+            var area = new Area(){Value = type.Namespace.Split('.').First()};
+            var segmentList = type.Namespace.Split('.').Skip(1).ToList();
             
             if (configuration.NamespaceSegmentsToStrip.ContainsKey(area))
             {

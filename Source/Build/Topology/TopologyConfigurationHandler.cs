@@ -35,7 +35,7 @@ namespace Dolittle.Build.Topology
         /// </summary>
         /// <param name="types">The discovered artifact types from the bounded context's assemblies</param>
         /// <param name="configuration"></param>
-        public Applications.Configuration.Topology Build(Type[] types, PostBuildPerformerConfiguration configuration)
+        public Applications.Configuration.Topology Build(Type[] types, BuildTaskConfiguration configuration)
         {
             var topology = _configurationManager.Load();
             var boundedContextTopology = new BoundedContextTopology(topology, configuration.UseModules, configuration.NamespaceSegmentsToStrip);

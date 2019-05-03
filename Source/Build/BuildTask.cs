@@ -23,42 +23,42 @@ using Dolittle.Strings;
 namespace Dolittle.Build
 {
     /// <summary>
-    /// Represents a <see cref="ICanPerformPostBuildTasks"/> for doing the work that is needed for the
+    /// Represents a <see cref="ICanPerformBuildTask"/> for doing the work that is needed for the
     /// SDK post build
     /// </summary>
-    public class PostBuildPerformer : ICanPerformPostBuildTasks
+    public class BuildTask : ICanPerformBuildTask
     {
-        private readonly PostBuildPerformerConfiguration _configuration;
-        private readonly IBoundedContextLoader _boundedContextLoader;
-        private readonly ArtifactTypes _artifactTypes;
-        private readonly IBuildMessages _buildMessages;
+        readonly BuildTaskConfiguration _configuration;
+        readonly IBoundedContextLoader _boundedContextLoader;
+        readonly ArtifactTypes _artifactTypes;
+        readonly IBuildMessages _buildMessages;
         readonly TopologyConfigurationHandler _topologyConfigurationHandler;
         readonly ArtifactsConfigurationHandler _artifactsConfigurationHandler;
         readonly ProxiesHandler _proxiesHandler;
+        readonly BuildTarget _buildTarget;
         ArtifactsDiscoverer _artifactsDiscoverer;
         EventProcessorDiscoverer _eventProcessorDiscoverer;
-        private readonly BuildConfiguration _buildConfiguration;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="PostBuildPerformer"/>
+        /// Initializes a new instance of <see cref="BuildTask"/>
         /// </summary>
-        /// <param name="buildConfiguration"></param>
-        /// <param name="configuration"></param>
-        /// <param name="boundedContextLoader"></param>
-        /// <param name="artifactTypes"></param>
-        /// <param name="buildMessages"></param>
-        /// <param name="topologyConfigurationHandler"></param>
-        /// <param name="artifactsConfigurationHandler"></param>
-        /// <param name="proxiesHandler"></param>
-        public PostBuildPerformer(
-            BuildConfiguration buildConfiguration,
-            PostBuildPerformerConfiguration configuration,
+        /// <param name="buildTarget">Current <see cref="BuildTarget"/></param>
+        /// <param name="configuration">Current <see cref="BuildTaskConfiguration"/></param>
+        /// <param name="boundedContextLoader"><see cref="IBoundedContextLoader"/> for loading bounded-context.json</param>
+        /// <param name="artifactTypes">Known <see cref="ArtifactTypes"/></param>
+        /// <param name="topologyConfigurationHandler"><see cref="TopologyConfigurationHandler"/> for handling topology configuration</param>
+        /// <param name="artifactsConfigurationHandler"><see cref="ArtifactsConfigurationHandler"/> for handling artifacts configuration</param>
+        /// <param name="proxiesHandler"><see cref="ProxiesHandler"/> for dealing with proxies </param>
+        /// <param name="buildMessages"><see cref="IBuildMessages"/> for build messages</param>
+        public BuildTask(
+            BuildTarget buildTarget,
+            BuildTaskConfiguration configuration,
             IBoundedContextLoader boundedContextLoader,
             ArtifactTypes artifactTypes,
-            IBuildMessages buildMessages,
             TopologyConfigurationHandler topologyConfigurationHandler,
             ArtifactsConfigurationHandler artifactsConfigurationHandler,
-            ProxiesHandler proxiesHandler)
+            ProxiesHandler proxiesHandler,
+            IBuildMessages buildMessages)
         {
             _configuration = configuration;
             _boundedContextLoader = boundedContextLoader;
@@ -67,19 +67,18 @@ namespace Dolittle.Build
             _topologyConfigurationHandler = topologyConfigurationHandler;
             _artifactsConfigurationHandler = artifactsConfigurationHandler;
             _proxiesHandler = proxiesHandler;
-            _buildConfiguration = buildConfiguration;
+            _buildTarget = buildTarget;
         }
+
+        /// <inheritdoc/>
+        public string Message => "Generating topology, artifacts and proxies";
 
         /// <inheritdoc/>
         public void Perform()
         {
-            var clientAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(_buildConfiguration.TargetAssemblyPath);
             var boundedContextConfig = _boundedContextLoader.Load(_configuration.BoundedContextConfigPath);
-
-            var assemblyContext = AssemblyContext.From(clientAssembly);
-
-            _artifactsDiscoverer = new ArtifactsDiscoverer(assemblyContext, _artifactTypes, _buildMessages);
-            _eventProcessorDiscoverer = new EventProcessorDiscoverer(assemblyContext, _buildMessages);
+            _artifactsDiscoverer = new ArtifactsDiscoverer(_buildTarget.AssemblyContext, _artifactTypes, _buildMessages);
+            _eventProcessorDiscoverer = new EventProcessorDiscoverer(_buildTarget.AssemblyContext, _buildMessages);
 
             var artifacts = _artifactsDiscoverer.Artifacts;
 

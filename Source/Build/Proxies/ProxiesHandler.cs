@@ -36,7 +36,7 @@ namespace Dolittle.Build.Proxies
         /// <param name="artifacts"></param>
         /// <param name="configuration"></param>
         /// <param name="artifactsConfiguration"></param>
-        public void CreateProxies(Type[] artifacts, PostBuildPerformerConfiguration configuration, ArtifactsConfiguration artifactsConfiguration)
+        public void CreateProxies(Type[] artifacts, BuildTaskConfiguration configuration, ArtifactsConfiguration artifactsConfiguration)
         {
             var builder = new ProxiesBuilder(_templateLoader, artifacts, _artifactTypes, _buildMessages);
             builder.GenerateProxies(artifactsConfiguration, configuration);

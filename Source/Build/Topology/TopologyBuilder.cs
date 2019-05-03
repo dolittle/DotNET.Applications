@@ -74,8 +74,8 @@ namespace Dolittle.Build.Topology
 
         string ExtractTypePath(Type type)
         {
-            var area = new Area(){Value = type.Namespace.Split(".").First()};
-            var segmentList = type.Namespace.Split(".").Skip(1).ToList();
+            var area = new Area(){Value = type.Namespace.Split('.').First()};
+            var segmentList = type.Namespace.Split('.').Skip(1).ToList();
             
             if (_configuration.NamespaceSegmentsToStrip.ContainsKey(area))
             {
@@ -192,7 +192,7 @@ namespace Dolittle.Build.Topology
         {
             foreach(var path in typePaths)
             {
-                var numSegments = path.Split(".").Count();
+                var numSegments = path.Split('.').Count();
                 if (_configuration.UseModules && numSegments < 2) 
                 {
                     _buildMessages.Error($"Artifact with type path (a Module name + Feature names composition) '{path}' is invalid. When DolittleUseModules is True all artifacts has to belong to a Module and a Feature");

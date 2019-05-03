@@ -48,7 +48,7 @@ namespace Dolittle.Build.Proxies
         /// <summary>
         /// Generates all proxies for all relevant artifacts and writes them as files in their corresponding feature structure
         /// </summary>
-        public void GenerateProxies(ArtifactsConfiguration artifactsConfiguration, PostBuildPerformerConfiguration configuration)
+        public void GenerateProxies(ArtifactsConfiguration artifactsConfiguration, BuildTaskConfiguration configuration)
         {
             var proxies = new List<Proxy>();
 
@@ -60,10 +60,10 @@ namespace Dolittle.Build.Proxies
 
         void GenerateProxies(
             ArtifactsConfiguration artifactsConfiguration, 
-            PostBuildPerformerConfiguration configuration, 
+            BuildTaskConfiguration configuration, 
             Func<object, string> template, 
             string artifactTypeName, 
-            Func<Type, ArtifactsConfiguration, PostBuildPerformerConfiguration, Func<object, string>, Proxy> ProxyGeneratorFunction,
+            Func<Type, ArtifactsConfiguration, BuildTaskConfiguration, Func<object, string>, Proxy> ProxyGeneratorFunction,
             ref List<Proxy> proxies)
         {
             var artifactType = _artifactTypes.Single(_ => _.TypeName.Equals(artifactTypeName)).Type;
@@ -75,7 +75,7 @@ namespace Dolittle.Build.Proxies
                 if (proxy !=  null) proxies.Add(proxy);
             }
         }
-        Proxy GenerateCommandProxy(Type artifact, ArtifactsConfiguration artifactsConfig, PostBuildPerformerConfiguration configuration, Func<object, string> template)
+        Proxy GenerateCommandProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
         {
             _buildMessages.Trace($"Creating command proxy for {ClrType.FromType(artifact).TypeString}");
 
@@ -92,7 +92,7 @@ namespace Dolittle.Build.Proxies
 
             return CreateProxy(artifact, template(handlebarsCommand), configuration);
         }
-        Proxy GenereateQueryProxy(Type artifact, ArtifactsConfiguration artifactsConfig, PostBuildPerformerConfiguration configuration, Func<object, string> template)
+        Proxy GenereateQueryProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
         {
             _buildMessages.Trace($"Creating query proxy for {ClrType.FromType(artifact).TypeString}");
             var handlebarsQuery = new HandlebarsQuery()
@@ -108,7 +108,7 @@ namespace Dolittle.Build.Proxies
             return CreateProxy(artifact, template(handlebarsQuery), configuration);
             
         }
-        Proxy GenerateReadModelProxy(Type artifact, ArtifactsConfiguration artifactsConfig, PostBuildPerformerConfiguration configuration, Func<object, string> template)
+        Proxy GenerateReadModelProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
         {
             _buildMessages.Trace($"Creating read model proxy for {ClrType.FromType(artifact).TypeString}");
             var artifactId = GetArtifactId(artifact, artifactsConfig);
@@ -127,10 +127,10 @@ namespace Dolittle.Build.Proxies
             
         }
 
-        string GenerateFilePath(Type artifact, PostBuildPerformerConfiguration configuration, string artifactName)
+        string GenerateFilePath(Type artifact, BuildTaskConfiguration configuration, string artifactName)
         {
             var @namespace = artifact.StripExcludedNamespaceSegments(configuration);
-            return Path.Join(configuration.ProxiesBasePath, @namespace.Replace('.', '/'), $"{artifactName}.js");
+            return Path.Combine(configuration.ProxiesBasePath, @namespace.Replace('.', '/'), $"{artifactName}.js");
         }
 
         IEnumerable<ProxyProperty> CreateProxyProperties(PropertyInfo[] properties)
@@ -150,7 +150,7 @@ namespace Dolittle.Build.Proxies
             return proxyProperties;
         }
 
-        Proxy CreateProxy(Type artifact, string fileContent, PostBuildPerformerConfiguration configuration)
+        Proxy CreateProxy(Type artifact, string fileContent, BuildTaskConfiguration configuration)
         {
             var filePath = GenerateFilePath(artifact, configuration, artifact.Name);
 

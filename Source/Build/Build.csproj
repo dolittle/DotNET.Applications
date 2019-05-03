@@ -3,7 +3,7 @@
     <Import Project="../../Build/MSBuild/default.props" />
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <AssemblyName>Dolittle.SDK.Build</AssemblyName>
 
         <NoPackageAnalysis>true</NoPackageAnalysis>

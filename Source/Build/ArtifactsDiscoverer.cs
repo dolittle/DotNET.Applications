@@ -70,7 +70,7 @@ namespace Dolittle.Build
                     _buildMessages.Error($"The artifact '{type.FullName}' is invalid. Artifact has no namespace");
                     hasInvalidArtifact = true;      
                 } 
-                var numSegments = type.Namespace.Split(".").Count();
+                var numSegments = type.Namespace.Split('.').Count();
                 if (numSegments < 1) 
                 {
                     hasInvalidArtifact = true;
