@@ -24,18 +24,21 @@ namespace Dolittle.Build
         /// <param name="namespaceSegmentsToStrip">Namespace segments to strip</param>
         /// <param name="generateProxies">Wether or not to generate proxies</param>
         /// <param name="proxiesBasePath">Base path for proxy output</param>
+        /// <param name="dolittleFolder">Path to the .dolittle folder</param>
         public BuildTaskConfiguration(
             string boundedContextConfigPath,
             bool useModules,
             string namespaceSegmentsToStrip,
             bool generateProxies,
-            string proxiesBasePath)
+            string proxiesBasePath,
+            string dolittleFolder)
         {
             BoundedContextConfigPath = boundedContextConfigPath;
             UseModules = useModules;
             NamespaceSegmentsToStrip = GetNamespacesToStripForAreaFor(namespaceSegmentsToStrip);
             GenerateProxies = generateProxies;
             ProxiesBasePath = proxiesBasePath;
+            DolittleFolder = dolittleFolder;
         }
 
         /// <summary>
@@ -62,6 +65,11 @@ namespace Dolittle.Build
         /// Gets the base path for proxy generation for output
         /// </summary>
         public string ProxiesBasePath {  get; }
+
+        /// <summary>
+        /// Gets the path to the .dolittle folder
+        /// </summary>
+        public string DolittleFolder { get; }
 
 
         Dictionary<Area, IEnumerable<string>> GetNamespacesToStripForAreaFor(string value)

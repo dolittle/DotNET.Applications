@@ -19,10 +19,7 @@ namespace Dolittle.Build.Topology
     [Singleton]
     public class TopologyConfigurationManager : ITopologyConfigurationManager
     {
-        readonly static string _path = Path.Combine(".dolittle", "topology.json");
         readonly ISerializer _serializer;
-        readonly ILogger _logger;
-
         readonly ISerializationOptions _serializationOptions = SerializationOptions.Custom(callback:
             serializer =>
             {
@@ -30,15 +27,19 @@ namespace Dolittle.Build.Topology
                 serializer.Formatting = Formatting.Indented;
             }
         );
+        readonly string _path;
+
         /// <summary>
         /// Initializes a new instance of <see cref="TopologyConfigurationManager"/>
         /// </summary>
         /// <param name="serializer"><see cref="ISerializer"/> to use for working with configuration as JSON</param>
-        /// <param name="logger"></param>
-        public TopologyConfigurationManager(ISerializer serializer, ILogger logger)
+        /// <param name="buildTaskConfiguration">Current <see cref="BuildTaskConfiguration"/></param>
+        public TopologyConfigurationManager(
+            ISerializer serializer,
+            BuildTaskConfiguration buildTaskConfiguration)
         {
             _serializer = serializer;
-            _logger = logger;
+            _path = Path.Combine(buildTaskConfiguration.DolittleFolder, "topology.json");
         }
 
         /// <inheritdoc/>
