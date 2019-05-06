@@ -10,9 +10,9 @@
     </ItemGroup>
     
     <ItemGroup>
-        <PackageReference Include="Dolittle.Runtime.Commands" Version="2.*" />
-        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="2.*" />
-        <PackageReference Include="Dolittle.Runtime.Events" Version="2.*" />
+        <PackageReference Include="Dolittle.Runtime.Commands" Version="3.*" />
+        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="3.*" />
+        <PackageReference Include="Dolittle.Runtime.Events" Version="3.*" />
     </ItemGroup>
 
    

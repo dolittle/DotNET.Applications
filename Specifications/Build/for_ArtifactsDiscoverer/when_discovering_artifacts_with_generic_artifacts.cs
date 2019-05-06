@@ -8,7 +8,7 @@ namespace Dolittle.Build.for_ArtifactsDiscoverer
     {
         static IEnumerable<Type> discovered_artifacts;
 
-        Because of = () => discovered_artifacts = new ArtifactsDiscoverer(assemvly_context.Object, dolittle_artifact_types, buildMessages).Artifacts;
+        Because of = () => discovered_artifacts = new ArtifactsDiscoverer(assemvly_context.Object, dolittle_artifact_types, build_messages).Artifacts;
 
         It should_not_contain_any_generic_types = () => discovered_artifacts.ShouldNotContain(generic_types);
         It should_contain_the_non_generic_subtypes_of_the_generic_types = () => discovered_artifacts.ShouldContain(non_generic_subtypes_of_the_generic_types);

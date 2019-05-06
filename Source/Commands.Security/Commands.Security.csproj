@@ -6,9 +6,9 @@
         <AssemblyName>Dolittle.SDK.Commands.Security</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Dolittle.DependencyInversion" Version="2.*" />
-        <PackageReference Include="Dolittle.Runtime.Commands.Security" Version="2.*" />
-        <PackageReference Include="Dolittle.Runtime.Commands" Version="2.*" />
+        <PackageReference Include="Dolittle.DependencyInversion" Version="3.*" />
+        <PackageReference Include="Dolittle.Runtime.Commands.Security" Version="3.*" />
+        <PackageReference Include="Dolittle.Runtime.Commands" Version="3.*" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Commands.Handling\Commands.Handling.csproj" />

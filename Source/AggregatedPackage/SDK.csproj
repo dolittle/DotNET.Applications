@@ -10,13 +10,13 @@
         <ProjectReference Include="../**/*.csproj" Exclude="../AggregatedPackage/SDK.csproj;../Build/Build.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Dolittle.Serialization.Json" Version="2.*" />
-        <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="2.*" />
-        <PackageReference Include="Dolittle.Concepts.Serialization.Protobuf" Version="2.*" />
-        <PackageReference Include="Dolittle.Configuration.Files" Version="2.*" />
-        <PackageReference Include="Dolittle.Runtime.Queries.Coordination" Version="2.*" />
-        <PackageReference Include="Dolittle.DependencyInversion.Booting" Version="2.*" />
-        <PackageReference Include="Dolittle.ResourceTypes.Configuration" Version="2.*" />
+        <PackageReference Include="Dolittle.Serialization.Json" Version="3.*" />
+        <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="3.*" />
+        <PackageReference Include="Dolittle.Concepts.Serialization.Protobuf" Version="3.*" />
+        <PackageReference Include="Dolittle.Configuration.Files" Version="3.*" />
+        <PackageReference Include="Dolittle.Runtime.Queries.Coordination" Version="3.*" />
+        <PackageReference Include="Dolittle.DependencyInversion.Booting" Version="3.*" />
+        <PackageReference Include="Dolittle.ResourceTypes.Configuration" Version="3.*" />
     </ItemGroup>
 </Project>
 

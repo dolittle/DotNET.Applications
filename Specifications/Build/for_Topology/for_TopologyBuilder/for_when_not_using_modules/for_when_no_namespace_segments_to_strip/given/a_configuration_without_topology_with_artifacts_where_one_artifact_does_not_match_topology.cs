@@ -17,7 +17,7 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_not_
                 new Dictionary<Feature,FeatureDefinition>()
             ), false, new Dictionary<Area, IEnumerable<string>>());
 
-        protected static readonly TopologyBuilder topology_builder = new TopologyBuilder(artifacts, configuration, buildMessages);
+        protected static readonly TopologyBuilder topology_builder = new TopologyBuilder(artifacts, configuration, build_messages);
         
     }
 }
