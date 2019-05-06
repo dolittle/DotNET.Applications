@@ -9,7 +9,7 @@ using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
 using Dolittle.Build.Topology;
 
-namespace Dolittle.Build.Artifact
+namespace Dolittle.Build.Artifacts
 {
     /// <summary>
     /// Extensions for <see cref="BoundedContextTopology"/> that's specific for the Build.Artifact namespace
@@ -51,8 +51,8 @@ namespace Dolittle.Build.Artifact
         /// </summary>
         public static KeyValuePair<Feature, FeatureDefinition> FindMatchingFeature(this BoundedContextTopology boundedContextConfiguration, string @namespace, List<string> nonMatchingArtifacts)
         {
-            var area = new Area(){Value = @namespace.Split(".").First()};
-            var segments = @namespace.Split(".").Skip(1).ToArray();
+            var area = new Area(){Value = @namespace.Split('.').First()};
+            var segments = @namespace.Split('.').Skip(1).ToArray();
             
             if (boundedContextConfiguration.NamespaceSegmentsToStrip.ContainsKey(area))
             {

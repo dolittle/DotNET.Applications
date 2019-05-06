@@ -23,7 +23,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactConfigurationBuilder.
         static ArtifactsConfigurationBuilder artifacts_configuration_builder_with_a_non_matching_type;
         static Exception result_exception;
         
-        Establish context = () => artifacts_configuration_builder_with_a_non_matching_type = new ArtifactsConfigurationBuilder(types_with_a_non_matching_type.ToArray(), artifacts_configuration, artifact_types, logger);
+        Establish context = () => artifacts_configuration_builder_with_a_non_matching_type = new ArtifactsConfigurationBuilder(types_with_a_non_matching_type.ToArray(), artifacts_configuration, artifact_types, buildMessages);
         
         Because of_building_with_a_type_not_matching_structure = () => result_exception = Catch.Exception( () => artifacts_configuration_builder_with_a_non_matching_type.Build(bounded_context_config));
 

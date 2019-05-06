@@ -26,7 +26,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactConfigurationBuilder.
         
         static ArtifactsConfiguration result_configuration;
         
-        Establish context = () => artifacts_configuration_builder_with_all_used_types = new ArtifactsConfigurationBuilder(all_used_types.ToArray(), artifacts_configuration, artifact_types, logger);
+        Establish context = () => artifacts_configuration_builder_with_all_used_types = new ArtifactsConfigurationBuilder(all_used_types.ToArray(), artifacts_configuration, artifact_types, buildMessages);
         
         
         Because of_building_with_all_used_types = () => result_configuration = artifacts_configuration_builder_with_all_used_types.Build(bounded_context_config);

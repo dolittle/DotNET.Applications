@@ -1,0 +1,13 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup>
+        <DolittleBuildPlugin Include="Dolittle.Build.BuildTask">
+            <Assembly>$(MSBuildThisFileDirectory)../tasks/netstandard2.0/publish/Dolittle.SDK.Build.dll</Assembly>
+            <BoundedContextConfigPath>$(DolittleBoundedContextConfigPath)</BoundedContextConfigPath>
+            <UseModules>$(DolittleUseModules)</UseModules>
+            <NamespaceSegmentsToStrip>$(DolittleNamespaceSegmentsToStrip)</NamespaceSegmentsToStrip>
+            <GenerateProxies>$(DolittleGenerateProxies)</GenerateProxies>
+            <ProxiesBasePath>$(DolittleProxiesBasePath)</ProxiesBasePath>
+            <DolittleFolder>$(DolittleFolder)</DolittleFolder>
+        </DolittleBuildPlugin>
+    </ItemGroup>
+</Project>  

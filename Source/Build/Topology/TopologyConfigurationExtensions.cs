@@ -55,12 +55,12 @@ namespace Dolittle.Build.Topology
         /// <summary>
         /// Validates the <see cref="Applications.Configuration.Topology"/>
         /// </summary>
-        public static void ValidateTopology(this Applications.Configuration.Topology topology, bool useModules, IBuildToolLogger logger)
+        public static void ValidateTopology(this Applications.Configuration.Topology topology, bool useModules, IBuildMessages buildMessages)
         {
-            ThrowIfDuplicateId(topology, useModules, logger);
+            ThrowIfDuplicateId(topology, useModules, buildMessages);
         }
 
-        static void ThrowIfDuplicateId(Applications.Configuration.Topology topology, bool useModules, IBuildToolLogger logger)
+        static void ThrowIfDuplicateId(Applications.Configuration.Topology topology, bool useModules, IBuildMessages buildMessages)
         {
             var idMap = new Dictionary<Guid, string>();
             bool hasDuplicateId = false;
@@ -74,7 +74,7 @@ namespace Dolittle.Build.Topology
                         hasDuplicateId = true;
                         var name = idMap[module.Key];
 
-                        logger.Error(
+                        buildMessages.Error(
                             $"Duplicate id found in bounded-context topology.\n" +
                             $"The id: '{module.Key.Value}' is already occupied by the Module/Feature: '{name}' ");
                     }
@@ -82,12 +82,12 @@ namespace Dolittle.Build.Topology
                     {
                         idMap.Add(module.Key, module.Value.Name);
                     }
-                    ThrowIfDuplicateId(module.Value.Features, ref idMap, ref hasDuplicateId, logger);
+                    ThrowIfDuplicateId(module.Value.Features, ref idMap, ref hasDuplicateId, buildMessages);
                 }
             }
             else 
             {
-                ThrowIfDuplicateId(topology.Features, ref idMap, ref hasDuplicateId, logger);
+                ThrowIfDuplicateId(topology.Features, ref idMap, ref hasDuplicateId, buildMessages);
             }
 
             if (hasDuplicateId)
@@ -95,7 +95,7 @@ namespace Dolittle.Build.Topology
                 throw new InvalidTopology("Bounded context topology has one or more Features/Modules with the same Id");
             }
         }
-        static void ThrowIfDuplicateId(IDictionary<Feature,FeatureDefinition> features, ref Dictionary<Guid, string> idMap, ref bool hasDuplicateId, IBuildToolLogger logger)
+        static void ThrowIfDuplicateId(IDictionary<Feature,FeatureDefinition> features, ref Dictionary<Guid, string> idMap, ref bool hasDuplicateId, IBuildMessages buildMessages)
         {
             foreach (var feature in features)
             {
@@ -104,7 +104,7 @@ namespace Dolittle.Build.Topology
                     hasDuplicateId = true;
                     var name = idMap[feature.Key];
                     
-                    logger.Error(
+                    buildMessages.Error(
                         $"Duplicate id found in bounded-context topology.\n" +
                         $"The id: '{feature.Key.Value}' is already occupied by the Module/Feature: '{name}' ");
                 }
@@ -112,7 +112,7 @@ namespace Dolittle.Build.Topology
                 {
                     idMap.Add(feature.Key, feature.Value.Name);
                 }
-                ThrowIfDuplicateId(feature.Value.SubFeatures, ref idMap, ref hasDuplicateId, logger);
+                ThrowIfDuplicateId(feature.Value.SubFeatures, ref idMap, ref hasDuplicateId, buildMessages);
             }
         }
     }

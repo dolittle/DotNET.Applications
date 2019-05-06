@@ -5,7 +5,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Dolittle.Build.Artifact
+namespace Dolittle.Build.Artifacts
 {
     /// <summary>
     /// 

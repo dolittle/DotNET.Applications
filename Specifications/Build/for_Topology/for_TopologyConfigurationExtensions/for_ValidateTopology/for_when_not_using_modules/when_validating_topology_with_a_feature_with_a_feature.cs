@@ -31,7 +31,7 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyConfigurationExtensio
             });
         };
 
-        Because of = () => exception_result = Catch.Exception(() => topology.ValidateTopology(false, logger));
+        Because of = () => exception_result = Catch.Exception(() => topology.ValidateTopology(false, buildMessages));
 
         It should_be_a_valid_topology = () => exception_result.ShouldBeNull();
     }

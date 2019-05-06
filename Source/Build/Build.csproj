@@ -1,24 +1,20 @@
+<!-- Inspired by : https://github.com/madskristensen/BundlerMinifier/blob/e66ec7c85ad6c291fcd5bf55e7f426485e2e2d38/src/BundlerMinifier/BundlerMinifier.csproj -->
 <Project Sdk="Microsoft.NET.Sdk">
     <Import Project="../../Build/MSBuild/default.props" />
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <AssemblyName>Dolittle.SDK.Build</AssemblyName>
+
+        <NoPackageAnalysis>true</NoPackageAnalysis>
+        <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
+        <!--<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>-->
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="4.8.1" />
+        <PackageReference Include="Dolittle.Build.MSBuild" Version="2.*" />
         <PackageReference Include="Handlebars.Net" Version="1.9.5" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.0.4" />
-        <PackageReference Include="Dolittle.Assemblies" Version="2.*" />
-        <PackageReference Include="Dolittle.Booting" Version="2.*" />
-        <PackageReference Include="Dolittle.Configuration.Files" Version="2.*" />
-        <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="2.*" />
-        <PackageReference Include="Dolittle.DependencyInversion.Booting" Version="2.*" />
-        <PackageReference Include="Dolittle.Runtime.Applications.Configuration" Version="2.*" />
+        <!--<PackageReference Update="@(PackageReference)" PrivateAssets="All" />-->
     </ItemGroup>
 
     <ItemGroup>
@@ -34,9 +30,34 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Include="Dolittle.SDK.Build.props" PackagePath="build\" />
+        <Content Include="Dolittle.SDK.Build.targets" PackagePath="build\" />
+    </ItemGroup>
+
+    <ItemGroup>
         <EmbeddedResource Include="Proxies/templates/command_template.js"/>
         <EmbeddedResource Include="Proxies/templates/query_template.js"/>
         <EmbeddedResource Include="Proxies/templates/readmodel_template.js"/>
-    </ItemGroup>
-    
+    </ItemGroup>    
+
+    <!--
+        The include needs to happen after output has been copied to build output folder
+        but before NuGet generates a nuspec. See https://github.com/NuGet/Home/issues/4704.
+        -->
+
+    <Target Name="PublishBuildCLI" BeforeTargets="GenerateNuspec">
+        <Exec Command="dotnet publish -c $(Configuration)" WorkingDirectory="."/>
+    </Target>
+
+    <Target Name="PackTaskDependencies" AfterTargets="PublishBuildCLI">
+        
+        <ItemGroup>
+            <_PackageFiles Include=".\bin\$(Configuration)\*\publish\**\*">
+                <PackagePath>tasks\%(RecursiveDir)</PackagePath>
+                <Visible>false</Visible>
+                <BuildAction>Content</BuildAction>
+            </_PackageFiles>
+        </ItemGroup>
+    </Target>
+
 </Project>

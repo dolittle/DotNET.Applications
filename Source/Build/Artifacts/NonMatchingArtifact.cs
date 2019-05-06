@@ -5,7 +5,7 @@
 using System;
 using Dolittle.Applications.Configuration;
 
-namespace Dolittle.Build.Artifact
+namespace Dolittle.Build.Artifacts
 {
     /// <summary>
     /// Exception that gets thrown when no <see cref="FeatureDefinition"/> matching the artifact's namespace is found in the <see cref="BoundedContextConfiguration"/> topology

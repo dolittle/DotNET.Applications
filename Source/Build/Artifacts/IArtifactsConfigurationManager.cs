@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using Dolittle.Artifacts.Configuration;
 
-namespace Dolittle.Build.Artifact
+namespace Dolittle.Build.Artifacts
 {
     /// <summary>
     /// Defines a system for working with <see cref="ArtifactsConfiguration"/>

@@ -11,7 +11,7 @@ using Dolittle.Artifacts.Configuration;
 using Dolittle.Applications;
 using System.Collections.Generic;
 
-namespace Dolittle.Build.Artifact
+namespace Dolittle.Build.Artifacts
 {
     /// <summary>
     /// Represents an implementation of <see cref="IArtifactsConfigurationManager"/>
@@ -19,7 +19,6 @@ namespace Dolittle.Build.Artifact
     [Singleton]
     public class ArtifactsConfigurationManager : IArtifactsConfigurationManager
     {
-        static string _path = Path.Combine(".dolittle", "artifacts.json");
 
         readonly ISerializationOptions _serializationOptions = SerializationOptions.Custom(callback:
             serializer =>
@@ -30,18 +29,21 @@ namespace Dolittle.Build.Artifact
         );
 
         readonly ISerializer _serializer;
-        readonly ILogger _logger;
+        readonly string _path;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ArtifactsConfigurationManager"/>
         /// </summary>
         /// <param name="serializer"><see cref="ISerializer"/> to use</param>
-        /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        public ArtifactsConfigurationManager(ISerializer serializer, ILogger logger)
+        /// <param name="buildTaskConfiguration">Current <see cref="BuildTaskConfiguration"/></param>
+        public ArtifactsConfigurationManager(
+            ISerializer serializer,
+            BuildTaskConfiguration buildTaskConfiguration)
         {
             _serializer = serializer;
-            _logger = logger;
+            _path = Path.Combine(buildTaskConfiguration.DolittleFolder, "artifacts.json");
         }
+
 
         /// <inheritdoc/>
         public ArtifactsConfiguration Load()

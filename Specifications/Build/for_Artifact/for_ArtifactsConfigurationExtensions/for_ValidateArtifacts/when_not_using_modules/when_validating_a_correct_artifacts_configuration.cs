@@ -22,7 +22,7 @@ namespace Dolittle.Build.Artifact.for_Artifact.for_ArtifactsConfigurationExtensi
         };
         static Exception exception_when_validating_with_all_used_types; 
         Because of_validating_configuration_with_all_used_types = () => 
-            exception_when_validating_with_all_used_types = Catch.Exception( () => artifacts_configuration.ValidateArtifacts(bounded_context_config, all_used_types, logger));
+            exception_when_validating_with_all_used_types = Catch.Exception( () => artifacts_configuration.ValidateArtifacts(bounded_context_config, all_used_types, buildMessages));
         
         It should_not_throw_exception = () => exception_when_validating_with_all_used_types.ShouldBeNull();
     }

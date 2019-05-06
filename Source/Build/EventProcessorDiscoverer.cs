@@ -22,9 +22,21 @@ namespace Dolittle.Build
         readonly static Type EventProcessorCollectionType = typeof(ICanProcessEvents);
         
         readonly IAssemblyContext _assemblyContext;
-        readonly IBuildToolLogger _logger;
+        readonly IBuildMessages _buildMessages;
 
         MethodInfo[] _eventProcessors;
+        
+        /// <summary>
+        /// Instantiates and instance of <see cref="EventProcessorDiscoverer"/>
+        /// </summary>
+        /// <param name="assemblyContext"></param>
+        /// <param name="buildMessages"></param>
+        public EventProcessorDiscoverer(IAssemblyContext assemblyContext, IBuildMessages buildMessages)
+        {
+            _assemblyContext = assemblyContext;
+            _buildMessages = buildMessages;
+        }
+
 
         /// <summary>
         /// Gets all the discovered event processors
@@ -39,17 +51,7 @@ namespace Dolittle.Build
         public IEnumerable<MethodInfo> GetEventProcessors(Type type) => 
             _eventProcessors.Where(_ => _.DeclaringType.Equals(type)) 
             ?? (_eventProcessors = DiscoverEventProcessors()).Where(_ => _.DeclaringType.Equals(type));
-        
-        /// <summary>
-        /// Instantiates and instance of <see cref="EventProcessorDiscoverer"/>
-        /// </summary>
-        /// <param name="assemblyContext"></param>
-        /// <param name="logger"></param>
-        public EventProcessorDiscoverer(IAssemblyContext assemblyContext, IBuildToolLogger logger)
-        {
-            _assemblyContext = assemblyContext;
-            _logger = logger;
-        }
+
         MethodInfo[] DiscoverEventProcessors()
         {
             var types = GetTypesHoldingEventProcessorsFromAssembly();
@@ -69,7 +71,7 @@ namespace Dolittle.Build
                     }
                 });
                 if (! found)
-                    _logger.Warning($"No event processor methods found in Event Processor collection class '{type.FullName}'. All methods that'll process events has to be marked with '{typeof(EventProcessorAttribute).FullName}' giving it a unique Event Processor Id.");
+                    _buildMessages.Warning($"No event processor methods found in Event Processor collection class '{type.FullName}'. All methods that'll process events has to be marked with '{typeof(EventProcessorAttribute).FullName}' giving it a unique Event Processor Id.");
             }
             
             return eventProcessors.ToArray();

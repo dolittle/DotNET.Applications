@@ -12,7 +12,7 @@ using Dolittle.Serialization.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Dolittle.Build.Artifact
+namespace Dolittle.Build.Artifacts
 {
     /// <summary>
     /// Represents a class that basically handles the interations with a <see cref="ArtifactsConfiguration"/>
@@ -20,8 +20,8 @@ namespace Dolittle.Build.Artifact
     public class ArtifactsConfigurationHandler
     {
         readonly IArtifactsConfigurationManager _configurationManager;
-        readonly DolittleArtifactTypes _artifactTypes;
-        readonly IBuildToolLogger _logger;
+        readonly ArtifactTypes _artifactTypes;
+        readonly IBuildMessages _buildMessages;
 
         
         /// <summary>
@@ -29,12 +29,12 @@ namespace Dolittle.Build.Artifact
         /// </summary>
         /// <param name="configurationManager"></param>
         /// <param name="artifactTypes">A list of <see cref="ArtifactType"/> which represents the different artifact types</param>
-        /// <param name="logger"></param>
-        public ArtifactsConfigurationHandler(IArtifactsConfigurationManager configurationManager, DolittleArtifactTypes artifactTypes, IBuildToolLogger logger)
+        /// <param name="buildMessages"></param>
+        public ArtifactsConfigurationHandler(IArtifactsConfigurationManager configurationManager, ArtifactTypes artifactTypes, IBuildMessages buildMessages)
         {
             _configurationManager = configurationManager;
             _artifactTypes = artifactTypes;
-            _logger = logger;
+            _buildMessages = buildMessages;
         }
 
         /// <summary>
@@ -42,12 +42,12 @@ namespace Dolittle.Build.Artifact
         /// </summary>
         /// <param name="types">The discovered artifact types from the bounded context's assemblies</param>
         /// <param name="topology">The <see cref="Applications.Configuration.Topology"/> that's used for building the <see cref="ArtifactsConfiguration"/></param>
-        /// <param name="parsingResults"></param>
-        public ArtifactsConfiguration Build(Type[] types, Applications.Configuration.Topology topology, ArgumentsParsingResult parsingResults)
+        /// <param name="configuration"></param>
+        public ArtifactsConfiguration Build(Type[] types, Applications.Configuration.Topology topology, BuildTaskConfiguration configuration)
         {
             var artifactsConfiguration = _configurationManager.Load();
-            var boundedContextTopology = new BoundedContextTopology(topology, parsingResults.UseModules, parsingResults.NamespaceSegmentsToStrip);
-            return new ArtifactsConfigurationBuilder(types, artifactsConfiguration, _artifactTypes, _logger).Build(boundedContextTopology);
+            var boundedContextTopology = new BoundedContextTopology(topology, configuration.UseModules, configuration.NamespaceSegmentsToStrip);
+            return new ArtifactsConfigurationBuilder(types, artifactsConfiguration, _artifactTypes, _buildMessages).Build(boundedContextTopology);
         }
         internal void Save(ArtifactsConfiguration config)
         {
