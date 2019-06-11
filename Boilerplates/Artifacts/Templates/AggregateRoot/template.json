@@ -1,0 +1,6 @@
+{
+  "name": "Aggregate Root template",
+  "type": "aggregateRoot",
+  "area": "domain",
+  "description": "Creates an Aggregate Root"
+}

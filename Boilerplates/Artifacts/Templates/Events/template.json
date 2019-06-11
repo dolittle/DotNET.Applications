@@ -1,0 +1,6 @@
+{
+   "name": "Event template",
+   "type": "event",
+   "area": "events",
+   "description": "Creates an event"
+}
