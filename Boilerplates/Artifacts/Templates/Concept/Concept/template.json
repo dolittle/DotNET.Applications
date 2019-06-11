@@ -1,0 +1,14 @@
+{
+   "name": "Concept template",
+   "type": "concept",
+   "area": "concepts",
+   "description": "Creates a concept",
+   "dependencies": {
+        "conceptType": {
+            "description": "The type of the Concept",
+            "type": "userInput",
+            "userInputType": "input",
+            "promptMessage": "Concept as (Concept Type):"
+        }
+    }
+}
