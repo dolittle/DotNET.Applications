@@ -4,12 +4,6 @@
     "type": "templates",
     "description": "All artifact templates for C#",
     "dependencies": {
-        "name": {
-            "description": "The name of the artifact",
-            "type": "userInput",
-            "promptMessage": "The name of the artifact",
-            "userInputType": "argument"
-        },
         "namespace": {
             "description": "The namespace of the artifact",
             "type": "discover",
