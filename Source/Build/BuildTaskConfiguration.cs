@@ -37,7 +37,7 @@ namespace Dolittle.Build
             UseModules = useModules;
             NamespaceSegmentsToStrip = GetNamespacesToStripForAreaFor(namespaceSegmentsToStrip);
             GenerateProxies = generateProxies;
-            ProxiesBasePath = proxiesBasePath;
+            ProxiesBasePath = GetProxiesBasePath(proxiesBasePath);
             DolittleFolder = dolittleFolder;
         }
 
@@ -64,13 +64,12 @@ namespace Dolittle.Build
         /// <summary>
         /// Gets the base path for proxy generation for output
         /// </summary>
-        public string ProxiesBasePath {  get; }
+        public IEnumerable<string> ProxiesBasePath {  get; }
 
         /// <summary>
         /// Gets the path to the .dolittle folder
         /// </summary>
         public string DolittleFolder { get; }
-
 
         Dictionary<Area, IEnumerable<string>> GetNamespacesToStripForAreaFor(string value)
         {
@@ -102,6 +101,10 @@ namespace Dolittle.Build
             }
 
             return namespaceSegmentsToStrip;
+        }
+        IEnumerable<string> GetProxiesBasePath(string value)
+        {
+            return value.Split('|');
         }
     }
 }
