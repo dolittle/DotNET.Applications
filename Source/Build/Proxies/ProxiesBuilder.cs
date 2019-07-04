@@ -8,16 +8,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Dolittle.Applications;
-using Dolittle.Applications.Configuration;
 using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Build.Artifacts;
-using Dolittle.Collections;
-using Dolittle.Queries;
 using Dolittle.Reflection;
 using Dolittle.Strings;
-using HandlebarsDotNet;
 
 namespace Dolittle.Build.Proxies
 {
@@ -63,7 +58,7 @@ namespace Dolittle.Build.Proxies
             BuildTaskConfiguration configuration, 
             Func<object, string> template, 
             string artifactTypeName, 
-            Func<Type, ArtifactsConfiguration, BuildTaskConfiguration, Func<object, string>, Proxy> ProxyGeneratorFunction,
+            Func<Type, ArtifactsConfiguration, BuildTaskConfiguration, Func<object, string>, IEnumerable<Proxy>> ProxyGeneratorFunction,
             ref List<Proxy> proxies)
         {
             var artifactType = _artifactTypes.Single(_ => _.TypeName.Equals(artifactTypeName)).Type;
@@ -71,11 +66,11 @@ namespace Dolittle.Build.Proxies
 
             foreach (var artifact in artifacts)
             {
-                var proxy = ProxyGeneratorFunction(artifact, artifactsConfiguration, configuration, template);
-                if (proxy !=  null) proxies.Add(proxy);
+                var newProxies = ProxyGeneratorFunction(artifact, artifactsConfiguration, configuration, template);
+                proxies.AddRange(newProxies);
             }
         }
-        Proxy GenerateCommandProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
+        IEnumerable<Proxy> GenerateCommandProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
         {
             _buildMessages.Trace($"Creating command proxy for {ClrType.FromType(artifact).TypeString}");
 
@@ -89,10 +84,14 @@ namespace Dolittle.Build.Proxies
             
             if (setableProperties.Any())
                 handlebarsCommand.Properties = CreateProxyProperties(setableProperties);
-
-            return CreateProxy(artifact, template(handlebarsCommand), configuration);
+            var proxies = new List<Proxy>();
+            foreach (var path in configuration.ProxiesBasePath)
+            {
+                proxies.Add(CreateProxy(artifact, template(handlebarsCommand), configuration, path));
+            }
+            return proxies;
         }
-        Proxy GenereateQueryProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
+        IEnumerable<Proxy> GenereateQueryProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
         {
             _buildMessages.Trace($"Creating query proxy for {ClrType.FromType(artifact).TypeString}");
             var handlebarsQuery = new HandlebarsQuery()
@@ -104,11 +103,15 @@ namespace Dolittle.Build.Proxies
             
             if (setableProperties.Any())
                 handlebarsQuery.Properties = CreateProxyProperties(setableProperties);
-            
-            return CreateProxy(artifact, template(handlebarsQuery), configuration);
+            var proxies = new List<Proxy>();
+            foreach (var path in configuration.ProxiesBasePath)
+            {
+                proxies.Add(CreateProxy(artifact, template(handlebarsQuery), configuration, path));
+            }
+            return proxies;
             
         }
-        Proxy GenerateReadModelProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
+        IEnumerable<Proxy> GenerateReadModelProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
         {
             _buildMessages.Trace($"Creating read model proxy for {ClrType.FromType(artifact).TypeString}");
             var artifactId = GetArtifactId(artifact, artifactsConfig);
@@ -123,14 +126,19 @@ namespace Dolittle.Build.Proxies
             if (setableProperties.Any())
                 handlebarsReadmodel.Properties = CreateProxyProperties(setableProperties);
             
-            return CreateProxy(artifact, template(handlebarsReadmodel), configuration);
+            var proxies = new List<Proxy>();
+            foreach (var path in configuration.ProxiesBasePath)
+            {
+                proxies.Add(CreateProxy(artifact, template(handlebarsReadmodel), configuration, path));
+            }
+            return proxies;
             
         }
 
-        string GenerateFilePath(Type artifact, BuildTaskConfiguration configuration, string artifactName)
+        string GenerateFilePath(Type artifact, BuildTaskConfiguration configuration, string artifactName, string proxyBasePath)
         {
             var @namespace = artifact.StripExcludedNamespaceSegments(configuration);
-            return Path.Combine(configuration.ProxiesBasePath, @namespace.Replace('.', '/'), $"{artifactName}.js");
+            return Path.Combine(proxyBasePath, @namespace.Replace('.', '/'), $"{artifactName}.js");
         }
 
         IEnumerable<ProxyProperty> CreateProxyProperties(PropertyInfo[] properties)
@@ -150,9 +158,9 @@ namespace Dolittle.Build.Proxies
             return proxyProperties;
         }
 
-        Proxy CreateProxy(Type artifact, string fileContent, BuildTaskConfiguration configuration)
+        Proxy CreateProxy(Type artifact, string fileContent, BuildTaskConfiguration configuration, string proxyBasePath)
         {
-            var filePath = GenerateFilePath(artifact, configuration, artifact.Name);
+            var filePath = GenerateFilePath(artifact, configuration, artifact.Name, proxyBasePath);
 
             return (new Proxy(){Content = fileContent, FullFilePath = filePath});
         }
