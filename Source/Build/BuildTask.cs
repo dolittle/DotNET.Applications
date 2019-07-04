@@ -76,7 +76,6 @@ namespace Dolittle.Build
         /// <inheritdoc/>
         public void Perform()
         {
-            while(!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(100);
             var boundedContextConfig = _boundedContextLoader.Load(_configuration.BoundedContextConfigPath);
             _artifactsDiscoverer = new ArtifactsDiscoverer(_buildTarget.AssemblyContext, _artifactTypes, _buildMessages);
             _eventProcessorDiscoverer = new EventProcessorDiscoverer(_buildTarget.AssemblyContext, _buildMessages);
