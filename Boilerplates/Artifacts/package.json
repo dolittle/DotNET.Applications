@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/boilerplates.artifacts.csharp",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "description": "C# artifact templates for the Dolittle platform",
   "repository": {
     "type": "git",
@@ -8,7 +8,7 @@
   },
   "keywords": ["dolittle", "tooling", "boilerplates", "templates"],
   "dolittle": {
-    "tooling": "6.*"
+    "tooling": "7.*"
   },
   "author": "Dolittle",
   "license": "MIT",
