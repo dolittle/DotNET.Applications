@@ -21,5 +21,4 @@ namespace Dolittle.Client
             return new ClientId { Value = value };
         }
     }
-
 }
