@@ -4,11 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.Loader;
 using Dolittle.Booting;
-using Dolittle.Hosting;
 using Dolittle.Logging;
 using Dolittle.Runtime.Application.Grpc;
+using Dolittle.Services;
 using Google.Protobuf;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
@@ -25,6 +26,7 @@ namespace Dolittle.Client
         readonly ILogger _logger;
         readonly ClientPort _port;
         readonly CallLogger _callLogger;
+        readonly IBoundServices _boundServices;
 
         /// <summary>
         /// Initalizes a new instance of <see cref="BootProcedure"/>
@@ -33,16 +35,19 @@ namespace Dolittle.Client
         /// <param name="port"><see cref="ClientPort"/> to use for runtime to connect back to</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         /// <param name="callLogger"><see cref="CallLogger"/> for logging calls</param>
+        /// <param name="boundServices"></param>
         public BootProcedure(
             ClientId clientId,
             ClientPort port,
             ILogger logger,
-            CallLogger callLogger)
+            CallLogger callLogger,
+            IBoundServices boundServices)
         {
             _clientId = clientId;
             _logger = logger;
             _port = port;
             _callLogger = callLogger;
+            _boundServices = boundServices;
         }
 
         /// <inheritdoc/>
@@ -53,21 +58,28 @@ namespace Dolittle.Client
         {
             _logger.Information($"Connect client '{_clientId}'");
 
-            var channel = new Channel("0.0.0.0", 50053, ChannelCredentials.Insecure);
+            var channel = new Channel("0.0.0.0", 50052, ChannelCredentials.Insecure);
             channel.Intercept(_callLogger);
             var client = new ClientClient(channel);
-            var clientInfo = new ClientInfo();
-            clientInfo.ClientId = new System.Protobuf.guid();
-            clientInfo.ClientId.Value = ByteString.CopyFrom(_clientId.Value.ToByteArray());
-            clientInfo.Host = Environment.MachineName;
-            clientInfo.Port = _port;
-            clientInfo.Runtime = $".NET Core : {Environment.Version} - {Environment.OSVersion} - {Environment.ProcessorCount} cores";
+            var clientId = new System.Protobuf.guid();
+            clientId.Value = ByteString.CopyFrom(_clientId.Value.ToByteArray());
+            var clientInfo = new ClientInfo
+            {
+                ClientId = clientId,
+                Host = Environment.MachineName,
+                Port = _port,
+                Runtime = $".NET Core : {Environment.Version} - {Environment.OSVersion} - {Environment.ProcessorCount} cores"
+            };
+
+            if (_boundServices.HasFor(ApplicationClientServiceType.ServiceType))
+            {
+                var boundServices = _boundServices.GetFor(ApplicationClientServiceType.ServiceType);
+                clientInfo.ServicesByName.Add(boundServices.Select(_ => _.Descriptor.FullName));
+
+            }
 
             void Disconnect()
             {
-                channel = new Channel("0.0.0.0", 50053, ChannelCredentials.Insecure);
-                client = new ClientClient(channel);
-
                 System.Console.WriteLine($"Disconnect client '{_clientId}'");
                 _logger.Information($"Disconnect client '{_clientId}'");
                 try
