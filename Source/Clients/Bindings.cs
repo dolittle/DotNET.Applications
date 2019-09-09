@@ -13,25 +13,41 @@ namespace Dolittle.Clients
     /// </summary>
     public class Bindings : ICanProvideBindings
     {
+        readonly GetContainer _getContainer;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="getContainer"></param>
+        public Bindings(GetContainer getContainer)
+        {
+            _getContainer = getContainer;
+        }
+
         /// <inheritdoc/>
         public void Provide(IBindingProviderBuilder builder)
         {
-           var keepAliveTime = new ChannelOption("grpc.keepalive_time", 1000);
-            var keepAliveTimeout = new ChannelOption("grpc.keepalive_timeout_ms", 500);
-            var keepAliveWithoutCalls = new ChannelOption("grpc.keepalive_permit_without_calls", 1);
-
-            var channel = new Channel("0.0.0.0", 50053, ChannelCredentials.Insecure, new []
+            builder.Bind<Client>().To(() =>
             {
-                keepAliveTime,
-                keepAliveTimeout,
-                keepAliveWithoutCalls
-            });
+                var keepAliveTime = new ChannelOption("grpc.keepalive_time", 1000);
+                var keepAliveTimeout = new ChannelOption("grpc.keepalive_timeout_ms", 500);
+                var keepAliveWithoutCalls = new ChannelOption("grpc.keepalive_permit_without_calls", 1);
 
-            builder.Bind<Client>().To(new Client(
-                Guid.NewGuid(),
-                PreConfiguration.ClientPort,
-                channel
-            )).Singleton();
+                var configuration = _getContainer().Get<ClientConfiguration>();
+
+                var channel = new Channel(configuration.Host, configuration.Port, ChannelCredentials.Insecure, new []
+                {
+                    keepAliveTime,
+                    keepAliveTimeout,
+                    keepAliveWithoutCalls
+                });
+
+                return new Client(
+                    Guid.NewGuid(),
+                    PreConfiguration.ClientPort,
+                    channel
+                );
+            }).Singleton();
         }
     }
 }
