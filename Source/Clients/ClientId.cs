@@ -5,7 +5,7 @@
 using System;
 using Dolittle.Concepts;
 
-namespace Dolittle.Client
+namespace Dolittle.Clients
 {
     /// <summary>
     /// The representation of a client by its identifier

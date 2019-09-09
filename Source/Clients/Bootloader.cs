@@ -7,7 +7,7 @@ using Dolittle.Booting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Dolittle.Client
+namespace Dolittle.Clients
 {
     /// <summary>
     /// Represents a bootloader for booting a server

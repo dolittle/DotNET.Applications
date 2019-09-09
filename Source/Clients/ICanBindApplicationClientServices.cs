@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using Dolittle.Services;
 
-namespace Dolittle.Client
+namespace Dolittle.Clients
 {
     /// <summary>
     /// Defines a system that can bind gRPC services for application client purposes

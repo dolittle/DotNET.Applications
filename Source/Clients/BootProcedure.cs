@@ -11,42 +11,32 @@ using Dolittle.Logging;
 using Dolittle.Runtime.Application.Grpc;
 using Dolittle.Services;
 using Google.Protobuf;
-using Grpc.Core;
-using Grpc.Core.Interceptors;
 using static Dolittle.Runtime.Application.Grpc.Client;
 
-namespace Dolittle.Client
+namespace Dolittle.Clients
 {
     /// <summary>
     /// Performs boot procedures related to client
     /// </summary>
     public class BootProcedure : ICanPerformBootProcedure
     {
-        readonly ClientId _clientId;
+        readonly Client _client;
         readonly ILogger _logger;
-        readonly ClientPort _port;
-        readonly CallLogger _callLogger;
         readonly IBoundServices _boundServices;
 
         /// <summary>
         /// Initalizes a new instance of <see cref="BootProcedure"/>
         /// </summary>
-        /// <param name="clientId"><see cref="ClientId"/> representing the running client</param>
-        /// <param name="port"><see cref="ClientPort"/> to use for runtime to connect back to</param>
+        /// <param name="client"><see cref="Client"/> representing the running client</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        /// <param name="callLogger"><see cref="CallLogger"/> for logging calls</param>
         /// <param name="boundServices"></param>
         public BootProcedure(
-            ClientId clientId,
-            ClientPort port,
+            Client client,
             ILogger logger,
-            CallLogger callLogger,
             IBoundServices boundServices)
         {
-            _clientId = clientId;
+            _client = client;
             _logger = logger;
-            _port = port;
-            _callLogger = callLogger;
             _boundServices = boundServices;
         }
 
@@ -55,19 +45,18 @@ namespace Dolittle.Client
 
         /// <inheritdoc/>
         public void Perform()
-        {
-            _logger.Information($"Connect client '{_clientId}'");
-
-            var channel = new Channel("0.0.0.0", 50052, ChannelCredentials.Insecure);
-            channel.Intercept(_callLogger);
-            var client = new ClientClient(channel);
-            var clientId = new System.Protobuf.guid();
-            clientId.Value = ByteString.CopyFrom(_clientId.Value.ToByteArray());
+        {           
+            _logger.Information($"Connect client '{_client.Id}'");
+            var client = new ClientClient(_client.RuntimeChannel);
+            var clientId = new System.Protobuf.guid
+            {
+                Value = ByteString.CopyFrom(_client.Id.Value.ToByteArray())
+            };
             var clientInfo = new ClientInfo
             {
                 ClientId = clientId,
                 Host = Environment.MachineName,
-                Port = _port,
+                Port = _client.Port,
                 Runtime = $".NET Core : {Environment.Version} - {Environment.OSVersion} - {Environment.ProcessorCount} cores"
             };
 
@@ -75,21 +64,20 @@ namespace Dolittle.Client
             {
                 var boundServices = _boundServices.GetFor(ApplicationClientServiceType.ServiceType);
                 clientInfo.ServicesByName.Add(boundServices.Select(_ => _.Descriptor.FullName));
-
             }
 
             void Disconnect()
             {
-                System.Console.WriteLine($"Disconnect client '{_clientId}'");
-                _logger.Information($"Disconnect client '{_clientId}'");
+                System.Console.WriteLine($"Disconnect client '{_client.Id}'");
+                _logger.Information($"Disconnect client '{_client.Id}'");
                 try
                 {
                     client.Disconnect(clientInfo.ClientId);
-                    System.Console.WriteLine($"Client '{_clientId}' disconnected");
+                    System.Console.WriteLine($"Client '{_client.Id}' disconnected");
                 }
                 catch (Exception ex)
                 {
-                    System.Console.WriteLine($"Couldn't disconnect client '{_clientId}' - {ex.Message}");
+                    System.Console.WriteLine($"Couldn't disconnect client '{_client.Id}' - {ex.Message}");
                 }
             }
 

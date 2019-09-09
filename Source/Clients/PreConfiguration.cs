@@ -2,28 +2,33 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using System;
+
 using System.Net;
 using System.Net.Sockets;
-using Dolittle.DependencyInversion;
+using Dolittle.Booting;
+using Dolittle.Services;
 
-namespace Dolittle.Client
+namespace Dolittle.Clients
 {
     /// <summary>
-    /// Provides bindings related to client
+    /// 
     /// </summary>
-    public class Bindings : ICanProvideBindings
+    public class PreConfiguration : ICanRunBeforeBootStage<NoSettings>
     {
-        /// <inheritdoc/>
-        public void Provide(IBindingProviderBuilder builder)
-        {
-            builder.Bind<ClientId>().To(Guid.NewGuid()).Singleton();
+        internal static ClientPort ClientPort;
 
+        /// <inheritdoc/>
+        public BootStage BootStage => BootStage.Configuration;
+
+        /// <inheritdoc/>
+        public void Perform(NoSettings settings, IBootStageBuilder builder)
+        {
             var listener = new TcpListener(IPAddress.Loopback, 0);
             listener.Start();
-            uint port = (uint)((IPEndPoint) listener.LocalEndpoint).Port;
+            ClientPort = ((IPEndPoint) listener.LocalEndpoint).Port;
             listener.Stop();
-            builder.Bind<ClientPort>().To(port).Singleton();
+
+            EndpointConfigurationDefaultProvider.DefaultPrivatePort = ClientPort;
         }
     }
 }

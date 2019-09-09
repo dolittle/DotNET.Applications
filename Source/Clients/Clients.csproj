@@ -3,7 +3,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>Dolittle.SDK.Client</AssemblyName>
+        <AssemblyName>Dolittle.SDK.Clients</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,6 +16,7 @@
         <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="3.*" />
         <PackageReference Include="Dolittle.DependencyInversion.Booting" Version="3.*" />
         <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="3.*" />
+        <PackageReference Include="Dolittle.Protobuf" Version="3.*"/>
         <PackageReference Include="Dolittle.Resilience" Version="3.*" />
         <PackageReference Include="Dolittle.Runtime.Application.Grpc" Version="3.*"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />

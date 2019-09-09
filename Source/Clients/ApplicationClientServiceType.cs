@@ -5,7 +5,7 @@
 using System;
 using Dolittle.Services;
 
-namespace Dolittle.Client
+namespace Dolittle.Clients
 {
     /// <summary>
     /// Represents a <see cref="IRepresentServiceType">host type</see> that is for application client communication
@@ -39,6 +39,6 @@ namespace Dolittle.Client
         public Type BindingInterface => typeof(ICanBindApplicationClientServices);
 
         /// <inheritdoc/>
-        public EndpointVisibility Visibility => EndpointVisibility.Public;
+        public EndpointVisibility Visibility => EndpointVisibility.Private;
     }
 }
