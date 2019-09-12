@@ -32,7 +32,7 @@ namespace Dolittle.Clients
                 if (_instance == null)
                 {
                     var type = typeof(T);                    
-                    var constructor = type.GetConstructor(new Type[]  {  typeof(Channel) });
+                    var constructor = type.GetConstructor(new Type[]  {  typeof(ChannelBase) });
                     _instance = constructor.Invoke(new [] { _client.RuntimeChannel }) as T;
                 }
                 return _instance;

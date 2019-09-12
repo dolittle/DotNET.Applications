@@ -4,10 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using Dolittle.DependencyInversion;
+using Dolittle.Resilience;
 using Grpc.Core;
 
 namespace Dolittle.Clients
 {
+
     /// <summary>
     /// Provides bindings related to client
     /// </summary>
@@ -34,6 +36,7 @@ namespace Dolittle.Clients
                 var keepAliveWithoutCalls = new ChannelOption("grpc.keepalive_permit_without_calls", 1);
 
                 var configuration = _getContainer().Get<ClientConfiguration>();
+                var policy = _getContainer().Get<IPolicyFor<ResilientCallInvoker>>();
 
                 var channel = new Channel(configuration.Host, configuration.Port, ChannelCredentials.Insecure, new []
                 {

@@ -16,8 +16,8 @@ namespace Dolittle.Clients
         /// </summary>
         /// <param name="id"><see cref="ClientId">Id</see> of the client</param>
         /// <param name="port"><see cref="ClientPort">Port</see> the client is exposed on</param>
-        /// <param name="runtimeChannel"><see cref="Channel"/> used to connect to runtime</param>
-        public Client(ClientId id, ClientPort port, Channel runtimeChannel)
+        /// <param name="runtimeChannel"><see cref="ChannelBase"/> used to connect to runtime</param>
+        public Client(ClientId id, ClientPort port, ChannelBase runtimeChannel)
         {
             Id = id;
             Port = port;
@@ -37,6 +37,6 @@ namespace Dolittle.Clients
         /// <summary>
         /// Gets the <see cref="Channel"/> in which the client uses to connect to the runtime to
         /// </summary>
-        public Channel RuntimeChannel {  get; }
+        public ChannelBase RuntimeChannel {  get; }
     }
 }
