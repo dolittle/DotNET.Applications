@@ -6,6 +6,7 @@ using System;
 using Dolittle.DependencyInversion;
 using Dolittle.Resilience;
 using Grpc.Core;
+using Grpc.Core.Interceptors;
 
 namespace Dolittle.Clients
 {
@@ -45,11 +46,20 @@ namespace Dolittle.Clients
                     keepAliveWithoutCalls
                 });
 
-                return new Client(
-                    Guid.NewGuid(),
+                var clientId = Guid.NewGuid();
+
+                var callInvoker = channel.Intercept(_ => {
+                    _.Add(new Metadata.Entry("clientid", clientId.ToString()));
+                    return _;
+                });
+
+                var client = new Client(
+                    clientId,
                     PreConfiguration.ClientPort,
-                    channel
+                    callInvoker
                 );
+
+                return client;
             }).Singleton();
         }
     }

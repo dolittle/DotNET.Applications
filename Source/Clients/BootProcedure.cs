@@ -3,15 +3,13 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Loader;
 using Dolittle.Booting;
 using Dolittle.Logging;
 using Dolittle.Runtime.Application.Grpc;
 using Dolittle.Services;
 using Google.Protobuf;
-using static Dolittle.Runtime.Application.Grpc.Client;
+using static Dolittle.Runtime.Application.Grpc.Server.Clients;
 
 namespace Dolittle.Clients
 {
@@ -47,7 +45,7 @@ namespace Dolittle.Clients
         public void Perform()
         {           
             _logger.Information($"Connect client '{_client.Id}'");
-            var client = new ClientClient(_client.RuntimeChannel);
+            var client = new ClientsClient(_client.CallInvoker);
             var clientId = new System.Protobuf.guid
             {
                 Value = ByteString.CopyFrom(_client.Id.Value.ToByteArray())
@@ -65,27 +63,6 @@ namespace Dolittle.Clients
                 var boundServices = _boundServices.GetFor(ApplicationClientServiceType.ServiceType);
                 clientInfo.ServicesByName.Add(boundServices.Select(_ => _.Descriptor.FullName));
             }
-
-            void Disconnect()
-            {
-                System.Console.WriteLine($"Disconnect client '{_client.Id}'");
-                _logger.Information($"Disconnect client '{_client.Id}'");
-                try
-                {
-                    client.Disconnect(clientInfo.ClientId);
-                    System.Console.WriteLine($"Client '{_client.Id}' disconnected");
-                }
-                catch (Exception ex)
-                {
-                    System.Console.WriteLine($"Couldn't disconnect client '{_client.Id}' - {ex.Message}");
-                }
-            }
-
-            Process.GetCurrentProcess().Exited += (e, s) => Disconnect();
-            AppDomain.CurrentDomain.DomainUnload += (e, s) => Disconnect();
-            AppDomain.CurrentDomain.ProcessExit += (e, s) => Disconnect();
-            AssemblyLoadContext.Default.Unloading += (e) => Disconnect();
-            Console.CancelKeyPress += (e, s) => Disconnect();
 
             client.Connect(clientInfo);
         }
