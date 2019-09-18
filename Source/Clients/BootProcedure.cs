@@ -65,6 +65,7 @@ namespace Dolittle.Clients
             }
 
             client.Connect(clientInfo);
+            Client.Connected = true;
         }
     }
 }

@@ -12,6 +12,12 @@ namespace Dolittle.Clients
     public class Client
     {
         /// <summary>
+        /// Gets wether or not the application <see cref="Client"/> is connected - useful during booting
+        /// </summary>
+        /// <value></value>
+        public static bool Connected { get; internal set; }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="Client"/>
         /// </summary>
         /// <param name="id"><see cref="ClientId">Id</see> of the client</param>

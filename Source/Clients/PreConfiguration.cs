@@ -11,7 +11,7 @@ using Dolittle.Services;
 namespace Dolittle.Clients
 {
     /// <summary>
-    /// 
+    /// Represents a system that runs before the <see cref="BootStage.Configuration"/> boot stage
     /// </summary>
     public class PreConfiguration : ICanRunBeforeBootStage<NoSettings>
     {
@@ -29,6 +29,13 @@ namespace Dolittle.Clients
             listener.Stop();
 
             EndpointConfigurationDefaultProvider.DefaultPrivatePort = ClientPort;
+
+            listener = new TcpListener(IPAddress.Loopback, 0);
+            listener.Start();
+            var publicPort = ((IPEndPoint) listener.LocalEndpoint).Port;
+            listener.Stop();
+
+            EndpointConfigurationDefaultProvider.DefaultPublicPort = publicPort;
         }
     }
 }
