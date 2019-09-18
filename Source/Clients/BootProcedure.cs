@@ -4,6 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Dolittle.Booting;
 using Dolittle.Logging;
 using Dolittle.Runtime.Application.Grpc;
@@ -43,7 +45,7 @@ namespace Dolittle.Clients
 
         /// <inheritdoc/>
         public void Perform()
-        {           
+        {
             _logger.Information($"Connect client '{_client.Id}'");
             var client = new ClientsClient(_client.CallInvoker);
             var clientId = new System.Protobuf.guid
@@ -64,7 +66,40 @@ namespace Dolittle.Clients
                 clientInfo.ServicesByName.Add(boundServices.Select(_ => _.Descriptor.FullName));
             }
 
-            client.Connect(clientInfo);
+            var streamCall = client.Connect(clientInfo);
+            Task.Run(async() =>
+            {
+                var cancellationTokenSource = new CancellationTokenSource();
+                cancellationTokenSource.Token.ThrowIfCancellationRequested();
+
+                var lastPing = DateTimeOffset.MinValue;
+
+                var timer = new System.Timers.Timer(2000)
+                {
+                    Enabled = true
+                };
+                timer.Elapsed += (s, e) =>
+                {
+                    if( lastPing == DateTimeOffset.MinValue ) return;
+                    var delta = DateTimeOffset.UtcNow.Subtract(lastPing);
+                    if( delta.TotalSeconds > 2 ) cancellationTokenSource.Cancel();
+                };
+                timer.Start();
+
+                try
+                { 
+                    while (await streamCall.ResponseStream.MoveNext(cancellationTokenSource.Token))
+                    {
+                        lastPing = DateTimeOffset.UtcNow;
+                        _logger.Information("Ping from server");
+                    }
+                }
+                finally
+                {
+                    _logger.Information("Server disconnected");
+                }
+            });
+
             Client.Connected = true;
         }
     }
