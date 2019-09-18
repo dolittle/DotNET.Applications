@@ -91,7 +91,6 @@ namespace Dolittle.Clients
                     while (await streamCall.ResponseStream.MoveNext(cancellationTokenSource.Token))
                     {
                         lastPing = DateTimeOffset.UtcNow;
-                        _logger.Information("Ping from server");
                     }
                 }
                 finally
