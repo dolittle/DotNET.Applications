@@ -20,10 +20,7 @@ namespace Dolittle.Clients
         public static async Task Start()
         {
             var hostBuilder = new HostBuilder();
-            hostBuilder.ConfigureLogging(_ =>
-            {
-                _.AddConsole();
-            });
+            hostBuilder.ConfigureLogging(_ => _.AddConsole());
             hostBuilder.UseEnvironment("Development");
             var host = hostBuilder.Build();
             var loggerFactory = host.Services.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
@@ -34,8 +31,7 @@ namespace Dolittle.Clients
                 _.Development();
             }).Start();
 
-            await host.RunAsync();
+            await host.RunAsync().ConfigureAwait(false);
         }
     }
-
 }
