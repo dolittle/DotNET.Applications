@@ -16,7 +16,6 @@ namespace Dolittle.Clients
         /// Initializes a new instance of <see cref="MustInheritFromClientBase"/>
         /// </summary>
         /// <param name="type"></param>
-        /// <returns></returns>
         public MustInheritFromClientBase(Type type) : base($"Type '{type.AssemblyQualifiedName}' does inherit {typeof(ClientBase<>).AssemblyQualifiedName}") {}
     }
 }
