@@ -10,7 +10,6 @@ using Grpc.Core.Interceptors;
 
 namespace Dolittle.Clients
 {
-
     /// <summary>
     /// Provides bindings related to client
     /// </summary>
@@ -19,9 +18,9 @@ namespace Dolittle.Clients
         readonly GetContainer _getContainer;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of <see cref="Bindings"/>
         /// </summary>
-        /// <param name="getContainer"></param>
+        /// <param name="getContainer"><see cref="GetContainer"/> for getting the correct <see cref="IContainer"/>></param>
         public Bindings(GetContainer getContainer)
         {
             _getContainer = getContainer;
