@@ -9,7 +9,7 @@ namespace Dolittle.Clients
     /// <summary>
     /// Defines a system that can bind gRPC services for application client purposes
     /// </summary>
-    public interface ICanBindApplicationClientServices : ICanBindServices
+    public interface ICanBindApplicationServices : ICanBindServices
     {
     }
 }

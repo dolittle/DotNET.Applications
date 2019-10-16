@@ -9,7 +9,7 @@ namespace Dolittle.Clients
     /// <summary>
     /// Defines a system that defines runtime application services
     /// </summary>
-    public interface IDefineApplicationRuntimeServices
+    public interface IDefineRuntimeServices
     {
         /// <summary>
         /// Gets the <see cref="RuntimeServiceDefinition"/> for all exposed services

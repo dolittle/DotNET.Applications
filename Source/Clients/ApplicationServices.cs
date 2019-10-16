@@ -10,15 +10,17 @@ namespace Dolittle.Clients
     /// <summary>
     /// Represents the runtime services having a client representation
     /// </summary>
-    public class ApplicationClientServices : ICanBindApplicationClientServices
+    public class ApplicationServices : ICanBindApplicationServices
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="ApplicationClientServices"/>
+        /// Initializes a new instance of <see cref="ApplicationServices"/>
         /// </summary>
-        public ApplicationClientServices()
+        public ApplicationServices()
         {
-            
         }
+
+        /// <inheritdoc/>
+        public ServiceAspect Aspect => "Client";
 
         /// <inheritdoc/>
         public IEnumerable<Service> BindServices()

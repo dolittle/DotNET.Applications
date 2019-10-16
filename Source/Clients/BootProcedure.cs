@@ -8,10 +8,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dolittle.Booting;
 using Dolittle.Logging;
-using Dolittle.Runtime.Application.Grpc;
+using Dolittle.Applications;
 using Dolittle.Services;
 using Google.Protobuf;
-using static Dolittle.Runtime.Application.Grpc.Server.Clients;
+using static Dolittle.Applications.Runtime.Clients;
 
 namespace Dolittle.Clients
 {
@@ -60,9 +60,9 @@ namespace Dolittle.Clients
                 Runtime = $".NET Core : {Environment.Version} - {Environment.OSVersion} - {Environment.ProcessorCount} cores"
             };
 
-            if (_boundServices.HasFor(ApplicationClientServiceType.ServiceType))
+            if (_boundServices.HasFor(ApplicationServiceType.ServiceType))
             {
-                var boundServices = _boundServices.GetFor(ApplicationClientServiceType.ServiceType);
+                var boundServices = _boundServices.GetFor(ApplicationServiceType.ServiceType);
                 clientInfo.ServicesByName.Add(boundServices.Select(_ => _.Descriptor.FullName));
             }
 

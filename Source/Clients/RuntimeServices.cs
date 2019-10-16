@@ -10,16 +10,16 @@ using Dolittle.Types;
 namespace Dolittle.Clients
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IApplicationRuntimeServices"/>
+    /// Represents an implementation of <see cref="IRuntimeServices"/>
     /// </summary>
     [Singleton]
-    public class ApplicationRuntimeServices : IApplicationRuntimeServices
+    public class RuntimeServices : IRuntimeServices
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="ApplicationRuntimeServices"/>
+        /// Initializes a new instance of <see cref="RuntimeServices"/>
         /// </summary>
-        /// <param name="definers">Instances of <see cref="IDefineApplicationRuntimeServices">definers</see></param>
-        public ApplicationRuntimeServices(IInstancesOf<IDefineApplicationRuntimeServices> definers)
+        /// <param name="definers">Instances of <see cref="IDefineRuntimeServices">definers</see></param>
+        public RuntimeServices(IInstancesOf<IDefineRuntimeServices> definers)
         {
             Services = definers.SelectMany(_ => _.Services);
         }
