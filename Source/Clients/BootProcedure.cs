@@ -12,6 +12,7 @@ using Dolittle.Applications;
 using Dolittle.Services;
 using Google.Protobuf;
 using static Dolittle.Applications.Runtime.Clients;
+using Dolittle.Protobuf;
 
 namespace Dolittle.Clients
 {
@@ -48,10 +49,7 @@ namespace Dolittle.Clients
         {
             _logger.Information($"Connect client '{_client.Id}'");
             var client = new ClientsClient(_client.CallInvoker);
-            var clientId = new System.Protobuf.guid
-            {
-                Value = ByteString.CopyFrom(_client.Id.Value.ToByteArray())
-            };
+            var clientId = _client.Id.ToProtobuf();
             var clientInfo = new ClientInfo
             {
                 ClientId = clientId,
