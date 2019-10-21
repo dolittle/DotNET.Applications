@@ -6,7 +6,7 @@ using System;
 using Google.Protobuf.Reflection;
 using Grpc.Core;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// Represents the definition of a client service and its actual <see cref="ClientBase{T}"/> for it

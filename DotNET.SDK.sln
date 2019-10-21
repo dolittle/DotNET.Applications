@@ -61,9 +61,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands.Security", "Specif
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands.Security", "Source\Commands.Security\Commands.Security.csproj", "{BDDCE0E2-9A16-4534-8C6F-A8A82F2B53F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clients", "Source\Clients\Clients.csproj", "{52BAA334-D949-46BD-8BD6-A82F91AF1FF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heads", "Source\Heads\Heads.csproj", "{52BAA334-D949-46BD-8BD6-A82F91AF1FF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clients", "Specifications\Clients\Clients.csproj", "{D9E0F0E3-3EAB-472D-9251-A3DD579A7C9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heads", "Specifications\Heads\Heads.csproj", "{D9E0F0E3-3EAB-472D-9251-A3DD579A7C9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,7 +5,7 @@
 using System;
 using Machine.Specifications;
 
-namespace Dolittle.Clients.for_ClientServiceDefinition
+namespace Dolittle.Heads.for_RuntimeServiceDefinition
 {
     public class when_creating_instance_with_type_not_inheriting_client_base
     {

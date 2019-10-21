@@ -8,14 +8,14 @@ using System.Net.Sockets;
 using Dolittle.Booting;
 using Dolittle.Services;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// Represents a system that runs before the <see cref="BootStage.Configuration"/> boot stage
     /// </summary>
     public class PreConfiguration : ICanRunBeforeBootStage<NoSettings>
     {
-        internal static ClientPort ClientPort;
+        internal static HeadPort ClientPort;
 
         /// <inheritdoc/>
         public BootStage BootStage => BootStage.Configuration;

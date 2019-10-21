@@ -5,7 +5,7 @@
 using System;
 using Dolittle.Services;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// Represents a <see cref="IRepresentServiceType">host type</see> that is for application client communication
@@ -21,13 +21,13 @@ namespace Dolittle.Clients
         /// </summary>
         internal const string ServiceType = "Application";
 
-        readonly ClientPort _port;
+        readonly HeadPort _port;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationServiceType"/>
         /// </summary>
-        /// <param name="port"><see cref="ClientPort"/> to expose</param>
-        public ApplicationServiceType(ClientPort port)
+        /// <param name="port"><see cref="HeadPort"/> to expose</param>
+        public ApplicationServiceType(HeadPort port)
         {
             _port = port;
         }
@@ -36,7 +36,7 @@ namespace Dolittle.Clients
         public ServiceType Identifier => ServiceType;
 
         /// <inheritdoc/>
-        public Type BindingInterface => typeof(ICanBindApplicationServices);
+        public Type BindingInterface => typeof(ICanBindHeadServices);
 
         /// <inheritdoc/>
         public EndpointVisibility Visibility => EndpointVisibility.Private;

@@ -4,26 +4,25 @@
  *--------------------------------------------------------------------------------------------*/
 using Grpc.Core;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// Represents the details of a client
     /// </summary>
-    public class Client
+    public class Head
     {
         /// <summary>
-        /// Gets wether or not the application <see cref="Client"/> is connected - useful during booting
+        /// Gets wether or not the application <see cref="Head"/> is connected - useful during booting
         /// </summary>
-        /// <value></value>
         public static bool Connected { get; internal set; }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Client"/>
+        /// Initializes a new instance of <see cref="Head"/>
         /// </summary>
-        /// <param name="id"><see cref="ClientId">Id</see> of the client</param>
-        /// <param name="port"><see cref="ClientPort">Port</see> the client is exposed on</param>
+        /// <param name="id"><see cref="HeadId">Id</see> of the client</param>
+        /// <param name="port"><see cref="HeadPort">Port</see> the client is exposed on</param>
         /// <param name="callInvoker"><see cref="ChannelBase"/> used to connect to runtime</param>
-        public Client(ClientId id, ClientPort port, CallInvoker callInvoker)
+        public Head(HeadId id, HeadPort port, CallInvoker callInvoker)
         {
             Id = id;
             Port = port;
@@ -31,14 +30,14 @@ namespace Dolittle.Clients
         }
 
         /// <summary>
-        /// Gets the <see cref="ClientId">unique identifier</see> of the client
+        /// Gets the <see cref="HeadId">unique identifier</see> of the client
         /// </summary>
-        public ClientId Id { get; }
+        public HeadId Id { get; }
 
         /// <summary>
-        /// Gets the <see cref="ClientPort">client port</see> exposed for the runtime to connect to
+        /// Gets the <see cref="HeadPort">client port</see> exposed for the runtime to connect to
         /// </summary>
-        public ClientPort Port { get; }
+        public HeadPort Port { get; }
 
         /// <summary>
         /// Gets the <see cref="Channel"/> in which the client uses to connect to the runtime to

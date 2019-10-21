@@ -5,12 +5,12 @@
 using System.Collections.Generic;
 using Dolittle.Services;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// Represents the runtime services having a client representation
     /// </summary>
-    public class ApplicationServices : ICanBindApplicationServices
+    public class ApplicationServices : ICanBindHeadServices
     {
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationServices"/>

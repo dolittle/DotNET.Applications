@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>Dolittle.Clients.Specs</AssemblyName>
+    <AssemblyName>Dolittle.Heads.Specs</AssemblyName>
   </PropertyGroup>
 
   <Import Project="../../Build/MSBuild/specs.props"></Import>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Clients\Clients.csproj" />
+    <ProjectReference Include="..\..\Source\Heads\Heads.csproj" />
   </ItemGroup>
 
 

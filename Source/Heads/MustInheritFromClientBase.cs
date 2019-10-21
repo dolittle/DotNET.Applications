@@ -5,7 +5,7 @@
 using System;
 using Grpc.Core;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// Exception that gets thrown if a <see cref="Type"/> does not implement <see cref="ClientBase{T}"/>

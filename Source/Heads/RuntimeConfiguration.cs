@@ -4,23 +4,23 @@
  *--------------------------------------------------------------------------------------------*/
 using Dolittle.Configuration;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
-    /// Represents the <see cref="IConfigurationObject">configuration object</see> for <see cref="Client"/>
+    /// Represents the <see cref="IConfigurationObject">configuration object</see> for <see cref="Head"/>
     /// </summary>
     /// <remarks>
     /// This is representing the information needed to connect to a runtime
     /// </remarks>
-    [Name("client")]
-    public class ClientConfiguration : IConfigurationObject
+    [Name("runtime")]
+    public class RuntimeConfiguration : IConfigurationObject
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="ClientConfiguration"/>
+        /// Initializes a new instance of <see cref="RuntimeConfiguration"/>
         /// </summary>
         /// <param name="host">Hostname for the runtime</param>
-        /// <param name="port"></param>
-        public ClientConfiguration(string host, int port)
+        /// <param name="port">Port to connect to for the runtime</param>
+        public RuntimeConfiguration(string host, int port)
         {
             Host = host;
             Port = port;

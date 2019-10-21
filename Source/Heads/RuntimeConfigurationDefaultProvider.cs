@@ -4,17 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 using Dolittle.Configuration;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
-    /// Represents the default configuration for <see cref="ClientConfiguration"/> if none is provided
+    /// Represents the default configuration for <see cref="RuntimeConfiguration"/> if none is provided
     /// </summary>
-    public class ClientConfigurationDefaultProvider : ICanProvideDefaultConfigurationFor<ClientConfiguration>
+    public class RuntimeConfigurationDefaultProvider : ICanProvideDefaultConfigurationFor<RuntimeConfiguration>
     {
         /// <inheritdoc/>
-        public ClientConfiguration Provide()
+        public RuntimeConfiguration Provide()
         {
-            return new ClientConfiguration("0.0.0.0", 50053);
+            return new RuntimeConfiguration("0.0.0.0", 50053);
         }
     }
 }

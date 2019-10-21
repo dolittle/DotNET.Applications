@@ -8,35 +8,34 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dolittle.Booting;
 using Dolittle.Logging;
-using Dolittle.Applications;
 using Dolittle.Services;
-using Google.Protobuf;
-using static Dolittle.Applications.Runtime.Clients;
 using Dolittle.Protobuf;
+using Dolittle.Heads.Runtime;
+using static Dolittle.Heads.Runtime.Heads;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// Performs boot procedures related to client
     /// </summary>
     public class BootProcedure : ICanPerformBootProcedure
     {
-        readonly Client _client;
+        readonly Head _head;
         readonly ILogger _logger;
         readonly IBoundServices _boundServices;
 
         /// <summary>
         /// Initalizes a new instance of <see cref="BootProcedure"/>
         /// </summary>
-        /// <param name="client"><see cref="Client"/> representing the running client</param>
+        /// <param name="head"><see cref="Head"/> representing the running client</param>
+        /// <param name="boundServices"><see cref="IBoundServices"/></param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        /// <param name="boundServices"></param>
         public BootProcedure(
-            Client client,
-            ILogger logger,
-            IBoundServices boundServices)
+            Head head,
+            IBoundServices boundServices,
+            ILogger logger)
         {
-            _client = client;
+            _head = head;
             _logger = logger;
             _boundServices = boundServices;
         }
@@ -47,24 +46,24 @@ namespace Dolittle.Clients
         /// <inheritdoc/>
         public void Perform()
         {
-            _logger.Information($"Connect client '{_client.Id}'");
-            var client = new ClientsClient(_client.CallInvoker);
-            var clientId = _client.Id.ToProtobuf();
-            var clientInfo = new ClientInfo
+            _logger.Information($"Connect client '{_head.Id}'");
+            var head = new HeadsClient(_head.CallInvoker);
+            var headId = _head.Id.ToProtobuf();
+            var headInfo = new HeadInfo
             {
-                ClientId = clientId,
+                HeadId = headId,
                 Host = Environment.MachineName,
-                Port = _client.Port,
+                Port = _head.Port,
                 Runtime = $".NET Core : {Environment.Version} - {Environment.OSVersion} - {Environment.ProcessorCount} cores"
             };
 
             if (_boundServices.HasFor(ApplicationServiceType.ServiceType))
             {
                 var boundServices = _boundServices.GetFor(ApplicationServiceType.ServiceType);
-                clientInfo.ServicesByName.Add(boundServices.Select(_ => _.Descriptor.FullName));
+                headInfo.ServicesByName.Add(boundServices.Select(_ => _.Descriptor.FullName));
             }
 
-            var streamCall = client.Connect(clientInfo);
+            var streamCall = head.Connect(headInfo);
             Task.Run(async() =>
             {
                 var cancellationTokenSource = new CancellationTokenSource();
@@ -97,7 +96,7 @@ namespace Dolittle.Clients
                 }
             });
 
-            Client.Connected = true;
+            Head.Connected = true;
         }
     }
 }

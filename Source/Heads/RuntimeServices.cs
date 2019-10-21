@@ -7,7 +7,7 @@ using System.Linq;
 using Dolittle.Lifecycle;
 using Dolittle.Types;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// Represents an implementation of <see cref="IRuntimeServices"/>

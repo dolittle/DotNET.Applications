@@ -5,21 +5,21 @@
 using System;
 using Grpc.Core;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// Represents an implementation of <see cref="IClientFor{T}"/>
     /// </summary>
     public class ClientFor<T> : IClientFor<T> where T : ClientBase
     {
-        readonly Client _client;
+        readonly Head _client;
         T _instance;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ClientFor{T}"/>
         /// </summary>
-        /// <param name="client"><see cref="Client"/> information</param>
-        public ClientFor(Client client)
+        /// <param name="client"><see cref="Head"/> information</param>
+        public ClientFor(Head client)
         {
             _client = client;
         }

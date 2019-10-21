@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Dolittle.Resilience;
 using Grpc.Core;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// 

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using Grpc.Core;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// Defines an interface for getting a gRPC client proxy for a service

@@ -8,7 +8,7 @@ using Dolittle.Resilience;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 
-namespace Dolittle.Clients
+namespace Dolittle.Heads
 {
     /// <summary>
     /// Provides bindings related to client
@@ -29,13 +29,13 @@ namespace Dolittle.Clients
         /// <inheritdoc/>
         public void Provide(IBindingProviderBuilder builder)
         {
-            builder.Bind<Client>().To(() =>
+            builder.Bind<Head>().To(() =>
             {
                 var keepAliveTime = new ChannelOption("grpc.keepalive_time", 1000);
                 var keepAliveTimeout = new ChannelOption("grpc.keepalive_timeout_ms", 500);
                 var keepAliveWithoutCalls = new ChannelOption("grpc.keepalive_permit_without_calls", 1);
 
-                var configuration = _getContainer().Get<ClientConfiguration>();
+                var configuration = _getContainer().Get<RuntimeConfiguration>();
                 var policy = _getContainer().Get<IPolicyFor<ResilientCallInvoker>>();
 
                 var channel = new Channel(configuration.Host, configuration.Port, ChannelCredentials.Insecure, new []
@@ -52,7 +52,7 @@ namespace Dolittle.Clients
                     return _;
                 });
 
-                var client = new Client(
+                var client = new Head(
                     clientId,
                     PreConfiguration.ClientPort,
                     callInvoker

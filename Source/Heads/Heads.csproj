@@ -3,7 +3,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>Dolittle.SDK.Clients</AssemblyName>
+        <AssemblyName>Dolittle.SDK.Heads</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,7 +18,7 @@
         <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="4.0.0-beta*" />
         <PackageReference Include="Dolittle.Protobuf" Version="4.0.0-beta*"/>
         <PackageReference Include="Dolittle.Resilience" Version="4.0.0-beta*" />
-        <PackageReference Include="Dolittle.Applications.Contracts" Version="4.0.0-beta*"/>
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="4.0.0-beta*"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
     </ItemGroup>
