@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using Dolittle.DependencyInversion;
+using Dolittle.Logging;
 using Dolittle.Resilience;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
@@ -37,6 +38,9 @@ namespace Dolittle.Heads
 
                 var configuration = _getContainer().Get<RuntimeConfiguration>();
                 var policy = _getContainer().Get<IPolicyFor<ResilientCallInvoker>>();
+                var logger = _getContainer().Get<ILogger>();
+
+                logger.Information($"Connect head to runtime at '{configuration.Host}:{configuration.Port}'");
 
                 var channel = new Channel(configuration.Host, configuration.Port, ChannelCredentials.Insecure, new []
                 {

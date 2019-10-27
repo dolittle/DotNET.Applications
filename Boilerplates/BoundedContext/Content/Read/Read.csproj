@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dolittle.SDK" Version="4.0.0-beta*" />
+    <PackageReference Include="Dolittle.SDK" Version="4.*" />
   </ItemGroup>
 
 
