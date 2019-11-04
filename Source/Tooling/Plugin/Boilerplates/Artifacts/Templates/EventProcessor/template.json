@@ -1,6 +1,6 @@
 {
     "name": "EventProcessor template",
-    "type": "eventProcessor",
+    "type": "event-processor",
     "area": "read",
     "description": "Creates an event processor",
     "dependencies": {

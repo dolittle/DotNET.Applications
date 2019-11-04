@@ -1,6 +1,6 @@
 {
    "name": "QueryFor Template",
-   "type": "queryFor",
+   "type": "query-for",
    "area": "read",
    "description": "Creates a Query for a particular readmodel",
     "dependencies": {

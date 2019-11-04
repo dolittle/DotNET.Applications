@@ -1,6 +1,6 @@
 {
    "name": "CommandHandler template",
-   "type": "commandHandler",
+   "type": "command-handler",
    "area": "domain",
    "description": "Creates a command handler",
    "dependencies": {
