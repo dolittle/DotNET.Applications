@@ -1,11 +1,8 @@
 {
   "name": "@dolittle/boilerplates.bounded-context.csharp",
-  "version": "3.0.0",
+  "version": "1.0.0",
+  "private": true,
   "description": "Standard bounded context boilerplate for C#",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dolittle-runtime/DotNET.SDK.git"
-  },
   "keywords": [
     "dolittle",
     "tooling",
@@ -14,14 +11,5 @@
   ],
   "dolittle": {
     "tooling": "8.*"
-  },
-  "author": "Dolittle",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dolittle-runtime/DotNET.SDK/issues"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "homepage": "https://dolittle.io"
+  }
 }

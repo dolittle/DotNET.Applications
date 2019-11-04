@@ -1,11 +1,8 @@
 {
   "name": "@dolittle/boilerplates.artifacts.csharp",
-  "version": "4.0.0",
+  "version": "1.0.0",
+  "private": true,
   "description": "C# artifact templates for the Dolittle platform",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dolittle-runtime/DotNET.SDK.git"
-  },
   "keywords": [
     "dolittle",
     "tooling",
@@ -14,14 +11,5 @@
   ],
   "dolittle": {
     "tooling": "8.*"
-  },
-  "author": "Dolittle",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dolittle-runtime/DotNET.SDK/issues"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "homepage": "https://dolittle.io"
+  }
 }
