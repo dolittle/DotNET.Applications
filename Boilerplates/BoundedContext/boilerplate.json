@@ -8,7 +8,10 @@
             "description": "The name of the bounded context",
             "type": "userInput",
             "promptMessage": "The name of the bounded context",
-            "userInputType": "argument"
+            "userInputType": "argument",
+            "rules": [
+                "IsNotEmpty"
+            ]
         },
         "readModelsImplementation": {
             "description": "The implementation type of read models",
@@ -20,7 +23,8 @@
                     "value": "MongoDB"
                 }
             ],
-            "promptMessage": "Choose the resource implementation for read models"
+            "promptMessage": "Choose the resource implementation for read models",
+            "rules": []
         },
         "eventStoreImplementation": {
             "description": "The implementation type of event store",
