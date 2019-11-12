@@ -10,6 +10,3 @@ resources:
 
 jobs:
 - template: Source/DotNet/pipeline.yml@templates
-  parameters:
-    CASCADES:
-      - 'dolittle-interaction/AspNetCore'
