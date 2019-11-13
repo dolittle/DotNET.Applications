@@ -57,9 +57,9 @@ namespace Dolittle.Heads
                 Runtime = $".NET Core : {Environment.Version} - {Environment.OSVersion} - {Environment.ProcessorCount} cores"
             };
 
-            if (_boundServices.HasFor(ApplicationServiceType.ServiceType))
+            if (_boundServices.HasFor(HeadServiceType.ServiceType))
             {
-                var boundServices = _boundServices.GetFor(ApplicationServiceType.ServiceType);
+                var boundServices = _boundServices.GetFor(HeadServiceType.ServiceType);
                 headInfo.ServicesByName.Add(boundServices.Select(_ => _.Descriptor.FullName));
             }
 

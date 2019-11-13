@@ -14,20 +14,20 @@ namespace Dolittle.Heads
     /// Application client is considered the channel in which a runtime connects - application client is considered
     /// the representation of the application and is usually represented through an SDK
     /// </remarks>
-    public class ApplicationServiceType : IRepresentServiceType
+    public class HeadServiceType : IRepresentServiceType
     {
         /// <summary>
         /// Gets the name of the <see cref="ServiceType"/> for application client
         /// </summary>
-        internal const string ServiceType = "Application";
+        internal const string ServiceType = "Head";
 
         readonly HeadPort _port;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ApplicationServiceType"/>
+        /// Initializes a new instance of <see cref="HeadServiceType"/>
         /// </summary>
         /// <param name="port"><see cref="HeadPort"/> to expose</param>
-        public ApplicationServiceType(HeadPort port)
+        public HeadServiceType(HeadPort port)
         {
             _port = port;
         }

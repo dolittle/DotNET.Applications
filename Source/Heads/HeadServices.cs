@@ -10,17 +10,17 @@ namespace Dolittle.Heads
     /// <summary>
     /// Represents the runtime services having a client representation
     /// </summary>
-    public class ApplicationServices : ICanBindHeadServices
+    public class HeadServices : ICanBindHeadServices
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="ApplicationServices"/>
+        /// Initializes a new instance of <see cref="HeadServices"/>
         /// </summary>
-        public ApplicationServices()
+        public HeadServices()
         {
         }
 
         /// <inheritdoc/>
-        public ServiceAspect Aspect => "Client";
+        public ServiceAspect Aspect => "Runtime";
 
         /// <inheritdoc/>
         public IEnumerable<Service> BindServices()
