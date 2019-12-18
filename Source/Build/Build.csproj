@@ -1,6 +1,6 @@
 <!-- Inspired by : https://github.com/madskristensen/BundlerMinifier/blob/e66ec7c85ad6c291fcd5bf55e7f426485e2e2d38/src/BundlerMinifier/BundlerMinifier.csproj -->
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="../default.props" />
+    <Import Project="../../default.props" />
 
     <PropertyGroup>
         <AssemblyName>Dolittle.SDK.Build</AssemblyName>
