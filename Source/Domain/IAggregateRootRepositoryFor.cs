@@ -11,7 +11,7 @@ namespace Dolittle.Domain
     /// </summary>
     /// <typeparam name="T">Type of aggregated root</typeparam>
     public interface IAggregateRootRepositoryFor<T>
-        where T : AggregateRoot
+        where T : class, IAggregateRoot
     {
         /// <summary>
         /// Get an aggregated root by id
@@ -20,4 +20,5 @@ namespace Dolittle.Domain
         /// <returns>An instance of the aggregated root</returns>
         T Get(EventSourceId id);
     }
+
 }

@@ -7,7 +7,7 @@
   <Import Project="../../Build/MSBuild/specs.props"/>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="3.*" />
+        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="4.*" />
     </ItemGroup>
 
 
