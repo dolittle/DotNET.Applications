@@ -1,0 +1,6 @@
+{
+   "name": "Concept as int template",
+   "type": "concept-int",
+   "area": "concepts",
+   "description": "Creates a concept as int"
+}
