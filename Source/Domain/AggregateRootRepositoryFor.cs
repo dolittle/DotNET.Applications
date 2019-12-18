@@ -20,7 +20,8 @@ namespace Dolittle.Domain
     /// Defines a concrete implementation of <see cref="IAggregateRootRepositoryFor{T}">IAggregatedRootRepository</see>
     /// </summary>
     /// <typeparam name="T">Type the repository is for</typeparam>
-    public class AggregateRootRepositoryFor<T> : IAggregateRootRepositoryFor<T> where T : AggregateRoot
+    public class AggregateRootRepositoryFor<T> : IAggregateRootRepositoryFor<T>
+        where T : class, IAggregateRoot
     {
         ICommandContextManager _commandContextManager;
         IEventStore _eventStore;
