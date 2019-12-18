@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +16,7 @@ using Dolittle.Strings;
 namespace Dolittle.Build.Proxies
 {
     /// <summary>
-    /// Represents a class that handles the generation of proxies
+    /// Represents a class that handles the generation of proxies.
     /// </summary>
     public class ProxiesBuilder
     {
@@ -27,10 +26,10 @@ namespace Dolittle.Build.Proxies
         readonly IBuildMessages _buildMessages;
 
         /// <summary>
-        /// Instantiates an instance of <see cref="ProxiesBuilder"/>
+        /// Initializes a new instance of the <see cref="ProxiesBuilder"/> class.
         /// </summary>
-        /// <param name="templateLoader"></param>
-        /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
+        /// <param name="templateLoader"><see cref="TemplateLoader"/></param>
+        /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies.</param>
         /// <param name="artifactTypes"></param>
         /// <param name="buildMessages"></param>
         public ProxiesBuilder(TemplateLoader templateLoader, Type[] artifacts, ArtifactTypes artifactTypes, IBuildMessages buildMessages)
