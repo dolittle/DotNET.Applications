@@ -35,4 +35,4 @@ namespace Dolittle.Applications.Configuration
         /// </summary>
         public ReadOnlyDictionary<Feature, FeatureDefinition> Features { get; }
     }
-}¯
+}
