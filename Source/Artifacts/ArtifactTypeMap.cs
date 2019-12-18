@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
 using Dolittle.Lifecycle;
@@ -9,12 +8,12 @@ using Dolittle.Lifecycle;
 namespace Dolittle.Artifacts
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IArtifactTypeMap"/>
+    /// Represents an implementation of <see cref="IArtifactTypeMap"/>.
     /// </summary>
     [Singleton]
     public class ArtifactTypeMap : IArtifactTypeMap
     {
-        readonly Dictionary<ArtifactId, Type>   _typesByArtifact = new Dictionary<ArtifactId, Type>();
+        readonly Dictionary<ArtifactId, Type> _typesByArtifact = new Dictionary<ArtifactId, Type>();
         readonly Dictionary<Type, Artifact> _artifactByTypes = new Dictionary<Type, Artifact>();
 
         /// <inheritdoc/>
