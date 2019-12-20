@@ -1,10 +1,12 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Dynamic;
 using Dolittle.Artifacts;
 using Dolittle.Execution;
 using Dolittle.Runtime.Commands;
 using Dolittle.Runtime.Commands.Security;
 using Machine.Specifications;
-using Moq;
 using It = Machine.Specifications.It;
 
 namespace Dolittle.Commands.Security.for_CommandRequestSecurityManager
@@ -13,7 +15,7 @@ namespace Dolittle.Commands.Security.for_CommandRequestSecurityManager
     {
         static CommandRequest command_request;
 
-        Establish context = () => 
+        Establish context = () =>
         {
             var artifact = Artifact.New();
             command_request = new CommandRequest(CorrelationId.Empty, artifact.Id, artifact.Generation, new ExpandoObject());
