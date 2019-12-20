@@ -1,7 +1,5 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -19,15 +17,10 @@ namespace Dolittle.Commands.Validation
     /// <typeparam name="TProperty">The type of property to discover validators of.</typeparam>
     public class ComposedCommandRuleBuilder<TProperty> : IComposedCommandRuleBuilder
     {
-        /// <summary>
-        /// Builds composed validators from <paramref name="childValidators"/> and adds them to <paramref name="validator"/>.
-        /// </summary>
-        /// <param name="validator"></param>
-        /// <param name="childValidators"></param>
-        /// <typeparam name="TCommand">The type of command to build validators of.</typeparam>
+        /// <inheritdoc/>
         public void AddTo<TCommand>(AbstractValidator<TCommand> validator, IEnumerable<IValidator> childValidators)
         {
-            if (childValidators == null || !childValidators.Any())
+            if (childValidators?.Any() != true)
             {
                 return;
             }

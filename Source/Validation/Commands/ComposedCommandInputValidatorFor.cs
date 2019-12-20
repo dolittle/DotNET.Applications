@@ -1,11 +1,9 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dolittle.Commands;
 using Dolittle.Validation;
 using FluentValidation;
 
@@ -14,11 +12,12 @@ namespace Dolittle.Commands.Validation
     /// <summary>
     /// Represents a command input validator that is constructed from discovered rules.
     /// </summary>
+    /// <typeparam name="T">Type of <see cref="ICommand"/>.</typeparam>
     public class ComposedCommandInputValidatorFor<T> : InputValidator<T>, ICanValidate<T>, ICommandInputValidator
         where T : class, ICommand
     {
         /// <summary>
-        /// Instantiates an Instance of a <see cref="ComposedCommandInputValidatorFor{T}"/>.
+        /// Initializes a new instance of the <see cref="ComposedCommandInputValidatorFor{T}"/> class.
         /// </summary>
         /// <param name="propertyTypesAndValidators">A collection of dynamically discovered validators to use.</param>
         public ComposedCommandInputValidatorFor(IDictionary<Type, IEnumerable<IValidator>> propertyTypesAndValidators)
@@ -31,22 +30,27 @@ namespace Dolittle.Commands.Validation
             }
         }
 
-#pragma warning disable 1591 // Xml Comments
+        /// <summary>
+        /// Validates that the object is in a valid state.
+        /// </summary>
+        /// <param name="command">The <see cref="ICommand"/> to validate.</param>
+        /// <returns>A collection of ValidationResults. An empty collection indicates a valid command.</returns>
         public IEnumerable<ValidationResult> ValidateFor(ICommand command)
         {
             return ValidateFor(command as T);
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<ValidationResult> ValidateFor(T command)
         {
             var result = Validate(command);
             return result.Errors.Select(e => new ValidationResult(e.ErrorMessage, new[] { e.PropertyName }));
         }
 
+        /// <inheritdoc/>
         IEnumerable<ValidationResult> ICanValidate.ValidateFor(object target)
         {
             return ValidateFor((T)target);
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }
