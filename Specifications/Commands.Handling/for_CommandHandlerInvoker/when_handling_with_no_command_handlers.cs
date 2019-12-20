@@ -1,16 +1,7 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-using System.Dynamic;
-using System.Collections.Generic;
-using Dolittle.Applications;
-using Dolittle.Artifacts;
-using Dolittle.Commands;
-using Dolittle.Runtime.Commands;
-using Dolittle.Execution;
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using Machine.Specifications;
-using Moq;
 using It = Machine.Specifications.It;
 
 namespace Dolittle.Commands.Handling.for_CommandHandlerInvoker

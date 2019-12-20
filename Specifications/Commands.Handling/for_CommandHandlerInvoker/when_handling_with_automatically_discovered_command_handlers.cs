@@ -1,10 +1,6 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-using System.Dynamic;
-using Dolittle.Commands;
-using Dolittle.Execution;
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using Machine.Specifications;
 
 namespace Dolittle.Commands.Handling.for_CommandHandlerInvoker
@@ -14,10 +10,7 @@ namespace Dolittle.Commands.Handling.for_CommandHandlerInvoker
     {
         static bool result;
 
-        Establish context = () =>
-        {
-            command_request_converter.Setup(c => c.Convert(command_request)).Returns(new Command());
-        };
+        Establish context = () => command_request_converter.Setup(c => c.Convert(command_request)).Returns(new Command());
 
         Because of = () => result = invoker.TryHandle(command_request);
 
