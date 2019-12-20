@@ -1,21 +1,18 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-using Dolittle.DependencyInversion;
-using Dolittle.Events;
-using Dolittle.PropertyBags;
-using Dolittle.Runtime.Events;
-using Moq;
-using Machine.Specifications;
-using System.Reflection;
-using System.Linq;
-using Dolittle.Logging;
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
-using Dolittle.Artifacts;
-using Dolittle.Types;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Dolittle.Artifacts;
+using Dolittle.DependencyInversion;
+using Dolittle.Logging;
+using Dolittle.PropertyBags;
 using Dolittle.Runtime.Events.Processing;
+using Dolittle.Types;
+using Machine.Specifications;
+using Moq;
 
 namespace Dolittle.Events.Processing.given
 {
@@ -31,7 +28,7 @@ namespace Dolittle.Events.Processing.given
         public static MethodInfo method_with_event_and_metadata;
         public static MethodInfo invalid_method;
         public static MethodInfo invalid_method_return_value;
-        public static MethodInfo process_1;    
+        public static MethodInfo process_1;
         public static MethodInfo process_2;
         public static MethodInfo process_3;
         public static Artifact my_event_artifact;
@@ -39,28 +36,28 @@ namespace Dolittle.Events.Processing.given
 
         public static IEnumerable<EventProcessorId> event_processor_ids;
 
-        Establish context = () => 
+        Establish context = () =>
         {
-            my_event_artifact = new Artifact(Guid.NewGuid(),1);
+            my_event_artifact = new Artifact(Guid.NewGuid(), 1);
             logger = new Mock<ILogger>();
-            logger.Setup(l => l.Trace(Moq.It.IsAny<string>(),Moq.It.IsAny<string>(),Moq.It.IsAny<int>(),Moq.It.IsAny<string>()))
-                .Callback<string,string,int,string>((s1,s2,i,s3) => Console.WriteLine(s1));
+            logger.Setup(l => l.Trace(Moq.It.IsAny<string>(), Moq.It.IsAny<string>(), Moq.It.IsAny<int>(), Moq.It.IsAny<string>()))
+                .Callback<string, string, int, string>((s1, s2, i, s3) => Console.WriteLine(s1));
             object_factory = build_object_factory();
             processor = new TestEventProcessor();
             container = build_container(processor);
             implementations = build_implementations();
             artifact_type_map = build_artifact_type_map();
             setup_method_infos();
-            identify_event_processors(method_with_just_event,method_with_event_and_event_source_id,method_with_event_and_metadata,process_1,process_2,process_3);
+            identify_event_processors(method_with_just_event, method_with_event_and_event_source_id, method_with_event_and_metadata, process_1, process_2, process_3);
         };
 
-        static Mock<IObjectFactory> build_object_factory() 
+        static Mock<IObjectFactory> build_object_factory()
         {
             var factory = new Mock<IObjectFactory>();
-            factory.Setup(f => f.Build(typeof(MyEvent),Moq.It.IsAny<PropertyBag>())).Returns(new MyEvent());
+            factory.Setup(f => f.Build(typeof(MyEvent), Moq.It.IsAny<PropertyBag>())).Returns(new MyEvent());
             return factory;
-
         }
+
         static Mock<IContainer> build_container(TestEventProcessor processor)
         {
             var container = new Mock<IContainer>();
@@ -70,14 +67,16 @@ namespace Dolittle.Events.Processing.given
 
         static Mock<IImplementationsOf<ICanProcessEvents>> build_implementations()
         {
-            var types = new List<Type>();
-            types.Add(typeof(TestEventProcessor));
-            types.Add(typeof(AnotherTestEventProcessor));
+            var types = new List<Type>
+            {
+                typeof(TestEventProcessor),
+                typeof(AnotherTestEventProcessor)
+            };
             var implementations = new Mock<IImplementationsOf<ICanProcessEvents>>();
             implementations.Setup(_ => _.GetEnumerator()).Returns(() => types.GetEnumerator());
             return implementations;
         }
- 
+
         static Mock<IArtifactTypeMap> build_artifact_type_map()
         {
             var map = new Mock<IArtifactTypeMap>();
