@@ -1,11 +1,7 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Linq;
-using Dolittle.Applications;
 using Machine.Specifications;
 
 namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_using_modules.for_when_stripping_one_namespace_segment
@@ -18,6 +14,5 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_usin
 
         It should_throw_an_exception = () => exception_result.ShouldNotBeNull();
         It should_throw_InvalidTopology = () => exception_result.ShouldBeOfExactType(typeof(InvalidArtifact));
-        
     }
 }

@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using Machine.Specifications;
 
@@ -12,7 +11,7 @@ namespace Dolittle.Artifacts.for_ArtifactTypeMap
         static Artifact registered_artifact;
         static Type registered_type;
 
-        Establish context = () => 
+        Establish context = () =>
         {
             registered_artifact = Artifact.New();
             registered_type = typeof(string);

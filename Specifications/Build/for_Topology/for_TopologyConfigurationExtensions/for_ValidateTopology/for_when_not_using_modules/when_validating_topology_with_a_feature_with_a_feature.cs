@@ -1,7 +1,5 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -13,21 +11,20 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyConfigurationExtensio
 {
     public class when_validating_topology_with_a_feature_with_a_feature : given.an_ILogger
     {
-
-        static Applications.Configuration.Topology topology; 
+        static Applications.Configuration.Topology topology;
         static Exception exception_result;
 
-        Establish context = () => 
+        Establish context = () =>
         {
-            var feature_def_2 = new FeatureDefinition("Feature2", new Dictionary<Feature,FeatureDefinition>());
+            var feature_def_2 = new FeatureDefinition("Feature2", new Dictionary<Feature, FeatureDefinition>());
             var feature_def_1 = new FeatureDefinition("Feature1", new Dictionary<Feature, FeatureDefinition>
             {
-                {Guid.NewGuid(), feature_def_2}
+                { Guid.NewGuid(), feature_def_2 }
             });
 
-            topology = new Applications.Configuration.Topology(new Dictionary<Module,ModuleDefinition>(), new Dictionary<Feature, FeatureDefinition>
+            topology = new Applications.Configuration.Topology(new Dictionary<Module, ModuleDefinition>(), new Dictionary<Feature, FeatureDefinition>
             {
-                {Guid.NewGuid(), feature_def_1}
+                { Guid.NewGuid(), feature_def_1 }
             });
         };
 
