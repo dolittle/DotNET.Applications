@@ -1,7 +1,6 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Linq;
 using Machine.Specifications;
 
@@ -9,8 +8,8 @@ namespace Dolittle.FluentValidation.for_PropertyValidatorWithDynamicState
 {
     public class when_adding_property_expression
     {
-        static MyValidator    validator;
-        
+        static MyValidator validator;
+
         Establish context = () => validator = new MyValidator();
 
         Because of = () => validator.AddExpression<MyValidator>(v => v.Something);

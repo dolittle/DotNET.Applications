@@ -1,7 +1,6 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using Dolittle.Commands.Validation;
 using Dolittle.Validation;
 using Machine.Specifications;
@@ -15,10 +14,7 @@ namespace Dolittle.FluentValidation.Commands.for_CommandValidatorProvider
         static ICanValidate business_validator;
         static MySimpleCommand command;
 
-        Establish context = () =>
-        {
-            command = new MySimpleCommand();
-        };
+        Establish context = () => command = new MySimpleCommand();
 
         Because of = () => business_validator = command_validator_provider.GetBusinessValidatorFor(command);
 

@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using Dolittle.Commands.Validation;
 using Machine.Specifications;
 
@@ -12,5 +11,5 @@ namespace Dolittle.FluentValidation.Commands.for_CommandValidatorProvider
     {
         It should_register_all_the_input_validators = () => command_validator_provider.RegisteredInputCommandValidators.ShouldContainOnly(command_input_validators);
         It should_register_all_the_business_validators = () => command_validator_provider.RegisteredBusinessCommandValidators.ShouldContainOnly(command_business_validators);
-   }
+    }
 }

@@ -1,7 +1,6 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Linq.Expressions;
 using Dolittle.Validation;
@@ -11,14 +10,15 @@ namespace Dolittle.FluentValidation.for_RuleBuilderExtensions
 {
     public class FakePropertyValidatorWithDynamicState : PropertyValidatorWithDynamicState
     {
-
-        public FakePropertyValidatorWithDynamicState() : base("") { }
+        public FakePropertyValidatorWithDynamicState()
+            : base("")
+        {
+        }
 
         protected override bool IsValid(PropertyValidatorContext context)
         {
             return true;
         }
-
 
         public bool AddExpressionCalled = false;
 
