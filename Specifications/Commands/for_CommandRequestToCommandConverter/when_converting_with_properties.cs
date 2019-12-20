@@ -1,12 +1,11 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
 using Dolittle.Artifacts;
-using Dolittle.Runtime.Commands;
 using Dolittle.Execution;
+using Dolittle.Runtime.Commands;
 using Machine.Specifications;
 using Moq;
 using Newtonsoft.Json;
@@ -17,6 +16,10 @@ namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 {
     public class when_converting_with_properties : given.a_serializer
     {
+        const string a_string = "Fourty Two";
+        const int an_integer = 42;
+        const double a_double = 42.42;
+        const float a_float = 42.42f;
         static CorrelationId correlation_id;
         static Mock<IArtifactTypeMap> artifact_type_map;
         static Artifact identifier;
@@ -24,32 +27,32 @@ namespace Dolittle.Commands.for_CommandRequestToCommandConverter
         static IDictionary<string, object> content;
         static CommandRequestToCommandConverter converter;
         static command_with_all_property_types result;
-        const string a_string = "Fourty Two";
-        const int an_integer = 42;
-        const double a_double = 42.42;
-        const float a_float = 42.42f;
         static Guid a_guid = Guid.NewGuid();
         static string AStringWithPascalCasing = "Fourty Two Pascals";
         static Guid a_concept_as_guid = Guid.NewGuid();
-        static complex_type a_complex_type = new complex_type { 
+
+        static complex_type a_complex_type = new complex_type
+        {
             a_string = "Nested string",
             an_integer = 420,
             a_double = 420.420,
             a_float = 430.430f
         };
-        static string[] an_enumerable_of_strings = new[] {"first", "second", "third"};
-        static int[] an_enumerable_of_integers = new[] { 42,43,44 };
-        static float[] an_enumerable_of_floats = new[] { 42.1f,43.2f,44.3f };
-        static double[] an_enumerable_of_doubles = new[] { 42.4,43.5,44.6 };
-        static Guid[] an_enumerable_of_guids = new[] { Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid() };
 
-        Establish context = () => 
+        static string[] an_enumerable_of_strings = new[] { "first", "second", "third" };
+        static int[] an_enumerable_of_integers = new[] { 42, 43, 44 };
+        static float[] an_enumerable_of_floats = new[] { 42.1f, 43.2f, 44.3f };
+        static double[] an_enumerable_of_doubles = new[] { 42.4, 43.5, 44.6 };
+        static Guid[] an_enumerable_of_guids = new[] { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() };
+
+        Establish context = () =>
         {
             correlation_id = CorrelationId.New();
             identifier = Artifact.New();
 
-            content = new Dictionary<string, object> {
-                { "a_string", a_string},
+            content = new Dictionary<string, object>
+            {
+                { "a_string", a_string },
                 { "an_integer", an_integer },
                 { "a_double", a_double },
                 { "a_float", a_float },
