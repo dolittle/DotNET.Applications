@@ -25,10 +25,16 @@ namespace Dolittle.Validation
             IValidator validator,
             string name)
         {
-            return ruleBuilder
-                .NotNull()
-                .SetValidator(validator as IPropertyValidator)
-                .WithName(name);
+            var builder = ruleBuilder
+                    .NotNull()
+                    .WithName(name);
+
+            if (validator is IPropertyValidator)
+            {
+                builder = builder.SetValidator(validator as IPropertyValidator);
+            }
+
+            return builder;
         }
     }
 }
