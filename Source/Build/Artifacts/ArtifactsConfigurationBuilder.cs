@@ -20,7 +20,7 @@ namespace Dolittle.Build.Artifacts
     /// </summary>
     public class ArtifactsConfigurationBuilder
     {
-        readonly Type[] _artifacts;
+        readonly IEnumerable<Type> _artifacts;
         readonly IBuildMessages _buildMessages;
         readonly ArtifactTypes _artifactTypes;
         readonly ArtifactsConfiguration _currentArtifactsConfiguration;
@@ -33,7 +33,7 @@ namespace Dolittle.Build.Artifacts
         /// <param name="artifactTypes">A list of <see cref="ArtifactType"/> which represents the different artifact types.</param>
         /// <param name="buildMessages">The <see cref="IBuildMessages"/> for outputting build messages.</param>
         public ArtifactsConfigurationBuilder(
-            Type[] artifacts,
+            IEnumerable<Type> artifacts,
             ArtifactsConfiguration currentArtifactsConfiguration,
             ArtifactTypes artifactTypes,
             IBuildMessages buildMessages)
@@ -93,8 +93,7 @@ namespace Dolittle.Build.Artifacts
                     var arguments = artifactsByTypeDefinitionConstructor.GetParameters().Select(arg => _.Value.SingleOrDefault(prop => arg.Name.Equals(prop.Key.Name, StringComparison.InvariantCultureIgnoreCase)).Value ?? new Dictionary<ArtifactId, ArtifactDefinition>()).ToArray();
                     var artifacts = artifactsByTypeDefinitionConstructor.Invoke(arguments) as ArtifactsByTypeDefinition;
                     return new KeyValuePair<Feature, ArtifactsByTypeDefinition>(feature, artifacts);
-                }).ToDictionary(_ => _.Key, _ => _.Value)
-            ));
+                }).ToDictionary(_ => _.Key, _ => _.Value)));
             updatedArtifactsConfiguration.ValidateArtifacts(boundedContextTopology, _artifacts, _buildMessages);
 
             if (newArtifacts > 0)

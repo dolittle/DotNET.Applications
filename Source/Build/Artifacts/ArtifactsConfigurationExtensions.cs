@@ -39,7 +39,7 @@ namespace Dolittle.Build.Artifacts
         }
 
         /// <summary>
-        /// Returns all <see cref="ArtifactDefinition"/> instances in the <see cref="ArtifactsConfiguration"/> by retrieving the <see cref="ArtifactDefinition"/> dictionaries with the <see cref="PropertyInfo"/>
+        /// Returns all <see cref="ArtifactDefinition"/> instances in the <see cref="ArtifactsConfiguration"/> by retrieving the <see cref="ArtifactDefinition"/> dictionaries with the <see cref="PropertyInfo"/>.
         /// </summary>
         /// <param name="configuration">The <see cref="ArtifactsConfiguration"/> being extended.</param>
         /// <param name="targetProperty">The target <see cref="PropertyInfo"/>.</param>
@@ -113,7 +113,7 @@ namespace Dolittle.Build.Artifacts
         public static void ValidateArtifacts(
             this ArtifactsConfiguration configuration,
             BoundedContextTopology boundedContextTopology,
-            Type[] types,
+            IEnumerable<Type> types,
             IBuildMessages buildMessages)
         {
             ThrowIfDuplicateArtifacts(configuration, buildMessages);

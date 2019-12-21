@@ -1,24 +1,21 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections;
 using System.Collections.Generic;
 using Dolittle.Commands;
 using Dolittle.Events;
-using Dolittle.Events.Processing;
-using Dolittle.Execution;
 using Dolittle.Queries;
 using Dolittle.ReadModels;
 
 namespace Dolittle.Build
 {
     /// <summary>
-    /// Represents a class that's basically a collection of Dolittle's native artifact types
+    /// Represents a class that's basically a collection of Dolittle's native artifact types.
     /// </summary>
     public class ArtifactTypes : IEnumerable<ArtifactType>
     {
-        List<ArtifactType> _artifactTypes = new List<ArtifactType>
+        readonly List<ArtifactType> _artifactTypes = new List<ArtifactType>
         {
             new ArtifactType { Type = typeof(ICommand), TypeName = "command", TargetPropertyExpression = a => a.Commands },
             new ArtifactType { Type = typeof(IEvent), TypeName = "event", TargetPropertyExpression = a => a.Events },
@@ -33,6 +30,7 @@ namespace Dolittle.Build
             return _artifactTypes.GetEnumerator();
         }
 
+        /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _artifactTypes.GetEnumerator();

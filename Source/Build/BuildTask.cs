@@ -1,13 +1,10 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Loader;
-using Dolittle.Assemblies;
 using Dolittle.Build.Artifacts;
 using Dolittle.Build.Proxies;
 using Dolittle.Build.Topology;
@@ -19,12 +16,11 @@ using Dolittle.Reflection;
 using Dolittle.Runtime.Events.Processing;
 using Dolittle.Strings;
 
-
 namespace Dolittle.Build
 {
     /// <summary>
     /// Represents a <see cref="ICanPerformBuildTask"/> for doing the work that is needed for the
-    /// SDK post build
+    /// SDK post build.
     /// </summary>
     public class BuildTask : ICanPerformBuildTask
     {
@@ -40,16 +36,16 @@ namespace Dolittle.Build
         EventProcessorDiscoverer _eventProcessorDiscoverer;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="BuildTask"/>
+        /// Initializes a new instance of the <see cref="BuildTask"/> class.
         /// </summary>
-        /// <param name="buildTarget">Current <see cref="BuildTarget"/></param>
-        /// <param name="configuration">Current <see cref="BuildTaskConfiguration"/></param>
-        /// <param name="boundedContextLoader"><see cref="IBoundedContextLoader"/> for loading bounded-context.json</param>
-        /// <param name="artifactTypes">Known <see cref="ArtifactTypes"/></param>
-        /// <param name="topologyConfigurationHandler"><see cref="TopologyConfigurationHandler"/> for handling topology configuration</param>
-        /// <param name="artifactsConfigurationHandler"><see cref="ArtifactsConfigurationHandler"/> for handling artifacts configuration</param>
-        /// <param name="proxiesHandler"><see cref="ProxiesHandler"/> for dealing with proxies </param>
-        /// <param name="buildMessages"><see cref="IBuildMessages"/> for build messages</param>
+        /// <param name="buildTarget">Current <see cref="BuildTarget"/>.</param>
+        /// <param name="configuration">Current <see cref="BuildTaskConfiguration"/>.</param>
+        /// <param name="boundedContextLoader"><see cref="IBoundedContextLoader"/> for loading bounded-context.json.</param>
+        /// <param name="artifactTypes">Known <see cref="ArtifactTypes"/>.</param>
+        /// <param name="topologyConfigurationHandler"><see cref="TopologyConfigurationHandler"/> for handling topology configuration.</param>
+        /// <param name="artifactsConfigurationHandler"><see cref="ArtifactsConfigurationHandler"/> for handling artifacts configuration.</param>
+        /// <param name="proxiesHandler"><see cref="ProxiesHandler"/> for dealing with proxies.</param>
+        /// <param name="buildMessages"><see cref="IBuildMessages"/> for build messages.</param>
         public BuildTask(
             BuildTarget buildTarget,
             BuildTaskConfiguration configuration,
@@ -112,21 +108,22 @@ namespace Dolittle.Build
             eventProcessors.ForEach(method =>
             {
                 var eventProcessorId = method.EventProcessorId();
-                if (eventProcessorId.Value == null || eventProcessorId.Value.Equals(Guid.Empty))
-                    throw new ArgumentException("Found a event processor with empty Id.", "eventProcessors");
+                if (eventProcessorId.Value == default || eventProcessorId.Value.Equals(Guid.Empty))
+                    throw new ArgumentException("Found a event processor with empty Id.", nameof(eventProcessors));
+
                 if (idMap.ContainsKey(eventProcessorId))
                 {
-                    if (! duplicateEventProcessors.ContainsKey(eventProcessorId))
-                        duplicateEventProcessors.Add(eventProcessorId, new List<MethodInfo>(){idMap[eventProcessorId]});
-                    
+                    if (!duplicateEventProcessors.ContainsKey(eventProcessorId))
+                        duplicateEventProcessors.Add(eventProcessorId, new List<MethodInfo>() { idMap[eventProcessorId] });
+
                     duplicateEventProcessors[eventProcessorId].Add(method);
                 }
-                else 
+                else
                 {
                     idMap.Add(eventProcessorId, method);
                 }
             });
-            if (duplicateEventProcessors.Any())
+            if (duplicateEventProcessors.Count > 0)
             {
                 foreach (var entry in duplicateEventProcessors)
                 {
@@ -134,17 +131,19 @@ namespace Dolittle.Build
                     foreach (var eventProcessor in entry.Value)
                         _buildMessages.Error($"\tId: '{entry.Key.Value.ToString()}' Method Name: '{eventProcessor.Name}' Type FullName: '{eventProcessor.DeclaringType.FullName}'");
                 }
+
                 throw new DuplicateEventProcessor();
             }
         }
 
         void ValidateEvents(IEnumerable<Type> events, int depthLevel = 0)
         {
-            if (depthLevel >= 3) 
+            if (depthLevel >= 3)
             {
                 _buildMessages.Error($"Event validation reached a too deep depth level, meaning that your events are way too complex!. Be aware of complex types on events.");
                 throw new InvalidEvent("There are critical errors on events");
             }
+
             ValidateEventsAreImmutable(events);
             ValidateEventsPropertiesMatchConstructorParameter(events);
             ValidateEventContent(events, depthLevel);
@@ -153,10 +152,12 @@ namespace Dolittle.Build
         void ValidateEventsAreImmutable(IEnumerable<Type> events)
         {
             var mutableEvents = new List<Type>();
-            events.ForEach(@event => {
-                if (! @event.IsImmutable()) mutableEvents.Add(@event);
+            events.ForEach(@event =>
+            {
+                if (!@event.IsImmutable()) mutableEvents.Add(@event);
             });
-            if (mutableEvents.Any())
+
+            if (mutableEvents.Count > 0)
             {
                 _buildMessages.Warning("Discovered mutable events. An event should not have any settable properties");
                 mutableEvents.ForEach(@event => _buildMessages.Error($"The event '{@event.FullName}' is not immutable."));
@@ -169,21 +170,23 @@ namespace Dolittle.Build
         {
             var eventsWithoutNonDefaultConstructor = new List<Type>();
             var eventsWithConstructorParameterNameMismatch = new List<(Type @event, string propName)>();
-            events.ForEach(@event => {
+            events.ForEach(@event =>
+            {
                 var eventConstructor = @event.GetNonDefaultConstructorWithGreatestNumberOfParameters();
                 var publicProperties = @event.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-                if (eventConstructor == null && publicProperties.Count() > 0) eventsWithoutNonDefaultConstructor.Add(@event);
+                if (eventConstructor == null && publicProperties.Length > 0) eventsWithoutNonDefaultConstructor.Add(@event);
                 else if (eventConstructor != null) ValidateEventPropertyAndConstructorParameterNameMatch(eventConstructor, publicProperties, @event, eventsWithConstructorParameterNameMismatch);
             });
             bool throwException = false;
-            if (eventsWithoutNonDefaultConstructor.Any())
+            if (eventsWithoutNonDefaultConstructor.Count > 0)
             {
                 throwException = true;
                 _buildMessages.Error("Discovered events with state, but without a custom constructor.");
                 eventsWithoutNonDefaultConstructor.ForEach(invalidEvent => _buildMessages.Error($"The event '{invalidEvent.FullName}' has properties, but does not have a custom constructor."));
             }
-            if (eventsWithConstructorParameterNameMismatch.Any())
+
+            if (eventsWithConstructorParameterNameMismatch.Count > 0)
             {
                 throwException = true;
                 _buildMessages.Error("Discovered events with incorrect constructors. All constructor parameter names should be camelCase and match the property name which it sets, which should be PascalCase");
@@ -193,12 +196,12 @@ namespace Dolittle.Build
             if (throwException) throw new InvalidEvent("There are critical errors on events");
         }
 
-
         void ValidateEventPropertyAndConstructorParameterNameMatch(ConstructorInfo eventConstructor, PropertyInfo[] publicProperties, Type @event, IList<(Type @event, string propName)> invalidEvents)
         {
             var constructorPropertyNames = eventConstructor.GetParameters().Select(_ => _.Name);
-            publicProperties.Select(_ => _.Name).ForEach(propName => {
-                if (! constructorPropertyNames.Any(paramName => paramName == propName.ToCamelCase())) 
+            publicProperties.Select(_ => _.Name).ForEach(propName =>
+            {
+                if (!constructorPropertyNames.Any(paramName => paramName == propName.ToCamelCase()))
                     invalidEvents.Add((@event, propName));
             });
         }
@@ -208,48 +211,50 @@ namespace Dolittle.Build
             ThrowIfEventsWithInvalidComplexProperties(events, depthLevel);
         }
 
-
         void ThrowIfEventsWithInvalidComplexProperties(IEnumerable<Type> events, int depthLevel)
         {
             var invalidProperties = new List<PropertyInfo>();
-            foreach (var @event in events) 
+            foreach (var @event in events)
             {
-                var publicProperties = @event.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                foreach(var prop in publicProperties)
+                foreach (var prop in @event.GetProperties(BindingFlags.Public | BindingFlags.Instance))
                 {
                     var propType = prop.PropertyType;
-                    if (propType.IsEnumerable()) 
+                    if (propType.IsEnumerable())
                         propType = propType.GetEnumerableElementType();
-                    
-                    if (propType.IsNullable()) 
-                        invalidProperties.Add(prop);
-                    else if (IsEvent(propType))
-                        invalidProperties.Add(prop);
-                    else if (propType.IsConcept()) 
-                        invalidProperties.Add(prop);
 
-                    else if (! propType.IsAPrimitiveType() && propType != typeof(Guid)) 
+                    if (propType.IsNullable())
+                    {
+                        invalidProperties.Add(prop);
+                    }
+                    else if (IsEvent(propType))
+                    {
+                        invalidProperties.Add(prop);
+                    }
+                    else if (propType.IsConcept())
+                    {
+                        invalidProperties.Add(prop);
+                    }
+                    else if (!propType.IsAPrimitiveType() && propType != typeof(Guid))
                     {
                         if (propType.Module != prop.DeclaringType.Module)
                             invalidProperties.Add(prop);
-                        else ValidateEvents(new []{propType}, depthLevel + 1);
-
+                        else ValidateEvents(new[] { propType }, depthLevel + 1);
                     }
                 }
             }
-            if (invalidProperties.Any())
+
+            if (invalidProperties.Count > 0)
             {
                 _buildMessages.Error($"Discovered events with invalid content.\n\tAn event cannot contain a Nullable type.\n\tAn event cannot contain a Concept.\n\tAn event cannot contain another Event.\n\tAn Event cannot contain complex types from other projects.\n\tAn event cannot contain a Complex Type that has a too deep type reference structure.");
                 invalidProperties.ForEach(prop => _buildMessages.Error($"The property '{prop.Name}' of Type '{prop.PropertyType.FullName}' on the event '{prop.DeclaringType.FullName}' is invalid. "));
 
                 throw new InvalidEvent("There are critical errors on events");
             }
-            
-        }
-        bool IsEvent(Type type)
-        {
-            return _artifactTypes.Where(artifactType => artifactType.TypeName == "event").First().Type.IsAssignableFrom(type);
         }
 
+        bool IsEvent(Type type)
+        {
+            return _artifactTypes.First(artifactType => artifactType.TypeName == "event").Type.IsAssignableFrom(type);
+        }
     }
 }

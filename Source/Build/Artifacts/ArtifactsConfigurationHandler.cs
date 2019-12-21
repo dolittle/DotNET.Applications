@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Build.Topology;
 
@@ -36,7 +37,7 @@ namespace Dolittle.Build.Artifacts
         /// <param name="topology">The <see cref="Applications.Configuration.Topology"/> that's used for building the <see cref="ArtifactsConfiguration"/>.</param>
         /// <param name="configuration">Current <see cref="BuildTaskConfiguration"/>.</param>
         /// <returns>The built <see cref="ArtifactsConfiguration"/>.</returns>
-        public ArtifactsConfiguration Build(Type[] types, Applications.Configuration.Topology topology, BuildTaskConfiguration configuration)
+        public ArtifactsConfiguration Build(IEnumerable<Type> types, Applications.Configuration.Topology topology, BuildTaskConfiguration configuration)
         {
             var artifactsConfiguration = _configurationManager.Load();
             var boundedContextTopology = new BoundedContextTopology(topology, configuration.UseModules, configuration.NamespaceSegmentsToStrip);

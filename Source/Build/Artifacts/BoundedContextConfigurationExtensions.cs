@@ -27,7 +27,7 @@ namespace Dolittle.Build.Artifacts
         }
 
         /// <summary>
-        /// Returns a <see cref="Dictionary{Feature, FeatureName}"/> where Key is the Feature (id) and Value is the FeatureName of all <see cref="FeatureDefinition"/> in <see cref="Applications.Configuration.Topology"/>
+        /// Returns a <see cref="Dictionary{Feature, FeatureName}"/> where Key is the Feature (id) and Value is the FeatureName of all <see cref="FeatureDefinition"/> in <see cref="Applications.Configuration.Topology"/>.
         /// </summary>
         /// <param name="configuration"><see cref="BoundedContextTopology"/> to extend.</param>
         /// <returns>A map of <see cref="Feature"/> to <see cref="FeatureName"/>.</returns>
@@ -41,7 +41,7 @@ namespace Dolittle.Build.Artifacts
         }
 
         /// <summary>
-        /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextTopology">BoundedContextConfiguration's </see> topology 
+        /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextTopology">BoundedContextConfiguration's </see> topology.
         /// </summary>
         /// <param name="configuration"><see cref="BoundedContextTopology"/> to extend.</param>
         /// <param name="namespace">Namespace to find matching feature in.</param>
@@ -55,7 +55,7 @@ namespace Dolittle.Build.Artifacts
         }
 
         /// <summary>
-        /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextTopology">BoundedContextConfiguration's </see> topology 
+        /// Returns a <see cref="FeatureDefinition"/> that matches the artifact with the given namespace based on the <see cref="BoundedContextTopology">BoundedContextConfiguration's </see> topology.
         /// </summary>
         /// <param name="configuration"><see cref="BoundedContextTopology"/> to extend.</param>
         /// <param name="namespace">Namespace to find matching feature in.</param>
