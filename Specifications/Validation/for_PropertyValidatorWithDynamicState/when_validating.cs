@@ -1,7 +1,6 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using FluentValidation;
 using FluentValidation.Internal;
 using FluentValidation.Validators;
@@ -17,15 +16,15 @@ namespace Dolittle.FluentValidation.for_PropertyValidatorWithDynamicState
         static PropertyValidatorContext validator_context;
 
         Establish context = () =>
-            {
-                validator = new MyValidator();
-                model = new Model { TheString = expected };
-                validator_context = new PropertyValidatorContext(
-                    new ValidationContext(model), 
-                    PropertyRule.Create((Model m) => m.TheString),
-                    "TheString");
-                validator.AddExpression<Model>(v => v.TheString);
-            };
+        {
+            validator = new MyValidator();
+            model = new Model { TheString = expected };
+            validator_context = new PropertyValidatorContext(
+                new ValidationContext(model),
+                PropertyRule.Create((Model m) => m.TheString),
+                "TheString");
+            validator.AddExpression<Model>(v => v.TheString);
+        };
 
         Because of = () => validator.Validate(validator_context);
 

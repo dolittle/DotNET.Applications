@@ -1,22 +1,21 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Dolittle.Applications.Configuration
 {
     /// <summary>
-    /// Represents the definition of a <see cref="Feature"/>
+    /// Represents the definition of a <see cref="Feature"/>.
     /// </summary>
-    public class FeatureDefinition 
+    public class FeatureDefinition
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="FeatureDefinition"/>
+        /// Initializes a new instance of the <see cref="FeatureDefinition"/> class.
         /// </summary>
-        /// <param name="name"><see cref="FeatureName">Name</see> of the featurew</param>
-        /// <param name="subFeatures">Key/Value pairs of features and their definitions for any sub-features</param>
+        /// <param name="name"><see cref="FeatureName">Name</see> of the feature.</param>
+        /// <param name="subFeatures">Key/Value pairs of features and their definitions for any sub-features.</param>
         public FeatureDefinition(FeatureName name, IDictionary<Feature, FeatureDefinition> subFeatures)
         {
             Name = name;
@@ -24,14 +23,13 @@ namespace Dolittle.Applications.Configuration
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="FeatureName">name of the feature</see>
+        /// Gets the <see cref="FeatureName">name of the feature</see>.
         /// </summary>
         public FeatureName Name { get; }
 
-
         /// <summary>
-        /// Gets the <see cref="IEnumerable{FeatureDefinition}">sub features</see> that exists
+        /// Gets the <see cref="IEnumerable{FeatureDefinition}">sub features</see> that exists.
         /// </summary>
-        public ReadOnlyDictionary<Feature,FeatureDefinition> SubFeatures { get; }
+        public ReadOnlyDictionary<Feature, FeatureDefinition> SubFeatures { get; }
     }
 }

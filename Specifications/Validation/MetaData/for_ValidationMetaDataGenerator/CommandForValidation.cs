@@ -1,7 +1,6 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using Dolittle.Commands;
 
 namespace Dolittle.FluentValidation.MetaData.for_ValidationMetaDataGenerator
@@ -12,6 +11,7 @@ namespace Dolittle.FluentValidation.MetaData.for_ValidationMetaDataGenerator
         public const string SomeIntName = "someInt";
 
         public string SomeString { get; set; }
+
         public int SomeInt { get; set; }
     }
 }

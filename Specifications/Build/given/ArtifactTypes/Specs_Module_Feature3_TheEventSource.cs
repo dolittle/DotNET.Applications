@@ -1,7 +1,5 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -9,6 +7,8 @@ using System.Linq.Expressions;
 using Dolittle.Events;
 using Dolittle.Rules;
 using Dolittle.Runtime.Events;
+
+#pragma warning disable SA1649
 
 namespace Specs.Module.Feature3
 {
@@ -21,6 +21,7 @@ namespace Specs.Module.Feature3
         public UncommittedEvents UncommittedEvents => throw new System.NotImplementedException();
 
         public IEnumerable<BrokenRule> BrokenRules => throw new System.NotImplementedException();
+
         public IEnumerable<RuleSetEvaluation> RuleSetEvaluations => throw new System.NotImplementedException();
 
         public RuleSetEvaluation Evaluate(params IRule[] rules)

@@ -1,9 +1,9 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Dolittle.Artifacts;
@@ -11,13 +11,14 @@ using Dolittle.Collections;
 using Dolittle.Concepts;
 using Dolittle.Runtime.Commands;
 using Dolittle.Serialization.Json;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
+#pragma warning disable CA1308
 
 namespace Dolittle.Commands
 {
     /// <summary>
-    /// Represents an implementation of <see cref="ICommandRequestToCommandConverter"/>
+    /// Represents an implementation of <see cref="ICommandRequestToCommandConverter"/>.
     /// </summary>
     public class CommandRequestToCommandConverter : ICommandRequestToCommandConverter
     {
@@ -25,10 +26,10 @@ namespace Dolittle.Commands
         readonly ISerializer _serializer;
 
         /// <summary>
-        /// Initialize a new instance of <see cref="CommandRequestToCommandConverter"/>
+        /// Initializes a new instance of the <see cref="CommandRequestToCommandConverter"/> class.
         /// </summary>
-        /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for mapping between types and artifacts</param>
-        /// <param name="serializer"><see cref="ISerializer"/> for serialization</param>
+        /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for mapping between types and artifacts.</param>
+        /// <param name="serializer"><see cref="ISerializer"/> for serialization.</param>
         public CommandRequestToCommandConverter(IArtifactTypeMap artifactTypeMap, ISerializer serializer)
         {
             _artifactTypeMap = artifactTypeMap;
@@ -38,8 +39,7 @@ namespace Dolittle.Commands
         /// <inheritdoc/>
         public ICommand Convert(CommandRequest request)
         {
-            // todo: Cache it per transaction / command context 
-
+            // Todo: Cache it per transaction / command context
             var type = _artifactTypeMap.GetTypeFor(request.Type);
 
             // todo: Verify that it is a an ICommand
@@ -71,7 +71,7 @@ namespace Dolittle.Commands
 
         object HandleValue(Type targetType, object value)
         {
-            if (value is JArray ||  value is JObject)
+            if (value is JArray || value is JObject)
             {
                 value = _serializer.FromJson(targetType, value.ToString());
             }
@@ -81,7 +81,7 @@ namespace Dolittle.Commands
             }
             else if (targetType == typeof(DateTimeOffset) && value.GetType() == typeof(DateTime))
             {
-                value = new DateTimeOffset((DateTime) value);
+                value = new DateTimeOffset((DateTime)value);
             }
             else if (targetType.IsEnum)
             {
@@ -94,7 +94,9 @@ namespace Dolittle.Commands
             else
             {
                 if (!targetType.IsAssignableFrom(value.GetType()))
-                    value = System.Convert.ChangeType(value, targetType);
+                {
+                    value = System.Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
+                }
             }
 
             return value;

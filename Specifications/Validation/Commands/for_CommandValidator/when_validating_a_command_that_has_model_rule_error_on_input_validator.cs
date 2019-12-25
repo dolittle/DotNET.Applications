@@ -1,15 +1,14 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Dynamic;
 using System.Linq;
 using Dolittle.Artifacts;
 using Dolittle.Commands;
 using Dolittle.Commands.Validation;
+using Dolittle.Execution;
 using Dolittle.Runtime.Commands;
 using Dolittle.Runtime.Commands.Validation;
-using Dolittle.Execution;
 using Dolittle.Validation;
 using Machine.Specifications;
 using Moq;
@@ -33,9 +32,9 @@ namespace Dolittle.FluentValidation.Commands.for_CommandValidator
             command_instance = Mock.Of<ICommand>();
             command_request_converter.Setup(c => c.Convert(command)).Returns(command_instance);
             command_input_validator = new Mock<ICommandInputValidator>();
-            command_input_validator.Setup(c => c.ValidateFor(command_instance)).Returns(new []
+            command_input_validator.Setup(c => c.ValidateFor(command_instance)).Returns(new[]
             {
-                new ValidationResult(ErrorMessage, new [] { ModelRule<object>.ModelRulePropertyName })
+                new ValidationResult(ErrorMessage, new[] { ModelRule<object>.ModelRulePropertyName })
             });
 
             command_validator_provider_mock.Setup(c => c.GetInputValidatorFor(command_instance)).Returns(command_input_validator.Object);

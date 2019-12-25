@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>Dolittle.Commands.Security</AssemblyName>
-  </PropertyGroup>
-  <Import Project="../../Build/MSBuild/specs.props"></Import>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Source\Commands.Security\Commands.Security.csproj" />
-    <ProjectReference Include="..\..\Source\Commands.Handling\Commands.Handling.csproj" />
-  </ItemGroup>
+    <Import Project="../../specs.props"/>
+
+    <PropertyGroup>
+        <AssemblyName>Dolittle.Commands.Security</AssemblyName>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="..\..\Source\Commands.Security\Commands.Security.csproj" />
+        <ProjectReference Include="..\..\Source\Commands.Handling\Commands.Handling.csproj" />
+    </ItemGroup>
 </Project>

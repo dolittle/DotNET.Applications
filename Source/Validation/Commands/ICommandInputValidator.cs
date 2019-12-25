@@ -1,15 +1,13 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-using Dolittle.Commands;
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using Dolittle.Validation;
 using FluentValidation;
 
 namespace Dolittle.Commands.Validation
 {
     /// <summary>
-    /// Defines a marker interface for input level validator for a <see cref="ICommand"/>
+    /// Defines a marker interface for input level validator for a <see cref="ICommand"/>.
     /// </summary>
     /// <remarks>
     /// Types inheriting from this interface and also <see cref="ICanValidate{T}"/> will be automatically registered.

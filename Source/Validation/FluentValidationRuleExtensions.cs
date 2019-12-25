@@ -1,36 +1,40 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using FluentValidation;
 using FluentValidation.Validators;
 
 namespace Dolittle.Validation
 {
     /// <summary>
-    /// 
+    /// Extensions for FluentValidation rules.
     /// </summary>
     public static class FluentValidationRuleExtensions
     {
         /// <summary>
+        /// Start building a dynamic validation rule.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TProperty"></typeparam>
-        /// <param name="ruleBuilder"></param>
-        /// <param name="validator"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">Type being validated.</typeparam>
+        /// <typeparam name="TProperty">Type of property being validated.</typeparam>
+        /// <param name="ruleBuilder"><see cref="IRuleBuilder{T,TProperty}"/> being extended.</param>
+        /// <param name="validator"><see cref="IValidator"/> to add.</param>
+        /// <param name="name">Display name.</param>
+        /// <returns><see cref="IRuleBuilderOptions{T, TProperty}"/> for building.</returns>
         public static IRuleBuilderOptions<T, TProperty> DynamicValidationRule<T, TProperty>(
             this IRuleBuilder<T, TProperty> ruleBuilder,
             IValidator validator,
             string name)
         {
-#pragma warning disable 0618
-            return ruleBuilder
-                .NotNull()
-                //.SetValidator(validator)
-                .WithName(name);
-#pragma warning restore 0618
+            var builder = ruleBuilder
+                    .NotNull()
+                    .WithName(name);
+
+            if (validator is IPropertyValidator)
+            {
+                builder = builder.SetValidator(validator as IPropertyValidator);
+            }
+
+            return builder;
         }
     }
 }

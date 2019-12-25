@@ -1,18 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../specs.props"/>
 
-  <PropertyGroup>
-    <AssemblyName>Dolittle.Domain.Specs</AssemblyName>
-  </PropertyGroup>
-
-  <Import Project="../../Build/MSBuild/specs.props"/>
+    <PropertyGroup>
+        <AssemblyName>Dolittle.Domain.Specs</AssemblyName>
+    </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="4.*" />
     </ItemGroup>
 
-
-  <ItemGroup>
-    <ProjectReference Include="../../Source/Domain/Domain.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="../../Source/Domain/Domain.csproj" />
+    </ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using Dolittle.DependencyInversion;
 using Dolittle.Logging;
@@ -12,16 +11,16 @@ using Grpc.Core.Interceptors;
 namespace Dolittle.Heads
 {
     /// <summary>
-    /// Provides bindings related to client
+    /// Provides bindings related to client.
     /// </summary>
     public class Bindings : ICanProvideBindings
     {
         readonly GetContainer _getContainer;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Bindings"/>
+        /// Initializes a new instance of the <see cref="Bindings"/> class.
         /// </summary>
-        /// <param name="getContainer"><see cref="GetContainer"/> for getting the correct <see cref="IContainer"/>></param>
+        /// <param name="getContainer"><see cref="GetContainer"/> for getting the correct <see cref="IContainer"/>.</param>
         public Bindings(GetContainer getContainer)
         {
             _getContainer = getContainer;
@@ -42,27 +41,24 @@ namespace Dolittle.Heads
 
                 logger.Information($"Connect head to runtime at '{configuration.Host}:{configuration.Port}'");
 
-                var channel = new Channel(configuration.Host, configuration.Port, ChannelCredentials.Insecure, new []
-                {
-                    keepAliveTime,
-                    keepAliveTimeout,
-                    keepAliveWithoutCalls
-                });
+                var channel = new Channel(
+                    configuration.Host,
+                    configuration.Port,
+                    ChannelCredentials.Insecure,
+                    new[] { keepAliveTime, keepAliveTimeout, keepAliveWithoutCalls });
 
                 var clientId = Guid.NewGuid();
 
-                var callInvoker = channel.Intercept(_ => {
+                var callInvoker = channel.Intercept(_ =>
+                {
                     _.Add(new Metadata.Entry("clientid", clientId.ToString()));
                     return _;
                 });
 
-                var client = new Head(
+                return new Head(
                     clientId,
                     PreConfiguration.ClientPort,
-                    callInvoker
-                );
-
-                return client;
+                    callInvoker);
             }).Singleton();
         }
     }

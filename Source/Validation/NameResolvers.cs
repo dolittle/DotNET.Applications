@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -13,32 +12,31 @@ using FluentValidation.Internal;
 namespace Dolittle.Validation
 {
     /// <summary>
-    /// Resolves property names and display names, taking into account concepts and model rules
+    /// Resolves property names and display names, taking into account concepts and model rules.
     /// </summary>
-    public class NameResolvers
+    public static class NameResolvers
     {
         /// <summary>
-        /// Use by Fluent Validation.  Resolves property names, taking into account concepts and model rules
+        /// Use by Fluent Validation.  Resolves property names, taking into account concepts and model rules.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="memberInfo"></param>
-        /// <param name="expression"></param>
-        /// <returns></returns>
+        /// <param name="type"><see cref="Type"/> to resolve from.</param>
+        /// <param name="memberInfo"><see cref="MemberInfo"/> for property.</param>
+        /// <param name="expression"><see cref="LambdaExpression"/> representing the property.</param>
+        /// <returns>Name of property.</returns>
         public static string PropertyNameResolver(Type type, MemberInfo memberInfo, LambdaExpression expression)
         {
             if (expression != null)
             {
-                var chain = FromExpression(type,memberInfo,expression);
+                var chain = FromExpression(type, memberInfo, expression);
                 if (chain.Count > 0)
                 {
-                    var chainAsString = chain.ToString();
-                    return chainAsString;
+                    return chain.ToString();
                 }
             }
 
             if (memberInfo != null)
             {
-                return (IsModelRule(memberInfo) || IsConcept(memberInfo)) 
+                return (IsModelRule(memberInfo) || IsConcept(memberInfo))
                     ? string.Empty : memberInfo.Name;
             }
 
@@ -48,15 +46,16 @@ namespace Dolittle.Validation
         /// <summary>
         /// Used by Fluent Validation.  Resolves display name based on member expression.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="memberInfo"></param>
-        /// <param name="expression"></param>
-        /// <returns></returns>
+        /// <param name="type"><see cref="Type"/> to resolve from.</param>
+        /// <param name="memberInfo"><see cref="MemberInfo"/> for property.</param>
+        /// <param name="expression"><see cref="LambdaExpression"/> representing the property.</param>
+        /// <returns>Name of property.</returns>
+#pragma warning disable CA1801
         public static string DisplayNameResolver(Type type, MemberInfo memberInfo, LambdaExpression expression)
+#pragma warning restore CA1801
         {
             if (expression == null) return "[N/A]";
-            var displayName = FromExpression(expression);
-            return displayName;
+            return FromExpression(expression);
         }
 
         static PropertyChain FromExpression(Type type, MemberInfo memberInfo, LambdaExpression expression)
@@ -70,9 +69,10 @@ namespace Dolittle.Validation
                     memberExpression != null;
                     memberExpression = ExpressionExtensions.Unwrap(memberExpression.Expression))
             {
-                if(!IsConcept(memberInfo))
+                if (!IsConcept(memberInfo))
                     stack.Push(memberExpression.Member.Name);
             }
+
             return new PropertyChain((IEnumerable<string>)stack);
         }
 
@@ -85,6 +85,7 @@ namespace Dolittle.Validation
             {
                 stack.Push(memberExpression.Member.Name);
             }
+
             return string.Join(".", stack.ToArray());
         }
 

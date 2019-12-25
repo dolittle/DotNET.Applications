@@ -1,14 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../specs.props"/>
 
-  <PropertyGroup>
-    <AssemblyName>Dolittle.Build.Specs</AssemblyName>
-  </PropertyGroup>
+    <PropertyGroup>
+        <AssemblyName>Dolittle.Build.Specs</AssemblyName>
+    </PropertyGroup>
 
-  <Import Project="../../Build/MSBuild/specs.props"></Import>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Source\Build\Build.csproj" />
-  </ItemGroup>
-
-
+    <ItemGroup>
+        <ProjectReference Include="..\..\Source\Build\Build.csproj" />
+    </ItemGroup>
 </Project>

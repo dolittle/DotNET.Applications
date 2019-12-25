@@ -1,7 +1,6 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 namespace Dolittle.Validation
 {
     /// <summary>
@@ -12,6 +11,7 @@ namespace Dolittle.Validation
     /// of types (i.e. commands) for which there are no explicitly defined validators.
     /// You most likely want to subclass <see cref="InputValidator{T}"/>.
     /// </remarks>
+    /// <typeparam name="T">Type being validated.</typeparam>
     public interface IValidateInput<T>
     {
     }

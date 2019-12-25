@@ -1,7 +1,5 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using Dolittle.Commands;
@@ -12,7 +10,7 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_not_
 {
     public class artifacts_where_one_artifact_does_not_match_topology : Dolittle.Build.given.an_ILogger
     {
-        protected static readonly Type[] artifacts = new []
+        protected static readonly Type[] artifacts = new[]
         {
             typeof(Specs.Feature.TheCommand),
             typeof(Specs.Feature.TheEvent),

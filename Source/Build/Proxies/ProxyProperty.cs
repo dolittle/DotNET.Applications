@@ -1,22 +1,21 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace Dolittle.Build.Proxies
 {
     /// <summary>
-    /// Represents a property of an artifact
+    /// Represents a property of an artifact.
     /// </summary>
     public class ProxyProperty
     {
         /// <summary>
-        /// Gets and sets the name of the property
+        /// Gets or sets the name of the property.
         /// </summary>
-        public string PropertyName {get; set;}
+        public string PropertyName { get; set; }
+
         /// <summary>
-        /// Gets and sets the default value of the property 
+        /// Gets or sets the default value of the property.
         /// </summary>
-        public object PropertyDefaultValue {get; set;}
+        public object PropertyDefaultValue { get; set; }
     }
 }

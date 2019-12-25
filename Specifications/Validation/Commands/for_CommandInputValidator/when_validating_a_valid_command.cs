@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
 using Dolittle.Commands.Validation;
 using Dolittle.Validation;
@@ -15,10 +14,10 @@ namespace Dolittle.FluentValidation.Commands.for_CommandInputValidator
         static IEnumerable<ValidationResult> results;
 
         Establish context = () =>
-                                {
-                                    simple_command.SomeString = "Something, something, something, Dark Side";
-                                    simple_command.SomeInt = 42;
-                                };
+        {
+            simple_command.SomeString = "Something, something, something, Dark Side";
+            simple_command.SomeInt = 42;
+        };
 
         Because of = () => results = simple_command_input_validator.ValidateFor(simple_command);
 

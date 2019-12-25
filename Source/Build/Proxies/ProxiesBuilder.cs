@@ -1,9 +1,9 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -17,59 +17,63 @@ using Dolittle.Strings;
 namespace Dolittle.Build.Proxies
 {
     /// <summary>
-    /// Represents a class that handles the generation of proxies
+    /// Represents a class that handles the generation of proxies.
     /// </summary>
     public class ProxiesBuilder
     {
         readonly TemplateLoader _templateLoader;
-        readonly Type[] _artifacts;
+        readonly IEnumerable<Type> _artifacts;
         readonly ArtifactTypes _artifactTypes;
         readonly IBuildMessages _buildMessages;
 
         /// <summary>
-        /// Instantiates an instance of <see cref="ProxiesBuilder"/>
+        /// Initializes a new instance of the <see cref="ProxiesBuilder"/> class.
         /// </summary>
-        /// <param name="templateLoader"></param>
-        /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies</param>
-        /// <param name="artifactTypes"></param>
-        /// <param name="buildMessages"></param>
-        public ProxiesBuilder(TemplateLoader templateLoader, Type[] artifacts, ArtifactTypes artifactTypes, IBuildMessages buildMessages)
+        /// <param name="templateLoader"><see cref="TemplateLoader"/>.</param>
+        /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies.</param>
+        /// <param name="artifactTypes">All <see cref="ArtifactTypes"/>.</param>
+        /// <param name="buildMessages"><see cref="IBuildMessages"/> for outputting build messages.</param>
+        public ProxiesBuilder(TemplateLoader templateLoader, IEnumerable<Type> artifacts, ArtifactTypes artifactTypes, IBuildMessages buildMessages)
         {
             _templateLoader = templateLoader;
             _artifacts = artifacts;
             _artifactTypes = artifactTypes;
             _buildMessages = buildMessages;
         }
+
         /// <summary>
-        /// Generates all proxies for all relevant artifacts and writes them as files in their corresponding feature structure
+        /// Generates all proxies for all relevant artifacts and writes them as files in their corresponding feature structure.
         /// </summary>
+        /// <param name="artifactsConfiguration">The <see cref="ArtifactsConfiguration"/>.</param>
+        /// <param name="configuration">The <see cref="BuildTaskConfiguration"/>.</param>
         public void GenerateProxies(ArtifactsConfiguration artifactsConfiguration, BuildTaskConfiguration configuration)
         {
             var proxies = new List<Proxy>();
 
-            GenerateProxies(artifactsConfiguration, configuration, _templateLoader.CommandProxyTemplate, "command", GenerateCommandProxy, ref proxies);
-            GenerateProxies(artifactsConfiguration, configuration, _templateLoader.QueryProxyTemplate, "query", GenereateQueryProxy, ref proxies);
-            GenerateProxies(artifactsConfiguration, configuration, _templateLoader.ReadModelProxyTemplate, "read model", GenerateReadModelProxy, ref proxies);
+            proxies.AddRange(GenerateProxies(artifactsConfiguration, configuration, _templateLoader.CommandProxyTemplate, "command", GenerateCommandProxy));
+            proxies.AddRange(GenerateProxies(artifactsConfiguration, configuration, _templateLoader.QueryProxyTemplate, "query", GenereateQueryProxy));
+            proxies.AddRange(GenerateProxies(artifactsConfiguration, configuration, _templateLoader.ReadModelProxyTemplate, "read model", GenerateReadModelProxy));
             WriteProxiesToFile(proxies.ToArray());
         }
 
-        void GenerateProxies(
-            ArtifactsConfiguration artifactsConfiguration, 
-            BuildTaskConfiguration configuration, 
-            Func<object, string> template, 
-            string artifactTypeName, 
-            Func<Type, ArtifactsConfiguration, BuildTaskConfiguration, Func<object, string>, IEnumerable<Proxy>> ProxyGeneratorFunction,
-            ref List<Proxy> proxies)
+        IEnumerable<Proxy> GenerateProxies(
+            ArtifactsConfiguration artifactsConfiguration,
+            BuildTaskConfiguration configuration,
+            Func<object, string> template,
+            string artifactTypeName,
+            Func<Type, ArtifactsConfiguration, BuildTaskConfiguration, Func<object, string>, IEnumerable<Proxy>> proxyGeneratorFunction)
         {
-            var artifactType = _artifactTypes.Single(_ => _.TypeName.Equals(artifactTypeName)).Type;
-            var artifacts = _artifacts.Where(_ => artifactType.IsAssignableFrom(_));
-
-            foreach (var artifact in artifacts)
+            List<Proxy> proxies = new List<Proxy>();
+            var artifactType = _artifactTypes.Single(_ => _.TypeName.Equals(artifactTypeName, StringComparison.InvariantCulture)).Type;
+            foreach (var artifact in _artifacts.Where(_ => artifactType.IsAssignableFrom(_)))
             {
-                var newProxies = ProxyGeneratorFunction(artifact, artifactsConfiguration, configuration, template);
+                var newProxies = proxyGeneratorFunction(artifact, artifactsConfiguration, configuration, template);
                 proxies.AddRange(newProxies);
             }
+
+            return proxies;
         }
+
         IEnumerable<Proxy> GenerateCommandProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
         {
             _buildMessages.Trace($"Creating command proxy for {ClrType.FromType(artifact).TypeString}");
@@ -81,16 +85,19 @@ namespace Dolittle.Build.Proxies
                 ArtifactId = artifactId.Value.ToString()
             };
             var setableProperties = artifact.GetSettableProperties();
-            
-            if (setableProperties.Any())
+
+            if (setableProperties.Length > 0)
                 handlebarsCommand.Properties = CreateProxyProperties(setableProperties);
+
             var proxies = new List<Proxy>();
             foreach (var path in configuration.ProxiesBasePath)
             {
                 proxies.Add(CreateProxy(artifact, template(handlebarsCommand), configuration, path));
             }
+
             return proxies;
         }
+
         IEnumerable<Proxy> GenereateQueryProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
         {
             _buildMessages.Trace($"Creating query proxy for {ClrType.FromType(artifact).TypeString}");
@@ -99,18 +106,20 @@ namespace Dolittle.Build.Proxies
                 ClrType = artifact.FullName,
                 QueryName = artifact.Name
             };
-            var setableProperties = artifact.GetSettableProperties();
-            
-            if (setableProperties.Any())
-                handlebarsQuery.Properties = CreateProxyProperties(setableProperties);
+            var settableProperties = artifact.GetSettableProperties();
+
+            if (settableProperties.Length > 0)
+                handlebarsQuery.Properties = CreateProxyProperties(settableProperties);
+
             var proxies = new List<Proxy>();
             foreach (var path in configuration.ProxiesBasePath)
             {
                 proxies.Add(CreateProxy(artifact, template(handlebarsQuery), configuration, path));
             }
+
             return proxies;
-            
         }
+
         IEnumerable<Proxy> GenerateReadModelProxy(Type artifact, ArtifactsConfiguration artifactsConfig, BuildTaskConfiguration configuration, Func<object, string> template)
         {
             _buildMessages.Trace($"Creating read model proxy for {ClrType.FromType(artifact).TypeString}");
@@ -120,19 +129,20 @@ namespace Dolittle.Build.Proxies
             {
                 ReadModelName = artifact.Name,
                 ReadModelArtifactId = artifactId.Value.ToString(),
-                ReadModelGeneration = artifactDefinition.Generation.Value.ToString()
+                ReadModelGeneration = artifactDefinition.Generation.Value.ToString(CultureInfo.InvariantCulture)
             };
-            var setableProperties = artifact.GetSettableProperties();
-            if (setableProperties.Any())
-                handlebarsReadmodel.Properties = CreateProxyProperties(setableProperties);
-            
+
+            var settableProperties = artifact.GetSettableProperties();
+            if (settableProperties.Length > 0)
+                handlebarsReadmodel.Properties = CreateProxyProperties(settableProperties);
+
             var proxies = new List<Proxy>();
             foreach (var path in configuration.ProxiesBasePath)
             {
                 proxies.Add(CreateProxy(artifact, template(handlebarsReadmodel), configuration, path));
             }
+
             return proxies;
-            
         }
 
         string GenerateFilePath(Type artifact, BuildTaskConfiguration configuration, string artifactName, string proxyBasePath)
@@ -147,7 +157,7 @@ namespace Dolittle.Build.Proxies
             foreach (var prop in properties)
             {
                 var defaultValue = prop.PropertyType.GetDefaultValueAsString();
-                
+
                 var proxyProperty = new ProxyProperty()
                 {
                     PropertyName = prop.Name.ToCamelCase(),
@@ -155,6 +165,7 @@ namespace Dolittle.Build.Proxies
                 };
                 proxyProperties.Add(proxyProperty);
             }
+
             return proxyProperties;
         }
 
@@ -162,24 +173,27 @@ namespace Dolittle.Build.Proxies
         {
             var filePath = GenerateFilePath(artifact, configuration, artifact.Name, proxyBasePath);
 
-            return (new Proxy(){Content = fileContent, FullFilePath = filePath});
+            return new Proxy() { Content = fileContent, FullFilePath = filePath };
         }
+
         void WriteProxiesToFile(Proxy[] proxies)
         {
             foreach (var proxy in proxies)
             {
                 var fileInfo = new FileInfo(proxy.FullFilePath);
-                if (! fileInfo.Directory.Exists) System.IO.Directory.CreateDirectory(fileInfo.DirectoryName);
+                if (!fileInfo.Directory.Exists) System.IO.Directory.CreateDirectory(fileInfo.DirectoryName);
                 using (var streamWriter = new StreamWriter(proxy.FullFilePath, false, Encoding.UTF8))
                 {
                     streamWriter.Write(proxy.Content);
                 }
             }
         }
+
         ArtifactId GetArtifactId(Type artifact, ArtifactsConfiguration config)
         {
             return config.GetMatchingArtifactId(artifact);
         }
+
         ArtifactDefinition GetArtifactDefinition(Type artifact, ArtifactsConfiguration config)
         {
             return config.GetMatchingArtifactDefinition(artifact);

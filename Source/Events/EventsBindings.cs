@@ -1,23 +1,21 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using Dolittle.DependencyInversion;
+using Dolittle.Events.Coordination;
+using Dolittle.Runtime.Events.Coordination;
+
 namespace Dolittle.Events
 {
-    using Dolittle.DependencyInversion;
-    using Dolittle.Runtime.Events.Coordination;
-    using Dolittle.Events.Coordination;
-    using System;
-
     /// <summary>
-    /// Bindings for hooking Events implementations to Runtime Interfaces
+    /// Bindings for hooking Events implementations to Runtime Interfaces.
     /// </summary>
-    public class EventsBindings : ICanProvideBindings 
+    public class EventsBindings : ICanProvideBindings
     {
         /// <inheritdoc />
         public void Provide(IBindingProviderBuilder builder)
         {
-            builder.Bind<IUncommittedEventStreamCoordinator>().To<UncommittedEventStreamCoordinator>();            
+            builder.Bind<IUncommittedEventStreamCoordinator>().To<UncommittedEventStreamCoordinator>();
         }
     }
 }

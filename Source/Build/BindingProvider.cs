@@ -1,21 +1,12 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-using Dolittle.Commands;
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using Dolittle.DependencyInversion;
-using Dolittle.Events;
-using Dolittle.Events.Processing;
-using Dolittle.Queries;
-using Dolittle.ReadModels;
-using Dolittle.Serialization.Json;
-using Newtonsoft.Json;
 
 namespace Dolittle.Build
 {
-
     /// <summary>
-    /// A class providing the startup bindings
+    /// A class providing the startup bindings.
     /// </summary>
     public class BindingProvider : ICanProvideBindings
     {

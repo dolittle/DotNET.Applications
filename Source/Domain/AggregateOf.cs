@@ -1,48 +1,48 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using Dolittle.Runtime.Events;
 
 namespace Dolittle.Domain
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IAggregateOf{T}"/>
+    /// Represents an implementation of <see cref="IAggregateOf{T}"/>.
     /// </summary>
-    public class AggregateOf<T> : IAggregateOf<T>
-        where T : class, IAggregateRoot
+    /// <typeparam name="TAggregate">Type of <see cref="IAggregateRoot"/>.</typeparam>
+    public class AggregateOf<TAggregate> : IAggregateOf<TAggregate>
+        where TAggregate : class, IAggregateRoot
     {
-        readonly IAggregateRootRepositoryFor<T> _repository;
+        readonly IAggregateRootRepositoryFor<TAggregate> _repository;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="AggregateOf{T}"/>
+        /// Initializes a new instance of the <see cref="AggregateOf{T}"/> class.
         /// </summary>
-        /// <param name="repository"><see cref="IAggregateRootRepositoryFor{T}"/> for getting <see cref="IAggregateRoot"/> instance</param>
-        public AggregateOf(IAggregateRootRepositoryFor<T> repository)
+        /// <param name="repository"><see cref="IAggregateRootRepositoryFor{T}"/> for getting <see cref="IAggregateRoot"/> instance.</param>
+        public AggregateOf(IAggregateRootRepositoryFor<TAggregate> repository)
         {
             _repository = repository;
         }
 
         /// <inheritdoc/>
-        public IAggregateRootOperations<T> Create()
+        public IAggregateRootOperations<TAggregate> Create()
         {
             var aggregate = _repository.Get(Guid.NewGuid());
-            return new AggregateRootOperations<T>(aggregate);
+            return new AggregateRootOperations<TAggregate>(aggregate);
         }
 
         /// <inheritdoc/>
-        public IAggregateRootOperations<T> Create(EventSourceId eventSourceId)
+        public IAggregateRootOperations<TAggregate> Create(EventSourceId eventSourceId)
         {
             var aggregate = _repository.Get(eventSourceId);
-            return new AggregateRootOperations<T>(aggregate);
+            return new AggregateRootOperations<TAggregate>(aggregate);
         }
 
         /// <inheritdoc/>
-        public IAggregateRootOperations<T> Rehydrate(EventSourceId eventSourceId)
+        public IAggregateRootOperations<TAggregate> Rehydrate(EventSourceId eventSourceId)
         {
             var aggregate = _repository.Get(eventSourceId);
-            return new AggregateRootOperations<T>(aggregate);
+            return new AggregateRootOperations<TAggregate>(aggregate);
         }
     }
 }

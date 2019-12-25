@@ -1,7 +1,5 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -12,19 +10,19 @@ using Dolittle.Configuration;
 namespace Dolittle.Build
 {
     /// <summary>
-    /// Represents the configuration object for the <see cref="BuildTask"/>
+    /// Represents the configuration object for the <see cref="BuildTask"/>.
     /// </summary>
     public class BuildTaskConfiguration : IConfigurationObject
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="BuildTaskConfiguration"/>
+        /// Initializes a new instance of the <see cref="BuildTaskConfiguration"/> class.
         /// </summary>
-        /// <param name="boundedContextConfigPath">Path to the 'bounded-context.json' file</param>
-        /// <param name="useModules">Wether or not to use modules in topology</param>
-        /// <param name="namespaceSegmentsToStrip">Namespace segments to strip</param>
-        /// <param name="generateProxies">Wether or not to generate proxies</param>
-        /// <param name="proxiesBasePath">Base path for proxy output</param>
-        /// <param name="dolittleFolder">Path to the .dolittle folder</param>
+        /// <param name="boundedContextConfigPath">Path to the 'bounded-context.json' file.</param>
+        /// <param name="useModules">Wether or not to use modules in topology.</param>
+        /// <param name="namespaceSegmentsToStrip">Namespace segments to strip.</param>
+        /// <param name="generateProxies">Wether or not to generate proxies.</param>
+        /// <param name="proxiesBasePath">Base path for proxy output.</param>
+        /// <param name="dolittleFolder">Path to the .dolittle folder.</param>
         public BuildTaskConfiguration(
             string boundedContextConfigPath,
             bool useModules,
@@ -42,34 +40,34 @@ namespace Dolittle.Build
         }
 
         /// <summary>
-        /// Gets the path to the 'bounded-context.json' file
+        /// Gets the path to the 'bounded-context.json' file.
         /// </summary>
-        public string BoundedContextConfigPath {  get; }
+        public string BoundedContextConfigPath { get; }
 
         /// <summary>
-        /// Gets wether or not to use modules as part of topology
+        /// Gets a value indicating whether or not to use modules as part of topology.
         /// </summary>
-        public bool UseModules {  get; }
+        public bool UseModules { get; }
 
         /// <summary>
-        /// Gets namespace segments to strip
+        /// Gets namespace segments to strip.
         /// </summary>
-        public IDictionary<Area, IEnumerable<string>> NamespaceSegmentsToStrip {get; }
+        public IDictionary<Area, IEnumerable<string>> NamespaceSegmentsToStrip { get; }
 
         /// <summary>
-        /// Gets wether or not to generate proxies
+        /// Gets a value indicating whether or not to generate proxies.
         /// </summary>
-        public bool GenerateProxies {  get; }
+        public bool GenerateProxies { get; }
 
         /// <summary>
-        /// Gets the base path for proxy generation for output
+        /// Gets the base path for proxy generation for output.
         /// </summary>
-        public IEnumerable<string> ProxiesBasePath {  get; }
+        public IEnumerable<string> ProxiesBasePath { get; }
 
         /// <summary>
-        /// Gets the path to the .dolittle folder
+        /// Gets the path to the .dolittle folder.
         /// </summary>
-        public string DolittleFolder { get; }
+        public string DolittleFolder { get; }
 
         Dictionary<Area, IEnumerable<string>> GetNamespacesToStripForAreaFor(string value)
         {
@@ -91,10 +89,10 @@ namespace Dolittle.Build
                     Value = splittedSegment[0]
                 };
                 var namespaceSegment = splittedSegment[1];
-                
-                if (! namespaceSegmentsToStrip.ContainsKey(area))
+
+                if (!namespaceSegmentsToStrip.ContainsKey(area))
                     namespaceSegmentsToStrip.Add(area, new List<string>());
-                
+
                 var values = namespaceSegmentsToStrip[area].ToList();
                 values.Add(namespaceSegment);
                 namespaceSegmentsToStrip[area] = values;
@@ -102,6 +100,7 @@ namespace Dolittle.Build
 
             return namespaceSegmentsToStrip;
         }
+
         IEnumerable<string> GetProxiesBasePath(string value)
         {
             return value.Split('|');

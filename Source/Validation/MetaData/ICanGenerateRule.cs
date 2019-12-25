@@ -1,9 +1,8 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
-using Dolittle.Validation.MetaData;
+using System.Collections.Generic;
 using FluentValidation.Validators;
 
 namespace Dolittle.Validation.MetaData
@@ -14,16 +13,16 @@ namespace Dolittle.Validation.MetaData
     public interface ICanGenerateRule
     {
         /// <summary>
-        /// Types that are supported by the generator
+        /// Gets types that are supported by the generator.
         /// </summary>
-        Type[] From { get; }
+        IEnumerable<Type> From { get; }
 
         /// <summary>
-        /// Generate from a specific <see cref="IPropertyValidator"/>
+        /// Generate from a specific <see cref="IPropertyValidator"/>.
         /// </summary>
-        /// <param name="propertyName">Name of the property</param>
-        /// <param name="propertyValidator"><see cref="IPropertyValidator"/></param>
-        /// <returns></returns>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="propertyValidator"><see cref="IPropertyValidator"/>.</param>
+        /// <returns><see cref="Rule"/> instance.</returns>
         Rule GeneratorFrom(string propertyName, IPropertyValidator propertyValidator);
     }
 }

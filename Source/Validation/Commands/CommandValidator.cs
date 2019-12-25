@@ -1,20 +1,19 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dolittle.Runtime.Commands;
-using Dolittle.Validation;
-using Dolittle.Runtime.Commands.Validation;
 using Dolittle.Commands.Coordination;
-using Dolittle.Commands.Handling;
 using Dolittle.Lifecycle;
+using Dolittle.Runtime.Commands;
+using Dolittle.Runtime.Commands.Validation;
+using Dolittle.Validation;
 
 namespace Dolittle.Commands.Validation
 {
     /// <summary>
-    /// Represents a <see cref="ICommandValidator">ICommandValidationService</see>
+    /// Represents a <see cref="ICommandValidator">ICommandValidationService</see>.
     /// </summary>
     [Singleton]
     public class CommandValidator : ICommandValidator
@@ -23,10 +22,10 @@ namespace Dolittle.Commands.Validation
         readonly ICommandRequestToCommandConverter _commandRequestConverter;
 
         /// <summary>
-        /// Initializes an instance of <see cref="CommandValidator"/> CommandValidationService
+        /// Initializes a new instance of the <see cref="CommandValidator"/> class.
         /// </summary>
-        /// <param name="commandValidatorProvider"><see cref="ICommandValidatorProvider"/> for providing command validators</param>
-        /// <param name="commandRequestConverter"><see cref="ICommandToCommandRequestConverter"/> for converting to command instances</param>
+        /// <param name="commandValidatorProvider"><see cref="ICommandValidatorProvider"/> for providing command validators.</param>
+        /// <param name="commandRequestConverter"><see cref="ICommandToCommandRequestConverter"/> for converting to command instances.</param>
         public CommandValidator(
             ICommandValidatorProvider commandValidatorProvider,
             ICommandRequestToCommandConverter commandRequestConverter)
@@ -44,9 +43,8 @@ namespace Dolittle.Commands.Validation
             var validationResults = ValidateInternal(commandInstance);
             result.ValidationResults = validationResults.Where(v => v.MemberNames.First() != ModelRule<object>.ModelRulePropertyName);
             result.CommandErrorMessages = validationResults.Where(v => v.MemberNames.First() == ModelRule<object>.ModelRulePropertyName).Select(v => v.ErrorMessage);
-            return result;   
+            return result;
         }
-
 
         IEnumerable<ValidationResult> ValidateInternal(ICommand command)
         {
@@ -54,7 +52,7 @@ namespace Dolittle.Commands.Validation
             if (inputValidator != null)
             {
                 var inputValidationErrors = inputValidator.ValidateFor(command);
-                if (inputValidationErrors.Count() > 0)
+                if (inputValidationErrors.Any())
                     return inputValidationErrors;
             }
 
@@ -62,10 +60,10 @@ namespace Dolittle.Commands.Validation
             if (businessValidator != null)
             {
                 var businessValidationErrors = businessValidator.ValidateFor(command);
-                return businessValidationErrors.Count() > 0 ? businessValidationErrors : new ValidationResult[0];
+                return businessValidationErrors.Any() ? businessValidationErrors : Array.Empty<ValidationResult>();
             }
 
-            return new ValidationResult[0];
+            return Array.Empty<ValidationResult>();
         }
     }
 }

@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using Dolittle.Resilience;
 using Grpc.Core;
@@ -9,7 +8,7 @@ using Grpc.Core;
 namespace Dolittle.Heads
 {
     /// <summary>
-    /// 
+    /// Represents a resilient <see cref="CallInvoker"/>.
     /// </summary>
     public class ResilientCallInvoker : CallInvoker
     {
@@ -17,10 +16,10 @@ namespace Dolittle.Heads
         private readonly CallInvoker _innerCallinvoker;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="ResilientCallInvoker"/> class.
         /// </summary>
-        /// <param name="policy"></param>
-        /// <param name="innerCallinvoker"></param>
+        /// <param name="policy"><see cref="IPolicyFor{T}"/> the invoker.</param>
+        /// <param name="innerCallinvoker"><see cref="CallInvoker"/> to forward to.</param>
         public ResilientCallInvoker(
             IPolicyFor<ResilientCallInvoker> policy,
             CallInvoker innerCallinvoker)
@@ -59,5 +58,4 @@ namespace Dolittle.Heads
             throw new NotImplementedException();
         }
     }
-
 }

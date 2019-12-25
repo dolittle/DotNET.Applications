@@ -1,13 +1,12 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using Dolittle.Configuration;
 
 namespace Dolittle.Heads
 {
     /// <summary>
-    /// Represents the default configuration for <see cref="RuntimeConfiguration"/> if none is provided
+    /// Represents the default configuration for <see cref="RuntimeConfiguration"/> if none is provided.
     /// </summary>
     public class RuntimeConfigurationDefaultProvider : ICanProvideDefaultConfigurationFor<RuntimeConfiguration>
     {
