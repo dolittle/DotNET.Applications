@@ -1,0 +1,32 @@
+{
+    "name": "EventProcessor template",
+    "type": "event-processor",
+    "area": "read",
+    "description": "Creates an event processor",
+    "dependencies": {
+        "events": {
+             "description": "The events that should be generated processors for",
+             "type": "discover",
+             "discoverType": "multipleFiles",
+             "userInputType": "chooseMultiple",
+             "promptMessage": "Choose events to process", 
+             "fileMatch": ".*\\.cs$",
+             "contentMatch": ".*public\\s*class\\s*(\\w*)\\s*:\\s*IEvent",
+             "withNamespace": true,
+             "milestone": ".*\\.csproj$",
+             "fromArea": "events"
+         },
+         "readModels": {
+            "description": "The read models that is manipulated by the events",
+            "type": "discover",
+            "discoverType": "multipleFiles",
+            "userInputType": "chooseMultiple",
+            "promptMessage": "Choose read models",
+            "fileMatch": ".*\\.cs$",
+            "contentMatch": ".*public\\s*class\\s*(\\w*)\\s*:\\s*IReadModel",
+            "withNamespace": true,
+            "milestone": ".*\\.csproj$"
+        }
+    }
+ }
+ 

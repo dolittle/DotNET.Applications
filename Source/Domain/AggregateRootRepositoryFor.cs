@@ -20,7 +20,7 @@ namespace Dolittle.Domain
     /// </summary>
     /// <typeparam name="T">Type the repository is for.</typeparam>
     public class AggregateRootRepositoryFor<T> : IAggregateRootRepositoryFor<T>
-        where T : AggregateRoot
+        where T : class, IAggregateRoot
     {
         readonly ICommandContextManager _commandContextManager;
         readonly IEventStore _eventStore;

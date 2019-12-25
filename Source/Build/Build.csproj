@@ -11,7 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Build" Version="3.*" />
+        <PackageReference Include="Dolittle.Build" Version="4.*" />
         <PackageReference Include="Handlebars.Net" Version="1.9.5" />
         <!--<PackageReference Update="@(PackageReference)" PrivateAssets="All" />-->
     </ItemGroup>

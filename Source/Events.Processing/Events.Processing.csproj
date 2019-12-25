@@ -4,10 +4,10 @@
         <AssemblyName>Dolittle.SDK.Events.Processing</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Dolittle.Artifacts" Version="3.*" />
-        <PackageReference Include="Dolittle.Booting" Version="3.*" />
-        <PackageReference Include="Dolittle.Lifecycle" Version="3.*" />
-        <PackageReference Include="Dolittle.Runtime.Events" Version="3.*" />
+        <PackageReference Include="Dolittle.Artifacts" Version="4.*" />
+        <PackageReference Include="Dolittle.Booting" Version="4.*" />
+        <PackageReference Include="Dolittle.Lifecycle" Version="4.*" />
+        <PackageReference Include="Dolittle.Runtime.Events" Version="4.*" />
     </ItemGroup>
 
     <ItemGroup>

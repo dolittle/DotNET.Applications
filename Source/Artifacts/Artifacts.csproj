@@ -5,8 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Artifacts" Version="3.*" />
-        <PackageReference Include="Dolittle.Lifecycle" Version="3.*" />
+        <PackageReference Include="Dolittle.Artifacts" Version="4.*" />
+        <PackageReference Include="Dolittle.Lifecycle" Version="4.*" />
     </ItemGroup>
 </Project>
 
