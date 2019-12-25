@@ -19,6 +19,7 @@ namespace Specs.Feature
         public UncommittedEvents UncommittedEvents => throw new System.NotImplementedException();
 
         public IEnumerable<BrokenRule> BrokenRules => throw new System.NotImplementedException();
+
         public IEnumerable<RuleSetEvaluation> RuleSetEvaluations => throw new System.NotImplementedException();
 
         public RuleSetEvaluation Evaluate(params IRule[] rules)
@@ -30,7 +31,6 @@ namespace Specs.Feature
         {
             throw new System.NotImplementedException();
         }
-
 
         public void Apply(IEvent @event)
         {
