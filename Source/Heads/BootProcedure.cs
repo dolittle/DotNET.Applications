@@ -1,22 +1,21 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Dolittle.Booting;
-using Dolittle.Logging;
-using Dolittle.Services;
-using Dolittle.Protobuf;
 using Dolittle.Heads.Runtime;
+using Dolittle.Logging;
+using Dolittle.Protobuf;
+using Dolittle.Services;
 using static Dolittle.Heads.Runtime.Heads;
 
 namespace Dolittle.Heads
 {
     /// <summary>
-    /// Performs boot procedures related to client
+    /// Performs boot procedures related to client.
     /// </summary>
     public class BootProcedure : ICanPerformBootProcedure
     {
@@ -25,11 +24,11 @@ namespace Dolittle.Heads
         readonly IBoundServices _boundServices;
 
         /// <summary>
-        /// Initalizes a new instance of <see cref="BootProcedure"/>
+        /// Initializes a new instance of the <see cref="BootProcedure"/> class.
         /// </summary>
-        /// <param name="head"><see cref="Head"/> representing the running client</param>
-        /// <param name="boundServices"><see cref="IBoundServices"/></param>
-        /// <param name="logger"><see cref="ILogger"/> for logging</param>
+        /// <param name="head"><see cref="Head"/> representing the running client.</param>
+        /// <param name="boundServices"><see cref="IBoundServices"/>.</param>
+        /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public BootProcedure(
             Head head,
             IBoundServices boundServices,
@@ -64,7 +63,7 @@ namespace Dolittle.Heads
             }
 
             var streamCall = head.Connect(headInfo);
-            Task.Run(async() =>
+            Task.Run(async () =>
             {
                 var cancellationTokenSource = new CancellationTokenSource();
                 cancellationTokenSource.Token.ThrowIfCancellationRequested();
@@ -77,15 +76,15 @@ namespace Dolittle.Heads
                 };
                 timer.Elapsed += (s, e) =>
                 {
-                    if( lastPing == DateTimeOffset.MinValue ) return;
+                    if (lastPing == DateTimeOffset.MinValue) return;
                     var delta = DateTimeOffset.UtcNow.Subtract(lastPing);
-                    if( delta.TotalSeconds > 2 ) cancellationTokenSource.Cancel();
+                    if (delta.TotalSeconds > 2) cancellationTokenSource.Cancel();
                 };
                 timer.Start();
 
                 try
-                { 
-                    while (await streamCall.ResponseStream.MoveNext(cancellationTokenSource.Token))
+                {
+                    while (await streamCall.ResponseStream.MoveNext(cancellationTokenSource.Token).ConfigureAwait(false))
                     {
                         lastPing = DateTimeOffset.UtcNow;
                     }

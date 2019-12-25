@@ -19,5 +19,4 @@ namespace Dolittle.Domain
         /// <returns>An instance of the aggregated root.</returns>
         T Get(EventSourceId id);
     }
-
 }

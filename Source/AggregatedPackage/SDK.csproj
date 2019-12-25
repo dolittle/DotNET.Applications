@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../**/*.csproj" Exclude="../AggregatedPackage/SDK.csproj;../Build/Build.csproj" />
+        <ProjectReference Include="../**/*.csproj" Exclude="../AggregatedPackage/SDK.csproj;../Build/Build.csproj;../Tooling/**/*.csproj" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Dolittle.Serialization.Json" Version="4.*" />

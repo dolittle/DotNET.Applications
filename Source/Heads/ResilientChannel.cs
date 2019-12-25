@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
 using Dolittle.Resilience;
 using Grpc.Core;
@@ -9,7 +8,7 @@ using Grpc.Core;
 namespace Dolittle.Heads
 {
     /// <summary>
-    /// 
+    /// Represents a resilient <see cref="ChannelBase"/>.
     /// </summary>
     public class ResilientChannel : ChannelBase
     {
@@ -17,13 +16,13 @@ namespace Dolittle.Heads
         readonly IPolicyFor<ResilientCallInvoker> _policy;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="ResilientChannel"/> class.
         /// </summary>
-        /// <param name="host"></param>
-        /// <param name="port"></param>
-        /// <param name="credentials"></param>
-        /// <param name="options"></param>
-        /// <param name="policy"></param>
+        /// <param name="host">Host to connect to.</param>
+        /// <param name="port">Port to connect to.</param>
+        /// <param name="credentials"><see cref="ChannelCredentials"/> to use.</param>
+        /// <param name="options">All <see cref="ChannelOption">options</see>.</param>
+        /// <param name="policy"><see cref="IPolicyFor{T}"/> for the <see cref="ResilientCallInvoker"/> to use.</param>
         public ResilientChannel(
             string host,
             int port,
@@ -42,5 +41,4 @@ namespace Dolittle.Heads
             return _channel.CreateCallInvoker();
         }
     }
-
 }
