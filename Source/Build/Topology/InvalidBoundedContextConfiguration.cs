@@ -14,9 +14,9 @@ namespace Dolittle.Build.Topology
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidBoundedContextConfiguration"/> class.
         /// </summary>
-        /// <param name="message">The message.</param>
-        public InvalidBoundedContextConfiguration(string message)
-            : base(message)
+        /// <param name="description">The description.</param>
+        public InvalidBoundedContextConfiguration(string description)
+            : base(description)
         {
         }
     }

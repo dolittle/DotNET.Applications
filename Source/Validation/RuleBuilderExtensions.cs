@@ -36,15 +36,14 @@ namespace Dolittle.Validation
             var actualBuilder = builder as RuleBuilder<T, TProperty>;
             if (!(actualBuilder.Rule.CurrentValidator is PropertyValidatorWithDynamicState))
             {
-                throw new InvalidValidatorTypeException(
-                    $"Dynamic state is only supported on a property validator that inherits from {typeof(PropertyValidatorWithDynamicState)}");
+                throw new InvalidValidatorType();
             }
         }
 
         static void ThrowIfNotCorrectRuleBuilder<T, TProperty>(IRuleBuilderOptions<T, TProperty> builder)
         {
             if (!(builder is RuleBuilder<T, TProperty>))
-                throw new ArgumentException("Builder is of wrong type - expecting RuleBuilder<>");
+                throw new InvalidRuleBuilderType(builder.GetType());
         }
     }
 }

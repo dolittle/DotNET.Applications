@@ -22,7 +22,6 @@ namespace Dolittle.Build.Proxies
         /// <returns>Default value as JSON <see cref="string"/>.</returns>
         public static string GetDefaultValueAsString(this Type type)
         {
-            if (type == null) throw new ArgumentNullException(nameof(type));
             if (type.IsAPrimitiveType())
             {
                 if (type.IsNullable()) return Nullable.GetUnderlyingType(type).GetDefaultValueAsString();

@@ -14,9 +14,9 @@ namespace Dolittle.Build.Topology
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidTopology"/> class.
         /// </summary>
-        /// <param name="message">The message.</param>
-        public InvalidTopology(string message)
-            : base(message)
+        /// <param name="description">The description.</param>
+        public InvalidTopology(string description)
+            : base(description)
         {
         }
     }

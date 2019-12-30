@@ -19,6 +19,6 @@ namespace Dolittle.FluentValidation.for_RuleBuilderExtensions
 
         Because of = () => exception = Catch.Exception(() => validator_mock.Object.RuleFor(o => o).NotNull().WithDynamicStateFrom(o => o));
 
-        It should_throw_invalid_validator_type_exception = () => exception.ShouldBeOfExactType<InvalidValidatorTypeException>();
+        It should_throw_invalid_validator_type_exception = () => exception.ShouldBeOfExactType<InvalidValidatorType>();
     }
 }

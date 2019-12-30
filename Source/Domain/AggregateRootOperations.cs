@@ -14,7 +14,7 @@ namespace Dolittle.Domain
     public class AggregateRootOperations<TAggregate> : IAggregateRootOperations<TAggregate>
         where TAggregate : class, IAggregateRoot
     {
-        private readonly TAggregate _aggregateRoot;
+        readonly TAggregate _aggregateRoot;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateRootOperations{TAggregate}"/> class.

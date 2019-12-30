@@ -41,7 +41,7 @@ namespace Dolittle.Commands.Validation
             return ValidateFor((T)target);
         }
 
-        private static IEnumerable<ValidationResult> BuildValidationResults(global::FluentValidation.Results.ValidationResult result)
+        static IEnumerable<ValidationResult> BuildValidationResults(global::FluentValidation.Results.ValidationResult result)
         {
             return result.Errors.Select(error =>
             {

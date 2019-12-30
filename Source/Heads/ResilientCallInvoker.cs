@@ -5,6 +5,8 @@ using System;
 using Dolittle.Resilience;
 using Grpc.Core;
 
+#pragma warning disable DL0008
+
 namespace Dolittle.Heads
 {
     /// <summary>
@@ -13,7 +15,7 @@ namespace Dolittle.Heads
     public class ResilientCallInvoker : CallInvoker
     {
         readonly IPolicyFor<ResilientCallInvoker> _policy;
-        private readonly CallInvoker _innerCallinvoker;
+        readonly CallInvoker _innerCallinvoker;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResilientCallInvoker"/> class.

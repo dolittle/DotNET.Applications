@@ -25,7 +25,7 @@ namespace Dolittle.Build.Topology
                 || path.Contains(' ')
                 || path.Contains('-'))
             {
-                throw new ArgumentException($"Could not get module from path: '{path}'. Path cannot be empty, contain spaces or dashes");
+                throw new InvalidPathForModule(path);
             }
 
             var splitPath = path.Split('.');
@@ -56,7 +56,7 @@ namespace Dolittle.Build.Topology
                 || path.Contains(' ')
                 || path.Contains('-'))
             {
-                throw new ArgumentException($"Could not get module from path: '{path}'. Path cannot be empty, contain spaces or dashes");
+                throw new InvalidPathForFeature(path);
             }
 
             var stringSegmentsReversed = path.Split('.').Reverse().ToArray();

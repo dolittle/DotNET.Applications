@@ -6,7 +6,7 @@ using System;
 namespace Dolittle.Events.Processing
 {
     /// <summary>
-    /// A method is marked as an EventProcessor but does not have the correct method signature.
+    /// Exception that gets thrown when a method is marked as an EventProcessor but does not have the correct method signature.
     /// </summary>
     /// <remarks>
     /// void [MethodName](MyEvent @event)

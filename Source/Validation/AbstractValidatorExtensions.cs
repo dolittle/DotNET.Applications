@@ -27,8 +27,6 @@ namespace Dolittle.Validation
             this AbstractValidator<T> validator,
             Expression<Func<T, TProperty>> expression)
         {
-            if (expression == null)
-                throw new ArgumentException("Cannot pass null to RuleForConcept");
             var rule = PropertyRule.Create(expression, () => validator.CascadeMode);
             rule.PropertyName = FromExpression(expression) ?? typeof(TProperty).Name;
             validator.AddRule(rule);

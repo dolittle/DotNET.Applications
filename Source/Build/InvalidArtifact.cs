@@ -6,7 +6,7 @@ using System;
 namespace Dolittle.Build
 {
     /// <summary>
-    /// The exception that gets thrown when an invalid artifact is discovered.
+    /// Exception that gets thrown when an invalid artifact is discovered.
     /// </summary>
     public class InvalidArtifact : Exception
     {

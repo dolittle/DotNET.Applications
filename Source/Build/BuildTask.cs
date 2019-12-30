@@ -109,7 +109,7 @@ namespace Dolittle.Build
             {
                 var eventProcessorId = method.EventProcessorId();
                 if (eventProcessorId.Value == default || eventProcessorId.Value.Equals(Guid.Empty))
-                    throw new ArgumentException("Found a event processor with empty Id.", nameof(eventProcessors));
+                    throw new EventProcessorWithEmptyIdNotAllowed(method);
 
                 if (idMap.ContainsKey(eventProcessorId))
                 {
@@ -141,7 +141,7 @@ namespace Dolittle.Build
             if (depthLevel >= 3)
             {
                 _buildMessages.Error($"Event validation reached a too deep depth level, meaning that your events are way too complex!. Be aware of complex types on events.");
-                throw new InvalidEvent("There are critical errors on events");
+                throw new InvalidEvent();
             }
 
             ValidateEventsAreImmutable(events);
@@ -162,7 +162,7 @@ namespace Dolittle.Build
                 _buildMessages.Warning("Discovered mutable events. An event should not have any settable properties");
                 mutableEvents.ForEach(@event => _buildMessages.Error($"The event '{@event.FullName}' is not immutable."));
 
-                throw new InvalidEvent("There are critical errors on events");
+                throw new InvalidEvent();
             }
         }
 
@@ -193,7 +193,7 @@ namespace Dolittle.Build
                 eventsWithConstructorParameterNameMismatch.ForEach(invalidEvent => _buildMessages.Error($"The event '{invalidEvent.@event.FullName}''s constructor with the most parameters is invalid. Expected a constructor parameter name to be '{invalidEvent.propName.ToCamelCase()}'"));
             }
 
-            if (throwException) throw new InvalidEvent("There are critical errors on events");
+            if (throwException) throw new InvalidEvent();
         }
 
         void ValidateEventPropertyAndConstructorParameterNameMatch(ConstructorInfo eventConstructor, PropertyInfo[] publicProperties, Type @event, IList<(Type @event, string propName)> invalidEvents)
@@ -248,7 +248,7 @@ namespace Dolittle.Build
                 _buildMessages.Error($"Discovered events with invalid content.\n\tAn event cannot contain a Nullable type.\n\tAn event cannot contain a Concept.\n\tAn event cannot contain another Event.\n\tAn Event cannot contain complex types from other projects.\n\tAn event cannot contain a Complex Type that has a too deep type reference structure.");
                 invalidProperties.ForEach(prop => _buildMessages.Error($"The property '{prop.Name}' of Type '{prop.PropertyType.FullName}' on the event '{prop.DeclaringType.FullName}' is invalid. "));
 
-                throw new InvalidEvent("There are critical errors on events");
+                throw new InvalidEvent();
             }
         }
 

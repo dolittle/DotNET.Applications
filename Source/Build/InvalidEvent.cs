@@ -6,16 +6,15 @@ using System;
 namespace Dolittle.Build
 {
     /// <summary>
-    /// The exception that gets thrown when a critical validation error is found on an event.
+    /// Exception that gets thrown when a critical validation error is found on an event.
     /// </summary>
     public class InvalidEvent : Exception
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidEvent"/> class.
         /// </summary>
-        /// <param name="message">Message to display.</param>
-        public InvalidEvent(string message)
-            : base(message)
+        public InvalidEvent()
+            : base("There are critical errors on events")
         {
         }
     }

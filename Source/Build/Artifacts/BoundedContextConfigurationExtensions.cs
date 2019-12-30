@@ -108,10 +108,10 @@ namespace Dolittle.Build.Artifacts
         {
             var featureName = segments.Length > 0 ? segments[0] : string.Empty;
             if (string.IsNullOrEmpty(featureName))
-                throw new Exception("Missing feature");
+                throw new MissingFeature(featureName);
 
             bool predicate(KeyValuePair<Feature, FeatureDefinition> feature) => feature.Value.Name.Value.Equals(segments[0], StringComparison.InvariantCulture);
-            if (!features.Any(predicate)) throw new Exception("Missing feature");
+            if (!features.Any(predicate)) throw new MissingFeature(featureName);
 
             var matchingFeature = features.SingleOrDefault(predicate);
 

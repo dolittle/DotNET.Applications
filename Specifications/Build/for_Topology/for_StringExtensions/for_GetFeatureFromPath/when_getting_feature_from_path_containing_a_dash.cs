@@ -14,6 +14,6 @@ namespace Dolittle.Build.Topology.for_Topology.for_StringExtensions.for_GetFeatu
         Because of_getting_feature_definition = () => exception_result_for_path_containing_dash = Catch.Exception(() => path_containing_dash.GetFeatureFromPath());
 
         It should_throw_an_exception = () => exception_result_for_path_containing_dash.ShouldNotBeNull();
-        It should_throw_ArgumentException = () => exception_result_for_path_containing_dash.ShouldBeOfExactType<ArgumentException>();
+        It should_throw_ArgumentException = () => exception_result_for_path_containing_dash.ShouldBeOfExactType<InvalidPathForFeature>();
     }
 }

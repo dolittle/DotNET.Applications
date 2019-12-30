@@ -100,13 +100,13 @@ namespace Dolittle.Events.Processing
                     && parameters[parameters.Length - 1].ParameterType == typeof(EventMetadata);
         }
 
-        private abstract class ProcessMethodInvoker
+        abstract class ProcessMethodInvoker
         {
             protected readonly IObjectFactory _objectFactory;
             protected Type _eventType;
-            private readonly MethodInfo _method;
-            private readonly IContainer _container;
-            private readonly ILogger _logger;
+            readonly MethodInfo _method;
+            readonly IContainer _container;
+            readonly ILogger _logger;
 
             protected ProcessMethodInvoker(MethodInfo method, Type eventType, IObjectFactory objectFactory, IContainer container, ILogger logger)
             {
@@ -134,7 +134,7 @@ namespace Dolittle.Events.Processing
             protected abstract object[] BuildParameters(CommittedEventEnvelope committedEventEnvelope);
         }
 
-        private class ProcessorMethodWithEvent : ProcessMethodInvoker
+        class ProcessorMethodWithEvent : ProcessMethodInvoker
         {
             public ProcessorMethodWithEvent(MethodInfo method, Type eventType, IObjectFactory objectFactory, IContainer container, ILogger logger)
                 : base(method, eventType, objectFactory, container, logger)
@@ -148,7 +148,7 @@ namespace Dolittle.Events.Processing
             }
         }
 
-        private class ProcessorMethodWithEventAndEventSourceId : ProcessMethodInvoker
+        class ProcessorMethodWithEventAndEventSourceId : ProcessMethodInvoker
         {
             public ProcessorMethodWithEventAndEventSourceId(MethodInfo method, Type eventType, IObjectFactory objectFactory, IContainer container, ILogger logger)
                 : base(method, eventType, objectFactory, container, logger)
@@ -162,7 +162,7 @@ namespace Dolittle.Events.Processing
             }
         }
 
-        private class ProcessorMethodWithEventAndMetadata : ProcessMethodInvoker
+        class ProcessorMethodWithEventAndMetadata : ProcessMethodInvoker
         {
             public ProcessorMethodWithEventAndMetadata(MethodInfo method, Type eventType, IObjectFactory objectFactory, IContainer container, ILogger logger)
                 : base(method, eventType, objectFactory, container, logger)

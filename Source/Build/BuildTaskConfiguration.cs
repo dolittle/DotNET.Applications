@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Applications.Configuration;
@@ -83,7 +82,7 @@ namespace Dolittle.Build
             foreach (var segment in segments)
             {
                 var splittedSegment = segment.Split('=');
-                if (splittedSegment.Length != 2) throw new ArgumentException("Errors while parsing NamespaceSegmentsToStrip; It should look like this:\n<NamespaceSegmentsToStrip>NamespacePrefix1=This|NamespacePrefix2=Other");
+                if (splittedSegment.Length != 2) throw new InvalidNamespaceSegmentsToStripFormat(value);
                 var area = new Area()
                 {
                     Value = splittedSegment[0]

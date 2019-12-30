@@ -7,7 +7,7 @@ using Dolittle.Runtime.Events;
 namespace Dolittle.Domain
 {
     /// <summary>
-    /// Gets thrown if an <see cref="AggregateRoot"/> does not follow the convention for expected
+    /// Exception that gets thrown when an <see cref="AggregateRoot"/> does not follow the convention for expected
     /// signature for the constructor.
     /// </summary>
     /// <remarks>

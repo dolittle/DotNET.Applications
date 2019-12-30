@@ -118,7 +118,7 @@ namespace Dolittle.Events.Coordination
         {
             var envelopes = events.Select(e => e.Event.ToEnvelope(BuildEventMetadata(e.Event, EventId.New(), ToVersionedEventSource(e, version.EventSource, version.Artifact), correlationId, committed))).ToList();
             if (envelopes?.Any() != true)
-                throw new ApplicationException("There are no envelopes");
+                throw new MissingEnvelopes();
 
             return BuildStreamFrom(EventStream.From(envelopes));
         }
