@@ -21,7 +21,7 @@ namespace Dolittle.Domain
     /// Defines a concrete implementation of <see cref="IAggregateRootRepositoryFor{T}">IAggregatedRootRepository</see>.
     /// </summary>
     /// <typeparam name="T">Type the repository is for.</typeparam>
-    [Obsolete("Use of AggregateRootRepositoryFor is being replaced by IAggregateOf and will be removed in a future version", false)]
+    [Obsolete("Use of AggregateRootRepositoryFor is being replaced by AggregateOf and will be removed in a future version", false)]
     public class AggregateRootRepositoryFor<T> : IAggregateRootRepositoryFor<T>
         where T : class, IAggregateRoot
     {
