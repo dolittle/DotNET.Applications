@@ -13,12 +13,15 @@ using Dolittle.Runtime.Commands.Coordination;
 using Dolittle.Runtime.Events;
 using Dolittle.Runtime.Events.Store;
 
+#pragma warning disable CS0612, CS0618
+
 namespace Dolittle.Domain
 {
     /// <summary>
     /// Defines a concrete implementation of <see cref="IAggregateRootRepositoryFor{T}">IAggregatedRootRepository</see>.
     /// </summary>
     /// <typeparam name="T">Type the repository is for.</typeparam>
+    [Obsolete("Use of AggregateRootRepositoryFor is being replaced by IAggregateOf and will be removed in a future version", false)]
     public class AggregateRootRepositoryFor<T> : IAggregateRootRepositoryFor<T>
         where T : class, IAggregateRoot
     {
