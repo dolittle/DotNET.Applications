@@ -6,11 +6,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Applications" Version="4.*" />
-        <PackageReference Include="Dolittle.Reflection" Version="4.*" />
-        <PackageReference Include="Dolittle.Types" Version="4.*" />
-        <PackageReference Include="Dolittle.Serialization.Json" Version="4.*" />
-        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="4.*" />
+        <PackageReference Include="Dolittle.Applications" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Reflection" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Types" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Serialization.Json" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="$(RuntimeVersion)" />
     </ItemGroup>
 
     <ItemGroup>

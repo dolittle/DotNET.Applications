@@ -65,7 +65,7 @@ namespace Dolittle.Validation
 
         static string CleanPropertyName(string propertyName)
         {
-            return propertyName.Replace(ModelRule<string>.ModelRulePropertyName, string.Empty).Trim('.');
+            return propertyName.Replace(ModelRule<string>.ModelRulePropertyName, string.Empty, StringComparison.InvariantCulture).Trim('.');
         }
     }
 }
