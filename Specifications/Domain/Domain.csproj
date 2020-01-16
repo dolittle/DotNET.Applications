@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="4.*" />
+        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="$(RuntimeVersion)" />
     </ItemGroup>
 
     <ItemGroup>

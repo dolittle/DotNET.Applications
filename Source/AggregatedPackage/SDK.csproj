@@ -9,13 +9,13 @@
         <ProjectReference Include="../**/*.csproj" Exclude="../AggregatedPackage/SDK.csproj;../Build/Build.csproj;../Tooling/**/*.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Dolittle.Serialization.Json" Version="4.*" />
-        <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="4.*" />
-        <PackageReference Include="Dolittle.Concepts.Serialization.Protobuf" Version="4.*" />
-        <PackageReference Include="Dolittle.Configuration.Files" Version="4.*" />
-        <PackageReference Include="Dolittle.Runtime.Queries.Coordination" Version="4.*" />
-        <PackageReference Include="Dolittle.DependencyInversion.Booting" Version="4.*" />
-        <PackageReference Include="Dolittle.ResourceTypes.Configuration" Version="4.*" />
+        <PackageReference Include="Dolittle.Serialization.Json" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Concepts.Serialization.Protobuf" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Configuration.Files" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Runtime.Queries.Coordination" Version="$(RuntimeVersion)" />
+        <PackageReference Include="Dolittle.DependencyInversion.Booting" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.ResourceTypes.Configuration" Version="$(FundamentalsVersion)" />
     </ItemGroup>
 </Project>
 

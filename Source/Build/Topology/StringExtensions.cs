@@ -22,8 +22,8 @@ namespace Dolittle.Build.Topology
         public static KeyValuePair<Module, ModuleDefinition> GetModuleFromPath(this string path)
         {
             if (string.IsNullOrEmpty(path)
-                || path.Contains(' ')
-                || path.Contains('-'))
+                || path.Contains(' ', StringComparison.InvariantCulture)
+                || path.Contains('-', StringComparison.InvariantCulture))
             {
                 throw new InvalidPathForModule(path);
             }
@@ -53,8 +53,8 @@ namespace Dolittle.Build.Topology
         public static KeyValuePair<Feature, FeatureDefinition> GetFeatureFromPath(this string path)
         {
             if (string.IsNullOrEmpty(path)
-                || path.Contains(' ')
-                || path.Contains('-'))
+                || path.Contains(' ', StringComparison.InvariantCulture)
+                || path.Contains('-', StringComparison.InvariantCulture))
             {
                 throw new InvalidPathForFeature(path);
             }

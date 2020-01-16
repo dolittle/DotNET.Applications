@@ -6,8 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Applications" Version="4.*" />
-        <PackageReference Include="Dolittle.Artifacts" Version="4.*" />
+        <PackageReference Include="Dolittle.Applications" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Artifacts" Version="$(FundamentalsVersion)" />
     </ItemGroup>
 
     <ItemGroup>

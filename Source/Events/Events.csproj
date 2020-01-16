@@ -4,10 +4,12 @@
         <AssemblyName>Dolittle.SDK.Events</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Dolittle.Artifacts" Version="4.*" />
-        <PackageReference Include="Dolittle.Runtime.Events" Version="4.*" />
+        <PackageReference Include="Dolittle.Artifacts" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Runtime.Events" Version="$(RuntimeVersion)" />
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(RuntimeVersion)"/>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Artifacts\Artifacts.csproj" />
+        <ProjectReference Include="..\Heads\Heads.csproj" />
     </ItemGroup>
 </Project>
