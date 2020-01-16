@@ -5,10 +5,11 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="FluentValidation" Version="7.1.1" />
+        <PackageReference Include="Dolittle.Rules" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Types" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Validation" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Runtime.Commands" Version="$(RuntimeVersion)" />
         <PackageReference Include="Dolittle.Runtime.Commands.Validation" Version="$(RuntimeVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Validation" Version="$(RuntimeVersion)" />
     </ItemGroup>
 
 

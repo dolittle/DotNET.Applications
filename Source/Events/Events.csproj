@@ -6,8 +6,10 @@
     <ItemGroup>
         <PackageReference Include="Dolittle.Artifacts" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Runtime.Events" Version="$(RuntimeVersion)" />
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(RuntimeVersion)"/>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Artifacts\Artifacts.csproj" />
+        <ProjectReference Include="..\Heads\Heads.csproj" />
     </ItemGroup>
 </Project>

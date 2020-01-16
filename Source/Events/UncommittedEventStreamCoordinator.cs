@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Artifacts;
-using Dolittle.DependencyInversion;
 using Dolittle.Execution;
+using Dolittle.Heads;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Runtime.Events;
@@ -15,6 +15,8 @@ using Dolittle.Runtime.Events.Processing;
 using Dolittle.Runtime.Events.Relativity;
 using Dolittle.Runtime.Events.Store;
 using Dolittle.Time;
+using static Dolittle.Events.Runtime.EventStore;
+using grpc = Dolittle.Events.Runtime;
 
 namespace Dolittle.Events.Coordination
 {
@@ -25,7 +27,7 @@ namespace Dolittle.Events.Coordination
     [Singleton]
     public class UncommittedEventStreamCoordinator : IUncommittedEventStreamCoordinator
     {
-        readonly FactoryFor<IEventStore> _getEventStore;
+        readonly IClientFor<EventStoreClient> _eventStoreClient;
         readonly ILogger _logger;
         readonly IArtifactTypeMap _artifactMap;
         readonly ISystemClock _systemClock;
@@ -36,7 +38,7 @@ namespace Dolittle.Events.Coordination
         /// <summary>
         /// Initializes a new instance of the <see cref="UncommittedEventStreamCoordinator"/> class.
         /// </summary>
-        /// <param name="getEventStore">A <see cref="FactoryFor{IEventStore}" /> to return a correctly scoped instance of <see cref="IEventStore" />.</param>
+        /// <param name="eventStoreClient">A <see cref="IClientFor{T}" /> to work with the <see cref="EventStoreClient"/>.</param>
         /// <param name="eventProcessorHub"><see cref="IScopedEventProcessingHub"/> for processing in same bounded context.</param>
         /// <param name="eventHorizon"><see cref="IEventHorizon"/> to pass events through to.</param>
         /// <param name="artifactMap">An instance of <see cref="IArtifactTypeMap" /> to get the artifact for Event Source and Events.</param>
@@ -44,7 +46,7 @@ namespace Dolittle.Events.Coordination
         /// <param name="systemClock"><see cref="ISystemClock"/> for getting the time.</param>
         /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for accessing the current <see cref="ExecutionContext" />.</param>
         public UncommittedEventStreamCoordinator(
-            FactoryFor<IEventStore> getEventStore,
+            IClientFor<EventStoreClient> eventStoreClient,
             IScopedEventProcessingHub eventProcessorHub,
             IEventHorizon eventHorizon,
             IArtifactTypeMap artifactMap,
@@ -52,7 +54,7 @@ namespace Dolittle.Events.Coordination
             ISystemClock systemClock,
             IExecutionContextManager executionContextManager)
         {
-            _getEventStore = getEventStore;
+            _eventStoreClient = eventStoreClient;
             _eventProcessorHub = eventProcessorHub;
             _eventHorizon = eventHorizon;
             _logger = logger;
@@ -68,22 +70,20 @@ namespace Dolittle.Events.Coordination
             _logger.Trace("Building the Event Store uncommitted event stream");
             var uncommitted = BuildUncommitted(uncommittedEvents, correlationId.Value);
             _logger.Trace("Committing the events");
-            CommittedEventStream committed;
-            using (var eventStore = _getEventStore())
-            {
-                committed = eventStore.Commit(uncommitted);
-            }
 
+            _eventStoreClient.Instance.Commit(new grpc.UncommittedEvents());
+
+            var committed = new CommittedEventStream(0, uncommitted.Source, uncommitted.Id, uncommitted.CorrelationId, uncommitted.Timestamp, uncommitted.Events);
             try
             {
-                _logger.Trace("Process events in same bounded context");
                 _eventProcessorHub.Process(committed);
+                _logger.Trace("Process events in same bounded context");
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, $"Error processing CommittedEventStream within local event processors '{committed?.Sequence?.ToString() ?? "[NULL]"}'");
             }
-
+#if false
             try
             {
                 _logger.Trace("Passing committed events through event horizon");
@@ -93,6 +93,7 @@ namespace Dolittle.Events.Coordination
             {
                 _logger.Error(ex, $"Error processing CommittedEventStream within event horizons '{committed?.Sequence?.ToString() ?? "[NULL]"}'");
             }
+#endif
         }
 
         UncommittedEventStream BuildUncommitted(UncommittedEvents uncommittedEvents, CorrelationId correlationId)
