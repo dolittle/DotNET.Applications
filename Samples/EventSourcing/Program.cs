@@ -8,6 +8,7 @@ using Dolittle.Domain;
 using Dolittle.Execution;
 using Dolittle.Runtime.Commands;
 using Dolittle.Runtime.Commands.Coordination;
+using Dolittle.Tenancy;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -34,7 +35,7 @@ namespace EventSourcing
             var commandContextManager = result.Container.Get<ICommandContextManager>();
             var executionContextManager = result.Container.Get<IExecutionContextManager>();
 
-            executionContextManager.CurrentFor(Guid.Parse("b319e9de-168e-4c70-a95a-67afe357cf46"));
+            executionContextManager.CurrentFor(TenantId.Development);
 
             using (commandContextManager.EstablishForCommand(NullCommandRequest))
             {
