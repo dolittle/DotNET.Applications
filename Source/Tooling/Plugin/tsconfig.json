@@ -1,5 +1,5 @@
 {
-    "extends": "./node_modules/@dolittle/typescript.build.node/TSConfig/tsconfig.base.json",
+    "extends": "./node_modules/@dolittle/typescript.build/TSConfig/tsconfig.base.json",
     "compilerOptions": {
         "target": "es2017",
         "declaration": false
