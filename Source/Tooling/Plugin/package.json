@@ -1,7 +1,7 @@
 {
   "name": "@dolittle/tooling.plugin.dotnet-sdk",
   "description": "A dolittle tooling plugin for the DotNet SDK",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publishConfig": {
     "access": "public"
   },
