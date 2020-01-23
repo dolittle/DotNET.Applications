@@ -34,10 +34,6 @@
                 {
                     "name": "MongoDB",
                     "value": "MongoDB"
-                },
-                {
-                    "name": "CosmosDB",
-                    "value": "Azure"
                 }
             ],
             "promptMessage": "Choose the resource implementation for event store"
