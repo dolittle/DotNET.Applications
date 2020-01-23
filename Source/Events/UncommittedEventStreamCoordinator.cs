@@ -7,7 +7,6 @@ using System.Linq;
 using Dolittle.Artifacts;
 using Dolittle.Collections;
 using Dolittle.Execution;
-using Dolittle.Heads;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
@@ -31,7 +30,7 @@ namespace Dolittle.Events.Coordination
     [Singleton]
     public class UncommittedEventStreamCoordinator : IUncommittedEventStreamCoordinator
     {
-        readonly IClientFor<EventStoreClient> _eventStoreClient;
+        readonly EventStoreClient _eventStoreClient;
         readonly ILogger _logger;
         readonly IArtifactTypeMap _artifactMap;
         readonly ISystemClock _systemClock;
@@ -43,7 +42,7 @@ namespace Dolittle.Events.Coordination
         /// <summary>
         /// Initializes a new instance of the <see cref="UncommittedEventStreamCoordinator"/> class.
         /// </summary>
-        /// <param name="eventStoreClient">A <see cref="IClientFor{T}" /> to work with the <see cref="EventStoreClient"/>.</param>
+        /// <param name="eventStoreClient">A see cref="EventStoreClient"/> for connecting to the runtime.</param>
         /// <param name="eventProcessorHub"><see cref="IScopedEventProcessingHub"/> for processing in same bounded context.</param>
         /// <param name="eventHorizon"><see cref="IEventHorizon"/> to pass events through to.</param>
         /// <param name="artifactMap">An instance of <see cref="IArtifactTypeMap" /> to get the artifact for Event Source and Events.</param>
@@ -52,7 +51,7 @@ namespace Dolittle.Events.Coordination
         /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for accessing the current <see cref="ExecutionContext" />.</param>
         /// <param name="serializer">A JSON <see cref="ISerializer"/>.</param>
         public UncommittedEventStreamCoordinator(
-            IClientFor<EventStoreClient> eventStoreClient,
+            EventStoreClient eventStoreClient,
             IScopedEventProcessingHub eventProcessorHub,
             IEventHorizon eventHorizon,
             IArtifactTypeMap artifactMap,
@@ -83,7 +82,7 @@ namespace Dolittle.Events.Coordination
             uncommittedEvents.ForEach(_ =>
             {
                 var artifact = _artifactMap.GetArtifactFor(_.GetType());
-                var serialized = _serializer.ToJson(_);
+                var serialized = _serializer.ToJson(_, SerializationOptions.CamelCase);
                 var uncommittedEvent = new grpc.UncommittedEvent
                 {
                     Occurred = Timestamp.FromDateTimeOffset(uncommitted.Timestamp),
@@ -97,7 +96,7 @@ namespace Dolittle.Events.Coordination
                 uncommittedEventsToSend.Events.Add(uncommittedEvent);
             });
 
-            _eventStoreClient.Instance.Commit(uncommittedEventsToSend);
+            _eventStoreClient.Commit(uncommittedEventsToSend);
 
             var committed = new CommittedEventStream(0, uncommitted.Source, uncommitted.Id, uncommitted.CorrelationId, uncommitted.Timestamp, uncommitted.Events);
             try
