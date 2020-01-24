@@ -1,0 +1,16 @@
+<Project>
+    <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+        <VersionInPathIndex>$([MSBuild]::Subtract($(MSBuildThisFileDirectory.Split('\\').Length),3))</VersionInPathIndex>
+        <DolittleCodeAnalysisVersion>$(MSBuildThisFileDirectory.Split('\\').GetValue($(VersionInPathIndex)))</DolittleCodeAnalysisVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+        <VersionInPathIndex>$([MSBuild]::Subtract($(MSBuildThisFileDirectory.Split('/').Length),3))</VersionInPathIndex>
+        <DolittleCodeAnalysisVersion>$(MSBuildThisFileDirectory.Split('/').GetValue($(VersionInPathIndex)))</DolittleCodeAnalysisVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Analyzer Include="$(NuGetPackageRoot)dolittle.sdk.codeanalysis/$(DolittleCodeAnalysisVersion)/analyzers/dotnet/cs/Dolittle.SDK.CodeAnalysis.dll" />
+    </ItemGroup>
+
+</Project>
