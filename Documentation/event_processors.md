@@ -3,7 +3,10 @@ title: Event Processors
 description: This contains details on how event processors work in C#
 keywords: Events, Processors
 author: einari
-aliases: /runtime/dotnet.sdk/events/event_processors
+weight: 1
+aliases: 
+    - /runtime/dotnet-sdk/events/event_processors
+    - /runtime/dotnet.sdk/events/event_processors
 ---
 
 Event processors are key to dealing acting on state changes represented as events coming through the system.

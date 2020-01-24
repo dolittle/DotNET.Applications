@@ -8,4 +8,3 @@ repository: https://github.com/dolittle-runtime/DotNET.SDK
 aliases: /runtime/dotnet.sdk/
 ---
 
-This section describes the SDK for [.NET Core](https://www.microsoft.com/net).

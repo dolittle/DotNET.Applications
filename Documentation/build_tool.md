@@ -3,7 +3,10 @@ title: Build Tool
 description: Describes the Dolittle Build Tool for the .NET SDK
 keywords: General, tooling, Build Tool
 author: woksin
-aliases: /runtime/dotnet.sdk/tooling/build_tool
+weight: 2
+aliases: 
+    - /runtime/dotnet.sdk/tooling/build_tool
+    - /runtime/dotnet-sdk/tooling/build_tool
 ---
 
 ## Background
