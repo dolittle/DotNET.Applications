@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Immutable;
+using System.Linq;
+using Dolittle.Events;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -48,11 +50,15 @@ namespace Dolittle.SDK.CodeAnalysis.EventsMustBeImmutable
             var owningClass = context.Node.FirstAncestorOrSelf<ClassDeclarationSyntax>();
             if (owningClass != default)
             {
-                while (!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(10);
-                if (owningClass.ImplementsAnEvent(context.SemanticModel))
+                if (owningClass.ImplementsInterfaceOf<IEvent>(context.SemanticModel))
                 {
-                    var diagnostic = Diagnostic.Create(Rule, owningClass.GetLocation());
-                    context.ReportDiagnostic(diagnostic);
+                    var propertyDeclaration = context.Node as PropertyDeclarationSyntax;
+
+                    if (propertyDeclaration.AccessorList.Accessors.Any(_ => _.Keyword.Text == "set"))
+                    {
+                        var diagnostic = Diagnostic.Create(Rule, propertyDeclaration.GetLocation());
+                        context.ReportDiagnostic(diagnostic);
+                    }
                 }
             }
         }

@@ -1,6 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
+using Dolittle.Events;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -69,23 +71,36 @@ namespace Dolittle.SDK.CodeAnalysis.EventsMustBeImmutable
                 }
             ";
 
-            var expected = new DiagnosticResult
+            var firstProperty = new DiagnosticResult
             {
                 Id = Analyzer.Rule.Id,
                 Message = (string)Analyzer.Rule.MessageFormat,
                 Severity = Analyzer.Rule.DefaultSeverity,
                 Locations = new[]
                 {
-                    new DiagnosticResultLocation("Test0.cs", 10, 29)
+                    new DiagnosticResultLocation("Test0.cs", 8, 25)
                 }
             };
 
-            VerifyCSharpDiagnostic(content, expected);
+            var secondProperty = new DiagnosticResult
+            {
+                Id = Analyzer.Rule.Id,
+                Message = (string)Analyzer.Rule.MessageFormat,
+                Severity = Analyzer.Rule.DefaultSeverity,
+                Locations = new[]
+                {
+                    new DiagnosticResultLocation("Test0.cs", 10, 25)
+                }
+            };
+
+            VerifyCSharpDiagnostic(content, firstProperty, secondProperty);
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
             return new Analyzer();
         }
+
+        protected override IEnumerable<string> AdditionalAssemblyReferences => new[] { typeof(IEvent).Assembly.FullName };
     }
 }
