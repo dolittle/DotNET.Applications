@@ -39,10 +39,11 @@ namespace Dolittle.SDK.CodeAnalysis
         /// <param name="sources">Classes in the form of strings</param>
         /// <param name="language">The language the source classes are in</param>
         /// <param name="analyzer">The analyzer to be run on the sources</param>
+        /// <param name="references">Any additional assembly references to include.</param>
         /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
-        static Diagnostic[] GetSortedDiagnostics(string[] sources, string language, DiagnosticAnalyzer analyzer)
+        static Diagnostic[] GetSortedDiagnostics(string[] sources, string language, DiagnosticAnalyzer analyzer, MetadataReference[] references)
         {
-            return GetSortedDiagnosticsFromDocuments(analyzer, GetDocuments(sources, language));
+            return GetSortedDiagnosticsFromDocuments(analyzer, GetDocuments(sources, language), references);
         }
 
         /// <summary>
@@ -51,8 +52,9 @@ namespace Dolittle.SDK.CodeAnalysis
         /// </summary>
         /// <param name="analyzer">The analyzer to run on the documents</param>
         /// <param name="documents">The Documents that the analyzer will be run on</param>
+        /// <param name="references">Any additional assembly references to include.</param>
         /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
-        protected static Diagnostic[] GetSortedDiagnosticsFromDocuments(DiagnosticAnalyzer analyzer, Document[] documents)
+        protected static Diagnostic[] GetSortedDiagnosticsFromDocuments(DiagnosticAnalyzer analyzer, Document[] documents, MetadataReference[] references)
         {
             var projects = new HashSet<Project>();
             foreach (var document in documents)
@@ -60,13 +62,10 @@ namespace Dolittle.SDK.CodeAnalysis
                 projects.Add(document.Project);
             }
 
-            var assembly = Assembly.Load("Dolittle.Runtime.Events");
-            var reference = MetadataReference.CreateFromFile(assembly.Location);
-
             var diagnostics = new List<Diagnostic>();
             foreach (var project in projects)
             {
-                var compilationWithAnalyzers = project.GetCompilationAsync().Result.WithReferences(reference).WithAnalyzers(ImmutableArray.Create(analyzer));
+                var compilationWithAnalyzers = project.GetCompilationAsync().Result.WithReferences(references).WithAnalyzers(ImmutableArray.Create(analyzer));
                 var diags = compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync().Result;
                 foreach (var diag in diags)
                 {

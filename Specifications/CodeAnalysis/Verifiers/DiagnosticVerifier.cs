@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -34,7 +35,22 @@ namespace Dolittle.SDK.CodeAnalysis
         {
             return null;
         }
+
+        /// <summary>
+        /// Gets any additional assembly references
+        /// </summary>
+        protected virtual IEnumerable<string> AdditionalAssemblyReferences => new string[0];
+
         #endregion
+
+        protected MetadataReference[] GetReferences()
+        {
+            return AdditionalAssemblyReferences.Select(_ =>
+            {
+                var assembly = Assembly.Load(_);
+                return MetadataReference.CreateFromFile(assembly.Location);
+            }).ToArray();
+        }
 
         #region Verifier wrappers
 
@@ -46,7 +62,7 @@ namespace Dolittle.SDK.CodeAnalysis
         /// <param name="expected"> DiagnosticResults that should appear after the analyzer is run on the source</param>
         protected void VerifyCSharpDiagnostic(string source, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(new[] { source }, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), expected);
+            VerifyDiagnostics(new[] { source }, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetReferences(), expected);
         }
 
         /// <summary>
@@ -57,7 +73,7 @@ namespace Dolittle.SDK.CodeAnalysis
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the source</param>
         protected void VerifyBasicDiagnostic(string source, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(new[] { source }, LanguageNames.VisualBasic, GetBasicDiagnosticAnalyzer(), expected);
+            VerifyDiagnostics(new[] { source }, LanguageNames.VisualBasic, GetBasicDiagnosticAnalyzer(), GetReferences(), expected);
         }
 
         /// <summary>
@@ -68,7 +84,7 @@ namespace Dolittle.SDK.CodeAnalysis
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
         protected void VerifyCSharpDiagnostic(string[] sources, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(sources, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), expected);
+            VerifyDiagnostics(sources, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetReferences(), expected);
         }
 
         /// <summary>
@@ -79,7 +95,7 @@ namespace Dolittle.SDK.CodeAnalysis
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
         protected void VerifyBasicDiagnostic(string[] sources, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(sources, LanguageNames.VisualBasic, GetBasicDiagnosticAnalyzer(), expected);
+            VerifyDiagnostics(sources, LanguageNames.VisualBasic, GetBasicDiagnosticAnalyzer(), GetReferences(), expected);
         }
 
         /// <summary>
@@ -89,10 +105,11 @@ namespace Dolittle.SDK.CodeAnalysis
         /// <param name="sources">An array of strings to create source documents from to run the analyzers on</param>
         /// <param name="language">The language of the classes represented by the source strings</param>
         /// <param name="analyzer">The analyzer to be run on the source code</param>
+        /// <param name="references">Any additional assembly references to include.</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
-        void VerifyDiagnostics(string[] sources, string language, DiagnosticAnalyzer analyzer, params DiagnosticResult[] expected)
+        void VerifyDiagnostics(string[] sources, string language, DiagnosticAnalyzer analyzer, MetadataReference[] references, params DiagnosticResult[] expected)
         {
-            var diagnostics = GetSortedDiagnostics(sources, language, analyzer);
+            var diagnostics = GetSortedDiagnostics(sources, language, analyzer, references);
             VerifyDiagnosticResults(diagnostics, analyzer, expected);
         }
 
