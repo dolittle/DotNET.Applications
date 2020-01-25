@@ -24,7 +24,7 @@ namespace Dolittle.SDK.CodeAnalysis.EventsMustBeImmutable
              id: "DL1001",
              title: "EventsMustBeImmutable",
              messageFormat: "Events must be immutable. Public properties with setters not allowed.",
-             category: "Style",
+             category: "Events",
              defaultSeverity: DiagnosticSeverity.Error,
              isEnabledByDefault: true,
              description: null,
