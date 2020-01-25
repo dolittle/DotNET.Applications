@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Immutable;
 using System.Linq;
-using Dolittle.Events;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -50,7 +49,7 @@ namespace Dolittle.SDK.CodeAnalysis.EventsMustBeImmutable
             var owningClass = context.Node.FirstAncestorOrSelf<ClassDeclarationSyntax>();
             if (owningClass != default)
             {
-                if (owningClass.ImplementsInterfaceOf<IEvent>(context.SemanticModel))
+                if (owningClass.ImplementsInterface("Dolittle.Events", "IEvent", context.SemanticModel))
                 {
                     var propertyDeclaration = context.Node as PropertyDeclarationSyntax;
 

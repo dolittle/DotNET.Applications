@@ -17,24 +17,17 @@ namespace Dolittle.SDK.CodeAnalysis
         /// <summary>
         /// Check if a <see cref="ClassDeclarationSyntax"/> implements a specific interface.
         /// </summary>
-        /// <typeparam name="T">The type of interface to check for.</typeparam>
         /// <param name="classDeclaration"><see cref="ClassDeclarationSyntax"/> to check.</param>
+        /// <param name="namespace">The namespace the type sits in.</param>
+        /// <param name="type">The name of the type.</param>
         /// <param name="model"><see cref="SemanticModel"/> to use.</param>
         /// <returns>true if it inherits, false if not.</returns>
-        public static bool ImplementsInterfaceOf<T>(this ClassDeclarationSyntax classDeclaration, SemanticModel model)
-            where T : class
+        public static bool ImplementsInterface(this ClassDeclarationSyntax classDeclaration, string @namespace, string type, SemanticModel model)
         {
-            var @interface = typeof(T);
-            if (!@interface.IsInterface)
-            {
-                throw new TypeMustBeAnInterface(@interface);
-            }
-
             var classSymbol = model.GetDeclaredSymbol(classDeclaration);
             var interfaceDeclaration = classSymbol.AllInterfaces.FirstOrDefault(_ =>
-                _.ContainingAssembly.Name.Equals(@interface.Assembly.GetName().Name, StringComparison.InvariantCulture) &&
-                _.ContainingNamespace.ToDisplayString().Equals(@interface.Namespace, StringComparison.InvariantCulture) &&
-                _.Name.Equals(@interface.Name, StringComparison.InvariantCulture));
+                _.ContainingNamespace.ToDisplayString().Equals(@namespace, StringComparison.InvariantCulture) &&
+                _.Name.Equals(type, StringComparison.InvariantCulture));
 
             return interfaceDeclaration != default;
         }
