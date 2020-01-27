@@ -1,6 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+extern alias contracts;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +20,8 @@ using Dolittle.Runtime.Events.Store;
 using Dolittle.Serialization.Json;
 using Dolittle.Time;
 using Google.Protobuf.WellKnownTypes;
-using static Dolittle.Events.Runtime.EventStore;
-using grpc = Dolittle.Events.Runtime;
+using static contracts::Dolittle.Runtime.Events.EventStore;
+using grpc = contracts::Dolittle.Runtime.Events;
 
 namespace Dolittle.Events.Coordination
 {

@@ -1,13 +1,14 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+extern alias contracts;
+
 using System.Threading.Tasks;
-using Dolittle.Heads;
+using contracts::Dolittle.Runtime.TimeSeries.DataTypes;
 using Dolittle.TimeSeries.DataTypes;
-using Dolittle.TimeSeries.DataTypes.Runtime;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using static Dolittle.TimeSeries.DataPoints.Runtime.DataPointStream;
+using static contracts::Dolittle.Runtime.TimeSeries.DataPoints.DataPointStream;
 
 namespace Dolittle.TimeSeries.DataPoints
 {
@@ -21,10 +22,10 @@ namespace Dolittle.TimeSeries.DataPoints
         /// <summary>
         /// Initializes a new instance of the <see cref="DataPointPublisher"/> class.
         /// </summary>
-        /// <param name="client"><see cref="IClientFor{T}"/> <see cref="DataPointStreamClient"/>.</param>
-        public DataPointPublisher(IClientFor<DataPointStreamClient> client)
+        /// <param name="client">The <see cref="DataPointStreamClient"/>.</param>
+        public DataPointPublisher(DataPointStreamClient client)
         {
-            _streamCall = client.Instance.Open();
+            _streamCall = client.Open();
         }
 
         /// <inheritdoc/>

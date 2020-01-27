@@ -1,20 +1,21 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+extern alias contracts;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using contracts::Dolittle.Runtime.TimeSeries.Connectors;
 using Dolittle.Collections;
-using Dolittle.Heads;
 using Dolittle.Lifecycle;
 using Dolittle.Protobuf;
-using Dolittle.TimeSeries.Connectors.Runtime;
 using Dolittle.TimeSeries.DataPoints;
 using Dolittle.TimeSeries.DataTypes;
 using Dolittle.Types;
 using Grpc.Core;
-using static Dolittle.TimeSeries.Connectors.Runtime.PullConnectors;
+using static contracts::Dolittle.Runtime.TimeSeries.Connectors.PullConnectors;
 
 namespace Dolittle.TimeSeries.Connectors
 {
@@ -25,17 +26,17 @@ namespace Dolittle.TimeSeries.Connectors
     public class PullConnectors : IPullConnectors
     {
         readonly IDictionary<ConnectorId, IAmAPullConnector> _connectors;
-        readonly IClientFor<PullConnectorsClient> _pullConnectorsClient;
+        readonly PullConnectorsClient _pullConnectorsClient;
         readonly PullConnectorsConfiguration _configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PullConnectors"/> class.
         /// </summary>
-        /// <param name="pullConnectorsClient"><see cref="IClientFor{T}">client for</see> <see cref="PullConnectorsClient"/> for connecting to runtime.</param>
+        /// <param name="pullConnectorsClient">The <see cref="PullConnectorsClient"/> for connecting to runtime.</param>
         /// <param name="connectors">Instances of <see cref="IAmAPullConnector"/>.</param>
         /// <param name="configuration"><see cref="PullConnectorsConfiguration"/> for configuring pull connectors.</param>
         public PullConnectors(
-            IClientFor<PullConnectorsClient> pullConnectorsClient,
+            PullConnectorsClient pullConnectorsClient,
             IInstancesOf<IAmAPullConnector> connectors,
             PullConnectorsConfiguration configuration)
         {
@@ -68,7 +69,7 @@ namespace Dolittle.TimeSeries.Connectors
                 {
                     try
                     {
-                        var streamCall = _pullConnectorsClient.Instance.Connect(pullConnector);
+                        var streamCall = _pullConnectorsClient.Connect(pullConnector);
 
                         while (await streamCall.ResponseStream.MoveNext().ConfigureAwait(false))
                         {
@@ -81,7 +82,7 @@ namespace Dolittle.TimeSeries.Connectors
                                 ConnectorId = pullConnector.Id
                             };
                             writeMessage.Data.Add(tagDataPoints);
-                            await _pullConnectorsClient.Instance.WriteAsync(writeMessage);
+                            await _pullConnectorsClient.WriteAsync(writeMessage);
                         }
                     }
                     catch

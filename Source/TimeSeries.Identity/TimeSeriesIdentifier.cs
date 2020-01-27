@@ -1,12 +1,13 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+extern alias contracts;
+
 using System.Collections.Generic;
-using Dolittle.Heads;
+using contracts::Dolittle.Runtime.TimeSeries.Identity;
 using Dolittle.Protobuf;
 using Dolittle.TimeSeries.DataPoints;
-using Dolittle.TimeSeries.Identity.Runtime;
-using static Dolittle.TimeSeries.Identity.Runtime.TimeSeriesMapIdentifier;
+using static contracts::Dolittle.Runtime.TimeSeries.Identity.TimeSeriesMapIdentifier;
 
 namespace Dolittle.TimeSeries.Identity
 {
@@ -15,13 +16,13 @@ namespace Dolittle.TimeSeries.Identity
     /// </summary>
     public class TimeSeriesIdentifier : ITimeSeriesIdentifier
     {
-        readonly IClientFor<TimeSeriesMapIdentifierClient> _timeSeriesMapIdentifierClient;
+        readonly TimeSeriesMapIdentifierClient _timeSeriesMapIdentifierClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimeSeriesIdentifier"/> class.
         /// </summary>
-        /// <param name="timeSeriesMapIdentifierClient"><see cref="IClientFor{T}"/> <see cref="TimeSeriesMapIdentifierClient"/>.</param>
-        public TimeSeriesIdentifier(IClientFor<TimeSeriesMapIdentifierClient> timeSeriesMapIdentifierClient)
+        /// <param name="timeSeriesMapIdentifierClient">The <see cref="TimeSeriesMapIdentifierClient"/>.</param>
+        public TimeSeriesIdentifier(TimeSeriesMapIdentifierClient timeSeriesMapIdentifierClient)
         {
             _timeSeriesMapIdentifierClient = timeSeriesMapIdentifierClient;
         }
@@ -34,7 +35,7 @@ namespace Dolittle.TimeSeries.Identity
                 Source = source,
             };
             timeSeriesMap.TagToTimeSeriesId[tag] = timeSeriesId.ToProtobuf();
-            _timeSeriesMapIdentifierClient.Instance.RegisterAsync(timeSeriesMap);
+            _timeSeriesMapIdentifierClient.RegisterAsync(timeSeriesMap);
         }
 
         /// <inheritdoc/>
@@ -49,7 +50,7 @@ namespace Dolittle.TimeSeries.Identity
                 timeSeriesMap.TagToTimeSeriesId[tag] = timeSeriesId.ToProtobuf();
             }
 
-            _timeSeriesMapIdentifierClient.Instance.RegisterAsync(timeSeriesMap);
+            _timeSeriesMapIdentifierClient.RegisterAsync(timeSeriesMap);
         }
     }
 }

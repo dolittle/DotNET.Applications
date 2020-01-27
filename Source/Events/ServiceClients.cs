@@ -1,10 +1,12 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+extern alias contracts;
+
 using System.Collections.Generic;
 using Dolittle.Services;
 using Dolittle.Services.Clients;
-using static Dolittle.Events.Runtime.EventStore;
+using static contracts::Dolittle.Runtime.Events.EventStore;
 
 namespace Dolittle.Events.Coordination
 {

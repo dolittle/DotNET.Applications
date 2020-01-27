@@ -2,7 +2,7 @@
     <Import Project="../../specs.props"/>
 
     <PropertyGroup>
-        <AssemblyName>Dolittle.FluentValidation.Specs</AssemblyName>
+        <AssemblyName>Dolittle.Validation.Specs</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

@@ -1,10 +1,12 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+extern alias contracts;
+
 using System.Collections.Generic;
 using Dolittle.Services;
 using Dolittle.Services.Clients;
-using static Dolittle.Heads.Runtime.Heads;
+using static contracts::Dolittle.Runtime.Heads.Heads;
 
 namespace Dolittle.Heads
 {

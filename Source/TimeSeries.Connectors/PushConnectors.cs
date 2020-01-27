@@ -1,18 +1,19 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+extern alias contracts;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using contracts::Dolittle.Runtime.TimeSeries.Connectors;
 using Dolittle.Collections;
-using Dolittle.Heads;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
-using Dolittle.TimeSeries.Connectors.Runtime;
 using Dolittle.Types;
 using Grpc.Core;
-using static Dolittle.TimeSeries.Connectors.Runtime.PushConnectors;
+using static contracts::Dolittle.Runtime.TimeSeries.Connectors.PushConnectors;
 
 namespace Dolittle.TimeSeries.Connectors
 {
@@ -23,17 +24,17 @@ namespace Dolittle.TimeSeries.Connectors
     public class PushConnectors : IPushConnectors
     {
         readonly IDictionary<ConnectorId, IAmAPushConnector> _connectors;
-        readonly IClientFor<PushConnectorsClient> _pushConnectorsClient;
+        readonly PushConnectorsClient _pushConnectorsClient;
         readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PushConnectors"/> class.
         /// </summary>
-        /// <param name="pushConnectorsClient"><see cref="IClientFor{T}">client for</see> <see cref="PushConnectorsClient"/> for connecting to runtime.</param>
+        /// <param name="pushConnectorsClient">The <see cref="PushConnectorsClient"/> for connecting to runtime.</param>
         /// <param name="connectors">Instances of <see cref="IAmAPushConnector"/>.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public PushConnectors(
-            IClientFor<PushConnectorsClient> pushConnectorsClient,
+            PushConnectorsClient pushConnectorsClient,
             IInstancesOf<IAmAPushConnector> connectors,
             ILogger logger)
         {
@@ -65,7 +66,7 @@ namespace Dolittle.TimeSeries.Connectors
 
                     try
                     {
-                        var streamingCall = _pushConnectorsClient.Instance.Open(metadata);
+                        var streamingCall = _pushConnectorsClient.Open(metadata);
 
                         await Process(_.Value, streamingCall.RequestStream).ConfigureAwait(false);
                     }

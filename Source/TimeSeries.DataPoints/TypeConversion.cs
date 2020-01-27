@@ -1,7 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+extern alias contracts;
+
 using Dolittle.TimeSeries.DataTypes;
+using grpc = contracts::Dolittle.Runtime.TimeSeries.DataPoints;
 
 namespace Dolittle.TimeSeries.DataPoints
 {
@@ -11,13 +14,13 @@ namespace Dolittle.TimeSeries.DataPoints
     public static class TypeConversion
     {
         /// <summary>
-        /// Convert from <see cref="TagDataPoint"/> to <see cref="Runtime.TagDataPoint"/>.
+        /// Convert from <see cref="TagDataPoint"/> to <see cref="grpc.TagDataPoint"/>.
         /// </summary>
         /// <param name="tagDataPoint"><see cref="TagDataPoint"/> to convert from.</param>
-        /// <returns>Converted <see cref="Runtime.TagDataPoint"/>.</returns>
-        public static Runtime.TagDataPoint ToRuntime(this TagDataPoint tagDataPoint)
+        /// <returns>Converted <see cref="grpc.TagDataPoint"/>.</returns>
+        public static grpc.TagDataPoint ToRuntime(this TagDataPoint tagDataPoint)
         {
-            var converted = new Runtime.TagDataPoint
+            var converted = new grpc.TagDataPoint
             {
                 Tag = tagDataPoint.Tag,
             };
@@ -39,24 +42,24 @@ namespace Dolittle.TimeSeries.DataPoints
         }
 
         /// <summary>
-        /// Convert from <see cref="Runtime.TagDataPoint"/> to <see cref="TagDataPoint"/>.
+        /// Convert from <see cref="grpc.TagDataPoint"/> to <see cref="TagDataPoint"/>.
         /// </summary>
-        /// <param name="tagDataPoint"><see cref="Runtime.TagDataPoint"/> to convert from.</param>
+        /// <param name="tagDataPoint"><see cref="grpc.TagDataPoint"/> to convert from.</param>
         /// <returns>Converted <see cref="TagDataPoint"/>.</returns>
-        public static TagDataPoint ToTagDataPoint(this Runtime.TagDataPoint tagDataPoint)
+        public static TagDataPoint ToTagDataPoint(this grpc.TagDataPoint tagDataPoint)
         {
             var tag = tagDataPoint.Tag;
             IMeasurement measurement = null;
 
             switch (tagDataPoint.MeasurementCase)
             {
-                case Runtime.TagDataPoint.MeasurementOneofCase.SingleValue:
+                case grpc.TagDataPoint.MeasurementOneofCase.SingleValue:
                     measurement = tagDataPoint.SingleValue.ToSingle();
                     break;
-                case Runtime.TagDataPoint.MeasurementOneofCase.Vector2Value:
+                case grpc.TagDataPoint.MeasurementOneofCase.Vector2Value:
                     measurement = tagDataPoint.Vector2Value.ToVector2();
                     break;
-                case Runtime.TagDataPoint.MeasurementOneofCase.Vector3Value:
+                case grpc.TagDataPoint.MeasurementOneofCase.Vector3Value:
                     measurement = tagDataPoint.Vector3Value.ToVector3();
                     break;
             }

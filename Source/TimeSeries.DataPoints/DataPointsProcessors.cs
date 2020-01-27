@@ -1,21 +1,22 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+extern alias contracts;
+
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Dolittle.Collections;
-using Dolittle.Heads;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.TimeSeries.DataTypes;
 using Dolittle.Types;
 using Grpc.Core;
-using static Dolittle.TimeSeries.DataPoints.Runtime.DataPointProcessors;
-using grpc = Dolittle.TimeSeries.DataPoints.Runtime;
+using static contracts::Dolittle.Runtime.TimeSeries.DataPoints.DataPointProcessors;
+using grpc = contracts::Dolittle.Runtime.TimeSeries.DataPoints;
 
 namespace Dolittle.TimeSeries.DataPoints
 {
@@ -28,17 +29,17 @@ namespace Dolittle.TimeSeries.DataPoints
         readonly IInstancesOf<ICanProcessDataPoints> _processors;
         readonly ConcurrentDictionary<DataPointProcessorId, DataPointProcessor> _dataProcessors = new ConcurrentDictionary<DataPointProcessorId, DataPointProcessor>();
         readonly ILogger _logger;
-        readonly IClientFor<DataPointProcessorsClient> _client;
+        readonly DataPointProcessorsClient _client;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataPointsProcessors"/> class.
         /// </summary>
         /// <param name="processors">Instances of <see cref="ICanProcessDataPoints">processors</see>.</param>
-        /// <param name="client"><see cref="IClientFor{T}">Client</see> for <see cref="DataPointProcessorsClient"/>.</param>
+        /// <param name="client">The <see cref="DataPointProcessorsClient"/>.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public DataPointsProcessors(
             IInstancesOf<ICanProcessDataPoints> processors,
-            IClientFor<DataPointProcessorsClient> client,
+            DataPointProcessorsClient client,
             ILogger logger)
         {
             _processors = processors;
@@ -59,7 +60,7 @@ namespace Dolittle.TimeSeries.DataPoints
                 {
                     try
                     {
-                        var streamingCall = _client.Instance.Open(new grpc.DataPointProcessor
+                        var streamingCall = _client.Open(new grpc.DataPointProcessor
                         {
                             Id = _.Id.ToProtobuf()
                         });
