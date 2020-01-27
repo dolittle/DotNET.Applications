@@ -18,7 +18,8 @@ namespace Dolittle.Events.Coordination
         /// <inheritdoc/>
         public IEnumerable<Client> Clients => new[]
         {
-            new Client(EndpointVisibility.Private, typeof(DataPointProcessors.DataPointProcessorsClient), DataPointProcessors.Descriptor)
+            new Client(EndpointVisibility.Private, typeof(DataPointProcessors.DataPointProcessorsClient), DataPointProcessors.Descriptor),
+            new Client(EndpointVisibility.Private, typeof(DataPointStream.DataPointStreamClient), DataPointStream.Descriptor)
         };
     }
 }
