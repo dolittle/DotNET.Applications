@@ -119,7 +119,7 @@ namespace Dolittle.SDK.CodeAnalysis.EventsMustHaveMatchingConstructorArguments
         }
 
         [TestMethod]
-        public void EventWithMisMatchingConstructorArguments()
+        public void EventWithMismatchingConstructorArguments()
         {
             const string content = @"
                 using Dolittle.Events;
