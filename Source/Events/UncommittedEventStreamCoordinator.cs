@@ -1,22 +1,25 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+extern alias contracts;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Artifacts;
+using Dolittle.Collections;
 using Dolittle.Execution;
-using Dolittle.Heads;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
+using Dolittle.Protobuf;
 using Dolittle.Runtime.Events;
 using Dolittle.Runtime.Events.Coordination;
-using Dolittle.Runtime.Events.Processing;
-using Dolittle.Runtime.Events.Relativity;
 using Dolittle.Runtime.Events.Store;
+using Dolittle.Serialization.Json;
 using Dolittle.Time;
-using static Dolittle.Events.Runtime.EventStore;
-using grpc = Dolittle.Events.Runtime;
+using Google.Protobuf.WellKnownTypes;
+using static contracts::Dolittle.Runtime.Events.EventStore;
+using grpc = contracts::Dolittle.Runtime.Events;
 
 namespace Dolittle.Events.Coordination
 {
@@ -27,40 +30,36 @@ namespace Dolittle.Events.Coordination
     [Singleton]
     public class UncommittedEventStreamCoordinator : IUncommittedEventStreamCoordinator
     {
-        readonly IClientFor<EventStoreClient> _eventStoreClient;
+        readonly EventStoreClient _eventStoreClient;
         readonly ILogger _logger;
         readonly IArtifactTypeMap _artifactMap;
         readonly ISystemClock _systemClock;
-        readonly IScopedEventProcessingHub _eventProcessorHub;
-        readonly IEventHorizon _eventHorizon;
         readonly IExecutionContextManager _executionContextManager;
+        readonly ISerializer _serializer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UncommittedEventStreamCoordinator"/> class.
         /// </summary>
-        /// <param name="eventStoreClient">A <see cref="IClientFor{T}" /> to work with the <see cref="EventStoreClient"/>.</param>
-        /// <param name="eventProcessorHub"><see cref="IScopedEventProcessingHub"/> for processing in same bounded context.</param>
-        /// <param name="eventHorizon"><see cref="IEventHorizon"/> to pass events through to.</param>
+        /// <param name="eventStoreClient">A see cref="EventStoreClient"/> for connecting to the runtime.</param>
         /// <param name="artifactMap">An instance of <see cref="IArtifactTypeMap" /> to get the artifact for Event Source and Events.</param>
         /// <param name="logger"><see cref="ILogger"/> for doing logging.</param>
         /// <param name="systemClock"><see cref="ISystemClock"/> for getting the time.</param>
         /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for accessing the current <see cref="ExecutionContext" />.</param>
+        /// <param name="serializer">A JSON <see cref="ISerializer"/>.</param>
         public UncommittedEventStreamCoordinator(
-            IClientFor<EventStoreClient> eventStoreClient,
-            IScopedEventProcessingHub eventProcessorHub,
-            IEventHorizon eventHorizon,
+            EventStoreClient eventStoreClient,
             IArtifactTypeMap artifactMap,
             ILogger logger,
             ISystemClock systemClock,
-            IExecutionContextManager executionContextManager)
+            IExecutionContextManager executionContextManager,
+            ISerializer serializer)
         {
             _eventStoreClient = eventStoreClient;
-            _eventProcessorHub = eventProcessorHub;
-            _eventHorizon = eventHorizon;
             _logger = logger;
             _artifactMap = artifactMap;
             _systemClock = systemClock;
             _executionContextManager = executionContextManager;
+            _serializer = serializer;
         }
 
         /// <inheritdoc/>
@@ -71,8 +70,26 @@ namespace Dolittle.Events.Coordination
             var uncommitted = BuildUncommitted(uncommittedEvents, correlationId.Value);
             _logger.Trace("Committing the events");
 
-            _eventStoreClient.Instance.Commit(new grpc.UncommittedEvents());
+            var uncommittedEventsToSend = new grpc.UncommittedEvents();
+            uncommittedEvents.ForEach(_ =>
+            {
+                var artifact = _artifactMap.GetArtifactFor(_.GetType());
+                var serialized = _serializer.ToJson(_, SerializationOptions.CamelCase);
+                var uncommittedEvent = new grpc.UncommittedEvent
+                {
+                    Occurred = Timestamp.FromDateTimeOffset(uncommitted.Timestamp),
+                    Artifact = new grpc.Artifact
+                    {
+                        Id = artifact.Id.ToProtobuf(),
+                        Generation = artifact.Generation
+                    },
+                    Data = serialized
+                };
+                uncommittedEventsToSend.Events.Add(uncommittedEvent);
+            });
 
+            _eventStoreClient.Commit(uncommittedEventsToSend);
+#if false
             var committed = new CommittedEventStream(0, uncommitted.Source, uncommitted.Id, uncommitted.CorrelationId, uncommitted.Timestamp, uncommitted.Events);
             try
             {
@@ -83,7 +100,7 @@ namespace Dolittle.Events.Coordination
             {
                 _logger.Error(ex, $"Error processing CommittedEventStream within local event processors '{committed?.Sequence?.ToString() ?? "[NULL]"}'");
             }
-#if false
+
             try
             {
                 _logger.Trace("Passing committed events through event horizon");

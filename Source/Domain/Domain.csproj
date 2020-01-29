@@ -12,6 +12,7 @@
         <PackageReference Include="Dolittle.Runtime.Commands" Version="$(RuntimeVersion)" />
         <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="$(RuntimeVersion)" />
         <PackageReference Include="Dolittle.Runtime.Events" Version="$(RuntimeVersion)" />
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)" alias="contracts"/>
     </ItemGroup>
 
    
