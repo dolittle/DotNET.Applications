@@ -1,44 +1,42 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
-using Dolittle.Validation;
 using FluentValidation;
 
 namespace Dolittle.Commands.Validation
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IValidatorFactory"/> for dealing with validation for commands
+    /// Represents an implementation of <see cref="IValidatorFactory"/> for dealing with validation for commands.
     /// </summary>
     public class CommandValidatorFactory : IValidatorFactory
     {
         readonly ICommandValidatorProvider _commandValidatorProvider;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="CommandValidatorFactory"/>
+        /// Initializes a new instance of the <see cref="CommandValidatorFactory"/> class.
         /// </summary>
-        /// <param name="commandValidatorProvider"><see cref="ICommandValidatorProvider"/> to get validators from</param>
+        /// <param name="commandValidatorProvider"><see cref="ICommandValidatorProvider"/> to get validators from.</param>
         public CommandValidatorFactory(ICommandValidatorProvider commandValidatorProvider)
         {
             _commandValidatorProvider = commandValidatorProvider;
         }
-#pragma warning disable 1591 // Xml Comments
+
+        /// <inheritdoc/>
         public IValidator<T> GetValidator<T>()
         {
-            var validator = _commandValidatorProvider.GetInputValidatorFor(typeof(T)) as IValidator<T>;
-            return validator;
+            return _commandValidatorProvider.GetInputValidatorFor(typeof(T)) as IValidator<T>;
         }
 
+        /// <inheritdoc/>
         public IValidator GetValidator(Type type)
         {
-            if (null != type)
+            if (type != null)
             {
-                var validator = _commandValidatorProvider.GetInputValidatorFor(type) as IValidator;
-                return validator;
+                return _commandValidatorProvider.GetInputValidatorFor(type) as IValidator;
             }
+
             return null;
         }
-#pragma warning restore 1591 // Xml Comments
     }
 }

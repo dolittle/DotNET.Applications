@@ -1,20 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../default.props" />
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
         <AssemblyName>Dolittle.SDK.Applications.Configuration</AssemblyName>
     </PropertyGroup>
-    <Import Project="../../Build/MSBuild/default.props" />
-
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Applications" Version="3.*" />
+        <PackageReference Include="Dolittle.Applications" Version="4.*" />
 
-        <PackageReference Include="Dolittle.Booting" Version="3.*" />
-        <PackageReference Include="Dolittle.Configuration" Version="3.*" />
-        <PackageReference Include="Dolittle.Serialization.Json" Version="3.*" />
-        <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="3.*" />
-        <PackageReference Include="Dolittle.Execution" Version="3.*" />
-        <PackageReference Include="Dolittle.ResourceTypes.Configuration" Version="3.*" />
+        <PackageReference Include="Dolittle.Booting" Version="4.*" />
+        <PackageReference Include="Dolittle.Configuration" Version="4.*" />
+        <PackageReference Include="Dolittle.Serialization.Json" Version="4.*" />
+        <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="4.*" />
+        <PackageReference Include="Dolittle.Execution" Version="4.*" />
+        <PackageReference Include="Dolittle.ResourceTypes.Configuration" Version="4.*" />
 
     </ItemGroup>
 </Project>

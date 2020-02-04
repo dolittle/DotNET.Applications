@@ -1,7 +1,6 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Reflection;
 using Dolittle.DependencyInversion;
@@ -10,41 +9,41 @@ using FluentValidation;
 namespace Dolittle.Validation
 {
     /// <summary>
-    /// Represents a <see cref="IValidatorFactory"/> that is based on conventions
+    /// Represents a <see cref="IValidatorFactory"/> that is based on conventions.
     /// </summary>
     public class ConventionValidatorFactory : IValidatorFactory
     {
         readonly IContainer _container;
 
         /// <summary>
-        /// Initializes an instance of <see cref="ConventionValidatorFactory"/>
+        /// Initializes a new instance of the <see cref="ConventionValidatorFactory"/> class.
         /// </summary>
-        /// <param name="container"><see cref="IContainer"/> to use for getting instances of <see cref="IValidator">validators</see></param>
+        /// <param name="container"><see cref="IContainer"/> to use for getting instances of <see cref="IValidator">validators</see>.</param>
         public ConventionValidatorFactory(IContainer container)
         {
             _container = container;
         }
-#pragma warning disable 1591 // Xml Comments
+
+        /// <inheritdoc/>
         public IValidator<T> GetValidator<T>()
         {
             var type = typeof(T);
-            var validatorTypeName = string.Format("{0}Validator", type.Name);
+            var validatorTypeName = $"{type.Name}Validator";
             var validatorType = type.GetTypeInfo().Assembly.GetType(validatorTypeName);
-            var validator = _container.Get(validatorType) as IValidator<T>;
-            return validator;
+            return _container.Get(validatorType) as IValidator<T>;
         }
 
+        /// <inheritdoc/>
         public IValidator GetValidator(Type type)
         {
-            var validatorTypeName = string.Format("{0}.{1}Validator", type.Namespace, type.Name);
+            var validatorTypeName = $"{type.Namespace}.{type.Name}Validator";
             var validatorType = type.GetTypeInfo().Assembly.GetType(validatorTypeName);
-            if (null != validatorType)
+            if (validatorType != null)
             {
-                var validator = _container.Get(validatorType) as IValidator;
-                return validator;
+                return _container.Get(validatorType) as IValidator;
             }
+
             return null;
         }
     }
-#pragma warning restore 1591 // Xml Comments
 }

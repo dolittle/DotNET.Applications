@@ -1,0 +1,42 @@
+{
+    "name": "C# bounded context boilerplate",
+    "language": "csharp",
+    "type": "boundedContext",
+    "description": "This is a basic bounded context boilerplate",
+    "dependencies": {
+        "name": {
+            "description": "The name of the bounded context",
+            "type": "userInput",
+            "promptMessage": "The name of the bounded context",
+            "userInputType": "argument",
+            "rules": [
+                "IsNotEmpty"
+            ]
+        },
+        "readModelsImplementation": {
+            "description": "The implementation type of read models",
+            "type": "userInput",
+            "userInputType": "chooseOne",
+            "choices": [
+                {
+                    "name": "MongoDB",
+                    "value": "MongoDB"
+                }
+            ],
+            "promptMessage": "Choose the resource implementation for read models",
+            "rules": []
+        },
+        "eventStoreImplementation": {
+            "description": "The implementation type of event store",
+            "type": "userInput",
+            "userInputType": "chooseOne",
+            "choices": [
+                {
+                    "name": "MongoDB",
+                    "value": "MongoDB"
+                }
+            ],
+            "promptMessage": "Choose the resource implementation for event store"
+        }
+    }
+ }

@@ -1,8 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-using System;
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Linq;
 using System.Reflection;
 using Dolittle.Collections;
@@ -12,7 +10,7 @@ using Dolittle.Types;
 namespace Dolittle.Rules
 {
     /// <summary>
-    /// Represents the bindings for working with rules
+    /// Represents the bindings for working with rules.
     /// </summary>
     public class Bindings : ICanProvideBindings
     {
@@ -20,10 +18,10 @@ namespace Dolittle.Rules
         readonly GetContainer _getContainer;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Bindings"/>
+        /// Initializes a new instance of the <see cref="Bindings"/> class.
         /// </summary>
-        /// <param name="typeFinder"><see cref="ITypeFinder"/> to use for discovering rules</param>
-        /// <param name="getContainer"><see cref="GetContainer"/> for getting the <see cref="IContainer"/></param>
+        /// <param name="typeFinder"><see cref="ITypeFinder"/> to use for discovering rules.</param>
+        /// <param name="getContainer"><see cref="GetContainer"/> for getting the <see cref="IContainer"/>.</param>
         public Bindings(ITypeFinder typeFinder, GetContainer getContainer)
         {
             _typeFinder = typeFinder;
@@ -43,7 +41,7 @@ namespace Dolittle.Rules
                 builder.Bind(ruleType).To(() =>
                 {
                     var ruleImplementation = _getContainer().Get(_);
-                    var ruleProperty = _.GetProperty("Rule", BindingFlags.Public|BindingFlags.Instance);
+                    var ruleProperty = _.GetProperty("Rule", BindingFlags.Public | BindingFlags.Instance);
                     return ruleProperty.GetValue(ruleImplementation);
                 });
             });

@@ -1,0 +1,6 @@
+{
+   "name": "Concept as string template",
+   "type": "concept-string",
+   "area": "concepts",
+   "description": "Creates a concept as string"
+}

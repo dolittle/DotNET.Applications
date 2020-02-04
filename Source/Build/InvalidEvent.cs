@@ -1,22 +1,20 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
-using System.Runtime.Serialization;
 
 namespace Dolittle.Build
 {
     /// <summary>
-    /// The exception that gets thrown when a critical validation error is found on an event
+    /// Exception that gets thrown when a critical validation error is found on an event.
     /// </summary>
     public class InvalidEvent : Exception
     {
         /// <summary>
-        /// Instantiates an instance of <see cref="InvalidEvent"/>
+        /// Initializes a new instance of the <see cref="InvalidEvent"/> class.
         /// </summary>
-        /// <param name="message"></param>
-        public InvalidEvent(string message) : base(message)
+        public InvalidEvent()
+            : base("There are critical errors on events")
         {
         }
     }

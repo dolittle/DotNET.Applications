@@ -1,15 +1,14 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
-using Dolittle.Applications.Configuration;
+using System.Collections.Generic;
 using Dolittle.Artifacts.Configuration;
 
 namespace Dolittle.Build.Proxies
 {
     /// <summary>
-    /// Represents a class that handles the interaction with the proxy builder
+    /// Represents a class that handles the interaction with the proxy builder.
     /// </summary>
     public class ProxiesHandler
     {
@@ -18,11 +17,11 @@ namespace Dolittle.Build.Proxies
         readonly IBuildMessages _buildMessages;
 
         /// <summary>
-        /// Instantiates a new instance of <see cref="ProxiesHandler"/>
+        /// Initializes a new instance of the <see cref="ProxiesHandler"/> class.
         /// </summary>
-        /// <param name="templateLoader"></param>
-        /// <param name="artifactTypes"></param>
-        /// <param name="buildMessages"></param>
+        /// <param name="templateLoader"><see cref="TemplateLoader"/> for loading templates.</param>
+        /// <param name="artifactTypes">All <see cref="ArtifactTypes"/>.</param>
+        /// <param name="buildMessages"><see cref="IBuildMessages"/> for outputting build messages.</param>
         public ProxiesHandler(TemplateLoader templateLoader, ArtifactTypes artifactTypes, IBuildMessages buildMessages)
         {
             _templateLoader = templateLoader;
@@ -31,12 +30,12 @@ namespace Dolittle.Build.Proxies
         }
 
         /// <summary>
-        /// Creates the proxies given a list of artifacts and configurations
+        /// Creates the proxies given a list of artifacts and configurations.
         /// </summary>
-        /// <param name="artifacts"></param>
-        /// <param name="configuration"></param>
-        /// <param name="artifactsConfiguration"></param>
-        public void CreateProxies(Type[] artifacts, BuildTaskConfiguration configuration, ArtifactsConfiguration artifactsConfiguration)
+        /// <param name="artifacts">All artifacts as types.</param>
+        /// <param name="configuration">Current <see cref="BuildTaskConfiguration"/>.</param>
+        /// <param name="artifactsConfiguration">Current <see cref="ArtifactsConfiguration"/>.</param>
+        public void CreateProxies(IEnumerable<Type> artifacts, BuildTaskConfiguration configuration, ArtifactsConfiguration artifactsConfiguration)
         {
             var builder = new ProxiesBuilder(_templateLoader, artifacts, _artifactTypes, _buildMessages);
             builder.GenerateProxies(artifactsConfiguration, configuration);

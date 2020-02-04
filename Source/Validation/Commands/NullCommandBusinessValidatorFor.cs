@@ -1,8 +1,5 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-using Dolittle.Commands;
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace Dolittle.Commands.Validation
 {
@@ -12,7 +9,9 @@ namespace Dolittle.Commands.Validation
     /// <remarks>
     /// Always returns an empty validation result collection.
     /// </remarks>
-    public class NullCommandBusinessValidatorFor<T> : CommandBusinessValidatorFor<T> where T : class, ICommand
+    /// <typeparam name="T">Type of <see cref="ICommand"/>.</typeparam>
+    public class NullCommandBusinessValidatorFor<T> : CommandBusinessValidatorFor<T>
+        where T : class, ICommand
     {
     }
 }

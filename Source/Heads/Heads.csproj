@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../default.props" />
+
+    <PropertyGroup>
+        <AssemblyName>Dolittle.SDK.Heads</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dolittle.Services" Version="4.*" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dolittle.Booting" Version="4.*" />
+        <PackageReference Include="Dolittle.Configuration.Files" Version="4.*" />
+        <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="4.*" />
+        <PackageReference Include="Dolittle.DependencyInversion.Booting" Version="4.*" />
+        <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="4.*" />
+        <PackageReference Include="Dolittle.Protobuf" Version="4.*"/>
+        <PackageReference Include="Dolittle.Resilience" Version="4.*" />
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="4.*"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
+    </ItemGroup>
+
+</Project>

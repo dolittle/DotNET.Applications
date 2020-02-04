@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Dolittle.Applications;
@@ -10,7 +9,7 @@ using Dolittle.Configuration;
 namespace Dolittle.Artifacts.Configuration
 {
     /// <summary>
-    /// Represents the definition of features for configuration
+    /// Represents the definition of features for configuration.
     /// </summary>
     [Name("artifacts")]
     public class ArtifactsConfiguration :
@@ -18,10 +17,11 @@ namespace Dolittle.Artifacts.Configuration
         IConfigurationObject
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="ArtifactsConfiguration"/>
+        /// Initializes a new instance of the <see cref="ArtifactsConfiguration"/> class.
         /// </summary>
-        /// <param name="artifacts"><see cref="IDictionary{TKey, TValue}"/> for artifacts per feature</param>
-        public ArtifactsConfiguration(IDictionary<Feature, ArtifactsByTypeDefinition> artifacts) : base(artifacts)
+        /// <param name="artifacts"><see cref="IDictionary{TKey, TValue}"/> for artifacts per feature.</param>
+        public ArtifactsConfiguration(IDictionary<Feature, ArtifactsByTypeDefinition> artifacts)
+            : base(artifacts)
         {
         }
     }

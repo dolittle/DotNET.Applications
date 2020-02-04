@@ -1,23 +1,21 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using Dolittle.Booting;
-using Dolittle.Types;
 
 namespace Dolittle.Events.Processing
 {
     /// <summary>
-    /// The <see cref="ICanPerformBootProcedure">boot procedure</see> for in-process event processors
+    /// The <see cref="ICanPerformBootProcedure">boot procedure</see> for in-process event processors.
     /// </summary>
     public class BootProcedure : ICanPerformBootProcedure
     {
         readonly ProcessMethodEventProcessors _processors;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="BootProcedure"/> class.
         /// </summary>
-        /// <param name="processors"></param>
+        /// <param name="processors">All <see cref="ProcessMethodEventProcessors"/>.</param>
         public BootProcedure(ProcessMethodEventProcessors processors)
         {
             _processors = processors;

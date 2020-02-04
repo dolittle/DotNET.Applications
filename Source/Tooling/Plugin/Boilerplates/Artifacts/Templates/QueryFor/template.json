@@ -1,0 +1,20 @@
+{
+   "name": "QueryFor Template",
+   "type": "query-for",
+   "area": "read",
+   "description": "Creates a Query for a particular readmodel",
+    "dependencies": {
+        "readModel": {
+            "description": "The read model that this is a query for",
+            "type": "discover",
+            "discoverType": "multipleFiles",
+            "userInputType": "chooseOne",
+            "promptMessage": "Choose a read model",
+            "customInput": "Write ReadModel name: ",
+            "fileMatch": ".*\\.cs$",
+            "contentMatch": ".*public\\s*class\\s*(\\w*)\\s*:\\s*IReadModel",
+            "withNamespace": true,
+            "milestone": ".*\\.csproj$"
+        }
+    }
+}

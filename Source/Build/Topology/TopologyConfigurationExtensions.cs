@@ -1,27 +1,27 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
-using Dolittle.Collections;
 
 namespace Dolittle.Build.Topology
 {
     /// <summary>
-    /// Extensions for the topology of a <see cref="BoundedContextConfiguration"/>
+    /// Extensions for the topology of a <see cref="BoundedContextConfiguration"/>.
     /// </summary>
     public static class TopologyConfigurationExtensions
     {
         /// <summary>
-        /// Returns a collapsed list of <see cref="ModuleDefinition"/> 
+        /// Returns a collapsed list of <see cref="ModuleDefinition"/>.
         /// </summary>
-        public static IDictionary<Module, ModuleDefinition> GetCollapsedModules(this IDictionary<Module,ModuleDefinition> modules)
+        /// <param name="modules"><see cref="IDictionary{TKey, TValue}"/> of <see cref="Module"/> to <see cref="ModuleDefinition"/> to collapse.</param>
+        /// <returns><see cref="IDictionary{TKey, TValue}"/> of <see cref="Module"/> to <see cref="ModuleDefinition"/>.</returns>
+        public static IDictionary<Module, ModuleDefinition> GetCollapsedModules(this IDictionary<Module, ModuleDefinition> modules)
         {
-            var collapsedModules = new Dictionary<Module,ModuleDefinition>();
+            var collapsedModules = new Dictionary<Module, ModuleDefinition>();
 
             foreach (var group in modules.GroupBy(_ => _.Value.Name))
             {
@@ -35,12 +35,15 @@ namespace Dolittle.Build.Topology
 
             return collapsedModules;
         }
+
         /// <summary>
-        /// Returns a collapsed list of <see cref="FeatureDefinition"/> 
+        /// Returns a collapsed list of <see cref="FeatureDefinition"/>.
         /// </summary>
+        /// <param name="features"><see cref="IDictionary{TKey, TValue}"/> of <see cref="Feature"/> to <see cref="FeatureDefinition"/> to collapse.</param>
+        /// <returns><see cref="IDictionary{TKey, TValue}"/> of <see cref="Feature"/> to <see cref="FeatureDefinition"/>.</returns>
         public static IDictionary<Feature, FeatureDefinition> GetCollapsedFeatures(this IDictionary<Feature, FeatureDefinition> features)
         {
-            var collapsedFeatures = new Dictionary<Feature,FeatureDefinition>();
+            var collapsedFeatures = new Dictionary<Feature, FeatureDefinition>();
 
             foreach (var group in features.GroupBy(_ => _.Value.Name))
             {
@@ -50,11 +53,16 @@ namespace Dolittle.Build.Topology
                 var newFeature = new FeatureDefinition(feature.Value.Name, subFeatures);
                 collapsedFeatures[feature.Key] = newFeature;
             }
+
             return collapsedFeatures;
         }
+
         /// <summary>
-        /// Validates the <see cref="Applications.Configuration.Topology"/>
+        /// Validates the <see cref="Applications.Configuration.Topology"/>.
         /// </summary>
+        /// <param name="topology"><see cref="Applications.Configuration.Topology"/> to validate.</param>
+        /// <param name="useModules">true if we're using modules, false if not.</param>
+        /// <param name="buildMessages"><see cref="IBuildMessages"/> for outputting build messages.</param>
         public static void ValidateTopology(this Applications.Configuration.Topology topology, bool useModules, IBuildMessages buildMessages)
         {
             ThrowIfDuplicateId(topology, useModules, buildMessages);
@@ -82,10 +90,11 @@ namespace Dolittle.Build.Topology
                     {
                         idMap.Add(module.Key, module.Value.Name);
                     }
+
                     ThrowIfDuplicateId(module.Value.Features, ref idMap, ref hasDuplicateId, buildMessages);
                 }
             }
-            else 
+            else
             {
                 ThrowIfDuplicateId(topology.Features, ref idMap, ref hasDuplicateId, buildMessages);
             }
@@ -95,7 +104,8 @@ namespace Dolittle.Build.Topology
                 throw new InvalidTopology("Bounded context topology has one or more Features/Modules with the same Id");
             }
         }
-        static void ThrowIfDuplicateId(IDictionary<Feature,FeatureDefinition> features, ref Dictionary<Guid, string> idMap, ref bool hasDuplicateId, IBuildMessages buildMessages)
+
+        static void ThrowIfDuplicateId(IDictionary<Feature, FeatureDefinition> features, ref Dictionary<Guid, string> idMap, ref bool hasDuplicateId, IBuildMessages buildMessages)
         {
             foreach (var feature in features)
             {
@@ -103,15 +113,14 @@ namespace Dolittle.Build.Topology
                 {
                     hasDuplicateId = true;
                     var name = idMap[feature.Key];
-                    
-                    buildMessages.Error(
-                        $"Duplicate id found in bounded-context topology.\n" +
-                        $"The id: '{feature.Key.Value}' is already occupied by the Module/Feature: '{name}' ");
+
+                    buildMessages.Error($"The id: '{feature.Key.Value}' is already occupied by the Module/Feature: '{name}' ");
                 }
                 else
                 {
                     idMap.Add(feature.Key, feature.Value.Name);
                 }
+
                 ThrowIfDuplicateId(feature.Value.SubFeatures, ref idMap, ref hasDuplicateId, buildMessages);
             }
         }

@@ -1,9 +1,8 @@
 <!-- Inspired by : https://github.com/madskristensen/BundlerMinifier/blob/e66ec7c85ad6c291fcd5bf55e7f426485e2e2d38/src/BundlerMinifier/BundlerMinifier.csproj -->
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="../../Build/MSBuild/default.props" />
+    <Import Project="../../default.props" />
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
         <AssemblyName>Dolittle.SDK.Build</AssemblyName>
 
         <NoPackageAnalysis>true</NoPackageAnalysis>
@@ -12,7 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Build" Version="3.*" />
+        <PackageReference Include="Dolittle.Build" Version="4.*" />
         <PackageReference Include="Handlebars.Net" Version="1.9.5" />
         <!--<PackageReference Update="@(PackageReference)" PrivateAssets="All" />-->
     </ItemGroup>

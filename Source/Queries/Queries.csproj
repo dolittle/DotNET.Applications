@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../default.props" />
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
         <AssemblyName>Dolittle.SDK.Queries</AssemblyName>
     </PropertyGroup>
-    <Import Project="../../Build/MSBuild/default.props" />
     <ItemGroup>
-        <PackageReference Include="Dolittle.Artifacts" Version="3.*" />
-        <PackageReference Include="Dolittle.Runtime.Queries" Version="3.*" />
+        <PackageReference Include="Dolittle.Artifacts" Version="4.*" />
+        <PackageReference Include="Dolittle.Runtime.Queries" Version="4.*" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Artifacts\Artifacts.csproj" />

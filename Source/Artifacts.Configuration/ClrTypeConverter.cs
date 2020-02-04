@@ -1,14 +1,13 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using Newtonsoft.Json;
 
 namespace Dolittle.Artifacts.Configuration
 {
     /// <summary>
-    /// Represents a <see cref="JsonConverter"/> for dealing with serialization of <see cref="Type"/>
+    /// Represents a <see cref="JsonConverter"/> for dealing with serialization of <see cref="Type"/>.
     /// </summary>
     public class ClrTypeConverter : JsonConverter
     {
@@ -22,7 +21,7 @@ namespace Dolittle.Artifacts.Configuration
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var typeName = reader.Value.ToString();
-            var clrType = new ClrType { TypeString = typeName };
+            var clrType = new ClrType { TypeString = typeName };
             return clrType;
         }
 

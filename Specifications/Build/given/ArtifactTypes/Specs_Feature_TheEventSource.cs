@@ -1,12 +1,16 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using Dolittle.Events;
+using Dolittle.Rules;
 using Dolittle.Runtime.Events;
 
-namespace Specs.Feature
+#pragma warning disable SA1649
+
+namespace Dolittle.Build.given.ArtifactTypes
 {
     public class TheEventSource : IEventSource
     {
@@ -15,6 +19,20 @@ namespace Specs.Feature
         public EventSourceVersion Version => throw new System.NotImplementedException();
 
         public UncommittedEvents UncommittedEvents => throw new System.NotImplementedException();
+
+        public IEnumerable<BrokenRule> BrokenRules => throw new System.NotImplementedException();
+
+        public IEnumerable<RuleSetEvaluation> RuleSetEvaluations => throw new System.NotImplementedException();
+
+        public RuleSetEvaluation Evaluate(params IRule[] rules)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public RuleSetEvaluation Evaluate(params Expression<Func<RuleEvaluationResult>>[] rules)
+        {
+            throw new System.NotImplementedException();
+        }
 
         public void Apply(IEvent @event)
         {

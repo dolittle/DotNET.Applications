@@ -1,22 +1,22 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
-using Dolittle.Validation.MetaData;
+using System.Collections.Generic;
 using FluentValidation.Validators;
 
 namespace Dolittle.Validation.MetaData
 {
     /// <summary>
     /// Represents the generater that can generate a <see cref="NotNull"/> rule from
-    /// an <see cref="INotNullValidator"/>
+    /// an <see cref="INotNullValidator"/>.
     /// </summary>
     public class NotNullGenerator : ICanGenerateRule
     {
-#pragma warning disable 1591 // Xml Comments
-        public Type[] From { get { return new[] { typeof(INotNullValidator), typeof(NotNullGenerator) }; } }
+        /// <inheritdoc/>
+        public IEnumerable<Type> From => new[] { typeof(INotNullValidator), typeof(NotNullGenerator) };
 
+        /// <inheritdoc/>
         public Rule GeneratorFrom(string propertyName, IPropertyValidator propertyValidator)
         {
             return new NotNull
@@ -24,7 +24,5 @@ namespace Dolittle.Validation.MetaData
                 Message = propertyValidator.GetErrorMessageFor(propertyName)
             };
         }
-#pragma warning restore 1591 // Xml Comments
-
     }
 }

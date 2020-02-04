@@ -34,7 +34,8 @@ _site
 artifacts
 !Source/Artifacts
 !Specifications/Artifacts
-!Boilerplates/Artifacts
+!Source/Tooling/Plugin/Boilerplates/Artifacts
+!Source/Build/Artifacts/
 log.txt
 
 *.trx

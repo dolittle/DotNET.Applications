@@ -1,21 +1,21 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
-using Dolittle.Validation.MetaData;
+using System.Collections.Generic;
 using FluentValidation.Validators;
 
 namespace Dolittle.Validation.MetaData
 {
     /// <summary>
-    /// Represents the generator for generating a <see cref="Regex"/> rule from a <see cref="IRegularExpressionValidator"/>
+    /// Represents the generator for generating a <see cref="Regex"/> rule from a <see cref="IRegularExpressionValidator"/>.
     /// </summary>
     public class RegexGenerator : ICanGenerateRule
     {
-#pragma warning disable 1591 // Xml Comments
-        public Type[] From { get { return new[] { typeof(IRegularExpressionValidator), typeof(RegularExpressionValidator) }; } }
+        /// <inheritdoc/>
+        public IEnumerable<Type> From => new[] { typeof(IRegularExpressionValidator), typeof(RegularExpressionValidator) };
 
+        /// <inheritdoc/>
         public Rule GeneratorFrom(string propertyName, IPropertyValidator propertyValidator)
         {
             var rule = new Regex
@@ -25,7 +25,5 @@ namespace Dolittle.Validation.MetaData
             };
             return rule;
         }
-#pragma warning restore 1591 // Xml Comments
-
     }
 }

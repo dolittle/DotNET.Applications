@@ -1,35 +1,21 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 
 namespace Dolittle.Build
 {
     /// <summary>
-    /// The exception that gets thrown when an invalid artifact is discovered
+    /// Exception that gets thrown when an invalid artifact is discovered.
     /// </summary>
     public class InvalidArtifact : Exception
     {
         /// <summary>
-        /// Instantiates an instance of <see cref="InvalidArtifact"/>
+        /// Initializes a new instance of the <see cref="InvalidArtifact"/> class.
         /// </summary>
-        public InvalidArtifact() 
-            : base("Invalid Artifacts was discovered") 
-        { }
-
-        /// <summary>
-        /// Instantiates an instance of <see cref="InvalidArtifact"/>
-        /// </summary>
-        public InvalidArtifact(Type type)
-            : base($"The Artifact '{type.FullName}' is invalid")
-        { }
-
-        /// <summary>
-        /// Instantiates an instance of <see cref="InvalidArtifact"/>
-        /// </summary>
-        public InvalidArtifact(string typePath)
-            : base($"Artifact with type path (a Module name + Feature names composition) '{typePath}' is invalid")
-        { }
+        public InvalidArtifact()
+            : base("Invalid Artifacts was discovered")
+        {
+        }
     }
 }

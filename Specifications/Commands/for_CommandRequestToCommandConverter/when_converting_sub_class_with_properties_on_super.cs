@@ -1,29 +1,27 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
 using Dolittle.Artifacts;
-using Dolittle.Runtime.Commands;
 using Dolittle.Execution;
+using Dolittle.Runtime.Commands;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
-using Dolittle.Serialization.Json;
 
 namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 {
     public class when_converting_sub_class_with_properties_on_super : given.a_serializer
     {
         const int an_integer = 42;
+
         class super : ICommand
         {
-            public int an_integer {  get; set; }
+            public int an_integer { get; set; }
         }
 
         class sub : super
         {
-
         }
 
         static CorrelationId correlation_id;
@@ -42,7 +40,8 @@ namespace Dolittle.Commands.for_CommandRequestToCommandConverter
             identifier = Artifact.New();
 
             content = new Dictionary<string, object>
-            { { "an_integer", an_integer }
+            {
+                { "an_integer", an_integer }
             };
 
             request = new CommandRequest(correlation_id, identifier.Id, identifier.Generation, content);

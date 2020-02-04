@@ -1,7 +1,10 @@
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using Dolittle.Runtime.Commands;
+using Dolittle.Security;
 using Machine.Specifications;
 using Moq;
-using Dolittle.Security;
-using Dolittle.Runtime.Commands;
 
 namespace Dolittle.Commands.Security.for_CommandRequestSecurityManager.given
 {

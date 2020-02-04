@@ -1,13 +1,9 @@
-﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+﻿// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
-using Dolittle.Applications;
 using Dolittle.Artifacts;
-using Dolittle.Commands;
 using Dolittle.DependencyInversion;
-using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Types;
 using Machine.Specifications;
@@ -26,7 +22,7 @@ namespace Dolittle.Commands.Handling.for_CommandHandlerInvoker.given
         Establish context = () =>
         {
             type_finder = new Mock<ITypeFinder>();
-            type_finder.Setup(t => t.FindMultiple<ICanHandleCommands>()).Returns(new Type[0]);
+            type_finder.Setup(t => t.FindMultiple<ICanHandleCommands>()).Returns(Array.Empty<Type>());
             container = new Mock<IContainer>();
             artifact_type_map = new Mock<IArtifactTypeMap>();
             command_request_converter = new Mock<ICommandRequestToCommandConverter>();
