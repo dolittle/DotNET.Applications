@@ -17,7 +17,7 @@
         <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="4.*" />
         <PackageReference Include="Dolittle.Protobuf" Version="4.*"/>
         <PackageReference Include="Dolittle.Resilience" Version="4.*" />
-        <PackageReference Include="Dolittle.Runtime.Contracts" Version="4.*"/>
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="4.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
     </ItemGroup>
