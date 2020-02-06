@@ -1,12 +1,13 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Dolittle.Events;
 using Dolittle.Rules;
 
 namespace Dolittle.Domain
 {
     /// <summary>
-    /// Represents the result after a perform operation done on an <see cref="IAggregateRoot"/>.
+    /// Represents the result after a perform operation done on an <see cref="AggregateRoot"/>.
     /// </summary>
     public class AggregateRootPerformResult
     {
