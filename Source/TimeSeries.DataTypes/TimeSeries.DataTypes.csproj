@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../default.props" />
+
+    <PropertyGroup>
+        <AssemblyName>Dolittle.TimeSeries.DataTypes</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dolittle.Protobuf" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)" alias="contracts"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../Heads/Heads.csproj"/>
+        <ProjectReference Include="../TimeSeries/TimeSeries.csproj"/>
+    </ItemGroup>
+
+</Project>
