@@ -6,12 +6,12 @@ using Dolittle.Logging;
 
 namespace EventSourcing
 {
-    [EventHandler("38eeb77f-90ca-405c-a733-3b0e6f0b0ef3")]
-    public class MyEventProcessors : ICanHandleEvents
+    [EventHandler("d87ed076-b18e-4d68-affd-73e56b9ba324")]
+    public class MySecondEventHandler : ICanHandleEvents
     {
         readonly ILogger _logger;
 
-        public MyEventProcessors(ILogger logger)
+        public MySecondEventHandler(ILogger logger)
         {
             _logger = logger;
         }

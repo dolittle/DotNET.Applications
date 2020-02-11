@@ -12,6 +12,7 @@ using Dolittle.PropertyBags;
 using Dolittle.Runtime.Commands.Coordination;
 using Dolittle.Runtime.Events;
 using Dolittle.Runtime.Events.Store;
+using CommittedEvent = Dolittle.Runtime.Events.CommittedEvent;
 
 #pragma warning disable CS0612, CS0618
 

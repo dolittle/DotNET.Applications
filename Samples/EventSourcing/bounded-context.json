@@ -6,10 +6,6 @@
         "readModels": {
           "production": "MongoDB",
           "development": "MongoDB"
-        },
-        "eventStore": {
-          "production": "MongoDB",
-          "development": "MongoDB"
         }
       },
         "core": {

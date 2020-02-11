@@ -6,9 +6,9 @@ extern alias contracts;
 using System.Collections.Generic;
 using Dolittle.Services;
 using Dolittle.Services.Clients;
-using static contracts::Dolittle.Runtime.Events.EventStore;
+using static contracts::Dolittle.Runtime.Events.Processing.Filters;
 
-namespace Dolittle.Events
+namespace Dolittle.Events.Processing
 {
     /// <summary>
     /// Represents something that knows about service clients.
@@ -18,7 +18,7 @@ namespace Dolittle.Events
         /// <inheritdoc/>
         public IEnumerable<Client> Clients => new[]
         {
-            new Client(EndpointVisibility.Private, typeof(EventStoreClient), Descriptor)
+            new Client(EndpointVisibility.Private, typeof(FiltersClient), Descriptor)
         };
     }
 }

@@ -7,5 +7,14 @@ namespace EventSourcing
 {
     public class MyEvent : IEvent
     {
+        public MyEvent(int myInteger, string myString)
+        {
+            MyInteger = myInteger;
+            MyString = myString;
+        }
+
+        public int MyInteger { get; }
+
+        public string MyString { get; }
     }
 }

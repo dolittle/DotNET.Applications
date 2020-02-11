@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using Dolittle.Serialization.Json;
 
 namespace Dolittle.Events
@@ -17,6 +18,18 @@ namespace Dolittle.Events
         /// <param name="event">The <see cref="IEvent"/> to serialize.</param>
         /// <returns>Camel cased JSON representation of the <see cref="IEvent"/>.</returns>
         public static string EventToJson(this ISerializer serializer, IEvent @event) => serializer.ToJson(@event, SerializationOptions.CamelCase);
+
+        /// <summary>
+        /// Deserialize from JSON to a given <see cref="IEvent"/> type.
+        /// </summary>
+        /// <param name="serializer">The <see cref="ISerializer"/> to extend.</param>
+        /// <param name="type">Type of <see cref="IEvent"/> to serialize to.</param>
+        /// <param name="json">The JSON representation of the event.</param>
+        /// <returns>An instance of the given <see cref="IEvent"/> type.</returns>
+        public static object JsonToEvent(this ISerializer serializer, Type type, string json)
+        {
+            return serializer.FromJson(type, json);
+        }
 
         /// <summary>
         /// Deserialize from JSON to a given <see cref="IEvent"/> type.

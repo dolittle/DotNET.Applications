@@ -21,7 +21,7 @@ using Google.Protobuf.WellKnownTypes;
 using static contracts::Dolittle.Runtime.Events.EventStore;
 using grpc = contracts::Dolittle.Runtime.Events;
 
-namespace Dolittle.Events.Coordination
+namespace Dolittle.Events
 {
     /// <summary>
     /// Represents a <see cref="IUncommittedEventStreamCoordinator"/>.
@@ -74,7 +74,7 @@ namespace Dolittle.Events.Coordination
             uncommittedEvents.ForEach(_ =>
             {
                 var artifact = _artifactMap.GetArtifactFor(_.GetType());
-                var serialized = _serializer.ToJson(_, SerializationOptions.CamelCase);
+                var serialized = _serializer.EventToJson(_);
                 var uncommittedEvent = new grpc.UncommittedEvent
                 {
                     Occurred = Timestamp.FromDateTimeOffset(uncommitted.Timestamp),
