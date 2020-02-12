@@ -3,16 +3,20 @@
 
 extern alias contracts;
 
+using System;
+using System.Linq;
 using Dolittle.Artifacts;
 using Dolittle.Execution;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
+using Dolittle.Protobuf;
 using Dolittle.Runtime.Events;
 using Dolittle.Runtime.Events.Coordination;
 using Dolittle.Serialization.Json;
 using Dolittle.Time;
 using static contracts::Dolittle.Runtime.Events.EventStore;
-using grpc = contracts::Dolittle.Runtime.Events;
+using grpcArtifacts = contracts::Dolittle.Runtime.Artifacts;
+using grpcEvents = contracts::Dolittle.Runtime.Events;
 
 namespace Dolittle.Events
 {
@@ -59,7 +63,29 @@ namespace Dolittle.Events
         public void Commit(CorrelationId correlationId, UncommittedEvents eventStream)
         {
             _logger.Information($"Committing uncommitted event stream with correlationId '{correlationId}'");
-            var uncommittedAggregateEvents = new grpc.UncommittedAggregateEvents();
+            var uncommittedAggregateEvents = new grpcEvents.UncommittedAggregateEvents
+            {
+                AggregateRoot = Guid.Parse("ac14f174-572e-4c07-8cd1-e4e8ecc0fea9").ToProtobuf(),
+                EventSourceId = Guid.NewGuid().ToProtobuf(),
+                Version = 0
+            };
+
+            var events = eventStream.Select(_ =>
+                {
+                    var artifact = _artifactMap.GetArtifactFor(_.GetType());
+                    return new grpcEvents.UncommittedEvent
+                    {
+                        Artifact = new grpcArtifacts.Artifact
+                        {
+                            Id = artifact.Id.ToProtobuf(),
+                            Generation = artifact.Generation
+                        },
+                        Content = _serializer.EventToJson(_)
+                    };
+                });
+
+            uncommittedAggregateEvents.Events.AddRange(events);
+
             _eventStoreClient.CommitForAggregate(uncommittedAggregateEvents);
         }
     }
