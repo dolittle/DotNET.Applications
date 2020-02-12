@@ -6,7 +6,7 @@ extern alias contracts;
 using System.Collections.Generic;
 using Dolittle.Services;
 using Dolittle.Services.Clients;
-using static contracts::Dolittle.Runtime.Events.Processing.Filters;
+using grpc = contracts::Dolittle.Runtime.Events.Processing;
 
 namespace Dolittle.Events.Processing
 {
@@ -18,7 +18,7 @@ namespace Dolittle.Events.Processing
         /// <inheritdoc/>
         public IEnumerable<Client> Clients => new[]
         {
-            new Client(EndpointVisibility.Private, typeof(FiltersClient), Descriptor)
+            new Client(EndpointVisibility.Private, typeof(grpc.Filters.FiltersClient), grpc.Filters.Descriptor),
         };
     }
 }
