@@ -8,15 +8,15 @@ namespace Dolittle.Events.Processing
     /// <summary>
     /// Represents a <see cref="ICanPerformBootProcedure"/> for settings up all filters and processors.
     /// </summary>
-    public class BootProcedure : ICanPerformBootProcedure
+    public class FiltersBootProcedure : ICanPerformBootProcedure
     {
         readonly IStreamFilters _filters;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BootProcedure"/> class.
+        /// Initializes a new instance of the <see cref="FiltersBootProcedure"/> class.
         /// </summary>
         /// <param name="filters">All the <see cref="IStreamFilters"/>.</param>
-        public BootProcedure(IStreamFilters filters)
+        public FiltersBootProcedure(IStreamFilters filters)
         {
             _filters = filters;
         }
