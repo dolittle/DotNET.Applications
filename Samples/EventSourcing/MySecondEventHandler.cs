@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Threading.Tasks;
 using Dolittle.Events.Processing;
 using Dolittle.Logging;
 
@@ -16,9 +17,10 @@ namespace EventSourcing
             _logger = logger;
         }
 
-        public void Handle(MyEvent @event)
+        public Task Handle(MyEvent @event)
         {
             _logger.Information($"Processing event : '{@event}'");
+            return Task.CompletedTask;
         }
     }
 }
