@@ -3,19 +3,19 @@
 
 using System;
 
-namespace Dolittle.Events.Processing
+namespace Dolittle.Events.Handling
 {
     /// <summary>
     /// Decorates a method to indicate that the method is an Event Processor.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method)]
-    public class EventProcessorAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class)]
+    public class EventHandlerAttribute : Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventProcessorAttribute"/> class.
+        /// Initializes a new instance of the <see cref="EventHandlerAttribute"/> class.
         /// </summary>
         /// <param name="id">The <see cref="Guid" /> identifier.</param>
-        public EventProcessorAttribute(string id)
+        public EventHandlerAttribute(string id)
         {
             Id = Guid.Parse(id);
         }
@@ -23,6 +23,6 @@ namespace Dolittle.Events.Processing
         /// <summary>
         /// Gets the unique id for this event processor.
         /// </summary>
-        public EventProcessorId Id { get; }
+        public EventHandlerId Id { get; }
     }
 }

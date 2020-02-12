@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Import Project="../../default.props" />
     <PropertyGroup>
-        <AssemblyName>Dolittle.SDK.Events.Processing</AssemblyName>
+        <AssemblyName>Dolittle.SDK.Events.Handling</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Dolittle.Artifacts" Version="$(FundamentalsVersion)" />
@@ -15,6 +15,7 @@
         <ProjectReference Include="..\Applications\Applications.csproj" />
         <ProjectReference Include="..\Artifacts.Configuration\Artifacts.Configuration.csproj" />
         <ProjectReference Include="..\Events\Events.csproj" />
+        <ProjectReference Include="..\Events.Processing\Events.Processing.csproj" />
     </ItemGroup>
     
 </Project>

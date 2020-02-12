@@ -10,8 +10,6 @@ using Dolittle.Logging;
 using Dolittle.Runtime.Commands.Coordination;
 using Dolittle.Runtime.Events;
 
-#pragma warning disable CS0612, CS0618
-
 namespace Dolittle.Domain
 {
     /// <summary>

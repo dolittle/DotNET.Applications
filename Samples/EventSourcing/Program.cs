@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Dolittle.Booting;
 using Dolittle.Domain;
 using Dolittle.Execution;
@@ -18,7 +19,7 @@ namespace EventSourcing
     {
         static readonly CommandRequest NullCommandRequest = new CommandRequest(CorrelationId.New(), Guid.Parse("7f1d64af-2ec7-4b6e-bac2-fa0e0b18a661"), 1, new Dictionary<string, object>());
 
-        static void Main()
+        static async Task Main()
         {
             var hostBuilder = new HostBuilder();
             hostBuilder.ConfigureLogging(_ => _.AddConsole());
@@ -42,6 +43,8 @@ namespace EventSourcing
                 var aggregateOf = result.Container.Get<IAggregateOf<MyAggregate>>();
                 aggregateOf.Create().Perform(_ => _.DoStuff());
             }
+
+            await host.RunAsync().ConfigureAwait(false);
         }
     }
 }

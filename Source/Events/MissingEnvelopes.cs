@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Dolittle.Events.Coordination
+namespace Dolittle.Events
 {
     /// <summary>
     /// Exception that gets thrown when there are no envelopes.

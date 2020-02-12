@@ -3,7 +3,6 @@
 
 using System;
 using System.Reflection;
-using Dolittle.Runtime.Events.Processing;
 
 namespace Dolittle.Events.Processing
 {
