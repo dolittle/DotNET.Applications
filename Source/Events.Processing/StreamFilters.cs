@@ -98,14 +98,15 @@ namespace Dolittle.Events.Processing
                             var artifact = new Artifact(artifactId, call.Request.Event.Type.Generation);
                             var type = _artifactTypeMap.GetTypeFor(artifact);
                             var eventInstance = _serializer.JsonToEvent(type, call.Request.Event.Content);
-
                             var occurred = call.Request.Event.Occurred.ToDateTimeOffset();
 
                             _logger.Information($"Event @ {occurred} -  {eventInstance} - {_serializer.EventToJson((IEvent)eventInstance)} received for filtering");
 
-                            var response = new grpc.FilterClientToRuntimeResponse();
-                            response.IsIncluded = true;
-                            response.ExecutionContext = call.Request.ExecutionContext;
+                            var response = new grpc.FilterClientToRuntimeResponse
+                            {
+                                IsIncluded = true,
+                                ExecutionContext = call.Request.ExecutionContext
+                            };
                             await call.Reply(response).ConfigureAwait(false);
                         }
                         catch (Exception ex)
