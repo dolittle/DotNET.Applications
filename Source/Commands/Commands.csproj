@@ -6,9 +6,11 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Dolittle.Applications" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Execution" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Rules" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Serialization.Json" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Types" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Commands.Handling" Version="$(RuntimeVersion)" />
+        <PackageReference Include="Dolittle.Validation" Version="$(FundamentalsVersion)" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Artifacts\Artifacts.csproj" />

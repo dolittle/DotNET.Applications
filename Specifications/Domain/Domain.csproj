@@ -6,10 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="$(RuntimeVersion)" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="../../Source/Domain/Domain.csproj" />
     </ItemGroup>
 

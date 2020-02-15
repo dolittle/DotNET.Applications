@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Dolittle.Events;
 using Dolittle.Rules;
-using Dolittle.Runtime.Events;
+using Dolittle.Domain;
 
 namespace Specs.Feature
 {

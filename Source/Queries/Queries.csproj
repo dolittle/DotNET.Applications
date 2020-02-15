@@ -5,9 +5,10 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Dolittle.Artifacts" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Queries" Version="$(RuntimeVersion)" />
+        <PackageReference Include="Dolittle.Rules" Version="$(FundamentalsVersion)" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Artifacts\Artifacts.csproj" />
+        <ProjectReference Include="..\ReadModels\ReadModels.csproj" />
     </ItemGroup>
 </Project>

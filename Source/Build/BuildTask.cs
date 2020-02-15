@@ -13,7 +13,6 @@ using Dolittle.Concepts;
 using Dolittle.Events.Processing;
 using Dolittle.Immutability;
 using Dolittle.Reflection;
-using Dolittle.Runtime.Events.Processing;
 using Dolittle.Strings;
 
 namespace Dolittle.Build

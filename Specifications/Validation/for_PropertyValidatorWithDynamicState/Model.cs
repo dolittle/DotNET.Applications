@@ -3,7 +3,7 @@
 
 using System.Reflection;
 
-namespace Dolittle.FluentValidation.for_PropertyValidatorWithDynamicState
+namespace Dolittle.Validation.for_PropertyValidatorWithDynamicState
 {
     public class Model
     {

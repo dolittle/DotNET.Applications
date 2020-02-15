@@ -4,7 +4,7 @@
 using Dolittle.Validation;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.for_DynamicState
+namespace Dolittle.Validation.for_DynamicState
 {
     public class when_gettng_member_via_container
     {

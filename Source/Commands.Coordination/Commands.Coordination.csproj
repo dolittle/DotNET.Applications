@@ -7,15 +7,19 @@
 
     <ItemGroup>
         <PackageReference Include="Dolittle.Applications" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Globalization" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Reflection" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Types" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Serialization.Json" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="$(RuntimeVersion)" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Artifacts\Artifacts.csproj" />
         <ProjectReference Include="..\Commands\Commands.csproj" />
+        <ProjectReference Include="..\Commands.Handling\Commands.Handling.csproj" />
+        <ProjectReference Include="..\Commands.Security\Commands.Security.csproj" />
+        <ProjectReference Include="..\Commands.Validation\Commands.Validation.csproj" />
+        <ProjectReference Include="..\Events\Events.csproj" />
     </ItemGroup>
 
 </Project>

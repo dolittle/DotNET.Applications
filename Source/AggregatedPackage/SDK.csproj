@@ -13,7 +13,6 @@
         <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Concepts.Serialization.Protobuf" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Configuration.Files" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Queries.Coordination" Version="$(RuntimeVersion)" />
         <PackageReference Include="Dolittle.DependencyInversion.Booting" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.ResourceTypes.Configuration" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Services.Clients" Version="$(FundamentalsVersion)" />

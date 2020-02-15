@@ -4,7 +4,7 @@
 using System;
 using Dolittle.Concepts;
 
-namespace Dolittle.FluentValidation.Concepts.given
+namespace Dolittle.Validation.Concepts.given
 {
     public class GuidConcept : ConceptAs<Guid>
     {

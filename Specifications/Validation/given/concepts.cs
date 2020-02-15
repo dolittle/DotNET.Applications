@@ -3,7 +3,7 @@
 
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.Concepts.given
+namespace Dolittle.Validation.Concepts.given
 {
     public class concepts
     {

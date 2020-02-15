@@ -5,7 +5,7 @@ using Dolittle.Concepts;
 using Dolittle.Validation;
 using FluentValidation;
 
-namespace Dolittle.FluentValidation
+namespace Dolittle.Validation
 {
     public class LongValidator : BusinessValidator<ConceptAs<long>>
     {

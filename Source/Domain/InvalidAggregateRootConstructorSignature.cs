@@ -3,7 +3,6 @@
 
 using System;
 using Dolittle.Events;
-using Dolittle.Runtime.Events;
 
 namespace Dolittle.Domain
 {

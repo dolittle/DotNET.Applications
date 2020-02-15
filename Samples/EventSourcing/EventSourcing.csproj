@@ -13,7 +13,6 @@
 
     <ItemGroup>
         <PackageReference Include="Dolittle.ReadModels.MongoDB" Version="4.*" />
-        <!--<PackageReference Include="Dolittle.Runtime.Events.MongoDB" Version="4.*" />-->
     </ItemGroup>
 
 </Project>

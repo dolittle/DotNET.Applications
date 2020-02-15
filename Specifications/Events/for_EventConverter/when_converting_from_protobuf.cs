@@ -49,8 +49,16 @@ namespace Dolittle.Events.for_EventConverter
                     Id = artifact.ToProtobuf(),
                     Generation = generation
                 },
-                Content = "{\"someProperty\":42}",
-                Occurred = Timestamp.FromDateTimeOffset(occurred)
+                Occurred = Timestamp.FromDateTimeOffset(occurred),
+                CorrelationId = Guid.NewGuid().ToProtobuf(),
+                Microservice = Guid.NewGuid().ToProtobuf(),
+                Tenant = Guid.NewGuid().ToProtobuf(),
+                Cause = new grpcEvents.Cause
+                {
+                    Type = (int)CauseType.Command,
+                    Position = 0
+                },
+                Content = "{\"someProperty\":42}"
             };
 
             artifact_type_map.Setup(_ => _.GetTypeFor(new Artifact(artifact, generation))).Returns(typeof(MyEvent));

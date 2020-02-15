@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Dolittle.Commands.Coordination.Specs</AssemblyName>
+  </PropertyGroup>
+
+  <Import Project="../../specs.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Commands.Coordination\Commands.Coordination.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dolittle.Globalization" Version="$(FundamentalsVersion)" />
+  </ItemGroup>
+
+</Project>

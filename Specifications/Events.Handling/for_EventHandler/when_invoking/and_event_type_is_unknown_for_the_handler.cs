@@ -20,7 +20,7 @@ namespace Dolittle.Events.Handling.for_EventHandler.when_invoking
 
         Establish context = () =>
         {
-            committed_event = new CommittedEvent(new MyEvent(), DateTimeOffset.UtcNow);
+            committed_event = committed_events.single();
 
             event_handler = new EventHandler(
                                     Mock.Of<IContainer>(),

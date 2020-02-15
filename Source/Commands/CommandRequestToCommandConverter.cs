@@ -9,7 +9,6 @@ using System.Reflection;
 using Dolittle.Artifacts;
 using Dolittle.Collections;
 using Dolittle.Concepts;
-using Dolittle.Runtime.Commands;
 using Dolittle.Serialization.Json;
 using Newtonsoft.Json.Linq;
 

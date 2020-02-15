@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using Dolittle.Validation;
 using FluentValidation.Validators;
 
-namespace Dolittle.FluentValidation.for_RuleBuilderExtensions
+namespace Dolittle.Validation.for_RuleBuilderExtensions
 {
     public class FakePropertyValidatorWithDynamicState : PropertyValidatorWithDynamicState
     {
