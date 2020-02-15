@@ -3,7 +3,6 @@
 
 extern alias contracts;
 
-using System;
 using System.Linq;
 using Dolittle.Artifacts;
 using Dolittle.Execution;
@@ -60,17 +59,17 @@ namespace Dolittle.Events
         }
 
         /// <inheritdoc/>
-        public void Commit(CorrelationId correlationId, UncommittedEvents eventStream)
+        public void Commit(CorrelationId correlationId, UncommittedAggregateEvents events)
         {
             _logger.Information($"Committing uncommitted event stream with correlationId '{correlationId}'");
             var uncommittedAggregateEvents = new grpcEvents.UncommittedAggregateEvents
             {
-                AggregateRoot = Guid.Parse("ac14f174-572e-4c07-8cd1-e4e8ecc0fea9").ToProtobuf(),
-                EventSourceId = Guid.NewGuid().ToProtobuf(),
-                Version = 0
+                AggregateRoot = _artifactMap.GetArtifactFor(events.AggregateRoot).Id.ToProtobuf(),
+                EventSourceId = events.EventSource.ToProtobuf(),
+                Version = events.ExpectedAggregateRootVersion
             };
 
-            var events = eventStream.Select(_ =>
+            var grpcEvents = events.Select(_ =>
                 {
                     var artifact = _artifactMap.GetArtifactFor(_.GetType());
                     return new grpcEvents.UncommittedEvent
@@ -84,7 +83,7 @@ namespace Dolittle.Events
                     };
                 });
 
-            uncommittedAggregateEvents.Events.AddRange(events);
+            uncommittedAggregateEvents.Events.AddRange(grpcEvents);
 
             _eventStoreClient.CommitForAggregate(uncommittedAggregateEvents);
         }
