@@ -15,6 +15,7 @@ namespace EventSourcing
 
         public void DoStuff()
         {
+            Apply(new MySecondEvent("Bla bla..."));
             Apply(new MyEvent(42, "Fourty Two"));
         }
     }

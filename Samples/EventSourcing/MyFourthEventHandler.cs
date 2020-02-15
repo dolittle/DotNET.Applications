@@ -7,17 +7,23 @@ using Dolittle.Logging;
 
 namespace EventSourcing
 {
-    [EventHandler("ac471b46-17e4-410d-ab9d-58b03edcab91")]
-    public class MySecondEventHandler : ICanHandleEvents
+    [EventHandler("9985b24e-1e9f-4fc0-bb37-92c95b2bce36")]
+    public class MyFourthEventHandler : ICanHandleEvents
     {
         readonly ILogger _logger;
 
-        public MySecondEventHandler(ILogger logger)
+        public MyFourthEventHandler(ILogger logger)
         {
             _logger = logger;
         }
 
         public Task Handle(MyEvent @event)
+        {
+            _logger.Information($"Processing event : '{@event}'");
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(MySecondEvent @event)
         {
             _logger.Information($"Processing event : '{@event}'");
             return Task.CompletedTask;
