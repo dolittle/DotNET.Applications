@@ -6,10 +6,9 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Dolittle.DependencyInversion" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Commands.Security" Version="$(RuntimeVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Commands" Version="$(RuntimeVersion)" />
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\Commands\Commands.csproj" />
         <ProjectReference Include="..\Commands.Handling\Commands.Handling.csproj" />
     </ItemGroup>  
 </Project>

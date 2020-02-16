@@ -3,7 +3,7 @@
 
 using Dolittle.Concepts;
 
-namespace Dolittle.FluentValidation.Concepts.given
+namespace Dolittle.Validation.Concepts.given
 {
     public class StringConcept : ConceptAs<string>
     {

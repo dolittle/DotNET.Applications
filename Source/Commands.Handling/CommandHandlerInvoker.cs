@@ -10,8 +10,6 @@ using Dolittle.Collections;
 using Dolittle.DependencyInversion;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
-using Dolittle.Runtime.Commands;
-using Dolittle.Runtime.Commands.Handling;
 using Dolittle.Types;
 
 namespace Dolittle.Commands.Handling

@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Dolittle.Commands;
+using Dolittle.Domain;
 using Dolittle.Events;
 using Dolittle.Queries;
 using Dolittle.ReadModels;

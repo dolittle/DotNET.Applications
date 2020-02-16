@@ -5,10 +5,9 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Dolittle.Artifacts;
+using Dolittle.Commands.Coordination;
 using Dolittle.Events;
 using Dolittle.Logging;
-using Dolittle.Runtime.Commands.Coordination;
-using Dolittle.Runtime.Events;
 
 namespace Dolittle.Domain
 {

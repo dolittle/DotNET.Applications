@@ -19,7 +19,7 @@ namespace Dolittle.Events.Handling.for_EventHandlerMethod
             Expression<Action<MyEventHandler>> expression = (MyEventHandler _) => _.AsyncHandle(null);
             method = new EventHandlerMethod(typeof(MyEvent), expression.GetMethodInfo());
             event_handler = new MyEventHandler();
-            committed_event = new CommittedEvent(new MyEvent(), DateTimeOffset.UtcNow);
+            committed_event = committed_events.single();
         };
 
         Because of = () => method.Invoke(event_handler, committed_event).Wait();

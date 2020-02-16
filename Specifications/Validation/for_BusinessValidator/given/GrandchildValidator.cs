@@ -4,7 +4,7 @@
 using Dolittle.Validation;
 using FluentValidation;
 
-namespace Dolittle.FluentValidation.for_BusinessValidator.given
+namespace Dolittle.Validation.for_BusinessValidator.given
 {
     public class GrandchildValidator : BusinessValidator<Grandchild>
     {

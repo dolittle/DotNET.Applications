@@ -3,7 +3,7 @@
 
 using System.Reflection;
 
-namespace Dolittle.FluentValidation.for_DynamicState
+namespace Dolittle.Validation.for_DynamicState
 {
     public class Model
     {

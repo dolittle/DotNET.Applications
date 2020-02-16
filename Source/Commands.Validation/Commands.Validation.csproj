@@ -4,6 +4,7 @@
         <AssemblyName>Dolittle.SDK.Commands.Validation</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
+        <ProjectReference Include="..\Commands\Commands.csproj" />
         <ProjectReference Include="..\Validation\Validation.csproj" />
     </ItemGroup>
 </Project>

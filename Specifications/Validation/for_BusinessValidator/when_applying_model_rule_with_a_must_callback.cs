@@ -3,7 +3,7 @@
 
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.for_BusinessValidator
+namespace Dolittle.Validation.for_BusinessValidator
 {
     public class when_applying_model_rule_with_a_must_callback
     {

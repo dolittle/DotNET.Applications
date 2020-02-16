@@ -1,5 +1,5 @@
 using Dolittle.Domain;
-using Dolittle.Runtime.Events;
+using Dolittle.Domain;
 
 namespace {{namespace}}
 {

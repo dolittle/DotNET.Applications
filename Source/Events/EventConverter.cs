@@ -3,9 +3,12 @@
 
 extern alias contracts;
 
+using Dolittle.Applications;
 using Dolittle.Artifacts;
+using Dolittle.Execution;
 using Dolittle.Protobuf;
 using Dolittle.Serialization.Json;
+using Dolittle.Tenancy;
 using grpc = contracts::Dolittle.Runtime.Events;
 
 namespace Dolittle.Events
@@ -39,7 +42,19 @@ namespace Dolittle.Events
             var type = _artifactTypeMap.GetTypeFor(artifact);
             var eventInstance = _serializer.JsonToEvent(type, source.Content) as IEvent;
             var occurred = source.Occurred.ToDateTimeOffset();
-            return new CommittedEvent(eventInstance, occurred);
+            var correlationId = source.CorrelationId.To<CorrelationId>();
+            var microservice = source.Microservice.To<Microservice>();
+            var tenantId = source.Tenant.To<TenantId>();
+            var cause = new Cause((CauseType)source.Cause.Type, source.Cause.Position);
+
+            return new CommittedEvent(
+                source.EventLogVersion,
+                occurred,
+                correlationId,
+                microservice,
+                tenantId,
+                cause,
+                eventInstance);
         }
     }
 }

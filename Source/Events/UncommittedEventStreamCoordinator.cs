@@ -9,8 +9,6 @@ using Dolittle.Execution;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
-using Dolittle.Runtime.Events;
-using Dolittle.Runtime.Events.Coordination;
 using Dolittle.Serialization.Json;
 using Dolittle.Time;
 using static contracts::Dolittle.Runtime.Events.EventStore;

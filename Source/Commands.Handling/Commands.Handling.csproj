@@ -8,7 +8,6 @@
     <ItemGroup>
         <PackageReference Include="Dolittle.Applications" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Types" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Commands.Handling" Version="$(RuntimeVersion)" />
     </ItemGroup>
 
     <ItemGroup>
