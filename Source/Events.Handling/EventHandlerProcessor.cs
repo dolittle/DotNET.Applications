@@ -106,7 +106,8 @@ namespace Dolittle.Events.Handling
                         {
                             Succeeded = false,
                             Retry = false,
-                            FailureReason = $"Failure Message: {ex.Message}\nStack Trace: {ex.StackTrace}"
+                            FailureReason = $"Failure Message: {ex.Message}\nStack Trace: {ex.StackTrace}",
+                            ExecutionContext = call.Request.ExecutionContext
                         };
                         await call.Reply(response).ConfigureAwait(false);
 
