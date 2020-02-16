@@ -18,5 +18,10 @@ namespace Dolittle.Events.Handling.for_EventHandlerMethod
             EventPassed = @event;
             return Task.CompletedTask;
         }
+
+        public async void AsyncVoidHandle(MyEvent @event)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+        }
     }
 }
