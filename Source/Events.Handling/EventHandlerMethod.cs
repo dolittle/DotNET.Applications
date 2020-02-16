@@ -3,6 +3,7 @@
 
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Dolittle.Events.Handling
@@ -25,6 +26,7 @@ namespace Dolittle.Events.Handling
             _methodInfo = methodInfo;
 
             ThrowIfEventHandlerMethodIsNotAsynchronous(methodInfo);
+            ThrowIfEventHandlerMethodIsAsyncVoid(methodInfo);
         }
 
         /// <inheritdoc/>
@@ -42,6 +44,16 @@ namespace Dolittle.Events.Handling
             if (!typeof(Task).IsAssignableFrom(methodInfo.ReturnType))
             {
                 throw new EventHandlerMethodMustBeAsynchronous(methodInfo, EventType);
+            }
+        }
+
+        void ThrowIfEventHandlerMethodIsAsyncVoid(MethodInfo methodInfo)
+        {
+            var asyncStateMachineAttribute = (AsyncStateMachineAttribute)methodInfo.GetCustomAttribute(typeof(AsyncStateMachineAttribute));
+
+            if (asyncStateMachineAttribute == null && methodInfo.ReturnType == typeof(void))
+            {
+                throw new EventHandlerMethodCannotBeAsyncVoid(methodInfo, EventType);
             }
         }
     }
