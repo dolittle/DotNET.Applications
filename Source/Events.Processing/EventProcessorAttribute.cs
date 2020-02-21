@@ -18,11 +18,18 @@ namespace Dolittle.Events.Processing
         public EventProcessorAttribute(string id)
         {
             Id = Guid.Parse(id);
+            ThrowIfIllegalEventProcessorId(Id);
         }
 
         /// <summary>
         /// Gets the unique id for this event processor.
         /// </summary>
         public EventProcessorId Id { get; }
+
+        void ThrowIfIllegalEventProcessorId(EventProcessorId id)
+        {
+            var stream = new StreamId { Value = id };
+            if (stream.IsNonWriteable) throw new IllegalEventProcessorId(id);
+        }
     }
 }

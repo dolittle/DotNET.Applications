@@ -77,6 +77,7 @@ namespace Dolittle.Events
                             Id = artifact.Id.ToProtobuf(),
                             Generation = artifact.Generation
                         },
+                        Public = typeof(IPublicEvent).IsAssignableFrom(_.GetType()),
                         Content = _serializer.EventToJson(_)
                     };
                 });
