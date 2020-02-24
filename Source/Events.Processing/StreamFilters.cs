@@ -34,6 +34,7 @@ namespace Dolittle.Events.Processing
         readonly IReverseCallClientManager _reverseCallClientManager;
         readonly ILogger _logger;
         readonly ConcurrentDictionary<Type, ICanFilterEventsInStream> _filters = new ConcurrentDictionary<Type, ICanFilterEventsInStream>();
+        readonly IEventConverter _eventConverter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamFilters"/> class.
@@ -42,6 +43,7 @@ namespace Dolittle.Events.Processing
         /// <param name="filters"><see cref="IInstancesOf{T}"/> of <see cref="ICanFilterEventsInStream"/>.</param>
         /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for managing the <see cref="Execution.ExecutionContext"/>.</param>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for getting types from artifacts.</param>
+        /// <param name="eventConverter"><see cref="IEventConverter" /> for converting events.</param>
         /// <param name="serializer"><see cref="ISerializer"/> for serialization.</param>
         /// <param name="filtersClient"><see cref="FiltersClient"/> for connecting to server.</param>
         /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
@@ -51,6 +53,7 @@ namespace Dolittle.Events.Processing
             IInstancesOf<ICanFilterEventsInStream> filters,
             IExecutionContextManager executionContextManager,
             IArtifactTypeMap artifactTypeMap,
+            IEventConverter eventConverter,
             ISerializer serializer,
             FiltersClient filtersClient,
             IReverseCallClientManager reverseCallClientManager,
@@ -59,6 +62,7 @@ namespace Dolittle.Events.Processing
             _filterProviders = filterProviders;
             _executionContextManager = executionContextManager;
             _artifactTypeMap = artifactTypeMap;
+            _eventConverter = eventConverter;
             _serializer = serializer;
             _filtersClient = filtersClient;
             _reverseCallClientManager = reverseCallClientManager;
@@ -94,6 +98,7 @@ namespace Dolittle.Events.Processing
                             var executionContext = Execution.Contracts.ExecutionContext.Parser.ParseFrom(call.Request.ExecutionContext);
                             _executionContextManager.CurrentFor(executionContext);
 
+                            var committedEvent = _eventConverter.ToSDK(call.Request.Event);
                             var artifactId = call.Request.Event.Type.Id.To<ArtifactId>();
                             var artifact = new Artifact(artifactId, call.Request.Event.Type.Generation);
                             var type = _artifactTypeMap.GetTypeFor(artifact);
@@ -102,15 +107,27 @@ namespace Dolittle.Events.Processing
 
                             _logger.Information($"Event @ {occurred} -  {eventInstance} - {_serializer.EventToJson((IEvent)eventInstance)} received for filtering");
 
+                            var filterResult = await filter.Filter(committedEvent).ConfigureAwait(false);
                             var response = new grpc.FilterClientToRuntimeResponse
                             {
-                                IsIncluded = true,
+                                Succeeded = true,
+                                Retry = false,
+                                IsIncluded = filterResult.IsIncluded,
+                                Partition = filterResult.Partition.Value.ToProtobuf(),
                                 ExecutionContext = call.Request.ExecutionContext
                             };
                             await call.Reply(response).ConfigureAwait(false);
                         }
                         catch (Exception ex)
                         {
+                            var response = new grpc.FilterClientToRuntimeResponse
+                            {
+                                Succeeded = false,
+                                Retry = false,
+                                FailureReason = $"Failure Message: {ex.Message}\nStack Trace: {ex.StackTrace}",
+                                ExecutionContext = call.Request.ExecutionContext
+                            };
+                            await call.Reply(response).ConfigureAwait(false);
                             _logger.Error(ex, "Error handling event in filter");
                         }
                     });

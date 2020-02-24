@@ -33,8 +33,15 @@ namespace Dolittle.Events.Handling
         /// <inheritdoc/>
         public async Task Invoke(ICanHandleEvents handler, CommittedEvent @event)
         {
-            var result = _methodInfo.Invoke(handler, new[] { @event.Event }) as Task;
-            await result.ConfigureAwait(false);
+            try
+            {
+                var result = _methodInfo.Invoke(handler, new[] { @event.Event }) as Task;
+                await result.ConfigureAwait(false);
+            }
+            catch (TargetInvocationException ex)
+            {
+                throw ex.InnerException;
+            }
         }
 
         void ThrowIfEventHandlerMethodIsNotAsynchronous(MethodInfo methodInfo)

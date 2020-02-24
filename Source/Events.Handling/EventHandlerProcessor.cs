@@ -105,7 +105,9 @@ namespace Dolittle.Events.Handling
                         var response = new grpc.EventHandlerClientToRuntimeResponse
                         {
                             Succeeded = false,
-                            Retry = false
+                            Retry = false,
+                            FailureReason = $"Failure Message: {ex.Message}\nStack Trace: {ex.StackTrace}",
+                            ExecutionContext = call.Request.ExecutionContext
                         };
                         await call.Reply(response).ConfigureAwait(false);
 
