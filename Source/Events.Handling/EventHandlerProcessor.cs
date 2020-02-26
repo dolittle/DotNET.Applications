@@ -62,8 +62,8 @@ namespace Dolittle.Events.Handling
             var artifacts = eventHandler.EventTypes.Select(_ => _artifactTypeMap.GetArtifactFor(_));
             var arguments = new EventHandlerArguments
             {
-                EventHandlerId = eventHandler.Identifier.ToProtobuf(),
-                StreamId = StreamId.AllStream.ToProtobuf(),
+                EventHandler = eventHandler.Identifier.ToProtobuf(),
+                Stream = StreamId.AllStream.ToProtobuf(),
                 Partitioned = false
             };
             arguments.Types_.AddRange(artifacts.Select(_ =>

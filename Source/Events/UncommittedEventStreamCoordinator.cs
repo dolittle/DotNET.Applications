@@ -63,8 +63,8 @@ namespace Dolittle.Events
             var uncommittedAggregateEvents = new grpcEvents.UncommittedAggregateEvents
             {
                 AggregateRoot = _artifactMap.GetArtifactFor(events.AggregateRoot).Id.ToProtobuf(),
-                EventSourceId = events.EventSource.ToProtobuf(),
-                Version = events.ExpectedAggregateRootVersion
+                EventSource = events.EventSource.ToProtobuf(),
+                AggregateRootVersion = events.ExpectedAggregateRootVersion
             };
 
             var grpcEvents = events.Select(_ =>
