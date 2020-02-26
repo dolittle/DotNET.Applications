@@ -42,13 +42,13 @@ namespace Dolittle.Events
             var type = _artifactTypeMap.GetTypeFor(artifact);
             var eventInstance = _serializer.JsonToEvent(type, source.Content) as IEvent;
             var occurred = source.Occurred.ToDateTimeOffset();
-            var correlationId = source.CorrelationId.To<CorrelationId>();
+            var correlationId = source.Correlation.To<CorrelationId>();
             var microservice = source.Microservice.To<Microservice>();
             var tenantId = source.Tenant.To<TenantId>();
             var cause = new Cause((CauseType)source.Cause.Type, source.Cause.Position);
 
             return new CommittedEvent(
-                source.EventLogVersion,
+                source.EventLogSequenceNumber,
                 occurred,
                 correlationId,
                 microservice,
