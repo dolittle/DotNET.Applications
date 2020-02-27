@@ -35,7 +35,11 @@ namespace Dolittle.Events.Handling
         {
             try
             {
-                var result = _methodInfo.Invoke(handler, new[] { @event.Event }) as Task;
+                var result = _methodInfo.Invoke(handler, new object[]
+                {
+                    @event.Event,
+                    new EventContext(Guid.NewGuid(), @event.Occurred)
+                }) as Task;
                 await result.ConfigureAwait(false);
             }
             catch (TargetInvocationException ex)
