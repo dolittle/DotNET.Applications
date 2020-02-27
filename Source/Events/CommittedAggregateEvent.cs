@@ -27,17 +27,11 @@ namespace Dolittle.Events
         /// <param name="cause">The link to the cause of the Event.</param>
         /// <param name="event">An instance of the Event that was committed to the Event Store.</param>
         public CommittedAggregateEvent(EventSourceId eventSource, Type aggregateRoot, AggregateRootVersion aggregateRootVersion, EventLogVersion eventLogVersion, DateTimeOffset occurred, CorrelationId correlationId, Microservice microservice, TenantId tenant, Cause cause, IEvent @event)
-            : base(eventLogVersion, occurred, correlationId, microservice, tenant, cause, @event)
+            : base(eventLogVersion, occurred, eventSource, correlationId, microservice, tenant, cause, @event)
         {
-            EventSource = eventSource;
             AggregateRoot = aggregateRoot;
             AggregateRootVersion = aggregateRootVersion;
         }
-
-        /// <summary>
-        /// Gets the Event Source that the Event was applied to.
-        /// </summary>
-        public EventSourceId EventSource { get; }
 
         /// <summary>
         /// Gets the <see cref="Type"/> of the Aggregate Root that applied the Event to the Event Source.

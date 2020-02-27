@@ -18,6 +18,7 @@ namespace Dolittle.Events
         /// </summary>
         /// <param name="eventLogVersion">The version of the Event Log the Event was committed to.</param>
         /// <param name="occurred">The <see cref="DateTimeOffset" /> when the Event was committed to the Event Store.</param>
+        /// <param name="eventSourceId">The <see cref="EventSource" /> of the Event.</param>
         /// <param name="correlationId">The <see cref="CorrelationId" /> to relate this event to other artifacts and actions within the system.</param>
         /// <param name="microservice">The <see cref="Microservice"/> within which the Event occured.</param>
         /// <param name="tenant">The <see cref="TenantId"/> within which the Event occurred.</param>
@@ -26,6 +27,7 @@ namespace Dolittle.Events
         public CommittedEvent(
             EventLogVersion eventLogVersion,
             DateTimeOffset occurred,
+            EventSourceId eventSourceId,
             CorrelationId correlationId,
             Microservice microservice,
             TenantId tenant,
@@ -39,6 +41,7 @@ namespace Dolittle.Events
             Tenant = tenant;
             Cause = cause;
             Event = @event;
+            EventSource = eventSourceId;
         }
 
         /// <summary>
@@ -50,6 +53,11 @@ namespace Dolittle.Events
         /// Gets the <see cref="DateTimeOffset" /> when the Event was committed to the Event Store.
         /// </summary>
         public DateTimeOffset Occurred { get; }
+
+        /// <summary>
+        /// Gets the Event Source that this Event was applied to.
+        /// </summary>
+        public EventSourceId EventSource { get; }
 
         /// <summary>
         /// Gets the <see cref="CorrelationId" /> to relate this event to other artifacts and actions within the system.

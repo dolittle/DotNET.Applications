@@ -42,6 +42,7 @@ namespace Dolittle.Events
             var type = _artifactTypeMap.GetTypeFor(artifact);
             var eventInstance = _serializer.JsonToEvent(type, source.Content) as IEvent;
             var occurred = source.Occurred.ToDateTimeOffset();
+            var eventSource = source.EventSource.To<EventSourceId>();
             var correlationId = source.Correlation.To<CorrelationId>();
             var microservice = source.Microservice.To<Microservice>();
             var tenantId = source.Tenant.To<TenantId>();
@@ -50,6 +51,7 @@ namespace Dolittle.Events
             return new CommittedEvent(
                 source.EventLogSequenceNumber,
                 occurred,
+                eventSource,
                 correlationId,
                 microservice,
                 tenantId,
