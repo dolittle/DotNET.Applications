@@ -14,7 +14,7 @@ namespace Dolittle.Events.Handling.for_EventHandlerMethod
 
         Because of = () =>
         {
-            Expression<Action<MyEventHandler>> expression = (MyEventHandler _) => _.SyncHandle(null);
+            Expression<Action<MySyncEventHandler>> expression = (MySyncEventHandler _) => _.Handle(null);
             result = Catch.Exception(() => new EventHandlerMethod(typeof(MyEvent), expression.GetMethodInfo()));
         };
 
