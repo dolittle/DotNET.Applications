@@ -58,11 +58,12 @@ namespace Dolittle.Events.Handling
         /// <inheritdoc/>
         public void Start(EventHandler eventHandler)
         {
+            ThrowIfIllegalEventHandlerId(eventHandler.Identifier);
             var artifacts = eventHandler.EventTypes.Select(_ => _artifactTypeMap.GetArtifactFor(_));
             var arguments = new EventHandlerArguments
             {
-                EventHandlerId = eventHandler.Identifier.ToProtobuf(),
-                StreamId = StreamId.AllStream.ToProtobuf(),
+                EventHandler = eventHandler.Identifier.ToProtobuf(),
+                Stream = StreamId.AllStream.ToProtobuf(),
                 Partitioned = false
             };
             arguments.Types_.AddRange(artifacts.Select(_ =>
@@ -114,6 +115,12 @@ namespace Dolittle.Events.Handling
                         _logger.Error(ex, "Error handling event");
                     }
                 });
+        }
+
+        void ThrowIfIllegalEventHandlerId(EventHandlerId id)
+        {
+            var stream = new StreamId { Value = id };
+            if (stream.IsNonWriteable) throw new IllegalEventHandlerId(id);
         }
     }
 }

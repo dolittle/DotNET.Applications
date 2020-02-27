@@ -75,14 +75,15 @@ namespace Dolittle.Events.Processing
         /// <inheritdoc/>
         public void Register()
         {
+            _filters.Values.ForEach(_ => ThrowIfIllegalFilterId(_.FilterId));
             _filters.Values.ForEach(filter =>
             {
                 _logger.Information($"Registering filter with identifier '{filter.FilterId}' for Stream with identifier '{filter.StreamId}'");
 
                 var additionalInfo = new FilterArguments
                 {
-                    FilterId = filter.FilterId.ToProtobuf(),
-                    StreamId = filter.StreamId.ToProtobuf()
+                    Filter = filter.FilterId.ToProtobuf(),
+                    Stream = filter.StreamId.ToProtobuf()
                 };
                 var metadata = new Metadata { additionalInfo.ToArgumentsMetadata() };
 
@@ -132,6 +133,12 @@ namespace Dolittle.Events.Processing
                         }
                     });
             });
+        }
+
+        void ThrowIfIllegalFilterId(FilterId id)
+        {
+            var stream = new StreamId { Value = id };
+            if (stream.IsNonWriteable) throw new IllegalFilterId(id);
         }
     }
 }
