@@ -19,6 +19,7 @@ namespace Dolittle.Domain
         where TAggregate : AggregateRoot
     {
         readonly ICommandContextManager _commandContextManager;
+        readonly IEventStore _eventStore;
         readonly IArtifactTypeMap _artifactTypeMap;
         readonly ILogger _logger;
 
@@ -26,14 +27,17 @@ namespace Dolittle.Domain
         /// Initializes a new instance of the <see cref="AggregateOf{T}"/> class.
         /// </summary>
         /// <param name="commandContextManager"> <see cref="ICommandContextManager"/> to use for tracking.</param>
+        /// <param name="eventStore">The <see cref="IEventStore" />.</param>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for being able to identify resources.</param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging.</param>
         public AggregateOf(
             ICommandContextManager commandContextManager,
+            IEventStore eventStore,
             IArtifactTypeMap artifactTypeMap,
             ILogger logger)
         {
             _commandContextManager = commandContextManager;
+            _eventStore = eventStore;
             _artifactTypeMap = artifactTypeMap;
             _logger = logger;
         }
@@ -81,14 +85,11 @@ namespace Dolittle.Domain
 
         void ReApplyEvents(TAggregate aggregateRoot)
         {
-            var identifier = _artifactTypeMap.GetArtifactFor(typeof(TAggregate));
             var eventSourceId = aggregateRoot.EventSourceId;
 
-            // TODO: gRPC
-            // var commits = _eventStore.Fetch(new EventSourceKey(aggregateRoot.EventSourceId, identifier.Id));
-            // var committedEvents = new CommittedEvents(aggregateRoot.EventSourceId, FromCommits(commits));
-            // if (committedEvents.HasEvents)
-            //     aggregateRoot.ReApply(committedEvents);
+            var committedEvents = _eventStore.FetchForAggregate(eventSourceId);
+            if (committedEvents.HasEvents)
+                aggregateRoot.ReApply(committedEvents);
         }
 
         TAggregate GetInstanceFrom(EventSourceId id, ConstructorInfo constructor)
