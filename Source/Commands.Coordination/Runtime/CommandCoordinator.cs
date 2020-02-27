@@ -93,7 +93,7 @@ namespace Dolittle.Commands.Coordination.Runtime
                             commandResult.BrokenRules = commandContext.GetAggregateRootsBeingTracked()
                                 .SelectMany(_ => _.BrokenRules.Select(__ => new BrokenRuleResult(
                                         __.Rule.Name,
-                                        $"EventSource: {_.GetType().Name} - with id {_.EventSource.Value}",
+                                        $"EventSource: {_.GetType().Name} - with id {_.EventSourceId.Value}",
                                         __.Instance?.ToString() ?? "[Not Set]",
                                         __.Causes)));
 
