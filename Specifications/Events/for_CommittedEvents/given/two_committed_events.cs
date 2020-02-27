@@ -19,6 +19,7 @@ namespace Dolittle.Events.for_CommittedEvents.given
             first_event = new CommittedEvent(
                 0,
                 DateTimeOffset.Now,
+                EventSourceId.New(),
                 CorrelationId.New(),
                 Microservice.New(),
                 Guid.NewGuid(),
@@ -28,6 +29,7 @@ namespace Dolittle.Events.for_CommittedEvents.given
             second_event = new CommittedEvent(
                 1,
                 DateTimeOffset.Now,
+                EventSourceId.New(),
                 CorrelationId.New(),
                 Microservice.New(),
                 Guid.NewGuid(),
