@@ -82,7 +82,7 @@ namespace Dolittle.Domain
         void ReApplyEvents(TAggregate aggregateRoot)
         {
             var identifier = _artifactTypeMap.GetArtifactFor(typeof(TAggregate));
-            var eventSourceId = aggregateRoot.EventSource;
+            var eventSourceId = aggregateRoot.EventSourceId;
 
             // TODO: gRPC
             // var commits = _eventStore.Fetch(new EventSourceKey(aggregateRoot.EventSourceId, identifier.Id));

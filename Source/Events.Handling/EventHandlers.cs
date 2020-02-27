@@ -63,7 +63,7 @@ namespace Dolittle.Events.Handling
             }
 
             var eventMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
-                                                    .Where(_ => _.Name == HandleMethodName && HasEventParameter(_));
+                                                    .Where(_ => _.Name == HandleMethodName && TakesExpectedParameters(_));
 
             var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod(_.GetParameters()[0].ParameterType, _));
             var eventHandler = new EventHandler(_container, eventHandlerId, type, eventHandlerMethods);
@@ -74,11 +74,12 @@ namespace Dolittle.Events.Handling
             return eventHandler;
         }
 
-        bool HasEventParameter(MethodInfo methodInfo)
+        bool TakesExpectedParameters(MethodInfo methodInfo)
         {
             var parameters = methodInfo.GetParameters();
-            return parameters.Length == 1 &&
-                    typeof(IEvent).IsAssignableFrom(parameters[0].ParameterType);
+            return parameters.Length == 2 &&
+                    typeof(IEvent).IsAssignableFrom(parameters[0].ParameterType) &&
+                    parameters[1].ParameterType == typeof(EventContext);
         }
 
         void ThrowIfTypeIsNotAnEventHandler(Type type)

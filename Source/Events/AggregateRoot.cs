@@ -24,10 +24,10 @@ namespace Dolittle.Domain
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateRoot"/> class.
         /// </summary>
-        /// <param name="eventSource">The <see cref="EventSourceId"/> that the Aggregate Root will apply events on.</param>
-        protected AggregateRoot(EventSourceId eventSource)
+        /// <param name="eventSourceId">The <see cref="Events.EventSourceId"/> that the Aggregate Root will apply events on.</param>
+        protected AggregateRoot(EventSourceId eventSourceId)
         {
-            EventSource = eventSource;
+            EventSourceId = eventSourceId;
             Version = AggregateRootVersion.Initial;
             _ruleSetEvaluations = new List<RuleSetEvaluation>();
             _brokenRules = new List<BrokenRule>();
@@ -35,9 +35,9 @@ namespace Dolittle.Domain
         }
 
         /// <summary>
-        /// Gets the <see cref="EventSourceId"/> that the Aggregate Root will apply events to.
+        /// Gets the <see cref="Events.EventSourceId"/> that the Aggregate Root will apply events to.
         /// </summary>
-        public EventSourceId EventSource { get; }
+        public EventSourceId EventSourceId { get; }
 
         /// <summary>
         /// Gets the current <see cref="AggregateRootVersion"/> reflecting the number of events it has applied to the Event Source.
@@ -51,7 +51,7 @@ namespace Dolittle.Domain
         {
             get
             {
-                var events = new UncommittedAggregateEvents(EventSource, GetType(), Version - (uint)_uncommittedEvents.Count);
+                var events = new UncommittedAggregateEvents(EventSourceId, GetType(), Version - (uint)_uncommittedEvents.Count);
                 foreach (var @event in _uncommittedEvents) events.Append(@event);
                 return events;
             }
@@ -129,7 +129,7 @@ namespace Dolittle.Domain
         }
 
         /// <summary>
-        /// Fast forward to the specified version of the <see cref="EventSource">EventSource</see>.
+        /// Fast forward to the specified version of the <see cref="EventSourceId">EventSource</see>.
         /// </summary>
         /// <param name="version">Version to fast forward to.</param>
         public void FastForward(AggregateRootVersion version)
@@ -170,7 +170,7 @@ namespace Dolittle.Domain
 
         void ThrowIfEventWasAppliedToOtherEventSource(CommittedAggregateEvents events)
         {
-            if (events.EventSource != EventSource) throw new EventWasAppliedToOtherEventSource(events.EventSource, EventSource);
+            if (events.EventSource != EventSourceId) throw new EventWasAppliedToOtherEventSource(events.EventSource, EventSourceId);
         }
 
         void ThrowIfEventWasAppliedByOtherAggregateRoot(CommittedAggregateEvents events)
