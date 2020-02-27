@@ -33,15 +33,25 @@ namespace Dolittle.Events.Handling
         /// <inheritdoc/>
         public async Task Invoke(ICanHandleEvents handler, CommittedEvent @event)
         {
+            ThrowIfInvalidHandleSignature(_methodInfo);
             try
             {
-                var result = _methodInfo.Invoke(handler, new object[] { @event.Event, new EventContext(@event.EventSource, @event.Occurred) }) as Task;
+                var result = _methodInfo.Invoke(handler, new object[] { @event.Event, @event.DeriveContext() }) as Task;
                 await result.ConfigureAwait(false);
             }
             catch (TargetInvocationException ex)
             {
                 throw ex.InnerException;
             }
+        }
+
+        void ThrowIfInvalidHandleSignature(MethodInfo methodInfo)
+        {
+            if (methodInfo.Name != EventHandlers.HandleMethodName) throw new EventHandlerMethodHasInvalidMethodName(methodInfo, methodInfo.Name);
+            var parameters = methodInfo.GetParameters();
+            if (parameters.Length != 2) throw new EventHandlerMethodMustTakeTwoParameters(methodInfo);
+            if (!typeof(IEvent).IsAssignableFrom(parameters[0].ParameterType)) throw new EventHandlerMethodFirstParameterMustBeAnEvent(methodInfo, parameters[0].ParameterType);
+            if (parameters[1].ParameterType != typeof(EventContext)) throw new EventHandlerMethodSecondParameterMustBeEventContext(methodInfo, parameters[1].ParameterType);
         }
 
         void ThrowIfEventHandlerMethodIsNotAsynchronous(MethodInfo methodInfo)
