@@ -3,13 +3,15 @@
 
 extern alias contracts;
 
+using System.Linq;
 using Dolittle.Applications;
 using Dolittle.Artifacts;
 using Dolittle.Execution;
 using Dolittle.Protobuf;
 using Dolittle.Serialization.Json;
 using Dolittle.Tenancy;
-using grpc = contracts::Dolittle.Runtime.Events;
+using grpcArtifacts = contracts::Dolittle.Runtime.Artifacts;
+using grpcEvents = contracts::Dolittle.Runtime.Events;
 
 namespace Dolittle.Events
 {
@@ -35,7 +37,45 @@ namespace Dolittle.Events
         }
 
         /// <inheritdoc/>
-        public CommittedEvent ToSDK(grpc.CommittedEvent source)
+        public grpcEvents.UncommittedEvent ToProtobuf(IEvent @event)
+        {
+            var artifact = _artifactTypeMap.GetArtifactFor(@event.GetType());
+            return new grpcEvents.UncommittedEvent
+                {
+                    Artifact = new grpcArtifacts.Artifact
+                    {
+                        Id = artifact.Id.ToProtobuf(),
+                        Generation = artifact.Generation
+                    },
+                    Public = typeof(IPublicEvent).IsAssignableFrom(@event.GetType()),
+                    Content = _serializer.EventToJson(@event)
+                };
+        }
+
+        /// <inheritdoc/>
+        public grpcEvents.UncommittedEvents ToProtobuf(UncommittedEvents uncommittedEvents)
+        {
+            var protobuf = new grpcEvents.UncommittedEvents();
+            protobuf.Events.AddRange(uncommittedEvents.Select(ToProtobuf));
+            return protobuf;
+        }
+
+        /// <inheritdoc/>
+        public grpcEvents.UncommittedAggregateEvents ToProtobuf(UncommittedAggregateEvents uncommittedEvents)
+        {
+            var protobuf = new grpcEvents.UncommittedAggregateEvents
+            {
+                AggregateRoot = _artifactTypeMap.GetArtifactFor(uncommittedEvents.AggregateRoot).Id.ToProtobuf(),
+                EventSource = uncommittedEvents.EventSource.ToProtobuf(),
+                AggregateRootVersion = uncommittedEvents.ExpectedAggregateRootVersion
+            };
+
+            protobuf.Events.AddRange(uncommittedEvents.Select(ToProtobuf));
+            return protobuf;
+        }
+
+        /// <inheritdoc/>
+        public CommittedEvent ToSDK(grpcEvents.CommittedEvent source)
         {
             var artifactId = source.Type.Id.To<ArtifactId>();
             var artifact = new Artifact(artifactId, source.Type.Generation);
