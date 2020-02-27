@@ -5,6 +5,7 @@ extern alias contracts;
 
 using System.Linq;
 using Dolittle.Artifacts;
+using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.Serialization.Json;
@@ -16,6 +17,7 @@ namespace Dolittle.Events
     /// <summary>
     /// Represents an implementation of <see cref="IEventStore" />.
     /// </summary>
+    [SingletonPerTenant]
     public class EventStore : IEventStore
     {
         readonly EventStoreClient _eventStoreClient;
