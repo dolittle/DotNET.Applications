@@ -17,8 +17,12 @@ namespace Dolittle.Events.Processing
         /// <param name="id">The <see cref="Guid" /> identifier.</param>
         public RetryProcessingAttribute(string id)
         {
-            Id = Guid.Parse(id);
-            ThrowIfIllegalId(Id);
         }
+    }
+    public interface IRetryStrategies
+    {
+        RetryStrategy GetStrategyFor(Type type);
+
+        
     }
 }
