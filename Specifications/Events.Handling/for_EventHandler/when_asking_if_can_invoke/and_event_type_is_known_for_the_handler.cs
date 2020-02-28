@@ -23,6 +23,7 @@ namespace Dolittle.Events.Handling.for_EventHandler.when_asking_if_can_invoke
                                     Mock.Of<IContainer>(),
                                     EventHandlerId.NotSet,
                                     typeof(EventHandlerWithoutAnyHandleMethods),
+                                    false,
                                     new[] { event_handler_method.Object });
         };
 

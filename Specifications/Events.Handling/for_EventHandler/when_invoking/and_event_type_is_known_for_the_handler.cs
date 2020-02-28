@@ -36,6 +36,7 @@ namespace Dolittle.Events.Handling.for_EventHandler.when_invoking
                                     container.Object,
                                     EventHandlerId.NotSet,
                                     typeof(EventHandlerWithoutAnyHandleMethods),
+                                    false,
                                     new[] { event_handler_method.Object });
         };
 

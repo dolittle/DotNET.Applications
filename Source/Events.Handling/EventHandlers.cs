@@ -70,13 +70,16 @@ namespace Dolittle.Events.Handling
                                                     .Where(_ => _.Name == HandleMethodName && TakesExpectedParameters(_));
 
             var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod(_.GetParameters()[0].ParameterType, _));
-            var eventHandler = new EventHandler(_container, eventHandlerId, type, eventHandlerMethods);
+            var eventHandler = new EventHandler(_container, eventHandlerId, type, IsPartitioned(type), eventHandlerMethods);
             _eventHandlers[eventHandlerId] = eventHandler;
 
             _eventHandlerProcessor.Start(eventHandler);
 
             return eventHandler;
         }
+
+        bool IsPartitioned(Type type) =>
+            !type.HasAttribute<NotPartitionedAttribute>();
 
         bool TakesExpectedParameters(MethodInfo methodInfo)
         {

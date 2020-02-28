@@ -64,7 +64,7 @@ namespace Dolittle.Events.Handling
             {
                 EventHandler = eventHandler.Identifier.ToProtobuf(),
                 Stream = StreamId.AllStream.ToProtobuf(),
-                Partitioned = false
+                Partitioned = eventHandler.Partitioned
             };
             arguments.Types_.AddRange(artifacts.Select(_ =>
                 new grpcArtifacts.Artifact

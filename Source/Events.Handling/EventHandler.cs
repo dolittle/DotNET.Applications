@@ -26,16 +26,19 @@ namespace Dolittle.Events.Handling
         /// <param name="container"><see cref="IContainer"/> for getting instances of <see cref="ICanHandleEvents"/>.</param>
         /// <param name="identifier">The unique <see cref="EventHandlerId">identifier</see>.</param>
         /// <param name="type"><see cref="Type"/> of <see cref="ICanHandleEvents"/>.</param>
+        /// <param name="partitioned">Whether the Event Handler is partitioned.</param>
         /// <param name="methods"><see cref="IEnumerable{T}"/> of <see cref="EventHandlerMethod"/>.</param>
         public EventHandler(
             IContainer container,
             EventHandlerId identifier,
             Type type,
+            bool partitioned,
             IEnumerable<IEventHandlerMethod> methods)
         {
             _container = container;
             Type = type;
             Identifier = identifier;
+            Partitioned = partitioned;
             EventTypes = methods.Select(_ => _.EventType);
 
             ThrowIfTypeIsNotAnEventHandler();
@@ -56,6 +59,11 @@ namespace Dolittle.Events.Handling
         /// Gets the type of events supported by the handler.
         /// </summary>
         public IEnumerable<Type> EventTypes { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this Event Handler is partitioned.
+        /// </summary>
+        public bool Partitioned { get; }
 
         /// <summary>
         /// Check if there is a method that can be invoked for the given <see cref="IEvent"/>.

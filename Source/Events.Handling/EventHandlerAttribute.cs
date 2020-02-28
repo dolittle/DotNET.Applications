@@ -6,7 +6,7 @@ using System;
 namespace Dolittle.Events.Handling
 {
     /// <summary>
-    /// Decorates a method to indicate that the method is an Event Processor.
+    /// Decorates a method to indicate the Event Handler Id of the Event Handler class.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class EventHandlerAttribute : Attribute
