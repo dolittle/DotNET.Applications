@@ -62,9 +62,9 @@ namespace Dolittle.Events
         }
 
         /// <inheritdoc/>
-        public CommittedAggregateEvents FetchForAggregate(EventSourceId aggregateEventSourceId)
+        public CommittedAggregateEvents FetchForAggregate(EventSourceId eventSourceId, ArtifactId aggregateRoot)
         {
-            var request = new grpcEvents.Aggregate { Id = aggregateEventSourceId.ToProtobuf() };
+            var request = new grpcEvents.Aggregate { EventSource = eventSourceId.ToProtobuf(), AggregateRoot = aggregateRoot.ToProtobuf() };
             var response = _eventStoreClient.FetchForAggregate(request);
             ThrowIfUnsuccessfullRespone(response.Success, response.Reason);
             return CommittedEventsFromResponse(response.Events);
@@ -78,7 +78,7 @@ namespace Dolittle.Events
 
         CommittedAggregateEvents CommittedEventsFromResponse(grpcEvents.CommittedAggregateEvents committedEvents)
         {
-            var aggregateRoot = _artifactMap.GetTypeFor(new Artifact(committedEvents.AggregateRoot.ToGuid(), 0));
+            var aggregateRoot = _artifactMap.GetTypeFor(new Artifact(committedEvents.AggregateRoot.ToGuid(), ArtifactGeneration.First));
             var aggregateRootVersion = committedEvents.AggregateRootVersion;
             return new CommittedAggregateEvents(
                 committedEvents.EventSource.ToGuid(),
