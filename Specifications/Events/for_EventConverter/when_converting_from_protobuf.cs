@@ -50,7 +50,8 @@ namespace Dolittle.Events.for_EventConverter
                     Generation = generation
                 },
                 Occurred = Timestamp.FromDateTimeOffset(occurred),
-                CorrelationId = Guid.NewGuid().ToProtobuf(),
+                Correlation = Guid.NewGuid().ToProtobuf(),
+                EventSource = EventSourceId.New().ToProtobuf(),
                 Microservice = Guid.NewGuid().ToProtobuf(),
                 Tenant = Guid.NewGuid().ToProtobuf(),
                 Cause = new grpcEvents.Cause

@@ -15,7 +15,11 @@ namespace Dolittle.Events.Handling
     /// </summary>
     public class EventHandlers : IEventHandlers
     {
-        const string HandleMethodName = "Handle";
+        /// <summary>
+        /// The method name of the Event Handler method that can handle an Event.
+        /// </summary>
+        public const string HandleMethodName = "Handle";
+
         readonly ConcurrentDictionary<EventHandlerId, EventHandler> _eventHandlers = new ConcurrentDictionary<EventHandlerId, EventHandler>();
         readonly IContainer _container;
         readonly IEventHandlerProcessor _eventHandlerProcessor;

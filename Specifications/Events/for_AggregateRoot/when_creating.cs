@@ -13,7 +13,7 @@ namespace Dolittle.Domain.for_AggregateRoot
 
         Because of = () => aggregate_root = new StatelessAggregateRoot(event_source_id);
 
-        It should_be_the_correct_event_source_id = () => aggregate_root.EventSource.ShouldEqual(event_source_id);
+        It should_be_the_correct_event_source_id = () => aggregate_root.EventSourceId.ShouldEqual(event_source_id);
         It should_have_the_initial_version = () => aggregate_root.Version.ShouldEqual(AggregateRootVersion.Initial);
         It should_have_no_uncommitted_events = () => aggregate_root.UncommittedEvents.ShouldBeEmpty();
         It should_have_no_broken_rules = () => aggregate_root.BrokenRules.ShouldBeEmpty();

@@ -7,27 +7,27 @@ namespace Dolittle.Events.Handling.for_EventHandlers
 {
     public class MyEventHandler : ICanHandleEvents
     {
-        public static Task Handle(MyFifthEvent @event)
+        public static Task Handle(MyFifthEvent @event, EventContext context)
         {
             return Task.CompletedTask;
         }
 
-        public Task Handle(MyFirstEvent @event)
+        public Task Handle(MyFirstEvent @event, EventContext context)
         {
             return Task.CompletedTask;
         }
 
-        public Task Handle(MySecondEvent @event)
+        public Task Handle(MySecondEvent @event, EventContext context)
         {
             return Task.CompletedTask;
         }
 
-        static Task Handle(MyFourthEvent @event)
+        static Task Handle(MyFourthEvent @event, EventContext context)
         {
             return Task.CompletedTask;
         }
 
-        Task Handle(MyThirdEvent @event)
+        Task Handle(MyThirdEvent @event, EventContext context)
         {
             return Task.CompletedTask;
         }

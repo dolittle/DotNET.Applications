@@ -13,6 +13,7 @@ namespace Dolittle.Events.Handling
         public static CommittedEvent single() => new CommittedEvent(
                 EventLogVersion.Initial,
                 DateTimeOffset.UtcNow,
+                EventSourceId.New(),
                 CorrelationId.New(),
                 Microservice.New(),
                 TenantId.Development,

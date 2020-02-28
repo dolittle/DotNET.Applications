@@ -18,5 +18,26 @@ namespace Dolittle.Events
         /// <param name="source"><see cref="grpc.CommittedEvent"/>.</param>
         /// <returns>Converted <see cref="global::Dolittle.Events.CommittedEvent"/>.</returns>
         CommittedEvent ToSDK(grpc.CommittedEvent source);
+
+        /// <summary>
+        /// Convert from <see cref="IEvent" /> to <see cref="grpc.UncommittedEvent" />.
+        /// </summary>
+        /// <param name="event"><see cref="IEvent" />.</param>
+        /// <returns>Converted <see cref="grpc.UncommittedEvent" />.</returns>
+        grpc.UncommittedEvent ToProtobuf(IEvent @event);
+
+        /// <summary>
+        /// Convert from <see cref="UncommittedEvents" /> to <see cref="grpc.UncommittedEvents" />.
+        /// </summary>
+        /// <param name="uncommittedEvents"><see cref="UncommittedEvents" />.</param>
+        /// <returns>Converted <see cref="grpc.UncommittedEvents" />.</returns>
+        grpc.UncommittedEvents ToProtobuf(UncommittedEvents uncommittedEvents);
+
+        /// <summary>
+        /// Convert from <see cref="UncommittedAggregateEvents" /> to <see cref="grpc.UncommittedAggregateEvents" />.
+        /// </summary>
+        /// <param name="uncommittedEvents"><see cref="UncommittedAggregateEvents" />.</param>
+        /// <returns>Converted <see cref="grpc.UncommittedAggregateEvents" />.</returns>
+        grpc.UncommittedAggregateEvents ToProtobuf(UncommittedAggregateEvents uncommittedEvents);
     }
 }
