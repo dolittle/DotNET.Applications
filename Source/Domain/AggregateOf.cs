@@ -87,7 +87,7 @@ namespace Dolittle.Domain
         {
             var eventSourceId = aggregateRoot.EventSourceId;
             var artifact = _artifactTypeMap.GetArtifactFor(typeof(TAggregate));
-            var committedEvents = _eventStore.FetchForAggregate(eventSourceId, artifact.Id);
+            var committedEvents = _eventStore.FetchForAggregate(artifact.Id, eventSourceId);
             if (committedEvents.HasEvents)
                 aggregateRoot.ReApply(committedEvents);
         }

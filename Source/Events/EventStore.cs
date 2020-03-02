@@ -62,7 +62,7 @@ namespace Dolittle.Events
         }
 
         /// <inheritdoc/>
-        public CommittedAggregateEvents FetchForAggregate(EventSourceId eventSourceId, ArtifactId aggregateRoot)
+        public CommittedAggregateEvents FetchForAggregate(ArtifactId aggregateRoot, EventSourceId eventSourceId)
         {
             var request = new grpcEvents.Aggregate { EventSource = eventSourceId.ToProtobuf(), AggregateRoot = aggregateRoot.ToProtobuf() };
             var response = _eventStoreClient.FetchForAggregate(request);

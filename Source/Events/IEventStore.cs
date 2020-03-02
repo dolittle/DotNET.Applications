@@ -28,9 +28,9 @@ namespace Dolittle.Events
         /// <summary>
         /// Fetch <see cref="CommittedAggregateEvents" /> for a <see cref="AggregateRoot" />.
         /// </summary>
-        /// <param name="eventSource">The <see cref="EventSourceId" /> of the Aggregate.</param>
         /// <param name="aggregateRoot">The <see cref="ArtifactId" />.</param>
+        /// <param name="eventSource">The <see cref="EventSourceId" /> of the Aggregate.</param>
         /// <returns>The <see cref="CommittedAggregateEvents" /> on from this Aggregate.</returns>
-        CommittedAggregateEvents FetchForAggregate(EventSourceId eventSource, ArtifactId aggregateRoot);
+        CommittedAggregateEvents FetchForAggregate(ArtifactId aggregateRoot, EventSourceId eventSource);
     }
 }
