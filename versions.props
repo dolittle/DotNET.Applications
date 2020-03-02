@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <FundamentalsVersion>4.*</FundamentalsVersion>
+        <FundamentalsVersion>5.0.0-alpha*</FundamentalsVersion>
         <RuntimeVersion>4.*</RuntimeVersion>
         <ContractsVersion>5.*</ContractsVersion>
     </PropertyGroup>
