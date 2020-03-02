@@ -16,8 +16,8 @@
         <PackageReference Include="Dolittle.Services" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Services.Clients" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)" alias="contracts"/>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.2" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.2" />
     </ItemGroup>
 
 </Project>
