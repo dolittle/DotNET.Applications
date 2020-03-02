@@ -7,7 +7,7 @@
   <Import Project="../../specs.props"></Import>
 
   <ItemGroup>
-    <PackageReference Include="Dolittle.Machine.Specifications.Rules" Version="2.*"/>
+    <PackageReference Include="Dolittle.Rules.Machine.Specifications" Version="$(FundamentalsVersion)"/>
   </ItemGroup>
 
   <ItemGroup>
