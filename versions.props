@@ -1,7 +1,7 @@
 <Project>
     <PropertyGroup>
-        <FundamentalsVersion>5.0.0-alpha*</FundamentalsVersion>
-        <RuntimeVersion>4.*</RuntimeVersion>
         <ContractsVersion>5.*</ContractsVersion>
+        <FundamentalsVersion>5.0.0-alpha*</FundamentalsVersion>
+        <ReadModelsMongo>5.0.0-alpha*</ReadModelsMongo>
     </PropertyGroup>
 </Project>
