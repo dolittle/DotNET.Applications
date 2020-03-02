@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Dolittle.Artifacts;
 using Dolittle.Domain;
 
 namespace Dolittle.Events
@@ -27,8 +28,9 @@ namespace Dolittle.Events
         /// <summary>
         /// Fetch <see cref="CommittedAggregateEvents" /> for a <see cref="AggregateRoot" />.
         /// </summary>
-        /// <param name="aggregateEventSourceId">The <see cref="EventSourceId" /> of the Aggregate.</param>
+        /// <param name="aggregateRoot">The <see cref="ArtifactId" />.</param>
+        /// <param name="eventSource">The <see cref="EventSourceId" /> of the Aggregate.</param>
         /// <returns>The <see cref="CommittedAggregateEvents" /> on from this Aggregate.</returns>
-        CommittedAggregateEvents FetchForAggregate(EventSourceId aggregateEventSourceId);
+        CommittedAggregateEvents FetchForAggregate(ArtifactId aggregateRoot, EventSourceId eventSource);
     }
 }
