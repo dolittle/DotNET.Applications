@@ -79,24 +79,11 @@ namespace Dolittle.Events
         CommittedAggregateEvents CommittedEventsFromResponse(grpcEvents.CommittedAggregateEvents committedEvents)
         {
             var aggregateRoot = _artifactMap.GetTypeFor(new Artifact(committedEvents.AggregateRoot.ToGuid(), ArtifactGeneration.First));
-            var aggregateRootVersion = committedEvents.AggregateRootVersion;
             return new CommittedAggregateEvents(
                 committedEvents.EventSource.ToGuid(),
                 aggregateRoot,
-                aggregateRootVersion,
                 committedEvents.Events
-                    .Select(_eventConverter.ToSDK)
-                    .Select(_ => new CommittedAggregateEvent(
-                        _.EventSource,
-                        aggregateRoot,
-                        aggregateRootVersion,
-                        _.EventLogVersion,
-                        _.Occurred,
-                        _.CorrelationId,
-                        _.Microservice,
-                        _.Tenant,
-                        _.Cause,
-                        _.Event))
+                    .Select(_ => _eventConverter.ToSDK(_, aggregateRoot))
                     .ToArray());
         }
 

@@ -3,6 +3,7 @@
 
 extern alias contracts;
 
+using System;
 using grpc = contracts::Dolittle.Runtime.Events;
 
 namespace Dolittle.Events
@@ -18,6 +19,14 @@ namespace Dolittle.Events
         /// <param name="source"><see cref="grpc.CommittedEvent"/>.</param>
         /// <returns>Converted <see cref="global::Dolittle.Events.CommittedEvent"/>.</returns>
         CommittedEvent ToSDK(grpc.CommittedEvent source);
+
+        /// <summary>
+        /// Convert from <see cref="grpc.CommittedAggregateEvent"/> to <see cref="global::Dolittle.Events.CommittedAggregateEvent"/>.
+        /// </summary>
+        /// <param name="source"><see cref="grpc.CommittedAggregateEvent"/>.</param>
+        /// <param name="aggregateRootType">The aggregate root <see cref="Type" />.</param>
+        /// <returns>Converted <see cref="global::Dolittle.Events.CommittedAggregateEvent"/>.</returns>
+        CommittedAggregateEvent ToSDK(grpc.CommittedAggregateEvent source, Type aggregateRootType);
 
         /// <summary>
         /// Convert from <see cref="IEvent" /> to <see cref="grpc.UncommittedEvent" />.
