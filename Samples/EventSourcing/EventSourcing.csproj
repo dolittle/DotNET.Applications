@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.ReadModels.MongoDB" Version="4.*" />
+        <PackageReference Include="Dolittle.ReadModels.MongoDB" Version="$(ReadModelsMongo)" />
     </ItemGroup>
 
 </Project>
