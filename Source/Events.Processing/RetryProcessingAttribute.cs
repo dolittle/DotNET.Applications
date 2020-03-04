@@ -6,7 +6,7 @@ using System;
 namespace Dolittle.Events.Processing
 {
     /// <summary>
-    /// Decorates a method to indicate the Event Handler Id of the Event Handler class.
+    /// Decorates a system that processes an event with a strategy retrying failed events.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class RetryProcessingAttribute : Attribute
@@ -14,15 +14,8 @@ namespace Dolittle.Events.Processing
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryProcessingAttribute"/> class.
         /// </summary>
-        /// <param name="id">The <see cref="Guid" /> identifier.</param>
-        public RetryProcessingAttribute(string id)
+        public RetryProcessingAttribute()
         {
         }
-    }
-    public interface IRetryStrategies
-    {
-        RetryStrategy GetStrategyFor(Type type);
-
-        
     }
 }
