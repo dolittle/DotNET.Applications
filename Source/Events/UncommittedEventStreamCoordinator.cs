@@ -3,17 +3,10 @@
 
 extern alias contracts;
 
-using System.Linq;
-using Dolittle.Artifacts;
 using Dolittle.Execution;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
-using Dolittle.Protobuf;
-using Dolittle.Serialization.Json;
-using Dolittle.Time;
 using static contracts::Dolittle.Runtime.Events.EventStore;
-using grpcArtifacts = contracts::Dolittle.Runtime.Artifacts;
-using grpcEvents = contracts::Dolittle.Runtime.Events;
 
 namespace Dolittle.Events
 {
