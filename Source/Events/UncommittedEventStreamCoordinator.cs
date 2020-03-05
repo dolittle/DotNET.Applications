@@ -25,66 +25,30 @@ namespace Dolittle.Events
     public class UncommittedEventStreamCoordinator : IUncommittedEventStreamCoordinator
     {
         readonly EventStoreClient _eventStoreClient;
+        readonly IEventConverter _eventConverter;
         readonly ILogger _logger;
-        readonly IArtifactTypeMap _artifactMap;
-        readonly ISystemClock _systemClock;
-        readonly IExecutionContextManager _executionContextManager;
-        readonly ISerializer _serializer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UncommittedEventStreamCoordinator"/> class.
         /// </summary>
         /// <param name="eventStoreClient">A see cref="EventStoreClient"/> for connecting to the runtime.</param>
-        /// <param name="artifactMap">An instance of <see cref="IArtifactTypeMap" /> to get the artifact for Event Source and Events.</param>
+        /// <param name="eventConverter">The <see cref="IEventConverter" />.</param>
         /// <param name="logger"><see cref="ILogger"/> for doing logging.</param>
-        /// <param name="systemClock"><see cref="ISystemClock"/> for getting the time.</param>
-        /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for accessing the current <see cref="ExecutionContext" />.</param>
-        /// <param name="serializer">A JSON <see cref="ISerializer"/>.</param>
         public UncommittedEventStreamCoordinator(
             EventStoreClient eventStoreClient,
-            IArtifactTypeMap artifactMap,
-            ILogger logger,
-            ISystemClock systemClock,
-            IExecutionContextManager executionContextManager,
-            ISerializer serializer)
+            IEventConverter eventConverter,
+            ILogger logger)
         {
             _eventStoreClient = eventStoreClient;
+            _eventConverter = eventConverter;
             _logger = logger;
-            _artifactMap = artifactMap;
-            _systemClock = systemClock;
-            _executionContextManager = executionContextManager;
-            _serializer = serializer;
         }
 
         /// <inheritdoc/>
         public void Commit(CorrelationId correlationId, UncommittedAggregateEvents events)
         {
             _logger.Information($"Committing uncommitted event stream with correlationId '{correlationId}'");
-            var uncommittedAggregateEvents = new grpcEvents.UncommittedAggregateEvents
-            {
-                AggregateRoot = _artifactMap.GetArtifactFor(events.AggregateRoot).Id.ToProtobuf(),
-                EventSource = events.EventSource.ToProtobuf(),
-                AggregateRootVersion = events.ExpectedAggregateRootVersion
-            };
-
-            var grpcEvents = events.Select(_ =>
-                {
-                    var artifact = _artifactMap.GetArtifactFor(_.GetType());
-                    return new grpcEvents.UncommittedEvent
-                    {
-                        Artifact = new grpcArtifacts.Artifact
-                        {
-                            Id = artifact.Id.ToProtobuf(),
-                            Generation = artifact.Generation
-                        },
-                        Public = typeof(IPublicEvent).IsAssignableFrom(_.GetType()),
-                        Content = _serializer.EventToJson(_)
-                    };
-                });
-
-            uncommittedAggregateEvents.Events.AddRange(grpcEvents);
-
-            _eventStoreClient.CommitForAggregate(uncommittedAggregateEvents);
+            _eventStoreClient.CommitForAggregate(_eventConverter.ToProtobuf(events));
         }
     }
 }
