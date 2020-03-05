@@ -4,10 +4,10 @@
 namespace Dolittle.Events
 {
     /// <summary>
-    /// Defines the basics of a external event.
+    /// Defines the basics of an external event.
     /// </summary>
     /// <remarks>
-    /// Types inheriting from this interface can be used in event sourcing and will be picked up by the event migration system.
+    /// This is a marker interface to mark events that are coming from an external system.
     /// </remarks>
     public interface IExternalEvent : IEvent
     {
