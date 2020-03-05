@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Dolittle.Collections;
 
 namespace Dolittle.Events
@@ -14,32 +15,30 @@ namespace Dolittle.Events
     public class CommittedAggregateEvents : IReadOnlyList<CommittedAggregateEvent>
     {
         readonly NullFreeList<CommittedAggregateEvent> _events;
+        AggregateRootVersion _nextAggregateRootVersion;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommittedAggregateEvents"/> class.
         /// </summary>
         /// <param name="eventSource">The <see cref="EventSourceId"/> that the Events were applied to.</param>
         /// <param name="aggregateRoot">The <see cref="Type"/> of the Aggregate Root that applied the Events to the Event Source.</param>
-        /// <param name="aggregateRootVersion">The version of the <see cref="AggregateRoot"/> that applied the Events.</param>
         /// <param name="events">The <see cref="CommittedAggregateEvent">events</see>.</param>
-        public CommittedAggregateEvents(EventSourceId eventSource, Type aggregateRoot, AggregateRootVersion aggregateRootVersion, IReadOnlyList<CommittedAggregateEvent> events)
+        public CommittedAggregateEvents(EventSourceId eventSource, Type aggregateRoot, IReadOnlyList<CommittedAggregateEvent> events)
         {
             EventSource = eventSource;
             AggregateRoot = aggregateRoot;
-            AggregateRootVersion = AggregateRootVersion.Initial;
 
             for (var i = 0; i < events.Count; i++)
             {
+                if (i == 0) _nextAggregateRootVersion = events[0].AggregateRootVersion;
                 var @event = events[i];
                 ThrowIfEventIsNull(@event);
                 ThrowIfEventWasAppliedToOtherEventSource(@event);
                 ThrowIfEventWasAppliedByOtherAggregateRoot(@event);
                 ThrowIfAggreggateRootVersionIsOutOfOrder(@event);
                 if (i > 0) ThrowIfEventLogVersionIsOutOfOrder(@event, events[i - 1]);
-                AggregateRootVersion++;
+                _nextAggregateRootVersion++;
             }
-
-            ThrowIfEventsAreMissingForExpectedVersion(aggregateRootVersion);
 
             _events = new NullFreeList<CommittedAggregateEvent>(events);
         }
@@ -55,9 +54,9 @@ namespace Dolittle.Events
         public Type AggregateRoot { get; }
 
         /// <summary>
-        /// Gets the version of the <see cref="AggregateRoot"/> that applied the Events.
+        /// Gets the version of the <see cref="AggregateRoot"/> after all the Events was applied.
         /// </summary>
-        public AggregateRootVersion AggregateRootVersion { get; }
+        public AggregateRootVersion AggregateRootVersion => _events.Count == 0 ? AggregateRootVersion.Initial : _events.Last().AggregateRootVersion;
 
         /// <summary>
         /// Gets a value indicating whether or not there are any events in the committed sequence.
@@ -93,7 +92,7 @@ namespace Dolittle.Events
 
         void ThrowIfAggreggateRootVersionIsOutOfOrder(CommittedAggregateEvent @event)
         {
-            if (@event.AggregateRootVersion != AggregateRootVersion) throw new AggregateRootVersionIsOutOfOrder(@event.AggregateRootVersion, AggregateRootVersion);
+            if (@event.AggregateRootVersion != _nextAggregateRootVersion) throw new AggregateRootVersionIsOutOfOrder(@event.AggregateRootVersion, _nextAggregateRootVersion);
         }
 
         void ThrowIfEventLogVersionIsOutOfOrder(CommittedAggregateEvent @event, CommittedAggregateEvent previousEvent)

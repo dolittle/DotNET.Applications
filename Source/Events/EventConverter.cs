@@ -3,6 +3,7 @@
 
 extern alias contracts;
 
+using System;
 using System.Linq;
 using Dolittle.Applications;
 using Dolittle.Artifacts;
@@ -92,6 +93,33 @@ namespace Dolittle.Events
                 source.EventLogSequenceNumber,
                 occurred,
                 eventSource,
+                correlationId,
+                microservice,
+                tenantId,
+                cause,
+                eventInstance);
+        }
+
+        /// <inheritdoc/>
+        public CommittedAggregateEvent ToSDK(grpcEvents.CommittedAggregateEvent source, Type aggregateRootType)
+        {
+            var artifactId = source.Type.Id.To<ArtifactId>();
+            var artifact = new Artifact(artifactId, source.Type.Generation);
+            var type = _artifactTypeMap.GetTypeFor(artifact);
+            var eventInstance = _serializer.JsonToEvent(type, source.Content) as IEvent;
+            var occurred = source.Occurred.ToDateTimeOffset();
+            var eventSource = source.EventSource.To<EventSourceId>();
+            var correlationId = source.Correlation.To<CorrelationId>();
+            var microservice = source.Microservice.To<Microservice>();
+            var tenantId = source.Tenant.To<TenantId>();
+            var cause = new Cause((CauseType)source.Cause.Type, source.Cause.Position);
+
+            return new CommittedAggregateEvent(
+                eventSource,
+                aggregateRootType,
+                source.AggregateRootVersion,
+                source.EventLogSequenceNumber,
+                occurred,
                 correlationId,
                 microservice,
                 tenantId,
