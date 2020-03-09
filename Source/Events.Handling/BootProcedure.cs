@@ -14,18 +14,22 @@ namespace Dolittle.Events.Handling
     {
         readonly IImplementationsOf<ICanHandleEvents> _eventHandlerTypes;
         readonly IEventHandlers _eventHandlers;
+        readonly IEventHandlersWaiters _eventHandlersWaiters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BootProcedure"/> class.
         /// </summary>
         /// <param name="eventHandlerTypes"><see cref="IImplementationsOf{T}"/> <see cref="ICanHandleEvents"/>.</param>
         /// <param name="eventHandlers">The <see cref="IEventHandlers"/> system.</param>
+        /// <param name="eventHandlersWaiters"><see cref="IEventHandlersWaiters"/> for registering event handlers.</param>
         public BootProcedure(
             IImplementationsOf<ICanHandleEvents> eventHandlerTypes,
-            IEventHandlers eventHandlers)
+            IEventHandlers eventHandlers,
+            IEventHandlersWaiters eventHandlersWaiters)
         {
             _eventHandlerTypes = eventHandlerTypes;
             _eventHandlers = eventHandlers;
+            _eventHandlersWaiters = eventHandlersWaiters;
         }
 
         /// <inheritdoc/>
@@ -34,7 +38,11 @@ namespace Dolittle.Events.Handling
         /// <inheritdoc/>
         public void Perform()
         {
-            _eventHandlerTypes.ForEach(type => _eventHandlers.Register(type));
+            _eventHandlerTypes.ForEach(type =>
+            {
+                var eventHandler = _eventHandlers.Register(type);
+                _eventHandlersWaiters.RegisterHandler(eventHandler);
+            });
         }
     }
 }
