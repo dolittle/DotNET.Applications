@@ -1,13 +1,9 @@
 ﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dolittle.Booting;
-using Dolittle.Commands;
 using Dolittle.Commands.Coordination;
-using Dolittle.Domain;
 using Dolittle.Execution;
 using Dolittle.Tenancy;
 using Microsoft.Extensions.Hosting;
@@ -17,8 +13,6 @@ namespace EventSourcing
 {
     static class Program
     {
-        static readonly CommandRequest NullCommandRequest = new CommandRequest(CorrelationId.New(), Guid.Parse("7f1d64af-2ec7-4b6e-bac2-fa0e0b18a661"), 1, new Dictionary<string, object>());
-
         static async Task Main()
         {
             var hostBuilder = new HostBuilder();
@@ -33,16 +27,19 @@ namespace EventSourcing
                 _.Development();
             }).Start();
 
+            var logger = result.Container.Get<Dolittle.Logging.ILogger>();
+
             var commandContextManager = result.Container.Get<ICommandContextManager>();
             var executionContextManager = result.Container.Get<IExecutionContextManager>();
+            var commandCoordinator = result.Container.Get<ICommandCoordinator>();
 
             executionContextManager.CurrentFor(TenantId.Development);
 
-            using (commandContextManager.EstablishForCommand(NullCommandRequest))
-            {
-                var aggregateOf = result.Container.Get<IAggregateOf<MyAggregate>>();
-                aggregateOf.Create().Perform(_ => _.DoStuff());
-            }
+            logger.Information("Handle command");
+
+            var commandResult = commandCoordinator.Handle(new MyCommand());
+
+            logger.Information($"Success : {commandResult.Success}");
 
             await host.RunAsync().ConfigureAwait(false);
         }
