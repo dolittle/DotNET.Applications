@@ -56,7 +56,12 @@ namespace Dolittle.Events.Handling
         public EventHandlersWaiter GetWaiterFor(CorrelationId correlationId, params Type[] types)
         {
             var typeCounts = types.ToDictionary(_ => _, _ => 0);
-            _eventTypesByEventHandler.ForEach(_ => _.Value.ForEach(et => typeCounts[et]++));
+            _eventTypesByEventHandler.ForEach(_ => _.Value.ForEach(eventType =>
+            {
+                if (!typeCounts.ContainsKey(eventType)) typeCounts[eventType] = 0;
+                typeCounts[eventType]++;
+            }));
+
             var waiter = new EventHandlersWaiter(typeCounts, _logger);
 
             foreach (var type in types)
