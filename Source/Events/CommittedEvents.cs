@@ -54,7 +54,7 @@ namespace Dolittle.Events
 
         void ThrowIfEventLogVersionIsOutOfOrder(CommittedEvent @event, CommittedEvent previousEvent)
         {
-            if (@event.EventLogVersion != previousEvent.EventLogVersion + 1) throw new EventLogVersionIsOutOfOrder(@event.EventLogVersion, previousEvent.EventLogVersion + 1);
+            if (@event.EventLogSequenceNumber <= previousEvent.EventLogSequenceNumber) throw new EventLogVersionIsOutOfOrder(@event.EventLogSequenceNumber, previousEvent.EventLogSequenceNumber);
         }
     }
 }
