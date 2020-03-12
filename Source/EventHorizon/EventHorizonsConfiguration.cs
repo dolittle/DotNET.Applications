@@ -9,7 +9,7 @@ using Dolittle.Tenancy;
 namespace Dolittle.EventHorizon
 {
     /// <summary>
-    /// Represents the configuration for hosts by <see cref="EventHorizonsConfiguration"/>.
+    /// Represents the configuration for event horizons.
     /// </summary>
     [Name(ConfigurationName)]
     public class EventHorizonsConfiguration :
