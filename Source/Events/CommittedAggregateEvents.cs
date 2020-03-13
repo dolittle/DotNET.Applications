@@ -97,7 +97,7 @@ namespace Dolittle.Events
 
         void ThrowIfEventLogVersionIsOutOfOrder(CommittedAggregateEvent @event, CommittedAggregateEvent previousEvent)
         {
-            if (@event.EventLogVersion != previousEvent.EventLogVersion + 1) throw new EventLogVersionIsOutOfOrder(@event.EventLogVersion, previousEvent.EventLogVersion + 1);
+            if (@event.EventLogSequenceNumber <= previousEvent.EventLogSequenceNumber) throw new EventLogVersionIsOutOfOrder(@event.EventLogSequenceNumber, previousEvent.EventLogSequenceNumber);
         }
 
         void ThrowIfEventsAreMissingForExpectedVersion(AggregateRootVersion aggregateRootVersion)

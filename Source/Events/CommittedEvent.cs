@@ -16,7 +16,7 @@ namespace Dolittle.Events
         /// <summary>
         /// Initializes a new instance of the <see cref="CommittedEvent"/> class.
         /// </summary>
-        /// <param name="eventLogVersion">The version of the Event Log the Event was committed to.</param>
+        /// <param name="eventLogSequenceNumber">The event log sequence number of the Event.</param>
         /// <param name="occurred">The <see cref="DateTimeOffset" /> when the Event was committed to the Event Store.</param>
         /// <param name="eventSourceId">The <see cref="EventSource" /> of the Event.</param>
         /// <param name="correlationId">The <see cref="CorrelationId" /> to relate this event to other artifacts and actions within the system.</param>
@@ -25,7 +25,7 @@ namespace Dolittle.Events
         /// <param name="cause">The link to the cause of the Event.</param>
         /// <param name="event">An instance of the Event that was committed to the Event Store.</param>
         public CommittedEvent(
-            EventLogVersion eventLogVersion,
+            EventLogSequenceNumber eventLogSequenceNumber,
             DateTimeOffset occurred,
             EventSourceId eventSourceId,
             CorrelationId correlationId,
@@ -34,7 +34,7 @@ namespace Dolittle.Events
             Cause cause,
             IEvent @event)
         {
-            EventLogVersion = eventLogVersion;
+            EventLogSequenceNumber = eventLogSequenceNumber;
             Occurred = occurred;
             CorrelationId = correlationId;
             Microservice = microservice;
@@ -45,9 +45,9 @@ namespace Dolittle.Events
         }
 
         /// <summary>
-        /// Gets the version of the Event Log the Event was committed to.
+        /// Gets the event log sequence number of the Event.
         /// </summary>
-        public EventLogVersion EventLogVersion { get; }
+        public EventLogSequenceNumber EventLogSequenceNumber { get; }
 
         /// <summary>
         /// Gets the <see cref="DateTimeOffset" /> when the Event was committed to the Event Store.

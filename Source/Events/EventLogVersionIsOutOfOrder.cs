@@ -6,17 +6,17 @@ using System;
 namespace Dolittle.Events
 {
     /// <summary>
-    /// Exception that gets thrown when a sequence of <see cref="IEvent"/>s are not in the order they were committed to the Event Store.
+    /// Exception that gets thrown when a event log sequence numbers in a sequence of events are out of order, meaning that an event has a lower event log sequence number than the previous event.
     /// </summary>s
-    public class EventLogVersionIsOutOfOrder : ArgumentException
+    public class EventLogVersionIsOutOfOrder : Exception
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EventLogVersionIsOutOfOrder"/> class.
         /// </summary>
-        /// <param name="eventVersion">The <see cref="EventLogVersion"/> the Event was committed to.</param>
-        /// <param name="expectedVersion">Expected <see cref="EventLogVersion"/>.</param>
-        public EventLogVersionIsOutOfOrder(EventLogVersion eventVersion, EventLogVersion expectedVersion)
-            : base($"Event Log Root version is out of order. Version '{eventVersion}' from event does not match '{expectedVersion}'")
+        /// <param name="sequenceNumber">The <see cref="EventLogSequenceNumber"/> the Event was committed to.</param>
+        /// <param name="expectedSequenceNumber">Expected <see cref="EventLogSequenceNumber"/>.</param>
+        public EventLogVersionIsOutOfOrder(EventLogSequenceNumber sequenceNumber, EventLogSequenceNumber expectedSequenceNumber)
+            : base($"Event Log Sequence is out of order because Event Log Sequence Number '{sequenceNumber}' is not greater than '{expectedSequenceNumber}'.")
         {
         }
     }

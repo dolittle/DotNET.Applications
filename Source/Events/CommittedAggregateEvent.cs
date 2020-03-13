@@ -19,15 +19,15 @@ namespace Dolittle.Events
         /// <param name="eventSource">The Event Source that the Event was applied to.</param>
         /// <param name="aggregateRoot">The <see cref="Type"/> of the Aggregate Root that applied the Event to the Event Source.</param>
         /// <param name="aggregateRootVersion">The version of the <see cref="AggregateRoot"/> that applied the Event.</param>
-        /// <param name="eventLogVersion">The version of the Event Log the Event was committed to.</param>
+        /// <param name="eventLogSequenceNumber">The event log sequence number of the Event.</param>
         /// <param name="occurred">The <see cref="DateTimeOffset" /> when the Event was committed to the Event Store.</param>
         /// <param name="correlationId">The <see cref="CorrelationId" /> to relate this event to other artifacts and actions within the system.</param>
         /// <param name="microservice">The <see cref="Microservice"/> within which the Event occurred.</param>
         /// <param name="tenant">The <see cref="TenantId"/> within which the Event occurred.</param>
         /// <param name="cause">The link to the cause of the Event.</param>
         /// <param name="event">An instance of the Event that was committed to the Event Store.</param>
-        public CommittedAggregateEvent(EventSourceId eventSource, Type aggregateRoot, AggregateRootVersion aggregateRootVersion, EventLogVersion eventLogVersion, DateTimeOffset occurred, CorrelationId correlationId, Microservice microservice, TenantId tenant, Cause cause, IEvent @event)
-            : base(eventLogVersion, occurred, eventSource, correlationId, microservice, tenant, cause, @event)
+        public CommittedAggregateEvent(EventSourceId eventSource, Type aggregateRoot, AggregateRootVersion aggregateRootVersion, EventLogSequenceNumber eventLogSequenceNumber, DateTimeOffset occurred, CorrelationId correlationId, Microservice microservice, TenantId tenant, Cause cause, IEvent @event)
+            : base(eventLogSequenceNumber, occurred, eventSource, correlationId, microservice, tenant, cause, @event)
         {
             AggregateRoot = aggregateRoot;
             AggregateRootVersion = aggregateRootVersion;
