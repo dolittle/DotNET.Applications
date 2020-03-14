@@ -10,7 +10,6 @@ using Dolittle.Execution;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
-using Dolittle.Security;
 using grpc = contracts::Dolittle.Runtime.EventHorizon;
 
 namespace Dolittle.EventHorizon
@@ -69,8 +68,8 @@ namespace Dolittle.EventHorizon
                         _microservice.Value,
                         subscriber,
                         currentExecutionContext.Environment,
-                        CorrelationId.New(),
-                        Claims.Empty,
+                        currentExecutionContext.CorrelationId,
+                        currentExecutionContext.Claims,
                         currentExecutionContext.Culture));
                     var response = _client.Subscribe(request);
                     if (!response.Success) throw new FailedToSubscribeToEventHorizon(subscriber, _.Microservice, _.Tenant);

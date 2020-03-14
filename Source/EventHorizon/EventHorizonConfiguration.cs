@@ -9,7 +9,7 @@ namespace Dolittle.EventHorizon
     /// <summary>
     /// Represents the configuration of an event horizon.
     /// </summary>
-    public class EventHorizon
+    public class EventHorizonConfiguration
     {
         /// <summary>
         /// Gets or sets the <see cref="Microservice" /> to receive events from.
