@@ -38,22 +38,20 @@ namespace Dolittle.Domain.for_AggregateRoot.given
                 2,
                 2,
                 event_three));
-            return new CommittedAggregateEvents(eventSource, aggregateRoot, 3, events);
+            return new CommittedAggregateEvents(eventSource, aggregateRoot, events);
         }
 
-        static CommittedAggregateEvent build_committed_event(EventSourceId eventSource, Type aggregateRoot, AggregateRootVersion aggregateRootVersion, EventLogVersion eventLogVersion, IEvent @event)
-        {
-            return new CommittedAggregateEvent(
+        static CommittedAggregateEvent build_committed_event(EventSourceId eventSource, Type aggregateRoot, AggregateRootVersion aggregateRootVersion, EventLogSequenceNumber eventLogSequenceNumber, IEvent @event) =>
+            new CommittedAggregateEvent(
                 eventSource,
                 aggregateRoot,
                 aggregateRootVersion,
-                eventLogVersion,
+                eventLogSequenceNumber,
                 DateTimeOffset.Now,
                 correlationId,
                 microserviceId,
                 tenantId,
                 cause,
                 @event);
-        }
     }
 }

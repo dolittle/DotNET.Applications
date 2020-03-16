@@ -11,7 +11,7 @@ namespace Dolittle.Events.for_CommittedAggregateEvents
 
         Because of = () =>
         {
-            events = new CommittedAggregateEvents(event_source_id, aggregate_root_type, 2, new CommittedAggregateEvent[] { first_event, second_event });
+            events = new CommittedAggregateEvents(event_source_id, aggregate_root_type, new CommittedAggregateEvent[] { first_event, second_event });
         };
 
         It should_have_events = () => events.HasEvents.ShouldBeTrue();

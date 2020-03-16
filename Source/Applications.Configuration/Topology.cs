@@ -8,7 +8,7 @@ using Dolittle.Configuration;
 namespace Dolittle.Applications.Configuration
 {
     /// <summary>
-    /// Represents the topology of the current <see cref="BoundedContext">bounded context</see>.
+    /// Represents the topology of the current <see cref="Microservice">bounded context</see>.
     /// </summary>
     public class Topology : IConfigurationObject
     {

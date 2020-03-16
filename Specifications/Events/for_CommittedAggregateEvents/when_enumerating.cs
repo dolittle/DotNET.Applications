@@ -13,7 +13,7 @@ namespace Dolittle.Events.for_CommittedAggregateEvents
 
         Establish context = () =>
         {
-            events = new CommittedAggregateEvents(event_source_id, aggregate_root_type, 2, new CommittedAggregateEvent[] { first_event, second_event });
+            events = new CommittedAggregateEvents(event_source_id, aggregate_root_type, new CommittedAggregateEvent[] { first_event, second_event });
         };
 
         Because of = () =>
