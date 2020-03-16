@@ -43,8 +43,8 @@ namespace Dolittle.EventHorizon
             ILogger logger)
         {
             _eventHorizons = eventHorizons;
-            _application = boundedContextConfiguration.Application.Value;
-            _microservice = boundedContextConfiguration.BoundedContext.Value;
+            _application = boundedContextConfiguration.Application;
+            _microservice = boundedContextConfiguration.BoundedContext;
             _client = subscriptionsClient;
             _executionContextManager = executionContextManager;
             _logger = logger;
@@ -62,15 +62,10 @@ namespace Dolittle.EventHorizon
                         Microservice = _.Microservice.ToProtobuf(),
                         Tenant = _.Tenant.ToProtobuf()
                     };
-                    var currentExecutionContext = _executionContextManager.Current;
-                    _executionContextManager.CurrentFor(new ExecutionContext(
+                    _executionContextManager.CurrentFor(
                         _application,
                         _microservice.Value,
-                        subscriber,
-                        currentExecutionContext.Environment,
-                        currentExecutionContext.CorrelationId,
-                        currentExecutionContext.Claims,
-                        currentExecutionContext.Culture));
+                        subscriber);
                     var response = _client.Subscribe(request);
                     if (!response.Success) throw new FailedToSubscribeToEventHorizon(subscriber, _.Microservice, _.Tenant);
                 });
