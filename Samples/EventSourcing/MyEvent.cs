@@ -5,7 +5,7 @@ using Dolittle.Events;
 
 namespace EventSourcing
 {
-    public class MyEvent : IEvent
+    public class MyEvent : IPublicEvent
     {
         public MyEvent(int myInteger, string myString)
         {
