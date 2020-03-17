@@ -4,6 +4,8 @@
 extern alias contracts;
 
 using System;
+using System.Net;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using contracts::Dolittle.Runtime.Heads;
@@ -55,7 +57,9 @@ namespace Dolittle.Heads
             var headInfo = new HeadInfo
             {
                 HeadId = headId,
-                Runtime = $".NET Core : {Environment.Version} - {Environment.OSVersion} - {Environment.ProcessorCount} cores"
+                Host = Dns.GetHostName(),
+                Runtime = $".NET Core : {Environment.Version} - {Environment.OSVersion} - {Environment.ProcessorCount} cores",
+                Version = Assembly.GetEntryAssembly().GetName().Version.ToString()
             };
 
             var streamCall = _headsClient.Connect(headInfo);
