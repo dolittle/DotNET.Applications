@@ -12,19 +12,17 @@ using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.Services.Clients;
 using Grpc.Core;
-using static contracts::Dolittle.Runtime.Events.Processing.EventHandlers;
 using static contracts::Dolittle.Runtime.Events.Processing.ExternalEventHandlers;
 using grpc = contracts::Dolittle.Runtime.Events.Processing;
 using grpcArtifacts = contracts::Dolittle.Runtime.Artifacts;
 
-namespace Dolittle.Events.Handling
+namespace Dolittle.Events.Handling.EventHorizon
 {
     /// <summary>
     /// Represents an implementation of <see cref="EventHandlerProcessor"/>.
     /// </summary>
-    public class EventHandlerProcessor : IEventHandlerProcessor
+    public class ExternalEventHandlerProcessor : IEventHandlerProcessor
     {
-        readonly EventHandlersClient _eventHandlersClient;
         readonly ExternalEventHandlersClient _externalEventHandlersClient;
         readonly IExecutionContextManager _executionContextManager;
         readonly IArtifactTypeMap _artifactTypeMap;
@@ -33,17 +31,15 @@ namespace Dolittle.Events.Handling
         readonly ILogger _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventHandlerProcessor"/> class.
+        /// Initializes a new instance of the <see cref="ExternalEventHandlerProcessor"/> class.
         /// </summary>
-        /// <param name="eventHandlersClient"><see cref="EventHandlersClient"/> for talking to the runtime.</param>
         /// <param name="externalEventHandlersClient"><see cref="ExternalEventHandlersClient" /> for talking to the runtime.</param>
         /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for managing the <see cref="Execution.ExecutionContext"/>.</param>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for mapping types and artifacts.</param>
         /// <param name="eventConverter"><see cref="IEventConverter"/> for converting events for transport.</param>
         /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
-        public EventHandlerProcessor(
-            EventHandlersClient eventHandlersClient,
+        public ExternalEventHandlerProcessor(
             ExternalEventHandlersClient externalEventHandlersClient,
             IExecutionContextManager executionContextManager,
             IArtifactTypeMap artifactTypeMap,
@@ -51,7 +47,6 @@ namespace Dolittle.Events.Handling
             IReverseCallClientManager reverseCallClientManager,
             ILogger logger)
         {
-            _eventHandlersClient = eventHandlersClient;
             _externalEventHandlersClient = externalEventHandlersClient;
             _executionContextManager = executionContextManager;
             _artifactTypeMap = artifactTypeMap;
@@ -61,18 +56,20 @@ namespace Dolittle.Events.Handling
         }
 
         /// <inheritdoc/>
-        public bool CanProcess(AbstractEventHandler eventHandler) => eventHandler.GetType().Equals(typeof(EventHandler));
+        public bool CanProcess(AbstractEventHandler eventHandler) => eventHandler.GetType().Equals(typeof(ExternalEventHandler));
 
         /// <inheritdoc/>
         public void Start(AbstractEventHandler eventHandler)
         {
             if (!CanProcess(eventHandler)) throw new EventHandlerProcessorCannotStartProcessingEventHandler(this, eventHandler);
+            var externalEventHandler = eventHandler as ExternalEventHandler;
             ThrowIfIllegalEventHandlerId(eventHandler.Identifier);
-            var artifacts = eventHandler.EventTypes.Select(_ => _artifactTypeMap.GetArtifactFor(_));
-            var arguments = new EventHandlerArguments
+            var artifacts = externalEventHandler.EventTypes.Select(_ => _artifactTypeMap.GetArtifactFor(_));
+            var arguments = new ExternalEventHandlerArguments
             {
-                EventHandler = eventHandler.Identifier.ToProtobuf(),
-                Partitioned = eventHandler.Partitioned
+                EventHandler = externalEventHandler.Identifier.ToProtobuf(),
+                Partitioned = externalEventHandler.Partitioned,
+                Microservice = externalEventHandler.Microservice.ToProtobuf()
             };
             arguments.Types_.AddRange(artifacts.Select(_ =>
                 new grpcArtifacts.Artifact
@@ -83,9 +80,9 @@ namespace Dolittle.Events.Handling
 
             var metadata = new Metadata { arguments.ToArgumentsMetadata() };
 
-            _logger.Debug($"Connecting to runtime for event handler '{eventHandler.Identifier}' for types '{string.Join(",", artifacts)}', partioning: {arguments.Partitioned}");
+            _logger.Debug($"Connecting to runtime for external event handler '{externalEventHandler.Identifier}' for types '{string.Join(",", artifacts)}', partioning: {arguments.Partitioned}");
 
-            var result = _eventHandlersClient.Connect(metadata);
+            var result = _externalEventHandlersClient.Connect(metadata);
             _reverseCallClientManager.Handle(
                 result,
                 _ => _.CallNumber,
@@ -97,7 +94,7 @@ namespace Dolittle.Events.Handling
                         var executionContext = Execution.Contracts.ExecutionContext.Parser.ParseFrom(call.Request.ExecutionContext);
                         _executionContextManager.CurrentFor(executionContext);
 
-                        var response = new grpc.EventHandlerClientToRuntimeResponse
+                        var response = new grpc.ExternalEventHandlerClientToRuntimeResponse
                         {
                             Succeeded = true,
                             Retry = false,
@@ -105,13 +102,12 @@ namespace Dolittle.Events.Handling
                         };
 
                         var committedEvent = _eventConverter.ToSDK(call.Request.Event);
-                        await eventHandler.Invoke(committedEvent).ConfigureAwait(false);
-
+                        await externalEventHandler.Invoke(committedEvent).ConfigureAwait(false);
                         await call.Reply(response).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
-                        var response = new grpc.EventHandlerClientToRuntimeResponse
+                        var response = new grpc.ExternalEventHandlerClientToRuntimeResponse
                         {
                             Succeeded = false,
                             Retry = false,

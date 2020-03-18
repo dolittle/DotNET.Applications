@@ -17,7 +17,7 @@ namespace Dolittle.Events.Handling
         /// <param name="methodInfo">The Event Handler Handle <see cref="MethodInfo" />.</param>
         /// <param name="parameterType">The <see cref="Type" /> of the first parameter in the event handler method.</param>
         public EventHandlerMethodFirstParameterMustBeAnEvent(MethodInfo methodInfo, Type parameterType)
-            : base(methodInfo, $"The Event Handler '{EventHandlers.HandleMethodName}' method's first parameter must inherit from {typeof(IEvent).FullName}. Got parameter type: {parameterType.FullName}")
+            : base(methodInfo, $"The Event Handler '{AbstractEventHandler.HandleMethodName}' method's first parameter must inherit from {typeof(IEvent).FullName}. Got parameter type: {parameterType.FullName}")
         {
         }
     }

@@ -1,12 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Concurrent;
-using System.Linq;
-using System.Reflection;
-using Dolittle.DependencyInversion;
-using Dolittle.Reflection;
 
 namespace Dolittle.Events.Handling
 {
@@ -15,94 +10,33 @@ namespace Dolittle.Events.Handling
     /// </summary>
     public class EventHandlers : IEventHandlers
     {
-        /// <summary>
-        /// The method name of the Event Handler method that can handle an Event.
-        /// </summary>
-        public const string HandleMethodName = "Handle";
-
-        readonly ConcurrentDictionary<EventHandlerId, EventHandler> _eventHandlers = new ConcurrentDictionary<EventHandlerId, EventHandler>();
-        readonly IContainer _container;
-        readonly IEventHandlerProcessor _eventHandlerProcessor;
+        readonly ConcurrentDictionary<EventHandlerId, AbstractEventHandler> _eventHandlers = new ConcurrentDictionary<EventHandlerId, AbstractEventHandler>();
+        readonly IEventHandlerProcessors _eventHandlerProcessors;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlers"/> class.
         /// </summary>
-        /// <param name="container"><see cref="IContainer"/> for getting instances.</param>
-        /// <param name="eventHandlerProcessor"><see cref="IEventHandlerProcessor"/> for processing <see cref="EventHandler"/>.</param>
-        public EventHandlers(IContainer container, IEventHandlerProcessor eventHandlerProcessor)
+        /// <param name="eventHandlerProcessors">The <see cref="IEventHandlerProcessors" />.</param>
+        public EventHandlers(IEventHandlerProcessors eventHandlerProcessors)
         {
-            _container = container;
-            _eventHandlerProcessor = eventHandlerProcessor;
+            _eventHandlerProcessors = eventHandlerProcessors;
         }
 
         /// <inheritdoc/>
-        public EventHandler GetFor(EventHandlerId eventHandlerId)
+        public AbstractEventHandler GetFor(EventHandlerId eventHandlerId)
         {
             ThrowIfMissingEventHandlerWithId(eventHandlerId);
             return _eventHandlers[eventHandlerId];
         }
 
         /// <inheritdoc/>
-        public bool HasFor(EventHandlerId eventHandlerId)
-        {
-            return _eventHandlers.ContainsKey(eventHandlerId);
-        }
+        public bool HasFor(EventHandlerId eventHandlerId) => _eventHandlers.ContainsKey(eventHandlerId);
 
         /// <inheritdoc/>
-        public EventHandler Register<TEventHandler>(EventHandlerId eventHandlerId)
-            where TEventHandler : ICanHandleEvents
+        public void Register(AbstractEventHandler eventHandler)
         {
-            return Register(typeof(TEventHandler), eventHandlerId);
-        }
-
-        /// <inheritdoc/>
-        public EventHandler Register(Type type, EventHandlerId eventHandlerId)
-        {
-            ThrowIfTypeIsNotAnEventHandler(type);
-
-            if (eventHandlerId == default || eventHandlerId.IsNotSet)
-            {
-                ThrowIfMissingAttributeForEventHandler(type);
-                eventHandlerId = type.GetCustomAttribute<EventHandlerAttribute>().Id;
-            }
-
-            var eventMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
-                                                    .Where(_ => _.Name == HandleMethodName && TakesExpectedParameters(_));
-
-            var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod(_.GetParameters()[0].ParameterType, _));
-            var eventHandler = new EventHandler(_container, eventHandlerId, type, IsPartitioned(type), eventHandlerMethods);
-            _eventHandlers[eventHandlerId] = eventHandler;
-
-            _eventHandlerProcessor.Start(eventHandler);
-
-            return eventHandler;
-        }
-
-        bool IsPartitioned(Type type) =>
-            !type.HasAttribute<NotPartitionedAttribute>();
-
-        bool TakesExpectedParameters(MethodInfo methodInfo)
-        {
-            var parameters = methodInfo.GetParameters();
-            return parameters.Length == 2 &&
-                    typeof(IEvent).IsAssignableFrom(parameters[0].ParameterType) &&
-                    parameters[1].ParameterType == typeof(EventContext);
-        }
-
-        void ThrowIfTypeIsNotAnEventHandler(Type type)
-        {
-            if (!type.Implements(typeof(ICanHandleEvents)))
-            {
-                throw new TypeIsNotAnEventHandler(type);
-            }
-        }
-
-        void ThrowIfMissingAttributeForEventHandler(Type type)
-        {
-            if (!type.HasAttribute<EventHandlerAttribute>())
-            {
-                throw new MissingAttributeForEventHandler(type);
-            }
+            if (!_eventHandlers.TryAdd(eventHandler.Identifier, eventHandler)) throw new EventHandlerAlreadyRegistered(eventHandler.Identifier);
+            _eventHandlerProcessors.Start(eventHandler);
         }
 
         void ThrowIfMissingEventHandlerWithId(EventHandlerId eventHandlerId)

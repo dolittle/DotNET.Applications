@@ -1,8 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-
 namespace Dolittle.Events.Handling
 {
     /// <summary>
@@ -11,34 +9,23 @@ namespace Dolittle.Events.Handling
     public interface IEventHandlers
     {
         /// <summary>
-        /// Check if there is an <see cref="ICanHandleEvents">event handler</see> for a specific <see cref="EventHandlerId"/>.
+        /// Check if there is an event handler for a specific <see cref="EventHandlerId"/>.
         /// </summary>
         /// <param name="eventHandlerId"><see cref="EventHandlerId"/> to check for.</param>
         /// <returns>true if there is one, false if not.</returns>
         bool HasFor(EventHandlerId eventHandlerId);
 
         /// <summary>
-        /// Get the <see cref="EventHandler"/> for a given <see cref="EventHandlerId"/>.
+        /// Get the <see cref="AbstractEventHandler"/> for a given <see cref="EventHandlerId"/>.
         /// </summary>
         /// <param name="eventHandlerId"><see cref="EventHandlerId"/> to get for.</param>
-        /// <returns><see cref="EventHandler"/> instance.</returns>
-        EventHandler GetFor(EventHandlerId eventHandlerId);
+        /// <returns><see cref="AbstractEventHandler"/> instance.</returns>
+        AbstractEventHandler GetFor(EventHandlerId eventHandlerId);
 
         /// <summary>
-        /// Register a <see cref="ICanHandleEvents"/> type towards a given <see cref="EventHandlerId"/>.
+        /// Register an event handler.
         /// </summary>
-        /// <param name="eventHandlerId"><see cref="EventHandlerId"/> to associate with.</param>
-        /// <typeparam name="TEventHandler">Type of <see cref="ICanHandleEvents"/>.</typeparam>
-        /// <returns><see cref="EventHandler"/> instance.</returns>
-        EventHandler Register<TEventHandler>(EventHandlerId eventHandlerId = default)
-            where TEventHandler : ICanHandleEvents;
-
-        /// <summary>
-        /// Register a <see cref="ICanHandleEvents"/> type towards a given <see cref="EventHandlerId"/>.
-        /// </summary>
-        /// <param name="type"><see cref="Type"/> of <see cref="ICanHandleEvents"/>.</param>
-        /// <param name="eventHandlerId"><see cref="EventHandlerId"/> to associate with.</param>
-        /// <returns><see cref="EventHandler"/> instance.</returns>
-        EventHandler Register(Type type, EventHandlerId eventHandlerId = default);
+        /// <param name="eventHandler">The <see cref="AbstractEventHandler"/>.</param>
+        void Register(AbstractEventHandler eventHandler);
     }
 }

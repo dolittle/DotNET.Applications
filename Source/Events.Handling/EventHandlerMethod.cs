@@ -47,7 +47,7 @@ namespace Dolittle.Events.Handling
 
         void ThrowIfInvalidHandleSignature(MethodInfo methodInfo)
         {
-            if (methodInfo.Name != EventHandlers.HandleMethodName) throw new EventHandlerMethodHasInvalidMethodName(methodInfo, methodInfo.Name);
+            if (methodInfo.Name != AbstractEventHandler.HandleMethodName) throw new EventHandlerMethodHasInvalidMethodName(methodInfo, methodInfo.Name);
             var parameters = methodInfo.GetParameters();
             if (parameters.Length != 2) throw new EventHandlerMethodMustTakeTwoParameters(methodInfo);
             if (!typeof(IEvent).IsAssignableFrom(parameters[0].ParameterType)) throw new EventHandlerMethodFirstParameterMustBeAnEvent(methodInfo, parameters[0].ParameterType);

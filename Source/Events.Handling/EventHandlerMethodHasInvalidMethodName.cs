@@ -16,7 +16,7 @@ namespace Dolittle.Events.Handling
         /// <param name="methodInfo">The Event Handler Handle <see cref="MethodInfo" />.</param>
         /// <param name="methodName">The name of the method.</param>
         public EventHandlerMethodHasInvalidMethodName(MethodInfo methodInfo, string methodName)
-            : base(methodInfo, $"The Event Handler method's name must be '{EventHandlers.HandleMethodName}', but was '{methodName}'")
+            : base(methodInfo, $"The Event Handler method's name must be '{AbstractEventHandler.HandleMethodName}', but was '{methodName}'")
         {
         }
     }
