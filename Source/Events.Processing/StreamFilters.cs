@@ -82,8 +82,7 @@ namespace Dolittle.Events.Processing
 
                 var additionalInfo = new FilterArguments
                 {
-                    Filter = filter.FilterId.ToProtobuf(),
-                    Stream = filter.StreamId.ToProtobuf()
+                    Filter = filter.FilterId.ToProtobuf()
                 };
                 var metadata = new Metadata { additionalInfo.ToArgumentsMetadata() };
 
