@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Concurrent;
+using Dolittle.Collections;
 
 namespace Dolittle.Events.Handling
 {
@@ -12,6 +13,7 @@ namespace Dolittle.Events.Handling
     {
         readonly ConcurrentDictionary<EventHandlerId, AbstractEventHandler> _eventHandlers = new ConcurrentDictionary<EventHandlerId, AbstractEventHandler>();
         readonly IEventHandlerProcessors _eventHandlerProcessors;
+        bool _alreadyStartedProcessing;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlers"/> class.
@@ -36,7 +38,16 @@ namespace Dolittle.Events.Handling
         public void Register(AbstractEventHandler eventHandler)
         {
             if (!_eventHandlers.TryAdd(eventHandler.Identifier, eventHandler)) throw new EventHandlerAlreadyRegistered(eventHandler.Identifier);
-            _eventHandlerProcessors.Start(eventHandler);
+        }
+
+        /// <inheritdoc/>
+        public void StartProcessingEventHandlers()
+        {
+            if (!_alreadyStartedProcessing)
+            {
+                _alreadyStartedProcessing = true;
+                _eventHandlers.ForEach(_ => _eventHandlerProcessors.Start(_.Value));
+            }
         }
 
         void ThrowIfMissingEventHandlerWithId(EventHandlerId eventHandlerId)

@@ -27,5 +27,10 @@ namespace Dolittle.Events.Handling
         /// </summary>
         /// <param name="eventHandler">The <see cref="AbstractEventHandler"/>.</param>
         void Register(AbstractEventHandler eventHandler);
+
+        /// <summary>
+        /// Starts processing all event handlers.
+        /// </summary>
+        void StartProcessingEventHandlers();
     }
 }

@@ -36,6 +36,7 @@ namespace Dolittle.Events.Handling
         public void Perform()
         {
             _eventHandlerProviders.SelectMany(provider => provider.Provide()).ForEach(eventHandler => _eventHandlers.Register(eventHandler));
+            _eventHandlers.StartProcessingEventHandlers();
         }
     }
 }
