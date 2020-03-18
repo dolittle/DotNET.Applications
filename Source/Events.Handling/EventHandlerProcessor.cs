@@ -13,7 +13,6 @@ using Dolittle.Protobuf;
 using Dolittle.Services.Clients;
 using Grpc.Core;
 using static contracts::Dolittle.Runtime.Events.Processing.EventHandlers;
-using static contracts::Dolittle.Runtime.Events.Processing.ExternalEventHandlers;
 using grpc = contracts::Dolittle.Runtime.Events.Processing;
 using grpcArtifacts = contracts::Dolittle.Runtime.Artifacts;
 
@@ -25,7 +24,6 @@ namespace Dolittle.Events.Handling
     public class EventHandlerProcessor : IEventHandlerProcessor
     {
         readonly EventHandlersClient _eventHandlersClient;
-        readonly ExternalEventHandlersClient _externalEventHandlersClient;
         readonly IExecutionContextManager _executionContextManager;
         readonly IArtifactTypeMap _artifactTypeMap;
         readonly IEventConverter _eventConverter;
@@ -36,7 +34,6 @@ namespace Dolittle.Events.Handling
         /// Initializes a new instance of the <see cref="EventHandlerProcessor"/> class.
         /// </summary>
         /// <param name="eventHandlersClient"><see cref="EventHandlersClient"/> for talking to the runtime.</param>
-        /// <param name="externalEventHandlersClient"><see cref="ExternalEventHandlersClient" /> for talking to the runtime.</param>
         /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for managing the <see cref="Execution.ExecutionContext"/>.</param>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for mapping types and artifacts.</param>
         /// <param name="eventConverter"><see cref="IEventConverter"/> for converting events for transport.</param>
@@ -44,7 +41,6 @@ namespace Dolittle.Events.Handling
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public EventHandlerProcessor(
             EventHandlersClient eventHandlersClient,
-            ExternalEventHandlersClient externalEventHandlersClient,
             IExecutionContextManager executionContextManager,
             IArtifactTypeMap artifactTypeMap,
             IEventConverter eventConverter,
@@ -52,7 +48,6 @@ namespace Dolittle.Events.Handling
             ILogger logger)
         {
             _eventHandlersClient = eventHandlersClient;
-            _externalEventHandlersClient = externalEventHandlersClient;
             _executionContextManager = executionContextManager;
             _artifactTypeMap = artifactTypeMap;
             _eventConverter = eventConverter;
