@@ -62,8 +62,7 @@ namespace Dolittle.Events.Handling
             var typeCounts = eventTypes.ToDictionary(_ => _, _ => 0);
             _eventTypesByEventHandler.ForEach(_ => _.Value.ForEach(eventType =>
             {
-                if (!typeCounts.ContainsKey(eventType)) typeCounts[eventType] = 0;
-                typeCounts[eventType]++;
+                if (typeCounts.ContainsKey(eventType)) typeCounts[eventType]++;
             }));
 
             var waiter = new EventHandlersWaiter(typeCounts, _logger);
