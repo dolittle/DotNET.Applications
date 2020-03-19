@@ -78,12 +78,12 @@ namespace Dolittle.Events.Handling
                 waiters.Add(waiter);
             }
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 action();
 
                 _logger.Trace("Waiting for EventHandlers");
-                waiter.Wait();
+                await waiter.Complete().ConfigureAwait(false);
                 _logger.Information("EventHandler waiting is done");
 
                 tcs.SetResult(true);

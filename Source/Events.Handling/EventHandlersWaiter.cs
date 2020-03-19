@@ -58,20 +58,31 @@ namespace Dolittle.Events.Handling
         /// <summary>
         /// Wait for all event handlers to be done.
         /// </summary>
-        public void Wait()
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public Task Complete()
         {
             const int delay = 20;
-            var timeout = 30000 / delay;
 
-            while (!IsDone())
+            var tcs = new TaskCompletionSource<bool>();
+
+            Task.Run(() =>
             {
-                Task.Delay(delay).Wait();
-                if (timeout-- == 0)
+                var timeout = 30000 / delay;
+
+                while (!IsDone())
                 {
-                    _logger.Information($"Waiting for event handlers timed out");
-                    break;
+                    Task.Delay(delay).Wait();
+                    if (timeout-- == 0)
+                    {
+                        _logger.Information($"Waiting for event handlers timed out");
+                        break;
+                    }
                 }
-            }
+
+                tcs.SetResult(true);
+            });
+
+            return tcs.Task;
         }
     }
 }
