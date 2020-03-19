@@ -8,7 +8,7 @@ namespace EventSourcing
 {
     public class HeadConnectionLifecycle : ITakePartInHeadConnectionLifecycle
     {
-        static readonly TaskCompletionSource<object> _tcs = new TaskCompletionSource<object>();
+        static readonly TaskCompletionSource<bool> _tcs = new TaskCompletionSource<bool>();
 
         /// <summary>
         /// Gets the task that can be awaited for when we're connected.
@@ -21,12 +21,13 @@ namespace EventSourcing
         /// <inheritdoc/>
         public void OnConnected()
         {
-            _tcs.SetResult(new object());
+            _tcs.TrySetResult(true);
         }
 
         /// <inheritdoc/>
         public void OnDisconnected()
         {
+            _tcs.TrySetResult(false);
         }
     }
 }
