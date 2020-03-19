@@ -61,7 +61,7 @@ namespace Dolittle.Events.Handling
         public void Wait()
         {
             const int delay = 20;
-            var timeout = 1000 / delay;
+            var timeout = 30000 / delay;
 
             while (!IsDone())
             {

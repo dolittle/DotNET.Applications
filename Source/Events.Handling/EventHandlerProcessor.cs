@@ -27,7 +27,7 @@ namespace Dolittle.Events.Handling
         readonly IExecutionContextManager _executionContextManager;
         readonly IArtifactTypeMap _artifactTypeMap;
         readonly IEventConverter _eventConverter;
-        readonly IEventHandlersWaiters _eventHandlersWaiters;
+        readonly IEventProcessingCompletion _eventHandlersWaiters;
         readonly IReverseCallClientManager _reverseCallClientManager;
         readonly ILogger _logger;
 
@@ -38,7 +38,7 @@ namespace Dolittle.Events.Handling
         /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for managing the <see cref="Execution.ExecutionContext"/>.</param>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for mapping types and artifacts.</param>
         /// <param name="eventConverter"><see cref="IEventConverter"/> for converting events for transport.</param>
-        /// <param name="eventHandlersWaiters"><see cref="IEventHandlersWaiters"/> for waiting on event handlers.</param>
+        /// <param name="eventHandlersWaiters"><see cref="IEventProcessingCompletion"/> for waiting on event handlers.</param>
         /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public EventHandlerProcessor(
@@ -46,7 +46,7 @@ namespace Dolittle.Events.Handling
             IExecutionContextManager executionContextManager,
             IArtifactTypeMap artifactTypeMap,
             IEventConverter eventConverter,
-            IEventHandlersWaiters eventHandlersWaiters,
+            IEventProcessingCompletion eventHandlersWaiters,
             IReverseCallClientManager reverseCallClientManager,
             ILogger logger)
         {
@@ -104,7 +104,7 @@ namespace Dolittle.Events.Handling
                         var committedEvent = _eventConverter.ToSDK(call.Request.Event);
                         await eventHandler.Invoke(committedEvent).ConfigureAwait(false);
 
-                        _eventHandlersWaiters.SignalDone(correlationId, eventHandler.Identifier, committedEvent.Event.GetType());
+                        _eventHandlersWaiters.EventHandlerCompletedForEvent(correlationId, eventHandler.Identifier, committedEvent.Event.GetType());
 
                         await call.Reply(response).ConfigureAwait(false);
                     }

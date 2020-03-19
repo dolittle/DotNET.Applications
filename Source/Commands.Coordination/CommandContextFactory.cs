@@ -15,7 +15,7 @@ namespace Dolittle.Commands.Coordination
     {
         readonly IUncommittedEventStreamCoordinator _uncommittedEventStreamCoordinator;
         readonly IExecutionContextManager _executionContextManager;
-        readonly IEventHandlersWaiters _eventHandlersWaiters;
+        readonly IEventProcessingCompletion _eventHandlersWaiters;
         readonly ILogger _logger;
 
         /// <summary>
@@ -23,12 +23,12 @@ namespace Dolittle.Commands.Coordination
         /// </summary>
         /// <param name="uncommittedEventStreamCoordinator">A <see cref="IUncommittedEventStreamCoordinator"/> to use for coordinator an <see cref="UncommittedEvents"/>.</param>
         /// <param name="executionContextManager">A <see cref="IExecutionContextManager"/> for getting execution context from.</param>
-        /// <param name="eventHandlersWaiters"><see cref="IEventHandlersWaiters"/> for waiting on event handlers.</param>
+        /// <param name="eventHandlersWaiters"><see cref="IEventProcessingCompletion"/> for waiting on event handlers.</param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging.</param>
         public CommandContextFactory(
             IUncommittedEventStreamCoordinator uncommittedEventStreamCoordinator,
             IExecutionContextManager executionContextManager,
-            IEventHandlersWaiters eventHandlersWaiters,
+            IEventProcessingCompletion eventHandlersWaiters,
             ILogger logger)
         {
             _uncommittedEventStreamCoordinator = uncommittedEventStreamCoordinator;

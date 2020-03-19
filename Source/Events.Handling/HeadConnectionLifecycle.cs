@@ -14,22 +14,22 @@ namespace Dolittle.Events.Handling
     {
         readonly IImplementationsOf<ICanHandleEvents> _eventHandlerTypes;
         readonly IEventHandlers _eventHandlers;
-        readonly IEventHandlersWaiters _eventHandlersWaiters;
+        readonly IEventProcessingCompletion _eventProcessingCompletion;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HeadConnectionLifecycle"/> class.
         /// </summary>
         /// <param name="eventHandlerTypes"><see cref="IImplementationsOf{T}"/> <see cref="ICanHandleEvents"/>.</param>
         /// <param name="eventHandlers">The <see cref="IEventHandlers"/> system.</param>
-        /// <param name="eventHandlersWaiters"><see cref="IEventHandlersWaiters"/> for registering event handlers.</param>
+        /// <param name="eventProcessingCompletion"><see cref="IEventProcessingCompletion"/> for registering event handlers.</param>
         public HeadConnectionLifecycle(
             IImplementationsOf<ICanHandleEvents> eventHandlerTypes,
             IEventHandlers eventHandlers,
-            IEventHandlersWaiters eventHandlersWaiters)
+            IEventProcessingCompletion eventProcessingCompletion)
         {
             _eventHandlerTypes = eventHandlerTypes;
             _eventHandlers = eventHandlers;
-            _eventHandlersWaiters = eventHandlersWaiters;
+            _eventProcessingCompletion = eventProcessingCompletion;
         }
 
         /// <inheritdoc/>
@@ -41,7 +41,7 @@ namespace Dolittle.Events.Handling
             _eventHandlerTypes.ForEach(type =>
             {
                 var eventHandler = _eventHandlers.Register(type);
-                _eventHandlersWaiters.RegisterHandler(eventHandler);
+                _eventProcessingCompletion.RegisterHandler(eventHandler);
             });
         }
 

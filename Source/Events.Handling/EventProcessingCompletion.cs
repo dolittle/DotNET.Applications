@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Dolittle.Collections;
 using Dolittle.Execution;
 using Dolittle.Lifecycle;
@@ -13,20 +14,20 @@ using Dolittle.Logging;
 namespace Dolittle.Events.Handling
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IEventHandlersWaiters"/>.
+    /// Represents an implementation of <see cref="IEventProcessingCompletion"/>.
     /// </summary>
     [Singleton]
-    public class EventHandlersWaiters : IEventHandlersWaiters
+    public class EventProcessingCompletion : IEventProcessingCompletion
     {
         readonly ConcurrentDictionary<EventHandlerId, IEnumerable<Type>> _eventTypesByEventHandler = new ConcurrentDictionary<EventHandlerId, IEnumerable<Type>>();
         readonly ConcurrentDictionary<Type, List<EventHandlersWaiter>> _eventHandlersWaiterByEventType = new ConcurrentDictionary<Type, List<EventHandlersWaiter>>();
         readonly ILogger _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventHandlersWaiters"/> class.
+        /// Initializes a new instance of the <see cref="EventProcessingCompletion"/> class.
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
-        public EventHandlersWaiters(ILogger logger)
+        public EventProcessingCompletion(ILogger logger)
         {
             _logger = logger;
         }
@@ -38,7 +39,7 @@ namespace Dolittle.Events.Handling
         }
 
         /// <inheritdoc/>
-        public void SignalDone(CorrelationId correlationId, EventHandlerId eventHandlerId, Type type)
+        public void EventHandlerCompletedForEvent(CorrelationId correlationId, EventHandlerId eventHandlerId, Type type)
         {
             if (_eventHandlersWaiterByEventType.ContainsKey(type))
             {
@@ -53,9 +54,12 @@ namespace Dolittle.Events.Handling
         }
 
         /// <inheritdoc/>
-        public EventHandlersWaiter GetWaiterFor(CorrelationId correlationId, params Type[] types)
+        public Task Perform(CorrelationId correlationId, IEnumerable<IEvent> events, Action action)
         {
-            var typeCounts = types.ToDictionary(_ => _, _ => 0);
+            var tcs = new TaskCompletionSource<bool>();
+            var eventTypes = events.Select(_ => _.GetType()).ToArray();
+
+            var typeCounts = eventTypes.ToDictionary(_ => _, _ => 0);
             _eventTypesByEventHandler.ForEach(_ => _.Value.ForEach(eventType =>
             {
                 if (!typeCounts.ContainsKey(eventType)) typeCounts[eventType] = 0;
@@ -64,7 +68,7 @@ namespace Dolittle.Events.Handling
 
             var waiter = new EventHandlersWaiter(typeCounts, _logger);
 
-            foreach (var type in types)
+            foreach (var type in eventTypes)
             {
                 var waiters = _eventHandlersWaiterByEventType[type] =
                                 _eventHandlersWaiterByEventType.ContainsKey(type) ?
@@ -74,7 +78,18 @@ namespace Dolittle.Events.Handling
                 waiters.Add(waiter);
             }
 
-            return waiter;
+            Task.Run(() =>
+            {
+                action();
+
+                _logger.Trace("Waiting for EventHandlers");
+                waiter.Wait();
+                _logger.Information("EventHandler waiting is done");
+
+                tcs.SetResult(true);
+            });
+
+            return tcs.Task;
         }
     }
 }

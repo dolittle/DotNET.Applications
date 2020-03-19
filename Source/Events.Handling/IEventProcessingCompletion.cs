@@ -2,6 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Dolittle.Execution;
 
 namespace Dolittle.Events.Handling
@@ -9,7 +11,7 @@ namespace Dolittle.Events.Handling
     /// <summary>
     /// Defines an interface for waiting for all event handlers to be done.
     /// </summary>
-    public interface IEventHandlersWaiters
+    public interface IEventProcessingCompletion
     {
         /// <summary>
         /// Register an <see cref="EventHandler"/> for waiting when appropriate.
@@ -23,14 +25,15 @@ namespace Dolittle.Events.Handling
         /// <param name="correlationId"><see cref="CorrelationId"/> in which the event is handled in context of.</param>
         /// <param name="eventHandlerId"><see cref="EventHandlerId"/> that was done handling.</param>
         /// <param name="eventType"><see cref="Type"/> of event that was handled.</param>
-        void SignalDone(CorrelationId correlationId, EventHandlerId eventHandlerId, Type eventType);
+        void EventHandlerCompletedForEvent(CorrelationId correlationId, EventHandlerId eventHandlerId, Type eventType);
 
         /// <summary>
-        /// Wait for a specific <see cref="CorrelationId"/> to be done with all handlers that should be done.
+        /// Perform an <see cref="Action"/> and wait till all processing is done.
         /// </summary>
         /// <param name="correlationId"><see cref="CorrelationId"/> to wait for.</param>
-        /// <param name="eventTypes">All the types of <see cref="IEvent">events</see> to wait for.</param>
+        /// <param name="events"><see cref="IEnumerable{T}"/> of <see cref="IEvent">events</see> to wait for.</param>
+        /// <param name="action"><see cref="Action"/> to perform.</param>
         /// <returns>Task to wait on.</returns>
-        EventHandlersWaiter GetWaiterFor(CorrelationId correlationId, params Type[] eventTypes);
+        Task Perform(CorrelationId correlationId, IEnumerable<IEvent> events, Action action);
     }
 }
