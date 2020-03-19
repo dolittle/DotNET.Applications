@@ -19,7 +19,7 @@ namespace Dolittle.Events.Handling
         /// <param name="identifier">The unique <see cref="EventHandlerId">identifier</see>.</param>
         /// <param name="type"><see cref="Type"/> of <see cref="ICanHandleEvents"/>.</param>
         /// <param name="partitioned">Whether the Event Handler is partitioned.</param>
-        /// <param name="methods"><see cref="IEnumerable{T}"/> of <see cref="EventHandlerMethod"/>.</param>
+        /// <param name="methods"><see cref="IEnumerable{T}"/> of <see cref="EventHandlerMethod{T}"/>.</param>
         public EventHandler(
             IContainer container,
             EventHandlerId identifier,

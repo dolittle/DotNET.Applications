@@ -38,7 +38,7 @@ namespace Dolittle.Events.Handling.EventHorizon
                 var eventMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
                                                     .Where(_ => _.Name == AbstractEventHandler.HandleMethodName && TakesExpectedParameters(_));
 
-                var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod(_.GetParameters()[0].ParameterType, _));
+                var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod<IExternalEvent>(_.GetParameters()[0].ParameterType, _));
                 return new ExternalEventHandler(_container, eventHandlerId, type, eventHandlerMethods);
             });
 
@@ -46,7 +46,7 @@ namespace Dolittle.Events.Handling.EventHorizon
         {
             var parameters = methodInfo.GetParameters();
             return parameters.Length == 2 &&
-                    typeof(IEvent).IsAssignableFrom(parameters[0].ParameterType) &&
+                    typeof(IExternalEvent).IsAssignableFrom(parameters[0].ParameterType) &&
                     parameters[1].ParameterType == typeof(EventContext);
         }
 

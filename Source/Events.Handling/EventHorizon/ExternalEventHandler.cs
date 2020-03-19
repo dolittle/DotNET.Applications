@@ -19,7 +19,7 @@ namespace Dolittle.Events.Handling.EventHorizon
         /// <param name="container"><see cref="IContainer"/> for getting instances of <see cref="ICanHandleEvents"/>.</param>
         /// <param name="identifier">The unique <see cref="EventHandlerId">identifier</see>.</param>
         /// <param name="type"><see cref="Type"/> of <see cref="ICanHandleEvents"/>.</param>
-        /// <param name="methods"><see cref="IEnumerable{T}"/> of <see cref="EventHandlerMethod"/>.</param>
+        /// <param name="methods"><see cref="IEnumerable{T}"/> of <see cref="EventHandlerMethod{T}"/>.</param>
         public ExternalEventHandler(IContainer container, EventHandlerId identifier, Type type, IEnumerable<IEventHandlerMethod> methods)
         : base(container, identifier, type, false, methods)
         {

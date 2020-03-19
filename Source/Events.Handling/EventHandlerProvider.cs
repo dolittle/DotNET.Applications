@@ -38,7 +38,7 @@ namespace Dolittle.Events.Handling
                 var eventMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
                                                     .Where(_ => _.Name == AbstractEventHandler.HandleMethodName && TakesExpectedParameters(_));
 
-                var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod(_.GetParameters()[0].ParameterType, _));
+                var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod<IEvent>(_.GetParameters()[0].ParameterType, _));
                 return new EventHandler(_container, eventHandlerId, type, IsPartitioned(type), eventHandlerMethods);
             });
 

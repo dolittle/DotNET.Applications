@@ -12,7 +12,7 @@ namespace Dolittle.Events.Handling
     public interface IEventHandlerMethod
     {
         /// <summary>
-        /// Gets the type of event the <see cref="EventHandlerMethod"/> is for.
+        /// Gets the type of event the <see cref="IEventHandlerMethod" /> is for.
         /// </summary>
         Type EventType { get; }
 
