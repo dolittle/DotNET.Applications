@@ -12,7 +12,7 @@ using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.Services.Clients;
 using Grpc.Core;
-using static contracts::Dolittle.Runtime.Events.Processing.ExternalEventHandlers;
+using static contracts::Dolittle.Runtime.Events.Processing.ScopedEventHandlers;
 using grpc = contracts::Dolittle.Runtime.Events.Processing;
 using grpcArtifacts = contracts::Dolittle.Runtime.Artifacts;
 
@@ -23,7 +23,7 @@ namespace Dolittle.Events.Handling.EventHorizon
     /// </summary>
     public class ExternalEventHandlerProcessor : IEventHandlerProcessor
     {
-        readonly ExternalEventHandlersClient _externalEventHandlersClient;
+        readonly ScopedEventHandlersClient _scopedEventHandlersClient;
         readonly IExecutionContextManager _executionContextManager;
         readonly IArtifactTypeMap _artifactTypeMap;
         readonly IEventConverter _eventConverter;
@@ -33,21 +33,21 @@ namespace Dolittle.Events.Handling.EventHorizon
         /// <summary>
         /// Initializes a new instance of the <see cref="ExternalEventHandlerProcessor"/> class.
         /// </summary>
-        /// <param name="externalEventHandlersClient"><see cref="ExternalEventHandlersClient" /> for talking to the runtime.</param>
+        /// <param name="scopedEventHandlersClient"><see cref="ScopedEventHandlersClient" /> for talking to the runtime.</param>
         /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for managing the <see cref="Execution.ExecutionContext"/>.</param>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for mapping types and artifacts.</param>
         /// <param name="eventConverter"><see cref="IEventConverter"/> for converting events for transport.</param>
         /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public ExternalEventHandlerProcessor(
-            ExternalEventHandlersClient externalEventHandlersClient,
+            ScopedEventHandlersClient scopedEventHandlersClient,
             IExecutionContextManager executionContextManager,
             IArtifactTypeMap artifactTypeMap,
             IEventConverter eventConverter,
             IReverseCallClientManager reverseCallClientManager,
             ILogger logger)
         {
-            _externalEventHandlersClient = externalEventHandlersClient;
+            _scopedEventHandlersClient = scopedEventHandlersClient;
             _executionContextManager = executionContextManager;
             _artifactTypeMap = artifactTypeMap;
             _eventConverter = eventConverter;
@@ -65,11 +65,11 @@ namespace Dolittle.Events.Handling.EventHorizon
             var externalEventHandler = eventHandler as ExternalEventHandler;
             ThrowIfIllegalEventHandlerId(eventHandler.Identifier);
             var artifacts = externalEventHandler.EventTypes.Select(_ => _artifactTypeMap.GetArtifactFor(_));
-            var arguments = new ExternalEventHandlerArguments
+            var arguments = new ScopedEventHandlerArguments
             {
                 EventHandler = externalEventHandler.Identifier.ToProtobuf(),
                 Partitioned = externalEventHandler.Partitioned,
-                Microservice = externalEventHandler.Microservice.ToProtobuf()
+                Scope = externalEventHandler.Scope.ToProtobuf()
             };
             arguments.Types_.AddRange(artifacts.Select(_ =>
                 new grpcArtifacts.Artifact
@@ -80,9 +80,9 @@ namespace Dolittle.Events.Handling.EventHorizon
 
             var metadata = new Metadata { arguments.ToArgumentsMetadata() };
 
-            _logger.Debug($"Connecting to runtime for external event handler '{externalEventHandler.Identifier}' for types '{string.Join(",", artifacts)}', partioning: {arguments.Partitioned}");
+            _logger.Debug($"Connecting to runtime for external event handler '{externalEventHandler.Identifier}' for scope '{externalEventHandler.Scope}', types '{string.Join(",", artifacts)}', partioning: {arguments.Partitioned}");
 
-            var result = _externalEventHandlersClient.Connect(metadata);
+            var result = _scopedEventHandlersClient.Connect(metadata);
             _reverseCallClientManager.Handle(
                 result,
                 _ => _.CallNumber,
@@ -94,7 +94,7 @@ namespace Dolittle.Events.Handling.EventHorizon
                         var executionContext = Execution.Contracts.ExecutionContext.Parser.ParseFrom(call.Request.ExecutionContext);
                         _executionContextManager.CurrentFor(executionContext);
 
-                        var response = new grpc.ExternalEventHandlerClientToRuntimeResponse
+                        var response = new grpc.ScopedEventHandlerClientToRuntimeResponse
                         {
                             Succeeded = true,
                             Retry = false,
@@ -107,7 +107,7 @@ namespace Dolittle.Events.Handling.EventHorizon
                     }
                     catch (Exception ex)
                     {
-                        var response = new grpc.ExternalEventHandlerClientToRuntimeResponse
+                        var response = new grpc.ScopedEventHandlerClientToRuntimeResponse
                         {
                             Succeeded = false,
                             Retry = false,

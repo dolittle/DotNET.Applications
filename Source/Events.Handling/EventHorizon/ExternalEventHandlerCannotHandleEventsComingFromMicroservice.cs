@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Linq;
 using Dolittle.Applications;
 
 namespace Dolittle.Events.Handling.EventHorizon
@@ -17,7 +18,7 @@ namespace Dolittle.Events.Handling.EventHorizon
         /// <param name="eventHandler">The <see cref="ExternalEventHandler" />.</param>
         /// <param name="event">The <see cref="CommittedEvent" />.</param>
         public ExternalEventHandlerCannotHandleEventsComingFromMicroservice(ExternalEventHandler eventHandler, CommittedEvent @event)
-            : base(eventHandler.GetType(), @event.GetType(), $"Event came from microservice '{@event.Microservice}' but event handler can only handle events from microservice '{eventHandler.Microservice}'")
+            : base(eventHandler.GetType(), @event.GetType(), $"Event came from microservice '{@event.Microservice}' but event handler can only handle events from microservices [{string.Join(',', eventHandler.ProducerMicroservices.Select(_ => $"'{_}'"))}]")
         {
         }
     }

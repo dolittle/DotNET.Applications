@@ -57,7 +57,7 @@ namespace Dolittle.Events.Handling
         {
             if (!type.HasAttribute<EventHandlerAttribute>())
             {
-                throw new MissingAttributeForEventHandler(type);
+                throw new MissingEventHandlerAttributeForEventHandler(type);
             }
         }
     }

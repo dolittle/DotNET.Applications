@@ -18,7 +18,7 @@ namespace Dolittle.Events.Handling.EventHorizon
         /// <inheritdoc/>
         public IEnumerable<Client> Clients => new[]
         {
-            new Client(EndpointVisibility.Private, typeof(grpc.ExternalEventHandlers.ExternalEventHandlersClient), grpc.ExternalEventHandlers.Descriptor)
+            new Client(EndpointVisibility.Private, typeof(grpc.ScopedEventHandlers.ScopedEventHandlersClient), grpc.ScopedEventHandlers.Descriptor)
         };
     }
 }

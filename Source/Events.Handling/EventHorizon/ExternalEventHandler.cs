@@ -19,22 +19,24 @@ namespace Dolittle.Events.Handling.EventHorizon
         /// <param name="container"><see cref="IContainer"/> for getting instances of <see cref="ICanHandleEvents"/>.</param>
         /// <param name="identifier">The unique <see cref="EventHandlerId">identifier</see>.</param>
         /// <param name="type"><see cref="Type"/> of <see cref="ICanHandleEvents"/>.</param>
+        /// <param name="scope">The <see cref="ScopeId" />.</param>
+        /// <param name="producerMicroservices">The list of <see cref ="Microservice" /> ids that produces the events that are handled.</param>
         /// <param name="methods"><see cref="IEnumerable{T}"/> of <see cref="EventHandlerMethod{T}"/>.</param>
-        public ExternalEventHandler(IContainer container, EventHandlerId identifier, Type type, IEnumerable<IEventHandlerMethod> methods)
+        public ExternalEventHandler(IContainer container, EventHandlerId identifier, Type type, ScopeId scope, IEnumerable<Microservice> producerMicroservices, IEnumerable<IEventHandlerMethod> methods)
         : base(container, identifier, type, false, methods)
         {
+            Scope = scope;
+            ProducerMicroservices = producerMicroservices;
         }
 
         /// <summary>
-        /// Gets the <see cref="Microservice" /> that the <see cref="ICanHandleExternalEvents" /> event handler handles events from.
+        /// Gets the <see cref="ScopeId" />.
         /// </summary>
-        public Microservice Microservice { get; }
+        public ScopeId Scope { get; }
 
-        /// <inheritdoc/>
-        protected override void ThrowIfCannotInvoke(CommittedEvent @event)
-        {
-            if (@event.Microservice != Microservice) throw new ExternalEventHandlerCannotHandleEventsComingFromMicroservice(this, @event);
-            base.ThrowIfCannotInvoke(@event);
-        }
+        /// <summary>
+        /// Gets the list of <see cref ="Microservice" /> ids that produces the events that are handled.
+        /// </summary>
+        public IEnumerable<Microservice> ProducerMicroservices { get; }
     }
 }

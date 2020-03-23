@@ -19,17 +19,11 @@ namespace Dolittle.Events.EventHorizon
         public ProducerMicroserviceAttribute(string id)
         {
             Id = Guid.Parse(id);
-            ThrowIfIllegalId(Id);
         }
 
         /// <summary>
         /// Gets the unique id of the microservices that produces a <see cref="IExternalEvent" />.
         /// </summary>
         public Microservice Id { get; }
-
-        void ThrowIfIllegalId(Microservice id)
-        {
-            if (id == Microservice.NotSet) throw new ProducerMicroserviceIdMustBeSet(id);
-        }
     }
 }

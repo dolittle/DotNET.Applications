@@ -6,7 +6,7 @@ using System;
 namespace Dolittle.Events
 {
     /// <summary>
-    /// Exception that gets thrown when a sequence of <see cref="IEvent"/>s are not valid for the Aggregate Root it is being used with.
+    /// Exception that gets thrown when a sequence of <see cref="IEvent"/> are not valid for the Aggregate Root it is being used with.
     /// </summary>s
     public class AggregateRootVersionIsOutOfOrder : ArgumentException
     {

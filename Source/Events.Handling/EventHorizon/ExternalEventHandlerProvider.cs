@@ -5,7 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Dolittle.Applications;
+using Dolittle.Collections;
 using Dolittle.DependencyInversion;
+using Dolittle.Events.EventHorizon;
 using Dolittle.Reflection;
 using Dolittle.Types;
 
@@ -31,16 +34,45 @@ namespace Dolittle.Events.Handling.EventHorizon
         }
 
         /// <inheritdoc/>
-        public IEnumerable<AbstractEventHandler> Provide() => _eventHandlerTypes.Select(type =>
+        public IEnumerable<AbstractEventHandler> Provide() => _eventHandlerTypes.Select(eventHandlerType =>
             {
-                ThrowIfMissingAttributeForEventHandler(type);
-                var eventHandlerId = type.GetCustomAttribute<EventHandlerAttribute>().Id;
-                var eventMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
+                ThrowIfMissingAttributes(eventHandlerType);
+                var eventHandlerId = eventHandlerType.GetCustomAttribute<EventHandlerAttribute>().Id;
+                var scopeId = eventHandlerType.GetCustomAttribute<ScopeAttribute>().Id;
+                var eventMethods = eventHandlerType.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
                                                     .Where(_ => _.Name == AbstractEventHandler.HandleMethodName && TakesExpectedParameters(_));
+                var eventTypesAndMethods = eventMethods.Select(_ =>
+                {
+                    (Type eventType, MethodInfo methodInfo) = (_.GetParameters()[0].ParameterType, _);
+                    return (eventType, methodInfo);
+                });
+                var producerMicroservices = new List<Microservice>();
+                var eventHandlerMethods = new List<EventHandlerMethod<IExternalEvent>>();
+                eventTypesAndMethods.ForEach(eventTypeAndMethod =>
+                {
+                    (var eventType, var methodInfo) = (eventTypeAndMethod.eventType, eventTypeAndMethod.methodInfo);
+                    ThrowIfMissingProducerMicroservice(eventType);
+                    var producerMicroservice = eventType.GetCustomAttribute<ProducerMicroserviceAttribute>().Id;
+                    ThrowIfIllegalProducerMicroserviceId(eventType, producerMicroservice);
+                    producerMicroservices.Add(producerMicroservice);
+                    eventHandlerMethods.Add(new EventHandlerMethod<IExternalEvent>(eventType, methodInfo));
+                });
 
-                var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod<IExternalEvent>(_.GetParameters()[0].ParameterType, _));
-                return new ExternalEventHandler(_container, eventHandlerId, type, eventHandlerMethods);
+                return new ExternalEventHandler(_container, eventHandlerId, eventHandlerType, scopeId, producerMicroservices, eventHandlerMethods);
             });
+
+        void ThrowIfIllegalProducerMicroserviceId(Type eventType, Microservice producerMicroservice)
+        {
+            ThrowIfProducerMicroserviceIdIsNotSet(eventType, producerMicroservice);
+        }
+
+        void ThrowIfProducerMicroserviceIdIsNotSet(Type eventType, Microservice producerMicroservice)
+        {
+            if (producerMicroservice == Microservice.NotSet)
+            {
+                throw new ProducerMicroserviceIdMustBeSet(eventType);
+            }
+        }
 
         bool TakesExpectedParameters(MethodInfo methodInfo)
         {
@@ -50,11 +82,33 @@ namespace Dolittle.Events.Handling.EventHorizon
                     parameters[1].ParameterType == typeof(EventContext);
         }
 
-        void ThrowIfMissingAttributeForEventHandler(Type type)
+        void ThrowIfMissingAttributes(Type eventHandlerType)
         {
-            if (!type.HasAttribute<EventHandlerAttribute>())
+            ThrowIfMissingEventHandlerAttribute(eventHandlerType);
+            ThrowIfMissingScopeAttribute(eventHandlerType);
+        }
+
+        void ThrowIfMissingEventHandlerAttribute(Type eventHandlerType)
+        {
+            if (!eventHandlerType.HasAttribute<EventHandlerAttribute>())
             {
-                throw new MissingAttributeForEventHandler(type);
+                throw new MissingEventHandlerAttributeForEventHandler(eventHandlerType);
+            }
+        }
+
+        void ThrowIfMissingScopeAttribute(Type eventHandlerType)
+        {
+            if (!eventHandlerType.HasAttribute<ScopeAttribute>())
+            {
+                throw new MissingScopeAttributeForExternalEventHandler(eventHandlerType);
+            }
+        }
+
+        void ThrowIfMissingProducerMicroservice(Type eventHandlerType)
+        {
+            if (!eventHandlerType.HasAttribute<ProducerMicroserviceAttribute>())
+            {
+                throw new MissingScopeAttributeForExternalEventHandler(eventHandlerType);
             }
         }
     }

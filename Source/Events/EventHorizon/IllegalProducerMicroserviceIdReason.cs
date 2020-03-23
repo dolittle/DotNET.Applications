@@ -6,7 +6,7 @@ using Dolittle.Concepts;
 namespace Dolittle.Events.EventHorizon
 {
     /// <summary>
-    /// Reprsents the reason for why the producer microservice id is illegal.
+    /// Represents the reason for why the producer microservice id is illegal.
     /// </summary>
     public class IllegalProducerMicroserviceIdReason : ConceptAs<string>
     {
