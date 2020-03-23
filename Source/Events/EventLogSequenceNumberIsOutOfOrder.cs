@@ -8,14 +8,14 @@ namespace Dolittle.Events
     /// <summary>
     /// Exception that gets thrown when a event log sequence numbers in a sequence of events are out of order, meaning that an event has a lower event log sequence number than the previous event.
     /// </summary>s
-    public class EventLogVersionIsOutOfOrder : Exception
+    public class EventLogSequenceNumberIsOutOfOrder : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventLogVersionIsOutOfOrder"/> class.
+        /// Initializes a new instance of the <see cref="EventLogSequenceNumberIsOutOfOrder"/> class.
         /// </summary>
         /// <param name="sequenceNumber">The <see cref="EventLogSequenceNumber"/> the Event was committed to.</param>
         /// <param name="expectedSequenceNumber">Expected <see cref="EventLogSequenceNumber"/>.</param>
-        public EventLogVersionIsOutOfOrder(EventLogSequenceNumber sequenceNumber, EventLogSequenceNumber expectedSequenceNumber)
+        public EventLogSequenceNumberIsOutOfOrder(EventLogSequenceNumber sequenceNumber, EventLogSequenceNumber expectedSequenceNumber)
             : base($"Event Log Sequence is out of order because Event Log Sequence Number '{sequenceNumber}' is not greater than '{expectedSequenceNumber}'.")
         {
         }
