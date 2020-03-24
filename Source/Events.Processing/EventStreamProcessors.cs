@@ -3,6 +3,7 @@
 
 using Dolittle.Execution;
 using Dolittle.Logging;
+using Dolittle.Protobuf;
 using Dolittle.Services.Clients;
 using Google.Protobuf;
 
@@ -13,6 +14,7 @@ namespace Dolittle.Events.Processing
     /// </summary>
     public class EventStreamProcessors : IEventStreamProcessors
     {
+        readonly IEventConverter _eventConverter;
         readonly IReverseCallClientManager _reverseCallClientManager;
         readonly IExecutionContextManager _executionContextManager;
         readonly ILogger _logger;
@@ -20,14 +22,17 @@ namespace Dolittle.Events.Processing
         /// <summary>
         /// Initializes a new instance of the <see cref="EventStreamProcessors"/> class.
         /// </summary>
+        /// <param name="eventConverter">The <see cref="IEventConverter" />.</param>
         /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
         /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for managing the <see cref="ExecutionContext"/>.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public EventStreamProcessors(
+            IEventConverter eventConverter,
             IReverseCallClientManager reverseCallClientManager,
             IExecutionContextManager executionContextManager,
             ILogger logger)
         {
+            _eventConverter = eventConverter;
             _reverseCallClientManager = reverseCallClientManager;
             _executionContextManager = executionContextManager;
             _logger = logger;
@@ -49,7 +54,7 @@ namespace Dolittle.Events.Processing
                     var executionContext = requestProxy.ExecutionContext;
                     _executionContextManager.CurrentFor(executionContext);
 
-                    var response = await eventProcessor.ProcessRequest(call.Request).ConfigureAwait(false);
+                    var response = await eventProcessor.ProcessRequest(requestProxy, _eventConverter.ToSDK(requestProxy.Event)).ConfigureAwait(false);
 
                     await call.Reply(response).ConfigureAwait(false);
                 });

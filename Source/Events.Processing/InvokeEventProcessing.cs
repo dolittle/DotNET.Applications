@@ -10,5 +10,6 @@ namespace Dolittle.Events.Processing
     /// </summary>
     /// <param name="event">The <see cref="CommittedEvent" />.</param>
     /// <returns>A task that yields an <see cref="IProcessingResult" />.</returns>
-    public delegate Task<IProcessingResult> InvokeEventProcessing(CommittedEvent @event);
+    public delegate Task<TProcessingResult> InvokeEventProcessing<TProcessingResult>(CommittedEvent @event)
+        where TProcessingResult : IProcessingResult;
 }

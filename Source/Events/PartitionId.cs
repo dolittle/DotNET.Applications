@@ -12,9 +12,9 @@ namespace Dolittle.Events
     public class PartitionId : ConceptAs<Guid>
     {
         /// <summary>
-        /// Gets the not set <see cref="PartitionId" />.
+        /// Gets the unspecified <see cref="PartitionId" />.
         /// </summary>
-        public static PartitionId NotSet => new PartitionId { Value = Guid.Empty };
+        public static PartitionId Unspecified => new PartitionId { Value = Guid.Empty };
 
         /// <summary>
         /// Implicitly convert from <see cref="Guid"/> to <see cref="PartitionId"/>.

@@ -8,14 +8,16 @@ namespace Dolittle.Events.Processing
     /// <summary>
     /// Defines a system that manages the invocations.
     /// </summary>
-    public interface IEventProcessingInvocationManager
+    /// <typeparam name="TProcessingResult">The <see cref="IProcessingResult" /> type.</typeparam>
+    public interface IEventProcessingInvocationManager<TProcessingResult>
+        where TProcessingResult : IProcessingResult
     {
         /// <summary>
         /// Manages the invocation of the processing of an event in a stream.
         /// </summary>
         /// <param name="event">The <see cref="CommittedEvent" />.</param>
         /// <param name="partition">The <see cref="PartitionId" />.</param>
-        /// <returns>A task that yields a <see cref="IProcessingResult" />.</returns>
-        Task<IProcessingResult> Invoke(CommittedEvent @event, PartitionId partition);
+        /// <returns>A task that yields <see cref="IProcessingResult" />.</returns>
+        Task<TProcessingResult> Invoke(CommittedEvent @event, PartitionId partition);
     }
 }

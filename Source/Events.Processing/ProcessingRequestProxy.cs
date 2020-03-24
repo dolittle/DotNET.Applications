@@ -3,8 +3,8 @@
 
 extern alias contracts;
 
-using Dolittle.Execution;
 using Google.Protobuf;
+using grpcEvents = contracts::Dolittle.Runtime.Events;
 
 namespace Dolittle.Events.Processing
 {
@@ -25,9 +25,9 @@ namespace Dolittle.Events.Processing
         }
 
         /// <summary>
-        /// Gets the <see cref="CommittedEvent" />.
+        /// Gets the <see cref="grpcEvents.CommittedEvent" />.
         /// </summary>
-        public abstract CommittedEvent Event { get; }
+        public abstract grpcEvents.CommittedEvent Event { get; }
 
         /// <summary>
         /// Gets the <see cref="PartitionId" />.
@@ -35,13 +35,13 @@ namespace Dolittle.Events.Processing
         public abstract PartitionId Partition { get; }
 
         /// <summary>
-        /// Gets the <see cref="ExecutionContext" />.
+        /// Gets the <see cref="Execution.Contracts.ExecutionContext" />.
         /// </summary>
-        public abstract ExecutionContext ExecutionContext { get; }
+        public abstract Execution.Contracts.ExecutionContext ExecutionContext { get; }
 
         /// <summary>
         /// Gets the <see typeparam="TRequest" />.
         /// </summary>
-        protected TRequest Request { get; }
+        public TRequest Request { get; }
     }
 }

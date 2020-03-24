@@ -22,32 +22,28 @@ namespace Dolittle.Events.Processing
     {
         readonly CreateProcessingRequestProxy<TRequest> _createProcessingRequestProxy;
         readonly CreateProcessingResponseProxy<TResponse, TRequest, TProcessingResult> _createProcessingResponseProxy;
-        readonly OnFailedProcessing<TResponse, TRequest, TProcessingResult> _onFailedProcessing;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventProcessor{TResponse, TRequest, TProcessingResult}"/> class.
         /// </summary>
         /// <param name="identifier">The <see cref="EventProcessorId" />.</param>
         /// <param name="streamingCall">The streaming call.</param>
-        /// <param name="invocationManager">The <see cref="IEventProcessingInvocationManager" />.</param>
+        /// <param name="invocationManager">The <see cref="IEventProcessingInvocationManager{TProcessingResult}" />.</param>
         /// <param name="responseProperty">The response property expression.</param>
         /// <param name="requestProperty">The request property expression.</param>
         /// <param name="createProcessingRequestProxy">The callback for creating <see cref="ProcessingRequestProxy{TRequest}" /> for the request type.</param>
-        /// <param name="createProcessingResponseProxy">The callback for creating <see cref="ProcessingResponseProxy{TResponse, TProcessingResult}" /> for the response type.</param>
-        /// <param name="onFailedProcessing">The callback for creating <see cref="ProcessingResponseProxy{TResponse, TProcessingResult}" /> for when the processing of an event failed.</param>
+        /// <param name="createProcessingResponseProxy">The callback for creating <see cref="ProcessingResponseProxy{TResponse, TRequest, TProcessingResult}" /> for the response type.</param>
         public EventProcessor(
             EventProcessorId identifier,
             AsyncDuplexStreamingCall<TResponse, TRequest> streamingCall,
-            IEventProcessingInvocationManager invocationManager,
+            IEventProcessingInvocationManager<TProcessingResult> invocationManager,
             Expression<Func<TResponse, ulong>> responseProperty,
             Expression<Func<TRequest, ulong>> requestProperty,
             CreateProcessingRequestProxy<TRequest> createProcessingRequestProxy,
-            CreateProcessingResponseProxy<TResponse, TRequest, TProcessingResult> createProcessingResponseProxy,
-            OnFailedProcessing<TResponse, TRequest, TProcessingResult> onFailedProcessing)
+            CreateProcessingResponseProxy<TResponse, TRequest, TProcessingResult> createProcessingResponseProxy)
         {
             _createProcessingRequestProxy = createProcessingRequestProxy;
             _createProcessingResponseProxy = createProcessingResponseProxy;
-            _onFailedProcessing = onFailedProcessing;
             Identifier = identifier;
             StreamingCall = streamingCall;
             ResponseProperty = responseProperty;
@@ -76,20 +72,20 @@ namespace Dolittle.Events.Processing
         public Expression<Func<TRequest, ulong>> RequestProperty { get; }
 
         /// <summary>
-        /// Gets the <see cref="IEventProcessingInvocationManager" />.
+        /// Gets the <see cref="IEventProcessingInvocationManager{TProcessingResult}" />.
         /// </summary>
-        public IEventProcessingInvocationManager InvocationManager { get; }
+        public IEventProcessingInvocationManager<TProcessingResult> InvocationManager { get; }
 
         /// <summary>
         /// Processes the event.
         /// </summary>
-        /// <param name="request">The <see typeref="TRequest" />.</param>
+        /// <param name="requestProxy">The <see typeref="ProcessingRequestProxy{TRequest}" />.</param>
+        /// <param name="event">The <see cref="CommittedEvent "/>.</param>
         /// <returns>A task that yields <see cref="IProcessingResult" />.</returns>
-        public async Task<TResponse> ProcessRequest(TRequest request)
+        public async Task<TResponse> ProcessRequest(ProcessingRequestProxy<TRequest> requestProxy, CommittedEvent @event)
         {
-            var requestProxy = _createProcessingRequestProxy(request);
-            var processingResult = await InvocationManager.Invoke(requestProxy.Event, requestProxy.Partition).ConfigureAwait(false);
-            return processingResult.Succeeded ? _createProcessingResponseProxy(processingResult, request) : _onFailedProcessing(processingResult, request);
+            var processingResult = await InvocationManager.Invoke(@event, requestProxy.Partition).ConfigureAwait(false);
+            return _createProcessingResponseProxy(processingResult, requestProxy.Request);
         }
 
         /// <summary>

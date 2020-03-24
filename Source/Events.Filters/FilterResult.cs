@@ -19,7 +19,7 @@ namespace Dolittle.Events.Filters
         public FilterResult(bool isIncluded)
         {
             IsIncluded = isIncluded;
-            Partition = PartitionId.Unspecificied;
+            Partition = PartitionId.Unspecified;
         }
 
         /// <summary>

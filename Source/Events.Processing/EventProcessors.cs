@@ -42,17 +42,17 @@ namespace Dolittle.Events.Processing
             Expression<Func<TRequest, ulong>> requestProperty,
             CreateProcessingRequestProxy<TRequest> createProcessingRequestProxy,
             CreateProcessingResponseProxy<TResponse, TRequest, TProcessingResult> createProcessingResponseProxy,
-            OnFailedProcessing<TResponse, TRequest, TProcessingResult> onFailedProcessing,
-            InvokeEventProcessing invoke)
+            Func<string, bool, uint, TProcessingResult> onFailedProcessing,
+            InvokeEventProcessing<TProcessingResult> invoke)
             where TResponse : IMessage
             where TRequest : IMessage
             where TProcessingResult : IProcessingResult
         {
             var eventProcessorId = new EventProcessorId(scope, sourceStream, processor);
             _registeredEventProcessors.TryAdd(eventProcessorId, true);
-            var invocationManager = new EventProcessingInvocationManager(invoke);
+            var invocationManager = new EventProcessingInvocationManager<TProcessingResult>(invoke, onFailedProcessing);
 
-            var eventProcessor = new EventProcessor<TResponse, TRequest, TProcessingResult>(eventProcessorId, call, invocationManager, responseProperty, requestProperty, createProcessingRequestProxy, createProcessingResponseProxy, onFailedProcessing);
+            var eventProcessor = new EventProcessor<TResponse, TRequest, TProcessingResult>(eventProcessorId, call, invocationManager, responseProperty, requestProperty, createProcessingRequestProxy, createProcessingResponseProxy);
             _eventStreamProcessors.StartProcessing(eventProcessor);
         }
     }

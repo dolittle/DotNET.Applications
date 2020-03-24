@@ -3,17 +3,14 @@
 
 extern alias contracts;
 
-using System;
 using System.Linq;
 using contracts::Dolittle.Runtime.Events.Processing;
 using Dolittle.Artifacts;
-using Dolittle.Execution;
+using Dolittle.Events.Processing;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
-using Dolittle.Services.Clients;
 using Grpc.Core;
 using static contracts::Dolittle.Runtime.Events.Processing.EventHandlers;
-using grpc = contracts::Dolittle.Runtime.Events.Processing;
 using grpcArtifacts = contracts::Dolittle.Runtime.Artifacts;
 
 namespace Dolittle.Events.Handling
@@ -23,35 +20,27 @@ namespace Dolittle.Events.Handling
     /// </summary>
     public class EventHandlerProcessor : IEventHandlerProcessor
     {
+        readonly IEventProcessors _eventProcessors;
         readonly EventHandlersClient _eventHandlersClient;
-        readonly IExecutionContextManager _executionContextManager;
         readonly IArtifactTypeMap _artifactTypeMap;
-        readonly IEventConverter _eventConverter;
-        readonly IReverseCallClientManager _reverseCallClientManager;
         readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerProcessor"/> class.
         /// </summary>
+        /// <param name="eventProcessors">The <see cref="IEventProcessors" />.</param>
         /// <param name="eventHandlersClient"><see cref="EventHandlersClient"/> for talking to the runtime.</param>
-        /// <param name="executionContextManager"><see cref="IExecutionContextManager"/> for managing the <see cref="Execution.ExecutionContext"/>.</param>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for mapping types and artifacts.</param>
-        /// <param name="eventConverter"><see cref="IEventConverter"/> for converting events for transport.</param>
-        /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public EventHandlerProcessor(
+            IEventProcessors eventProcessors,
             EventHandlersClient eventHandlersClient,
-            IExecutionContextManager executionContextManager,
             IArtifactTypeMap artifactTypeMap,
-            IEventConverter eventConverter,
-            IReverseCallClientManager reverseCallClientManager,
             ILogger logger)
         {
+            _eventProcessors = eventProcessors;
             _eventHandlersClient = eventHandlersClient;
-            _executionContextManager = executionContextManager;
             _artifactTypeMap = artifactTypeMap;
-            _eventConverter = eventConverter;
-            _reverseCallClientManager = reverseCallClientManager;
             _logger = logger;
         }
 
@@ -81,42 +70,20 @@ namespace Dolittle.Events.Handling
             _logger.Debug($"Connecting to runtime for event handler '{eventHandler.Identifier}' for types '{string.Join(",", artifacts)}', partioning: {arguments.Partitioned}");
 
             var result = _eventHandlersClient.Connect(metadata);
-            _reverseCallClientManager.Handle(
+            _eventProcessors.RegisterAndStartProcessing<EventHandlerClientToRuntimeResponse, EventHandlerRuntimeToClientRequest, IProcessingResult>(
+                ScopeId.Default,
+                StreamId.AllStream,
+                eventHandler.Identifier,
                 result,
                 _ => _.CallNumber,
                 _ => _.CallNumber,
-                async (call) =>
+                request => new EventHandlerProcessingRequestProxy(request),
+                (result, request) => new EventHandlerProcessingResponseProxy(result, request),
+                (failureReason, retry, retryTimeout) => retry ? new RetryProcessingResult(retryTimeout, failureReason) as IProcessingResult : new FailedProcessingResult(failureReason) as IProcessingResult,
+                async @event =>
                 {
-                    try
-                    {
-                        var executionContext = Execution.Contracts.ExecutionContext.Parser.ParseFrom(call.Request.ExecutionContext);
-                        _executionContextManager.CurrentFor(executionContext);
-
-                        var response = new grpc.EventHandlerClientToRuntimeResponse
-                        {
-                            Succeeded = true,
-                            Retry = false,
-                            ExecutionContext = call.Request.ExecutionContext
-                        };
-
-                        var committedEvent = _eventConverter.ToSDK(call.Request.Event);
-                        await eventHandler.Invoke(committedEvent).ConfigureAwait(false);
-
-                        await call.Reply(response).ConfigureAwait(false);
-                    }
-                    catch (Exception ex)
-                    {
-                        var response = new grpc.EventHandlerClientToRuntimeResponse
-                        {
-                            Succeeded = false,
-                            Retry = false,
-                            FailureReason = $"Failure Message: {ex.Message}\nStack Trace: {ex.StackTrace}",
-                            ExecutionContext = call.Request.ExecutionContext
-                        };
-                        await call.Reply(response).ConfigureAwait(false);
-
-                        _logger.Error(ex, "Error handling event");
-                    }
+                    await eventHandler.Invoke(@event).ConfigureAwait(false);
+                    return new SucceededProcessingResult();
                 });
         }
 

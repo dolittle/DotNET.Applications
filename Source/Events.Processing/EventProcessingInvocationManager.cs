@@ -7,23 +7,28 @@ using System.Threading.Tasks;
 namespace Dolittle.Events.Processing
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IEventProcessingInvocationManager" />.
+    /// Represents an implementation of <see cref="IEventProcessingInvocationManager{TProcessing}" />.
     /// </summary>
-    public class EventProcessingInvocationManager : IEventProcessingInvocationManager
+    /// <typeparam name="TProcessingResult">The <see cref="IProcessingResult" /> type.</typeparam>
+    public class EventProcessingInvocationManager<TProcessingResult> : IEventProcessingInvocationManager<TProcessingResult>
+        where TProcessingResult : IProcessingResult
     {
-        readonly InvokeEventProcessing _invoke;
+        readonly InvokeEventProcessing<TProcessingResult> _invoke;
+        readonly Func<string, bool, uint, TProcessingResult> _onFailedProcessing;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventProcessingInvocationManager"/> class.
+        /// Initializes a new instance of the <see cref="EventProcessingInvocationManager{TProcessingResult}"/> class.
         /// </summary>
-        /// <param name="invoke">The <see cref="InvokeEventProcessing" /> callback.</param>
-        public EventProcessingInvocationManager(InvokeEventProcessing invoke)
+        /// <param name="invoke">The <see cref="InvokeEventProcessing{TProcessingResult}" /> callback.</param>
+        /// <param name="onFailedProcessing">The callback for creating a failed processing result.</param>
+        public EventProcessingInvocationManager(InvokeEventProcessing<TProcessingResult> invoke, Func<string, bool, uint, TProcessingResult> onFailedProcessing)
         {
             _invoke = invoke;
+            _onFailedProcessing = onFailedProcessing;
         }
 
         /// <inheritdoc/>
-        public async Task<IProcessingResult> Invoke(CommittedEvent @event, PartitionId partition)
+        public async Task<TProcessingResult> Invoke(CommittedEvent @event, PartitionId partition)
         {
             try
             {
@@ -31,8 +36,7 @@ namespace Dolittle.Events.Processing
             }
             catch (Exception ex)
             {
-                // TODO: Check number of retries. Add retry timeout.
-                return new FailedProcessingResult($"Failure Message: {ex.Message}\nStack Trace: {ex.StackTrace}");
+                return _onFailedProcessing($"Failure Message: {ex.Message}\nStack Trace: {ex.StackTrace}", false, 0);
             }
         }
     }
