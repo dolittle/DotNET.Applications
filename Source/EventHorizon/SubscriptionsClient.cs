@@ -67,7 +67,8 @@ namespace Dolittle.EventHorizon
                         _microservice.Value,
                         subscriber);
                     var response = _client.Subscribe(request);
-                    if (!response.Success) throw new FailedToSubscribeToEventHorizon(subscriber, _.Microservice, _.Tenant);
+
+                    // if (!response.Success) throw new FailedToSubscribeToEventHorizon(subscriber, _.Microservice, _.Tenant);
                 });
             }
         }
