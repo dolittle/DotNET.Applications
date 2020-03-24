@@ -1,10 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Dolittle.Events.Processing
+namespace Dolittle.Events.Filters
 {
     /// <summary>
-    /// Represents the result of a <see cref="ICanFilterEventsInStream"/>.
+    /// Represents the result of a <see cref="ICanFilterPrivateEvents"/>.
     /// </summary>
     public class FilterResult
     {

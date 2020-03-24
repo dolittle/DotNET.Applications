@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Dolittle.Events.Processing
+namespace Dolittle.Events.Filters
 {
     /// <summary>
     /// Exception that gets thrown when <see cref="FilterId" /> is an illegal value.

@@ -4,13 +4,13 @@
 namespace Dolittle.Events.Processing
 {
     /// <summary>
-    /// Defines a system for handling all <see cref="ICanFilterEventsInStream"/>.
+    /// Defines the processing result for when processing should be tried again.
     /// </summary>
-    public interface IStreamFilters
+    public interface IRetryProcessingResult : IProcessingResult
     {
         /// <summary>
-        /// Register all the <see cref="ICanFilterEventsInStream">stream filters</see>.
+        /// Gets the amount milliseconds from now for when next retry should occur.
         /// </summary>
-        void Register();
+        uint RetryTimeout { get; }
     }
 }

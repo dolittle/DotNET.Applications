@@ -4,7 +4,7 @@
 using System;
 using Dolittle.Concepts;
 
-namespace Dolittle.Events.Processing
+namespace Dolittle.Events.Filters
 {
     /// <summary>
     /// Represents the concept of a unique identifier for a stream.

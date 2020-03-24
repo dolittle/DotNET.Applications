@@ -4,7 +4,7 @@
 namespace Dolittle.Events.Handling
 {
     /// <summary>
-    /// Defines a system that knows about <see cref="ICanHandleEvents"/>.
+    /// Defines a system that knows about event handlers.
     /// </summary>
     public interface IEventHandlers
     {

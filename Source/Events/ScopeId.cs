@@ -4,7 +4,7 @@
 using System;
 using Dolittle.Concepts;
 
-namespace Dolittle.Events.Handling.EventHorizon
+namespace Dolittle.Events
 {
     /// <summary>
     /// Represents the identification of a scope.

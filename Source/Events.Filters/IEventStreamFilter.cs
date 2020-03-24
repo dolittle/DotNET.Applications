@@ -3,22 +3,22 @@
 
 using System.Threading.Tasks;
 
-namespace Dolittle.Events.Processing
+namespace Dolittle.Events.Filters
 {
     /// <summary>
-    /// Defines a system that can filter events for a stream.
+    /// Represents a system that can filter a stream of events.
     /// </summary>
-    public interface ICanFilterEventsInStream
+    public interface IEventStreamFilter
     {
         /// <summary>
         /// Gets the source <see cref="StreamId"/>.
         /// </summary>
-        StreamId StreamId { get; }
+        StreamId SourceStreamId { get; }
 
         /// <summary>
-        /// Gets the <see cref="FilterId"/>.
+        /// Gets the <see cref="Identifier"/>.
         /// </summary>
-        FilterId FilterId { get; }
+        FilterId Identifier { get; }
 
         /// <summary>
         /// Method that is asked if event is accepted.

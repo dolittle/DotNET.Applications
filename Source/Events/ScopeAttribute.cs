@@ -3,10 +3,10 @@
 
 using System;
 
-namespace Dolittle.Events.Handling.EventHorizon
+namespace Dolittle.Events
 {
     /// <summary>
-    /// Decorates a method to indicate the scope id of an <see cref="ICanHandleExternalEvents" /> class.
+    /// Decorates a class to indicate the scope id.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class ScopeAttribute : Attribute
