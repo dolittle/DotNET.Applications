@@ -4,6 +4,7 @@
 using System;
 using Dolittle.Logging;
 using Dolittle.Resilience;
+using Grpc.Core;
 using Polly;
 
 namespace Dolittle.Heads
@@ -28,15 +29,22 @@ namespace Dolittle.Heads
         public Type Type => typeof(Head);
 
         /// <inheritdoc/>
-        public Polly.IAsyncPolicy Define()
-        {
-            return Polly.Policy
-                            .Handle<Exception>(_ =>
-                            {
-                                _logger.Error(_, "Problems connecting head to runtime - retrying");
-                                return true;
-                            })
-                            .WaitAndRetryForeverAsync(_ => TimeSpan.FromSeconds(1));
-        }
+        public Polly.IAsyncPolicy Define() =>
+          Polly.Policy
+            .Handle<RpcException>(_ =>
+            {
+                if (_.Status.StatusCode != StatusCode.Cancelled)
+                {
+                    _logger.Error(_, "Problems connecting head to runtime");
+                }
+
+                return true;
+            })
+            .Or<Exception>(_ =>
+            {
+                _logger.Error(_, "Problems connecting head to runtime");
+                return true;
+            })
+            .WaitAndRetryForeverAsync(_ => TimeSpan.FromSeconds(1));
     }
 }
