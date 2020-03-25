@@ -12,6 +12,7 @@ using Dolittle.Artifacts;
 using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
+using Dolittle.Resilience;
 using Dolittle.Services.Clients;
 using Grpc.Core;
 using static contracts::Dolittle.Runtime.Events.Processing.EventHandlers;
@@ -31,6 +32,7 @@ namespace Dolittle.Events.Handling
         readonly IEventConverter _eventConverter;
         readonly IEventProcessingCompletion _eventHandlersWaiters;
         readonly IReverseCallClientManager _reverseCallClientManager;
+        readonly IAsyncPolicyFor<EventHandlerProcessor> _policy;
         readonly ILogger _logger;
 
         /// <summary>
@@ -42,6 +44,7 @@ namespace Dolittle.Events.Handling
         /// <param name="eventConverter"><see cref="IEventConverter"/> for converting events for transport.</param>
         /// <param name="eventHandlersWaiters"><see cref="IEventProcessingCompletion"/> for waiting on event handlers.</param>
         /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
+        /// <param name="policy">Policy for <see cref="EventHandlerProcessor"/>.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public EventHandlerProcessor(
             EventHandlersClient eventHandlersClient,
@@ -50,6 +53,7 @@ namespace Dolittle.Events.Handling
             IEventConverter eventConverter,
             IEventProcessingCompletion eventHandlersWaiters,
             IReverseCallClientManager reverseCallClientManager,
+            IAsyncPolicyFor<EventHandlerProcessor> policy,
             ILogger logger)
         {
             _eventHandlersClient = eventHandlersClient;
@@ -58,6 +62,7 @@ namespace Dolittle.Events.Handling
             _eventConverter = eventConverter;
             _eventHandlersWaiters = eventHandlersWaiters;
             _reverseCallClientManager = reverseCallClientManager;
+            _policy = policy;
             _logger = logger;
         }
 
@@ -108,7 +113,7 @@ namespace Dolittle.Events.Handling
 
                         _eventHandlersWaiters.EventHandlerCompletedForEvent(correlationId, eventHandler.Identifier, committedEvent.Event.GetType());
 
-                        await call.Reply(response).ConfigureAwait(false);
+                        await _policy.Execute(() => call.Reply(response)).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
@@ -119,9 +124,8 @@ namespace Dolittle.Events.Handling
                             FailureReason = $"Failure Message: {ex.Message}\nStack Trace: {ex.StackTrace}",
                             ExecutionContext = call.Request.ExecutionContext
                         };
-                        await call.Reply(response).ConfigureAwait(false);
-
                         _logger.Error(ex, "Error handling event");
+                        await _policy.Execute(() => call.Reply(response)).ConfigureAwait(false);
                     }
                 }, token);
         }
