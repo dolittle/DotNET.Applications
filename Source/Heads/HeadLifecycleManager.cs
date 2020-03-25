@@ -4,6 +4,7 @@
 extern alias contracts;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -96,15 +97,22 @@ namespace Dolittle.Heads
 
                     try
                     {
+                        IEnumerable<Task> tasks = null;
                         while (await streamCall.ResponseStream.MoveNext(cancellationTokenSource.Token).ConfigureAwait(false))
                         {
                             if (!connected)
                             {
-                                OnConnected();
+                                tasks = OnConnected(cancellationTokenSource.Token);
                                 connected = true;
                             }
 
                             lastPing = DateTimeOffset.UtcNow;
+
+                            if (!cancellationTokenSource.IsCancellationRequested && tasks.Any(_ => _.IsCompleted))
+                            {
+                                tasks.Where(_ => _.IsFaulted).ForEach(_ => _logger.Error(_.Exception, $"Exception thrown in HeadConnectionLifecycle task: {GetInnermostException(_.Exception).Message}"));
+                                cancellationTokenSource.Cancel();
+                            }
                         }
                     }
                     finally
@@ -121,16 +129,21 @@ namespace Dolittle.Heads
             });
         }
 
-        void OnConnected()
+        Exception GetInnermostException(Exception exception)
+        {
+            while (exception.InnerException != null) exception = exception.InnerException;
+            return exception;
+        }
+
+        IEnumerable<Task> OnConnected(CancellationToken token)
         {
             _logger.Information($"Connected to runtime");
-            _headProcedures.ForEach(_ => _.OnConnected());
+            return _headProcedures.Select(_ => _.OnConnected(token)).ToList();
         }
 
         void OnDisconnected()
         {
             _logger.Information($"Disconnected from runtime");
-            _headProcedures.ForEach(_ => _.OnDisconnected());
         }
     }
 }

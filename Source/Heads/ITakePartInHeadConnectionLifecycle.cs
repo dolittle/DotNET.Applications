@@ -3,6 +3,9 @@
 
 extern alias contracts;
 
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace Dolittle.Heads
 {
     /// <summary>
@@ -19,11 +22,8 @@ namespace Dolittle.Heads
         /// <summary>
         /// Called when the head is connected.
         /// </summary>
-        void OnConnected();
-
-        /// <summary>
-        /// Called when the head is disconnected.
-        /// </summary>
-        void OnDisconnected();
+        /// <param name="token">Optional. A <see cref="CancellationToken" /> to cancel the operation.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task OnConnected(CancellationToken token = default);
     }
 }
