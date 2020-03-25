@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Threading.Tasks;
+using Dolittle.Events;
 using Dolittle.Events.Handling;
 using Dolittle.Logging;
 
@@ -17,13 +18,13 @@ namespace EventSourcing
             _logger = logger;
         }
 
-        public Task Handle(MyEvent @event)
+        public Task Handle(MyEvent @event, EventContext eventContext)
         {
             _logger.Information($"Processing event : '{@event}'");
             return Task.CompletedTask;
         }
 
-        public Task Handle(MySecondEvent @event)
+        public Task Handle(MySecondEvent @event, EventContext eventContext)
         {
             _logger.Information($"Processing event : '{@event}'");
             return Task.CompletedTask;

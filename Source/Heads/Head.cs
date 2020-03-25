@@ -18,11 +18,6 @@ namespace Dolittle.Heads
         }
 
         /// <summary>
-        /// Gets a value indicating whether or not the application <see cref="Head"/> is connected - useful during booting.
-        /// </summary>
-        public static bool Connected { get; internal set; }
-
-        /// <summary>
         /// Gets the <see cref="HeadId">unique identifier</see> of the client.
         /// </summary>
         public HeadId Id { get; }

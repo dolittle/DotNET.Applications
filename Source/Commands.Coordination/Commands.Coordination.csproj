@@ -20,6 +20,7 @@
         <ProjectReference Include="..\Commands.Security\Commands.Security.csproj" />
         <ProjectReference Include="..\Commands.Validation\Commands.Validation.csproj" />
         <ProjectReference Include="..\Events\Events.csproj" />
+        <ProjectReference Include="..\Events.Handling\Events.Handling.csproj" />
     </ItemGroup>
 
 </Project>

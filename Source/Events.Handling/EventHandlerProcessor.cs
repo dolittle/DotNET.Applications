@@ -3,13 +3,17 @@
 
 extern alias contracts;
 
+using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using contracts::Dolittle.Runtime.Events.Processing;
 using Dolittle.Artifacts;
 using Dolittle.Events.Processing;
 using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
+using Dolittle.Resilience;
 using Dolittle.Services.Clients;
 using Grpc.Core;
 using static contracts::Dolittle.Runtime.Events.Processing.EventHandlers;
@@ -25,9 +29,11 @@ namespace Dolittle.Events.Handling
         readonly IEventProcessingInvocationManager _eventProcessingInvocationManager;
         readonly EventHandlersClient _eventHandlersClient;
         readonly IArtifactTypeMap _artifactTypeMap;
-        readonly IReverseCallClientManager _reverseCallClientManager;
-        readonly IEventConverter _eventConverter;
         readonly IExecutionContextManager _executionContextManager;
+        readonly IEventConverter _eventConverter;
+        readonly IEventProcessingCompletion _eventHandlersWaiters;
+        readonly IReverseCallClientManager _reverseCallClientManager;
+        readonly IAsyncPolicyFor<EventHandlerProcessor> _policy;
         readonly ILogger _logger;
 
         /// <summary>
@@ -36,25 +42,31 @@ namespace Dolittle.Events.Handling
         /// <param name="eventProcessingInvocationManager">The <see cref="IEventProcessingInvocationManager" />.</param>
         /// <param name="eventHandlersClient"><see cref="EventHandlersClient"/> for talking to the runtime.</param>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for mapping types and artifacts.</param>
-        /// <param name="reverseCallClientManager">The <see cref="IReverseCallClientManager" />.</param>
-        /// <param name="eventConverter"><see cref="IEventConverter" />.</param>
         /// <param name="executionContextManager"><see cref="IExecutionContextManager" />.</param>
+        /// <param name="eventConverter"><see cref="IEventConverter"/> for converting events for transport.</param>
+        /// <param name="eventHandlersWaiters"><see cref="IEventProcessingCompletion"/> for waiting on event handlers.</param>
+        /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
+        /// <param name="policy">Policy for <see cref="EventHandlerProcessor"/>.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public EventHandlerProcessor(
             IEventProcessingInvocationManager eventProcessingInvocationManager,
             EventHandlersClient eventHandlersClient,
             IArtifactTypeMap artifactTypeMap,
-            IReverseCallClientManager reverseCallClientManager,
-            IEventConverter eventConverter,
             IExecutionContextManager executionContextManager,
+            IEventConverter eventConverter,
+            IEventProcessingCompletion eventHandlersWaiters,
+            IReverseCallClientManager reverseCallClientManager,
+            IAsyncPolicyFor<EventHandlerProcessor> policy,
             ILogger logger)
         {
             _eventProcessingInvocationManager = eventProcessingInvocationManager;
             _eventHandlersClient = eventHandlersClient;
             _artifactTypeMap = artifactTypeMap;
-            _reverseCallClientManager = reverseCallClientManager;
-            _eventConverter = eventConverter;
             _executionContextManager = executionContextManager;
+            _eventConverter = eventConverter;
+            _eventHandlersWaiters = eventHandlersWaiters;
+            _reverseCallClientManager = reverseCallClientManager;
+            _policy = policy;
             _logger = logger;
         }
 
@@ -62,7 +74,7 @@ namespace Dolittle.Events.Handling
         public bool CanProcess(AbstractEventHandler eventHandler) => eventHandler.GetType().Equals(typeof(EventHandler));
 
         /// <inheritdoc/>
-        public void Start(AbstractEventHandler eventHandler)
+        public void Start(AbstractEventHandler eventHandler, CancellationToken token)
         {
             if (!CanProcess(eventHandler)) throw new EventHandlerProcessorCannotStartProcessingEventHandler(this, eventHandler);
             ThrowIfIllegalEventHandlerId(eventHandler.Identifier);
@@ -84,8 +96,8 @@ namespace Dolittle.Events.Handling
 
             _logger.Debug($"Connecting to runtime for event handler '{eventHandler.Identifier}' for types '{string.Join(",", artifacts)}', partioning: {arguments.Partitioned}");
 
-            var result = _eventHandlersClient.Connect(metadata);
-            _reverseCallClientManager.Handle(
+            var result = _eventHandlersClient.Connect(metadata, cancellationToken: token);
+            return _reverseCallClientManager.Handle(
                 result,
                 _ => _.CallNumber,
                 _ => _.CallNumber,
@@ -106,7 +118,9 @@ namespace Dolittle.Events.Handling
                     {
                         _logger.Warning($"Error notifying waiters that event was processed : {correlationId} - {eventHandler.Identifier} : {ex.Message}");
                     }
-                });
+
+                    await _policy.Execute(() => call.Reply(response)).ConfigureAwait(false);
+                }, token);
         }
 
         void ThrowIfIllegalEventHandlerId(EventHandlerId id)

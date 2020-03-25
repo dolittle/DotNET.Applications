@@ -2,6 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Dolittle.Collections;
 
 namespace Dolittle.Events.Handling
@@ -13,7 +16,6 @@ namespace Dolittle.Events.Handling
     {
         readonly ConcurrentDictionary<EventHandlerId, AbstractEventHandler> _eventHandlers = new ConcurrentDictionary<EventHandlerId, AbstractEventHandler>();
         readonly IEventHandlerProcessor _eventHandlerProcessor;
-        bool _alreadyStartedProcessing;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlers"/> class.
@@ -41,14 +43,7 @@ namespace Dolittle.Events.Handling
         }
 
         /// <inheritdoc/>
-        public void StartProcessingEventHandlers()
-        {
-            if (!_alreadyStartedProcessing)
-            {
-                _alreadyStartedProcessing = true;
-                _eventHandlers.ForEach(_ => _eventHandlerProcessor.Start(_.Value));
-            }
-        }
+        public IEnumerable<Task> StartProcessingEventHandlers(CancellationToken cancellation) => _eventHandlers.Select(_ => _eventHandlerProcessor.Start(_.Value));
 
         void ThrowIfMissingEventHandlerWithId(EventHandlerId eventHandlerId)
         {
