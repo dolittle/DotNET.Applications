@@ -30,8 +30,7 @@ namespace EventSourcing
             var logger = result.Container.Get<Dolittle.Logging.ILogger>();
             logger.Information("Booted");
 
-            await HeadConnectionLifecycle.Connected.ConfigureAwait(false);
-
+            // await HeadConnectionLifecycle.Connected.ConfigureAwait(false);
             var commandContextManager = result.Container.Get<ICommandContextManager>();
             var executionContextManager = result.Container.Get<IExecutionContextManager>();
             var commandCoordinator = result.Container.Get<ICommandCoordinator>();
