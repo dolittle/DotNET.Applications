@@ -1,6 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace Dolittle.Events.Filters
 {
     /// <summary>
@@ -11,9 +13,9 @@ namespace Dolittle.Events.Filters
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryFilteringResult"/> class.
         /// </summary>
-        /// <param name="retryTimeout">The retry timeout in milliseconds.</param>
+        /// <param name="retryTimeout">The retry timeout <see cref="TimeSpan" />.</param>
         /// <param name="failureReason">The reason for failure.</param>
-        public RetryFilteringResult(uint retryTimeout, string failureReason)
+        public RetryFilteringResult(TimeSpan retryTimeout, string failureReason)
         {
             RetryTimeout = retryTimeout;
             FailureReason = failureReason;
@@ -35,6 +37,6 @@ namespace Dolittle.Events.Filters
         public PartitionId Partition => PartitionId.Unspecified;
 
         /// <inheritdoc/>
-        public uint RetryTimeout { get; }
+        public TimeSpan RetryTimeout { get; }
     }
 }

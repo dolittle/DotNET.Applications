@@ -62,7 +62,7 @@ namespace Dolittle.EventHorizon
                         Microservice = _.Microservice.ToProtobuf(),
                         Tenant = _.Tenant.ToProtobuf(),
                         Scope = _.Scope.ToProtobuf(),
-                        PublicStream = _.Stream.ToProtobuf(),
+                        Stream = _.Stream.ToProtobuf(),
                         Partition = _.Partition.ToProtobuf()
                     };
                     _executionContextManager.CurrentFor(

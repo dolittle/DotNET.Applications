@@ -19,17 +19,19 @@ namespace Dolittle.Events.Handling
         /// Initializes a new instance of the <see cref="AbstractEventHandlerForEventHandlerType{T}"/> class.
         /// </summary>
         /// <param name="container"><see cref="IContainer"/> for getting instances of <see cref="ICanHandleEvents"/>.</param>
+        /// <param name="scope">The <see cref="ScopeId" />.</param>
         /// <param name="identifier">The unique <see cref="EventHandlerId">identifier</see>.</param>
         /// <param name="type"><see cref="Type"/> of <see cref="ICanHandleEvents"/>.</param>
         /// <param name="partitioned">Whether the Event Handler is partitioned.</param>
         /// <param name="methods"><see cref="IEnumerable{T}"/> of <see cref="EventHandlerMethod{T}"/>.</param>
         protected AbstractEventHandlerForEventHandlerType(
             IContainer container,
+            ScopeId scope,
             EventHandlerId identifier,
             Type type,
             bool partitioned,
             IEnumerable<IEventHandlerMethod> methods)
-            : base(container, identifier, type, partitioned, methods)
+            : base(container, scope, identifier, type, partitioned, methods)
         {
             ThrowIfTypeIsNotCorrectEventHandlerType();
         }

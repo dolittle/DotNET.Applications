@@ -12,16 +12,16 @@ namespace Dolittle.Events.Handling
     public class EventHandlers : IEventHandlers
     {
         readonly ConcurrentDictionary<EventHandlerId, AbstractEventHandler> _eventHandlers = new ConcurrentDictionary<EventHandlerId, AbstractEventHandler>();
-        readonly IEventHandlerProcessors _eventHandlerProcessors;
+        readonly IEventHandlerProcessor _eventHandlerProcessor;
         bool _alreadyStartedProcessing;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlers"/> class.
         /// </summary>
-        /// <param name="eventHandlerProcessors">The <see cref="IEventHandlerProcessors" />.</param>
-        public EventHandlers(IEventHandlerProcessors eventHandlerProcessors)
+        /// <param name="eventHandlerProcessor">The <see cref="IEventHandlerProcessor" />.</param>
+        public EventHandlers(IEventHandlerProcessor eventHandlerProcessor)
         {
-            _eventHandlerProcessors = eventHandlerProcessors;
+            _eventHandlerProcessor = eventHandlerProcessor;
         }
 
         /// <inheritdoc/>
@@ -46,7 +46,7 @@ namespace Dolittle.Events.Handling
             if (!_alreadyStartedProcessing)
             {
                 _alreadyStartedProcessing = true;
-                _eventHandlers.ForEach(_ => _eventHandlerProcessors.Start(_.Value));
+                _eventHandlers.ForEach(_ => _eventHandlerProcessor.Start(_.Value));
             }
         }
 

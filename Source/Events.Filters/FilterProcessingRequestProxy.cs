@@ -8,18 +8,18 @@ using Dolittle.Events.Processing;
 using Dolittle.Protobuf;
 using grpcEvents = contracts::Dolittle.Runtime.Events;
 
-namespace Dolittle.Events.Handling
+namespace Dolittle.Events.Filters
 {
     /// <summary>
-    /// Represents the <see cref="ProcessingRequestProxy{TRequest}" /> for <see cref="EventHandlerRuntimeToClientRequest" />.
+    /// Represents the <see cref="ProcessingRequestProxy{TRequest}" /> for <see cref="FilterRuntimeToClientRequest" />.
     /// </summary>
-    public class EventHandlerProcessingRequestProxy : ProcessingRequestProxy<EventHandlerRuntimeToClientRequest>
+    public class FilterProcessingRequestProxy : ProcessingRequestProxy<FilterRuntimeToClientRequest>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventHandlerProcessingRequestProxy"/> class.
+        /// Initializes a new instance of the <see cref="FilterProcessingRequestProxy"/> class.
         /// </summary>
-        /// <param name="request">The <see cref="EventHandlerRuntimeToClientRequest" />.</param>
-        public EventHandlerProcessingRequestProxy(EventHandlerRuntimeToClientRequest request)
+        /// <param name="request">The <see cref="FilterRuntimeToClientRequest" />.</param>
+        public FilterProcessingRequestProxy(FilterRuntimeToClientRequest request)
             : base(request)
         {
             Event = request.Event;

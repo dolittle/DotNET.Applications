@@ -26,7 +26,7 @@ namespace Dolittle.Events.Handling
             Type type,
             bool partitioned,
             IEnumerable<IEventHandlerMethod> methods)
-            : base(container, identifier, type, partitioned, methods)
+            : base(container, ScopeId.Default, identifier, type, partitioned, methods)
         {
         }
     }

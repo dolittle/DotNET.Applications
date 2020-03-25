@@ -6,20 +6,21 @@ extern alias contracts;
 using contracts::Dolittle.Runtime.Events.Processing;
 using Dolittle.Events.Processing;
 using Dolittle.Protobuf;
+using Google.Protobuf.WellKnownTypes;
 
 namespace Dolittle.Events.Filters
 {
     /// <summary>
     /// Represents the <see cref="ProcessingResponseProxy{TResponse, TRequest, TProcessingResult}" /> for <see cref="FilterClientToRuntimeResponse" />.
     /// </summary>
-    public class PrivateEventsProcessingResponseProxy : ProcessingResponseProxy<FilterClientToRuntimeResponse, FilterRuntimeToClientRequest, IFilterResult>
+    public class FilterProcessingResponseProxy : ProcessingResponseProxy<FilterClientToRuntimeResponse, FilterRuntimeToClientRequest, IFilterResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PrivateEventsProcessingResponseProxy"/> class.
+        /// Initializes a new instance of the <see cref="FilterProcessingResponseProxy"/> class.
         /// </summary>
         /// <param name="result">The <see cref="IFilterResult" />.</param>
         /// <param name="request">The <see cref="FilterRuntimeToClientRequest" />.</param>
-        public PrivateEventsProcessingResponseProxy(IFilterResult result, FilterRuntimeToClientRequest request)
+        public FilterProcessingResponseProxy(IFilterResult result, FilterRuntimeToClientRequest request)
             : base(result, request)
         {
         }
@@ -29,25 +30,19 @@ namespace Dolittle.Events.Filters
         {
             var response = new FilterClientToRuntimeResponse
             {
-                ExecutionContext = Request.ExecutionContext,
-                IsIncluded = ProcessingResult.IsIncluded,
-                Partition = ProcessingResult.Partition.ToProtobuf()
+                ExecutionContext = Request.ExecutionContext
             };
             if (ProcessingResult.Succeeded)
             {
-                response.Succeeded = true;
-                response.Retry = false;
+                response.Success = new SuccessfulFilter { IsIncluded = true, Partition = ProcessingResult.Partition.ToProtobuf() };
             }
             else if (ProcessingResult is IRetryFilteringResult retryFilteringResult)
             {
-                response.Succeeded = false;
-                response.Retry = true;
-                response.RetryTimeout = retryFilteringResult.RetryTimeout;
+                response.Failed = new ProcessorFailure { Retry = true, RetryTimeout = Duration.FromTimeSpan(retryFilteringResult.RetryTimeout), Reason = retryFilteringResult.FailureReason };
             }
             else
             {
-                response.Succeeded = false;
-                response.Retry = false;
+                response.Failed = new ProcessorFailure { Retry = false, Reason = ProcessingResult.FailureReason };
             }
 
             return response;

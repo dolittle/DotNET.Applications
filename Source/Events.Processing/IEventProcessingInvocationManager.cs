@@ -1,23 +1,23 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Threading.Tasks;
+using Google.Protobuf;
 
 namespace Dolittle.Events.Processing
 {
     /// <summary>
     /// Defines a system that manages the invocations.
     /// </summary>
-    /// <typeparam name="TProcessingResult">The <see cref="IProcessingResult" /> type.</typeparam>
-    public interface IEventProcessingInvocationManager<TProcessingResult>
-        where TProcessingResult : IProcessingResult
+    public interface IEventProcessingInvocationManager
     {
         /// <summary>
-        /// Manages the invocation of the processing of an event in a stream.
+        /// Gets the <see cref="IEventProcessingInvocationManagerFor{TProcessingResponse, TProcessingResult}" /> for an event processor.
         /// </summary>
-        /// <param name="event">The <see cref="CommittedEvent" />.</param>
-        /// <param name="partition">The <see cref="PartitionId" />.</param>
-        /// <returns>A task that yields <see cref="IProcessingResult" />.</returns>
-        Task<TProcessingResult> Invoke(CommittedEvent @event, PartitionId partition);
+        /// <typeparam name="TProcessingResponse">The processing response <see cref="IMessage" />.</typeparam>
+        /// <typeparam name="TProcessingResult">The <see cref="IProcessingResult" />.</typeparam>
+        /// <returns><see cref="IEventProcessingInvocationManagerFor{TProcessingResponse, TProcessingResult}" />.</returns>
+        IEventProcessingInvocationManagerFor<TProcessingResponse, TProcessingResult> GetInvocationManagerFor<TProcessingResponse, TProcessingResult>()
+            where TProcessingResponse : IMessage, new()
+            where TProcessingResult : IProcessingResult;
     }
 }

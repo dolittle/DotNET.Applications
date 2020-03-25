@@ -23,16 +23,10 @@ namespace Dolittle.Events.Handling.EventHorizon
         /// <param name="producerMicroservices">The list of <see cref ="Microservice" /> ids that produces the events that are handled.</param>
         /// <param name="methods"><see cref="IEnumerable{T}"/> of <see cref="EventHandlerMethod{T}"/>.</param>
         public ExternalEventHandler(IContainer container, EventHandlerId identifier, Type type, ScopeId scope, IEnumerable<Microservice> producerMicroservices, IEnumerable<IEventHandlerMethod> methods)
-        : base(container, identifier, type, false, methods)
+        : base(container, scope, identifier, type, false, methods)
         {
-            Scope = scope;
             ProducerMicroservices = producerMicroservices;
         }
-
-        /// <summary>
-        /// Gets the <see cref="ScopeId" />.
-        /// </summary>
-        public ScopeId Scope { get; }
 
         /// <summary>
         /// Gets the list of <see cref ="Microservice" /> ids that produces the events that are handled.
