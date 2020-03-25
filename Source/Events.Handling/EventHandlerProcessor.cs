@@ -111,7 +111,14 @@ namespace Dolittle.Events.Handling
                         var committedEvent = _eventConverter.ToSDK(call.Request.Event);
                         await eventHandler.Invoke(committedEvent).ConfigureAwait(false);
 
-                        _eventHandlersWaiters.EventHandlerCompletedForEvent(correlationId, eventHandler.Identifier, committedEvent.Event.GetType());
+                        try
+                        {
+                            _eventHandlersWaiters.EventHandlerCompletedForEvent(correlationId, eventHandler.Identifier, committedEvent.Event.GetType());
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.Warning($"Error notifying waiters that event was processed : {correlationId} - {eventHandler.Identifier} : {ex.Message}");
+                        }
 
                         await _policy.Execute(() => call.Reply(response)).ConfigureAwait(false);
                     }
