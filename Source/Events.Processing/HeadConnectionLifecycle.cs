@@ -1,6 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Threading;
+using System.Threading.Tasks;
 using Dolittle.Heads;
 
 namespace Dolittle.Events.Processing
@@ -25,14 +27,10 @@ namespace Dolittle.Events.Processing
         public bool IsReady() => Artifacts.Configuration.BootProcedure.HasPerformed;
 
         /// <inheritdoc/>
-        public void OnConnected()
+        public Task OnConnected(CancellationToken token)
         {
             _filters.Register();
-        }
-
-        /// <inheritdoc/>
-        public void OnDisconnected()
-        {
+            return new TaskCompletionSource<bool>().Task;
         }
     }
 }
