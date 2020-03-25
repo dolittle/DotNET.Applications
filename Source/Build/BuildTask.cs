@@ -92,10 +92,10 @@ namespace Dolittle.Build
 
         void ValidateEvents(IEnumerable<Type> events, int depthLevel = 0)
         {
-            if (depthLevel >= 3)
+            if (depthLevel >= 15) 
             {
-                _buildMessages.Error($"Event validation reached a too deep depth level, meaning that your events are way too complex!. Be aware of complex types on events.");
-                throw new InvalidEvent();
+                _buildMessages.Error($"Event validation reached a too deep depth level ({depthLevel}), meaning that your events are way too complex!. Be aware of complex types on events.");
+                throw new InvalidEvent("There are critical errors on events");
             }
 
             ValidateEventsAreImmutable(events);

@@ -4,6 +4,7 @@
 using System.Dynamic;
 using Dolittle.Artifacts;
 using Dolittle.Events;
+using Dolittle.Events.Handling;
 using Dolittle.Execution;
 using Dolittle.Logging;
 using Machine.Specifications;
@@ -16,6 +17,7 @@ namespace Dolittle.Commands.Coordination.for_CommandContext.given
         protected static CommandRequest command;
         protected static CommandContext command_context;
         protected static Mock<IUncommittedEventStreamCoordinator> uncommitted_event_stream_coordinator;
+        protected static Mock<IEventHandlersWaiters> event_handlers_waiters;
         protected static Mock<ILogger> logger;
 
         Establish context = () =>
@@ -24,7 +26,8 @@ namespace Dolittle.Commands.Coordination.for_CommandContext.given
             command = new CommandRequest(CorrelationId.Empty, artifact.Id, artifact.Generation, new ExpandoObject());
             uncommitted_event_stream_coordinator = new Mock<IUncommittedEventStreamCoordinator>();
             logger = new Mock<ILogger>();
-            command_context = new CommandContext(command, null, uncommitted_event_stream_coordinator.Object, logger.Object);
+            event_handlers_waiters = new Mock<IEventHandlersWaiters>();
+            command_context = new CommandContext(command, null, uncommitted_event_stream_coordinator.Object, event_handlers_waiters.Object, logger.Object);
         };
     }
 }
