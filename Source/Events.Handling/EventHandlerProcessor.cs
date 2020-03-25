@@ -5,6 +5,8 @@ extern alias contracts;
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using contracts::Dolittle.Runtime.Events.Processing;
 using Dolittle.Artifacts;
 using Dolittle.Execution;
@@ -60,7 +62,7 @@ namespace Dolittle.Events.Handling
         }
 
         /// <inheritdoc/>
-        public void Start(EventHandler eventHandler)
+        public Task Start(EventHandler eventHandler, CancellationToken token)
         {
             ThrowIfIllegalEventHandlerId(eventHandler.Identifier);
             var artifacts = eventHandler.EventTypes.Select(_ => _artifactTypeMap.GetArtifactFor(_));
@@ -81,8 +83,8 @@ namespace Dolittle.Events.Handling
 
             _logger.Debug($"Connecting to runtime for event handler '{eventHandler.Identifier}' for types '{string.Join(",", artifacts)}', partioning: {arguments.Partitioned}");
 
-            var result = _eventHandlersClient.Connect(metadata);
-            _reverseCallClientManager.Handle(
+            var result = _eventHandlersClient.Connect(metadata, cancellationToken: token);
+            return _reverseCallClientManager.Handle(
                 result,
                 _ => _.CallNumber,
                 _ => _.CallNumber,
@@ -121,7 +123,7 @@ namespace Dolittle.Events.Handling
 
                         _logger.Error(ex, "Error handling event");
                     }
-                });
+                }, token);
         }
 
         void ThrowIfIllegalEventHandlerId(EventHandlerId id)

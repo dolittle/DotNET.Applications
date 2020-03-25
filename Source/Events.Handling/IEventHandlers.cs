@@ -2,6 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Dolittle.Events.Handling
 {
@@ -40,5 +42,13 @@ namespace Dolittle.Events.Handling
         /// <param name="eventHandlerId"><see cref="EventHandlerId"/> to associate with.</param>
         /// <returns><see cref="EventHandler"/> instance.</returns>
         EventHandler Register(Type type, EventHandlerId eventHandlerId = default);
+
+        /// <summary>
+        /// Starts the processing for an <see cref="EventHandler"/>.
+        /// </summary>
+        /// <param name="eventHandler">The <see cref="EventHandler"/>.</param>
+        /// <param name="token">Optional. A <see cref="CancellationToken" /> to cancel the operation.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task Start(EventHandler eventHandler, CancellationToken token = default);
     }
 }

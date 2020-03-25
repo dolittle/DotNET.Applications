@@ -5,6 +5,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Dolittle.DependencyInversion;
 using Dolittle.Reflection;
 
@@ -73,10 +75,12 @@ namespace Dolittle.Events.Handling
             var eventHandler = new EventHandler(_container, eventHandlerId, type, IsPartitioned(type), eventHandlerMethods);
             _eventHandlers[eventHandlerId] = eventHandler;
 
-            _eventHandlerProcessor.Start(eventHandler);
-
             return eventHandler;
         }
+
+        /// <inheritdoc/>
+        public Task Start(EventHandler eventHandler, CancellationToken token = default) =>
+            _eventHandlerProcessor.Start(eventHandler);
 
         bool IsPartitioned(Type type) =>
             !type.HasAttribute<NotPartitionedAttribute>();
