@@ -36,12 +36,7 @@ namespace Dolittle.EventHorizon
         public Task OnConnected(CancellationToken token = default)
         {
             _subscriptionsClient.Subscribe();
-            return new TaskCompletionSource<bool>().Task;
-        }
-
-        /// <inheritdoc/>
-        public void OnDisconnected()
-        {
+            return Task.CompletedTask;
         }
     }
 }

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Dolittle.Collections;
 using Dolittle.Events.Processing;
 using Dolittle.Heads;
 using Dolittle.Resilience;
@@ -19,21 +18,21 @@ namespace Dolittle.Events.Filters
     public class HeadConnectionLifecycle : ITakePartInHeadConnectionLifecycle
     {
         readonly IEnumerable<IEventStreamFilter> _filters;
-        readonly IStreamFilters _streamFilters;
+        readonly IFilterProcessors _filterProcessors;
         readonly IAsyncPolicy _startFilterProcessorPolicy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HeadConnectionLifecycle"/> class.
         /// </summary>
         /// <param name="filterProviders"><see cref="IImplementationsOf{T}"/> <see cref="ICanProvideStreamFilters"/>.</param>
-        /// <param name="streamFilters">The <see cref="IStreamFilters"/> system.</param>
+        /// <param name="filterProcessors">The <see cref="IFilterProcessors"/> system.</param>
         /// <param name="policies"><see cref="IAsyncPolicyFor{HeadConnectionLifecycle}"/> the event handlers.</param>
         public HeadConnectionLifecycle(
             IInstancesOf<ICanProvideStreamFilters> filterProviders,
-            IStreamFilters streamFilters,
+            IFilterProcessors filterProcessors,
             IPolicies policies)
         {
-            _streamFilters = streamFilters;
+            _filterProcessors = filterProcessors;
 
             _startFilterProcessorPolicy = policies.GetAsyncNamed(typeof(StartEventProcessorPolicy).Name);
             _filters = filterProviders.SelectMany(_ => _.Provide()).ToList();
@@ -45,20 +44,10 @@ namespace Dolittle.Events.Filters
         /// <inheritdoc/>
         public async Task OnConnected(CancellationToken token)
         {
-            var tasks = _filters.Select(filter =>
-            {
-                _streamFilters.Register(filter);
-                return _startFilterProcessorPolicy.Execute((token) => _streamFilters.Start(filter, token), token);
-            }).ToList();
+            var tasks = _filters.Select(filter => _startFilterProcessorPolicy.Execute((token) => _filterProcessors.Start(filter, token), token)).ToList();
             await Task.WhenAny(tasks).ConfigureAwait(false);
             var exception = tasks.FirstOrDefault(_ => _.Exception != null)?.Exception;
             if (exception != null) throw exception;
-        }
-
-        /// <inheritdoc/>
-        public void OnDisconnected()
-        {
-            _filters.Select(_ => _.Identifier).ForEach(_streamFilters.DeRegister);
         }
     }
 }

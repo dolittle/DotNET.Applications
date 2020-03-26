@@ -108,7 +108,7 @@ namespace Dolittle.Heads
 
                             lastPing = DateTimeOffset.UtcNow;
 
-                            if (!cancellationTokenSource.IsCancellationRequested && tasks.Any(_ => _.IsCompleted))
+                            if (!cancellationTokenSource.IsCancellationRequested && tasks.Any(_ => _.IsFaulted))
                             {
                                 tasks.Where(_ => _.IsFaulted).ForEach(_ => _logger.Error(_.Exception, $"Exception thrown in HeadConnectionLifecycle task: {GetInnermostException(_.Exception).Message}"));
                                 cancellationTokenSource.Cancel();
