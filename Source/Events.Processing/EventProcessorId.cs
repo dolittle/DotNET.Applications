@@ -14,20 +14,13 @@ namespace Dolittle.Events.Processing
         /// <summary>
         /// Initializes a new instance of the <see cref="EventProcessorId"/> class.
         /// </summary>
-        /// <param name="scope">The <see cref="ScopeId" />.</param>
         /// <param name="sourceStream">The source <see cref="StreamId "/>.</param>
         /// <param name="processor">The identifier of the processor.</param>
-        public EventProcessorId(ScopeId scope, StreamId sourceStream, Guid processor)
+        public EventProcessorId(StreamId sourceStream, Guid processor)
         {
-            Scope = scope;
             SourceStream = sourceStream;
             Processor = processor;
         }
-
-        /// <summary>
-        /// Gets the <see cref="ScopeId" />.
-        /// </summary>
-        public ScopeId Scope { get; }
 
         /// <summary>
         /// Gets the <see cref="StreamId" />.
