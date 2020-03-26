@@ -33,5 +33,10 @@ namespace Dolittle.TimeSeries.DataPoints
             _processors.Start();
             return new TaskCompletionSource<bool>().Task;
         }
+
+        /// <inheritdoc/>
+        public void OnDisconnected()
+        {
+        }
     }
 }
