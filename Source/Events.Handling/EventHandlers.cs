@@ -5,7 +5,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Dolittle.Collections;
 
 namespace Dolittle.Events.Handling
 {
@@ -43,7 +42,10 @@ namespace Dolittle.Events.Handling
         }
 
         /// <inheritdoc/>
-        public IEnumerable<Task> StartProcessingEventHandlers(CancellationToken cancellation) => _eventHandlers.Select(_ => _eventHandlerProcessor.Start(_.Value));
+        public void DeRegister(EventHandlerId eventHandler) => _eventHandlers.Remove(eventHandler, out var _);
+
+        /// <inheritdoc/>
+        public Task Start(AbstractEventHandler eventHandler, CancellationToken cancellation) => _eventHandlerProcessor.Start(eventHandler, cancellation);
 
         void ThrowIfMissingEventHandlerWithId(EventHandlerId eventHandlerId)
         {

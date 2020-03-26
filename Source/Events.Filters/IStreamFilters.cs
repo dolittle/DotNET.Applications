@@ -1,6 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace Dolittle.Events.Filters
 {
     /// <summary>
@@ -29,8 +32,17 @@ namespace Dolittle.Events.Filters
         void Register(IEventStreamFilter filter);
 
         /// <summary>
+        /// De-registers the <see cref="IEventStreamFilter" />.
+        /// </summary>
+        /// <param name="filter">The <see cref="IEventStreamFilter" />.</param>
+        void DeRegister(FilterId filter);
+
+        /// <summary>
         /// Starts processing all filters.
         /// </summary>
-        void StartProcessingFilters();
+        /// <param name="filter">The <see cref="IEventStreamFilter" />.</param>
+        /// <param name="token">Optional. A <see cref="CancellationToken" /> to cancel the operation.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task Start(IEventStreamFilter filter, CancellationToken token = default);
     }
 }

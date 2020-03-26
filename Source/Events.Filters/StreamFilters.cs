@@ -2,7 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Concurrent;
-using Dolittle.Collections;
+using System.Threading;
+using System.Threading.Tasks;
 using Dolittle.Logging;
 
 namespace Dolittle.Events.Filters
@@ -15,7 +16,6 @@ namespace Dolittle.Events.Filters
         readonly IFilterProcessors _filterProcessors;
         readonly ILogger _logger;
         readonly ConcurrentDictionary<FilterId, IEventStreamFilter> _filters = new ConcurrentDictionary<FilterId, IEventStreamFilter>();
-        bool _alreadyStartedProcessing;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamFilters"/> class.
@@ -46,14 +46,10 @@ namespace Dolittle.Events.Filters
         }
 
         /// <inheritdoc/>
-        public void StartProcessingFilters()
-        {
-            if (!_alreadyStartedProcessing)
-            {
-                _alreadyStartedProcessing = true;
-                _filters.ForEach(_ => _filterProcessors.Start(_.Value));
-            }
-        }
+        public void DeRegister(FilterId filter) => _filters.TryRemove(filter, out var _);
+
+        /// <inheritdoc/>
+        public Task Start(IEventStreamFilter filter, CancellationToken token) => _filterProcessors.Start(filter, token);
 
         void ThrowIfMissingFilterWithId(FilterId filterId)
         {

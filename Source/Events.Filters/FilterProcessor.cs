@@ -4,11 +4,16 @@
 extern alias contracts;
 
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using contracts::Dolittle.Runtime.Events.Processing;
 using Dolittle.Events.Processing;
+using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.Reflection;
+using Dolittle.Resilience;
+using Dolittle.Services.Clients;
 using Grpc.Core;
 using static contracts::Dolittle.Runtime.Events.Processing.Filters;
 
@@ -19,34 +24,50 @@ namespace Dolittle.Events.Filters
     /// </summary>
     public class FilterProcessor : IFilterProcessor
     {
-        readonly IEventProcessors _eventProcessors;
+        readonly IEventProcessingInvocationManager _eventProcessingInvocationManager;
         readonly FiltersClient _filtersClient;
+        readonly IExecutionContextManager _executionContextManager;
+        readonly IEventConverter _eventConverter;
+        readonly IReverseCallClientManager _reverseCallClientManager;
+        readonly IAsyncPolicy _writeFilterResponsePolicy;
         readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FilterProcessor"/> class.
         /// </summary>
-        /// <param name="eventProcessors">The <see cref="IEventProcessors" />.</param>
-        /// <param name="filtersClient"><see cref="FiltersClient"/> for connecting to server.</param>
+        /// <param name="eventProcessingInvocationManager">The <see cref="IEventProcessingInvocationManager" />.</param>
+        /// <param name="filtersClient"><see cref="FiltersClient"/> for talking to the runtime.</param>
+        /// <param name="executionContextManager"><see cref="IExecutionContextManager" />.</param>
+        /// <param name="eventConverter"><see cref="IEventConverter"/> for converting events for transport.</param>
+        /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
+        /// <param name="policies">Policy for <see cref="FilterProcessor"/>.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public FilterProcessor(
-            IEventProcessors eventProcessors,
+            IEventProcessingInvocationManager eventProcessingInvocationManager,
             FiltersClient filtersClient,
+            IExecutionContextManager executionContextManager,
+            IEventConverter eventConverter,
+            IReverseCallClientManager reverseCallClientManager,
+            IPolicies policies,
             ILogger logger)
         {
-            _eventProcessors = eventProcessors;
+            _eventProcessingInvocationManager = eventProcessingInvocationManager;
             _filtersClient = filtersClient;
+            _executionContextManager = executionContextManager;
+            _eventConverter = eventConverter;
+            _reverseCallClientManager = reverseCallClientManager;
             _logger = logger;
+
+            _writeFilterResponsePolicy = policies.GetAsyncNamed(typeof(WriteEventProcessingResponsePolicy).Name);
         }
 
         /// <inheritdoc/>
         public bool CanProcess(IEventStreamFilter filter) => typeof(ICanFilterPrivateEvents).IsAssignableFrom(filter.GetType());
 
         /// <inheritdoc/>
-        public void Start(IEventStreamFilter filter)
+        public Task Start(IEventStreamFilter filter, CancellationToken token)
         {
             if (!CanProcess(filter)) throw new FilterProcessorCannotStartProcessingFilter(this, filter);
-            _logger.Information($"Starting processor for private filter with identifier '{filter.Identifier}' on source stream '{filter.SourceStreamId}'");
 
             var scope = filter.GetType().HasAttribute<ScopeAttribute>() ? filter.GetType().GetCustomAttribute<ScopeAttribute>().Id : ScopeId.Default;
             var additionalInfo = new FilterArguments
@@ -56,23 +77,42 @@ namespace Dolittle.Events.Filters
             };
             var metadata = new Metadata { additionalInfo.ToArgumentsMetadata() };
 
-            var result = _filtersClient.Connect(metadata);
+            _logger.Debug($"Connecting to runtime for filter '{filter.Identifier}' on source stream '{filter.SourceStreamId}'");
 
-            _eventProcessors.RegisterAndStartProcessing<FilterClientToRuntimeResponse, FilterRuntimeToClientRequest, IFilterResult>(
-                ScopeId.Default,
-                StreamId.AllStream,
-                filter.Identifier,
+            var result = _filtersClient.Connect(metadata);
+            return _reverseCallClientManager.Handle(
                 result,
                 _ => _.CallNumber,
                 _ => _.CallNumber,
-                request => new FilterProcessingRequestProxy(request),
-                (result, request) => new FilterProcessingResponseProxy(result, request),
-                (failureReason, retry, retryTimeout) => retry ? new RetryFilteringResult(retryTimeout, failureReason) as IFilterResult : new FailedFilteringResult(failureReason) as IFilterResult,
-                async @event =>
+                async call =>
                 {
-                    var filterResult = await filter.Filter(@event).ConfigureAwait(false);
-                    return new SucceededFilteringResult(filterResult.IsIncluded, filterResult.Partition);
-                });
+                    var partition = call.Request.Partition.To<PartitionId>();
+                    var executionContext = Execution.Contracts.ExecutionContext.Parser.ParseFrom(call.Request.ExecutionContext);
+                    _executionContextManager.CurrentFor(executionContext);
+                    var correlationId = executionContext.CorrelationId.To<CorrelationId>();
+
+                    var committedEvent = _eventConverter.ToSDK(call.Request.Event);
+                    var invocationManager = _eventProcessingInvocationManager.GetInvocationManagerFor<FilterClientToRuntimeResponse, IFilterResult>();
+                    var response = await invocationManager.Invoke(
+                        async () =>
+                        {
+                            var filterResult = await filter.Filter(committedEvent).ConfigureAwait(false);
+                            return new SucceededFilteringResult(filterResult.IsIncluded, filterResult.Partition);
+                        },
+                        filter.GetType(),
+                        partition,
+                        call.Request.RetryProcessingState,
+                        succeededFilterResult => new FilterClientToRuntimeResponse
+                            {
+                                Success = new SuccessfulFilter
+                                    {
+                                        IsIncluded = succeededFilterResult.IsIncluded,
+                                        Partition = succeededFilterResult.Partition.ToProtobuf()
+                                    }
+                            },
+                        response => response.Failed).ConfigureAwait(false);
+                    await _writeFilterResponsePolicy.Execute(() => call.Reply(response)).ConfigureAwait(false);
+                }, token);
         }
     }
 }

@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,10 +32,17 @@ namespace Dolittle.Events.Handling
         void Register(AbstractEventHandler eventHandler);
 
         /// <summary>
-        /// Starts processing all event handlers.
+        /// De-registers an event handler.
         /// </summary>
+        /// <param name="eventHandler">The <see cref="EventHandlerId"/>.</param>
+        void DeRegister(EventHandlerId eventHandler);
+
+        /// <summary>
+        /// Starts processing an event handler.
+        /// </summary>
+        /// <param name="abstractEventHandler"><see cref="AbstractEventHandler" />.</param>
         /// <param name="token">Optional. A <see cref="CancellationToken" /> to cancel the operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        IEnumerable<Task> StartProcessingEventHandlers(CancellationToken token = default);
+        Task Start(AbstractEventHandler abstractEventHandler, CancellationToken token = default);
     }
 }

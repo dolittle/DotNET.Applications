@@ -33,8 +33,8 @@ namespace Dolittle.Events.Handling
         readonly IEventConverter _eventConverter;
         readonly IEventProcessingCompletion _eventHandlersWaiters;
         readonly IReverseCallClientManager _reverseCallClientManager;
-        readonly IAsyncPolicyFor<EventHandlerProcessor> _policy;
         readonly ILogger _logger;
+        readonly IAsyncPolicy _writeHandlerResponsePolicy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerProcessor"/> class.
@@ -46,7 +46,7 @@ namespace Dolittle.Events.Handling
         /// <param name="eventConverter"><see cref="IEventConverter"/> for converting events for transport.</param>
         /// <param name="eventHandlersWaiters"><see cref="IEventProcessingCompletion"/> for waiting on event handlers.</param>
         /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
-        /// <param name="policy">Policy for <see cref="EventHandlerProcessor"/>.</param>
+        /// <param name="policies"><see cref="IPolicies"/>.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public EventHandlerProcessor(
             IEventProcessingInvocationManager eventProcessingInvocationManager,
@@ -56,7 +56,7 @@ namespace Dolittle.Events.Handling
             IEventConverter eventConverter,
             IEventProcessingCompletion eventHandlersWaiters,
             IReverseCallClientManager reverseCallClientManager,
-            IAsyncPolicyFor<EventHandlerProcessor> policy,
+            IPolicies policies,
             ILogger logger)
         {
             _eventProcessingInvocationManager = eventProcessingInvocationManager;
@@ -66,15 +66,16 @@ namespace Dolittle.Events.Handling
             _eventConverter = eventConverter;
             _eventHandlersWaiters = eventHandlersWaiters;
             _reverseCallClientManager = reverseCallClientManager;
-            _policy = policy;
             _logger = logger;
+
+            _writeHandlerResponsePolicy = policies.GetAsyncNamed(typeof(WriteEventProcessingResponsePolicy).Name);
         }
 
         /// <inheritdoc/>
         public bool CanProcess(AbstractEventHandler eventHandler) => eventHandler.GetType().Equals(typeof(EventHandler));
 
         /// <inheritdoc/>
-        public void Start(AbstractEventHandler eventHandler, CancellationToken token)
+        public Task Start(AbstractEventHandler eventHandler, CancellationToken token)
         {
             if (!CanProcess(eventHandler)) throw new EventHandlerProcessorCannotStartProcessingEventHandler(this, eventHandler);
             ThrowIfIllegalEventHandlerId(eventHandler.Identifier);
@@ -103,12 +104,24 @@ namespace Dolittle.Events.Handling
                 _ => _.CallNumber,
                 async call =>
                 {
+                    var partition = call.Request.Partition.To<PartitionId>();
                     var executionContext = Execution.Contracts.ExecutionContext.Parser.ParseFrom(call.Request.ExecutionContext);
                     _executionContextManager.CurrentFor(executionContext);
                     var correlationId = executionContext.CorrelationId.To<CorrelationId>();
 
                     var committedEvent = _eventConverter.ToSDK(call.Request.Event);
-                    await eventHandler.Invoke(committedEvent).ConfigureAwait(false);
+                    var invocationManager = _eventProcessingInvocationManager.GetInvocationManagerFor<EventHandlerClientToRuntimeResponse, IProcessingResult>();
+                    var response = await invocationManager.Invoke(
+                        async () =>
+                        {
+                            await eventHandler.Invoke(committedEvent).ConfigureAwait(false);
+                            return new SucceededProcessingResult();
+                        },
+                        eventHandler.Type,
+                        partition,
+                        call.Request.RetryProcessingState,
+                        succeededProcessingResult => new EventHandlerClientToRuntimeResponse(),
+                        response => response.Failed).ConfigureAwait(false);
 
                     try
                     {
@@ -119,7 +132,7 @@ namespace Dolittle.Events.Handling
                         _logger.Warning($"Error notifying waiters that event was processed : {correlationId} - {eventHandler.Identifier} : {ex.Message}");
                     }
 
-                    await _policy.Execute(() => call.Reply(response)).ConfigureAwait(false);
+                    await _writeHandlerResponsePolicy.Execute(() => call.Reply(response)).ConfigureAwait(false);
                 }, token);
         }
 

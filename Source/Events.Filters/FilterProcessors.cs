@@ -2,6 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Dolittle.Types;
 
 namespace Dolittle.Events.Filters
@@ -23,7 +25,7 @@ namespace Dolittle.Events.Filters
         }
 
         /// <inheritdoc/>
-        public void Start(IEventStreamFilter filter)
+        public Task Start(IEventStreamFilter filter, CancellationToken token)
         {
             IFilterProcessor processor = null;
 
@@ -37,7 +39,7 @@ namespace Dolittle.Events.Filters
             }
 
             if (processor == null) throw new NoFilterProcessorForFilter(filter);
-            processor.Start(filter);
+            return processor.Start(filter);
         }
     }
 }
