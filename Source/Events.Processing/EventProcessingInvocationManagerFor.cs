@@ -27,7 +27,7 @@ namespace Dolittle.Events.Processing
             Type eventProcessorType,
             PartitionId partition,
             grpc.RetryProcessingState retryProcessingState,
-            Func<TProcessingResult, TProcessingResponse> createProcessingResponseFromResult,
+            Func<TProcessingResult, TProcessingResponse> createResponseFromSucceededProcessingResult,
             Expression<Func<TProcessingResponse, grpc.ProcessorFailure>> processorFailurePropertyExpression)
         {
             var response = new TProcessingResponse();
@@ -35,7 +35,7 @@ namespace Dolittle.Events.Processing
             try
             {
                 var result = await invoke().ConfigureAwait(false);
-                response = createProcessingResponseFromResult(result);
+                response = createResponseFromSucceededProcessingResult(result);
             }
             catch (Exception ex)
             {

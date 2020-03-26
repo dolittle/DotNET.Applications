@@ -27,7 +27,7 @@ namespace Dolittle.Events.Processing
         /// <param name="eventProcessorType">The <see cref="Type" /> of the event processor.</param>
         /// <param name="partition">The <see cref="PartitionId" />.</param>
         /// <param name="retryProcessingState">The <see cref="grpc.RetryProcessingState" /> of the request.</param>
-        /// <param name="createProcessingResponseFromResult">The <see cref="Func{T1, T2}" /> for creating a processing response from processing result.</param>
+        /// <param name="createResponseFromSucceededProcessingResult">The <see cref="Func{T1, T2}" /> for creating a processing response from processing result.</param>
         /// <param name="processorFailurePropertyExpression">An <see cref="Expression{T}"/> for describing what property on response message that will hold the <see cref="grpc.ProcessorFailure" />..</param>
         /// <returns>A task that yields <see cref="IProcessingResult" />.</returns>
         Task<TProcessingResponse> Invoke(
@@ -35,7 +35,7 @@ namespace Dolittle.Events.Processing
             Type eventProcessorType,
             PartitionId partition,
             grpc.RetryProcessingState retryProcessingState,
-            Func<TProcessingResult, TProcessingResponse> createProcessingResponseFromResult,
+            Func<TProcessingResult, TProcessingResponse> createResponseFromSucceededProcessingResult,
             Expression<Func<TProcessingResponse, grpc.ProcessorFailure>> processorFailurePropertyExpression);
     }
 }
