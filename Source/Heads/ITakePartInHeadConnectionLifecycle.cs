@@ -25,5 +25,10 @@ namespace Dolittle.Heads
         /// <param name="token">Optional. A <see cref="CancellationToken" /> to cancel the operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task OnConnected(CancellationToken token = default);
+
+        /// <summary>
+        /// Called when the head is disconnected.
+        /// </summary>
+        void OnDisconnected();
     }
 }
