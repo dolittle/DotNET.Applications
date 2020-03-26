@@ -39,7 +39,7 @@ namespace Dolittle.Events.Processing
             }
             catch (Exception ex)
             {
-                processorFailureProperty.SetValue(response, new grpc.ProcessorFailure { Reason = $"{ex.Message} - Stack Trace: {ex.StackTrace}", Retry = false });
+                processorFailureProperty.SetValue(response, new grpc.ProcessorFailure { FailureType = grpc.RetryProcessingState.Types.FailureType.Unknown, Reason = $"{ex.Message} - Stack Trace: {ex.StackTrace}", Retry = false });
             }
 
             return response;
