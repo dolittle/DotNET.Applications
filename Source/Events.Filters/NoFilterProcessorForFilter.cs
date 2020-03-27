@@ -15,7 +15,7 @@ namespace Dolittle.Events.Filters
         /// </summary>
         /// <param name="filter">The <see cref="IEventStreamFilter" />.</param>
         public NoFilterProcessorForFilter(IEventStreamFilter filter)
-            : base($"There are no instances of '{typeof(IFilterProcessor).FullName}' that can start processing filter '{filter.Identifier}' of type '{filter.GetType().FullName}'")
+            : base($"There are no instances of '{typeof(IFilterProcessor).FullName}' that can start processing filter of type '{filter.GetType().FullName}'")
         {
         }
     }

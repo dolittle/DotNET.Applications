@@ -15,7 +15,7 @@ namespace Dolittle.Events.Filters
         /// </summary>
         /// <param name="filter">The <see cref="IEventStreamFilter" />.</param>
         public MultipleFilterProcessorsForFilter(IEventStreamFilter filter)
-            : base($"There are multiple instances of '{typeof(IFilterProcessor).FullName}' that can start processing event handler '{filter.Identifier}' of type '{filter.GetType().FullName}'")
+            : base($"There are multiple instances of '{typeof(IFilterProcessor).FullName}' that can start processing filter of type '{filter.GetType().FullName}'")
         {
         }
     }

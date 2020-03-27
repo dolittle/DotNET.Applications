@@ -11,16 +11,6 @@ namespace Dolittle.Events.Filters
     public interface IEventStreamFilter
     {
         /// <summary>
-        /// Gets the source <see cref="StreamId"/>.
-        /// </summary>
-        StreamId SourceStreamId { get; }
-
-        /// <summary>
-        /// Gets the <see cref="Identifier"/>.
-        /// </summary>
-        FilterId Identifier { get; }
-
-        /// <summary>
         /// Method that is asked if event is accepted.
         /// </summary>
         /// <param name="event"><see cref="CommittedEvent"/> to ask if is accepted.</param>

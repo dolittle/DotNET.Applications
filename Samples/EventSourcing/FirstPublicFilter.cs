@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Threading.Tasks;
 using Dolittle.Events;
 using Dolittle.Events.Filters;
@@ -10,6 +9,7 @@ using Dolittle.Logging;
 
 namespace EventSourcing
 {
+    [Filter("db7acf1e-a640-41f3-934f-f2f188e1b1e9")]
     public class FirstPublicFilter : ICanFilterPublicEvents
     {
         readonly ILogger _logger;
@@ -18,10 +18,6 @@ namespace EventSourcing
         {
             _logger = logger;
         }
-
-        public StreamId SourceStreamId => StreamId.AllStream;
-
-        public FilterId Identifier => Guid.Parse("eb356fbc-59f1-486a-909f-1a20eb1e9ee5");
 
         public Task<FilterResult> Filter(CommittedEvent @event)
         {

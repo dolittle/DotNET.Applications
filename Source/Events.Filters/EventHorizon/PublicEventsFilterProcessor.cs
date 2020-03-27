@@ -3,6 +3,8 @@
 
 extern alias contracts;
 
+using System;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using contracts::Dolittle.Runtime.Events.Processing;
@@ -10,6 +12,7 @@ using Dolittle.Events.Processing;
 using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
+using Dolittle.Reflection;
 using Dolittle.Resilience;
 using Dolittle.Services.Clients;
 using Grpc.Core;
@@ -65,15 +68,17 @@ namespace Dolittle.Events.Filters.EventHorizon
         public Task Start(IEventStreamFilter filter, CancellationToken token)
         {
             if (!CanProcess(filter)) throw new FilterProcessorCannotStartProcessingFilter(this, filter);
+            ThrowIfMissingFilterIdAttribute(filter.GetType());
+            var filterId = filter.GetType().GetCustomAttribute<FilterAttribute>().Id;
             var scope = ScopeId.Default;
             var additionalInfo = new FilterArguments
             {
-                Filter = filter.Identifier.ToProtobuf(),
+                Filter = filterId.ToProtobuf(),
                 Scope = scope.ToProtobuf()
             };
             var metadata = new Metadata { additionalInfo.ToArgumentsMetadata() };
 
-            _logger.Debug($"Connecting to runtime for public filter '{filter.Identifier}' on source stream '{filter.SourceStreamId}'");
+            _logger.Debug($"Connecting to runtime for public filter '{filterId}'");
 
             var result = _filtersClient.Connect(metadata);
             return _reverseCallClientManager.Handle(
@@ -109,6 +114,11 @@ namespace Dolittle.Events.Filters.EventHorizon
                         response => response.Failed).ConfigureAwait(false);
                     await _policy.Execute(() => call.Reply(response)).ConfigureAwait(false);
                 }, token);
+        }
+
+        void ThrowIfMissingFilterIdAttribute(Type filterType)
+        {
+            if (!filterType.HasAttribute<FilterAttribute>()) throw new MissingFilterAttributeForFilter(filterType);
         }
     }
 }

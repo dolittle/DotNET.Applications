@@ -16,7 +16,7 @@ namespace Dolittle.Events.Filters
         /// <param name="filterProcessor">The <see cref="IFilterProcessor" />.</param>
         /// <param name="filter">The <see cref="IEventStreamFilter" />.</param>
         public FilterProcessorCannotStartProcessingFilter(IFilterProcessor filterProcessor, IEventStreamFilter filter)
-            : base($"The filter processor '{filterProcessor.GetType().FullName}' cannot start processing filter '{filter.Identifier}' of type '{filter.GetType().FullName}'")
+            : base($"The filter processor '{filterProcessor.GetType().FullName}' cannot start processing filter of type '{filter.GetType().FullName}'")
         {
         }
     }
