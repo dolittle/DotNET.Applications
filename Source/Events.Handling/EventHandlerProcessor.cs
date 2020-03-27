@@ -33,8 +33,8 @@ namespace Dolittle.Events.Handling
         readonly IEventConverter _eventConverter;
         readonly IEventProcessingCompletion _eventHandlersWaiters;
         readonly IReverseCallClientManager _reverseCallClientManager;
+        readonly IAsyncPolicyFor<EventHandlerProcessor> _policy;
         readonly ILogger _logger;
-        readonly IAsyncPolicy _writeHandlerResponsePolicy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerProcessor"/> class.
@@ -46,7 +46,7 @@ namespace Dolittle.Events.Handling
         /// <param name="eventConverter"><see cref="IEventConverter"/> for converting events for transport.</param>
         /// <param name="eventHandlersWaiters"><see cref="IEventProcessingCompletion"/> for waiting on event handlers.</param>
         /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
-        /// <param name="policies"><see cref="IPolicies"/>.</param>
+        /// <param name="policy"><see cref="IAsyncPolicyFor{T}"/>.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public EventHandlerProcessor(
             IEventProcessingInvocationManager eventProcessingInvocationManager,
@@ -56,7 +56,7 @@ namespace Dolittle.Events.Handling
             IEventConverter eventConverter,
             IEventProcessingCompletion eventHandlersWaiters,
             IReverseCallClientManager reverseCallClientManager,
-            IPolicies policies,
+            IAsyncPolicyFor<EventHandlerProcessor> policy,
             ILogger logger)
         {
             _eventProcessingInvocationManager = eventProcessingInvocationManager;
@@ -66,9 +66,8 @@ namespace Dolittle.Events.Handling
             _eventConverter = eventConverter;
             _eventHandlersWaiters = eventHandlersWaiters;
             _reverseCallClientManager = reverseCallClientManager;
+            _policy = policy;
             _logger = logger;
-
-            _writeHandlerResponsePolicy = policies.GetAsyncNamed(typeof(WriteEventProcessingResponsePolicy).Name);
         }
 
         /// <inheritdoc/>
@@ -132,7 +131,7 @@ namespace Dolittle.Events.Handling
                         _logger.Warning($"Error notifying waiters that event was processed : {correlationId} - {eventHandler.Identifier} : {ex.Message}");
                     }
 
-                    await _writeHandlerResponsePolicy.Execute(() => call.Reply(response)).ConfigureAwait(false);
+                    await _policy.Execute(() => call.Reply(response)).ConfigureAwait(false);
                 }, token);
         }
 
