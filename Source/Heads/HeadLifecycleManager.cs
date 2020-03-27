@@ -6,6 +6,8 @@ extern alias contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using contracts::Dolittle.Runtime.Heads;
@@ -65,10 +67,10 @@ namespace Dolittle.Heads
             {
                 HeadId = headId,
 
-                // Host = Dns.GetHostName(),
+                Host = Dns.GetHostName(),
                 Runtime = $".NET Core : {Environment.Version} - {Environment.OSVersion} - {Environment.ProcessorCount} cores",
 
-                // Version = Assembly.GetEntryAssembly().GetName().Version.ToString()
+                Version = Assembly.GetEntryAssembly().GetName().Version.ToString()
             };
 
             Task.Run(async () =>
