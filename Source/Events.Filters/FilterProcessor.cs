@@ -29,7 +29,7 @@ namespace Dolittle.Events.Filters
         readonly IExecutionContextManager _executionContextManager;
         readonly IEventConverter _eventConverter;
         readonly IReverseCallClientManager _reverseCallClientManager;
-        readonly IAsyncPolicy _writeFilterResponsePolicy;
+        readonly IAsyncPolicyFor<FilterProcessor> _policy;
         readonly ILogger _logger;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Dolittle.Events.Filters
         /// <param name="executionContextManager"><see cref="IExecutionContextManager" />.</param>
         /// <param name="eventConverter"><see cref="IEventConverter"/> for converting events for transport.</param>
         /// <param name="reverseCallClientManager">A <see cref="IReverseCallClientManager"/> for working with reverse calls from server.</param>
-        /// <param name="policies">Policy for <see cref="FilterProcessor"/>.</param>
+        /// <param name="policy">Policy for <see cref="FilterProcessor"/>.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public FilterProcessor(
             IEventProcessingInvocationManager eventProcessingInvocationManager,
@@ -48,7 +48,7 @@ namespace Dolittle.Events.Filters
             IExecutionContextManager executionContextManager,
             IEventConverter eventConverter,
             IReverseCallClientManager reverseCallClientManager,
-            IPolicies policies,
+            IAsyncPolicyFor<FilterProcessor> policy,
             ILogger logger)
         {
             _eventProcessingInvocationManager = eventProcessingInvocationManager;
@@ -56,9 +56,8 @@ namespace Dolittle.Events.Filters
             _executionContextManager = executionContextManager;
             _eventConverter = eventConverter;
             _reverseCallClientManager = reverseCallClientManager;
+            _policy = policy;
             _logger = logger;
-
-            _writeFilterResponsePolicy = policies.GetAsyncNamed(typeof(WriteEventProcessingResponsePolicy).Name);
         }
 
         /// <inheritdoc/>
@@ -111,7 +110,7 @@ namespace Dolittle.Events.Filters
                                     }
                             },
                         response => response.Failed).ConfigureAwait(false);
-                    await _writeFilterResponsePolicy.Execute(() => call.Reply(response)).ConfigureAwait(false);
+                    await _policy.Execute(() => call.Reply(response)).ConfigureAwait(false);
                 }, token);
         }
     }

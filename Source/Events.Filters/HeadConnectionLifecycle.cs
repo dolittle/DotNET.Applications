@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Dolittle.Events.Processing;
 using Dolittle.Heads;
 using Dolittle.Resilience;
 using Dolittle.Types;
@@ -19,22 +18,21 @@ namespace Dolittle.Events.Filters
     {
         readonly IEnumerable<IEventStreamFilter> _filters;
         readonly IFilterProcessors _filterProcessors;
-        readonly IAsyncPolicy _startFilterProcessorPolicy;
+        readonly IAsyncPolicyFor<HeadConnectionLifecycle> _policy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HeadConnectionLifecycle"/> class.
         /// </summary>
         /// <param name="filterProviders"><see cref="IImplementationsOf{T}"/> <see cref="ICanProvideStreamFilters"/>.</param>
         /// <param name="filterProcessors">The <see cref="IFilterProcessors"/> system.</param>
-        /// <param name="policies"><see cref="IAsyncPolicyFor{HeadConnectionLifecycle}"/> the event handlers.</param>
+        /// <param name="policy"><see cref="IAsyncPolicyFor{HeadConnectionLifecycle}"/> the event handlers.</param>
         public HeadConnectionLifecycle(
             IInstancesOf<ICanProvideStreamFilters> filterProviders,
             IFilterProcessors filterProcessors,
-            IPolicies policies)
+            IAsyncPolicyFor<HeadConnectionLifecycle> policy)
         {
             _filterProcessors = filterProcessors;
-
-            _startFilterProcessorPolicy = policies.GetAsyncNamed(typeof(StartEventProcessorPolicy).Name);
+            _policy = policy;
             _filters = filterProviders.SelectMany(_ => _.Provide()).ToList();
         }
 
@@ -44,7 +42,7 @@ namespace Dolittle.Events.Filters
         /// <inheritdoc/>
         public async Task OnConnected(CancellationToken token)
         {
-            var tasks = _filters.Select(filter => _startFilterProcessorPolicy.Execute((token) => _filterProcessors.Start(filter, token), token)).ToList();
+            var tasks = _filters.Select(filter => _policy.Execute((token) => _filterProcessors.Start(filter, token), token)).ToList();
             await Task.WhenAny(tasks).ConfigureAwait(false);
             var exception = tasks.FirstOrDefault(_ => _.Exception != null)?.Exception;
             if (exception != null) throw exception;

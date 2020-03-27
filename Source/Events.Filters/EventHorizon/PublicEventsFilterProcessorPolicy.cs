@@ -6,33 +6,32 @@ using Dolittle.Logging;
 using Dolittle.Resilience;
 using Polly;
 
-namespace Dolittle.Events.Processing
+namespace Dolittle.Events.Filters.EventHorizon
 {
     /// <summary>
-    /// Defines the policy for starting an event processor.
+    /// Defines the policy for filter processor.
     /// </summary>
-    public class StartEventProcessorPolicy : IDefineNamedAsyncPolicy
+    public class PublicEventsFilterProcessorPolicy : IDefineAsyncPolicyForType
     {
         readonly ILogger _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StartEventProcessorPolicy"/> class.
+        /// Initializes a new instance of the <see cref="PublicEventsFilterProcessorPolicy"/> class.
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
-        public StartEventProcessorPolicy(ILogger logger)
+        public PublicEventsFilterProcessorPolicy(ILogger logger)
         {
             _logger = logger;
-            Name = GetType().Name;
         }
 
         /// <inheritdoc/>
-        public string Name { get; }
+        public Type Type { get; } = typeof(PublicEventsFilterProcessor);
 
         /// <inheritdoc/>
         public Polly.IAsyncPolicy Define() =>
             Polly.Policy.Handle<Exception>(_ =>
                 {
-                    _logger.Warning($"Failed to start event processor : {_.Message}");
+                    _logger.Warning($"Failed to write public filter response to runtime : {_.Message}");
                     return true;
                 })
                 .WaitAndRetryForeverAsync(_ => TimeSpan.FromSeconds(5));

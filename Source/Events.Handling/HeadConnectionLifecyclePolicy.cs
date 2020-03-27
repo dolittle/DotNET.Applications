@@ -6,33 +6,32 @@ using Dolittle.Logging;
 using Dolittle.Resilience;
 using Polly;
 
-namespace Dolittle.Events.Processing
+namespace Dolittle.Events.Handling
 {
     /// <summary>
     /// Defines the policy for writing event processing response to runtime.
     /// </summary>
-    public class WriteEventProcessingResponsePolicy : IDefineNamedAsyncPolicy
+    public class HeadConnectionLifecyclePolicy : IDefineAsyncPolicyForType
     {
         readonly ILogger _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WriteEventProcessingResponsePolicy"/> class.
+        /// Initializes a new instance of the <see cref="HeadConnectionLifecyclePolicy"/> class.
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
-        public WriteEventProcessingResponsePolicy(ILogger logger)
+        public HeadConnectionLifecyclePolicy(ILogger logger)
         {
             _logger = logger;
-            Name = GetType().Name;
         }
 
         /// <inheritdoc/>
-        public string Name { get; }
+        public Type Type { get; } = typeof(HeadConnectionLifecycle);
 
         /// <inheritdoc/>
         public Polly.IAsyncPolicy Define() =>
             Polly.Policy.Handle<Exception>(_ =>
                 {
-                    _logger.Warning($"Failed to write event processing response to runtime : {_.Message}");
+                    _logger.Warning($"Failed to start event handler : {_.Message}");
                     return true;
                 })
                 .WaitAndRetryForeverAsync(_ => TimeSpan.FromSeconds(1));
