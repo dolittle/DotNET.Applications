@@ -52,6 +52,7 @@ namespace Dolittle.Events.Handling
                 _eventProcessingCompletion.RegisterHandler(eventHandler);
                 return _policy.Execute((token) => _eventHandlerProcessor.Start(eventHandler, token), token);
             }).ToList();
+            if (tasks.Count == 0) return;
             await Task.WhenAny(tasks).ConfigureAwait(false);
             var exception = tasks.FirstOrDefault(_ => _.Exception != null)?.Exception;
             if (exception != null) throw exception;

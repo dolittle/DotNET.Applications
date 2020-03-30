@@ -43,6 +43,7 @@ namespace Dolittle.Events.Filters
         public async Task OnConnected(CancellationToken token)
         {
             var tasks = _filters.Select(filter => _policy.Execute((token) => _filterProcessors.Start(filter, token), token)).ToList();
+            if (tasks.Count == 0) return;
             await Task.WhenAny(tasks).ConfigureAwait(false);
             var exception = tasks.FirstOrDefault(_ => _.Exception != null)?.Exception;
             if (exception != null) throw exception;
