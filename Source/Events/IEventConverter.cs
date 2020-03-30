@@ -24,9 +24,10 @@ namespace Dolittle.Events
         /// Convert from <see cref="grpc.CommittedAggregateEvent"/> to <see cref="global::Dolittle.Events.CommittedAggregateEvent"/>.
         /// </summary>
         /// <param name="source"><see cref="grpc.CommittedAggregateEvent"/>.</param>
+        /// <param name="eventSource">The <see cref="EventSourceId" />.</param>
         /// <param name="aggregateRootType">The aggregate root <see cref="Type" />.</param>
         /// <returns>Converted <see cref="global::Dolittle.Events.CommittedAggregateEvent"/>.</returns>
-        CommittedAggregateEvent ToSDK(grpc.CommittedAggregateEvent source, Type aggregateRootType);
+        CommittedAggregateEvent ToSDK(grpc.CommittedAggregateEvent source, EventSourceId eventSource, Type aggregateRootType);
 
         /// <summary>
         /// Convert from <see cref="IEvent" /> to <see cref="grpc.UncommittedEvent" />.

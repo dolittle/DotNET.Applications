@@ -1,6 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace Dolittle.Events.Handling
 {
     /// <summary>
@@ -9,9 +12,18 @@ namespace Dolittle.Events.Handling
     public interface IEventHandlerProcessor
     {
         /// <summary>
-        /// Start processing for a specific <see cref="EventHandler"/>.
+        /// Whether this <see cref="AbstractEventHandler" /> can be processed.
         /// </summary>
-        /// <param name="eventHandler"><see cref="EventHandler"/> to start processing.</param>
-        void Start(EventHandler eventHandler);
+        /// <param name="eventHandler">The <see cref="AbstractEventHandler" />.</param>
+        /// <returns>true if it can be processed, false if not.</returns>
+        bool CanProcess(AbstractEventHandler eventHandler);
+
+        /// <summary>
+        /// Start processing for a specific <see cref="AbstractEventHandler"> event handler</see>.
+        /// </summary>
+        /// <param name="eventHandler"><see cref="AbstractEventHandler"/> to start processing.</param>
+        /// <param name="token">Optional. A <see cref="CancellationToken" /> to cancel the operation.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task Start(AbstractEventHandler eventHandler, CancellationToken token = default);
     }
 }

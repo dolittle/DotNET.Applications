@@ -8,6 +8,9 @@ namespace Dolittle.Events
     /// </summary>
     public enum CauseType
     {
+        /// <summary>Indicates that the <see cref="IEvent" /> has an unknown cause.</summary>
+        Unknonwn = 0,
+
         /// <summary>Indicates that the <see cref="IEvent"/> was caused by a Command.</summary>
         Command = 1,
 

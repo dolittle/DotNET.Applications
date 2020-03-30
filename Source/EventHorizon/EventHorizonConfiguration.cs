@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Dolittle.Applications;
+using Dolittle.Events;
 using Dolittle.Tenancy;
 
 namespace Dolittle.EventHorizon
@@ -12,6 +13,11 @@ namespace Dolittle.EventHorizon
     public class EventHorizonConfiguration
     {
         /// <summary>
+        /// Gets or sets the <see cref="ScopeId" />.
+        /// </summary>
+        public ScopeId Scope { get; set; }
+
+        /// <summary>
         /// Gets or sets the <see cref="Microservice" /> to receive events from.
         /// </summary>
         public Microservice Microservice { get; set; }
@@ -20,5 +26,15 @@ namespace Dolittle.EventHorizon
         /// Gets or sets the <see cref="TenantId" /> tenant to receive events from.
         /// </summary>
         public TenantId Tenant { get; set; }
+
+        /// <summary>
+        /// Gets or sets the public <see cref="StreamId" /> to subscribe to.
+        /// </summary>
+        public StreamId Stream { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="PartitionId" /> in the public stream.
+        /// </summary>
+        public PartitionId Partition { get; set; }
     }
 }

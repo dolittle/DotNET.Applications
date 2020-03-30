@@ -68,7 +68,7 @@ namespace Dolittle.Events
             {
                 AggregateRoot = _artifactTypeMap.GetArtifactFor(uncommittedEvents.AggregateRoot).Id.ToProtobuf(),
                 EventSource = uncommittedEvents.EventSource.ToProtobuf(),
-                AggregateRootVersion = uncommittedEvents.ExpectedAggregateRootVersion
+                ExpectedAggregateRootVersion = uncommittedEvents.ExpectedAggregateRootVersion
             };
 
             protobuf.Events.AddRange(uncommittedEvents.Select(ToProtobuf));
@@ -87,7 +87,7 @@ namespace Dolittle.Events
             var correlationId = source.Correlation.To<CorrelationId>();
             var microservice = source.Microservice.To<Microservice>();
             var tenantId = source.Tenant.To<TenantId>();
-            var cause = new Cause((CauseType)source.Cause.Type, source.Cause.Position);
+            var cause = new Cause((CauseType)source.Cause.Type, source.Cause.SequenceNumber);
 
             return new CommittedEvent(
                 source.EventLogSequenceNumber,
@@ -101,18 +101,17 @@ namespace Dolittle.Events
         }
 
         /// <inheritdoc/>
-        public CommittedAggregateEvent ToSDK(grpcEvents.CommittedAggregateEvent source, Type aggregateRootType)
+        public CommittedAggregateEvent ToSDK(grpcEvents.CommittedAggregateEvent source, EventSourceId eventSource, Type aggregateRootType)
         {
             var artifactId = source.Type.Id.To<ArtifactId>();
             var artifact = new Artifact(artifactId, source.Type.Generation);
             var type = _artifactTypeMap.GetTypeFor(artifact);
             var eventInstance = _serializer.JsonToEvent(type, source.Content) as IEvent;
             var occurred = source.Occurred.ToDateTimeOffset();
-            var eventSource = source.EventSource.To<EventSourceId>();
             var correlationId = source.Correlation.To<CorrelationId>();
             var microservice = source.Microservice.To<Microservice>();
             var tenantId = source.Tenant.To<TenantId>();
-            var cause = new Cause((CauseType)source.Cause.Type, source.Cause.Position);
+            var cause = new Cause((CauseType)source.Cause.Type, source.Cause.SequenceNumber);
 
             return new CommittedAggregateEvent(
                 eventSource,

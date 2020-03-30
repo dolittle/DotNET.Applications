@@ -14,8 +14,10 @@ namespace Dolittle.Events.Handling
         /// Initializes a new instance of the <see cref="MissingAttributeForEventHandler"/> class.
         /// </summary>
         /// <param name="handlerType">Type of <see cref="ICanHandleEvents"/>.</param>
-        public MissingAttributeForEventHandler(Type handlerType)
-            : base($"Missing [EventHandler(\"00000000-0000-0000-0000-000000000000\")] attribute on '{handlerType.AssemblyQualifiedName}'. Any implementations of '{typeof(ICanHandleEvents).FullName}' needs this attribute")
+        /// <param name="attributeType">The <see cref="Type" /> of the attribute that is missing.</param>
+        /// <param name="attributeDefaultValueString">The default attribute default value string.</param>
+        public MissingAttributeForEventHandler(Type handlerType, Type attributeType, string attributeDefaultValueString)
+            : base($"Missing [{attributeType.Name.Replace("Attribute", string.Empty, StringComparison.InvariantCulture)}({attributeDefaultValueString})] attribute on '{handlerType.AssemblyQualifiedName}'.")
         {
         }
     }

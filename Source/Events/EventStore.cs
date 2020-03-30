@@ -83,7 +83,7 @@ namespace Dolittle.Events
                 committedEvents.EventSource.ToGuid(),
                 aggregateRoot,
                 committedEvents.Events
-                    .Select(_ => _eventConverter.ToSDK(_, aggregateRoot))
+                    .Select(_ => _eventConverter.ToSDK(_, committedEvents.EventSource.To<EventSourceId>(), aggregateRoot))
                     .ToArray());
         }
 

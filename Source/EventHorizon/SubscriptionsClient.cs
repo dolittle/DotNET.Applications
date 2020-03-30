@@ -60,14 +60,18 @@ namespace Dolittle.EventHorizon
                     var request = new Subscription
                     {
                         Microservice = _.Microservice.ToProtobuf(),
-                        Tenant = _.Tenant.ToProtobuf()
+                        Tenant = _.Tenant.ToProtobuf(),
+                        Scope = _.Scope.ToProtobuf(),
+                        Stream = _.Stream.ToProtobuf(),
+                        Partition = _.Partition.ToProtobuf()
                     };
                     _executionContextManager.CurrentFor(
                         _application,
                         _microservice.Value,
                         subscriber);
                     var response = _client.Subscribe(request);
-                    if (!response.Success) throw new FailedToSubscribeToEventHorizon(subscriber, _.Microservice, _.Tenant);
+
+                    // if (!response.Success) throw new FailedToSubscribeToEventHorizon(subscriber, _.Microservice, _.Tenant);
                 });
             }
         }
