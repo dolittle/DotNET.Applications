@@ -15,7 +15,7 @@ namespace Dolittle.Events
     public class CommittedAggregateEvents : IReadOnlyList<CommittedAggregateEvent>
     {
         readonly NullFreeList<CommittedAggregateEvent> _events;
-        AggregateRootVersion _nextAggregateRootVersion;
+        readonly AggregateRootVersion _nextAggregateRootVersion;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommittedAggregateEvents"/> class.
