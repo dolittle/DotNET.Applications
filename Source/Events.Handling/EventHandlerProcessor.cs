@@ -71,12 +71,8 @@ namespace Dolittle.Events.Handling
         }
 
         /// <inheritdoc/>
-        public bool CanProcess(AbstractEventHandler eventHandler) => eventHandler.GetType().Equals(typeof(EventHandler));
-
-        /// <inheritdoc/>
         public Task Start(AbstractEventHandler eventHandler, CancellationToken token)
         {
-            if (!CanProcess(eventHandler)) throw new EventHandlerProcessorCannotStartProcessingEventHandler(this, eventHandler);
             ThrowIfIllegalEventHandlerId(eventHandler.Identifier);
             var artifacts = eventHandler.EventTypes.Select(_ => _artifactTypeMap.GetArtifactFor(_));
             var arguments = new EventHandlerArguments

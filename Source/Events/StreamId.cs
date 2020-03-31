@@ -14,17 +14,12 @@ namespace Dolittle.Events
         /// <summary>
         /// Represents the all stream <see cref="StreamId"/>.
         /// </summary>
-        public static StreamId AllStream = Guid.Empty;
-
-        /// <summary>
-        /// Represents the public events stream <see cref="StreamId" />.
-        /// </summary>
-        public static StreamId PublicEvents = Guid.Parse("5352cc2d-e772-4d21-b6b0-1782bbc9e64a");
+        public static StreamId EventLog = Guid.Empty;
 
         /// <summary>
         /// Gets a value indicating whether a <see cref="StreamId" /> is writeable for a user-defined filter.
         /// </summary>
-        public bool IsNonWriteable => this == AllStream || this == PublicEvents;
+        public bool IsNonWriteable => this == EventLog;
 
         /// <summary>
         /// Implicitly convert from <see cref="Guid"/> to <see cref="StreamId"/>.
@@ -36,9 +31,6 @@ namespace Dolittle.Events
         /// Creates a new instance of <see cref="StreamId"/> with a unique id.
         /// </summary>
         /// <returns>A new <see cref="StreamId"/>.</returns>
-        public static StreamId New()
-        {
-            return new StreamId { Value = Guid.NewGuid() };
-        }
+        public static StreamId New() => new StreamId { Value = Guid.NewGuid() };
     }
 }

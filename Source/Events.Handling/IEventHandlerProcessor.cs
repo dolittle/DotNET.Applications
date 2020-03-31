@@ -12,13 +12,6 @@ namespace Dolittle.Events.Handling
     public interface IEventHandlerProcessor
     {
         /// <summary>
-        /// Whether this <see cref="AbstractEventHandler" /> can be processed.
-        /// </summary>
-        /// <param name="eventHandler">The <see cref="AbstractEventHandler" />.</param>
-        /// <returns>true if it can be processed, false if not.</returns>
-        bool CanProcess(AbstractEventHandler eventHandler);
-
-        /// <summary>
         /// Start processing for a specific <see cref="AbstractEventHandler"> event handler</see>.
         /// </summary>
         /// <param name="eventHandler"><see cref="AbstractEventHandler"/> to start processing.</param>

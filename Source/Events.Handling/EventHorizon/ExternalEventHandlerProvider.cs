@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Dolittle.Applications;
+using Dolittle.Artifacts;
 using Dolittle.Collections;
 using Dolittle.DependencyInversion;
 using Dolittle.Events.EventHorizon;
@@ -46,33 +46,17 @@ namespace Dolittle.Events.Handling.EventHorizon
                     (Type eventType, MethodInfo methodInfo) = (_.GetParameters()[0].ParameterType, _);
                     return (eventType, methodInfo);
                 });
-                var producerMicroservices = new List<Microservice>();
                 var eventHandlerMethods = new List<EventHandlerMethod<IExternalEvent>>();
                 eventTypesAndMethods.ForEach(eventTypeAndMethod =>
                 {
                     (var eventType, var methodInfo) = (eventTypeAndMethod.eventType, eventTypeAndMethod.methodInfo);
-                    ThrowIfMissingProducerMicroservice(eventType);
-                    var producerMicroservice = eventType.GetCustomAttribute<ProducerMicroserviceAttribute>().Id;
-                    ThrowIfIllegalProducerMicroserviceId(eventType, producerMicroservice);
-                    producerMicroservices.Add(producerMicroservice);
+                    ThrowIfEventMissingArtifactAttribute(eventType);
+                    var producerMicroservice = eventType.GetCustomAttribute<ArtifactAttribute>().Artifact;
                     eventHandlerMethods.Add(new EventHandlerMethod<IExternalEvent>(eventType, methodInfo));
                 });
 
-                return new ExternalEventHandler(_container, eventHandlerId, eventHandlerType, scopeId, producerMicroservices, eventHandlerMethods);
+                return new ExternalEventHandler(_container, eventHandlerId, eventHandlerType, scopeId, eventHandlerMethods);
             });
-
-        void ThrowIfIllegalProducerMicroserviceId(Type eventType, Microservice producerMicroservice)
-        {
-            ThrowIfProducerMicroserviceIdIsNotSet(eventType, producerMicroservice);
-        }
-
-        void ThrowIfProducerMicroserviceIdIsNotSet(Type eventType, Microservice producerMicroservice)
-        {
-            if (producerMicroservice == Microservice.NotSet)
-            {
-                throw new ProducerMicroserviceIdMustBeSet(eventType);
-            }
-        }
 
         bool TakesExpectedParameters(MethodInfo methodInfo)
         {
@@ -80,6 +64,11 @@ namespace Dolittle.Events.Handling.EventHorizon
             return parameters.Length == 2 &&
                     typeof(IExternalEvent).IsAssignableFrom(parameters[0].ParameterType) &&
                     parameters[1].ParameterType == typeof(EventContext);
+        }
+
+        void ThrowIfEventMissingArtifactAttribute(Type eventType)
+        {
+            if (!eventType.HasAttribute<ArtifactAttribute>()) throw new ExternalEventMustHaveArtifactAttribute(eventType);
         }
 
         void ThrowIfMissingAttributes(Type eventHandlerType)
@@ -99,14 +88,6 @@ namespace Dolittle.Events.Handling.EventHorizon
         void ThrowIfMissingScopeAttribute(Type eventHandlerType)
         {
             if (!eventHandlerType.HasAttribute<ScopeAttribute>())
-            {
-                throw new MissingScopeAttributeForExternalEventHandler(eventHandlerType);
-            }
-        }
-
-        void ThrowIfMissingProducerMicroservice(Type eventHandlerType)
-        {
-            if (!eventHandlerType.HasAttribute<ProducerMicroserviceAttribute>())
             {
                 throw new MissingScopeAttributeForExternalEventHandler(eventHandlerType);
             }
