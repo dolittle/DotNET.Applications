@@ -34,7 +34,7 @@ namespace Dolittle.Events.Handling
         public Type EventType { get; }
 
         /// <inheritdoc/>
-        public async Task Invoke(ICanHandleEvents handler, CommittedEvent @event)
+        public async Task Invoke(object handler, CommittedEvent @event)
         {
             try
             {

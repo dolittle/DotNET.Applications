@@ -93,11 +93,11 @@ namespace Dolittle.Events.Filters
                     _executionContextManager.CurrentFor(executionContext);
                     var correlationId = executionContext.CorrelationId.To<CorrelationId>();
 
-                    var committedEvent = _eventConverter.ToSDK(call.Request.Event);
                     var invocationManager = _eventProcessingInvocationManager.GetInvocationManagerFor<FilterClientToRuntimeResponse, IFilterResult>();
                     var response = await invocationManager.Invoke(
                         async () =>
                         {
+                            var committedEvent = _eventConverter.ToSDK(call.Request.Event);
                             var filterResult = await filter.Filter(committedEvent).ConfigureAwait(false);
                             return new SucceededFilteringResult(filterResult.IsIncluded, filterResult.Partition);
                         },

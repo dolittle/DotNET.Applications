@@ -83,7 +83,7 @@ namespace Dolittle.Events.Handling
         public Task Invoke(CommittedEvent @event)
         {
             ThrowIfCannotInvoke(@event);
-            var handler = _container.Get(Type) as ICanHandleEvents;
+            var handler = _container.Get(Type);
             return _methods[@event.Event.GetType()].Invoke(handler, @event);
         }
 

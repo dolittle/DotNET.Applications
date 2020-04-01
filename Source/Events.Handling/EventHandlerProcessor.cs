@@ -104,11 +104,11 @@ namespace Dolittle.Events.Handling
                     _executionContextManager.CurrentFor(executionContext);
                     var correlationId = executionContext.CorrelationId.To<CorrelationId>();
 
-                    var committedEvent = _eventConverter.ToSDK(call.Request.Event);
                     var invocationManager = _eventProcessingInvocationManager.GetInvocationManagerFor<EventHandlerClientToRuntimeResponse, IProcessingResult>();
                     var response = await invocationManager.Invoke(
                         async () =>
                         {
+                            var committedEvent = _eventConverter.ToSDK(call.Request.Event);
                             await eventHandler.Invoke(committedEvent).ConfigureAwait(false);
                             return new SucceededProcessingResult();
                         },
@@ -120,7 +120,7 @@ namespace Dolittle.Events.Handling
 
                     try
                     {
-                        _eventHandlersWaiters.EventHandlerCompletedForEvent(correlationId, eventHandler.Identifier, committedEvent.Event.GetType());
+                        _eventHandlersWaiters.EventHandlerCompletedForEvent(correlationId, eventHandler.Identifier, _artifactTypeMap.GetTypeFor(new Artifact(call.Request.Event.Type.Id.To<ArtifactId>(), call.Request.Event.Type.Generation)));
                     }
                     catch (Exception ex)
                     {
