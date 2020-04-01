@@ -15,7 +15,7 @@ namespace Dolittle.Events
     public class CommittedAggregateEvents : IReadOnlyList<CommittedAggregateEvent>
     {
         readonly NullFreeList<CommittedAggregateEvent> _events;
-        AggregateRootVersion _nextAggregateRootVersion;
+        readonly AggregateRootVersion _nextAggregateRootVersion;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommittedAggregateEvents"/> class.
@@ -98,11 +98,6 @@ namespace Dolittle.Events
         void ThrowIfEventLogVersionIsOutOfOrder(CommittedAggregateEvent @event, CommittedAggregateEvent previousEvent)
         {
             if (@event.EventLogSequenceNumber <= previousEvent.EventLogSequenceNumber) throw new EventLogSequenceNumberIsOutOfOrder(@event.EventLogSequenceNumber, previousEvent.EventLogSequenceNumber);
-        }
-
-        void ThrowIfEventsAreMissingForExpectedVersion(AggregateRootVersion aggregateRootVersion)
-        {
-            if (AggregateRootVersion != aggregateRootVersion) throw new MissingEventsForExpectedAggregateRootVersion(aggregateRootVersion, AggregateRootVersion);
         }
     }
 }

@@ -2,7 +2,7 @@
     <Import Project="../../default.props" />
 
     <PropertyGroup>
-        <AssemblyName>Dolittle.TimeSeries.Connectors</AssemblyName>
+        <AssemblyName>Dolittle.SDK.TimeSeries.Connectors</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
