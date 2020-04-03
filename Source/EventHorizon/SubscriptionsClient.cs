@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 extern alias contracts;
 
-using System.Threading;
 using System.Threading.Tasks;
 using contracts::Dolittle.Runtime.EventHorizon;
 using Dolittle.Applications;
@@ -53,7 +52,7 @@ namespace Dolittle.EventHorizon
         }
 
         /// <inheritdoc/>
-        public async Task Subscribe(TenantId consumerTenant, EventHorizon eventHorizon, CancellationToken token)
+        public async Task Subscribe(TenantId consumerTenant, EventHorizon eventHorizon)
         {
             _logger.Trace($"Tenant '{consumerTenant}' subscribing for scope '{eventHorizon.Scope}' to partition '{eventHorizon.Partition}' in stream '{eventHorizon.Stream}' for tenant '{eventHorizon.Tenant}' in microservice '{eventHorizon.Microservice}'");
             var request = new Subscription
@@ -68,7 +67,8 @@ namespace Dolittle.EventHorizon
                 _application,
                 _microservice,
                 consumerTenant);
-            var response = await _client.SubscribeAsync(request, cancellationToken: token);
+            var response = await _client.SubscribeAsync(request);
+            _logger.Debug($"Tenant '{consumerTenant}' {(response.Failure == null ? "successfully" : "unsuccessfully")} subscribed for scope '{eventHorizon.Scope}' to partition '{eventHorizon.Partition}' in stream '{eventHorizon.Stream}' for tenant '{eventHorizon.Tenant}' in microservice '{eventHorizon.Microservice}'");
             if (response.Failure != null)
             {
                 throw new FailedToSubscribeToEventHorizon(response.Failure.Reason, consumerTenant, eventHorizon.Microservice, eventHorizon.Tenant, eventHorizon.Stream, eventHorizon.Partition);
