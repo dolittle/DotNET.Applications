@@ -2,14 +2,16 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 extern alias contracts;
 
+using System.Threading;
+using System.Threading.Tasks;
 using contracts::Dolittle.Runtime.EventHorizon;
 using Dolittle.Applications;
 using Dolittle.Applications.Configuration;
-using Dolittle.Collections;
 using Dolittle.Execution;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
+using Dolittle.Tenancy;
 using grpc = contracts::Dolittle.Runtime.EventHorizon;
 
 namespace Dolittle.EventHorizon
@@ -51,28 +53,25 @@ namespace Dolittle.EventHorizon
         }
 
         /// <inheritdoc/>
-        public void Subscribe()
+        public async Task Subscribe(TenantId consumerTenant, EventHorizon eventHorizon, CancellationToken token)
         {
-            foreach ((var subscriber, var eventHorizon) in _eventHorizons)
+            _logger.Trace($"Tenant '{consumerTenant}' subscribing for scope '{eventHorizon.Scope}' to partition '{eventHorizon.Partition}' in stream '{eventHorizon.Stream}' for tenant '{eventHorizon.Tenant}' in microservice '{eventHorizon.Microservice}'");
+            var request = new Subscription
             {
-                eventHorizon.ForEach(_ =>
-                {
-                    var request = new Subscription
-                    {
-                        Microservice = _.Microservice.ToProtobuf(),
-                        Tenant = _.Tenant.ToProtobuf(),
-                        Scope = _.Scope.ToProtobuf(),
-                        Stream = _.Stream.ToProtobuf(),
-                        Partition = _.Partition.ToProtobuf()
-                    };
-                    _executionContextManager.CurrentFor(
-                        _application,
-                        _microservice.Value,
-                        subscriber);
-                    var response = _client.Subscribe(request);
-
-                    // if (!response.Success) throw new FailedToSubscribeToEventHorizon(subscriber, _.Microservice, _.Tenant);
-                });
+                Microservice = eventHorizon.Microservice.ToProtobuf(),
+                Tenant = eventHorizon.Tenant.ToProtobuf(),
+                Scope = eventHorizon.Scope.ToProtobuf(),
+                Stream = eventHorizon.Stream.ToProtobuf(),
+                Partition = eventHorizon.Partition.ToProtobuf()
+            };
+            _executionContextManager.CurrentFor(
+                _application,
+                _microservice,
+                consumerTenant);
+            var response = await _client.SubscribeAsync(request, cancellationToken: token);
+            if (response.Failure != null)
+            {
+                throw new FailedToSubscribeToEventHorizon(response.Failure.Reason, consumerTenant, eventHorizon.Microservice, eventHorizon.Tenant, eventHorizon.Stream, eventHorizon.Partition);
             }
         }
     }
