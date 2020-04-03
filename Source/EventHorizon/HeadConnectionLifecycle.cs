@@ -1,9 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Dolittle.Collections;
 using Dolittle.Heads;
 using Dolittle.Logging;
 using Dolittle.Resilience;
@@ -46,13 +47,15 @@ namespace Dolittle.EventHorizon
         public async Task OnConnected(CancellationToken token = default)
         {
             _logger.Debug($"Subscribing to event horizons based on '{EventHorizonsConfiguration.ConfigurationName}' configuration.");
-            var tasks = _eventHorizons.SelectMany(_ =>
+            var tasks = new List<Task>();
+            _eventHorizons.ForEach(_ =>
                 {
                     var consumerTenant = _.Key;
                     var eventHorizons = _.Value;
-                    return eventHorizons.Select(eventHorizon => _policy.Execute((token) => _subscriptionsClient.Subscribe(consumerTenant, eventHorizon, token), token));
+                    _logger.Trace($"Registering event horizons for consumer tenant '{consumerTenant}'");
+                    eventHorizons.ForEach(eventHorizon => tasks.Add(_policy.Execute(_ => _subscriptionsClient.Subscribe(consumerTenant, eventHorizon), token)));
                 });
-            if (!tasks.Any()) return;
+            if (tasks.Count == 0) return;
             await Task.WhenAll(tasks).ConfigureAwait(false);
         }
     }
