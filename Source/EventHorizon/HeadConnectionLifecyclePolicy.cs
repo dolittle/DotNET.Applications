@@ -31,7 +31,7 @@ namespace Dolittle.EventHorizon
         public Polly.IAsyncPolicy Define() =>
             Polly.Policy.Handle<Exception>(_ =>
                 {
-                    _logger.Warning($"Failed to subscribe to event horizon : {_.Message}");
+                    _logger.Warning($"Error while subscribing to event horizon : {_.Message}");
                     return true;
                 })
                 .WaitAndRetryForeverAsync(_ => TimeSpan.FromSeconds(5));
