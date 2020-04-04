@@ -61,7 +61,7 @@ namespace Dolittle.Heads
         /// <inheritdoc/>
         public void Start()
         {
-            _logger.Information($"Connect client '{_head.Id}'");
+            _logger.Debug($"Connecting client '{_head.Id}'");
             var headId = _head.Id.ToProtobuf();
             var headInfo = new HeadInfo
             {
