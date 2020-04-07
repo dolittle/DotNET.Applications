@@ -3,6 +3,7 @@
 
 using System;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 
 namespace Dolittle.Events.Handling
@@ -43,7 +44,7 @@ namespace Dolittle.Events.Handling
             }
             catch (TargetInvocationException ex)
             {
-                throw ex.InnerException;
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
             }
         }
 
