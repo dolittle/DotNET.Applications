@@ -1,6 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Threading.Tasks;
+using Dolittle.Tenancy;
+
 namespace Dolittle.EventHorizon
 {
     /// <summary>
@@ -9,8 +12,11 @@ namespace Dolittle.EventHorizon
     public interface ISubscriptionsClient
     {
         /// <summary>
-        /// Subscribes based on configurations.
+        /// Notifies the runtime to subscribe to an event horizon.
         /// </summary>
-        void Subscribe();
+        /// <param name="consumerTenant">The consumer <see cref="TenantId" />.</param>
+        /// <param name="eventHorizon">The <see cref="EventHorizon" />.</param>
+        /// <returns>The asynchronous operation.</returns>
+        Task Subscribe(TenantId consumerTenant, EventHorizon eventHorizon);
     }
 }

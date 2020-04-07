@@ -86,7 +86,7 @@ namespace Dolittle.Commands.Handling
         {
             EnsureInitialized();
 
-            _logger.Information($"Trying to invoke command handlers for {command.Type}");
+            _logger.Debug($"Trying to invoke command handlers for {command.Type}");
 
             if (_commandHandlers.Count == 0) return false;
 
@@ -113,7 +113,7 @@ namespace Dolittle.Commands.Handling
             }
             else
             {
-                _logger.Information("No command handlers to invoke");
+                _logger.Debug("No command handlers to invoke");
             }
 
             return false;

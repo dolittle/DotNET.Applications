@@ -10,7 +10,7 @@ namespace Dolittle.EventHorizon
     /// <summary>
     /// Represents the configuration of an event horizon.
     /// </summary>
-    public class EventHorizonConfiguration
+    public class EventHorizon
     {
         /// <summary>
         /// Gets or sets the <see cref="ScopeId" />.

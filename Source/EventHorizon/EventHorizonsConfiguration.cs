@@ -13,7 +13,7 @@ namespace Dolittle.EventHorizon
     /// </summary>
     [Name(ConfigurationName)]
     public class EventHorizonsConfiguration :
-        ReadOnlyDictionary<TenantId, IReadOnlyList<EventHorizonConfiguration>>,
+        ReadOnlyDictionary<TenantId, IReadOnlyList<EventHorizon>>,
         IConfigurationObject
     {
         /// <summary>
@@ -24,8 +24,8 @@ namespace Dolittle.EventHorizon
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHorizonsConfiguration"/> class.
         /// </summary>
-        /// <param name="configuration">Dictionary for <see cref="TenantId"/> with <see cref="IReadOnlyList{T}" /> of ><see cref="EventHorizonConfiguration"/>.</param>
-        public EventHorizonsConfiguration(IDictionary<TenantId, IReadOnlyList<EventHorizonConfiguration>> configuration)
+        /// <param name="configuration">Dictionary for <see cref="TenantId"/> with <see cref="IReadOnlyList{T}" /> of ><see cref="EventHorizon"/>.</param>
+        public EventHorizonsConfiguration(IDictionary<TenantId, IReadOnlyList<EventHorizon>> configuration)
             : base(configuration)
         {
         }
