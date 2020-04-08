@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dolittle.DependencyInversion;
+using Dolittle.Logging;
 using Dolittle.Reflection;
 using Dolittle.Types;
 
@@ -18,47 +19,77 @@ namespace Dolittle.Events.Handling
     {
         readonly IImplementationsOf<ICanHandleEvents> _eventHandlerTypes;
         readonly IContainer _container;
+        readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerProvider"/> class.
         /// </summary>
         /// <param name="eventHandlerTypes">The <see cref="IImplementationsOf{T}" /> of <see cref="ICanHandleEvents" />.</param>
         /// <param name="container">The <see cref="IContainer" />.</param>
-        public EventHandlerProvider(IImplementationsOf<ICanHandleEvents> eventHandlerTypes, IContainer container)
+        /// <param name="logger">The <see cref="ILogger" />.</param>
+        public EventHandlerProvider(IImplementationsOf<ICanHandleEvents> eventHandlerTypes, IContainer container, ILogger logger)
         {
             _eventHandlerTypes = eventHandlerTypes;
             _container = container;
+            _logger = logger;
         }
 
         /// <inheritdoc/>
-        public IEnumerable<AbstractEventHandler> Provide() => _eventHandlerTypes.Select(type =>
+        public IEnumerable<AbstractEventHandler> Provide()
+        {
+            var eventHandlers = new List<AbstractEventHandler>();
+            foreach (var eventHandlerType in _eventHandlerTypes)
             {
-                ThrowIfMissingAttributeForEventHandler(type);
-                var eventHandlerId = type.GetCustomAttribute<EventHandlerAttribute>().Id;
-                var eventMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
-                                                    .Where(_ => _.Name == AbstractEventHandler.HandleMethodName && TakesExpectedParameters(_));
+                CheckEventHandlerAttributes(eventHandlerType);
+                var eventHandlerId = eventHandlerType.GetCustomAttribute<EventHandlerAttribute>().Id;
+                var eventMethods = eventHandlerType
+                                    .GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
+                                    .Where(_ => _.Name == AbstractEventHandler.HandleMethodName)
+                                    .Where(CheckHandleMethod);
 
                 var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod<IEvent>(_.GetParameters()[0].ParameterType, _));
-                return new EventHandler(_container, eventHandlerId, type, IsPartitioned(type), eventHandlerMethods);
-            });
+                eventHandlers.Add(new EventHandler(_container, eventHandlerId, eventHandlerType, IsPartitioned(eventHandlerType), eventHandlerMethods));
+            }
+
+            return eventHandlers;
+        }
 
         bool IsPartitioned(Type type) =>
             !type.HasAttribute<NotPartitionedAttribute>();
 
-        bool TakesExpectedParameters(MethodInfo methodInfo)
+        bool CheckEventHandlerAttributes(Type eventHandlerType)
         {
-            var parameters = methodInfo.GetParameters();
-            return parameters.Length == 2 &&
-                    typeof(IEvent).IsAssignableFrom(parameters[0].ParameterType) &&
-                    parameters[1].ParameterType == typeof(EventContext);
+            if (!eventHandlerType.HasAttribute<EventHandlerAttribute>())
+            {
+                _logger.Warning(
+                    "Cannot register event handler '{eventHandlerName} : {eventHandlerInterfaceName}' because it is missing the '{eventHandletAttribute}' attribute.",
+                    eventHandlerType.AssemblyQualifiedName,
+                    typeof(ICanHandleEvents).FullName,
+                    typeof(EventHandlerAttribute).FullName);
+                return false;
+            }
+
+            return true;
         }
 
-        void ThrowIfMissingAttributeForEventHandler(Type type)
+        bool CheckHandleMethod(MethodInfo methodInfo)
         {
-            if (!type.HasAttribute<EventHandlerAttribute>())
+            var eventHandlerType = methodInfo.DeclaringType;
+            var parameters = methodInfo.GetParameters();
+            if (parameters.Length != 2
+                || !typeof(IEvent).IsAssignableFrom(parameters?[0]?.ParameterType)
+                || parameters?[1]?.ParameterType == typeof(EventContext))
             {
-                throw new MissingEventHandlerAttributeForEventHandler(type);
+                _logger.Warning(
+                    "Event Handler Method {eventHandlerMethod} in event handler '{eventHandler}' must take two parameters the first being an event that implements '{event}' and the context of the event '{eventContext}' ",
+                    $"{methodInfo.Name}({string.Join(", ", parameters.Select(_ => _.ParameterType.AssemblyQualifiedName))})",
+                    eventHandlerType.AssemblyQualifiedName,
+                    typeof(IEvent).FullName,
+                    typeof(EventContext).FullName);
+                return false;
             }
+
+            return true;
         }
     }
 }
