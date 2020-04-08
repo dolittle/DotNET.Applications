@@ -127,6 +127,7 @@ namespace Dolittle.Events.Handling
                         _logger.Warning($"Error notifying waiters that event was processed : {correlationId} - {eventHandler.Identifier} : {ex.Message}");
                     }
 
+                    response.ExecutionContext = _executionContextManager.Current.ToByteString();
                     await _policy.Execute(() => call.Reply(response)).ConfigureAwait(false);
                 }, token);
         }
