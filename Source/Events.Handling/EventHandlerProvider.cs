@@ -43,7 +43,7 @@ namespace Dolittle.Events.Handling
             var eventHandlers = new List<AbstractEventHandler>();
             foreach (var eventHandlerType in _eventHandlerTypes)
             {
-                CheckEventHandlerAttributes(eventHandlerType);
+                if (!CheckEventHandlerAttributes(eventHandlerType)) break;
                 var eventHandlerId = eventHandlerType.GetCustomAttribute<EventHandlerAttribute>().Id;
                 var eventMethods = eventHandlerType
                                     .GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
