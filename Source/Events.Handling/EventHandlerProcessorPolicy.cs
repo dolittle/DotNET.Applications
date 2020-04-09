@@ -19,7 +19,7 @@ namespace Dolittle.Events.Handling
         /// Initializes a new instance of the <see cref="EventHandlerProcessorPolicy"/> class.
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
-        public EventHandlerProcessorPolicy(ILogger logger)
+        public EventHandlerProcessorPolicy(ILogger<EventHandlerProcessorPolicy> logger)
         {
             _logger = logger;
         }

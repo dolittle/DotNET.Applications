@@ -28,7 +28,10 @@ namespace Dolittle.Events.Handling.EventHorizon
         /// <param name="eventHandlerTypes">The <see cref="IImplementationsOf{T}" /> of <see cref="ICanHandleExternalEvents" />.</param>
         /// <param name="container">The <see cref="IContainer" />.</param>
         /// <param name="logger">The <see cref="ILogger" />.</param>
-        public ExternalEventHandlerProvider(IImplementationsOf<ICanHandleExternalEvents> eventHandlerTypes, IContainer container, ILogger logger)
+        public ExternalEventHandlerProvider(
+            IImplementationsOf<ICanHandleExternalEvents> eventHandlerTypes,
+            IContainer container,
+            ILogger<ExternalEventHandlerProvider> logger)
         {
             _eventHandlerTypes = eventHandlerTypes;
             _container = container;
@@ -69,20 +72,20 @@ namespace Dolittle.Events.Handling.EventHorizon
             if (!eventHandlerType.HasAttribute<EventHandlerAttribute>())
             {
                 _logger.Warning(
-                    "Cannot register event handler '{eventHandlerName} : {externalEventHandlerInterfaceName}' because it is missing the '{eventHandlerAttribute}' attribute.",
-                    eventHandlerType.AssemblyQualifiedName,
-                    typeof(ICanHandleExternalEvents).FullName,
-                    typeof(EventHandlerAttribute).FullName);
+                    "Could not register External Event Handler '{eventHandlerName} : {externalEventHandlerInterfaceName}' because it is missing the '{eventHandlerAttribute}' attribute",
+                    eventHandlerType.ToString(),
+                    typeof(ICanHandleExternalEvents).ToString(),
+                    typeof(EventHandlerAttribute).ToString());
                 return false;
             }
 
             if (!eventHandlerType.HasAttribute<ScopeAttribute>())
             {
                 _logger.Warning(
-                    "Cannot register event handler '{eventHandlerName} : {externalEventHandlerInterfaceName}' because it is missing the '{scopeAttribute}' attribute.",
-                    eventHandlerType.AssemblyQualifiedName,
-                    typeof(ICanHandleExternalEvents).FullName,
-                    typeof(ScopeAttribute).FullName);
+                    "Could not register External Event Handler '{eventHandlerName} : {externalEventHandlerInterfaceName}' because it is missing the '{scopeAttribute}' attribute",
+                    eventHandlerType.ToString(),
+                    typeof(ICanHandleExternalEvents).ToString(),
+                    typeof(ScopeAttribute).ToString());
                 return false;
             }
 
@@ -95,14 +98,14 @@ namespace Dolittle.Events.Handling.EventHorizon
             var parameters = methodInfo.GetParameters();
             if (parameters.Length != 2
                 || !typeof(IPublicEvent).IsAssignableFrom(parameters?[0]?.ParameterType)
-                || parameters?[1]?.ParameterType == typeof(EventContext))
+                || parameters?[1]?.ParameterType != typeof(EventContext))
             {
                 _logger.Warning(
-                    "Event Handler Method {eventHandlerMethod} in event handler '{eventHandler}' must take two parameters the first being an event that implements '{publicEvent}' and the context of the event '{eventContext}' ",
-                    $"{methodInfo.Name}({string.Join(", ", parameters.Select(_ => _.ParameterType.AssemblyQualifiedName))})",
-                    eventHandlerType.AssemblyQualifiedName,
-                    typeof(IPublicEvent).FullName,
-                    typeof(EventContext).FullName);
+                    "Could not register the External Event Handler Method: {eventHandlerMethod} in event handler '{eventHandler}'. The method must take two parameters, the first being an event that implements: '{publicEvent}' and the second being the context of the event: '{eventContext}'",
+                    $"{methodInfo.Name}({string.Join(", ", parameters.Select(_ => _.ParameterType.ToString()))})",
+                    eventHandlerType.ToString(),
+                    typeof(IPublicEvent).ToString(),
+                    typeof(EventContext).ToString());
                 return false;
             }
 
@@ -114,9 +117,12 @@ namespace Dolittle.Events.Handling.EventHorizon
             if (!eventType.HasAttribute<ArtifactAttribute>())
             {
                 _logger.Warning(
-                    "Cannot have an event handler on event '{event}' because it does not have the '{artifactAttribute}' attribute",
-                    eventType.AssemblyQualifiedName,
-                    typeof(ArtifactAttribute).FullName);
+                    @"Cannot have an External Event Handler on event '{event}' because it does not have an '{artifactAttribute}' attribute.
+External '{publicEvent}' must have an '{artifactAttribute}' attribute on the class",
+                    eventType.ToString(),
+                    typeof(ArtifactAttribute).ToString(),
+                    typeof(IPublicEvent).ToString(),
+                    typeof(ArtifactAttribute).ToString());
                 return false;
             }
 

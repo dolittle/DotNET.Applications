@@ -27,7 +27,10 @@ namespace Dolittle.Events.Handling
         /// <param name="eventHandlerTypes">The <see cref="IImplementationsOf{T}" /> of <see cref="ICanHandleEvents" />.</param>
         /// <param name="container">The <see cref="IContainer" />.</param>
         /// <param name="logger">The <see cref="ILogger" />.</param>
-        public EventHandlerProvider(IImplementationsOf<ICanHandleEvents> eventHandlerTypes, IContainer container, ILogger logger)
+        public EventHandlerProvider(
+            IImplementationsOf<ICanHandleEvents> eventHandlerTypes,
+            IContainer container,
+            ILogger<EventHandlerProvider> logger)
         {
             _eventHandlerTypes = eventHandlerTypes;
             _container = container;
@@ -62,10 +65,10 @@ namespace Dolittle.Events.Handling
             if (!eventHandlerType.HasAttribute<EventHandlerAttribute>())
             {
                 _logger.Warning(
-                    "Cannot register event handler '{eventHandlerName} : {eventHandlerInterfaceName}' because it is missing the '{eventHandletAttribute}' attribute.",
-                    eventHandlerType.AssemblyQualifiedName,
-                    typeof(ICanHandleEvents).FullName,
-                    typeof(EventHandlerAttribute).FullName);
+                    "Could not register Event Handler '{eventHandlerName} : {eventHandlerInterfaceName}' because it is missing the '{eventHandletAttribute}' attribute.",
+                    eventHandlerType.ToString(),
+                    typeof(ICanHandleEvents).ToString(),
+                    typeof(EventHandlerAttribute).ToString());
                 return false;
             }
 
@@ -78,14 +81,14 @@ namespace Dolittle.Events.Handling
             var parameters = methodInfo.GetParameters();
             if (parameters.Length != 2
                 || !typeof(IEvent).IsAssignableFrom(parameters?[0]?.ParameterType)
-                || parameters?[1]?.ParameterType == typeof(EventContext))
+                || parameters?[1]?.ParameterType != typeof(EventContext))
             {
                 _logger.Warning(
-                    "Event Handler Method {eventHandlerMethod} in event handler '{eventHandler}' must take two parameters the first being an event that implements '{event}' and the context of the event '{eventContext}' ",
-                    $"{methodInfo.Name}({string.Join(", ", parameters.Select(_ => _.ParameterType.AssemblyQualifiedName))})",
-                    eventHandlerType.AssemblyQualifiedName,
-                    typeof(IEvent).FullName,
-                    typeof(EventContext).FullName);
+                    "Could not register Event Handler Method {eventHandlerMethod} in Event Handler '{eventHandler}'. It must take two parameters, the first being an event that implements '{event}' and the second being the context of the event '{eventContext}' ",
+                    $"{methodInfo.Name}({string.Join(", ", parameters.Select(_ => _.ParameterType.ToString()))})",
+                    eventHandlerType.ToString(),
+                    typeof(IEvent).ToString(),
+                    typeof(EventContext).ToString());
                 return false;
             }
 
