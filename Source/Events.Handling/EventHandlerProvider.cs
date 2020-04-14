@@ -51,7 +51,7 @@ namespace Dolittle.Events.Handling
                 if (eventMethods.Count(CheckHandleMethod) != eventMethods.Count())
                 {
                     _logger.Warning(
-                        "Could not register Event Handler '{eventHandlerName} : {eventHandlerInterfaceName}' because it is some of the Handle methods are invalid",
+                        "Could not register Event Handler '{eventHandlerName} : {eventHandlerInterfaceName}' because some of the Handle methods are invalid",
                         eventHandlerType.ToString(),
                         typeof(ICanHandleEvents).ToString());
                     continue;

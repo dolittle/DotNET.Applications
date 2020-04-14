@@ -54,7 +54,7 @@ namespace Dolittle.Events.Handling.EventHorizon
                 if (eventMethods.Count(CheckHandleMethod) != eventMethods.Count())
                 {
                     _logger.Warning(
-                        "Could not register External Event Handler '{eventHandlerName} : {eventHandlerInterfaceName}' because it is some of the Handle methods are invalid",
+                        "Could not register External Event Handler '{eventHandlerName} : {eventHandlerInterfaceName}' because some of the Handle methods are invalid",
                         eventHandlerType.ToString(),
                         typeof(ICanHandleExternalEvents).ToString());
                     continue;
