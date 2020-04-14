@@ -44,7 +44,7 @@ namespace Dolittle.Events.Handling.EventHorizon
             var eventHandlers = new List<AbstractEventHandler>();
             foreach (var eventHandlerType in _eventHandlerTypes)
             {
-                if (!CheckEventHandlerAttributes(eventHandlerType)) break;
+                if (!CheckEventHandlerAttributes(eventHandlerType)) continue;
 
                 var eventHandlerId = eventHandlerType.GetCustomAttribute<EventHandlerAttribute>().Id;
                 var scopeId = eventHandlerType.GetCustomAttribute<ScopeAttribute>().Id;
