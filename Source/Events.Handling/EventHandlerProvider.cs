@@ -43,12 +43,33 @@ namespace Dolittle.Events.Handling
             var eventHandlers = new List<AbstractEventHandler>();
             foreach (var eventHandlerType in _eventHandlerTypes)
             {
-                if (!CheckEventHandlerAttributes(eventHandlerType)) continue;
+                if (!HasEventHandlerAttribute(eventHandlerType))
+                {
+                    WarnEventHandlerMissingEventHandlerAttribute(eventHandlerType);
+                    continue;
+                }
+
                 var eventHandlerId = eventHandlerType.GetCustomAttribute<EventHandlerAttribute>().Id;
-                var eventMethods = eventHandlerType
+                var handleMethods = eventHandlerType
                                     .GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
                                     .Where(_ => _.Name == AbstractEventHandler.HandleMethodName);
-                if (eventMethods.Count(CheckHandleMethod) != eventMethods.Count())
+                var hasInvalidHandlerMethod = false;
+                foreach (var method in handleMethods)
+                {
+                    if (!FirstParameterIsEvent(method))
+                    {
+                        WarnFirstParameterIsNotEvent(method);
+                        hasInvalidHandlerMethod = true;
+                    }
+
+                    if (!SecondParameterIsEventContext(method))
+                    {
+                        WarnSecondParameterIsNotEventContext(method);
+                        hasInvalidHandlerMethod = true;
+                    }
+                }
+
+                if (hasInvalidHandlerMethod)
                 {
                     _logger.Warning(
                         "Could not register Event Handler '{eventHandlerName} : {eventHandlerInterfaceName}' because some of the Handle methods are invalid",
@@ -57,7 +78,7 @@ namespace Dolittle.Events.Handling
                     continue;
                 }
 
-                var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod<IEvent>(_.GetParameters()[0].ParameterType, _));
+                var eventHandlerMethods = handleMethods.Select(_ => new EventHandlerMethod<IEvent>(_.GetParameters()[0].ParameterType, _));
                 eventHandlers.Add(new EventHandler(_container, eventHandlerId, eventHandlerType, IsPartitioned(eventHandlerType), eventHandlerMethods));
             }
 
@@ -67,39 +88,31 @@ namespace Dolittle.Events.Handling
         bool IsPartitioned(Type type) =>
             !type.HasAttribute<NotPartitionedAttribute>();
 
-        bool CheckEventHandlerAttributes(Type eventHandlerType)
-        {
-            if (!eventHandlerType.HasAttribute<EventHandlerAttribute>())
-            {
-                _logger.Warning(
-                    "Could not register Event Handler '{eventHandlerName} : {eventHandlerInterfaceName}' because it is missing the '{eventHandletAttribute}' attribute.",
-                    eventHandlerType.ToString(),
-                    typeof(ICanHandleEvents).ToString(),
-                    typeof(EventHandlerAttribute).ToString());
-                return false;
-            }
+        bool HasEventHandlerAttribute(Type eventHandlerType) => eventHandlerType.HasAttribute<EventHandlerAttribute>();
 
-            return true;
-        }
+        void WarnEventHandlerMissingEventHandlerAttribute(Type eventHandlerType) =>
+            _logger.Warning(
+                "Could not register Event Handler '{eventHandlerName} : {eventHandlerInterfaceName}' because it is missing the '{eventHandlerAttribute}' attribute",
+                eventHandlerType.ToString(),
+                typeof(ICanHandleEvents).ToString(),
+                typeof(EventHandlerAttribute).ToString());
 
-        bool CheckHandleMethod(MethodInfo methodInfo)
-        {
-            var eventHandlerType = methodInfo.DeclaringType;
-            var parameters = methodInfo.GetParameters();
-            if (parameters.Length != 2
-                || !typeof(IEvent).IsAssignableFrom(parameters?[0]?.ParameterType)
-                || parameters?[1]?.ParameterType != typeof(EventContext))
-            {
-                _logger.Warning(
-                    "Could not register Event Handler Method {eventHandlerMethod} in Event Handler '{eventHandler}'. It must take two parameters, the first being an event that implements '{event}' and the second being the context of the event '{eventContext}' ",
-                    $"{methodInfo.Name}({string.Join(", ", parameters.Select(_ => _.ParameterType.ToString()))})",
-                    eventHandlerType.ToString(),
-                    typeof(IEvent).ToString(),
-                    typeof(EventContext).ToString());
-                return false;
-            }
+        bool FirstParameterIsEvent(MethodInfo methodInfo) => typeof(IEvent).IsAssignableFrom(methodInfo.GetParameters()[0]?.ParameterType);
 
-            return true;
-        }
+        bool SecondParameterIsEventContext(MethodInfo methodInfo) => methodInfo.GetParameters()[1]?.ParameterType == typeof(EventContext);
+
+        void WarnFirstParameterIsNotEvent(MethodInfo methodInfo) =>
+            _logger.Warning(
+                "Could not register the Event Handler Method: {eventHandlerMethod} in event handler '{eventHandler}'. The first parameter has to be an event that implements: '{event}'",
+                $"{methodInfo.Name}({string.Join(", ", methodInfo.GetParameters().Select(_ => _.ParameterType.ToString()))})",
+                methodInfo.DeclaringType.ToString(),
+                typeof(IEvent).ToString());
+
+        void WarnSecondParameterIsNotEventContext(MethodInfo methodInfo) =>
+            _logger.Warning(
+                "Could not register the Event Handler Method: {eventHandlerMethod} in event handler '{eventHandler}'. The second parameter has to be the context of the event: '{eventContext}'",
+                $"{methodInfo.Name}({string.Join(", ", methodInfo.GetParameters().Select(_ => _.ParameterType.ToString()))})",
+                methodInfo.DeclaringType.ToString(),
+                typeof(EventContext).ToString());
     }
 }

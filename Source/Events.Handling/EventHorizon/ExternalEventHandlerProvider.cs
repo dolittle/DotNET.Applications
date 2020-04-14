@@ -44,14 +44,45 @@ namespace Dolittle.Events.Handling.EventHorizon
             var eventHandlers = new List<AbstractEventHandler>();
             foreach (var eventHandlerType in _eventHandlerTypes)
             {
-                if (!CheckEventHandlerAttributes(eventHandlerType)) continue;
+                if (!HasEventHandlerAttribute(eventHandlerType))
+                {
+                    WarnEventHandlerMissingEventHandlerAttribute(eventHandlerType);
+                    continue;
+                }
+
+                if (!HasScopeAttribute(eventHandlerType))
+                {
+                    WarnEventHandlerMissingScopeAttribute(eventHandlerType);
+                    continue;
+                }
 
                 var eventHandlerId = eventHandlerType.GetCustomAttribute<EventHandlerAttribute>().Id;
                 var scopeId = eventHandlerType.GetCustomAttribute<ScopeAttribute>().Id;
-                var eventMethods = eventHandlerType
+                var handleMethods = eventHandlerType
                                     .GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
                                     .Where(_ => _.Name == AbstractEventHandler.HandleMethodName);
-                if (eventMethods.Count(CheckHandleMethod) != eventMethods.Count())
+                var hasInvalidHandlerMethod = false;
+                foreach (var method in handleMethods)
+                {
+                    if (!FirstParameterIsPublicEvent(method))
+                    {
+                        WarnFirstParameterIsNotPublicEvent(method);
+                        hasInvalidHandlerMethod = true;
+                    }
+
+                    if (!SecondParameterIsEventContext(method))
+                    {
+                        WarnSecondParameterIsNotEventContext(method);
+                        hasInvalidHandlerMethod = true;
+                    }
+
+                    if (FirstParameterIsPublicEvent(method) && !HasArtifactAttribute(method.GetParameters()[0].ParameterType))
+                    {
+                        WarnEventMissingArtifactIdAttribute(method.GetParameters()[0].ParameterType);
+                    }
+                }
+
+                if (hasInvalidHandlerMethod)
                 {
                     _logger.Warning(
                         "Could not register External Event Handler '{eventHandlerName} : {eventHandlerInterfaceName}' because some of the Handle methods are invalid",
@@ -60,7 +91,7 @@ namespace Dolittle.Events.Handling.EventHorizon
                     continue;
                 }
 
-                var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod<IPublicEvent>(_.GetParameters()[0].ParameterType, _));
+                var eventHandlerMethods = handleMethods.Select(_ => new EventHandlerMethod<IPublicEvent>(_.GetParameters()[0].ParameterType, _));
 
                 eventHandlers.Add(new ExternalEventHandler(_container, eventHandlerId, eventHandlerType, scopeId, eventHandlerMethods));
             }
@@ -68,65 +99,50 @@ namespace Dolittle.Events.Handling.EventHorizon
             return eventHandlers;
         }
 
-        bool CheckEventHandlerAttributes(Type eventHandlerType)
-        {
-            if (!eventHandlerType.HasAttribute<EventHandlerAttribute>())
-            {
-                _logger.Warning(
-                    "Could not register External Event Handler '{eventHandlerName} : {externalEventHandlerInterfaceName}' because it is missing the '{eventHandlerAttribute}' attribute",
-                    eventHandlerType.ToString(),
-                    typeof(ICanHandleExternalEvents).ToString(),
-                    typeof(EventHandlerAttribute).ToString());
-                return false;
-            }
+        bool HasEventHandlerAttribute(Type eventHandlerType) => eventHandlerType.HasAttribute<EventHandlerAttribute>();
 
-            if (!eventHandlerType.HasAttribute<ScopeAttribute>())
-            {
-                _logger.Warning(
+        bool HasScopeAttribute(Type eventHandlerType) => eventHandlerType.HasAttribute<ScopeAttribute>();
+
+        void WarnEventHandlerMissingEventHandlerAttribute(Type eventHandlerType) =>
+            _logger.Warning(
+                "Could not register External Event Handler '{eventHandlerName} : {externalEventHandlerInterfaceName}' because it is missing the '{eventHandlerAttribute}' attribute",
+                eventHandlerType.ToString(),
+                typeof(ICanHandleExternalEvents).ToString(),
+                typeof(EventHandlerAttribute).ToString());
+
+        void WarnEventHandlerMissingScopeAttribute(Type eventHandlerType) =>
+            _logger.Warning(
                     "Could not register External Event Handler '{eventHandlerName} : {externalEventHandlerInterfaceName}' because it is missing the '{scopeAttribute}' attribute",
                     eventHandlerType.ToString(),
                     typeof(ICanHandleExternalEvents).ToString(),
                     typeof(ScopeAttribute).ToString());
-                return false;
-            }
 
-            return true;
-        }
+        bool FirstParameterIsPublicEvent(MethodInfo methodInfo) => typeof(IPublicEvent).IsAssignableFrom(methodInfo.GetParameters()[0]?.ParameterType);
 
-        bool CheckHandleMethod(MethodInfo methodInfo)
-        {
-            var eventHandlerType = methodInfo.DeclaringType;
-            var parameters = methodInfo.GetParameters();
-            if (parameters.Length != 2
-                || !typeof(IPublicEvent).IsAssignableFrom(parameters?[0]?.ParameterType)
-                || parameters?[1]?.ParameterType != typeof(EventContext))
-            {
-                _logger.Warning(
-                    "Could not register the External Event Handler Method: {eventHandlerMethod} in event handler '{eventHandler}'. The method must take two parameters, the first being an event that implements: '{publicEvent}' and the second being the context of the event: '{eventContext}'",
-                    $"{methodInfo.Name}({string.Join(", ", parameters.Select(_ => _.ParameterType.ToString()))})",
-                    eventHandlerType.ToString(),
-                    typeof(IPublicEvent).ToString(),
-                    typeof(EventContext).ToString());
-                return false;
-            }
+        bool SecondParameterIsEventContext(MethodInfo methodInfo) => methodInfo.GetParameters()[1]?.ParameterType == typeof(EventContext);
 
-            return CheckEventAttributes(parameters?[0]?.ParameterType);
-        }
+        void WarnFirstParameterIsNotPublicEvent(MethodInfo methodInfo) =>
+            _logger.Warning(
+                "Could not register the External Event Handler Method: {eventHandlerMethod} in event handler '{eventHandler}'. The first parameter has to be an event that implements: '{publicEvent}'",
+                $"{methodInfo.Name}({string.Join(", ", methodInfo.GetParameters().Select(_ => _.ParameterType.ToString()))})",
+                methodInfo.DeclaringType.ToString(),
+                typeof(IPublicEvent).ToString());
 
-        bool CheckEventAttributes(Type eventType)
-        {
-            if (!eventType.HasAttribute<ArtifactAttribute>())
-            {
-                _logger.Warning(
-                    "Cannot have an External Event Handler on event '{event}' because it does not have an '{artifactAttribute}' attribute. External '{publicEvent}' must have an '{artifactAttribute}' attribute on the class",
-                    eventType.ToString(),
-                    typeof(ArtifactAttribute).ToString(),
-                    typeof(IPublicEvent).ToString(),
-                    typeof(ArtifactAttribute).ToString());
-                return false;
-            }
+        void WarnSecondParameterIsNotEventContext(MethodInfo methodInfo) =>
+            _logger.Warning(
+                "Could not register the External Event Handler Method: {eventHandlerMethod} in event handler '{eventHandler}'. The second parameter has to be the context of the event: '{eventContext}'",
+                $"{methodInfo.Name}({string.Join(", ", methodInfo.GetParameters().Select(_ => _.ParameterType.ToString()))})",
+                methodInfo.DeclaringType.ToString(),
+                typeof(EventContext).ToString());
 
-            return true;
-        }
+        bool HasArtifactAttribute(Type eventType) => eventType.HasAttribute<ArtifactAttribute>();
+
+        void WarnEventMissingArtifactIdAttribute(Type eventType) =>
+            _logger.Warning(
+                "Cannot have an External Event Handler on event '{event}' because it does not have an '{artifactAttribute}' attribute. External '{publicEvent}' must have an '{artifactAttribute}' attribute on the class",
+                eventType.ToString(),
+                typeof(ArtifactAttribute).ToString(),
+                typeof(IPublicEvent).ToString(),
+                typeof(ArtifactAttribute).ToString());
     }
 }
