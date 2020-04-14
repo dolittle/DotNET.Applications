@@ -6,6 +6,7 @@ extern alias contracts;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Dolittle.Logging;
 using Dolittle.Reflection;
 using Google.Protobuf;
 using grpc = contracts::Dolittle.Runtime.Events.Processing;
@@ -21,6 +22,17 @@ namespace Dolittle.Events.Processing
         where TProcessingResponse : IMessage, new()
         where TProcessingResult : IProcessingResult
     {
+        readonly ILogger _logger;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventProcessingInvocationManagerFor{TProcessingResponse, TProcessingResult}"/> class.
+        /// </summary>
+        /// <param name="logger">The <see cref="ILogger" />.</param>
+        public EventProcessingInvocationManagerFor(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         /// <inheritdoc/>
         public async Task<TProcessingResponse> Invoke(
             Func<Task<TProcessingResult>> invoke,
@@ -39,6 +51,7 @@ namespace Dolittle.Events.Processing
             }
             catch (Exception ex)
             {
+                _logger.Error(ex, "Error while processing event");
                 processorFailureProperty.SetValue(response, new grpc.ProcessorFailure { FailureType = grpc.RetryProcessingState.Types.FailureType.Unknown, Reason = $"{ex.Message} - Stack Trace: {ex.StackTrace}", Retry = false });
             }
 
