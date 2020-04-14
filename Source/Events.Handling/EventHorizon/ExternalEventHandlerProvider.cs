@@ -50,16 +50,17 @@ namespace Dolittle.Events.Handling.EventHorizon
                 var scopeId = eventHandlerType.GetCustomAttribute<ScopeAttribute>().Id;
                 var eventMethods = eventHandlerType
                                     .GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
-                                    .Where(_ => _.Name == AbstractEventHandler.HandleMethodName)
-                                    .Where(CheckHandleMethod);
-
-                var eventTypesAndMethods = eventMethods.Select(_ => (_.GetParameters()[0].ParameterType, _));
-                var eventHandlerMethods = new List<EventHandlerMethod<IPublicEvent>>();
-                foreach ((var eventType, var handleMethod) in eventTypesAndMethods)
+                                    .Where(_ => _.Name == AbstractEventHandler.HandleMethodName);
+                if (eventMethods.Count(CheckHandleMethod) != eventMethods.Count())
                 {
-                    if (!CheckEventAttributes(eventType)) break;
-                    eventHandlerMethods.Add(new EventHandlerMethod<IPublicEvent>(eventType, handleMethod));
+                    _logger.Warning(
+                        "Could not register External Event Handler '{eventHandlerName} : {eventHandlerInterfaceName}' because it is some of the Handle methods are invalid",
+                        eventHandlerType.ToString(),
+                        typeof(ICanHandleExternalEvents).ToString());
+                    continue;
                 }
+
+                var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod<IPublicEvent>(_.GetParameters()[0].ParameterType, _));
 
                 eventHandlers.Add(new ExternalEventHandler(_container, eventHandlerId, eventHandlerType, scopeId, eventHandlerMethods));
             }
@@ -109,7 +110,7 @@ namespace Dolittle.Events.Handling.EventHorizon
                 return false;
             }
 
-            return true;
+            return CheckEventAttributes(parameters?[0]?.ParameterType);
         }
 
         bool CheckEventAttributes(Type eventType)
@@ -117,8 +118,7 @@ namespace Dolittle.Events.Handling.EventHorizon
             if (!eventType.HasAttribute<ArtifactAttribute>())
             {
                 _logger.Warning(
-                    @"Cannot have an External Event Handler on event '{event}' because it does not have an '{artifactAttribute}' attribute.
-External '{publicEvent}' must have an '{artifactAttribute}' attribute on the class",
+                    "Cannot have an External Event Handler on event '{event}' because it does not have an '{artifactAttribute}' attribute. External '{publicEvent}' must have an '{artifactAttribute}' attribute on the class",
                     eventType.ToString(),
                     typeof(ArtifactAttribute).ToString(),
                     typeof(IPublicEvent).ToString(),

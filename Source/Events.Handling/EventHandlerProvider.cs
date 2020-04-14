@@ -47,8 +47,15 @@ namespace Dolittle.Events.Handling
                 var eventHandlerId = eventHandlerType.GetCustomAttribute<EventHandlerAttribute>().Id;
                 var eventMethods = eventHandlerType
                                     .GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
-                                    .Where(_ => _.Name == AbstractEventHandler.HandleMethodName)
-                                    .Where(CheckHandleMethod);
+                                    .Where(_ => _.Name == AbstractEventHandler.HandleMethodName);
+                if (eventMethods.Count(CheckHandleMethod) != eventMethods.Count())
+                {
+                    _logger.Warning(
+                        "Could not register Event Handler '{eventHandlerName} : {eventHandlerInterfaceName}' because it is some of the Handle methods are invalid",
+                        eventHandlerType.ToString(),
+                        typeof(ICanHandleEvents).ToString());
+                    continue;
+                }
 
                 var eventHandlerMethods = eventMethods.Select(_ => new EventHandlerMethod<IEvent>(_.GetParameters()[0].ParameterType, _));
                 eventHandlers.Add(new EventHandler(_container, eventHandlerId, eventHandlerType, IsPartitioned(eventHandlerType), eventHandlerMethods));
