@@ -83,7 +83,7 @@ namespace Dolittle.Heads
 
                     var lastPing = DateTimeOffset.MinValue;
 
-                    var timer = new System.Timers.Timer(2000)
+                    var timer = new System.Timers.Timer(10000)
                     {
                         Enabled = true
                     };
