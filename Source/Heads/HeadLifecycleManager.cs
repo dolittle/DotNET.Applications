@@ -83,7 +83,7 @@ namespace Dolittle.Heads
 
                     var lastPing = DateTimeOffset.MinValue;
 
-                    var timer = new System.Timers.Timer(10000)
+                    var timer = new System.Timers.Timer(2000)
                     {
                         Enabled = true
                     };
@@ -91,7 +91,7 @@ namespace Dolittle.Heads
                     {
                         if (lastPing == DateTimeOffset.MinValue) return;
                         var delta = DateTimeOffset.UtcNow.Subtract(lastPing);
-                        if (delta.TotalSeconds > 2) cancellationTokenSource.Cancel();
+                        if (delta.TotalSeconds > 10) cancellationTokenSource.Cancel();
                     };
                     timer.Start();
 
