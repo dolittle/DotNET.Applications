@@ -11,17 +11,6 @@ namespace Dolittle.Heads
     /// </summary>
     public class Bindings : ICanProvideBindings
     {
-        readonly GetContainer _getContainer;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Bindings"/> class.
-        /// </summary>
-        /// <param name="getContainer"><see cref="GetContainer"/> for getting the correct <see cref="IContainer"/>.</param>
-        public Bindings(GetContainer getContainer)
-        {
-            _getContainer = getContainer;
-        }
-
         /// <inheritdoc/>
         public void Provide(IBindingProviderBuilder builder)
         {
