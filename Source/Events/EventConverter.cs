@@ -5,7 +5,7 @@ extern alias contracts;
 
 using System;
 using System.Linq;
-using Dolittle.Applications;
+using Dolittle.ApplicationModel;
 using Dolittle.Artifacts;
 using Dolittle.Execution;
 using Dolittle.Protobuf;

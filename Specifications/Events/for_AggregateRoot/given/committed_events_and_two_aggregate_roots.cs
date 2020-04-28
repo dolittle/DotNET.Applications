@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Dolittle.Applications;
+using Dolittle.ApplicationModel;
 using Dolittle.Events;
 using Dolittle.Execution;
 using Dolittle.Tenancy;

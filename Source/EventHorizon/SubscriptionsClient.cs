@@ -4,7 +4,7 @@ extern alias contracts;
 
 using System.Threading.Tasks;
 using contracts::Dolittle.Runtime.EventHorizon;
-using Dolittle.Applications;
+using Dolittle.ApplicationModel;
 using Dolittle.Applications.Configuration;
 using Dolittle.Execution;
 using Dolittle.Lifecycle;

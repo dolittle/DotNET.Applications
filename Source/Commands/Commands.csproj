@@ -5,7 +5,7 @@
         <AssemblyName>Dolittle.SDK.Commands</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Dolittle.Applications" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.ApplicationModel" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Execution" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Rules" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Serialization.Json" Version="$(FundamentalsVersion)" />
