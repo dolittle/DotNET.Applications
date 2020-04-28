@@ -11,7 +11,7 @@ using Dolittle.Artifacts.Configuration;
 using Dolittle.Build.Topology;
 using Dolittle.Reflection;
 using MutableArtifactsByTypeDictionary = System.Collections.Generic.Dictionary<System.Reflection.PropertyInfo, System.Collections.Generic.Dictionary<Dolittle.Artifacts.ArtifactId, Dolittle.Artifacts.Configuration.ArtifactDefinition>>;
-using MutableArtifactsDictionary = System.Collections.Generic.Dictionary<Dolittle.Applications.Feature, System.Collections.Generic.Dictionary<System.Reflection.PropertyInfo, System.Collections.Generic.Dictionary<Dolittle.Artifacts.ArtifactId, Dolittle.Artifacts.Configuration.ArtifactDefinition>>>;
+using MutableArtifactsDictionary = System.Collections.Generic.Dictionary<Dolittle.ApplicationModel.Feature, System.Collections.Generic.Dictionary<System.Reflection.PropertyInfo, System.Collections.Generic.Dictionary<Dolittle.Artifacts.ArtifactId, Dolittle.Artifacts.Configuration.ArtifactDefinition>>>;
 
 namespace Dolittle.Build.Artifacts
 {
@@ -58,7 +58,7 @@ namespace Dolittle.Build.Artifacts
 
             foreach (var (feature, featureArtifactsByType) in _currentArtifactsConfiguration)
             {
-                var featureArtifacts = artifactsDictionary[feature] = new Dictionary<PropertyInfo, Dictionary<ArtifactId, ArtifactDefinition>>();
+                var featureArtifacts = artifactsDictionary[feature] = new MutableArtifactsByTypeDictionary();
                 foreach (var artifactType in featureArtifactsByType.GetType().GetProperties())
                 {
                     var existingArtifactsForFeatureType = artifactType.GetValue(featureArtifactsByType) as IReadOnlyDictionary<ArtifactId, ArtifactDefinition>;
