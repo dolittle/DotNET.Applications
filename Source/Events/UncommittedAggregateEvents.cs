@@ -28,6 +28,11 @@ namespace Dolittle.Events
             ExpectedAggregateRootVersion = expectedAggregateRootVersion;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether or not there are any events in the uncommitted sequence.
+        /// </summary>
+        public bool HasEvents => Count > 0;
+
         /// <inheritdoc/>
         public int Count => _events.Count;
 

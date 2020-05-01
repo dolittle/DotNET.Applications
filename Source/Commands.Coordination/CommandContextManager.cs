@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
+using System.Threading;
 
 namespace Dolittle.Commands.Coordination
 {
@@ -10,8 +10,7 @@ namespace Dolittle.Commands.Coordination
     /// </summary>
     public class CommandContextManager : ICommandContextManager
     {
-        [ThreadStatic]
-        static ICommandContext _currentContext;
+        static readonly AsyncLocal<ICommandContext> _currentContext = new AsyncLocal<ICommandContext>();
 
         readonly ICommandContextFactory _factory;
 
@@ -25,24 +24,12 @@ namespace Dolittle.Commands.Coordination
         }
 
         /// <inheritdoc/>
-        public bool HasCurrent
-        {
-            get { return CurrentContext != null; }
-        }
-
-        static ICommandContext CurrentContext
-        {
-            get { return _currentContext; }
-            set { _currentContext = value; }
-        }
+        public bool HasCurrent => _currentContext.Value != null;
 
         /// <summary>
         /// Reset context.
         /// </summary>
-        public static void ResetContext()
-        {
-            CurrentContext = null;
-        }
+        public static void ResetContext() => _currentContext.Value = null;
 
         /// <inheritdoc/>
         public ICommandContext GetCurrent()
@@ -52,7 +39,7 @@ namespace Dolittle.Commands.Coordination
                 throw new NoEstablishedCommandContext();
             }
 
-            return CurrentContext;
+            return _currentContext.Value;
         }
 
         /// <inheritdoc/>
@@ -60,13 +47,12 @@ namespace Dolittle.Commands.Coordination
         {
             if (!IsInContext(command))
             {
-                var commandContext = _factory.Build(command);
-                CurrentContext = commandContext;
+                _currentContext.Value = _factory.Build(command);
             }
 
-            return CurrentContext;
+            return _currentContext.Value;
         }
 
-        static bool IsInContext(CommandRequest command) => CurrentContext?.Command.Equals(command) == true;
+        static bool IsInContext(CommandRequest command) => _currentContext.Value?.Command.Equals(command) == true;
     }
 }

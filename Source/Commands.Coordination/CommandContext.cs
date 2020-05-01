@@ -16,7 +16,7 @@ namespace Dolittle.Commands.Coordination
     /// </summary>
     public class CommandContext : ICommandContext
     {
-        readonly IUncommittedEventStreamCoordinator _uncommittedEventStreamCoordinator;
+        readonly IEventStore _eventStore;
         readonly IEventProcessingCompletion _eventProcessingCompletion;
         readonly List<AggregateRoot> _aggregateRootsTracked = new List<AggregateRoot>();
 
@@ -27,19 +27,19 @@ namespace Dolittle.Commands.Coordination
         /// </summary>
         /// <param name="command">The <see cref="CommandRequest">command</see> the context is for.</param>
         /// <param name="executionContext">The <see cref="ExecutionContext"/> for the command.</param>
-        /// <param name="uncommittedEventStreamCoordinator">The <see cref="IUncommittedEventStreamCoordinator"/> to use for coordinating the committing of events.</param>
+        /// <param name="eventStore">The <see cref="IEventStore"/> to use for committing events.</param>
         /// <param name="eventProcessingCompletion"><see cref="IEventProcessingCompletion"/> for waiting on event handlers.</param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging.</param>
         public CommandContext(
             CommandRequest command,
             ExecutionContext executionContext,
-            IUncommittedEventStreamCoordinator uncommittedEventStreamCoordinator,
+            IEventStore eventStore,
             IEventProcessingCompletion eventProcessingCompletion,
             ILogger logger)
         {
             Command = command;
             ExecutionContext = executionContext;
-            _uncommittedEventStreamCoordinator = uncommittedEventStreamCoordinator;
+            _eventStore = eventStore;
             _eventProcessingCompletion = eventProcessingCompletion;
             _logger = logger;
 
@@ -89,7 +89,7 @@ namespace Dolittle.Commands.Coordination
                     _eventProcessingCompletion.Perform(CorrelationId, events, () =>
                     {
                         _logger.Trace("Events present - send them to uncommitted eventstream coordinator");
-                        _uncommittedEventStreamCoordinator.Commit(CorrelationId, events);
+                        _eventStore.CommitForAggregate(events).GetAwaiter().GetResult();
                         _logger.Trace("Commit object");
                         trackedAggregateRoot.Commit();
                     }).Wait();
