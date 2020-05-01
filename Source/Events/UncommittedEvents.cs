@@ -8,11 +8,11 @@ using Dolittle.Collections;
 namespace Dolittle.Events
 {
     /// <summary>
-    /// Represents a sequence of <see cref="IEvent"/>s that have not been committed to the Event Store.
+    /// Represents a sequence of <see cref="UncommittedEvent"/>s that have not been committed to the Event Store.
     /// </summary>
-    public class UncommittedEvents : IReadOnlyList<IEvent>
+    public class UncommittedEvents : IReadOnlyList<UncommittedEvent>
     {
-        readonly NullFreeList<IEvent> _events = new NullFreeList<IEvent>();
+        readonly NullFreeList<UncommittedEvent> _events = new NullFreeList<UncommittedEvent>();
 
         /// <summary>
         /// Gets a value indicating whether or not there are any events in the uncommitted sequence.
@@ -23,25 +23,33 @@ namespace Dolittle.Events
         public int Count => _events.Count;
 
         /// <inheritdoc/>
-        public IEvent this[int index] => _events[index];
+        public UncommittedEvent this[int index] => _events[index];
 
         /// <summary>
         /// Appends an event to the uncommitted sequence.
         /// </summary>
-        /// <param name="event"><see cref="IEvent"/> to append.</param>
-        public void Append(IEvent @event)
+        /// <param name="eventSource">The <see cref="EventSourceId"/> of the <see cref="UncommittedEvent"/> to append.</param>
+        /// <param name="event">The <see cref="IEvent"/> of the <see cref="UncommittedEvent"/> to append.</param>
+        public void Append(EventSourceId eventSource, IEvent @event)
+            => Append(new UncommittedEvent(eventSource, @event));
+
+        /// <summary>
+        /// Appends an event to the uncommitted sequence.
+        /// </summary>
+        /// <param name="event"><see cref="UncommittedEvent"/> to append.</param>
+        public void Append(UncommittedEvent @event)
         {
             ThrowIfEventIsNull(@event);
             _events.Add(@event);
         }
 
         /// <inheritdoc/>
-        public IEnumerator<IEvent> GetEnumerator() => _events.GetEnumerator();
+        public IEnumerator<UncommittedEvent> GetEnumerator() => _events.GetEnumerator();
 
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator() => _events.GetEnumerator();
 
-        void ThrowIfEventIsNull(IEvent @event)
+        void ThrowIfEventIsNull(UncommittedEvent @event)
         {
             if (@event == null) throw new EventCanNotBeNull();
         }

@@ -17,7 +17,8 @@ namespace Dolittle.Events
         /// <param name="serializer">The <see cref="ISerializer"/> to extend.</param>
         /// <param name="event">The <see cref="IEvent"/> to serialize.</param>
         /// <returns>Camel cased JSON representation of the <see cref="IEvent"/>.</returns>
-        public static string EventToJson(this ISerializer serializer, IEvent @event) => serializer.ToJson(@event, SerializationOptions.CamelCase);
+        public static string EventToJson(this ISerializer serializer, IEvent @event)
+            => serializer.ToJson(@event, SerializationOptions.CamelCase);
 
         /// <summary>
         /// Deserialize from JSON to a given <see cref="IEvent"/> type.
@@ -26,19 +27,7 @@ namespace Dolittle.Events
         /// <param name="type">Type of <see cref="IEvent"/> to serialize to.</param>
         /// <param name="json">The JSON representation of the event.</param>
         /// <returns>An instance of the given <see cref="IEvent"/> type.</returns>
-        public static object JsonToEvent(this ISerializer serializer, Type type, string json) => serializer.FromJson(type, json, SerializationOptions.CamelCase);
-
-        /// <summary>
-        /// Deserialize from JSON to a given <see cref="IEvent"/> type.
-        /// </summary>
-        /// <typeparam name="T">Type of <see cref="IEvent"/> to serialize to.</typeparam>
-        /// <param name="serializer">The <see cref="ISerializer"/> to extend.</param>
-        /// <param name="json">The JSON representation of the event.</param>
-        /// <returns>An instance of the given <see cref="IEvent"/> type.</returns>
-        public static T JsonToEvent<T>(this ISerializer serializer, string json)
-            where T : IEvent
-        {
-            return serializer.FromJson<T>(json, SerializationOptions.CamelCase);
-        }
+        public static IEvent JsonToEvent(this ISerializer serializer, Type type, string json)
+            => serializer.FromJson(type, json, SerializationOptions.CamelCase) as IEvent;
     }
 }
