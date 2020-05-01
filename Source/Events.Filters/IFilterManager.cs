@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Threading;
 using System.Threading.Tasks;
 using Dolittle.Events.Filters.Internal;
 
@@ -19,8 +20,9 @@ namespace Dolittle.Events.Filters
         /// <param name="id">The unique <see cref="FilterId"/> for the filter.</param>
         /// <param name="scope">The <see cref="ScopeId"/> of the scope in the Event Store where the filter will run.</param>
         /// <param name="filter">The implementation of the filter.</param>
+        /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
         /// <returns>A <see cref="Task"/> representing the execution of the filter.</returns>
-        Task Register<TEventType, TFilterResult>(FilterId id, ScopeId scope, ICanFilter<TEventType, TFilterResult> filter)
+        Task Register<TEventType, TFilterResult>(FilterId id, ScopeId scope, ICanFilter<TEventType, TFilterResult> filter, CancellationToken cancellationToken = default)
             where TEventType : IEvent;
     }
 }
