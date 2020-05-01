@@ -9,9 +9,9 @@ using Dolittle.Types;
 namespace Dolittle.Events.Filters.EventHorizon
 {
     /// <summary>
-    /// Represents an implementation of <see cref="ICanProvideStreamFilters" /> that provides filters that filter public events.
+    /// Represents an implementation of <see cref="ICanProvidePublicEventFilters" /> that provides filters that filter public events.
     /// </summary>
-    public class PublicEventsFilterProvider : ICanProvideStreamFilters
+    public class PublicEventsFilterProvider : ICanProvidePublicEventFilters
     {
         readonly IEnumerable<ICanFilterPublicEvents> _filters;
         readonly ILogger _logger;
@@ -28,9 +28,9 @@ namespace Dolittle.Events.Filters.EventHorizon
         }
 
         /// <inheritdoc/>
-        public IEnumerable<IEventStreamFilter> Provide()
+        public IEnumerable<ICanFilterPublicEvents> Provide()
         {
-            _logger.Debug($"Providing {_filters.Count()} filters that can filter public events.");
+            _logger.Debug("Providing {FilterCount} public event filters", _filters.Count());
             return _filters;
         }
     }
