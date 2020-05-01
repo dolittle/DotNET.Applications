@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Dolittle.Artifacts;
+using System.Threading;
 using Dolittle.Commands.Coordination;
 using Dolittle.Events;
 using Dolittle.Logging;
@@ -20,7 +20,6 @@ namespace Dolittle.Domain
     {
         readonly ICommandContextManager _commandContextManager;
         readonly IEventStore _eventStore;
-        readonly IArtifactTypeMap _artifactTypeMap;
         readonly ILogger _logger;
 
         /// <summary>
@@ -28,17 +27,14 @@ namespace Dolittle.Domain
         /// </summary>
         /// <param name="commandContextManager"> <see cref="ICommandContextManager"/> to use for tracking.</param>
         /// <param name="eventStore">The <see cref="IEventStore" />.</param>
-        /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for being able to identify resources.</param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging.</param>
         public AggregateOf(
             ICommandContextManager commandContextManager,
             IEventStore eventStore,
-            IArtifactTypeMap artifactTypeMap,
             ILogger logger)
         {
             _commandContextManager = commandContextManager;
             _eventStore = eventStore;
-            _artifactTypeMap = artifactTypeMap;
             _logger = logger;
         }
 
@@ -86,8 +82,7 @@ namespace Dolittle.Domain
         void ReApplyEvents(TAggregate aggregateRoot)
         {
             var eventSourceId = aggregateRoot.EventSourceId;
-            var artifact = _artifactTypeMap.GetArtifactFor(typeof(TAggregate));
-            var committedEvents = _eventStore.FetchForAggregate(artifact.Id, eventSourceId);
+            var committedEvents = _eventStore.FetchForAggregate<TAggregate>(eventSourceId, CancellationToken.None).GetAwaiter().GetResult();
             if (committedEvents.HasEvents)
                 aggregateRoot.ReApply(committedEvents);
         }
