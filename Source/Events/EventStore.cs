@@ -1,16 +1,19 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-extern alias contracts;
-
-using System.Linq;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Dolittle.Artifacts;
+using Dolittle.Domain;
+using Dolittle.Execution;
+using Dolittle.Heads;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
-using Dolittle.Serialization.Json;
-using static contracts::Dolittle.Runtime.Events.EventStore;
-using grpcEvents = contracts::Dolittle.Runtime.Events;
+using Dolittle.Services.Contracts;
+using static Dolittle.Runtime.Events.Contracts.EventStore;
+using Contracts = Dolittle.Runtime.Events.Contracts;
 
 namespace Dolittle.Events
 {
@@ -23,7 +26,8 @@ namespace Dolittle.Events
         readonly EventStoreClient _eventStoreClient;
         readonly IArtifactTypeMap _artifactMap;
         readonly IEventConverter _eventConverter;
-        readonly ISerializer _serializer;
+        readonly IExecutionContextManager _executionContextManager;
+        readonly Head _head;
         readonly ILogger _logger;
 
         /// <summary>
@@ -32,64 +36,86 @@ namespace Dolittle.Events
         /// <param name="eventStoreClient">The event store grpc client.</param>
         /// <param name="artifactMap">The <see cref="IArtifactTypeMap" />.</param>
         /// <param name="eventConverter">The <see cref="IEventConverter" />.</param>
-        /// <param name="serializer">The <see cref="ISerializer" />.</param>
+        /// <param name="executionContextManager">An <see cref="IExecutionContextManager"/> for getting execution context from.</param>
+        /// <param name="head">The current <see cref="Head"/>.</param>
         /// <param name="logger">The <see cref="ILogger" />.</param>
-        public EventStore(EventStoreClient eventStoreClient, IArtifactTypeMap artifactMap, IEventConverter eventConverter, ISerializer serializer, ILogger logger)
+        public EventStore(
+            EventStoreClient eventStoreClient,
+            IArtifactTypeMap artifactMap,
+            IEventConverter eventConverter,
+            IExecutionContextManager executionContextManager,
+            Head head,
+            ILogger logger)
         {
             _artifactMap = artifactMap;
             _eventStoreClient = eventStoreClient;
             _eventConverter = eventConverter;
-            _serializer = serializer;
+            _executionContextManager = executionContextManager;
+            _head = head;
             _logger = logger;
         }
 
         /// <inheritdoc/>
-        public CommittedEvents Commit(UncommittedEvents uncommittedEvents)
+        public async Task<CommittedEvents> Commit(UncommittedEvents uncommittedEvents, CancellationToken cancellationToken)
         {
-            var request = _eventConverter.ToProtobuf(uncommittedEvents);
-            var response = _eventStoreClient.Commit(request);
-            ThrowIfUnsuccessfullRespone(response.Success, response.Reason);
-            return CommittedEventsFromResponse(response.Events);
+            _logger.Debug("Committing events");
+            var request = new Contracts.CommitEventsRequest
+            {
+                CallContext = GetCurrentCallContext(),
+            };
+            request.Events.AddRange(_eventConverter.ToProtobuf(uncommittedEvents));
+            var response = await _eventStoreClient.CommitAsync(request, cancellationToken: cancellationToken);
+            ThrowIfFailure(response.Failure);
+            return _eventConverter.ToSDK(response.Events);
         }
 
         /// <inheritdoc/>
-        public CommittedAggregateEvents CommitForAggregate(UncommittedAggregateEvents uncommittedAggregateEvents)
+        public async Task<CommittedAggregateEvents> CommitForAggregate(UncommittedAggregateEvents uncommittedAggregateEvents, CancellationToken cancellationToken)
         {
-            var request = _eventConverter.ToProtobuf(uncommittedAggregateEvents);
-            var response = _eventStoreClient.CommitForAggregate(request);
-            ThrowIfUnsuccessfullRespone(response.Success, response.Reason);
-            return CommittedEventsFromResponse(response.Events);
+            _logger.Debug("Committing events for aggregate");
+            var request = new Contracts.CommitAggregateEventsRequest
+            {
+                CallContext = GetCurrentCallContext(),
+                Events = _eventConverter.ToProtobuf(uncommittedAggregateEvents),
+            };
+            var response = await _eventStoreClient.CommitForAggregateAsync(request, cancellationToken: cancellationToken);
+            ThrowIfFailure(response.Failure);
+            return _eventConverter.ToSDK(response.Events);
         }
 
         /// <inheritdoc/>
-        public CommittedAggregateEvents FetchForAggregate(ArtifactId aggregateRoot, EventSourceId eventSourceId)
+        public async Task<CommittedAggregateEvents> FetchForAggregate(Type aggregateRoot, EventSourceId eventSource, CancellationToken cancellationToken)
         {
-            var request = new grpcEvents.Aggregate { EventSource = eventSourceId.ToProtobuf(), AggregateRoot = aggregateRoot.ToProtobuf() };
-            var response = _eventStoreClient.FetchForAggregate(request);
-            ThrowIfUnsuccessfullRespone(response.Success, response.Reason);
-            return CommittedEventsFromResponse(response.Events);
+            _logger.Debug("Fetching events for aggregate");
+            var request = new Contracts.FetchForAggregateRequest
+            {
+                CallContext = GetCurrentCallContext(),
+                Aggregate = new Contracts.Aggregate
+                {
+                    AggregateRootId = _artifactMap.GetArtifactFor(aggregateRoot).Id.ToProtobuf(),
+                    EventSourceId = eventSource.ToProtobuf(),
+                },
+            };
+            var response = await _eventStoreClient.FetchForAggregateAsync(request, cancellationToken: cancellationToken);
+            ThrowIfFailure(response.Failure);
+            return _eventConverter.ToSDK(response.Events);
         }
 
-        CommittedEvents CommittedEventsFromResponse(grpcEvents.CommittedEvents committedEvents) =>
-            new CommittedEvents(
-                committedEvents.Events
-                    .Select(_eventConverter.ToSDK)
-                    .ToArray());
+        /// <inheritdoc/>
+        public Task<CommittedAggregateEvents> FetchForAggregate<TAggregateRoot>(EventSourceId eventSource, CancellationToken cancellationToken)
+            where TAggregateRoot : AggregateRoot
+            => FetchForAggregate(typeof(TAggregateRoot), eventSource, cancellationToken);
 
-        CommittedAggregateEvents CommittedEventsFromResponse(grpcEvents.CommittedAggregateEvents committedEvents)
-        {
-            var aggregateRoot = _artifactMap.GetTypeFor(new Artifact(committedEvents.AggregateRoot.ToGuid(), ArtifactGeneration.First));
-            return new CommittedAggregateEvents(
-                committedEvents.EventSource.ToGuid(),
-                aggregateRoot,
-                committedEvents.Events
-                    .Select(_ => _eventConverter.ToSDK(_, committedEvents.EventSource.To<EventSourceId>(), aggregateRoot))
-                    .ToArray());
-        }
+        CallRequestContext GetCurrentCallContext()
+            => new CallRequestContext
+            {
+                HeadId = _head.Id.ToProtobuf(),
+                ExecutionContext = _executionContextManager.Current.ToProtobuf(),
+            };
 
-        void ThrowIfUnsuccessfullRespone(bool success, string reason)
+        void ThrowIfFailure(Failure failure)
         {
-            if (!success) throw new EventStoreOperationFailed(reason);
+            if (failure != null) throw new EventStoreOperationFailed(failure.Reason);
         }
     }
 }
