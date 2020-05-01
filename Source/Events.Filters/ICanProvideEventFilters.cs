@@ -6,9 +6,9 @@ using Dolittle.Events.Filters.Internal;
 namespace Dolittle.Events.Filters
 {
     /// <summary>
-    /// Defines a system that can filter instances of <see cref="IEvent"/> to a stream.
+    /// Represents a system that is capable of providing implementations of <see cref="ICanFilterEvents"/>.
     /// </summary>
-    public interface ICanFilterEvents : ICanFilter<IEvent, FilterResult>
+    public interface ICanProvideEventFilters : ICanProvideFilters<ICanFilterEvents, IEvent, FilterResult>
     {
     }
 }

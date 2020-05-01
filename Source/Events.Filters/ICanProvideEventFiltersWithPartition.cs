@@ -6,9 +6,9 @@ using Dolittle.Events.Filters.Internal;
 namespace Dolittle.Events.Filters
 {
     /// <summary>
-    /// Defines a system that can filter instances of <see cref="IEvent"/> to a partitioned stream.
+    /// Represents a system that is capable of providing implementations of <see cref="ICanFilterEventsWithPartition"/>.
     /// </summary>
-    public interface ICanFilterEventsWithPartition : ICanFilter<IEvent, PartitonedFilterResult>
+    public interface ICanProvideEventFiltersWithPartition : ICanProvideFilters<ICanFilterEventsWithPartition, IEvent, PartitonedFilterResult>
     {
     }
 }
