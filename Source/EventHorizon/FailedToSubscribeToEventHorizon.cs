@@ -23,7 +23,7 @@ namespace Dolittle.EventHorizon
         /// <param name="publicStream">The <see cref="StreamId" /> to subscribe to.</param>
         /// <param name="partition">The <see cref="PartitionId" /> in the stream to subscribe to.</param>
         public FailedToSubscribeToEventHorizon(string failureReason, TenantId subscriber, Microservice producerMicroservice, TenantId producerTenant, StreamId publicStream, PartitionId partition)
-            : base($"Tenant '{subscriber}' could not subscribe to partition '{partition}' in public stream '{publicStream}' for tenant '{producerTenant}' on microservice '{producerMicroservice}. Reason: {failureReason}'")
+            : base($"Tenant {subscriber} could not subscribe to partition {partition} in public stream {publicStream} of tenant {producerTenant} in microservice {producerMicroservice}. {failureReason}")
         {
         }
     }

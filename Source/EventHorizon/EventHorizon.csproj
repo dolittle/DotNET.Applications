@@ -10,7 +10,7 @@
         <PackageReference Include="Dolittle.DependencyInversion" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Execution" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Protobuf" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)" Alias="contracts"/>
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)"/>
         <PackageReference Include="Dolittle.Services.Clients" Version="$(FundamentalsVersion)" />
     </ItemGroup>
     <ItemGroup>

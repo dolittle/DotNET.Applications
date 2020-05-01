@@ -11,21 +11,14 @@ namespace Dolittle.EventHorizon
     /// <summary>
     /// Represents the configuration for event horizons.
     /// </summary>
-    [Name(ConfigurationName)]
-    public class EventHorizonsConfiguration :
-        ReadOnlyDictionary<TenantId, IReadOnlyList<EventHorizon>>,
-        IConfigurationObject
+    [Name("event-horizons")]
+    public class EventHorizonsConfiguration : ReadOnlyDictionary<TenantId, IReadOnlyList<Subscription>>, IConfigurationObject
     {
-        /// <summary>
-        /// The name of the configuration.
-        /// </summary>
-        public const string ConfigurationName = "event-horizons";
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHorizonsConfiguration"/> class.
         /// </summary>
         /// <param name="configuration">Dictionary for <see cref="TenantId"/> with <see cref="IReadOnlyList{T}" /> of ><see cref="EventHorizon"/>.</param>
-        public EventHorizonsConfiguration(IDictionary<TenantId, IReadOnlyList<EventHorizon>> configuration)
+        public EventHorizonsConfiguration(IDictionary<TenantId, IReadOnlyList<Subscription>> configuration)
             : base(configuration)
         {
         }

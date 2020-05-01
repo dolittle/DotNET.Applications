@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Dolittle.ApplicationModel;
@@ -8,9 +8,9 @@ using Dolittle.Tenancy;
 namespace Dolittle.EventHorizon
 {
     /// <summary>
-    /// Represents the configuration of an event horizon.
+    /// Represents the configuration of an event horizon subscription.
     /// </summary>
-    public class EventHorizon
+    public class Subscription
     {
         /// <summary>
         /// Gets or sets the <see cref="ScopeId" />.
