@@ -41,22 +41,22 @@ namespace Dolittle.Events.Handling
         }
 
         /// <inheritdoc/>
-        public Task Register<TEventType>(EventHandlerId id, ScopeId scope, ICanHandle<TEventType> handler, CancellationToken cancellationToken)
+        public Task Register<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, ICanHandle<TEventType> handler, CancellationToken cancellationToken)
             where TEventType : IEvent
         {
             var handlerMethods = GetHandleMethodsFrom(handler);
             var processor = _container.Get<EventHandlerProcessor<TEventType>>();
-            return Task.Run(() => Start(id, scope, processor, handler, cancellationToken), cancellationToken);
+            return Task.Run(() => Start(id, scope, partitioned, processor, handlerMethods, cancellationToken), cancellationToken);
         }
 
-        Task Start<TEventType>(EventHandlerId id, ScopeId scope, EventHandlerProcessor<TEventType> processor, ICanHandle<TEventType> handler, CancellationToken cancellationToken)
+        Task Start<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, EventHandlerProcessor<TEventType> processor, IDictionary<Type, HandleMethod<TEventType>> handlers, CancellationToken cancellationToken)
             where TEventType : IEvent
             => _policy.Execute(
                 async (cancellationToken) =>
                 {
                     while (!cancellationToken.IsCancellationRequested)
                     {
-                        var receivedResponse = await processor.Register(id, scope, handler, cancellationToken).ConfigureAwait(false);
+                        var receivedResponse = await processor.Register(id, scope, handlers, partitioned, cancellationToken).ConfigureAwait(false);
                         ThrowIfNotReceivedResponse(id, receivedResponse);
                         ThrowIfRegisterFailure(id, processor.RegisterFailure);
                         await processor.Handle(cancellationToken).ConfigureAwait(false);

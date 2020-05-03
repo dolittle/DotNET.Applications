@@ -18,7 +18,6 @@ namespace Dolittle.Events.Handling
         public EventHandlerAttribute(string id)
         {
             Id = Guid.Parse(id);
-            ThrowIfIllegalId(Id);
         }
 
         /// <summary>
@@ -29,7 +28,6 @@ namespace Dolittle.Events.Handling
         void ThrowIfIllegalId(EventHandlerId id)
         {
             var stream = new StreamId { Value = id };
-            if (stream.IsNonWriteable) throw new IllegalEventHandlerId(id);
         }
     }
 }

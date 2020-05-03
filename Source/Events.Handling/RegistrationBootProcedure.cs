@@ -83,12 +83,13 @@ namespace Dolittle.Events.Handling
 
             var handlerId = type.GetCustomAttribute<EventHandlerAttribute>().Id;
             var scopeId = type.HasAttribute<ScopeAttribute>() ? type.GetCustomAttribute<ScopeAttribute>().Id : ScopeId.Default;
+            var partitioned = !type.HasAttribute<NotPartitionedAttribute>();
 
             Task.Run(async () =>
             {
                 try
                 {
-                    await _manager.Register(handlerId, scopeId, handler).ConfigureAwait(false);
+                    await _manager.Register(handlerId, scopeId, partitioned, handler).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
