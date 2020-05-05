@@ -1,7 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Logging;
 using Dolittle.Types;
@@ -13,7 +12,7 @@ namespace Dolittle.Events.Handling.EventHorizon
     /// </summary>
     public class ExternalEventHandlersProvider : ICanProvideExternalEventHandlers
     {
-        readonly IInstancesOf<ICanHandleExternalEvents> _handlers;
+        readonly IImplementationsOf<ICanHandleExternalEvents> _handlers;
         readonly ILogger _logger;
 
         /// <summary>
@@ -21,14 +20,14 @@ namespace Dolittle.Events.Handling.EventHorizon
         /// </summary>
         /// <param name="handlers"><see cref="IInstancesOf{T}"/> of type <see cref="ICanHandleExternalEvents"/>.</param>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
-        public ExternalEventHandlersProvider(IInstancesOf<ICanHandleExternalEvents> handlers, ILogger logger)
+        public ExternalEventHandlersProvider(IImplementationsOf<ICanHandleExternalEvents> handlers, ILogger logger)
         {
             _handlers = handlers;
             _logger = logger;
         }
 
         /// <inheritdoc/>
-        public IEnumerable<ICanHandleExternalEvents> Provide()
+        public IImplementationsOf<ICanHandleExternalEvents> Provide()
         {
             _logger.Debug("Providing {EventHandlerCount} external event handlers", _handlers.Count());
             return _handlers;

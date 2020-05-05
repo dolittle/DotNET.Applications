@@ -27,7 +27,7 @@ namespace Dolittle.Events.Handling
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerManager"/> class.
         /// </summary>
-        /// <param name="container">The <see cref="IContainer"/> that will be used to create instances of <see cref="EventHandlerProcessor{TEventType}"/>.</param>
+        /// <param name="container">The <see cref="IContainer"/> that will be used to create instances of <see cref="EventHandlerProcessor{THandlerType, TEventType}"/>.</param>
         /// <param name="policy">The <see cref="IAsyncPolicyFor{T}"/> that defines reconnect policies for event handlers.</param>
         /// <param name="logger">The <see cref="ILogger"/> used for logging.</param>
         public EventHandlerManager(
@@ -41,22 +41,25 @@ namespace Dolittle.Events.Handling
         }
 
         /// <inheritdoc/>
-        public Task Register<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, ICanHandle<TEventType> handler, CancellationToken cancellationToken)
+        public Task Register<THandlerType, TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, CancellationToken cancellationToken = default)
+            where THandlerType : ICanHandle<TEventType>
             where TEventType : IEvent
         {
-            var handlerMethods = GetHandleMethodsFrom(handler);
-            var processor = _container.Get<EventHandlerProcessor<TEventType>>();
-            return Task.Run(() => Start(id, scope, partitioned, processor, handlerMethods, cancellationToken), cancellationToken);
+            var methods = GetHandleMethodsFrom<TEventType>(typeof(THandlerType));
+            var handlerFactory = _container.Get<FactoryFor<THandlerType>>();
+            var processor = _container.Get<EventHandlerProcessor<THandlerType, TEventType>>();
+            return Task.Run(() => Start(id, scope, partitioned, processor, handlerFactory, methods, cancellationToken), cancellationToken);
         }
 
-        Task Start<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, EventHandlerProcessor<TEventType> processor, IDictionary<Type, HandleMethod<TEventType>> handlers, CancellationToken cancellationToken)
+        Task Start<THandlerType, TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, EventHandlerProcessor<THandlerType, TEventType> processor, FactoryFor<THandlerType> handlerFactory, IDictionary<Type, MethodInfo> methods, CancellationToken cancellationToken)
+            where THandlerType : ICanHandle<TEventType>
             where TEventType : IEvent
             => _policy.Execute(
                 async (cancellationToken) =>
                 {
                     while (!cancellationToken.IsCancellationRequested)
                     {
-                        var receivedResponse = await processor.Register(id, scope, handlers, partitioned, cancellationToken).ConfigureAwait(false);
+                        var receivedResponse = await processor.Register(id, scope, handlerFactory, methods, partitioned, cancellationToken).ConfigureAwait(false);
                         ThrowIfNotReceivedResponse(id, receivedResponse);
                         ThrowIfRegisterFailure(id, processor.RegisterFailure);
                         await processor.Handle(cancellationToken).ConfigureAwait(false);
@@ -64,11 +67,10 @@ namespace Dolittle.Events.Handling
                 },
                 cancellationToken);
 
-        IDictionary<Type, HandleMethod<TEventType>> GetHandleMethodsFrom<TEventType>(ICanHandle<TEventType> handler)
+        IDictionary<Type, MethodInfo> GetHandleMethodsFrom<TEventType>(Type handlerType)
             where TEventType : IEvent
         {
-            var methods = new Dictionary<Type, HandleMethod<TEventType>>();
-            var handlerType = handler.GetType();
+            var methods = new Dictionary<Type, MethodInfo>();
 
             foreach (var method in handlerType.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
             {
@@ -81,7 +83,7 @@ namespace Dolittle.Events.Handling
                 {
                     if (MethodHasHandleSignatureFor<TEventType>(method) && TryGetFirstMethodParameter<TEventType>(method, out var type))
                     {
-                        methods[type] = (HandleMethod<TEventType>)method.CreateDelegate(typeof(HandleMethod<TEventType>), handler);
+                        methods[type] = method;
                     }
                     else if (!FirstMethodParameterIs<TEventType>(method))
                     {

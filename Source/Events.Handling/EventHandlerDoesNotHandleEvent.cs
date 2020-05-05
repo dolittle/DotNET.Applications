@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Dolittle.Events.Handling.Internal
+namespace Dolittle.Events.Handling
 {
     /// <summary>
     /// Exception that gets thrown when an event handler is asked to handle an event it cannot handle.

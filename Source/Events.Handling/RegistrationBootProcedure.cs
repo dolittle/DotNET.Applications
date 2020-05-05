@@ -54,14 +54,18 @@ namespace Dolittle.Events.Handling
         }
 
         void RegisterHandlersFromProvider<THandlerType, TEventType>(ICanProvideHandlers<THandlerType, TEventType> provider)
-            where THandlerType : ICanHandle<TEventType>
+            where THandlerType : class, ICanHandle<TEventType>
             where TEventType : IEvent
         {
             var type = provider.GetType();
             _logger.Trace("Registering event handlers from {HandlerProvider}", type);
             try
             {
-                foreach (var handler in provider.Provide()) RegisterHandler(handler);
+                var registerHandlerMethod = GetType().GetMethod(nameof(RegisterHandler), BindingFlags.NonPublic | BindingFlags.Instance);
+                foreach (var handler in provider.Provide())
+                {
+                    registerHandlerMethod.MakeGenericMethod(handler, typeof(TEventType)).Invoke(this, null);
+                }
             }
             catch (Exception ex)
             {
@@ -69,10 +73,11 @@ namespace Dolittle.Events.Handling
             }
         }
 
-        void RegisterHandler<TEventType>(ICanHandle<TEventType> handler)
+        void RegisterHandler<THandlerType, TEventType>()
+            where THandlerType : class, ICanHandle<TEventType>
             where TEventType : IEvent
         {
-            var type = handler.GetType();
+            var type = typeof(THandlerType);
             _logger.Trace("Registering event handler {Handler}", type);
 
             if (!type.HasAttribute<EventHandlerAttribute>())
@@ -89,7 +94,7 @@ namespace Dolittle.Events.Handling
             {
                 try
                 {
-                    await _manager.Register(handlerId, scopeId, partitioned, handler).ConfigureAwait(false);
+                    await _manager.Register<THandlerType, TEventType>(handlerId, scopeId, partitioned).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
