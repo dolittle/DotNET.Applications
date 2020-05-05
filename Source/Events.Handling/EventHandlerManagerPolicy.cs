@@ -7,26 +7,26 @@ using Dolittle.Resilience;
 using Grpc.Core;
 using Polly;
 
-namespace Dolittle.Events.Filters
+namespace Dolittle.Events.Handling
 {
     /// <summary>
-    /// Defines the policy for registering event filters to the Runtime.
+    /// Defines the policy for registering event handlers to the Runtime.
     /// </summary>
-    public class FilterManagerPolicy : IDefineAsyncPolicyForType
+    public class EventHandlerManagerPolicy : IDefineAsyncPolicyForType
     {
-        readonly ILogger<FilterManager> _logger;
+        readonly ILogger<EventHandlerManager> _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FilterManagerPolicy"/> class.
+        /// Initializes a new instance of the <see cref="EventHandlerManagerPolicy"/> class.
         /// </summary>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
-        public FilterManagerPolicy(ILogger<FilterManager> logger)
+        public EventHandlerManagerPolicy(ILogger<EventHandlerManager> logger)
         {
             _logger = logger;
         }
 
         /// <inheritdoc/>
-        public Type Type => typeof(FilterManager);
+        public Type Type => typeof(EventHandlerManager);
 
         /// <inheritdoc/>
         public Polly.IAsyncPolicy Define()
@@ -46,7 +46,7 @@ namespace Dolittle.Events.Filters
                             goto default;
 
                             default:
-                            _logger.Warning(_, "Error while registering filter");
+                            _logger.Warning(_, "Error while registering event handler");
                             return true;
                         }
                     })

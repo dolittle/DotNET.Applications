@@ -4,6 +4,7 @@
 using System;
 using Dolittle.Logging;
 using Dolittle.Resilience;
+using Grpc.Core;
 using Polly;
 
 namespace Dolittle.EventHorizon
@@ -30,9 +31,25 @@ namespace Dolittle.EventHorizon
         /// <inheritdoc/>
         public Polly.IAsyncPolicy Define()
             => Polly.Policy
-                .Handle<Exception>()
-                .WaitAndRetryForeverAsync(
-                    attempt => TimeSpan.FromSeconds(Math.Min(Math.Pow(2, attempt), 60)),
-                    (ex, _) => _logger.Warning(ex, "Error while subscribing to event horizon"));
+                .Handle<Exception>(
+                    _ =>
+                    {
+                        switch (_)
+                        {
+                            case RpcException ex:
+                            switch (ex.StatusCode)
+                            {
+                                case StatusCode.Unavailable:
+                                return true;
+                            }
+
+                            goto default;
+
+                            default:
+                            _logger.Warning(_, "Error while subscribing to event horizon");
+                            return true;
+                        }
+                    })
+                .WaitAndRetryForeverAsync(attempt => TimeSpan.FromSeconds(Math.Min(Math.Pow(2, attempt), 60)));
     }
 }
