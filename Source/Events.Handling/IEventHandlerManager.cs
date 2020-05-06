@@ -3,7 +3,6 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Dolittle.Events.Handling.Internal;
 
 namespace Dolittle.Events.Handling
 {
@@ -18,12 +17,11 @@ namespace Dolittle.Events.Handling
         /// <param name="id">The unique <see cref="EventHandlerId"/> for the handler.</param>
         /// <param name="scope">The <see cref="ScopeId"/> of the scope in the Event Store where the handler will run.</param>
         /// <param name="partitioned">Whether the event handler produces a partitioned stream or not.</param>
+        /// <param name="handler">The handler to use.</param>
         /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
-        /// <typeparam name="THandlerType">The type of the event handler.</typeparam>
         /// <typeparam name="TEventType">The event type that the event handler can handle.</typeparam>
         /// <returns>A <see cref="Task"/> representing the execution of the event handler.</returns>
-        Task Register<THandlerType, TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, CancellationToken cancellationToken = default)
-            where THandlerType : ICanHandle<TEventType>
+        Task Register<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, IEventHandler<TEventType> handler, CancellationToken cancellationToken = default)
             where TEventType : IEvent;
     }
 }

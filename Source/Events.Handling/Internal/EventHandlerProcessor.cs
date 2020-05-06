@@ -2,12 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Dolittle.Artifacts;
-using Dolittle.DependencyInversion;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.Runtime.Events.Processing.Contracts;
@@ -15,17 +12,14 @@ using Dolittle.Services.Clients;
 using Google.Protobuf.WellKnownTypes;
 using static Dolittle.Runtime.Events.Processing.Contracts.EventHandlers;
 using Artifact = Dolittle.Artifacts.Contracts.Artifact;
-using Type = System.Type;
 
 namespace Dolittle.Events.Handling.Internal
 {
     /// <summary>
     /// Represents an event handler processor that wraps the gRPC protocol for event handlers.
     /// </summary>
-    /// <typeparam name="THandlerType">The type of the event handler.</typeparam>
     /// <typeparam name="TEventType">The event type that the filter can handle.</typeparam>
-    public class EventHandlerProcessor<THandlerType, TEventType>
-        where THandlerType : ICanHandle<TEventType>
+    public class EventHandlerProcessor<TEventType>
         where TEventType : IEvent
     {
         readonly IReverseCallClient<EventHandlersClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlersRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse> _client;
@@ -34,11 +28,10 @@ namespace Dolittle.Events.Handling.Internal
         readonly IEventConverter _converter;
         readonly ILogger _logger;
         EventHandlerId _id;
-        FactoryFor<THandlerType> _handlerFactory;
-        IDictionary<Type, MethodInfo> _methods;
+        IEventHandler<TEventType> _handler;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventHandlerProcessor{THandlerType, TEventType}"/> class.
+        /// Initializes a new instance of the <see cref="EventHandlerProcessor{TEventType}"/> class.
         /// </summary>
         /// <param name="handlersClient">The <see cref="EventHandlersClient"/> to use to connect to the Runtime.</param>
         /// <param name="reverseCallClients">The <see cref="IReverseCallClients"/> to use for creating instances of <see cref="IReverseCallClient{TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse}"/>.</param>
@@ -79,16 +72,14 @@ namespace Dolittle.Events.Handling.Internal
         /// </summary>
         /// <param name="id">The unique <see cref="EventHandlerId"/> for the event handler.</param>
         /// <param name="scope">The <see cref="ScopeId"/> of the scope in the Event Store where the event handler will run.</param>
-        /// <param name="handlerFactory">Factory for the handler type.</param>
-        /// <param name="methods">The delegates to call when event handling requests are received.</param>
         /// <param name="partitioned">Whether the event handler should create a partitioned stream or not.</param>
+        /// <param name="handler">The event handler.</param>
         /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
-        /// <returns>A <see cref="Task" /> that, when resolved, returns whether a registration response was received.</returns>
-        public Task<bool> Register(EventHandlerId id, ScopeId scope, FactoryFor<THandlerType> handlerFactory, IDictionary<Type, MethodInfo> methods, bool partitioned, CancellationToken cancellationToken)
+        /// <returns>A <see cref="Task"/> that, when resolved, returns whether a registration response was received.</returns>
+        public Task<bool> Register(EventHandlerId id, ScopeId scope, bool partitioned, IEventHandler<TEventType> handler, CancellationToken cancellationToken)
         {
             _id = id;
-            _handlerFactory = handlerFactory;
-            _methods = methods;
+            _handler = handler;
 
             var arguments = new EventHandlersRegistrationRequest
             {
@@ -97,7 +88,7 @@ namespace Dolittle.Events.Handling.Internal
                 Partitioned = partitioned,
             };
 
-            foreach ((Type eventType, _) in methods)
+            foreach (var eventType in handler.HandledEventTypes)
             {
                 var artifact = _artifactTypeMap.GetArtifactFor(eventType);
                 arguments.Types_.Add(new Artifact
@@ -123,15 +114,14 @@ namespace Dolittle.Events.Handling.Internal
             try
             {
                 var comitted = _converter.ToSDK(request.Event.Event);
-                if (_methods.TryGetValue(comitted.Event.GetType(), out var method))
+                if (comitted.Event is TEventType typedEvent)
                 {
-                    var handler = _handlerFactory();
-                    var task = (Task)method.Invoke(handler, new object[] { comitted.Event, new EventContext(comitted.EventSource, comitted.Occurred) });
-                    await task.ConfigureAwait(false);
+                    var context = new EventContext(comitted.EventSource, comitted.Occurred);
+                    await _handler.Handle(typedEvent, context).ConfigureAwait(false);
                     return new EventHandlerResponse();
                 }
 
-                throw new EventHandlerDoesNotHandleEvent(comitted.Event.GetType());
+                throw new EventHandlerDoesNotHandleEvent(typeof(TEventType));
             }
             catch (Exception ex)
             {

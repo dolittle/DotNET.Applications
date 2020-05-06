@@ -3,8 +3,8 @@
 
 using System;
 using System.Reflection;
-using System.Threading.Tasks;
 using Dolittle.Booting;
+using Dolittle.DependencyInversion;
 using Dolittle.Events.Handling.EventHorizon;
 using Dolittle.Events.Handling.Internal;
 using Dolittle.Logging;
@@ -18,6 +18,7 @@ namespace Dolittle.Events.Handling
     /// </summary>
     public class RegistrationBootProcedure : ICanPerformBootProcedure
     {
+        readonly IContainer _container;
         readonly IEventHandlerManager _manager;
         readonly IInstancesOf<ICanProvideEventHandlers> _handlerProviders;
         readonly IInstancesOf<ICanProvideExternalEventHandlers> _externalHandlerProviders;
@@ -26,16 +27,19 @@ namespace Dolittle.Events.Handling
         /// <summary>
         /// Initializes a new instance of the <see cref="RegistrationBootProcedure"/> class.
         /// </summary>
+        /// <param name="container">The <see cref="IContainer"/> that will be used to get <see cref="FactoryFor{T}"/> to instantiate event handlers.</param>
         /// <param name="manager">The <see cref="IEventHandlerManager"/> that will be used to register the event handlers.</param>
         /// <param name="handlerProviders">Providers of <see cref="ICanHandleEvents"/>.</param>
         /// <param name="externalHandlerProviders">Providers of <see cref="ICanHandleExternalEvents"/>.</param>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
         public RegistrationBootProcedure(
+            IContainer container,
             IEventHandlerManager manager,
             IInstancesOf<ICanProvideEventHandlers> handlerProviders,
             IInstancesOf<ICanProvideExternalEventHandlers> externalHandlerProviders,
             ILogger logger)
         {
+            _container = container;
             _manager = manager;
             _handlerProviders = handlerProviders;
             _externalHandlerProviders = externalHandlerProviders;
@@ -61,11 +65,7 @@ namespace Dolittle.Events.Handling
             _logger.Trace("Registering event handlers from {HandlerProvider}", type);
             try
             {
-                var registerHandlerMethod = GetType().GetMethod(nameof(RegisterHandler), BindingFlags.NonPublic | BindingFlags.Instance);
-                foreach (var handler in provider.Provide())
-                {
-                    registerHandlerMethod.MakeGenericMethod(handler, typeof(TEventType)).Invoke(this, null);
-                }
+                foreach (var handler in provider.Provide()) RegisterHandler<TEventType>(handler);
             }
             catch (Exception ex)
             {
@@ -73,11 +73,9 @@ namespace Dolittle.Events.Handling
             }
         }
 
-        void RegisterHandler<THandlerType, TEventType>()
-            where THandlerType : class, ICanHandle<TEventType>
+        void RegisterHandler<TEventType>(Type type)
             where TEventType : IEvent
         {
-            var type = typeof(THandlerType);
             _logger.Trace("Registering event handler {Handler}", type);
 
             if (!type.HasAttribute<EventHandlerAttribute>())
@@ -90,17 +88,12 @@ namespace Dolittle.Events.Handling
             var scopeId = type.HasAttribute<ScopeAttribute>() ? type.GetCustomAttribute<ScopeAttribute>().Id : ScopeId.Default;
             var partitioned = !type.HasAttribute<NotPartitionedAttribute>();
 
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await _manager.Register<THandlerType, TEventType>(handlerId, scopeId, partitioned).ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    _logger.Warning(ex, "Error while registering event handler {Handler}.", type);
-                }
-            });
+            var factory = _container.Get(typeof(FactoryFor<>).MakeGenericType(type));
+            var buildMethod = typeof(ConventionEventHandlerBuilder<TEventType>).GetMethod(nameof(ConventionEventHandlerBuilder<TEventType>.BuildFor));
+            var dynamicMethod = buildMethod.MakeGenericMethod(type);
+
+            var handler = (IEventHandler<TEventType>)dynamicMethod.Invoke(null, new[] { factory });
+            _manager.Register(handlerId, scopeId, partitioned, handler);
         }
     }
 }
