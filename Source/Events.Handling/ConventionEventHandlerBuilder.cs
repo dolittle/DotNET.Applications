@@ -49,7 +49,7 @@ namespace Dolittle.Events.Handling
                     }
                     else if (!FirstMethodParameterIs<TEventType>(method))
                     {
-                        throw new EventHandlerMethodFirstParameterMustBe<TEventType>(method);
+                        throw new EventHandlerMethodFirstParameterMustBeCorrectEventType(typeof(TEventType), method);
                     }
                     else if (!SecondMethodParameterIsEventContext(method))
                     {

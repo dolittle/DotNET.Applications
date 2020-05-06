@@ -78,22 +78,30 @@ namespace Dolittle.Events.Handling
         {
             _logger.Trace("Registering event handler {Handler}", type);
 
-            if (!type.HasAttribute<EventHandlerAttribute>())
+            try
             {
-                _logger.Warning("Event handler {Handler} is missing the required [EventHandler(...)] attribute. It will not be registered.");
-                return;
+                if (!type.HasAttribute<EventHandlerAttribute>())
+                {
+                    _logger.Warning("Event handler {Handler} is missing the required [EventHandler(...)] attribute. It will not be registered.");
+                    return;
+                }
+
+                var handlerId = type.GetCustomAttribute<EventHandlerAttribute>().Id;
+                var scopeId = type.HasAttribute<ScopeAttribute>() ? type.GetCustomAttribute<ScopeAttribute>().Id : ScopeId.Default;
+                var partitioned = !type.HasAttribute<NotPartitionedAttribute>();
+
+                var factory = _container.Get(typeof(FactoryFor<>).MakeGenericType(type));
+                var buildMethod = typeof(ConventionEventHandlerBuilder<TEventType>).GetMethod(nameof(ConventionEventHandlerBuilder<TEventType>.BuildFor));
+                var dynamicMethod = buildMethod.MakeGenericMethod(type);
+
+                var handler = (IEventHandler<TEventType>)dynamicMethod.Invoke(null, new[] { factory });
+                _manager.Register(handlerId, scopeId, partitioned, handler);
             }
-
-            var handlerId = type.GetCustomAttribute<EventHandlerAttribute>().Id;
-            var scopeId = type.HasAttribute<ScopeAttribute>() ? type.GetCustomAttribute<ScopeAttribute>().Id : ScopeId.Default;
-            var partitioned = !type.HasAttribute<NotPartitionedAttribute>();
-
-            var factory = _container.Get(typeof(FactoryFor<>).MakeGenericType(type));
-            var buildMethod = typeof(ConventionEventHandlerBuilder<TEventType>).GetMethod(nameof(ConventionEventHandlerBuilder<TEventType>.BuildFor));
-            var dynamicMethod = buildMethod.MakeGenericMethod(type);
-
-            var handler = (IEventHandler<TEventType>)dynamicMethod.Invoke(null, new[] { factory });
-            _manager.Register(handlerId, scopeId, partitioned, handler);
+            catch (Exception ex)
+            {
+                while (ex.InnerException != null) ex = ex.InnerException;
+                _logger.Warning(ex, "Error while registering event handler {Handler}", type);
+            }
         }
     }
 }
