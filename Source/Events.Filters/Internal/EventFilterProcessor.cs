@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Dolittle.DependencyInversion;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.Runtime.Events.Processing.Contracts;
@@ -17,8 +18,9 @@ namespace Dolittle.Events.Filters.Internal
     /// </summary>
     public class EventFilterProcessor : AbstractFilterProcessor
     {
-        readonly IReverseCallClient<FiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, FiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, FilterResponse> _client;
+        readonly FactoryFor<IReverseCallClient<FiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, FiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, FilterResponse>> _clientFactory;
         readonly ICanFilterEvents _filter;
+        IReverseCallClient<FiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, FiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, FilterResponse> _client;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventFilterProcessor"/> class.
@@ -31,7 +33,7 @@ namespace Dolittle.Events.Filters.Internal
         public EventFilterProcessor(FiltersClient filtersClient, IReverseCallClients reverseCallClients, ICanFilterEvents filter, IEventConverter converter, ILogger logger)
             : base(converter, logger)
         {
-            _client = reverseCallClients.GetFor<FiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, FiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, FilterResponse>(
+            _clientFactory = () => reverseCallClients.GetFor<FiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, FiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, FilterResponse>(
                 () => filtersClient.Connect(),
                 (message, arguments) => message.RegistrationRequest = arguments,
                 message => message.RegistrationResponse,
@@ -48,13 +50,16 @@ namespace Dolittle.Events.Filters.Internal
 
         /// <inheritdoc/>
         public override Task<bool> Register(FilterId filter, ScopeId scope, CancellationToken cancellationToken)
-            => _client.Connect(
+        {
+            _client = _clientFactory();
+            return _client.Connect(
                 new FiltersRegistrationRequest
                 {
                     FilterId = filter.ToProtobuf(),
                     ScopeId = scope.ToProtobuf(),
                 },
                 cancellationToken);
+        }
 
         /// <inheritdoc/>
         public override Task Handle(CancellationToken cancellationToken)

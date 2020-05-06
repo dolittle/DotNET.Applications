@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Dolittle.DependencyInversion;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.Runtime.Events.Processing.Contracts;
@@ -17,8 +18,9 @@ namespace Dolittle.Events.Filters.Internal
     /// </summary>
     public class EventFilterWithPartitionsProcessor : AbstractFilterProcessor
     {
-        readonly IReverseCallClient<PartitionedFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PartitionedFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse> _client;
+        readonly FactoryFor<IReverseCallClient<PartitionedFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PartitionedFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse>> _clientFactory;
         readonly ICanFilterEventsWithPartition _filter;
+        IReverseCallClient<PartitionedFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PartitionedFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse> _client;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventFilterWithPartitionsProcessor"/> class.
@@ -31,7 +33,7 @@ namespace Dolittle.Events.Filters.Internal
         public EventFilterWithPartitionsProcessor(FiltersClient filtersClient, IReverseCallClients reverseCallClients, ICanFilterEventsWithPartition filter, IEventConverter converter, ILogger logger)
             : base(converter, logger)
         {
-            _client = reverseCallClients.GetFor<PartitionedFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PartitionedFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse>(
+            _clientFactory = () => reverseCallClients.GetFor<PartitionedFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PartitionedFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse>(
                 () => filtersClient.ConnectPartitioned(),
                 (message, arguments) => message.RegistrationRequest = arguments,
                 message => message.RegistrationResponse,
@@ -48,13 +50,16 @@ namespace Dolittle.Events.Filters.Internal
 
         /// <inheritdoc/>
         public override Task<bool> Register(FilterId filter, ScopeId scope, CancellationToken cancellationToken)
-            => _client.Connect(
+        {
+            _client = _clientFactory();
+            return _client.Connect(
                 new PartitionedFiltersRegistrationRequest
                 {
                     FilterId = filter.ToProtobuf(),
                     ScopeId = scope.ToProtobuf(),
                 },
                 cancellationToken);
+        }
 
         /// <inheritdoc/>
         public override Task Handle(CancellationToken cancellationToken)

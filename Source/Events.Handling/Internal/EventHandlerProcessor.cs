@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Dolittle.Artifacts;
+using Dolittle.DependencyInversion;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.Runtime.Events.Processing.Contracts;
@@ -22,13 +23,14 @@ namespace Dolittle.Events.Handling.Internal
     public class EventHandlerProcessor<TEventType>
         where TEventType : IEvent
     {
-        readonly IReverseCallClient<EventHandlersClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlersRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse> _client;
+        readonly FactoryFor<IReverseCallClient<EventHandlersClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlersRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse>> _clientFactory;
         readonly IEventProcessingCompletion _eventProcessingCompletion;
         readonly IArtifactTypeMap _artifactTypeMap;
         readonly IEventConverter _converter;
         readonly ILogger _logger;
         EventHandlerId _id;
         IEventHandler<TEventType> _handler;
+        IReverseCallClient<EventHandlersClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlersRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse> _client;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerProcessor{TEventType}"/> class.
@@ -47,7 +49,7 @@ namespace Dolittle.Events.Handling.Internal
             IEventConverter converter,
             ILogger logger)
         {
-            _client = reverseCallClients.GetFor<EventHandlersClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlersRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse>(
+            _clientFactory = () => reverseCallClients.GetFor<EventHandlersClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlersRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse>(
                 () => handlersClient.Connect(),
                 (message, arguments) => message.RegistrationRequest = arguments,
                 message => message.RegistrationResponse,
@@ -80,6 +82,7 @@ namespace Dolittle.Events.Handling.Internal
         {
             _id = id;
             _handler = handler;
+            _client = _clientFactory();
 
             var arguments = new EventHandlersRegistrationRequest
             {

@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Dolittle.DependencyInversion;
 using Dolittle.Events.Filters.EventHorizon;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
@@ -18,9 +19,10 @@ namespace Dolittle.Events.Filters.Internal
     /// </summary>
     public class PublicEventFilterProcessor : AbstractFilterProcessor
     {
-        readonly IReverseCallClient<PublicFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PublicFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse> _client;
+        readonly FactoryFor<IReverseCallClient<PublicFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PublicFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse>> _clientFactory;
         readonly ICanFilterPublicEvents _filter;
         readonly ILogger _logger;
+        IReverseCallClient<PublicFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PublicFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse> _client;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PublicEventFilterProcessor"/> class.
@@ -33,7 +35,7 @@ namespace Dolittle.Events.Filters.Internal
         public PublicEventFilterProcessor(FiltersClient filtersClient, IReverseCallClients reverseCallClients, ICanFilterPublicEvents filter, IEventConverter converter, ILogger logger)
             : base(converter, logger)
         {
-            _client = reverseCallClients.GetFor<PublicFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PublicFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse>(
+            _clientFactory = () => reverseCallClients.GetFor<PublicFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PublicFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse>(
                 () => filtersClient.ConnectPublic(),
                 (message, arguments) => message.RegistrationRequest = arguments,
                 message => message.RegistrationResponse,
@@ -56,6 +58,8 @@ namespace Dolittle.Events.Filters.Internal
             {
                 _logger.Warning("The public filter {FilterId} was registered to a non-default scope. This is not allowed, and the filter will be registered on the default scope.", filter);
             }
+
+            _client = _clientFactory();
 
             return _client.Connect(
                 new PublicFiltersRegistrationRequest
