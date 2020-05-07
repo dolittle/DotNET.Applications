@@ -48,11 +48,19 @@ namespace Dolittle.Events.Handling.Internal
         /// <summary>
         /// Creates an <see cref="EventHandlerProcessor{TEventType}"/> of type <typeparamref name="TEventType"/>.
         /// </summary>
+        /// <param name="id">The unique <see cref="EventHandlerId"/> for the event handler.</param>
+        /// <param name="scope">The <see cref="ScopeId"/> of the scope in the Event Store where the event handler will run.</param>
+        /// <param name="partitioned">Whether the event handler should create a partitioned stream or not.</param>
+        /// <param name="handler">The <see cref="IEventHandler{TEventType}"/> that will be called to handle incoming events.</param>
         /// <typeparam name="TEventType">The type of events to process.</typeparam>
         /// <returns>An <see cref="EventHandlerProcessor{TEventType}"/> of type <typeparamref name="TEventType"/>.</returns>
-        public EventHandlerProcessor<TEventType> ProcessorFor<TEventType>()
+        public EventHandlerProcessor<TEventType> ProcessorFor<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, IEventHandler<TEventType> handler)
             where TEventType : IEvent
             => new EventHandlerProcessor<TEventType>(
+                id,
+                scope,
+                partitioned,
+                handler,
                 _handlersClient,
                 _reverseCallClients,
                 _eventProcessingCompletion,
