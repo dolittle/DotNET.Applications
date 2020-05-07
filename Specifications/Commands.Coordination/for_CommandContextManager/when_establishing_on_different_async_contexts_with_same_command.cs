@@ -2,6 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Dynamic;
+using System.Threading;
+using System.Threading.Tasks;
 using Dolittle.Artifacts;
 using Dolittle.Execution;
 using Machine.Specifications;
@@ -10,19 +12,18 @@ using It = Machine.Specifications.It;
 namespace Dolittle.Commands.Coordination.for_CommandContextManager
 {
     [Subject(Subjects.establishing_context)]
-    public class when_establishing_with_different_commands : given.a_command_context_manager
+    public class when_establishing_on_different_async_contexts_with_same_command : given.a_command_context_manager
     {
         static ICommandContext firstCommandContext;
         static ICommandContext secondCommandContext;
 
-        Because of = () =>
+        Establish context = () =>
         {
-            var first_artifact = Artifact.New();
-            var second_artifact = Artifact.New();
-            var firstCommand = new CommandRequest(CorrelationId.Empty, first_artifact.Id, first_artifact.Generation, new ExpandoObject());
-            var secondCommand = new CommandRequest(CorrelationId.Empty, second_artifact.Id, second_artifact.Generation, new ExpandoObject());
-            firstCommandContext = manager.EstablishForCommand(firstCommand);
-            secondCommandContext = manager.EstablishForCommand(secondCommand);
+            var resetEvent = new ManualResetEvent(false);
+            var artifact = Artifact.New();
+            var command = new CommandRequest(CorrelationId.Empty, artifact.Id, artifact.Generation, new ExpandoObject());
+            Task.Run(() => firstCommandContext = manager.EstablishForCommand(command)).GetAwaiter().GetResult();
+            Task.Run(() => secondCommandContext = manager.EstablishForCommand(command)).GetAwaiter().GetResult();
         };
 
         It should_return_different_contexts = () => firstCommandContext.ShouldNotEqual(secondCommandContext);

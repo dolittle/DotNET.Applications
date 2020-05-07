@@ -12,28 +12,28 @@ namespace Dolittle.Commands.Coordination.for_CommandContextManager.given
 {
     public class a_command_context_manager
     {
-        protected static CommandContextManager Manager;
-        protected static Mock<IUncommittedEventStreamCoordinator> uncommitted_event_stream_coordinator;
-        protected static Mock<IExecutionContextManager> execution_context_manager_mock;
-        protected static Mock<IEventHandlersWaiters> event_handlers_waiters;
+        protected static CommandContextManager manager;
+        protected static Mock<IEventStore> event_store;
+        protected static Mock<IExecutionContextManager> execution_context_manager;
+        protected static Mock<IEventProcessingCompletion> event_processing_completion;
         protected static CommandContextFactory factory;
         protected static Mock<ILogger> logger;
 
         Establish context = () =>
-                                        {
-                                            CommandContextManager.ResetContext();
-                                            uncommitted_event_stream_coordinator = new Mock<IUncommittedEventStreamCoordinator>();
-                                            execution_context_manager_mock = new Mock<IExecutionContextManager>();
-                                            event_handlers_waiters = new Mock<IEventHandlersWaiters>();
-                                            logger = new Mock<ILogger>();
+        {
+            CommandContextManager.ResetContext();
+            event_store = new Mock<IEventStore>();
+            execution_context_manager = new Mock<IExecutionContextManager>();
+            event_processing_completion = new Mock<IEventProcessingCompletion>();
+            logger = new Mock<ILogger>();
 
-                                            factory = new CommandContextFactory(
-                                                uncommitted_event_stream_coordinator.Object,
-                                                execution_context_manager_mock.Object,
-                                                event_handlers_waiters.Object,
-                                                logger.Object);
+            factory = new CommandContextFactory(
+                event_store.Object,
+                execution_context_manager.Object,
+                event_processing_completion.Object,
+                logger.Object);
 
-                                            Manager = new CommandContextManager(factory);
-                                        };
+            manager = new CommandContextManager(factory);
+        };
     }
 }
