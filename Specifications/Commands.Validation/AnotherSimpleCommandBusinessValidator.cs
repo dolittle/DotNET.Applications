@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Dolittle.Commands.Validation;
 using Dolittle.Validation;
 
 namespace Dolittle.Commands.Validation
@@ -12,7 +11,9 @@ namespace Dolittle.Commands.Validation
     {
         public override IEnumerable<ValidationResult> ValidateFor(AnotherSimpleCommand instance)
         {
+#pragma warning disable DL0008
             throw new NotImplementedException();
+#pragma warning restore DL0008
         }
     }
 }
