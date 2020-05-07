@@ -88,7 +88,7 @@ namespace Dolittle.Commands.Coordination
                 {
                     _eventProcessingCompletion.Perform(CorrelationId, events, () =>
                     {
-                        _logger.Trace("Events present - send them to uncommitted eventstream coordinator");
+                        _logger.Trace("Events present - commit them to the event store");
                         _eventStore.CommitForAggregate(events).GetAwaiter().GetResult();
                         _logger.Trace("Commit object");
                         trackedAggregateRoot.Commit();
