@@ -1,35 +1,33 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Dolittle.Events.Handling.for_EventHandlers
+namespace Dolittle.Events.Handling
 {
-    public class MyEventHandler : ICanHandleEvents
+    public class EventHandler : ICanHandleEvents
     {
-        public static Task Handle(MyFifthEvent @event, EventContext context)
-        {
-            return Task.CompletedTask;
-        }
+        readonly IList<IEvent> _handledEvents = new List<IEvent>();
+
+        public IEnumerable<IEvent> HandledEvents => _handledEvents;
 
         public Task Handle(MyFirstEvent @event, EventContext context)
         {
+            _handledEvents.Add(@event);
             return Task.CompletedTask;
         }
 
         public Task Handle(MySecondEvent @event, EventContext context)
         {
+            _handledEvents.Add(@event);
             return Task.CompletedTask;
         }
 
-        static Task Handle(MyFourthEvent @event, EventContext context)
+        public Task Handle(MyThirdEvent @event, EventContext context)
         {
+            _handledEvents.Add(@event);
             return Task.CompletedTask;
         }
-
-        Task Handle(MyThirdEvent @event, EventContext context)
-        {
-            return Task.CompletedTask;
-        }
-   }
+    }
 }
