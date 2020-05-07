@@ -4,10 +4,10 @@
 using Dolittle.Events;
 
 #pragma warning disable SA1649
-
 namespace Specs.ToStrip.Module
 {
     public class InvalidEvent : IEvent
     {
     }
 }
+#pragma warning restore SA1649
