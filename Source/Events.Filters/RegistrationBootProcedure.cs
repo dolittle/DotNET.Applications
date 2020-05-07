@@ -3,6 +3,7 @@
 
 using System;
 using System.Reflection;
+using System.Threading;
 using Dolittle.Booting;
 using Dolittle.Events.Filters.EventHorizon;
 using Dolittle.Events.Filters.Internal;
@@ -81,14 +82,37 @@ namespace Dolittle.Events.Filters
 
             if (!type.HasAttribute<FilterAttribute>())
             {
-                _logger.Warning("Event filter {Filter} is missing the required [Filter(...)] attribute. It will not be registered.");
+                _logger.Warning("Event filter {Filter} is missing the required [Filter(...)] attribute. It will not be registered.", type);
                 return;
             }
 
             var filterId = type.GetCustomAttribute<FilterAttribute>().Id;
             var scopeId = type.HasAttribute<ScopeAttribute>() ? type.GetCustomAttribute<ScopeAttribute>().Id : ScopeId.Default;
 
-            _manager.Register(filterId, scopeId, filter);
+            switch (filter)
+            {
+                case ICanFilterEvents eventFilter:
+                _manager.Register(filterId, scopeId, eventFilter, CancellationToken.None);
+                return;
+
+                case ICanFilterEventsWithPartition partitionedFilter:
+                _manager.Register(filterId, scopeId, partitionedFilter, CancellationToken.None);
+                return;
+
+                case ICanFilterPublicEvents publicFilter:
+                if (scopeId != ScopeId.Default)
+                {
+                    _logger.Warning("Public filter {Filter} has the [Scope(...)] attribute set with another scope than default. It will not be registered.", type);
+                    return;
+                }
+
+                _manager.Register(filterId, publicFilter, CancellationToken.None);
+                return;
+
+                default:
+                _logger.Warning("The filter {Filter} has an unknown type.", type);
+                return;
+            }
         }
     }
 }

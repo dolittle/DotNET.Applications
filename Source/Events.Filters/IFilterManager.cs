@@ -3,7 +3,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Dolittle.Events.Filters.Internal;
+using Dolittle.Events.Filters.EventHorizon;
 
 namespace Dolittle.Events.Filters
 {
@@ -13,16 +13,32 @@ namespace Dolittle.Events.Filters
     public interface IFilterManager
     {
         /// <summary>
-        /// Registers an event filter with the Runtime.
+        /// Registers a filter with the Runtime.
         /// </summary>
-        /// <typeparam name="TEventType">The event type that the filter can handle.</typeparam>
-        /// <typeparam name="TFilterResult">The type of filter result that the filter returns.</typeparam>
         /// <param name="id">The unique <see cref="FilterId"/> for the filter.</param>
         /// <param name="scope">The <see cref="ScopeId"/> of the scope in the Event Store where the filter will run.</param>
-        /// <param name="filter">The implementation of the filter.</param>
+        /// <param name="filter">The <see cref="ICanFilterEvents"/> to register.</param>
         /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
         /// <returns>A <see cref="Task"/> representing the execution of the filter.</returns>
-        Task Register<TEventType, TFilterResult>(FilterId id, ScopeId scope, ICanFilter<TEventType, TFilterResult> filter, CancellationToken cancellationToken = default)
-            where TEventType : IEvent;
+        Task Register(FilterId id, ScopeId scope, ICanFilterEvents filter, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Registers a partitioned filter with the Runtime.
+        /// </summary>
+        /// <param name="id">The unique <see cref="FilterId"/> for the filter.</param>
+        /// <param name="scope">The <see cref="ScopeId"/> of the scope in the Event Store where the filter will run.</param>
+        /// <param name="filter">The <see cref="ICanFilterEventsWithPartition"/> to register.</param>
+        /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
+        /// <returns>A <see cref="Task"/> representing the execution of the filter.</returns>
+        Task Register(FilterId id, ScopeId scope, ICanFilterEventsWithPartition filter, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Registers a public filter with the Runtime.
+        /// </summary>
+        /// <param name="id">The unique <see cref="FilterId"/> for the filter.</param>
+        /// <param name="filter">The <see cref="ICanFilterPublicEvents"/> to register.</param>
+        /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
+        /// <returns>A <see cref="Task"/> representing the execution of the filter.</returns>
+        Task Register(FilterId id, ICanFilterPublicEvents filter, CancellationToken cancellationToken = default);
     }
 }
