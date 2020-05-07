@@ -11,10 +11,7 @@ namespace Dolittle.Events.for_CommittedEvents
         static CommittedEvents events;
         static Exception exception;
 
-        Because of = () => exception = Catch.Exception(() =>
-        {
-            events = new CommittedEvents(new CommittedEvent[] { first_event, null });
-        });
+        Because of = () => exception = Catch.Exception(() => events = new CommittedEvents(new CommittedEvent[] { first_event, null }));
 
         It should_not_be_created = () => events.ShouldBeNull();
         It should_throw_an_exception = () => exception.ShouldBeOfExactType<EventCanNotBeNull>();

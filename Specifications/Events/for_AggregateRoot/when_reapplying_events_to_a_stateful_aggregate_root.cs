@@ -11,7 +11,7 @@ namespace Dolittle.Domain.for_AggregateRoot
     {
         static CommittedAggregateEvents events;
 
-        Establish context = () => events = build_committed_events(event_source_id, typeof(StatefulAggregateRoot));
+        Establish context = () => events = build_committed_events(event_source_id, typeof(StatefulAggregateRoot), execution_context);
 
         Because of = () => statefull_aggregate_root.ReApply(events);
 

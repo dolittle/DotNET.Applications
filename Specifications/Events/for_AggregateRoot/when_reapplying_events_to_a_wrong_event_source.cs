@@ -13,7 +13,7 @@ namespace Dolittle.Domain.for_AggregateRoot
         static CommittedAggregateEvents events;
         static Exception exception;
 
-        Establish context = () => events = build_committed_events(Guid.Parse("aa81d146-0c45-4121-bce0-fcc547257ccd"), typeof(StatefulAggregateRoot));
+        Establish context = () => events = build_committed_events(Guid.Parse("aa81d146-0c45-4121-bce0-fcc547257ccd"), typeof(StatefulAggregateRoot), execution_context);
 
         Because of = () => exception = Catch.Exception(() => statefull_aggregate_root.ReApply(events));
 

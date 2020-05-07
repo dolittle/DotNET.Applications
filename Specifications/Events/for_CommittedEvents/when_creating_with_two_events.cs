@@ -9,10 +9,7 @@ namespace Dolittle.Events.for_CommittedEvents
     {
         static CommittedEvents events;
 
-        Because of = () =>
-        {
-            events = new CommittedEvents(new CommittedEvent[] { first_event, second_event });
-        };
+        Because of = () => events = new CommittedEvents(new CommittedEvent[] { first_event, second_event });
 
         It should_have_events = () => events.HasEvents.ShouldBeTrue();
         It should_have_a_count_of_two = () => events.Count.ShouldEqual(2);

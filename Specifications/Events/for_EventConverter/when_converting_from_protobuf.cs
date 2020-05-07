@@ -1,8 +1,6 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-extern alias contracts;
-
 using System;
 using Dolittle.Artifacts;
 using Dolittle.Protobuf;
@@ -10,13 +8,14 @@ using Dolittle.Serialization.Json;
 using Google.Protobuf.WellKnownTypes;
 using Machine.Specifications;
 using Moq;
-using grpcArtifacts = contracts::Dolittle.Runtime.Artifacts;
-using grpcEvents = contracts::Dolittle.Runtime.Events;
+using given = Dolittle.Events.given;
+using grpcArtifacts = Dolittle.Artifacts.Contracts;
+using grpcEvents = Dolittle.Runtime.Events.Contracts;
 using It = Machine.Specifications.It;
 
 namespace Dolittle.Events.for_EventConverter
 {
-    public class when_converting_from_protobuf
+    public class when_converting_from_protobuf : given::Events
     {
         static Mock<IArtifactTypeMap> artifact_type_map;
         static Mock<ISerializer> serializer;
@@ -26,9 +25,11 @@ namespace Dolittle.Events.for_EventConverter
         static grpcEvents.CommittedEvent input;
 
         static Guid artifact;
-        static int generation;
+        static uint generation;
         static MyEvent the_event;
+        static EventSourceId event_source;
         static DateTimeOffset occurred;
+        static EventLogSequenceNumber event_log_sequence_number;
 
         Establish context = () =>
         {
@@ -37,10 +38,12 @@ namespace Dolittle.Events.for_EventConverter
 
             converter = new EventConverter(artifact_type_map.Object, serializer.Object);
 
-            artifact = Guid.NewGuid();
+            artifact = Guid.Parse("0e5dce70-15f3-4e48-b0cc-ecb9dba50af4");
             generation = 42;
-            occurred = DateTimeOffset.UtcNow;
             the_event = new MyEvent();
+            event_source = Guid.Parse("c15f86b2-4cc2-40d0-88e4-c016916fdddf");
+            occurred = DateTimeOffset.UtcNow;
+            event_log_sequence_number = 5;
 
             input = new grpcEvents.CommittedEvent
             {
@@ -49,17 +52,12 @@ namespace Dolittle.Events.for_EventConverter
                     Id = artifact.ToProtobuf(),
                     Generation = generation
                 },
+                ExecutionContext = execution_context.ToProtobuf(),
+                EventSourceId = event_source.ToProtobuf(),
                 Occurred = Timestamp.FromDateTimeOffset(occurred),
-                Correlation = Guid.NewGuid().ToProtobuf(),
-                EventSource = EventSourceId.New().ToProtobuf(),
-                Microservice = Guid.NewGuid().ToProtobuf(),
-                Tenant = Guid.NewGuid().ToProtobuf(),
-                Cause = new grpcEvents.Cause
-                {
-                    Type = (int)CauseType.Command,
-                    Position = 0
-                },
-                Content = "{\"someProperty\":42}"
+                EventLogSequenceNumber = event_log_sequence_number,
+                Content = "{\"someProperty\":42}",
+                Public = false,
             };
 
             artifact_type_map.Setup(_ => _.GetTypeFor(new Artifact(artifact, generation))).Returns(typeof(MyEvent));
@@ -69,6 +67,9 @@ namespace Dolittle.Events.for_EventConverter
         Because of = () => result = converter.ToSDK(input);
 
         It should_hold_the_event = () => result.Event.ShouldEqual(the_event);
-        It should_the_correct_timestamp = () => result.Occurred.ShouldEqual(occurred);
+        It should_have_the_correct_timestamp = () => result.Occurred.ShouldEqual(occurred);
+        It should_have_the_correct_execution_context = () => result.ExecutionContext.ShouldEqual(execution_context);
+        It should_have_the_correct_event_source = () => result.EventSource.ShouldEqual(event_source);
+        It should_have_the_correct_event_log_sequence_number = () => result.EventLogSequenceNumber.ShouldEqual(event_log_sequence_number);
     }
 }

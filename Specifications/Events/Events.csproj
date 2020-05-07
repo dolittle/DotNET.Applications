@@ -6,10 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)" alias="contracts"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\..\Source\Events\Events.csproj" />
     </ItemGroup>
 
