@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq.Expressions;
-using Dolittle.Validation;
 using FluentValidation.Validators;
 
 namespace Dolittle.Validation.for_RuleBuilderExtensions
