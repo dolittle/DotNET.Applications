@@ -6,8 +6,9 @@ using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Dolittle.Concepts;
+using Dolittle.Execution;
 using Dolittle.Logging;
-using Dolittle.Protobuf.Contracts;
+using Dolittle.Protobuf;
 using Dolittle.Resilience;
 using Dolittle.Runtime.Events.Processing.Contracts;
 using Dolittle.Services;
@@ -37,14 +38,17 @@ namespace Dolittle.Events.Processing.Internal
         where TRequest : class
         where TResponse : class
     {
+        readonly IExecutionContextManager _executionContextManager;
         readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventProcessor{TIdentifier, TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse}"/> class.
         /// </summary>
+        /// <param name="executionContextManager">The <see cref="IExecutionContextManager" />.</param>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
-        protected EventProcessor(ILogger logger)
+        protected EventProcessor(IExecutionContextManager executionContextManager, ILogger logger)
         {
+            _executionContextManager = executionContextManager;
             _logger = logger;
         }
 
@@ -67,7 +71,9 @@ namespace Dolittle.Events.Processing.Internal
         {
             _logger.Debug($"Registering {Kind} {{Id}} with the Runtime.", Identifier);
             var client = CreateClient();
-            var receivedResponse = await client.Connect(GetRegisterArguments(), cancellationToken).ConfigureAwait(false);
+            var argumentsCallContext = new Services.Contracts.ReverseCallArgumentsContext { ExecutionContext = _executionContextManager.Current.ToProtobuf() };
+            var connectArguments = GetRegisterArguments(argumentsCallContext);
+            var receivedResponse = await client.Connect(connectArguments, cancellationToken).ConfigureAwait(false);
             ThrowIfNotReceivedResponse(receivedResponse);
             ThrowIfRegisterFailure(GetFailureFromRegisterResponse(client.ConnectResponse));
             _logger.Trace($"{Kind} {{Id}} registered with the Runtime, start handling requests.", Identifier);
@@ -129,16 +135,17 @@ namespace Dolittle.Events.Processing.Internal
         /// <summary>
         /// The method that will be called to provide registration arguments to register the event processor with the Runtime.
         /// </summary>
+        /// <param name="callContext">The <see cref="Services.Contracts.ReverseCallArgumentsContext" />.</param>
         /// <returns><typeparamref name="TConnectArguments"/> to use for registering with the Runtime.</returns>
-        protected abstract TConnectArguments GetRegisterArguments();
+        protected abstract TConnectArguments GetRegisterArguments(Services.Contracts.ReverseCallArgumentsContext callContext);
 
         /// <summary>
         /// The method that will be called to check if the registration with the Runtime failed.
-        /// If a <see cref="Failure"/> was not present on the response (null) the registration request is considered successful.
+        /// If a <see cref="Protobuf.Contracts.Failure"/> was not present on the response (null) the registration request is considered successful.
         /// </summary>
         /// <param name="response">The <typeparamref name="TConnectResponse"/> recieved from the Runtime during registration.</param>
-        /// <returns>An optional <see cref="Failure"/> present on the <typeparamref name="TConnectResponse"/>.</returns>
-        protected abstract Failure GetFailureFromRegisterResponse(TConnectResponse response);
+        /// <returns>An optional <see cref="Protobuf.Contracts.Failure"/> present on the <typeparamref name="TConnectResponse"/>.</returns>
+        protected abstract Protobuf.Contracts.Failure GetFailureFromRegisterResponse(TConnectResponse response);
 
         /// <summary>
         /// The method that will be called to get the retry processing state from a request received from the Runtime.
@@ -200,7 +207,7 @@ namespace Dolittle.Events.Processing.Internal
             if (!receivedResponse) throw new DidNotReceiveRegistrationResponse(Kind, Identifier);
         }
 
-        void ThrowIfRegisterFailure(Failure registerFailure)
+        void ThrowIfRegisterFailure(Protobuf.Contracts.Failure registerFailure)
         {
             if (registerFailure != null) throw new RegistrationFailed(Kind, Identifier, registerFailure);
         }

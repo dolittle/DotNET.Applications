@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Dolittle.Artifacts;
+using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Services.Clients;
 using static Dolittle.Runtime.Events.Processing.Contracts.EventHandlers;
@@ -18,6 +19,7 @@ namespace Dolittle.Events.Handling.Internal
         readonly IEventProcessingCompletion _eventProcessingCompletion;
         readonly IArtifactTypeMap _artifactTypeMap;
         readonly IEventConverter _converter;
+        readonly IExecutionContextManager _executionContextManager;
         readonly ILoggerManager _loggerManager;
 
         /// <summary>
@@ -28,6 +30,7 @@ namespace Dolittle.Events.Handling.Internal
         /// <param name="eventProcessingCompletion">The <see cref="IEventProcessingCompletion"/> to use for notifying of event handling completion.</param>
         /// <param name="artifactTypeMap">The <see cref="IArtifactTypeMap"/> to use for converting event types to artifacts.</param>
         /// <param name="converter">The <see cref="IEventConverter"/> to use to convert events.</param>
+        /// <param name="executionContextManager">The <see cref="IExecutionContextManager" />.</param>
         /// <param name="loggerManager">The <see cref="ILoggerManager"/> to use for creating instances of <see cref="ILogger"/>.</param>
         public EventHandlerProcessors(
             EventHandlersClient handlersClient,
@@ -35,6 +38,7 @@ namespace Dolittle.Events.Handling.Internal
             IEventProcessingCompletion eventProcessingCompletion,
             IArtifactTypeMap artifactTypeMap,
             IEventConverter converter,
+            IExecutionContextManager executionContextManager,
             ILoggerManager loggerManager)
         {
             _handlersClient = handlersClient;
@@ -42,6 +46,7 @@ namespace Dolittle.Events.Handling.Internal
             _eventProcessingCompletion = eventProcessingCompletion;
             _artifactTypeMap = artifactTypeMap;
             _converter = converter;
+            _executionContextManager = executionContextManager;
             _loggerManager = loggerManager;
         }
 
@@ -66,6 +71,7 @@ namespace Dolittle.Events.Handling.Internal
                 _eventProcessingCompletion,
                 _artifactTypeMap,
                 _converter,
+                _executionContextManager,
                 _loggerManager.CreateLogger<EventHandlerProcessor<TEventType>>());
     }
 }

@@ -47,7 +47,7 @@ namespace Dolittle.Events.Filters
         }
 
         /// <inheritdoc/>
-        public bool CanPerform() => Artifacts.Configuration.BootProcedure.HasPerformed;
+        public bool CanPerform() => Artifacts.Configuration.BootProcedure.HasPerformed && Applications.Configuration.BootProcedure.HasPerformed;
 
         /// <inheritdoc/>
         public void Perform()
@@ -70,7 +70,7 @@ namespace Dolittle.Events.Filters
             }
             catch (Exception ex)
             {
-                _logger.Warning(ex, "Errror while providing event filters from {FilterProvider}", type);
+                _logger.Warning(ex, "Error while providing event filters from {FilterProvider}", type);
             }
         }
 

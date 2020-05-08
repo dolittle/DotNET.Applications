@@ -41,7 +41,7 @@ namespace Dolittle.EventHorizon
         }
 
         /// <inheritdoc/>
-        public bool CanPerform() => true;
+        public bool CanPerform() => Applications.Configuration.BootProcedure.HasPerformed;
 
         /// <inheritdoc/>
         public void Perform()
@@ -66,7 +66,7 @@ namespace Dolittle.EventHorizon
                     }
                     else
                     {
-                        _logger.Debug("Sucessfully subscribed to events from {Partition} in {Stream} of {ProducerTenant} in {Microservice} for {ConsumerTenant} into {Scope}", subscription.Partition, subscription.Stream, subscription.Tenant, subscription.Microservice, consumer, subscription.Scope);
+                        _logger.Debug("Successfully subscribed to events from {Partition} in {Stream} of {ProducerTenant} in {Microservice} for {ConsumerTenant} into {Scope}", subscription.Partition, subscription.Stream, subscription.Tenant, subscription.Microservice, consumer, subscription.Scope);
                     }
                 },
                 CancellationToken.None);

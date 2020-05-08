@@ -6,10 +6,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dolittle.Artifacts;
 using Dolittle.Events.Processing.Internal;
+using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.Runtime.Events.Processing.Contracts;
 using Dolittle.Services.Clients;
+using Dolittle.Services.Contracts;
 using static Dolittle.Runtime.Events.Processing.Contracts.EventHandlers;
 using Artifact = Dolittle.Artifacts.Contracts.Artifact;
 using Failure = Dolittle.Protobuf.Contracts.Failure;
@@ -45,6 +47,7 @@ namespace Dolittle.Events.Handling.Internal
         /// <param name="completion">The <see cref="IEventProcessingCompletion"/> to use for notifying of event handling completion.</param>
         /// <param name="artifacts">The <see cref="IArtifactTypeMap"/> to use for converting event types to artifacts.</param>
         /// <param name="converter">The <see cref="IEventConverter"/> to use to convert events.</param>
+        /// <param name="executionContextManager">The <see cref="IExecutionContextManager" />.</param>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
         public EventHandlerProcessor(
             EventHandlerId handlerId,
@@ -56,8 +59,9 @@ namespace Dolittle.Events.Handling.Internal
             IEventProcessingCompletion completion,
             IArtifactTypeMap artifacts,
             IEventConverter converter,
+            IExecutionContextManager executionContextManager,
             ILogger logger)
-            : base(logger)
+            : base(executionContextManager, logger)
         {
             Identifier = handlerId;
             _scope = scope;
@@ -101,13 +105,14 @@ namespace Dolittle.Events.Handling.Internal
             => response.Failure;
 
         /// <inheritdoc/>
-        protected override EventHandlersRegistrationRequest GetRegisterArguments()
+        protected override EventHandlersRegistrationRequest GetRegisterArguments(ReverseCallArgumentsContext callContext)
         {
             var request = new EventHandlersRegistrationRequest
             {
                 EventHandlerId = Identifier.ToProtobuf(),
                 ScopeId = _scope.ToProtobuf(),
                 Partitioned = _partitioned,
+                CallContext = callContext
             };
 
             foreach (var eventType in _handler.HandledEventTypes)

@@ -4,6 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Dolittle.Events.Processing.Internal;
+using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Protobuf.Contracts;
 using Dolittle.Runtime.Events.Processing.Contracts;
@@ -32,12 +33,14 @@ namespace Dolittle.Events.Filters.Internal
         /// </summary>
         /// <param name="filterId">The unique <see cref="FilterId"/> for the event filter.</param>
         /// <param name="converter">The <see cref="IEventConverter"/> to use to convert events.</param>
+        /// <param name="executionContextManager">The <see cref="IExecutionContextManager" />.</param>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
         protected AbstractFilterProcessor(
             FilterId filterId,
             IEventConverter converter,
+            IExecutionContextManager executionContextManager,
             ILogger logger)
-            : base(logger)
+            : base(executionContextManager, logger)
         {
             Identifier = filterId;
             _converter = converter;

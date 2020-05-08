@@ -2,10 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Threading.Tasks;
+using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.Runtime.Events.Processing.Contracts;
 using Dolittle.Services.Clients;
+using Dolittle.Services.Contracts;
 using static Dolittle.Runtime.Events.Processing.Contracts.Filters;
 
 namespace Dolittle.Events.Filters.Internal
@@ -29,6 +31,7 @@ namespace Dolittle.Events.Filters.Internal
         /// <param name="reverseCallClients">The <see cref="IReverseCallClients"/> to use for creating instances of <see cref="IReverseCallClient{TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse}"/>.</param>
         /// <param name="filter">The <see cref="ICanFilterEvents"/> to use for filtering the events.</param>
         /// <param name="converter">The <see cref="IEventConverter"/> to use to convert events.</param>
+        /// <param name="executionContextManager">The <see cref="IExecutionContextManager "/>.</param>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
         public EventFilterProcessor(
             FilterId filterId,
@@ -37,8 +40,9 @@ namespace Dolittle.Events.Filters.Internal
             IReverseCallClients reverseCallClients,
             ICanFilterEvents filter,
             IEventConverter converter,
+            IExecutionContextManager executionContextManager,
             ILogger logger)
-            : base(filterId, converter, logger)
+            : base(filterId, converter, executionContextManager, logger)
         {
             _scope = scope;
             _client = client;
@@ -62,11 +66,12 @@ namespace Dolittle.Events.Filters.Internal
                 (response, context) => response.CallContext = context);
 
         /// <inheritdoc/>
-        protected override FiltersRegistrationRequest GetRegisterArguments()
+        protected override FiltersRegistrationRequest GetRegisterArguments(ReverseCallArgumentsContext callContext)
             => new FiltersRegistrationRequest
             {
                 FilterId = Identifier.ToProtobuf(),
                 ScopeId = _scope.ToProtobuf(),
+                CallContext = callContext
             };
 
         /// <inheritdoc/>
