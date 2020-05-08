@@ -127,6 +127,6 @@ namespace Dolittle.Events
             => _artifactTypeMap.GetTypeFor(new Artifact(artifact.Id.To<ArtifactId>(), artifact.Generation));
 
         bool IsPublicEvent(Type eventType)
-            => typeof(IPublicEvent).IsAssignableFrom(eventType.GetType());
+            => typeof(IPublicEvent).IsAssignableFrom(eventType);
     }
 }
