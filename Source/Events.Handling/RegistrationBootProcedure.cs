@@ -3,10 +3,12 @@
 
 using System;
 using System.Reflection;
+using Dolittle.ApplicationModel;
 using Dolittle.Booting;
 using Dolittle.DependencyInversion;
 using Dolittle.Events.Handling.EventHorizon;
 using Dolittle.Events.Handling.Internal;
+using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Reflection;
 using Dolittle.Types;
@@ -22,6 +24,8 @@ namespace Dolittle.Events.Handling
         readonly IEventHandlerManager _manager;
         readonly IInstancesOf<ICanProvideEventHandlers> _handlerProviders;
         readonly IInstancesOf<ICanProvideExternalEventHandlers> _externalHandlerProviders;
+        readonly GetContainer _getContainer;
+        readonly IExecutionContextManager _executionContextManager;
         readonly ILogger _logger;
 
         /// <summary>
@@ -31,18 +35,24 @@ namespace Dolittle.Events.Handling
         /// <param name="manager">The <see cref="IEventHandlerManager"/> that will be used to register the event handlers.</param>
         /// <param name="handlerProviders">Providers of <see cref="ICanHandleEvents"/>.</param>
         /// <param name="externalHandlerProviders">Providers of <see cref="ICanHandleExternalEvents"/>.</param>
+        /// <param name="getContainer">The <see cref="GetContainer" />.</param>
+        /// <param name="executionContextManager">The <see cref="IExecutionContextManager "/>.</param>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
         public RegistrationBootProcedure(
             IContainer container,
             IEventHandlerManager manager,
             IInstancesOf<ICanProvideEventHandlers> handlerProviders,
             IInstancesOf<ICanProvideExternalEventHandlers> externalHandlerProviders,
+            GetContainer getContainer,
+            IExecutionContextManager executionContextManager,
             ILogger logger)
         {
             _container = container;
             _manager = manager;
             _handlerProviders = handlerProviders;
             _externalHandlerProviders = externalHandlerProviders;
+            _getContainer = getContainer;
+            _executionContextManager = executionContextManager;
             _logger = logger;
         }
 
@@ -52,6 +62,10 @@ namespace Dolittle.Events.Handling
         /// <inheritdoc/>
         public void Perform()
         {
+            var microservice = _getContainer().Get<Microservice>();
+            _executionContextManager.CurrentFor(
+                microservice,
+                _executionContextManager.Current.Tenant);
             _logger.Debug("Discovering event handlers in boot procedure");
             foreach (var provider in _handlerProviders) RegisterHandlersFromProvider(provider);
             foreach (var provider in _externalHandlerProviders) RegisterHandlersFromProvider(provider);

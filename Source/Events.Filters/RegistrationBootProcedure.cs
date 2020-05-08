@@ -4,9 +4,12 @@
 using System;
 using System.Reflection;
 using System.Threading;
+using Dolittle.ApplicationModel;
 using Dolittle.Booting;
+using Dolittle.DependencyInversion;
 using Dolittle.Events.Filters.EventHorizon;
 using Dolittle.Events.Filters.Internal;
+using Dolittle.Execution;
 using Dolittle.Logging;
 using Dolittle.Reflection;
 using Dolittle.Types;
@@ -22,6 +25,8 @@ namespace Dolittle.Events.Filters
         readonly IInstancesOf<ICanProvideEventFilters> _filterProviders;
         readonly IInstancesOf<ICanProvideEventFiltersWithPartition> _partitionedFilterProviders;
         readonly IInstancesOf<ICanProvidePublicEventFilters> _publicFilterProviders;
+        readonly GetContainer _getContainer;
+        readonly IExecutionContextManager _executionContextManager;
         readonly ILogger _logger;
 
         /// <summary>
@@ -31,18 +36,24 @@ namespace Dolittle.Events.Filters
         /// <param name="filterProviders">Providers of <see cref="ICanProvideEventFilters"/>.</param>
         /// <param name="partitionedFilterProviders">Providers of <see cref="ICanProvideEventFiltersWithPartition"/>.</param>
         /// <param name="publicFilterProviders">Providers of <see cref="ICanProvidePublicEventFilters"/>.</param>
+        /// <param name="getContainer">The <see cref="GetContainer" />.</param>
+        /// <param name="executionContextManager">The <see cref="IExecutionContextManager" />.</param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging.</param>
         public RegistrationBootProcedure(
             IFilterManager manager,
             IInstancesOf<ICanProvideEventFilters> filterProviders,
             IInstancesOf<ICanProvideEventFiltersWithPartition> partitionedFilterProviders,
             IInstancesOf<ICanProvidePublicEventFilters> publicFilterProviders,
+            GetContainer getContainer,
+            IExecutionContextManager executionContextManager,
             ILogger logger)
         {
             _manager = manager;
             _filterProviders = filterProviders;
             _partitionedFilterProviders = partitionedFilterProviders;
             _publicFilterProviders = publicFilterProviders;
+            _getContainer = getContainer;
+            _executionContextManager = executionContextManager;
             _logger = logger;
         }
 
@@ -52,6 +63,10 @@ namespace Dolittle.Events.Filters
         /// <inheritdoc/>
         public void Perform()
         {
+            var microservice = _getContainer().Get<Microservice>();
+            _executionContextManager.CurrentFor(
+                microservice,
+                _executionContextManager.Current.Tenant);
             _logger.Debug("Discovering event filters in boot procedure");
             foreach (var provider in _filterProviders) RegisterFiltersFromProvider(provider);
             foreach (var provider in _partitionedFilterProviders) RegisterFiltersFromProvider(provider);

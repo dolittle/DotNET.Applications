@@ -3,6 +3,8 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Dolittle.ApplicationModel;
+using Dolittle.DependencyInversion;
 using Dolittle.Execution;
 using Dolittle.Heads;
 using Dolittle.Lifecycle;
@@ -23,6 +25,7 @@ namespace Dolittle.EventHorizon
         readonly SubscriptionsClient _client;
         readonly IExecutionContextManager _executionContextManager;
         readonly Head _head;
+        readonly GetContainer _getContainer;
         readonly ILogger _logger;
 
         /// <summary>
@@ -31,23 +34,27 @@ namespace Dolittle.EventHorizon
         /// <param name="client">The <see cref="SubscriptionsClient"/> to use for connecting to the Runtime.</param>
         /// <param name="executionContextManager">The <see cref="IExecutionContextManager"/> to use for getting the current <see cref="Execution.ExecutionContext"/>.</param>
         /// <param name="head">The current <see cref="Head"/>.</param>
+        /// <param name="getContainer">The <see cref="GetContainer" />.</param>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
         public Subscriptions(
             SubscriptionsClient client,
             IExecutionContextManager executionContextManager,
             Head head,
+            GetContainer getContainer,
             ILogger logger)
         {
             _client = client;
             _executionContextManager = executionContextManager;
             _head = head;
+            _getContainer = getContainer;
             _logger = logger;
         }
 
         /// <inheritdoc/>
         public async Task<SubscriptionResponse> Subscribe(TenantId consumerTenant, Subscription subscription, CancellationToken cancellationToken)
         {
-            _executionContextManager.CurrentFor(consumerTenant);
+            var microservice = _getContainer().Get<Microservice>();
+            _executionContextManager.CurrentFor(microservice, consumerTenant);
             _logger.Debug("Subscribing to events from {Partition} in {Stream} of {ProducerTenant} in {Microservice} for {ConsumerTenant} into {Scope}", subscription.Partition, subscription.Stream, subscription.Tenant, subscription.Microservice, consumerTenant, subscription.Scope);
             var response = await _client.SubscribeAsync(
                 new Contracts.Subscription
