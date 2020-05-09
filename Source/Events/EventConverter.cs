@@ -38,7 +38,7 @@ namespace Dolittle.Events
             {
                 Artifact = ToProtobuf(@event.Event.GetType()),
                 EventSourceId = @event.EventSource.ToProtobuf(),
-                Public = IsPublicEvent(@event.Event.GetType()),
+                Public = IsPublicEvent(@event.Event),
                 Content = _serializer.EventToJson(@event.Event),
             };
 
@@ -62,7 +62,7 @@ namespace Dolittle.Events
                 events.Events.Add(new Contracts.UncommittedAggregateEvents.Types.UncommittedAggregateEvent
                 {
                     Artifact = ToProtobuf(@event.GetType()),
-                    Public = IsPublicEvent(@event.GetType()),
+                    Public = IsPublicEvent(@event),
                     Content = _serializer.EventToJson(@event),
                 });
             }
@@ -126,7 +126,7 @@ namespace Dolittle.Events
         Type ToSDK(Artifacts.Contracts.Artifact artifact)
             => _artifactTypeMap.GetTypeFor(new Artifact(artifact.Id.To<ArtifactId>(), artifact.Generation));
 
-        bool IsPublicEvent(Type eventType)
-            => typeof(IPublicEvent).IsAssignableFrom(eventType.GetType());
+        bool IsPublicEvent(IEvent @event)
+            => typeof(IPublicEvent).IsAssignableFrom(@event.GetType());
     }
 }
