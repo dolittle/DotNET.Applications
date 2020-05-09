@@ -5,6 +5,7 @@ using System.Linq;
 using Dolittle.Booting;
 using Dolittle.Execution;
 using Dolittle.ResourceTypes.Configuration;
+using Dolittle.Versioning;
 
 namespace Dolittle.Applications.Configuration
 {
@@ -50,9 +51,10 @@ namespace Dolittle.Applications.Configuration
                 _boundedContextConfiguration.Resources.ToDictionary(
                     kvp => kvp.Key,
                     kvp => environment == Environment.Production ? kvp.Value.Production : kvp.Value.Development));
-            _executionContextManager.CurrentFor(
-                _boundedContextConfiguration.BoundedContext,
-                _executionContextManager.Current.Tenant);
+
+            _executionContextManager.SetConstants(_boundedContextConfiguration.BoundedContext, Version.NotSet, environment);
+            _executionContextManager.CurrentFor(_boundedContextConfiguration.BoundedContext, _executionContextManager.Current.Tenant);
+
             HasPerformed = true;
         }
     }
