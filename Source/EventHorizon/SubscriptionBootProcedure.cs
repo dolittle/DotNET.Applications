@@ -41,7 +41,7 @@ namespace Dolittle.EventHorizon
         }
 
         /// <inheritdoc/>
-        public bool CanPerform() => true;
+        public bool CanPerform() => Applications.Configuration.BootProcedure.HasPerformed;
 
         /// <inheritdoc/>
         public void Perform()

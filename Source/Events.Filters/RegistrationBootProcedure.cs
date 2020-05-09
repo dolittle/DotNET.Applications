@@ -47,7 +47,7 @@ namespace Dolittle.Events.Filters
         }
 
         /// <inheritdoc/>
-        public bool CanPerform() => Artifacts.Configuration.BootProcedure.HasPerformed;
+        public bool CanPerform() => Applications.Configuration.BootProcedure.HasPerformed && Artifacts.Configuration.BootProcedure.HasPerformed;
 
         /// <inheritdoc/>
         public void Perform()
