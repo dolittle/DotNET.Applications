@@ -44,7 +44,7 @@ namespace Dolittle.Events.Filters.Internal
         /// <param name="scope">The <see cref="ScopeId"/> of the scope in the Event Store where the filter will run.</param>
         /// <param name="filter">The <see cref="ICanFilterEvents"/> to use for filtering the events.</param>
         /// <returns>An <see cref="EventFilterProcessor"/> for registering and invoking an instance of <see cref="ICanFilterEvents"/>.</returns>
-        public EventFilterProcessor ProcessorFor(FilterId id, ScopeId scope, ICanFilterEvents filter)
+        public EventFilterProcessor GetFor(FilterId id, ScopeId scope, ICanFilterEvents filter)
             => new EventFilterProcessor(id, scope, _client, _reverseCallClients, filter, _converter, _loggerManager.CreateLogger<EventFilterProcessor>());
 
         /// <summary>
