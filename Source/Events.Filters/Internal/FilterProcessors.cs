@@ -63,7 +63,7 @@ namespace Dolittle.Events.Filters.Internal
         /// <param name="id">The unique <see cref="FilterId"/> for the event filter.</param>
         /// <param name="filter">The <see cref="ICanFilterPublicEvents"/> to use for filtering the events.</param>
         /// <returns>A <see cref="PublicEventFilterProcessor"/> for registering and invoking an instance of <see cref="ICanFilterPublicEvents"/>.</returns>
-        public PublicEventFilterProcessor ProcessorFor(FilterId id, ICanFilterPublicEvents filter)
+        public PublicEventFilterProcessor GetFor(FilterId id, ICanFilterPublicEvents filter)
             => new PublicEventFilterProcessor(id, _client, _reverseCallClients, filter, _converter, _loggerManager.CreateLogger<PublicEventFilterProcessor>());
     }
 }
