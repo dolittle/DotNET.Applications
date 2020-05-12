@@ -8,7 +8,7 @@ namespace Dolittle.Events.Filters.EventHorizon
     /// <summary>
     /// Represents the result of a <see cref="ICanFilterPublicEvents"/>.
     /// </summary>
-    public class PublicFilterResult : PartitonedFilterResult
+    public class PublicFilterResult : PartitionedFilterResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PublicFilterResult"/> class.
