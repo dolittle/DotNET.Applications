@@ -34,21 +34,12 @@ namespace Dolittle.EventHorizon
                 .Handle<Exception>(
                     _ =>
                     {
-                        switch (_)
+                        if (_ is RpcException rpcException && rpcException.StatusCode == StatusCode.Unavailable)
                         {
-                            case RpcException ex:
-                            switch (ex.StatusCode)
-                            {
-                                case StatusCode.Unavailable:
-                                return true;
-                            }
-
-                            goto default;
-
-                            default:
-                            _logger.Warning(_, "Error while subscribing to event horizon");
                             return true;
                         }
+                        _logger.Warning(_, "Error while subscribing to event horizon");
+                         return true;
                     })
                 .WaitAndRetryForeverAsync(attempt => TimeSpan.FromSeconds(Math.Min(Math.Pow(2, attempt), 60)));
     }
