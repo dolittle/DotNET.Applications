@@ -4,10 +4,10 @@
 using Dolittle.Commands;
 
 #pragma warning disable SA1649
-
 namespace Specs.Module.Feature3
 {
     public class TheCommand : ICommand
     {
     }
 }
+#pragma warning restore SA1649

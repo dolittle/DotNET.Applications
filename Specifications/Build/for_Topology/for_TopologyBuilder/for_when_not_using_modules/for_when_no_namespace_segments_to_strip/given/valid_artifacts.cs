@@ -2,13 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using Dolittle.Commands;
-using Dolittle.Events;
-using Dolittle.Queries;
 
 namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_not_using_modules.for_when_no_namespace_segments_to_strip.given
 {
-    public class valid_artifacts : Dolittle.Build.given.an_ILogger
+    public class valid_artifacts : Build.given.an_ILogger
     {
         protected static readonly Type[] artifacts = new[]
         {

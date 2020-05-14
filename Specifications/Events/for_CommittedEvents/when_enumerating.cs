@@ -11,15 +11,9 @@ namespace Dolittle.Events.for_CommittedEvents
         static CommittedEvents events;
         static CommittedEvent[] enumerated;
 
-        Establish context = () =>
-        {
-            events = new CommittedEvents(new CommittedEvent[] { first_event, second_event });
-        };
+        Establish context = () => events = new CommittedEvents(new CommittedEvent[] { first_event, second_event });
 
-        Because of = () =>
-        {
-            enumerated = events.ToArray();
-        };
+        Because of = () => enumerated = events.ToArray();
 
         It should_enumerate_two_events = () => enumerated.Length.ShouldEqual(2);
         It should_enumerate_the_first_event_first = () => enumerated[0].ShouldEqual(first_event);

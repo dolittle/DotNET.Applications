@@ -16,19 +16,19 @@ namespace Dolittle.Commands.Coordination.for_CommandContextManager
         static CommandRequest command;
 
         Because of = () =>
-                         {
-                             var artifact = Artifact.New();
-                             command = new CommandRequest(CorrelationId.Empty, artifact.Id, artifact.Generation, new ExpandoObject());
-                             commandContext = Manager.EstablishForCommand(command);
-                         };
+        {
+            var artifact = Artifact.New();
+            command = new CommandRequest(CorrelationId.Empty, artifact.Id, artifact.Generation, new ExpandoObject());
+            commandContext = manager.EstablishForCommand(command);
+        };
 
         It should_return_a_non_null_context = () => commandContext.ShouldNotBeNull();
         It should_return_context_with_command_in_it = () => commandContext.Command.ShouldEqual(command);
 
         It should_return_the_same_calling_it_twice_on_same_thread = () =>
-                                                                        {
-                                                                            var secondContext = Manager.EstablishForCommand(command);
-                                                                            secondContext.ShouldEqual(commandContext);
-                                                                        };
+        {
+            var secondContext = manager.EstablishForCommand(command);
+            secondContext.ShouldEqual(commandContext);
+        };
     }
 }

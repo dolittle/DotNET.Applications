@@ -11,10 +11,7 @@ namespace Dolittle.Events.for_CommittedAggregateEvents
         static CommittedAggregateEvents events;
         static Exception exception;
 
-        Because of = () => exception = Catch.Exception(() =>
-        {
-            events = new CommittedAggregateEvents(event_source_id, aggregate_root_type, new CommittedAggregateEvent[] { first_event, second_event, event_with_earlier_aggregate_root_version });
-        });
+        Because of = () => exception = Catch.Exception(() => events = new CommittedAggregateEvents(event_source_id, aggregate_root_type, new CommittedAggregateEvent[] { first_event, second_event, event_with_earlier_aggregate_root_version }));
 
         It should_not_be_created = () => events.ShouldBeNull();
         It should_throw_an_exception = () => exception.ShouldBeOfExactType<AggregateRootVersionIsOutOfOrder>();

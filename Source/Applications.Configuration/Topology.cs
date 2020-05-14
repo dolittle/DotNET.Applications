@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Dolittle.ApplicationModel;
 using Dolittle.Configuration;
 
 namespace Dolittle.Applications.Configuration

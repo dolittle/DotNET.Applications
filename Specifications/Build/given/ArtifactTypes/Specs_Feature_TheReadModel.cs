@@ -4,10 +4,10 @@
 using Dolittle.ReadModels;
 
 #pragma warning disable SA1649
-
 namespace Specs.Feature
 {
     public class TheReadModel : IReadModel
     {
     }
 }
+#pragma warning restore SA1649

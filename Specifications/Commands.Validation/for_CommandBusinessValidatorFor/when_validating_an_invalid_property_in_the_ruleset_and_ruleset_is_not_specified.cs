@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Dolittle.Commands.Validation;
 using Dolittle.Validation;
 using Machine.Specifications;
 

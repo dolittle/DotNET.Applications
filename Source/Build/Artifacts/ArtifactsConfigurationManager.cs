@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Dolittle.Applications;
+using Dolittle.ApplicationModel;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Lifecycle;
 using Dolittle.Serialization.Json;

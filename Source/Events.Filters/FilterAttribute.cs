@@ -18,18 +18,11 @@ namespace Dolittle.Events.Filters
         public FilterAttribute(string id)
         {
             Id = Guid.Parse(id);
-            ThrowIfIllegalId(Id);
         }
 
         /// <summary>
         /// Gets the unique id for this event processor.
         /// </summary>
         public FilterId Id { get; }
-
-        void ThrowIfIllegalId(FilterId id)
-        {
-            var stream = new StreamId { Value = id };
-            if (stream.IsNonWriteable) throw new IllegalFilterId(id);
-        }
     }
 }

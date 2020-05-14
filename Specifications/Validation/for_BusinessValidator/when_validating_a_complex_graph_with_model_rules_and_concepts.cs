@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Linq;
-using Dolittle.Validation;
 using Machine.Specifications;
 
 namespace Dolittle.Validation.for_BusinessValidator

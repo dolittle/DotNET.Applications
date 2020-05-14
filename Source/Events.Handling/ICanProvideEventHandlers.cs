@@ -1,19 +1,14 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Collections.Generic;
+using Dolittle.Events.Handling.Internal;
 
 namespace Dolittle.Events.Handling
 {
     /// <summary>
-    /// Defines a system that can provide <see cref="AbstractEventHandler" /> implementations.
+    /// Defines a system that can provide <see cref="ICanHandleEvents"/> implementations.
     /// </summary>
-    public interface ICanProvideEventHandlers
+    public interface ICanProvideEventHandlers : ICanProvideHandlers<ICanHandleEvents, IEvent>
     {
-        /// <summary>
-        /// Provides instances of <see cref="AbstractEventHandler"/>.
-        /// </summary>
-        /// <returns><see cref="IEnumerable{T}"/> of <see cref="AbstractEventHandler" />.</returns>
-        IEnumerable<AbstractEventHandler> Provide();
     }
 }

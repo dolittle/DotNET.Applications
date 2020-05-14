@@ -10,10 +10,7 @@ namespace Dolittle.Events.for_CommittedAggregateEvents
     {
         static CommittedAggregateEvents events;
 
-        Because of = () =>
-        {
-            events = new CommittedAggregateEvents(event_source_id, aggregate_root_type, Array.Empty<CommittedAggregateEvent>());
-        };
+        Because of = () => events = new CommittedAggregateEvents(event_source_id, aggregate_root_type, Array.Empty<CommittedAggregateEvent>());
 
         It should_have_events = () => events.HasEvents.ShouldBeFalse();
         It should_have_a_count_of_one = () => events.Count.ShouldEqual(0);

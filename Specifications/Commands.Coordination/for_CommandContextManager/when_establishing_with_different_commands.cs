@@ -16,14 +16,14 @@ namespace Dolittle.Commands.Coordination.for_CommandContextManager
         static ICommandContext secondCommandContext;
 
         Because of = () =>
-                         {
-                             var first_artifact = Artifact.New();
-                             var second_artifact = Artifact.New();
-                             var firstCommand = new CommandRequest(CorrelationId.Empty, first_artifact.Id, first_artifact.Generation, new ExpandoObject());
-                             var secondCommand = new CommandRequest(CorrelationId.Empty, second_artifact.Id, second_artifact.Generation, new ExpandoObject());
-                             firstCommandContext = Manager.EstablishForCommand(firstCommand);
-                             secondCommandContext = Manager.EstablishForCommand(secondCommand);
-                         };
+        {
+            var first_artifact = Artifact.New();
+            var second_artifact = Artifact.New();
+            var firstCommand = new CommandRequest(CorrelationId.Empty, first_artifact.Id, first_artifact.Generation, new ExpandoObject());
+            var secondCommand = new CommandRequest(CorrelationId.Empty, second_artifact.Id, second_artifact.Generation, new ExpandoObject());
+            firstCommandContext = manager.EstablishForCommand(firstCommand);
+            secondCommandContext = manager.EstablishForCommand(secondCommand);
+        };
 
         It should_return_different_contexts = () => firstCommandContext.ShouldNotEqual(secondCommandContext);
     }

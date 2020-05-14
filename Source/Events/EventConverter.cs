@@ -1,18 +1,13 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-extern alias contracts;
-
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Dolittle.Applications;
 using Dolittle.Artifacts;
-using Dolittle.Execution;
 using Dolittle.Protobuf;
 using Dolittle.Serialization.Json;
-using Dolittle.Tenancy;
-using grpcArtifacts = contracts::Dolittle.Runtime.Artifacts;
-using grpcEvents = contracts::Dolittle.Runtime.Events;
+using Contracts = Dolittle.Runtime.Events.Contracts;
 
 namespace Dolittle.Events
 {
@@ -38,92 +33,100 @@ namespace Dolittle.Events
         }
 
         /// <inheritdoc/>
-        public grpcEvents.UncommittedEvent ToProtobuf(IEvent @event)
-        {
-            var artifact = _artifactTypeMap.GetArtifactFor(@event.GetType());
-            return new grpcEvents.UncommittedEvent
-                {
-                    Artifact = new grpcArtifacts.Artifact
-                    {
-                        Id = artifact.Id.ToProtobuf(),
-                        Generation = artifact.Generation
-                    },
-                    Public = typeof(IPublicEvent).IsAssignableFrom(@event.GetType()),
-                    Content = _serializer.EventToJson(@event)
-                };
-        }
-
-        /// <inheritdoc/>
-        public grpcEvents.UncommittedEvents ToProtobuf(UncommittedEvents uncommittedEvents)
-        {
-            var protobuf = new grpcEvents.UncommittedEvents();
-            protobuf.Events.AddRange(uncommittedEvents.Select(ToProtobuf));
-            return protobuf;
-        }
-
-        /// <inheritdoc/>
-        public grpcEvents.UncommittedAggregateEvents ToProtobuf(UncommittedAggregateEvents uncommittedEvents)
-        {
-            var protobuf = new grpcEvents.UncommittedAggregateEvents
+        public Contracts.UncommittedEvent ToProtobuf(UncommittedEvent @event)
+            => new Contracts.UncommittedEvent
             {
-                AggregateRoot = _artifactTypeMap.GetArtifactFor(uncommittedEvents.AggregateRoot).Id.ToProtobuf(),
-                EventSource = uncommittedEvents.EventSource.ToProtobuf(),
-                ExpectedAggregateRootVersion = uncommittedEvents.ExpectedAggregateRootVersion
+                Artifact = ToProtobuf(@event.Event.GetType()),
+                EventSourceId = @event.EventSource.ToProtobuf(),
+                Public = IsPublicEvent(@event.Event),
+                Content = _serializer.EventToJson(@event.Event),
             };
 
-            protobuf.Events.AddRange(uncommittedEvents.Select(ToProtobuf));
-            return protobuf;
+        /// <inheritdoc/>
+        public IEnumerable<Contracts.UncommittedEvent> ToProtobuf(UncommittedEvents events)
+            => events.Select(_ => ToProtobuf(_));
+
+        /// <inheritdoc/>
+        public Contracts.UncommittedAggregateEvents ToProtobuf(UncommittedAggregateEvents uncommittedEvents)
+        {
+            var aggregateRoot = _artifactTypeMap.GetArtifactFor(uncommittedEvents.AggregateRoot);
+            var events = new Contracts.UncommittedAggregateEvents
+            {
+                AggregateRootId = aggregateRoot.Id.ToProtobuf(),
+                EventSourceId = uncommittedEvents.EventSource.ToProtobuf(),
+                ExpectedAggregateRootVersion = uncommittedEvents.ExpectedAggregateRootVersion,
+            };
+
+            foreach (var @event in uncommittedEvents)
+            {
+                events.Events.Add(new Contracts.UncommittedAggregateEvents.Types.UncommittedAggregateEvent
+                {
+                    Artifact = ToProtobuf(@event.GetType()),
+                    Public = IsPublicEvent(@event),
+                    Content = _serializer.EventToJson(@event),
+                });
+            }
+
+            return events;
         }
 
         /// <inheritdoc/>
-        public CommittedEvent ToSDK(grpcEvents.CommittedEvent source)
+        public CommittedEvent ToSDK(Contracts.CommittedEvent source)
         {
-            var artifactId = source.Type.Id.To<ArtifactId>();
-            var artifact = new Artifact(artifactId, source.Type.Generation);
-            var type = _artifactTypeMap.GetTypeFor(artifact);
-            var eventInstance = _serializer.JsonToEvent(type, source.Content) as IEvent;
-            var occurred = source.Occurred.ToDateTimeOffset();
-            var eventSource = source.EventSource.To<EventSourceId>();
-            var correlationId = source.Correlation.To<CorrelationId>();
-            var microservice = source.Microservice.To<Microservice>();
-            var tenantId = source.Tenant.To<TenantId>();
-            var cause = new Cause((CauseType)source.Cause.Type, source.Cause.SequenceNumber);
-
+            var artifact = ToSDK(source.Type);
+            var @event = _serializer.JsonToEvent(artifact, source.Content);
             return new CommittedEvent(
                 source.EventLogSequenceNumber,
-                occurred,
-                eventSource,
-                correlationId,
-                microservice,
-                tenantId,
-                cause,
-                eventInstance);
+                source.Occurred.ToDateTimeOffset(),
+                source.EventSourceId.To<EventSourceId>(),
+                source.ExecutionContext.ToExecutionContext(),
+                @event);
         }
 
         /// <inheritdoc/>
-        public CommittedAggregateEvent ToSDK(grpcEvents.CommittedAggregateEvent source, EventSourceId eventSource, Type aggregateRootType)
-        {
-            var artifactId = source.Type.Id.To<ArtifactId>();
-            var artifact = new Artifact(artifactId, source.Type.Generation);
-            var type = _artifactTypeMap.GetTypeFor(artifact);
-            var eventInstance = _serializer.JsonToEvent(type, source.Content) as IEvent;
-            var occurred = source.Occurred.ToDateTimeOffset();
-            var correlationId = source.Correlation.To<CorrelationId>();
-            var microservice = source.Microservice.To<Microservice>();
-            var tenantId = source.Tenant.To<TenantId>();
-            var cause = new Cause((CauseType)source.Cause.Type, source.Cause.SequenceNumber);
+        public CommittedEvents ToSDK(IEnumerable<Contracts.CommittedEvent> source)
+            => new CommittedEvents(source.Select(ToSDK).ToList());
 
-            return new CommittedAggregateEvent(
-                eventSource,
-                aggregateRootType,
-                source.AggregateRootVersion,
-                source.EventLogSequenceNumber,
-                occurred,
-                correlationId,
-                microservice,
-                tenantId,
-                cause,
-                eventInstance);
+        /// <inheritdoc/>
+        public CommittedAggregateEvents ToSDK(Contracts.CommittedAggregateEvents source)
+        {
+            var aggregateRootVersion = source.AggregateRootVersion - (ulong)source.Events.Count + 1;
+            var aggregateRoot = _artifactTypeMap.GetTypeFor(new Artifact(source.AggregateRootId.To<ArtifactId>(), ArtifactGeneration.First));
+
+            var events = source.Events.Select(eventSource =>
+            {
+                var artifact = ToSDK(eventSource.Type);
+                var @event = _serializer.JsonToEvent(artifact, eventSource.Content);
+                return new CommittedAggregateEvent(
+                    eventSource.EventLogSequenceNumber,
+                    eventSource.Occurred.ToDateTimeOffset(),
+                    source.EventSourceId.To<EventSourceId>(),
+                    aggregateRoot,
+                    aggregateRootVersion++,
+                    eventSource.ExecutionContext.ToExecutionContext(),
+                    @event);
+            }).ToList();
+
+            return new CommittedAggregateEvents(
+                source.EventSourceId.To<EventSourceId>(),
+                aggregateRoot,
+                events);
         }
+
+        Artifacts.Contracts.Artifact ToProtobuf(Type artifact)
+        {
+            var mapped = _artifactTypeMap.GetArtifactFor(artifact);
+            return new Artifacts.Contracts.Artifact
+            {
+                Id = mapped.Id.ToProtobuf(),
+                Generation = mapped.Generation,
+            };
+        }
+
+        Type ToSDK(Artifacts.Contracts.Artifact artifact)
+            => _artifactTypeMap.GetTypeFor(new Artifact(artifact.Id.To<ArtifactId>(), artifact.Generation));
+
+        bool IsPublicEvent(IEvent @event)
+            => typeof(IPublicEvent).IsAssignableFrom(@event.GetType());
     }
 }

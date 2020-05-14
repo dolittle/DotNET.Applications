@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Linq;
-using Dolittle.Events;
 using Machine.Specifications;
 
 namespace Dolittle.Events.for_UncommittedAggregateEvents
@@ -19,10 +18,7 @@ namespace Dolittle.Events.for_UncommittedAggregateEvents
             events.Append(event_two);
         };
 
-        Because of = () =>
-        {
-            enumerated = events.ToArray();
-        };
+        Because of = () => enumerated = events.ToArray();
 
         It should_enumerate_two_events = () => enumerated.Length.ShouldEqual(2);
         It should_enumerate_the_first_event_first = () => enumerated[0].ShouldEqual(event_one);

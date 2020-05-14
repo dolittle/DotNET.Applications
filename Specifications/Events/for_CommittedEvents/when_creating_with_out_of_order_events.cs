@@ -11,12 +11,9 @@ namespace Dolittle.Events.for_CommittedEvents
         static CommittedEvents events;
         static Exception exception;
 
-        Because of = () => exception = Catch.Exception(() =>
-        {
-            events = new CommittedEvents(new CommittedEvent[] { second_event, first_event });
-        });
+        Because of = () => exception = Catch.Exception(() => events = new CommittedEvents(new CommittedEvent[] { second_event, first_event }));
 
         It should_not_be_created = () => events.ShouldBeNull();
-        It should_throw_an_exception = () => exception.ShouldBeOfExactType<EventLogVersionIsOutOfOrder>();
+        It should_throw_an_exception = () => exception.ShouldBeOfExactType<EventLogSequenceNumberIsOutOfOrder>();
     }
 }

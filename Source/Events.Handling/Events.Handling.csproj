@@ -7,12 +7,11 @@
         <PackageReference Include="Dolittle.Artifacts" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Booting" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Lifecycle" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Fundamentals.Contracts" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)" alias="contracts"/>
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Applications\Applications.csproj" />
+        <ProjectReference Include="..\Applications.Configuration\Applications.Configuration.csproj" />
         <ProjectReference Include="..\Artifacts.Configuration\Artifacts.Configuration.csproj" />
         <ProjectReference Include="..\Events\Events.csproj" />
         <ProjectReference Include="..\Events.Processing\Events.Processing.csproj" />

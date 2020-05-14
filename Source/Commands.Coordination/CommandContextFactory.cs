@@ -13,7 +13,7 @@ namespace Dolittle.Commands.Coordination
     /// </summary>
     public class CommandContextFactory : ICommandContextFactory
     {
-        readonly IUncommittedEventStreamCoordinator _uncommittedEventStreamCoordinator;
+        readonly IEventStore _eventStore;
         readonly IExecutionContextManager _executionContextManager;
         readonly IEventProcessingCompletion _eventHandlersWaiters;
         readonly ILogger _logger;
@@ -21,17 +21,17 @@ namespace Dolittle.Commands.Coordination
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandContextFactory"/> class.
         /// </summary>
-        /// <param name="uncommittedEventStreamCoordinator">A <see cref="IUncommittedEventStreamCoordinator"/> to use for coordinator an <see cref="UncommittedEvents"/>.</param>
+        /// <param name="eventStore">The <see cref="IEventStore"/> to use for committing events.</param>
         /// <param name="executionContextManager">A <see cref="IExecutionContextManager"/> for getting execution context from.</param>
         /// <param name="eventHandlersWaiters"><see cref="IEventProcessingCompletion"/> for waiting on event handlers.</param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging.</param>
         public CommandContextFactory(
-            IUncommittedEventStreamCoordinator uncommittedEventStreamCoordinator,
+            IEventStore eventStore,
             IExecutionContextManager executionContextManager,
             IEventProcessingCompletion eventHandlersWaiters,
             ILogger logger)
         {
-            _uncommittedEventStreamCoordinator = uncommittedEventStreamCoordinator;
+            _eventStore = eventStore;
             _executionContextManager = executionContextManager;
             _eventHandlersWaiters = eventHandlersWaiters;
             _logger = logger;
@@ -43,7 +43,7 @@ namespace Dolittle.Commands.Coordination
             return new CommandContext(
                 command,
                 _executionContextManager.Current,
-                _uncommittedEventStreamCoordinator,
+                _eventStore,
                 _eventHandlersWaiters,
                 _logger);
         }

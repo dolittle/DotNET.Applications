@@ -1,12 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-extern alias contracts;
-
 using System.Collections.Generic;
 using Dolittle.Services;
 using Dolittle.Services.Clients;
-using grpc = contracts::Dolittle.Runtime.EventHorizon;
+using static Dolittle.Runtime.EventHorizon.Contracts.Subscriptions;
 
 namespace Dolittle.EventHorizon
 {
@@ -18,7 +16,7 @@ namespace Dolittle.EventHorizon
         /// <inheritdoc/>
         public IEnumerable<Client> Clients => new[]
         {
-            new Client(EndpointVisibility.Private, typeof(grpc.Subscriptions.SubscriptionsClient), grpc.Subscriptions.Descriptor),
+            new Client(EndpointVisibility.Private, typeof(SubscriptionsClient), Descriptor),
         };
     }
 }

@@ -14,10 +14,11 @@ namespace Dolittle.Events.Handling
     public interface IEventProcessingCompletion
     {
         /// <summary>
-        /// Register an <see cref="AbstractEventHandler"/> for waiting when appropriate.
+        /// Register an event handler for waiting when appropriate.
         /// </summary>
-        /// <param name="eventHandler"><see cref="AbstractEventHandler"/> to register.</param>
-        void RegisterHandler(AbstractEventHandler eventHandler);
+        /// <param name="eventHandler"><see cref="EventHandlerId"/> to register.</param>
+        /// <param name="eventTypes">The types of events the event handler handles.</param>
+        void RegisterHandler(EventHandlerId eventHandler, IEnumerable<Type> eventTypes);
 
         /// <summary>
         /// Signal that a specific event handler with a given Id is done handling a specific <see cref="IEvent"/>.

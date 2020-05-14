@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Dolittle.Applications;
+using Dolittle.ApplicationModel;
 using Dolittle.Events;
 using Dolittle.Execution;
 using Dolittle.Tenancy;
@@ -17,41 +17,18 @@ namespace Dolittle.Domain.for_AggregateRoot.given
         static TenantId tenantId = Guid.Parse("54ad514b-baa5-44f5-8a6b-870d2ce0dcb2");
         static Cause cause = new Cause(CauseType.Command, 0);
 
-        public static CommittedAggregateEvents build_committed_events(EventSourceId eventSource, Type aggregateRoot)
+        public static CommittedAggregateEvents build_committed_events(EventSourceId eventSource, Type aggregateRoot, ExecutionContext executionContext)
         {
-            var events = new List<CommittedAggregateEvent>();
-            events.Add(build_committed_event(
-                eventSource,
-                aggregateRoot,
-                0,
-                0,
-                event_one));
-            events.Add(build_committed_event(
-                eventSource,
-                aggregateRoot,
-                1,
-                1,
-                event_two));
-            events.Add(build_committed_event(
-                eventSource,
-                aggregateRoot,
-                2,
-                2,
-                event_three));
+            var events = new List<CommittedAggregateEvent>()
+            {
+                build_committed_event(eventSource, aggregateRoot, 0, 0, event_one, executionContext),
+                build_committed_event(eventSource, aggregateRoot, 1, 1, event_two, executionContext),
+                build_committed_event(eventSource, aggregateRoot, 2, 2, event_three, executionContext),
+            };
             return new CommittedAggregateEvents(eventSource, aggregateRoot, events);
         }
 
-        static CommittedAggregateEvent build_committed_event(EventSourceId eventSource, Type aggregateRoot, AggregateRootVersion aggregateRootVersion, EventLogSequenceNumber eventLogSequenceNumber, IEvent @event) =>
-            new CommittedAggregateEvent(
-                eventSource,
-                aggregateRoot,
-                aggregateRootVersion,
-                eventLogSequenceNumber,
-                DateTimeOffset.Now,
-                correlationId,
-                microserviceId,
-                tenantId,
-                cause,
-                @event);
+        static CommittedAggregateEvent build_committed_event(EventSourceId eventSource, Type aggregateRoot, AggregateRootVersion aggregateRootVersion, EventLogSequenceNumber eventLogSequenceNumber, IEvent @event, ExecutionContext executionContext) =>
+            new CommittedAggregateEvent(eventLogSequenceNumber, DateTimeOffset.Now, eventSource, aggregateRoot, aggregateRootVersion, executionContext, @event);
     }
 }

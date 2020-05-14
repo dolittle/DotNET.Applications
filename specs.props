@@ -4,6 +4,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <IsTestProject>true</IsTestProject>
+        <NoWarn>IDE0044;IDE0051;IDE0052;IDE0060</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

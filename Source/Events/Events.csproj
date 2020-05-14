@@ -6,7 +6,7 @@
     <ItemGroup>
         <PackageReference Include="Dolittle.Artifacts" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Rules" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)" Alias="contracts"/>
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)"/>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Artifacts\Artifacts.csproj" />

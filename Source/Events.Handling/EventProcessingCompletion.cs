@@ -33,9 +33,9 @@ namespace Dolittle.Events.Handling
         }
 
         /// <inheritdoc/>
-        public void RegisterHandler(AbstractEventHandler eventHandler)
+        public void RegisterHandler(EventHandlerId eventHandler, IEnumerable<Type> eventTypes)
         {
-            _eventTypesByEventHandler[eventHandler.Identifier] = eventHandler.EventTypes;
+            _eventTypesByEventHandler[eventHandler] = eventTypes;
         }
 
         /// <inheritdoc/>

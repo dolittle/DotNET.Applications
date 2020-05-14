@@ -4,49 +4,28 @@
 namespace Dolittle.Events.Filters
 {
     /// <summary>
-    /// Represents the result of a <see cref="ICanFilterPrivateEvents"/>.
+    /// Represents the result of a <see cref="ICanFilterEvents"/>.
     /// </summary>
     public class FilterResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FilterResult"/> class.
         /// </summary>
-        /// <param name="isIncluded">Boolean indicating whether or not it should be included.</param>
-        /// <remarks>
-        /// Using this overload indicates that the partition is considered unspecified.
-        /// This means it will filter without considering a partition strategy.
-        /// </remarks>
-        public FilterResult(bool isIncluded)
+        /// <param name="included">true if the <see cref="IEvent"/> should be included in the stream, false if not.</param>
+        public FilterResult(bool included)
         {
-            IsIncluded = isIncluded;
-            Partition = PartitionId.Unspecified;
+            Included = included;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FilterResult"/> class.
+        /// Gets a value indicating whether or not the <see cref="IEvent"/> should be included in the stream.
         /// </summary>
-        /// <param name="isIncluded">Boolean indicating whether or not it should be included.</param>
-        /// <param name="partition"><see cref="PartitionId"/> it belongs to.</param>
-        public FilterResult(bool isIncluded, PartitionId partition)
-        {
-            IsIncluded = isIncluded;
-            Partition = partition;
-        }
+        public bool Included { get; }
 
         /// <summary>
-        /// Gets a value indicating whether or not it should be included.
+        /// Implicitly convert from a <see cref="bool"/> to <see cref="FilterResult"/>.
         /// </summary>
-        public bool IsIncluded { get; }
-
-        /// <summary>
-        /// Gets the <see cref="PartitionId"/> it belongs to.
-        /// </summary>
-        public PartitionId Partition { get; }
-
-        /// <summary>
-        /// Implicitly convert from a bool to <see cref="FilterResult"/>.
-        /// </summary>
-        /// <param name="isIncluded">true if it should be included, false if not.</param>
-        public static implicit operator FilterResult(bool isIncluded) => new FilterResult(isIncluded);
+        /// <param name="included">true if the <see cref="IEvent"/> should be included in the stream, false if not.</param>
+        public static implicit operator FilterResult(bool included) => new FilterResult(included);
     }
 }

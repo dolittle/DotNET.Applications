@@ -16,10 +16,10 @@ namespace Dolittle.Commands.Coordination.for_CommandContextFactory
         static ICommandContext command_context;
 
         Establish context = () =>
-            {
-                var artifact = Artifact.New();
-                command = new CommandRequest(CorrelationId.Empty, artifact.Id, artifact.Generation, new ExpandoObject());
-            };
+        {
+            var artifact = Artifact.New();
+            command = new CommandRequest(CorrelationId.Empty, artifact.Id, artifact.Generation, new ExpandoObject());
+        };
 
         Because of = () => command_context = factory.Build(command);
 

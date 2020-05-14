@@ -4,10 +4,10 @@
 using Dolittle.Queries;
 
 #pragma warning disable SA1649
-
 namespace Specs.Feature
 {
     public class TheQuery : IQuery
     {
     }
 }
+#pragma warning restore SA1649

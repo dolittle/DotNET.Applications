@@ -24,17 +24,21 @@ namespace Dolittle.Domain.for_AggregateRoot.given
 
         public MethodInfo OnAnotherEventMethod => GetMethodInfoFromCustomPointer("1900ae56-ad66-4a80-936a-016574b298d5");
 
+#pragma warning disable IDE0051, IDE0060
         [CustomMethodPointer("e9a77fc2-72ba-40e9-be2c-39b7198d0de7")]
         void On(SimpleEvent @event)
         {
             SimpleEventOnCalled++;
         }
+#pragma warning restore IDE0051, IDE0060
 
+#pragma warning disable IDE0051, IDE0060
         [CustomMethodPointer("1900ae56-ad66-4a80-936a-016574b298d5")]
         void On(AnotherEvent @event)
         {
             AnotherEventOnCalled++;
         }
+#pragma warning restore IDE0051, IDE0060
 
         MethodInfo GetMethodInfoFromCustomPointer(string id)
         {
