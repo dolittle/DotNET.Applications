@@ -32,41 +32,66 @@ namespace Dolittle.Events.Handling
 
             foreach (var method in handlerType.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
             {
-                if (MethodHasHandleSignatureFor<IEvent>(method) && method.Name != HandleMethodName)
-                {
-                    throw new EventHandlerMethodWithCorrectSignatureButWrongName(method, HandleMethodName);
-                }
+                ThrowIfMethodHasCorrectSignatureButWrongName(method);
 
                 if (method.Name == HandleMethodName)
                 {
-                    if (MethodHasHandleSignatureFor<TEventType>(method) && TryGetFirstMethodParameter<TEventType>(method, out var eventType))
-                    {
-                        var delegateType = typeof(EventHandlerMethod<,>).MakeGenericType(handlerType, eventType);
-                        var dynamicDelegate = method.CreateDelegate(delegateType, null);
-                        var builderHandleMethod = typeof(EventHandlerFactoryBuilder<THandlerType, TEventType>).GetMethod(nameof(EventHandlerFactoryBuilder<THandlerType, TEventType>.Handle));
-                        var dynamicHandleMethod = builderHandleMethod.MakeGenericMethod(eventType);
-                        dynamicHandleMethod.Invoke(builder, new[] { dynamicDelegate });
-                    }
-                    else if (!FirstMethodParameterIs<TEventType>(method))
-                    {
-                        throw new EventHandlerMethodFirstParameterMustBeCorrectEventType(typeof(TEventType), method);
-                    }
-                    else if (!SecondMethodParameterIsEventContext(method))
-                    {
-                        throw new EventHandlerMethodSecondParameterMustBeEventContext(method);
-                    }
-                    else if (!MethodHasNoExtraParameters(method))
-                    {
-                        throw new EventHandlerMethodMustTakeTwoParameters(method);
-                    }
-                    else
-                    {
-                        throw new EventHandlerMethodMustReturnATask(method);
-                    }
+                    ThrowIfFirstMethodParameterIsNot<TEventType>(method);
+                    ThrowIfSecondMethodParameterIsNotEventContext(method);
+                    ThrowIfMethodHasExtraParameters(method);
+                    ThrowIfMethodDoesNotReturnATask(method);
+
+                    TryGetFirstMethodParameter<TEventType>(method, out var eventType);
+                    var delegateType = typeof(EventHandlerMethod<,>).MakeGenericType(handlerType, eventType);
+                    var dynamicDelegate = method.CreateDelegate(delegateType, null);
+                    var builderHandleMethod = typeof(EventHandlerFactoryBuilder<THandlerType, TEventType>).GetMethod(nameof(EventHandlerFactoryBuilder<THandlerType, TEventType>.Handle));
+                    var dynamicHandleMethod = builderHandleMethod.MakeGenericMethod(eventType);
+                    dynamicHandleMethod.Invoke(builder, new[] { dynamicDelegate });
                 }
             }
 
             return builder.Build();
+        }
+
+        static void ThrowIfMethodHasCorrectSignatureButWrongName(MethodInfo method)
+        {
+            if (MethodHasHandleSignatureFor<IEvent>(method) && method.Name != HandleMethodName)
+            {
+                throw new EventHandlerMethodWithCorrectSignatureButWrongName(method, HandleMethodName);
+            }
+        }
+
+        static void ThrowIfFirstMethodParameterIsNot<TTEventType>(MethodInfo method)
+            where TTEventType : IEvent
+        {
+            if (!FirstMethodParameterIs<TEventType>(method))
+            {
+                throw new EventHandlerMethodFirstParameterMustBeCorrectEventType(typeof(TEventType), method);
+            }
+        }
+
+        static void ThrowIfSecondMethodParameterIsNotEventContext(MethodInfo method)
+        {
+            if (!SecondMethodParameterIsEventContext(method))
+            {
+                throw new EventHandlerMethodSecondParameterMustBeEventContext(method);
+            }
+        }
+
+        static void ThrowIfMethodHasExtraParameters(MethodInfo method)
+        {
+            if (!MethodHasNoExtraParameters(method))
+            {
+                throw new EventHandlerMethodMustTakeTwoParameters(method);
+            }
+        }
+
+        static void ThrowIfMethodDoesNotReturnATask(MethodInfo method)
+        {
+            if (!MethodReturnsTask(method))
+            {
+                throw new EventHandlerMethodMustReturnATask(method);
+            }
         }
 
         static bool MethodHasHandleSignatureFor<TTEventType>(MethodInfo method)
