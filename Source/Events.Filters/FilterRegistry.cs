@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Threading;
@@ -10,21 +10,21 @@ using Dolittle.Resilience;
 namespace Dolittle.Events.Filters
 {
     /// <summary>
-    /// An implementation of <see cref="IFilterManager"/>.
+    /// An implementation of <see cref="IRegisterFilters"/>.
     /// </summary>
-    public class FilterManager : IFilterManager
+    public class FilterRegistry : IRegisterFilters
     {
         readonly FilterProcessors _processors;
-        readonly IAsyncPolicyFor<FilterManager> _policy;
+        readonly IAsyncPolicyFor<FilterRegistry> _policy;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FilterManager"/> class.
+        /// Initializes a new instance of the <see cref="FilterRegistry"/> class.
         /// </summary>
         /// <param name="processors">The <see cref="FilterProcessors"/> to use for creating filter processors.</param>
         /// <param name="policy">The <see cref="IAsyncPolicyFor{T}"/> that defines reconnect policies for the event filters.</param>
-        public FilterManager(
+        public FilterRegistry(
             FilterProcessors processors,
-            IAsyncPolicyFor<FilterManager> policy)
+            IAsyncPolicyFor<FilterRegistry> policy)
         {
             _processors = processors;
             _policy = policy;

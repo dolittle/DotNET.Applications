@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -12,21 +12,21 @@ namespace Dolittle.Events.Filters
     /// <summary>
     /// Defines the policy for registering event filters to the Runtime.
     /// </summary>
-    public class FilterManagerPolicy : IDefineAsyncPolicyForType
+    public class FilterRegistryPolicy : IDefineAsyncPolicyForType
     {
-        readonly ILogger<FilterManager> _logger;
+        readonly ILogger<FilterRegistry> _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FilterManagerPolicy"/> class.
+        /// Initializes a new instance of the <see cref="FilterRegistryPolicy"/> class.
         /// </summary>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
-        public FilterManagerPolicy(ILogger<FilterManager> logger)
+        public FilterRegistryPolicy(ILogger<FilterRegistry> logger)
         {
             _logger = logger;
         }
 
         /// <inheritdoc/>
-        public Type Type => typeof(FilterManager);
+        public Type Type => typeof(FilterRegistry);
 
         /// <inheritdoc/>
         public Polly.IAsyncPolicy Define()

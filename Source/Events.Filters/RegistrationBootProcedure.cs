@@ -18,7 +18,7 @@ namespace Dolittle.Events.Filters
     /// </summary>
     public class RegistrationBootProcedure : ICanPerformBootProcedure
     {
-        readonly IFilterManager _manager;
+        readonly IRegisterFilters _manager;
         readonly IInstancesOf<ICanProvideEventFilters> _filterProviders;
         readonly IInstancesOf<ICanProvideEventFiltersWithPartition> _partitionedFilterProviders;
         readonly IInstancesOf<ICanProvidePublicEventFilters> _publicFilterProviders;
@@ -27,13 +27,13 @@ namespace Dolittle.Events.Filters
         /// <summary>
         /// Initializes a new instance of the <see cref="RegistrationBootProcedure"/> class.
         /// </summary>
-        /// <param name="manager">The <see cref="IFilterManager"/> that will be used to register the filters.</param>
+        /// <param name="manager">The <see cref="IRegisterFilters"/> that will be used to register the filters.</param>
         /// <param name="filterProviders">Providers of <see cref="ICanProvideEventFilters"/>.</param>
         /// <param name="partitionedFilterProviders">Providers of <see cref="ICanProvideEventFiltersWithPartition"/>.</param>
         /// <param name="publicFilterProviders">Providers of <see cref="ICanProvidePublicEventFilters"/>.</param>
         /// <param name="logger"><see cref="ILogger"/> to use for logging.</param>
         public RegistrationBootProcedure(
-            IFilterManager manager,
+            IRegisterFilters manager,
             IInstancesOf<ICanProvideEventFilters> filterProviders,
             IInstancesOf<ICanProvideEventFiltersWithPartition> partitionedFilterProviders,
             IInstancesOf<ICanProvidePublicEventFilters> publicFilterProviders,

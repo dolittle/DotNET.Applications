@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Threading;
@@ -10,7 +10,7 @@ namespace Dolittle.Events.Filters
     /// <summary>
     /// Defines a manager that deals with registering event filters with the Runtime.
     /// </summary>
-    public interface IFilterManager
+    public interface IRegisterFilters
     {
         /// <summary>
         /// Registers a filter with the Runtime.
