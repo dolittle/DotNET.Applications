@@ -19,7 +19,7 @@ namespace Dolittle.Events.Handling
     public class RegistrationBootProcedure : ICanPerformBootProcedure
     {
         readonly IContainer _container;
-        readonly IEventHandlerManager _manager;
+        readonly IRegisterEventHandlers _manager;
         readonly IInstancesOf<ICanProvideEventHandlers> _handlerProviders;
         readonly IInstancesOf<ICanProvideExternalEventHandlers> _externalHandlerProviders;
         readonly ILogger _logger;
@@ -28,13 +28,13 @@ namespace Dolittle.Events.Handling
         /// Initializes a new instance of the <see cref="RegistrationBootProcedure"/> class.
         /// </summary>
         /// <param name="container">The <see cref="IContainer"/> that will be used to get <see cref="FactoryFor{T}"/> to instantiate event handlers.</param>
-        /// <param name="manager">The <see cref="IEventHandlerManager"/> that will be used to register the event handlers.</param>
+        /// <param name="manager">The <see cref="IRegisterEventHandlers"/> that will be used to register the event handlers.</param>
         /// <param name="handlerProviders">Providers of <see cref="ICanHandleEvents"/>.</param>
         /// <param name="externalHandlerProviders">Providers of <see cref="ICanHandleExternalEvents"/>.</param>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
         public RegistrationBootProcedure(
             IContainer container,
-            IEventHandlerManager manager,
+            IRegisterEventHandlers manager,
             IInstancesOf<ICanProvideEventHandlers> handlerProviders,
             IInstancesOf<ICanProvideExternalEventHandlers> externalHandlerProviders,
             ILogger logger)

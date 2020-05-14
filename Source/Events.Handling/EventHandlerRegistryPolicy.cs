@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -12,21 +12,21 @@ namespace Dolittle.Events.Handling
     /// <summary>
     /// Defines the policy for registering event handlers to the Runtime.
     /// </summary>
-    public class EventHandlerManagerPolicy : IDefineAsyncPolicyForType
+    public class EventHandlerRegistryPolicy : IDefineAsyncPolicyForType
     {
-        readonly ILogger<EventHandlerManager> _logger;
+        readonly ILogger<EventHandlerRegistry> _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventHandlerManagerPolicy"/> class.
+        /// Initializes a new instance of the <see cref="EventHandlerRegistryPolicy"/> class.
         /// </summary>
         /// <param name="logger">The <see cref="ILogger"/> to use for logging.</param>
-        public EventHandlerManagerPolicy(ILogger<EventHandlerManager> logger)
+        public EventHandlerRegistryPolicy(ILogger<EventHandlerRegistry> logger)
         {
             _logger = logger;
         }
 
         /// <inheritdoc/>
-        public Type Type => typeof(EventHandlerManager);
+        public Type Type => typeof(EventHandlerRegistry);
 
         /// <inheritdoc/>
         public Polly.IAsyncPolicy Define()

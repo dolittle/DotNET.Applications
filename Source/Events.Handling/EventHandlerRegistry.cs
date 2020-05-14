@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Threading;
@@ -9,21 +9,21 @@ using Dolittle.Resilience;
 namespace Dolittle.Events.Handling
 {
     /// <summary>
-    /// An implementation of <see cref="IEventHandlerManager"/>.
+    /// An implementation of <see cref="IRegisterEventHandlers"/>.
     /// </summary>
-    public class EventHandlerManager : IEventHandlerManager
+    public class EventHandlerRegistry : IRegisterEventHandlers
     {
         readonly EventHandlerProcessors _processors;
-        readonly IAsyncPolicyFor<EventHandlerManager> _policy;
+        readonly IAsyncPolicyFor<EventHandlerRegistry> _policy;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventHandlerManager"/> class.
+        /// Initializes a new instance of the <see cref="EventHandlerRegistry"/> class.
         /// </summary>
         /// <param name="processors">The <see cref="EventHandlerProcessors"/> that will be used to create instances of <see cref="EventHandlerProcessor{TEventType}"/>.</param>
         /// <param name="policy">The <see cref="IAsyncPolicyFor{T}"/> that defines reconnect policies for event handlers.</param>
-        public EventHandlerManager(
+        public EventHandlerRegistry(
             EventHandlerProcessors processors,
-            IAsyncPolicyFor<EventHandlerManager> policy)
+            IAsyncPolicyFor<EventHandlerRegistry> policy)
         {
             _processors = processors;
             _policy = policy;

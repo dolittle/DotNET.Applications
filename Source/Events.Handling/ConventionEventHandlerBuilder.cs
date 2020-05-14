@@ -24,7 +24,7 @@ namespace Dolittle.Events.Handling
         /// </summary>
         /// <typeparam name="THandlerType">The type of the event handler to build for.</typeparam>
         /// <param name="factory">The <see cref="FactoryFor{T}"/> that will be used to instantiate the event handler.</param>
-        /// <returns>A <see cref="IEventHandler{TEventType}"/> that can be registered with an <see cref="IEventHandlerManager"/>.</returns>
+        /// <returns>A <see cref="IEventHandler{TEventType}"/> that can be registered with an <see cref="IRegisterEventHandlers"/>.</returns>
         public static IEventHandler<TEventType> BuildFor<THandlerType>(FactoryFor<THandlerType> factory)
         {
             var builder = EventHandlerBuilder.Create<TEventType>().With(factory);

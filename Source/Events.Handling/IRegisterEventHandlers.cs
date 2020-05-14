@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Threading;
@@ -9,7 +9,7 @@ namespace Dolittle.Events.Handling
     /// <summary>
     /// Defines a manager that deals with registering event handlers with the Runtime.
     /// </summary>
-    public interface IEventHandlerManager
+    public interface IRegisterEventHandlers
     {
         /// <summary>
         /// Registers an event handler with the Runtime.
