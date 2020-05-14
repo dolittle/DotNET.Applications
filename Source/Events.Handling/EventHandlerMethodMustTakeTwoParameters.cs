@@ -15,7 +15,7 @@ namespace Dolittle.Events.Handling
         /// </summary>
         /// <param name="methodInfo">The Event Handler Handle <see cref="MethodInfo" />.</param>
         public EventHandlerMethodMustTakeTwoParameters(MethodInfo methodInfo)
-            : base(methodInfo, "is invalid. The method must take exactly two parameter.")
+            : base(methodInfo, "The method must take exactly two parameter.")
         {
         }
     }

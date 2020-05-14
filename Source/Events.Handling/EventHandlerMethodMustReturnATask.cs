@@ -15,7 +15,7 @@ namespace Dolittle.Events.Handling
         /// </summary>
         /// <param name="methodInfo"><see cref="MethodInfo"/> that is violating.</param>
         public EventHandlerMethodMustReturnATask(MethodInfo methodInfo)
-            : base(methodInfo, "is invalid. The method must return a task.")
+            : base(methodInfo, "The method must return a task.")
         {
         }
     }

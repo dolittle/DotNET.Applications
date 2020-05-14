@@ -15,7 +15,7 @@ namespace Dolittle.Events.Handling
         /// </summary>
         /// <param name="methodInfo">The Event Handler Handle <see cref="MethodInfo" />.</param>
         public EventHandlerMethodSecondParameterMustBeEventContext(MethodInfo methodInfo)
-            : base(methodInfo, $"is invalid. The second parameter must be a {typeof(EventContext)}.")
+            : base(methodInfo, $"The second parameter must be a {typeof(EventContext)}.")
         {
         }
     }

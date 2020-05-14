@@ -17,7 +17,7 @@ namespace Dolittle.Events.Handling
         /// <param name="eventType">The expected event type.</param>
         /// <param name="methodInfo">The Event Handler Handle <see cref="MethodInfo" />.</param>
         public EventHandlerMethodFirstParameterMustBeCorrectEventType(Type eventType, MethodInfo methodInfo)
-            : base(methodInfo, $"is invalid. The first parameter must implement {eventType}.")
+            : base(methodInfo, $"The first parameter must implement {eventType}.")
         {
         }
     }

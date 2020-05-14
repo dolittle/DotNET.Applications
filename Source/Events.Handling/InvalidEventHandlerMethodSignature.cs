@@ -17,7 +17,7 @@ namespace Dolittle.Events.Handling
         /// <param name="methodInfo">The <see cerf="MethodInfo" /> of the handle method.</param>
         /// <param name="reason">The reason why it is invalid.</param>
         protected InvalidEventHandlerMethodSignature(MethodInfo methodInfo, string reason)
-            : base($"The method {methodInfo} on {methodInfo.DeclaringType} {reason}")
+            : base($"The method {methodInfo} on {methodInfo.DeclaringType} is invalid. {reason}")
         {
         }
     }
