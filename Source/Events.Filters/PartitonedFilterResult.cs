@@ -8,7 +8,7 @@ namespace Dolittle.Events.Filters
     /// <summary>
     /// Represents the result of a <see cref="ICanFilterEventsWithPartition"/>.
     /// </summary>
-    public class PartitonedFilterResult : FilterResult
+    public class PartitionedFilterResult : FilterResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PartitonedFilterResult"/> class.

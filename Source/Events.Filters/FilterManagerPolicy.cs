@@ -34,21 +34,12 @@ namespace Dolittle.Events.Filters
                 .Handle<Exception>(
                     _ =>
                     {
-                        switch (_)
+                        if (_ is RpcException rpcException && rpcException.StatusCode == StatusCode.Unavailable)
                         {
-                            case RpcException ex:
-                            switch (ex.StatusCode)
-                            {
-                                case StatusCode.Unavailable:
-                                return true;
-                            }
-
-                            goto default;
-
-                            default:
-                            _logger.Warning(_, "Error while registering filter");
                             return true;
                         }
+                        _logger.Warning(_, "Error while registering filter");
+                         return true;
                     })
                 .WaitAndRetryForeverAsync(attempt => TimeSpan.FromSeconds(Math.Min(Math.Pow(2, attempt), 60)));
     }
