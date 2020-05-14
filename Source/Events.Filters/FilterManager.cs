@@ -32,14 +32,14 @@ namespace Dolittle.Events.Filters
 
         /// <inheritdoc/>
         public Task Register(FilterId id, ScopeId scope, ICanFilterEvents filter, CancellationToken cancellationToken)
-            => _processors.ProcessorFor(id, scope, filter).RegisterAndHandleForeverWithPolicy(_policy, cancellationToken);
+            => _processors.GetFor(id, scope, filter).RegisterAndHandleForeverWithPolicy(_policy, cancellationToken);
 
         /// <inheritdoc/>
         public Task Register(FilterId id, ScopeId scope, ICanFilterEventsWithPartition filter, CancellationToken cancellationToken)
-            => _processors.ProcessorFor(id, scope, filter).RegisterAndHandleForeverWithPolicy(_policy, cancellationToken);
+            => _processors.GetFor(id, scope, filter).RegisterAndHandleForeverWithPolicy(_policy, cancellationToken);
 
         /// <inheritdoc/>
         public Task Register(FilterId id, ICanFilterPublicEvents filter, CancellationToken cancellationToken)
-            => _processors.ProcessorFor(id, filter).RegisterAndHandleForeverWithPolicy(_policy, cancellationToken);
+            => _processors.GetFor(id, filter).RegisterAndHandleForeverWithPolicy(_policy, cancellationToken);
     }
 }

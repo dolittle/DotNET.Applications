@@ -54,7 +54,7 @@ namespace Dolittle.Events.Handling.Internal
         /// <param name="handler">The <see cref="IEventHandler{TEventType}"/> that will be called to handle incoming events.</param>
         /// <typeparam name="TEventType">The type of events to process.</typeparam>
         /// <returns>An <see cref="EventHandlerProcessor{TEventType}"/> of type <typeparamref name="TEventType"/>.</returns>
-        public EventHandlerProcessor<TEventType> ProcessorFor<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, IEventHandler<TEventType> handler)
+        public EventHandlerProcessor<TEventType> GetFor<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, IEventHandler<TEventType> handler)
             where TEventType : IEvent
             => new EventHandlerProcessor<TEventType>(
                 id,

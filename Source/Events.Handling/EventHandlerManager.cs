@@ -32,6 +32,6 @@ namespace Dolittle.Events.Handling
         /// <inheritdoc/>
         public Task Register<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, IEventHandler<TEventType> handler, CancellationToken cancellationToken = default)
             where TEventType : IEvent
-            => _processors.ProcessorFor(id, scope, partitioned, handler).RegisterAndHandleForeverWithPolicy(_policy, cancellationToken);
+            => _processors.GetFor(id, scope, partitioned, handler).RegisterAndHandleForeverWithPolicy(_policy, cancellationToken);
     }
 }

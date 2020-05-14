@@ -8,7 +8,7 @@ namespace Dolittle.Events.Filters
     /// <summary>
     /// Defines a system that can filter instances of <see cref="IEvent"/> to a partitioned stream.
     /// </summary>
-    public interface ICanFilterEventsWithPartition : ICanFilter<IEvent, PartitonedFilterResult>
+    public interface ICanFilterEventsWithPartition : ICanFilter<IEvent, PartitionedFilterResult>
     {
     }
 }

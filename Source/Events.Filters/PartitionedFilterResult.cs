@@ -11,11 +11,11 @@ namespace Dolittle.Events.Filters
     public class PartitionedFilterResult : FilterResult
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PartitonedFilterResult"/> class.
+        /// Initializes a new instance of the <see cref="PartitionedFilterResult"/> class.
         /// </summary>
         /// <param name="included">true if the <see cref="IEvent"/> should be included in the stream, false if not.</param>
         /// <param name="partition">The <see cref="PartitionId"/> of which the <see cref="IEvent"/> should be put in the stream.</param>
-        public PartitonedFilterResult(bool included, PartitionId partition)
+        public PartitionedFilterResult(bool included, PartitionId partition)
             : base(included)
         {
             Partition = partition;
@@ -27,9 +27,9 @@ namespace Dolittle.Events.Filters
         public PartitionId Partition { get; }
 
         /// <summary>
-        /// Implicitly convert from a <see cref="Tuple{T,U}"/> to <see cref="PartitonedFilterResult"/>.
+        /// Implicitly convert from a <see cref="Tuple{T,U}"/> to <see cref="PartitionedFilterResult"/>.
         /// </summary>
         /// <param name="result">A <see cref="Tuple{T,U}"/> containing the result of the filtering operation.</param>
-        public static implicit operator PartitonedFilterResult((bool included, PartitionId partition) result) => new PartitonedFilterResult(result.included, result.partition);
+        public static implicit operator PartitionedFilterResult((bool included, PartitionId partition) result) => new PartitionedFilterResult(result.included, result.partition);
     }
 }

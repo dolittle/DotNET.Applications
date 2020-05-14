@@ -39,7 +39,7 @@ namespace Dolittle.Events.Filters
         }
 
         /// <inheritdoc/>
-        IEnumerable<ICanFilterEventsWithPartition> ICanProvideFilters<ICanFilterEventsWithPartition, IEvent, PartitonedFilterResult>.Provide()
+        IEnumerable<ICanFilterEventsWithPartition> ICanProvideFilters<ICanFilterEventsWithPartition, IEvent, PartitionedFilterResult>.Provide()
         {
             _logger.Debug("Providing {FilterCount} partitioned event filters", _partitionedFilters.Count());
             return _partitionedFilters;

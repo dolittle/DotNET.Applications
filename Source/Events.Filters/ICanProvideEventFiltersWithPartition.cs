@@ -8,7 +8,7 @@ namespace Dolittle.Events.Filters
     /// <summary>
     /// Represents a system that is capable of providing implementations of <see cref="ICanFilterEventsWithPartition"/>.
     /// </summary>
-    public interface ICanProvideEventFiltersWithPartition : ICanProvideFilters<ICanFilterEventsWithPartition, IEvent, PartitonedFilterResult>
+    public interface ICanProvideEventFiltersWithPartition : ICanProvideFilters<ICanFilterEventsWithPartition, IEvent, PartitionedFilterResult>
     {
     }
 }

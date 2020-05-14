@@ -35,11 +35,10 @@ namespace Dolittle.Events.Handling
                     _ =>
                     {
                         if (_ is RpcException rpcException && rpcException.StatusCode == StatusCode.Unavailable)
-                        {
                             return true;
-                        }
+
                         _logger.Warning(_, "Error while registering event handler");
-                         return true;
+                        return true;
                     })
                 .WaitAndRetryForeverAsync(attempt => TimeSpan.FromSeconds(Math.Min(Math.Pow(2, attempt), 60)));
     }
