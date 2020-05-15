@@ -28,6 +28,7 @@ namespace Dolittle.Events
             EventSourceId = eventSourceId;
             Occurred = occurred;
             ExecutionContext = executionContext;
+            UniqueIdentifier = new EventIdentifier(ExecutionContext.Microservice, ExecutionContext.Tenant, SequenceNumber);
         }
 
         /// <summary>
@@ -49,5 +50,10 @@ namespace Dolittle.Events
         /// Gets the <see cref="ExecutionContext"/> in which the event was committed to the <see cref="IEventStore"/>.
         /// </summary>
         public ExecutionContext ExecutionContext { get; }
+
+        /// <summary>
+        /// Gets the <see cref="EventIdentifier"/> that uniquely identifies the event.
+        /// </summary>
+        public EventIdentifier UniqueIdentifier { get; }
     }
 }
