@@ -13,7 +13,7 @@ namespace Dolittle.Events.Filters.Internal
     /// <summary>
     /// An implementation of <see cref="AbstractFilterProcessor{TEventType, TClientMessage, TRegistrationRequest, TFilterResponse}"/> used for <see cref="ICanFilterEventsWithPartition"/>.
     /// </summary>
-    public class EventFilterWithPartitionsProcessor : AbstractFilterProcessor<IEvent, PartitionedFiltersClientToRuntimeMessage, PartitionedFiltersRegistrationRequest, PartitionedFilterResponse>
+    public class EventFilterWithPartitionsProcessor : AbstractFilterProcessor<IEvent, PartitionedFilterClientToRuntimeMessage, PartitionedFilterRegistrationRequest, PartitionedFilterResponse>
     {
         readonly ScopeId _scope;
         readonly FiltersClient _client;
@@ -50,8 +50,8 @@ namespace Dolittle.Events.Filters.Internal
         protected override string Kind => "partitioned filter";
 
         /// <inheritdoc/>
-        protected override IReverseCallClient<PartitionedFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PartitionedFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse> CreateClient()
-            => _reverseCallClients.GetFor<PartitionedFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PartitionedFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse>(
+        protected override IReverseCallClient<PartitionedFilterClientToRuntimeMessage, FilterRuntimeToClientMessage, PartitionedFilterRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse> CreateClient()
+            => _reverseCallClients.GetFor<PartitionedFilterClientToRuntimeMessage, FilterRuntimeToClientMessage, PartitionedFilterRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse>(
                 () => _client.ConnectPartitioned(),
                 (message, arguments) => message.RegistrationRequest = arguments,
                 message => message.RegistrationResponse,
@@ -62,8 +62,8 @@ namespace Dolittle.Events.Filters.Internal
                 (response, context) => response.CallContext = context);
 
         /// <inheritdoc/>
-        protected override PartitionedFiltersRegistrationRequest GetRegisterArguments()
-            => new PartitionedFiltersRegistrationRequest
+        protected override PartitionedFilterRegistrationRequest GetRegisterArguments()
+            => new PartitionedFilterRegistrationRequest
             {
                 FilterId = Identifier.ToProtobuf(),
                 ScopeId = _scope.ToProtobuf(),

@@ -66,7 +66,7 @@ namespace Dolittle.EventHorizon
                     }
                     else
                     {
-                        _logger.Debug("Sucessfully subscribed to events from {Partition} in {Stream} of {ProducerTenant} in {Microservice} for {ConsumerTenant} into {Scope}", subscription.Partition, subscription.Stream, subscription.Tenant, subscription.Microservice, consumer, subscription.Scope);
+                        _logger.Debug("Sucessfully subscribed to events from {Partition} in {Stream} of {ProducerTenant} in {Microservice} for {ConsumerTenant} into {Scope} approved by {Consent}", subscription.Partition, subscription.Stream, subscription.Tenant, subscription.Microservice, consumer, subscription.Scope, response.Consent);
                     }
                 },
                 CancellationToken.None);

@@ -14,9 +14,11 @@ namespace Dolittle.EventHorizon
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionResponse"/> class.
         /// </summary>
-        /// <param name="failure">The optional <see cref="Failure"/> that occured during the subscription request.</param>
-        public SubscriptionResponse(Contracts.Failure failure)
+        /// <param name="consentId">The optional <see cref="Contracts.Uuid"/> that represents the <see cref="ConsentId"/> for this subscription.</param>
+        /// <param name="failure">The optional <see cref="Contracts.Failure"/> that occured during the subscription request.</param>
+        public SubscriptionResponse(Contracts.Uuid consentId, Contracts.Failure failure)
         {
+            if (consentId != null) Consent = consentId.To<ConsentId>();
             if (failure != null) Failure = failure;
         }
 
@@ -24,6 +26,11 @@ namespace Dolittle.EventHorizon
         /// Gets a value indicating whether the subscription was successful or not.
         /// </summary>
         public bool Success => Failure == null;
+
+        /// <summary>
+        /// Gets the <see cref="ConsentId"/> that was given to allow this subscription.
+        /// </summary>
+        public ConsentId Consent { get; }
 
         /// <summary>
         /// Gets the subscription response failure.

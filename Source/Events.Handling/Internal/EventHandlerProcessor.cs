@@ -20,7 +20,7 @@ namespace Dolittle.Events.Handling.Internal
     /// Implementation of <see cref="EventProcessor{TIdentifier, TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse}"/> for Event Handlers.
     /// </summary>
     /// <typeparam name="TEventType">The event type that the handler can handle.</typeparam>
-    public class EventHandlerProcessor<TEventType> : EventProcessor<EventHandlerId, EventHandlersClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlersRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse>
+    public class EventHandlerProcessor<TEventType> : EventProcessor<EventHandlerId, EventHandlerClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlerRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse>
         where TEventType : IEvent
     {
         readonly ScopeId _scope;
@@ -78,8 +78,8 @@ namespace Dolittle.Events.Handling.Internal
         protected override EventHandlerId Identifier { get; }
 
         /// <inheritdoc/>
-        protected override IReverseCallClient<EventHandlersClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlersRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse> CreateClient()
-            => _reverseCallClients.GetFor<EventHandlersClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlersRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse>(
+        protected override IReverseCallClient<EventHandlerClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlerRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse> CreateClient()
+            => _reverseCallClients.GetFor<EventHandlerClientToRuntimeMessage, EventHandlerRuntimeToClientMessage, EventHandlerRegistrationRequest, EventHandlerRegistrationResponse, HandleEventRequest, EventHandlerResponse>(
                 () => _client.Connect(),
                 (message, arguments) => message.RegistrationRequest = arguments,
                 message => message.RegistrationResponse,
@@ -101,9 +101,9 @@ namespace Dolittle.Events.Handling.Internal
             => response.Failure;
 
         /// <inheritdoc/>
-        protected override EventHandlersRegistrationRequest GetRegisterArguments()
+        protected override EventHandlerRegistrationRequest GetRegisterArguments()
         {
-            var request = new EventHandlersRegistrationRequest
+            var request = new EventHandlerRegistrationRequest
             {
                 EventHandlerId = Identifier.ToProtobuf(),
                 ScopeId = _scope.ToProtobuf(),

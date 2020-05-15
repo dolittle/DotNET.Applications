@@ -63,7 +63,7 @@ namespace Dolittle.EventHorizon
                     MicroserviceId = subscription.Microservice.ToProtobuf(),
                     ScopeId = subscription.Scope.ToProtobuf()
                 }, cancellationToken: cancellationToken);
-            return new SubscriptionResponse(response.Failure);
+            return new SubscriptionResponse(response.ConsentId, response.Failure);
         }
     }
 }
