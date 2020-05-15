@@ -57,14 +57,13 @@ namespace Dolittle.Events.Filters.Internal
         /// <inheritdoc/>
         protected override Task<TFilterResponse> Handle(FilterEventRequest request, CancellationToken cancellationToken)
         {
-            var converted = _converter.ToSDK(request.Event);
-            if (converted.Event is TEventType typedEvent)
+            var committed = _converter.ToSDK(request.Event);
+            if (committed.Event is TEventType typedEvent)
             {
-                var context = new EventContext(converted.EventSource, converted.Occurred);
-                return Filter(typedEvent, context);
+                return Filter(typedEvent, committed.DeriveContext());
             }
 
-            throw new EventTypeIsIncorrectForFilter(typeof(TEventType), converted.Event.GetType());
+            throw new EventTypeIsIncorrectForFilter(typeof(TEventType), committed.Event.GetType());
         }
 
         /// <summary>
