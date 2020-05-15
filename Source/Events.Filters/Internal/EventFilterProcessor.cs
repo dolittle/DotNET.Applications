@@ -13,7 +13,7 @@ namespace Dolittle.Events.Filters.Internal
     /// <summary>
     /// An implementation of <see cref="AbstractFilterProcessor{TEventType, TClientMessage, TRegistrationRequest, TFilterResponse}"/> used for <see cref="ICanFilterEvents"/>.
     /// </summary>
-    public class EventFilterProcessor : AbstractFilterProcessor<IEvent, FiltersClientToRuntimeMessage, FiltersRegistrationRequest, FilterResponse>
+    public class EventFilterProcessor : AbstractFilterProcessor<IEvent, FilterClientToRuntimeMessage, FilterRegistrationRequest, FilterResponse>
     {
         readonly ScopeId _scope;
         readonly FiltersClient _client;
@@ -50,8 +50,8 @@ namespace Dolittle.Events.Filters.Internal
         protected override string Kind => "filter";
 
         /// <inheritdoc/>
-        protected override IReverseCallClient<FiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, FiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, FilterResponse> CreateClient()
-            => _reverseCallClients.GetFor<FiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, FiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, FilterResponse>(
+        protected override IReverseCallClient<FilterClientToRuntimeMessage, FilterRuntimeToClientMessage, FilterRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, FilterResponse> CreateClient()
+            => _reverseCallClients.GetFor<FilterClientToRuntimeMessage, FilterRuntimeToClientMessage, FilterRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, FilterResponse>(
                 () => _client.Connect(),
                 (message, arguments) => message.RegistrationRequest = arguments,
                 message => message.RegistrationResponse,
@@ -62,8 +62,8 @@ namespace Dolittle.Events.Filters.Internal
                 (response, context) => response.CallContext = context);
 
         /// <inheritdoc/>
-        protected override FiltersRegistrationRequest GetRegisterArguments()
-            => new FiltersRegistrationRequest
+        protected override FilterRegistrationRequest GetRegisterArguments()
+            => new FilterRegistrationRequest
             {
                 FilterId = Identifier.ToProtobuf(),
                 ScopeId = _scope.ToProtobuf(),

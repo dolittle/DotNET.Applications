@@ -14,7 +14,7 @@ namespace Dolittle.Events.Filters.Internal
     /// <summary>
     /// An implementation of <see cref="AbstractFilterProcessor{TEventType, TClientMessage, TRegistrationRequest, TFilterResponse}"/> used for <see cref="ICanFilterPublicEvents"/>.
     /// </summary>
-    public class PublicEventFilterProcessor : AbstractFilterProcessor<IPublicEvent, PublicFiltersClientToRuntimeMessage, PublicFiltersRegistrationRequest, PartitionedFilterResponse>
+    public class PublicEventFilterProcessor : AbstractFilterProcessor<IPublicEvent, PublicFilterClientToRuntimeMessage, PublicFilterRegistrationRequest, PartitionedFilterResponse>
     {
         readonly FiltersClient _client;
         readonly IReverseCallClients _reverseCallClients;
@@ -47,8 +47,8 @@ namespace Dolittle.Events.Filters.Internal
         protected override string Kind => "public filter";
 
         /// <inheritdoc/>
-        protected override IReverseCallClient<PublicFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PublicFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse> CreateClient()
-            => _reverseCallClients.GetFor<PublicFiltersClientToRuntimeMessage, FilterRuntimeToClientMessage, PublicFiltersRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse>(
+        protected override IReverseCallClient<PublicFilterClientToRuntimeMessage, FilterRuntimeToClientMessage, PublicFilterRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse> CreateClient()
+            => _reverseCallClients.GetFor<PublicFilterClientToRuntimeMessage, FilterRuntimeToClientMessage, PublicFilterRegistrationRequest, FilterRegistrationResponse, FilterEventRequest, PartitionedFilterResponse>(
                 () => _client.ConnectPublic(),
                 (message, arguments) => message.RegistrationRequest = arguments,
                 message => message.RegistrationResponse,
@@ -59,8 +59,8 @@ namespace Dolittle.Events.Filters.Internal
                 (response, context) => response.CallContext = context);
 
         /// <inheritdoc/>
-        protected override PublicFiltersRegistrationRequest GetRegisterArguments()
-            => new PublicFiltersRegistrationRequest
+        protected override PublicFilterRegistrationRequest GetRegisterArguments()
+            => new PublicFilterRegistrationRequest
             {
                 FilterId = Identifier.ToProtobuf(),
             };
