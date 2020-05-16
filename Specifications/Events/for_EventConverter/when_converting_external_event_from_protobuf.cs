@@ -15,7 +15,7 @@ using It = Machine.Specifications.It;
 
 namespace Dolittle.Events.for_EventConverter
 {
-    public class when_converting_from_protobuf : given::Events
+    public class when_converting_external_event_from_protobuf : given::Events
     {
         static Mock<IArtifactTypeMap> artifact_type_map;
         static Mock<ISerializer> serializer;
@@ -30,6 +30,8 @@ namespace Dolittle.Events.for_EventConverter
         static EventSourceId event_source;
         static DateTimeOffset occurred;
         static EventLogSequenceNumber event_log_sequence_number;
+        static EventLogSequenceNumber external_event_log_sequence_number;
+        static DateTimeOffset received;
 
         Establish context = () =>
         {
@@ -42,8 +44,10 @@ namespace Dolittle.Events.for_EventConverter
             generation = 42;
             the_event = new MyEvent();
             event_source = Guid.Parse("c15f86b2-4cc2-40d0-88e4-c016916fdddf");
-            occurred = DateTimeOffset.UtcNow;
+            occurred = DateTimeOffset.UtcNow.AddHours(-1);
             event_log_sequence_number = 5;
+            external_event_log_sequence_number = 1337;
+            received = DateTimeOffset.Now.AddDays(-1);
 
             input = new grpcEvents.CommittedEvent
             {
@@ -58,6 +62,9 @@ namespace Dolittle.Events.for_EventConverter
                 EventLogSequenceNumber = event_log_sequence_number,
                 Content = "{\"someProperty\":42}",
                 Public = false,
+                External = true,
+                ExternalEventLogSequenceNumber = external_event_log_sequence_number,
+                ExternalEventReceived = Timestamp.FromDateTimeOffset(received),
             };
 
             artifact_type_map.Setup(_ => _.GetTypeFor(new Artifact(artifact, generation))).Returns(typeof(MyEvent));
@@ -66,10 +73,13 @@ namespace Dolittle.Events.for_EventConverter
 
         Because of = () => result = converter.ToSDK(input);
 
+        It should_be_a_committed_external_event = () => result.ShouldBeOfExactType<CommittedExternalEvent>();
         It should_hold_the_event = () => result.Event.ShouldEqual(the_event);
         It should_have_the_correct_timestamp = () => result.Occurred.ShouldEqual(occurred);
         It should_have_the_correct_execution_context = () => result.ExecutionContext.ShouldEqual(execution_context);
         It should_have_the_correct_event_source = () => result.EventSource.ShouldEqual(event_source);
         It should_have_the_correct_event_log_sequence_number = () => result.EventLogSequenceNumber.ShouldEqual(event_log_sequence_number);
+        It should_have_the_correct_external_event_log_sequence_number = () => (result as CommittedExternalEvent).ExternalEventLogSequenceNumber.ShouldEqual(external_event_log_sequence_number);
+        It should_have_the_correct_received_timestamp = () => (result as CommittedExternalEvent).Recieved.ShouldEqual(received);
     }
 }
