@@ -14,6 +14,10 @@ namespace Dolittle.Events
         /// <param name="committedEvent">The <see cref="CommittedEvent" />.</param>
         /// <returns>The derived <see cref="EventContext" />.</returns>
         public static EventContext DeriveContext(this CommittedEvent committedEvent) =>
-            new EventContext(committedEvent.EventSource, committedEvent.Occurred);
+            new EventContext(
+                committedEvent.EventLogSequenceNumber,
+                committedEvent.EventSource,
+                committedEvent.Occurred,
+                committedEvent.ExecutionContext);
     }
 }

@@ -135,8 +135,7 @@ namespace Dolittle.Events.Handling.Internal
                 var comitted = _converter.ToSDK(request.Event.Event);
                 if (comitted.Event is TEventType typedEvent)
                 {
-                    var context = new EventContext(comitted.EventSource, comitted.Occurred);
-                    await _handler.Handle(typedEvent, context).ConfigureAwait(false);
+                    await _handler.Handle(typedEvent, comitted.DeriveContext()).ConfigureAwait(false);
                     return new EventHandlerResponse();
                 }
 
