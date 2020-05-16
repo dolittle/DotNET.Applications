@@ -75,12 +75,26 @@ namespace Dolittle.Events
         {
             var artifact = ToSDK(source.Type);
             var @event = _serializer.JsonToEvent(artifact, source.Content);
-            return new CommittedEvent(
-                source.EventLogSequenceNumber,
-                source.Occurred.ToDateTimeOffset(),
-                source.EventSourceId.To<EventSourceId>(),
-                source.ExecutionContext.ToExecutionContext(),
-                @event);
+            if (source.External)
+            {
+                return new CommittedExternalEvent(
+                    source.EventLogSequenceNumber,
+                    source.Occurred.ToDateTimeOffset(),
+                    source.EventSourceId.To<EventSourceId>(),
+                    source.ExecutionContext.ToExecutionContext(),
+                    source.ExternalEventLogSequenceNumber,
+                    source.ExternalEventReceived.ToDateTimeOffset(),
+                    @event);
+            }
+            else
+            {
+                return new CommittedEvent(
+                    source.EventLogSequenceNumber,
+                    source.Occurred.ToDateTimeOffset(),
+                    source.EventSourceId.To<EventSourceId>(),
+                    source.ExecutionContext.ToExecutionContext(),
+                    @event);
+            }
         }
 
         /// <inheritdoc/>
