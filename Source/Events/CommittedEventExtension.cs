@@ -41,6 +41,6 @@ namespace Dolittle.Events
                 committedEvent.Occurred,
                 committedEvent.ExecutionContext,
                 committedEvent.ExternalEventLogSequenceNumber,
-                committedEvent.Recieved);
+                committedEvent.Received);
     }
 }

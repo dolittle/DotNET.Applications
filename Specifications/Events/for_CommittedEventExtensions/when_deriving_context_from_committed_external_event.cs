@@ -36,6 +36,6 @@ namespace Dolittle.Events.for_CommittedEventExtensions
         It should_have_the_correct_execution_context = () => result.ExecutionContext.ShouldEqual(execution_context);
         It should_have_the_correct_unique_identifier = () => result.UniqueIdentifier.Value.ShouldEqual("FvBR8iLWpE2bH34HjMicgGmkF77U7Q1LvCsgbQteafDAHwAAAAAAAA==");
         It should_have_the_correct_external_sequence_number = () => (result as ExternalEventContext).ExternalEventLogSequenceNumber.ShouldEqual(external_sequence_number);
-        It should_have_the_correct_received_timestamp = () => (result as ExternalEventContext).Recieved.ShouldEqual(received);
+        It should_have_the_correct_received_timestamp = () => (result as ExternalEventContext).Received.ShouldEqual(received);
     }
 }
