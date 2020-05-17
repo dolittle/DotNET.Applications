@@ -80,6 +80,6 @@ namespace Dolittle.Events.for_EventConverter
         It should_have_the_correct_event_source = () => result.EventSource.ShouldEqual(event_source);
         It should_have_the_correct_event_log_sequence_number = () => result.EventLogSequenceNumber.ShouldEqual(event_log_sequence_number);
         It should_have_the_correct_external_event_log_sequence_number = () => (result as CommittedExternalEvent).ExternalEventLogSequenceNumber.ShouldEqual(external_event_log_sequence_number);
-        It should_have_the_correct_received_timestamp = () => (result as CommittedExternalEvent).Recieved.ShouldEqual(received);
+        It should_have_the_correct_received_timestamp = () => (result as CommittedExternalEvent).Received.ShouldEqual(received);
     }
 }

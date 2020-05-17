@@ -32,7 +32,7 @@ namespace Dolittle.Events
             : base(eventLogSequenceNumber, occurred, eventSourceId, executionContext, @event)
         {
             ExternalEventLogSequenceNumber = externalEventLogSequenceNumber;
-            Recieved = received;
+            Received = received;
         }
 
         /// <summary>
@@ -43,6 +43,6 @@ namespace Dolittle.Events
         /// <summary>
         /// Gets the <see cref="DateTimeOffset"/> when the Event was received over the Event Horizon.
         /// </summary>
-        public DateTimeOffset Recieved { get; }
+        public DateTimeOffset Received { get; }
     }
 }
