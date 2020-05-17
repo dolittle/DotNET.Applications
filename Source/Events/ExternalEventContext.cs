@@ -35,7 +35,7 @@ namespace Dolittle.Events
                 new EventIdentifier(executionContext.Microservice, executionContext.Tenant, externalEventLogSequenceNumber))
         {
             ExternalEventLogSequenceNumber = externalEventLogSequenceNumber;
-            Recieved = received;
+            Received = received;
         }
 
         /// <summary>
@@ -46,6 +46,6 @@ namespace Dolittle.Events
         /// <summary>
         /// Gets the <see cref="DateTimeOffset"/> when the Event was received over the Event Horizon.
         /// </summary>
-        public DateTimeOffset Recieved { get; }
+        public DateTimeOffset Received { get; }
     }
 }
