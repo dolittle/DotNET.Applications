@@ -120,6 +120,8 @@ namespace Dolittle.Events.Handling.Internal
                 });
             }
 
+            _completion.RegisterHandler(Identifier, _handler.HandledEventTypes);
+
             return request;
         }
 
