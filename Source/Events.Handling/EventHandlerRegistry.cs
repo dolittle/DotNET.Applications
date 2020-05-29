@@ -15,23 +15,30 @@ namespace Dolittle.Events.Handling
     {
         readonly EventHandlerProcessors _processors;
         readonly IAsyncPolicyFor<EventHandlerRegistry> _policy;
+        readonly IEventProcessingCompletion _completion;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerRegistry"/> class.
         /// </summary>
         /// <param name="processors">The <see cref="EventHandlerProcessors"/> that will be used to create instances of <see cref="EventHandlerProcessor{TEventType}"/>.</param>
         /// <param name="policy">The <see cref="IAsyncPolicyFor{T}"/> that defines reconnect policies for event handlers.</param>
+        /// <param name="completion">The <see cref="IEventProcessingCompletion"/> that handles waiting for event handlers.</param>
         public EventHandlerRegistry(
             EventHandlerProcessors processors,
-            IAsyncPolicyFor<EventHandlerRegistry> policy)
+            IAsyncPolicyFor<EventHandlerRegistry> policy,
+            IEventProcessingCompletion completion)
         {
             _processors = processors;
             _policy = policy;
+            _completion = completion;
         }
 
         /// <inheritdoc/>
         public Task Register<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, IEventHandler<TEventType> handler, CancellationToken cancellationToken = default)
             where TEventType : IEvent
-            => _processors.GetFor(id, scope, partitioned, handler).RegisterAndHandleForeverWithPolicy(_policy, cancellationToken);
+            {
+                _completion.RegisterHandler(id, handler.HandledEventTypes);
+                return _processors.GetFor(id, scope, partitioned, handler).RegisterAndHandleForeverWithPolicy(_policy, cancellationToken);
+            }
     }
 }
