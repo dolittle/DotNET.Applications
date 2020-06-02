@@ -61,7 +61,7 @@ namespace Dolittle.Domain
 
         TAggregate Get(EventSourceId id)
         {
-            _logger.Trace($"Get '{typeof(TAggregate).AssemblyQualifiedName}' with Id of '{id?.Value.ToString() ?? "<unknown id>"}'");
+            _logger.Trace("Get '{Aggregate}' with Id of '{Id}'", typeof(TAggregate).AssemblyQualifiedName, id?.Value.ToString() ?? "<unknown id>");
 
             var commandContext = _commandContextManager.GetCurrent();
             var type = typeof(TAggregate);

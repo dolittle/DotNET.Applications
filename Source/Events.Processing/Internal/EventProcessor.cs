@@ -70,9 +70,9 @@ namespace Dolittle.Events.Processing.Internal
             var receivedResponse = await client.Connect(GetRegisterArguments(), cancellationToken).ConfigureAwait(false);
             ThrowIfNotReceivedResponse(receivedResponse);
             ThrowIfRegisterFailure(GetFailureFromRegisterResponse(client.ConnectResponse));
-            _logger.Trace($"{Kind} {{Id}} registered with the Runtime, start handling requests.", Identifier);
+            _logger.Trace("{Kind} {{Id}} registered with the Runtime, start handling requests.", Kind, Identifier);
             await client.Handle(CatchingHandle, cancellationToken).ConfigureAwait(false);
-            _logger.Trace($"{Kind} {{Id}} handling of requests completed.", Identifier);
+            _logger.Trace("{Kind} {{Id}} handling of requests completed.", Kind, Identifier);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Dolittle.Events.Processing.Internal
             while (true)
             {
                 await RegisterAndHandleWithPolicy(policy, cancellationToken).ConfigureAwait(false);
-                _logger.Trace($"Restaring {Kind} {{Id}}.", Identifier);
+                _logger.Trace("Restaring {Kind} {{Id}}.", Kind, Identifier);
             }
         }
 

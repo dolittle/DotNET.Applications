@@ -79,10 +79,10 @@ namespace Dolittle.Commands.Coordination
         {
             _logger.Trace("Commit transaction");
             var trackedAggregateRoots = GetAggregateRootsBeingTracked();
-            _logger.Trace($"Total number of objects tracked '{trackedAggregateRoots.Count()}");
+            _logger.Trace("Total number of objects tracked '{Count}", trackedAggregateRoots.Count());
             foreach (var trackedAggregateRoot in trackedAggregateRoots)
             {
-                _logger.Trace($"Committing events from {trackedAggregateRoot.GetType().AssemblyQualifiedName}");
+                _logger.Trace("Committing events from {TrackedAggregateRoot}", trackedAggregateRoot.GetType().AssemblyQualifiedName);
                 var events = trackedAggregateRoot.UncommittedEvents;
                 if (events.HasEvents)
                 {

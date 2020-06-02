@@ -74,7 +74,7 @@ namespace Dolittle.Events.Handling
                     Task.Delay(delay).Wait();
                     if (timeout-- == 0)
                     {
-                        _logger.Trace($"Waiting for event handlers timed out");
+                        _logger.Trace("Waiting for event handlers timed out");
                         break;
                     }
                 }

@@ -148,7 +148,7 @@ namespace Dolittle.Queries.Coordination
             result.TotalItems = providerResult.TotalItems;
             result.Items = providerResult.Items is IEnumerable<IReadModel> readModels ? _filters.Filter(readModels) : providerResult.Items;
 
-            _logger.Trace($"Query resulted in {result.TotalItems} items");
+            _logger.Trace("Query resulted in {TotalItems} items", result.TotalItems);
         }
 
         void ThrowIfNoQueryPropertyOnQuery(Type queryType)
