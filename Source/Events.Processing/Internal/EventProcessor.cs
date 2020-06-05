@@ -19,7 +19,7 @@ using Grpc.Core;
 namespace Dolittle.Events.Processing.Internal
 {
     /// <summary>
-    /// Defines a system that handles the behaviour of event processors that registers with the Runtime and handles processing requests.
+    /// Partial implementation of <see cref="IEventProcessor"/>.
     /// </summary>
     /// <typeparam name="TIdentifier">Type of the identifier for the implementation of the event processor.</typeparam>
     /// <typeparam name="TClientMessage">Type of the <see cref="IMessage">messages</see> that is sent from the client to the server.</typeparam>
@@ -28,7 +28,7 @@ namespace Dolittle.Events.Processing.Internal
     /// <typeparam name="TConnectResponse">Type of the response that is received after the initial Connect call.</typeparam>
     /// <typeparam name="TRequest">Type of the requests sent from the server to the client using <see cref="IReverseCallDispatcher{TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse}.Call"/>.</typeparam>
     /// <typeparam name="TResponse">Type of the responses received from the client using <see cref="IReverseCallDispatcher{TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse}.Call"/>.</typeparam>
-    public abstract class EventProcessor<TIdentifier, TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse>
+    public abstract class EventProcessor<TIdentifier, TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse> : IEventProcessor
         where TIdentifier : ConceptAs<Guid>
         where TClientMessage : IMessage, new()
         where TServerMessage : IMessage, new()
@@ -58,11 +58,7 @@ namespace Dolittle.Events.Processing.Internal
         /// </summary>
         protected abstract TIdentifier Identifier { get; }
 
-        /// <summary>
-        /// Registers the event processor with the Runtime, and if successful starts handling requests.
-        /// </summary>
-        /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        /// <inheritdoc/>
         public async Task RegisterAndHandle(CancellationToken cancellationToken)
         {
             _logger.Debug($"Registering {Kind} {{Id}} with the Runtime.", Identifier);
@@ -75,13 +71,7 @@ namespace Dolittle.Events.Processing.Internal
             _logger.Trace($"{Kind} {{Id}} handling of requests completed.", Identifier);
         }
 
-        /// <summary>
-        /// Registers the event processor with the Runtime, and if successful starts handling requests.
-        /// If the processor fails during registration or handling, the provided policy will be used to retry.
-        /// </summary>
-        /// <param name="policy">The <see cref="IAsyncPolicy"/> that defines the retry behaviour upon failure.</param>
-        /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        /// <inheritdoc/>
         public Task RegisterAndHandleWithPolicy(IAsyncPolicy policy, CancellationToken cancellationToken)
             => policy.Execute(
                 async (cancellationToken) =>
@@ -103,14 +93,7 @@ namespace Dolittle.Events.Processing.Internal
                 },
                 cancellationToken);
 
-        /// <summary>
-        /// Registers the event processor with the Runtime, and if successful starts handling requests.
-        /// If the processor fails during registration or handling, the provided policy will be used to retry.
-        /// If the processor finishes handling of requests without failing, it will restart.
-        /// </summary>
-        /// <param name="policy">The <see cref="IAsyncPolicy"/> that defines the retry behaviour upon failure.</param>
-        /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        /// <inheritdoc/>
         public async Task RegisterAndHandleForeverWithPolicy(IAsyncPolicy policy, CancellationToken cancellationToken)
         {
             while (true)

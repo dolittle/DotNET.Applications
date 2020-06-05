@@ -13,18 +13,18 @@ namespace Dolittle.Events.Handling
     /// </summary>
     public class EventHandlerRegistry : IRegisterEventHandlers
     {
-        readonly EventHandlerProcessors _processors;
+        readonly IEventHandlerProcessors _processors;
         readonly IAsyncPolicyFor<EventHandlerRegistry> _policy;
         readonly IEventProcessingCompletion _completion;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerRegistry"/> class.
         /// </summary>
-        /// <param name="processors">The <see cref="EventHandlerProcessors"/> that will be used to create instances of <see cref="EventHandlerProcessor{TEventType}"/>.</param>
+        /// <param name="processors">The <see cref="IEventHandlerProcessors"/> that will be used to create instances of <see cref="EventHandlerProcessor{TEventType}"/>.</param>
         /// <param name="policy">The <see cref="IAsyncPolicyFor{T}"/> that defines reconnect policies for event handlers.</param>
         /// <param name="completion">The <see cref="IEventProcessingCompletion"/> that handles waiting for event handlers.</param>
         public EventHandlerRegistry(
-            EventHandlerProcessors processors,
+            IEventHandlerProcessors processors,
             IAsyncPolicyFor<EventHandlerRegistry> policy,
             IEventProcessingCompletion completion)
         {
