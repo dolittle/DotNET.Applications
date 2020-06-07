@@ -1,11 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dolittle.Execution;
 using Dolittle.Logging;
 
 namespace Dolittle.Events.Handling
@@ -16,30 +15,32 @@ namespace Dolittle.Events.Handling
     public class EventHandlersWaiter
     {
         readonly object _lockObject = new object();
-        readonly ConcurrentDictionary<Type, int> _eventTypeAndCounts;
+        readonly IList<EventHandlerType> _eventTypeHandlers;
+        readonly CorrelationId _correlationId;
         readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlersWaiter"/> class.
         /// </summary>
-        /// <param name="eventTypeAndCounts"><see cref="IDictionary{TKey, TValue}"/> with count references.</param>
+        /// <param name="correlationId">The <see cref="CorrelationId" />.</param>
+        /// <param name="eventTypeHandlers">The <see cref="IEnumerable{T}" /> of <see cref="EventHandlerType" />.</param>
         /// <param name="logger"><see cref="ILogger"/> for logging.</param>
-        public EventHandlersWaiter(IDictionary<Type, int> eventTypeAndCounts, ILogger logger)
+        public EventHandlersWaiter(CorrelationId correlationId, IEnumerable<EventHandlerType> eventTypeHandlers, ILogger logger)
         {
-            _eventTypeAndCounts = new ConcurrentDictionary<Type, int>(eventTypeAndCounts);
+            _eventTypeHandlers = new List<EventHandlerType>(eventTypeHandlers);
+            _correlationId = correlationId;
             _logger = logger;
         }
 
         /// <summary>
         /// Signal for a specific event type.
         /// </summary>
-        /// <param name="type"><see cref="Type"/> of event to signel for.</param>
-        public void Signal(Type type)
+        /// <param name="eventHandlerType"><see cref="EventHandlerType"/> to signal for.</param>
+        public void Signal(EventHandlerType eventHandlerType)
         {
             lock (_lockObject)
             {
-                _eventTypeAndCounts[type]--;
-                if (_eventTypeAndCounts[type] < 0) _eventTypeAndCounts[type] = 0;
+                _eventTypeHandlers.Remove(eventHandlerType);
             }
         }
 
@@ -51,7 +52,7 @@ namespace Dolittle.Events.Handling
         {
             lock (_lockObject)
             {
-                return _eventTypeAndCounts.Values.All(_ => _ == 0);
+                return _eventTypeHandlers.Count == 0;
             }
         }
 
@@ -61,27 +62,26 @@ namespace Dolittle.Events.Handling
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task Complete()
         {
-            const int delay = 20;
-
-            var tcs = new TaskCompletionSource<bool>();
-
-            Task.Run(() =>
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+            Task.Run(async () =>
             {
-                var timeout = 30000 / delay;
-
+                int num = 1500;
                 while (!IsDone())
                 {
-                    Task.Delay(delay).Wait();
-                    if (timeout-- == 0)
+                    await Task.Delay(20).ConfigureAwait(false);
+                    if (num-- == 0)
                     {
-                        _logger.Trace($"Waiting for event handlers timed out");
-                        break;
+                        lock (_lockObject)
+                        {
+                            var waitingFor = string.Join(System.Environment.NewLine, _eventTypeHandlers.Select(_ => _.Type.ToString()));
+                            var handlers = string.Join(System.Environment.NewLine, _eventTypeHandlers.Select(_ => _.EventHandler));
+                            break;
+                        }
                     }
                 }
 
                 tcs.SetResult(true);
             });
-
             return tcs.Task;
         }
     }

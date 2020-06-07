@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Dolittle.Collections;
@@ -19,8 +20,8 @@ namespace Dolittle.Events.Handling
     [Singleton]
     public class EventProcessingCompletion : IEventProcessingCompletion
     {
-        readonly ConcurrentDictionary<EventHandlerId, IEnumerable<Type>> _eventTypesByEventHandler = new ConcurrentDictionary<EventHandlerId, IEnumerable<Type>>();
-        readonly ConcurrentDictionary<Type, List<EventHandlersWaiter>> _eventHandlersWaiterByEventType = new ConcurrentDictionary<Type, List<EventHandlersWaiter>>();
+        readonly ConcurrentDictionary<Type, List<EventHandlerType>> _eventHandlersByEventType = new ConcurrentDictionary<Type, List<EventHandlerType>>();
+        readonly ConcurrentDictionary<CorrelationId, EventHandlersWaiter> _eventHandlersWaitersByScope = new ConcurrentDictionary<CorrelationId, EventHandlersWaiter>();
         readonly ILogger _logger;
 
         /// <summary>
@@ -35,21 +36,29 @@ namespace Dolittle.Events.Handling
         /// <inheritdoc/>
         public void RegisterHandler(EventHandlerId eventHandler, IEnumerable<Type> eventTypes)
         {
-            _eventTypesByEventHandler[eventHandler] = eventTypes;
+            eventTypes.ForEach(_ =>
+                {
+                    var eventHandlerType = new EventHandlerType(eventHandler, _);
+                    _eventHandlersByEventType.AddOrUpdate(_, new List<EventHandlerType> { eventHandlerType }, (k, v) =>
+                        {
+                            v.Add(eventHandlerType);
+                            return v;
+                        });
+                });
         }
 
         /// <inheritdoc/>
         public void EventHandlerCompletedForEvent(CorrelationId correlationId, EventHandlerId eventHandlerId, Type type)
         {
-            if (_eventHandlersWaiterByEventType.ContainsKey(type))
+            _logger.Information("Event Handler completed for Event with correlation '{CorrelationId}'", correlationId);
+            if (_eventHandlersWaitersByScope.ContainsKey(correlationId))
             {
-                var waiters = _eventHandlersWaiterByEventType[type];
-                foreach (var waiter in waiters)
+                var waiter = _eventHandlersWaitersByScope[correlationId];
+                waiter.Signal(new EventHandlerType(eventHandlerId, type));
+                if (waiter.IsDone())
                 {
-                    waiter.Signal(type);
+                    _eventHandlersWaitersByScope.TryRemove(correlationId, out EventHandlersWaiter _);
                 }
-
-                _eventHandlersWaiterByEventType[type] = waiters.Where(_ => !_.IsDone()).ToList();
             }
         }
 
@@ -58,34 +67,40 @@ namespace Dolittle.Events.Handling
         {
             var tcs = new TaskCompletionSource<bool>();
             var eventTypes = events.Select(_ => _.GetType()).ToArray();
+            var eventHandlersForScope = _eventHandlersByEventType
+                .Where(_ => eventTypes.Contains(_.Key))
+                .SelectMany(_ => _.Value);
 
-            var typeCounts = eventTypes.ToDictionary(_ => _, _ => 0);
-            _eventTypesByEventHandler.ForEach(_ => _.Value.ForEach(eventType =>
-            {
-                if (typeCounts.ContainsKey(eventType)) typeCounts[eventType]++;
-            }));
+            var waiter = new EventHandlersWaiter(correlationId, eventHandlersForScope, _logger);
 
-            var waiter = new EventHandlersWaiter(typeCounts, _logger);
-
-            foreach (var type in eventTypes)
-            {
-                var waiters = _eventHandlersWaiterByEventType[type] =
-                                _eventHandlersWaiterByEventType.ContainsKey(type) ?
-                                _eventHandlersWaiterByEventType[type] :
-                                new List<EventHandlersWaiter>();
-
-                waiters.Add(waiter);
-            }
+            _eventHandlersWaitersByScope.AddOrUpdate(correlationId, waiter, (_, v) => v);
 
             Task.Run(async () =>
             {
-                action();
+                try
+                {
+                    var stopWatch = new Stopwatch();
+                    action();
+                    var actionTime = stopWatch.ElapsedMilliseconds;
+                    _logger.Information($"EventProcessingCompletion.PERFORM LOOP Time for eventHandlers '{correlationId}': {actionTime}");
 
-                _logger.Trace("Waiting for EventHandlers");
-                await waiter.Complete().ConfigureAwait(false);
-                _logger.Trace("EventHandler waiting is done");
+                    _logger.Information($"EventProcessingCompletion.PERFORM LOOP Waiting for EventHandlers: '{correlationId}' ");
+                    stopWatch.Restart();
+                    await waiter.Complete().ConfigureAwait(false);
+                    stopWatch.Stop();
+                    var waitingTime = stopWatch.ElapsedMilliseconds;
+                    _logger.Information($"EventProcessingCompletion.PERFORM LOOP EventHandler waiting is done '{correlationId}': {waitingTime}");
 
-                tcs.SetResult(true);
+                    tcs.SetResult(true);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Warning(ex, "An error occurred while performing event processing completion");
+                }
+                finally
+                {
+                    tcs.SetResult(true);
+                }
             });
 
             return tcs.Task;
