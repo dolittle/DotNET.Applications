@@ -7,6 +7,7 @@ using System.Reflection;
 using Dolittle.Commands.Handling;
 using Dolittle.Commands.Security;
 using Dolittle.Commands.Validation;
+using Dolittle.Execution;
 using Dolittle.Globalization;
 using Dolittle.Logging;
 
@@ -22,6 +23,7 @@ namespace Dolittle.Commands.Coordination.Runtime
         readonly ICommandValidators _commandValidationService;
         readonly ICommandSecurityManager _commandSecurityManager;
         readonly ILocalizer _localizer;
+        readonly IExecutionContextManager _executionContextManager;
         readonly ILogger _logger;
 
         /// <summary>
@@ -32,6 +34,7 @@ namespace Dolittle.Commands.Coordination.Runtime
         /// <param name="commandSecurityManager">A <see cref="ICommandSecurityManager"/> for dealing with security and commands.</param>
         /// <param name="commandValidators">A <see cref="ICommandValidators"/> for validating a <see cref="CommandRequest"/> before handling.</param>
         /// <param name="localizer">A <see cref="ILocalizer"/> to use for controlling localization of current thread when handling commands.</param>
+        /// <param name="executionContextManager">A <see cref="IExecutionContextManager" /> to manage the <see cref="IExecutionContextManager.Current" /> <see cref="ExecutionContext" />.</param>
         /// <param name="logger"><see cref="ILogger"/> to log with.</param>
         public CommandCoordinator(
             ICommandHandlerManager commandHandlerManager,
@@ -39,6 +42,7 @@ namespace Dolittle.Commands.Coordination.Runtime
             ICommandSecurityManager commandSecurityManager,
             ICommandValidators commandValidators,
             ILocalizer localizer,
+            IExecutionContextManager executionContextManager,
             ILogger logger)
         {
             _commandHandlerManager = commandHandlerManager;
@@ -46,12 +50,15 @@ namespace Dolittle.Commands.Coordination.Runtime
             _commandSecurityManager = commandSecurityManager;
             _commandValidationService = commandValidators;
             _localizer = localizer;
+            _executionContextManager = executionContextManager;
             _logger = logger;
         }
 
         /// <inheritdoc/>
         public CommandResult Handle(CommandRequest command)
         {
+            var tenantId = _executionContextManager.Current.Tenant;
+            _executionContextManager.CurrentFor(tenantId, command.CorrelationId);
             return Handle(_commandContextManager.EstablishForCommand(command), command);
         }
 
@@ -62,7 +69,7 @@ namespace Dolittle.Commands.Coordination.Runtime
             {
                 using (_localizer.BeginScope())
                 {
-                    _logger.Debug($"Handle command of type {command.Type}");
+                    _logger.Information("Handle command of type {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
 
                     commandResult = CommandResult.ForCommand(command);
 
@@ -102,13 +109,13 @@ namespace Dolittle.Commands.Coordination.Runtime
                         }
                         catch (TargetInvocationException ex)
                         {
-                            _logger.Error(ex, "Error handling command");
+                            _logger.Warning(ex, "Error handling command");
                             commandResult.Exception = ex.InnerException;
                             commandContext.Rollback();
                         }
                         catch (Exception ex)
                         {
-                            _logger.Error(ex, "Error handling command");
+                            _logger.Warning(ex, "Error handling command");
                             commandResult.Exception = ex;
                             commandContext.Rollback();
                         }
@@ -122,12 +129,12 @@ namespace Dolittle.Commands.Coordination.Runtime
             }
             catch (TargetInvocationException ex)
             {
-                _logger.Error(ex, "Error handling command");
+                _logger.Warning(ex, "Error handling command");
                 commandResult.Exception = ex.InnerException;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error handling command");
+                _logger.Warning(ex, "Error handling command");
                 commandResult.Exception = ex;
             }
 
