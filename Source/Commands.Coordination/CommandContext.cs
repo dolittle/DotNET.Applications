@@ -42,12 +42,7 @@ namespace Dolittle.Commands.Coordination
             _eventStore = eventStore;
             _eventProcessingCompletion = eventProcessingCompletion;
             _logger = logger;
-
-            CorrelationId = command.CorrelationId;
         }
-
-        /// <inheritdoc/>
-        public CorrelationId CorrelationId { get; }
 
         /// <inheritdoc/>
         public CommandRequest Command { get; }
@@ -63,10 +58,7 @@ namespace Dolittle.Commands.Coordination
         }
 
         /// <inheritdoc/>
-        public IEnumerable<AggregateRoot> GetAggregateRootsBeingTracked()
-        {
-            return _aggregateRootsTracked;
-        }
+        public IEnumerable<AggregateRoot> GetAggregateRootsBeingTracked() => _aggregateRootsTracked;
 
         /// <inheritdoc/>
         public void Dispose()
@@ -86,7 +78,7 @@ namespace Dolittle.Commands.Coordination
                 var events = trackedAggregateRoot.UncommittedEvents;
                 if (events.HasEvents)
                 {
-                    _eventProcessingCompletion.Perform(CorrelationId, events, () =>
+                    _eventProcessingCompletion.Perform(Command.CorrelationId, events, () =>
                     {
                         _logger.Trace("Events present - commit them to the event store");
                         _eventStore.CommitForAggregate(events).GetAwaiter().GetResult();
