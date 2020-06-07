@@ -43,7 +43,7 @@ namespace Dolittle.Commands.Coordination
             _eventProcessingCompletion = eventProcessingCompletion;
             _logger = logger;
 
-            CorrelationId = CorrelationId.New();
+            CorrelationId = command.CorrelationId;
         }
 
         /// <inheritdoc/>
@@ -92,7 +92,7 @@ namespace Dolittle.Commands.Coordination
                         _eventStore.CommitForAggregate(events).GetAwaiter().GetResult();
                         _logger.Trace("Commit object");
                         trackedAggregateRoot.Commit();
-                    }).Wait();
+                    }).GetAwaiter().GetResult();
                 }
             }
         }
