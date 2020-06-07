@@ -14,11 +14,6 @@ namespace Dolittle.Commands.Coordination
     public interface ICommandContext : ITransaction
     {
         /// <summary>
-        /// Gets the <see cref="CorrelationId"/> for the <see cref="ICommandContext"/>.
-        /// </summary>
-        CorrelationId CorrelationId { get; }
-
-        /// <summary>
         /// Gets the <see cref="CommandRequest">command</see> the context is for.
         /// </summary>
         CommandRequest Command { get; }
