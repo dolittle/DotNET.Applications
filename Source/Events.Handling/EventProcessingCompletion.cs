@@ -39,7 +39,7 @@ namespace Dolittle.Events.Handling
             eventTypes.ForEach(_ =>
                 {
                     var eventHandlerType = new EventHandlerType(eventHandler, _);
-                    _eventHandlersByEventType.AddOrUpdate(_, new List<EventHandlerType> { eventHandlerType }, (k, v) =>
+                    _eventHandlersByEventType.AddOrUpdate(_, new List<EventHandlerType> { eventHandlerType }, (_, v) =>
                         {
                             v.Add(eventHandlerType);
                             return v;
@@ -65,15 +65,19 @@ namespace Dolittle.Events.Handling
         /// <inheritdoc/>
         public Task Perform(CorrelationId correlationId, IEnumerable<IEvent> events, Action action)
         {
+            if (_eventHandlersWaitersByScope.ContainsKey(correlationId)) throw new AlreadyPerformingEventProcessingCompletionForCorrelation(correlationId);
             var tcs = new TaskCompletionSource<bool>();
-            var eventTypes = events.Select(_ => _.GetType()).ToArray();
-            var eventHandlersForScope = _eventHandlersByEventType
-                .Where(_ => eventTypes.Contains(_.Key))
-                .SelectMany(_ => _.Value);
+            var eventHandlersForScope = new List<EventHandlerType>();
+            events
+                .Select(_ => _.GetType())
+                .ForEach(eventType => _eventHandlersByEventType
+                                        .Where(_ => _.Key == eventType)
+                                        .SelectMany(_ => _.Value)
+                                        .ForEach(eventHandlersForScope.Add));
 
             var waiter = new EventHandlersWaiter(correlationId, eventHandlersForScope, _logger);
 
-            _eventHandlersWaitersByScope.AddOrUpdate(correlationId, waiter, (_, v) => v);
+            if (!_eventHandlersWaitersByScope.TryAdd(correlationId, waiter)) throw new AlreadyPerformingEventProcessingCompletionForCorrelation(correlationId);
 
             Task.Run(async () =>
             {
