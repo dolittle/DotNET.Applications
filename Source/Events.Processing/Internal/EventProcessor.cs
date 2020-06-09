@@ -19,7 +19,7 @@ using Grpc.Core;
 namespace Dolittle.Events.Processing.Internal
 {
     /// <summary>
-    /// Defines a system that handles the behaviour of event processors that registers with the Runtime and handles processing requests.
+    /// Partial implementation of <see cref="IEventProcessor"/>.
     /// </summary>
     /// <typeparam name="TIdentifier">Type of the identifier for the implementation of the event processor.</typeparam>
     /// <typeparam name="TClientMessage">Type of the <see cref="IMessage">messages</see> that is sent from the client to the server.</typeparam>
@@ -28,7 +28,7 @@ namespace Dolittle.Events.Processing.Internal
     /// <typeparam name="TConnectResponse">Type of the response that is received after the initial Connect call.</typeparam>
     /// <typeparam name="TRequest">Type of the requests sent from the server to the client using <see cref="IReverseCallDispatcher{TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse}.Call"/>.</typeparam>
     /// <typeparam name="TResponse">Type of the responses received from the client using <see cref="IReverseCallDispatcher{TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse}.Call"/>.</typeparam>
-    public abstract class EventProcessor<TIdentifier, TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse>
+    public abstract class EventProcessor<TIdentifier, TClientMessage, TServerMessage, TConnectArguments, TConnectResponse, TRequest, TResponse> : IEventProcessor
         where TIdentifier : ConceptAs<Guid>
         where TClientMessage : IMessage, new()
         where TServerMessage : IMessage, new()
@@ -58,30 +58,20 @@ namespace Dolittle.Events.Processing.Internal
         /// </summary>
         protected abstract TIdentifier Identifier { get; }
 
-        /// <summary>
-        /// Registers the event processor with the Runtime, and if successful starts handling requests.
-        /// </summary>
-        /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        /// <inheritdoc/>
         public async Task RegisterAndHandle(CancellationToken cancellationToken)
         {
-            _logger.Debug($"Registering {Kind} {{Id}} with the Runtime.", Identifier);
+            _logger.Debug("Registering {Kind} {{Id}} with the Runtime.", Kind, Identifier);
             var client = CreateClient();
             var receivedResponse = await client.Connect(GetRegisterArguments(), cancellationToken).ConfigureAwait(false);
             ThrowIfNotReceivedResponse(receivedResponse);
             ThrowIfRegisterFailure(GetFailureFromRegisterResponse(client.ConnectResponse));
-            _logger.Trace($"{Kind} {{Id}} registered with the Runtime, start handling requests.", Identifier);
+            _logger.Trace("{Kind} {{Id}} registered with the Runtime, start handling requests.", Kind, Identifier);
             await client.Handle(CatchingHandle, cancellationToken).ConfigureAwait(false);
-            _logger.Trace($"{Kind} {{Id}} handling of requests completed.", Identifier);
+            _logger.Trace("{Kind} {{Id}} handling of requests completed.", Kind, Identifier);
         }
 
-        /// <summary>
-        /// Registers the event processor with the Runtime, and if successful starts handling requests.
-        /// If the processor fails during registration or handling, the provided policy will be used to retry.
-        /// </summary>
-        /// <param name="policy">The <see cref="IAsyncPolicy"/> that defines the retry behaviour upon failure.</param>
-        /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        /// <inheritdoc/>
         public Task RegisterAndHandleWithPolicy(IAsyncPolicy policy, CancellationToken cancellationToken)
             => policy.Execute(
                 async (cancellationToken) =>
@@ -97,26 +87,19 @@ namespace Dolittle.Events.Processing.Internal
                     catch (Exception ex)
                     {
                         while (ex.InnerException != null) ex = ex.InnerException;
-                        _logger.Error(ex, $"Failed to register {Kind} {{Id}} with the Runtime.", Identifier);
+                        _logger.Error(ex, "Failed to register {Kind} {{Id}} with the Runtime.", Kind, Identifier);
                         ExceptionDispatchInfo.Capture(ex).Throw();
                     }
                 },
                 cancellationToken);
 
-        /// <summary>
-        /// Registers the event processor with the Runtime, and if successful starts handling requests.
-        /// If the processor fails during registration or handling, the provided policy will be used to retry.
-        /// If the processor finishes handling of requests without failing, it will restart.
-        /// </summary>
-        /// <param name="policy">The <see cref="IAsyncPolicy"/> that defines the retry behaviour upon failure.</param>
-        /// <param name="cancellationToken">Token that can be used to cancel this operation.</param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        /// <inheritdoc/>
         public async Task RegisterAndHandleForeverWithPolicy(IAsyncPolicy policy, CancellationToken cancellationToken)
         {
             while (true)
             {
                 await RegisterAndHandleWithPolicy(policy, cancellationToken).ConfigureAwait(false);
-                _logger.Trace($"Restaring {Kind} {{Id}}.", Identifier);
+                _logger.Trace("Restaring {Kind} {{Id}}.", Kind, Identifier);
             }
         }
 
@@ -182,7 +165,7 @@ namespace Dolittle.Events.Processing.Internal
                     RetryTimeout = CalculateRetryTimeout(retryState),
                 };
 
-                _logger.Warning(ex, $"Processing in {Kind} {{Id}} failed. Will retry in {{RetryTimeout}} seconds.", Identifier, failure.RetryTimeout.Seconds);
+                _logger.Warning(ex, "Processing in {Kind} {{Id}} failed. Will retry in {{RetryTimeout}} seconds.", Kind, Identifier, failure.RetryTimeout.Seconds);
 
                 return CreateResponseFromFailure(failure);
             }

@@ -86,26 +86,26 @@ namespace Dolittle.Commands.Handling
         {
             EnsureInitialized();
 
-            _logger.Debug($"Trying to invoke command handlers for {command.Type}");
+            _logger.Debug("Trying to invoke command handlers for {CommandType}", command.Type);
 
             if (_commandHandlers.Count == 0) return false;
 
             if (_commandHandlers.ContainsKey(command.Type))
             {
                 var commandHandlerType = _commandHandlers[command.Type].DeclaringType;
-                _logger.Trace($"Trying command handler '{commandHandlerType.AssemblyQualifiedName}'");
+                _logger.Trace("Trying command handler '{CommandHandlerType}'", commandHandlerType.AssemblyQualifiedName);
                 var commandHandler = _container.Get(commandHandlerType);
                 var method = _commandHandlers[command.Type];
                 var commandInstance = _converter.Convert(command);
 
-                _logger.Trace($"Invoke");
+                _logger.Trace("Invoke");
                 try
                 {
                     method.Invoke(commandHandler, new[] { commandInstance });
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, $"Failed invoking command handler '{commandHandlerType.AssemblyQualifiedName}' for command of type '{command.Type}'");
+                    _logger.Error(ex, "Failed invoking command handler '{CommandHandlerType}' for command of type '{CommandType}'", commandHandlerType.AssemblyQualifiedName, command.Type);
                     return false;
                 }
 

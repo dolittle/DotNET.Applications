@@ -29,7 +29,9 @@ namespace PullConnector
         {
             var tags = new [] {"first", "second", "third"};
 
-            _logger.Information($"Pulling tags '{string.Join(", ", tags.Select(_ => _))}'");
+            _logger.Information(
+                "Pulling tags '{tags}'",
+                string.Join(", ", tags.Select(_ => _)));
             return Task.FromResult(tags.Select(_ => new TagDataPoint(_, (Single)_random.NextDouble())));
         }
     }

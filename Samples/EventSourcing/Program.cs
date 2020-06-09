@@ -41,7 +41,7 @@ namespace EventSourcing
 
             var commandResult = commandCoordinator.Handle(new MyCommand());
 
-            logger.Information($"Success : {commandResult.Success}");
+            logger.Information("Success : {Result}", commandResult.Success);
 
             await host.RunAsync().ConfigureAwait(false);
         }

@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Dolittle.Artifacts;
+using Dolittle.Events.Processing.Internal;
 using Dolittle.Logging;
 using Dolittle.Services.Clients;
 using static Dolittle.Runtime.Events.Processing.Contracts.EventHandlers;
@@ -9,9 +10,9 @@ using static Dolittle.Runtime.Events.Processing.Contracts.EventHandlers;
 namespace Dolittle.Events.Handling.Internal
 {
     /// <summary>
-    /// A class used to construct instances of <see cref="EventHandlerProcessor{TEventType}"/>.
+    /// An implementation of <see cref="IEventHandlerProcessors"/>.
     /// </summary>
-    public class EventHandlerProcessors
+    public class EventHandlerProcessors : IEventHandlerProcessors
     {
         readonly EventHandlersClient _handlersClient;
         readonly IReverseCallClients _reverseCallClients;
@@ -45,16 +46,8 @@ namespace Dolittle.Events.Handling.Internal
             _loggerManager = loggerManager;
         }
 
-        /// <summary>
-        /// Creates an <see cref="EventHandlerProcessor{TEventType}"/> of type <typeparamref name="TEventType"/>.
-        /// </summary>
-        /// <param name="id">The unique <see cref="EventHandlerId"/> for the event handler.</param>
-        /// <param name="scope">The <see cref="ScopeId"/> of the scope in the Event Store where the event handler will run.</param>
-        /// <param name="partitioned">Whether the event handler should create a partitioned stream or not.</param>
-        /// <param name="handler">The <see cref="IEventHandler{TEventType}"/> that will be called to handle incoming events.</param>
-        /// <typeparam name="TEventType">The type of events to process.</typeparam>
-        /// <returns>An <see cref="EventHandlerProcessor{TEventType}"/> of type <typeparamref name="TEventType"/>.</returns>
-        public EventHandlerProcessor<TEventType> GetFor<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, IEventHandler<TEventType> handler)
+        /// <inheritdoc/>
+        public IEventProcessor GetFor<TEventType>(EventHandlerId id, ScopeId scope, bool partitioned, IEventHandler<TEventType> handler)
             where TEventType : IEvent
             => new EventHandlerProcessor<TEventType>(
                 id,

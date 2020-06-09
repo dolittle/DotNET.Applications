@@ -62,7 +62,7 @@ namespace Dolittle.Commands.Coordination.Runtime
             {
                 using (_localizer.BeginScope())
                 {
-                    _logger.Information("Handle command of type {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
+                    _logger.Debug("Handle command of type {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
 
                     commandResult = CommandResult.ForCommand(command);
 
