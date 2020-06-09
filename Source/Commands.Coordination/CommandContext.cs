@@ -69,7 +69,7 @@ namespace Dolittle.Commands.Coordination
         /// <inheritdoc/>
         public void Commit()
         {
-            _logger.Trace("Commit transaction");
+            _logger.Debug("Commit transaction for command {CommandType} with correlation {Correlation}", Command.Type, Command.CorrelationId);
             var trackedAggregateRoots = GetAggregateRootsBeingTracked();
             _logger.Trace("Total number of objects tracked '{Count}", trackedAggregateRoots.Count());
             foreach (var trackedAggregateRoot in trackedAggregateRoots)

@@ -40,6 +40,7 @@ namespace Dolittle.Commands.Coordination
         /// <inheritdoc/>
         public ICommandContext Build(CommandRequest command)
         {
+            _logger.Debug("Building new command context for command {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
             return new CommandContext(
                 command,
                 _executionContextManager.Current,

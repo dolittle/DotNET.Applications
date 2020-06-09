@@ -62,7 +62,7 @@ namespace Dolittle.Commands.Coordination.Runtime
             {
                 using (_localizer.BeginScope())
                 {
-                    _logger.Debug("Handle command of type {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
+                    _logger.Debug("Trying to handle command of type {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
 
                     commandResult = CommandResult.ForCommand(command);
 
@@ -102,32 +102,32 @@ namespace Dolittle.Commands.Coordination.Runtime
                         }
                         catch (TargetInvocationException ex)
                         {
-                            _logger.Warning(ex, "Error handling command");
+                            _logger.Warning(ex, "Error handling command {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
                             commandResult.Exception = ex.InnerException;
                             commandContext.Rollback();
                         }
                         catch (Exception ex)
                         {
-                            _logger.Warning(ex, "Error handling command");
+                            _logger.Warning(ex, "Error handling command {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
                             commandResult.Exception = ex;
                             commandContext.Rollback();
                         }
                     }
                     else
                     {
-                        _logger.Debug("Command was not successful, rolling back");
+                        _logger.Debug("Command {CommandType} with {Correlation} was not successful, rolling back", command.Type, command.CorrelationId);
                         commandContext.Rollback();
                     }
                 }
             }
             catch (TargetInvocationException ex)
             {
-                _logger.Warning(ex, "Error handling command");
+                _logger.Warning(ex, "Error handling command {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
                 commandResult.Exception = ex.InnerException;
             }
             catch (Exception ex)
             {
-                _logger.Warning(ex, "Error handling command");
+                _logger.Warning(ex, "Error handling command {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
                 commandResult.Exception = ex;
             }
 
