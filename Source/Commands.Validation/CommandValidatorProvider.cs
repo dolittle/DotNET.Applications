@@ -82,7 +82,7 @@ namespace Dolittle.Commands.Validation
         /// <inheritdoc/>
         public ICommandBusinessValidator GetBusinessValidatorFor(Type commandType)
         {
-            _logger.Debug($"Get business validator for : {commandType.AssemblyQualifiedName}");
+            _logger.Debug("Get business validator for : {CommandName}", commandType.AssemblyQualifiedName);
 
             if (!typeof(ICommand).GetTypeInfo().IsAssignableFrom(commandType))
                 return null;

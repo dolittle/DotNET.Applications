@@ -61,7 +61,7 @@ namespace Dolittle.Events.Processing.Internal
         /// <inheritdoc/>
         public async Task RegisterAndHandle(CancellationToken cancellationToken)
         {
-            _logger.Debug($"Registering {Kind} {{Id}} with the Runtime.", Identifier);
+            _logger.Debug("Registering {Kind} {{Id}} with the Runtime.", Kind, Identifier);
             var client = CreateClient();
             var receivedResponse = await client.Connect(GetRegisterArguments(), cancellationToken).ConfigureAwait(false);
             ThrowIfNotReceivedResponse(receivedResponse);
