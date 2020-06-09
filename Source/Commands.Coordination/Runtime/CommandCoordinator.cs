@@ -62,7 +62,7 @@ namespace Dolittle.Commands.Coordination.Runtime
             {
                 using (_localizer.BeginScope())
                 {
-                    _logger.Debug($"Handle command of type {command.Type}");
+                    _logger.Debug("Handle command of type {CommandType}", command.Type);
 
                     commandResult = CommandResult.ForCommand(command);
 

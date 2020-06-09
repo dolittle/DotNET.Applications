@@ -33,7 +33,9 @@ namespace PushConnector
             {
                 for (; ; )
                 {
-                    _logger.Information($"Pushing tags '{string.Join(", ", tags.Select(_ => _))}'");
+                    _logger.Information(
+                        "Pushing tags '{tags}'",
+                        string.Join(", ", tags.Select(_ => _)));
                     var dataPoints = tags.Select(_ => new TagDataPoint(
                         (Tag)_,
                         //Value = (Measurement<float>)_random.NextDouble()

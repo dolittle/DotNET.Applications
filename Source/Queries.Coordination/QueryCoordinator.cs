@@ -61,7 +61,7 @@ namespace Dolittle.Queries.Coordination
         public Task<QueryResult> Execute(IQuery query, PagingInfo paging)
         {
             var queryType = query.GetType();
-            _logger.Debug($"Executing query of type '{queryType.AssemblyQualifiedName}'");
+            _logger.Debug("Executing query of type '{QueryName}'", queryType.AssemblyQualifiedName);
 
             var taskCompletionSource = new TaskCompletionSource<QueryResult>();
             var result = QueryResult.For(query);
@@ -148,7 +148,7 @@ namespace Dolittle.Queries.Coordination
             result.TotalItems = providerResult.TotalItems;
             result.Items = providerResult.Items is IEnumerable<IReadModel> readModels ? _filters.Filter(readModels) : providerResult.Items;
 
-            _logger.Trace($"Query resulted in {result.TotalItems} items");
+            _logger.Trace("Query resulted in {TotalItems} items", result.TotalItems);
         }
 
         void ThrowIfNoQueryPropertyOnQuery(Type queryType)

@@ -21,7 +21,7 @@ namespace EventSourcing
 
         public Task<FilterResult> Filter(CommittedEvent @event)
         {
-            _logger.Warning($"Filtering public event '{@event}'");
+            _logger.Warning("Filtering public event '{Event}'", @event);
             return Task.FromResult(new FilterResult(true));
         }
     }

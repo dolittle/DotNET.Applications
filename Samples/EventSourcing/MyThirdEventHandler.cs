@@ -20,13 +20,13 @@ namespace EventSourcing
 
         public Task Handle(MyEvent @event, EventContext eventContext)
         {
-            _logger.Information($"Processing event : '{@event}'");
+            _logger.Information("Processing event : '{Event}'", @event);
             return Task.CompletedTask;
         }
 
         public Task Handle(MySecondEvent @event, EventContext eventContext)
         {
-            _logger.Information($"Processing event : '{@event}'");
+            _logger.Information("Processing event : '{Event}'", @event);
             return Task.CompletedTask;
         }
     }

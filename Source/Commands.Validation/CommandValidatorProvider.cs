@@ -82,7 +82,7 @@ namespace Dolittle.Commands.Validation
         /// <inheritdoc/>
         public ICommandBusinessValidator GetBusinessValidatorFor(Type commandType)
         {
-            _logger.Debug($"Get business validator for : {commandType.AssemblyQualifiedName}");
+            _logger.Debug("Get business validator for : {CommandName}", commandType.AssemblyQualifiedName);
 
             if (!typeof(ICommand).GetTypeInfo().IsAssignableFrom(commandType))
                 return null;
@@ -93,7 +93,7 @@ namespace Dolittle.Commands.Validation
 
             if (registeredBusinessValidatorType != null)
             {
-                _logger.Trace($"Validator for {commandType.AssemblyQualifiedName} found");
+                _logger.Trace("Validator for {CommandType} found", commandType.AssemblyQualifiedName);
                 var validator = _container.Get(registeredBusinessValidatorType) as ICommandBusinessValidator;
 
                 if (hasCrossCuttingValidators && validator is IEnumerable<IValidationRule> enumerable)
@@ -104,7 +104,7 @@ namespace Dolittle.Commands.Validation
                     {
                         enumerable.ForEach(rule =>
                         {
-                            _logger.Trace($"Adding rule with ruleset '{rule.RuleSet}'");
+                            _logger.Trace("Adding rule with ruleset '{RuleSet}'", rule.RuleSet);
                             addRuleMethod.Invoke(dynamicValidator, new[] { rule });
                         });
                     }
@@ -115,14 +115,14 @@ namespace Dolittle.Commands.Validation
                 return validator;
             }
 
-            _logger.Trace($"Building dynamic validator for {commandType.AssemblyQualifiedName}");
+            _logger.Trace("Building dynamic validator for {CommandType}", commandType.AssemblyQualifiedName);
             return BuildDynamicallyDiscoveredBusinessValidator(commandType, typesAndDiscoveredValidators);
         }
 
         /// <inheritdoc/>
         public ICommandInputValidator GetInputValidatorFor(Type commandType)
         {
-            _logger.Debug($"Get input validator for : {commandType.AssemblyQualifiedName}");
+            _logger.Debug("Get input validator for : {CommandType}", commandType.AssemblyQualifiedName);
 
             if (!typeof(ICommand).GetTypeInfo().IsAssignableFrom(commandType))
                 return null;
@@ -134,7 +134,7 @@ namespace Dolittle.Commands.Validation
 
             if (registeredInputValidatorType != null)
             {
-                _logger.Trace($"Validator for {commandType.AssemblyQualifiedName} found");
+                _logger.Trace("Validator for {CommandType} found", commandType.AssemblyQualifiedName);
                 var validator = _container.Get(registeredInputValidatorType) as ICommandInputValidator;
                 if (hasCrossCuttingValidators && validator is IEnumerable<IValidationRule> enumerable)
                 {
@@ -144,7 +144,7 @@ namespace Dolittle.Commands.Validation
                     {
                         enumerable.ForEach(rule =>
                         {
-                            _logger.Trace($"Adding rule with ruleset '{rule.RuleSet}'");
+                            _logger.Trace("Adding rule with ruleset '{RuleSet}'", rule.RuleSet);
                             addRuleMethod.Invoke(dynamicValidator, new[] { rule });
                         });
                     }
@@ -155,7 +155,7 @@ namespace Dolittle.Commands.Validation
                 return validator;
             }
 
-            _logger.Trace($"Building dynamic validator for {commandType.AssemblyQualifiedName}");
+            _logger.Trace("Building dynamic validator for {CommandType}", commandType.AssemblyQualifiedName);
             return BuildDynamicallyDiscoveredInputValidator(commandType, typesAndDiscoveredValidators);
         }
 
@@ -181,7 +181,7 @@ namespace Dolittle.Commands.Validation
 
         ICommandInputValidator BuildDynamicallyDiscoveredInputValidator(Type commandType, IDictionary<Type, IEnumerable<Type>> typeAndAssociatedValidatorTypes)
         {
-            _logger.Trace($"Build dynamic input validator for {commandType.AssemblyQualifiedName}");
+            _logger.Trace("Build dynamic input validator for {CommandType}", commandType.AssemblyQualifiedName);
             Type[] typeArgs = { commandType };
             var closedValidatorType = typeof(ComposedCommandInputValidatorFor<>).MakeGenericType(typeArgs);
 
@@ -193,14 +193,14 @@ namespace Dolittle.Commands.Validation
                 {
                     propertyTypeAndValidatorInstances.Add(key, validatorTypes.Select(v =>
                     {
-                        _logger.Trace($"Adding validator {v.AssemblyQualifiedName}");
+                        _logger.Trace("Adding validator {ValidatorType}", v.AssemblyQualifiedName);
                         var validator = _container.Get(v) as IValidator;
                         return validator;
                     }).ToArray());
                 }
             }
 
-            _logger.Trace($"Create instance dynamic composed validator of type {closedValidatorType.AssemblyQualifiedName}");
+            _logger.Trace("Create instance dynamic composed validator of type {ClosedValidatorType}", closedValidatorType.AssemblyQualifiedName);
             return Activator.CreateInstance(closedValidatorType, propertyTypeAndValidatorInstances) as ICommandInputValidator;
         }
 
@@ -256,7 +256,7 @@ namespace Dolittle.Commands.Validation
                 return;
             }
 
-            _logger.Trace($"Registering input validator {typeToRegister.AssemblyQualifiedName} for {commandType.AssemblyQualifiedName}");
+            _logger.Trace("Registering input validator {TypeToRegister} for {CommandType}", typeToRegister.AssemblyQualifiedName, commandType.AssemblyQualifiedName);
 
             validatorRegistry.Add(commandType, typeToRegister);
         }
@@ -271,7 +271,7 @@ namespace Dolittle.Commands.Validation
                 return;
             }
 
-            _logger.Trace($"Registering validator of type {typeToRegister.AssemblyQualifiedName} for validation of {validatedType.AssemblyQualifiedName}");
+            _logger.Trace("Registering validator of type {TypeToRegister} for validation of {ValidatedType}", typeToRegister.AssemblyQualifiedName, validatedType.AssemblyQualifiedName);
 
             if (validatorRegistry.ContainsKey(validatedType))
             {
