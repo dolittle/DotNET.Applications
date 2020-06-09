@@ -98,11 +98,11 @@ namespace Dolittle.Build.Artifacts
 
             if (newArtifacts > 0)
             {
-                _buildMessages.Information($"Added {newArtifacts} new artifacts to the map.");
+                _buildMessages.Information("Added {NewArtifacts} new artifacts to the map.", newArtifacts);
             }
             else
             {
-                _buildMessages.Information($"No new artifacts added to the map.");
+                _buildMessages.Information("No new artifacts added to the map.");
             }
 
             return updatedArtifactsConfiguration;
