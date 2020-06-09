@@ -65,6 +65,7 @@ namespace Dolittle.Events.Handling
         public Task Perform(CorrelationId correlationId, IEnumerable<IEvent> events, Action action)
         {
             if (_eventHandlersWaitersByScope.ContainsKey(correlationId)) throw new AlreadyPerformingEventProcessingCompletionForCorrelation(correlationId);
+            _logger.Debug("Performing event processing completion {NumEvents} for correlation {Correlation}", events.Count(), correlationId);
             var tcs = new TaskCompletionSource<bool>();
             var eventHandlersForScope = new List<EventHandlerType>();
             events
