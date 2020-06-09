@@ -33,7 +33,7 @@ namespace Dolittle.Commands.Coordination.for_CommandContextManager.given
                 event_processing_completion.Object,
                 logger.Object);
 
-            manager = new CommandContextManager(factory);
+            manager = new CommandContextManager(factory, execution_context_manager.Object, Mock.Of<ILogger>());
         };
     }
 }
