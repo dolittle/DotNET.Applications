@@ -61,7 +61,7 @@ namespace Dolittle.Queries.Coordination
         public Task<QueryResult> Execute(IQuery query, PagingInfo paging)
         {
             var queryType = query.GetType();
-            _loggerDebug("Executing query of type '{QueryName}'", queryType.AssemblyQualifiedName);
+            _logger.Debug("Executing query of type '{QueryName}'", queryType.AssemblyQualifiedName);
 
             var taskCompletionSource = new TaskCompletionSource<QueryResult>();
             var result = QueryResult.For(query);
