@@ -87,7 +87,7 @@ namespace Dolittle.Events.Processing.Internal
                     catch (Exception ex)
                     {
                         while (ex.InnerException != null) ex = ex.InnerException;
-                        _logger.Error(ex, $"Failed to register {Kind} {{Id}} with the Runtime.", Identifier);
+                        _logger.Error(ex, "Failed to register {Kind} {{Id}} with the Runtime.", Kind, Identifier);
                         ExceptionDispatchInfo.Capture(ex).Throw();
                     }
                 },
