@@ -71,13 +71,10 @@ namespace Dolittle.Events.Handling
                     await Task.Delay(20).ConfigureAwait(false);
                     if (num-- == 0)
                     {
-                        lock (_lockObject)
-                        {
-                            var waitingFor = string.Join(System.Environment.NewLine, _eventTypeHandlers.Select(_ => _.Type.ToString()));
-                            var handlers = string.Join(System.Environment.NewLine, _eventTypeHandlers.Select(_ => _.EventHandler));
-                            _logger.Debug("Waiting timed out for {WaitingFor} in event handlers {EventHandlers}. Completing waiter with correlation {CorrelationId}", waitingFor, handlers, _correlationId);
-                            break;
-                        }
+                        var waitingFor = string.Join(System.Environment.NewLine, _eventTypeHandlers.Select(_ => _.Type.ToString()));
+                        var handlers = string.Join(System.Environment.NewLine, _eventTypeHandlers.Select(_ => _.EventHandler));
+                        _logger.Debug("Waiting timed out for {WaitingFor} in event handlers {EventHandlers}. Completing waiter with correlation {CorrelationId}", waitingFor, handlers, _correlationId);
+                        break;
                     }
                 }
 

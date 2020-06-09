@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Dolittle.Collections;
@@ -50,7 +49,7 @@ namespace Dolittle.Events.Handling
         /// <inheritdoc/>
         public void EventHandlerCompletedForEvent(CorrelationId correlationId, EventHandlerId eventHandlerId, Type type)
         {
-            _logger.Information("Event Handler completed for Event with correlation '{CorrelationId}'", correlationId);
+            _logger.Debug("Event Handler {EventHandler} completed for Event {EventType} with correlation {CorrelationId}", eventHandlerId, type, correlationId);
             if (_eventHandlersWaitersByScope.ContainsKey(correlationId))
             {
                 var waiter = _eventHandlersWaitersByScope[correlationId];
@@ -83,17 +82,11 @@ namespace Dolittle.Events.Handling
             {
                 try
                 {
-                    var stopWatch = new Stopwatch();
                     action();
-                    var actionTime = stopWatch.ElapsedMilliseconds;
-                    _logger.Information($"EventProcessingCompletion.PERFORM LOOP Time for eventHandlers '{correlationId}': {actionTime}");
-
-                    _logger.Information($"EventProcessingCompletion.PERFORM LOOP Waiting for EventHandlers: '{correlationId}' ");
-                    stopWatch.Restart();
+                    _logger.Trace("EventProcessingCompletion.PERFORM LOOP Time for eventHandlers {CorrelationId}", correlationId);
+                    _logger.Trace("EventProcessingCompletion.PERFORM LOOP Waiting for EventHandlers: {CorrelationId}", correlationId);
                     await waiter.Complete().ConfigureAwait(false);
-                    stopWatch.Stop();
-                    var waitingTime = stopWatch.ElapsedMilliseconds;
-                    _logger.Information($"EventProcessingCompletion.PERFORM LOOP EventHandler waiting is done '{correlationId}': {waitingTime}");
+                    _logger.Trace("EventProcessingCompletion.PERFORM LOOP EventHandler waiting is done {CorrelationId}", correlationId);
 
                     tcs.SetResult(true);
                 }
