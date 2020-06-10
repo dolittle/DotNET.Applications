@@ -27,11 +27,7 @@ namespace Dolittle.Commands.for_CommandRequestToCommandConverter
             artifact_type_map.Setup(_ => _.GetTypeFor(identifier)).Returns(typeof(complex_type));
         };
 
-        Because of = () =>
-        {
-            while (!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(50);
-            exception = Catch.Exception(() => converter.Convert(request));
-        };
+        Because of = () => exception = Catch.Exception(() => converter.Convert(request));
 
         It should_fail_because_artifact_is_not_a_command = () => exception.ShouldBeOfExactType<ArtifactIsNotCommand>();
     }
