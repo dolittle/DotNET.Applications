@@ -66,16 +66,10 @@ namespace Dolittle.Commands
 
         ICommand GetCommandFrom(Artifact artifact)
         {
-            try
-            {
-                var type = _commandTypes.GetOrAdd(artifact, (artifact) => _artifactTypeMap.GetTypeFor(artifact));
-                return Activator.CreateInstance(type) as ICommand;
-            }
-            catch (Exception ex)
-            {
-                _logger.Warning(ex, "Could not convert command request. Artifact {Artifact} is not a valid {ICommand} type", artifact, typeof(ICommand));
-                throw new ArtifactIsNotCommand(artifact);
-            }
+            var type = _commandTypes.GetOrAdd(artifact, (artifact) => _artifactTypeMap.GetTypeFor(artifact));
+            var command = Activator.CreateInstance(type) as ICommand;
+            if (command == default) throw new ArtifactIsNotCommand(artifact);
+            return command;
         }
 
         void CopyPropertiesFromRequestToCommand(CommandRequest request, ICommand instance, Dictionary<string, PropertyInfo> properties)
