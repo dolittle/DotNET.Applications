@@ -61,14 +61,14 @@ namespace Dolittle.Events.Processing.Internal
         /// <inheritdoc/>
         public async Task RegisterAndHandle(CancellationToken cancellationToken)
         {
-            _logger.Debug("Registering {Kind} {{Id}} with the Runtime.", Kind, Identifier);
+            _logger.Debug("Registering {Kind} {Id} with the Runtime.", Kind, Identifier);
             var client = CreateClient();
             var receivedResponse = await client.Connect(GetRegisterArguments(), cancellationToken).ConfigureAwait(false);
             ThrowIfNotReceivedResponse(receivedResponse);
             ThrowIfRegisterFailure(GetFailureFromRegisterResponse(client.ConnectResponse));
-            _logger.Trace("{Kind} {{Id}} registered with the Runtime, start handling requests.", Kind, Identifier);
+            _logger.Trace("{Kind} {Id} registered with the Runtime, start handling requests.", Kind, Identifier);
             await client.Handle(CatchingHandle, cancellationToken).ConfigureAwait(false);
-            _logger.Trace("{Kind} {{Id}} handling of requests completed.", Kind, Identifier);
+            _logger.Trace("{Kind} {Id} handling of requests completed.", Kind, Identifier);
         }
 
         /// <inheritdoc/>
@@ -87,7 +87,7 @@ namespace Dolittle.Events.Processing.Internal
                     catch (Exception ex)
                     {
                         while (ex.InnerException != null) ex = ex.InnerException;
-                        _logger.Error(ex, "Failed to register {Kind} {{Id}} with the Runtime.", Kind, Identifier);
+                        _logger.Error(ex, "Failed to register {Kind} {Id} with the Runtime.", Kind, Identifier);
                         ExceptionDispatchInfo.Capture(ex).Throw();
                     }
                 },
@@ -99,7 +99,7 @@ namespace Dolittle.Events.Processing.Internal
             while (true)
             {
                 await RegisterAndHandleWithPolicy(policy, cancellationToken).ConfigureAwait(false);
-                _logger.Trace("Restaring {Kind} {{Id}}.", Kind, Identifier);
+                _logger.Trace("Restaring {Kind} {Id}.", Kind, Identifier);
             }
         }
 
@@ -165,7 +165,7 @@ namespace Dolittle.Events.Processing.Internal
                     RetryTimeout = CalculateRetryTimeout(retryState),
                 };
 
-                _logger.Warning(ex, "Processing in {Kind} {{Id}} failed. Will retry in {{RetryTimeout}} seconds.", Kind, Identifier, failure.RetryTimeout.Seconds);
+                _logger.Warning(ex, "Processing in {Kind} {Id} failed. Will retry in {RetryTimeout} seconds.", Kind, Identifier, failure.RetryTimeout.Seconds);
 
                 return CreateResponseFromFailure(failure);
             }
