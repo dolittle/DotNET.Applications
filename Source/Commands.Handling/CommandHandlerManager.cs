@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Dolittle.Lifecycle;
+using Dolittle.Logging;
 using Dolittle.Types;
 
 namespace Dolittle.Commands.Handling
@@ -18,6 +19,7 @@ namespace Dolittle.Commands.Handling
     public class CommandHandlerManager : ICommandHandlerManager
     {
         readonly IEnumerable<ICommandHandlerInvoker> _invokers;
+        readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandHandlerManager"/> class.
@@ -26,16 +28,18 @@ namespace Dolittle.Commands.Handling
         /// <see cref="IInstancesOf{ICommandHandlerInvoker}">Invokers</see> to use for discovering the.
         /// <see cref="ICommandHandlerInvoker">ICommandHandlerInvoker</see>'s to use.
         /// </param>
-        public CommandHandlerManager(IInstancesOf<ICommandHandlerInvoker> invokers)
+        /// <param name="logger">The <see cref="ILogger" />.</param>
+        public CommandHandlerManager(IInstancesOf<ICommandHandlerInvoker> invokers, ILogger logger)
         {
             _invokers = invokers;
+            _logger = logger;
         }
 
         /// <inheritdoc/>
         public void Handle(CommandRequest command)
         {
             var handled = false;
-
+            _logger.Trace("Invoking command handlers for command {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
             foreach (var invoker in _invokers)
             {
                 if (invoker.TryHandle(command))

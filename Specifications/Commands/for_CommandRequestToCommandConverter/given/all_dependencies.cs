@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using Dolittle.Artifacts;
 using Dolittle.Concepts.Serialization.Json;
 using Dolittle.Serialization.Json;
 using Dolittle.Types;
@@ -11,9 +12,10 @@ using Newtonsoft.Json;
 
 namespace Dolittle.Commands.for_CommandRequestToCommandConverter.given
 {
-    public class a_serializer
+    public class all_dependencies
     {
         protected static ISerializer serializer;
+        protected static Mock<IArtifactTypeMap> artifact_type_map;
 
         Establish context = () =>
         {
@@ -33,6 +35,8 @@ namespace Dolittle.Commands.for_CommandRequestToCommandConverter.given
             converters.Setup(_ => _.GetEnumerator()).Returns(converterProviders.GetEnumerator());
 
             serializer = new Serializer(converters.Object);
+
+            artifact_type_map = new Mock<IArtifactTypeMap>();
         };
     }
 }
