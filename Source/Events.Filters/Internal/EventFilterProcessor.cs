@@ -63,7 +63,7 @@ namespace Dolittle.Events.Filters.Internal
                 (response, context) => response.CallContext = context,
                 message => message.Ping,
                 (message, pong) => message.Pong = pong,
-                TimeSpan.FromSeconds(1));
+                TimeSpan.FromSeconds(5));
 
         /// <inheritdoc/>
         protected override FilterRegistrationRequest GetRegisterArguments()
