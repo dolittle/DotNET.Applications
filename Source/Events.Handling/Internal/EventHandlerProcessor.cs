@@ -87,7 +87,10 @@ namespace Dolittle.Events.Handling.Internal
                 (message, response) => message.HandleResult = response,
                 (arguments, context) => arguments.CallContext = context,
                 request => request.CallContext,
-                (response, context) => response.CallContext = context);
+                (response, context) => response.CallContext = context,
+                messsage => messsage.Ping,
+                (message, pong) => message.Pong = pong,
+                TimeSpan.FromSeconds(1));
 
         /// <inheritdoc/>
         protected override EventHandlerResponse CreateResponseFromFailure(ProcessorFailure failure)
