@@ -1,6 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Threading.Tasks;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
@@ -59,7 +60,10 @@ namespace Dolittle.Events.Filters.Internal
                 (message, response) => message.FilterResult = response,
                 (arguments, context) => arguments.CallContext = context,
                 request => request.CallContext,
-                (response, context) => response.CallContext = context);
+                (response, context) => response.CallContext = context,
+                message => message.Ping,
+                (message, pong) => message.Pong = pong,
+                TimeSpan.FromSeconds(5));
 
         /// <inheritdoc/>
         protected override FilterRegistrationRequest GetRegisterArguments()
