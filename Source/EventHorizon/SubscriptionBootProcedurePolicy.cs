@@ -36,6 +36,11 @@ namespace Dolittle.EventHorizon
                     {
                         if (_ is RpcException rpcException && rpcException.StatusCode == StatusCode.Unavailable)
                             return true;
+                        if (_ is FailedToSubscribeToEventHorizon)
+                        {
+                            _logger.Warning(_.Message);
+                            return true;
+                        }
 
                         _logger.Warning(_, "Error while subscribing to event horizon");
                         return true;

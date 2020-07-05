@@ -59,14 +59,36 @@ namespace Dolittle.EventHorizon
             => _policy.Execute(
                 async (cancellationToken) =>
                 {
+                    _logger.Trace(
+                            "Attempting to subscribe to events from {Partition} in {Stream} of {ProducerTenant} in {Microservice} for {ConsumerTenant} into {Scope}",
+                            subscription.Partition,
+                            subscription.Stream,
+                            subscription.Tenant,
+                            subscription.Microservice,
+                            consumer,
+                            subscription.Scope);
                     var response = await _subscriptions.Subscribe(consumer, subscription, cancellationToken).ConfigureAwait(false);
                     if (!response.Success)
                     {
-                        throw new FailedToSubscribeToEventHorizon(response.Failure.Reason, consumer, subscription.Microservice, subscription.Tenant, subscription.Stream, subscription.Partition);
+                        throw new FailedToSubscribeToEventHorizon(
+                            response.Failure.Reason,
+                            consumer,
+                            subscription.Microservice,
+                            subscription.Tenant,
+                            subscription.Stream,
+                            subscription.Partition);
                     }
                     else
                     {
-                        _logger.Debug("Sucessfully subscribed to events from {Partition} in {Stream} of {ProducerTenant} in {Microservice} for {ConsumerTenant} into {Scope} approved by {Consent}", subscription.Partition, subscription.Stream, subscription.Tenant, subscription.Microservice, consumer, subscription.Scope, response.Consent);
+                        _logger.Debug(
+                            "Successfully subscribed to events from {Partition} in {Stream} of {ProducerTenant} in {Microservice} for {ConsumerTenant} into {Scope} approved by {Consent}",
+                            subscription.Partition,
+                            subscription.Stream,
+                            subscription.Tenant,
+                            subscription.Microservice,
+                            consumer,
+                            subscription.Scope,
+                            response.Consent);
                     }
                 },
                 CancellationToken.None);
