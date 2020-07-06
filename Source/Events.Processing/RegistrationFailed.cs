@@ -19,7 +19,7 @@ namespace Dolittle.Events.Processing
         /// <param name="id">The <see cref="ConceptAs{T}"/> of type <see cref="Guid"/> that identifies the event processor.</param>
         /// <param name="registerFailure">The <see cref="Failure"/> that occured.</param>
         public RegistrationFailed(string kind, ConceptAs<Guid> id, Failure registerFailure)
-            : base($"Failure occured during registration of {kind} {id}. {registerFailure.Reason}")
+            : base($"Failure occurred during registration of {kind} {id}. {registerFailure.Reason}")
         {
         }
     }
