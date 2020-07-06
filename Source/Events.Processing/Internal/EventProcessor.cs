@@ -64,6 +64,7 @@ namespace Dolittle.Events.Processing.Internal
             _logger.Debug("Registering {Kind} {Id} with the Runtime.", Kind, Identifier);
             var client = CreateClient();
             var receivedResponse = await client.Connect(GetRegisterArguments(), cancellationToken).ConfigureAwait(false);
+            if (cancellationToken.IsCancellationRequested) return;
             ThrowIfNotReceivedResponse(receivedResponse);
             ThrowIfRegisterFailure(GetFailureFromRegisterResponse(client.ConnectResponse));
             _logger.Trace("{Kind} {Id} registered with the Runtime, start handling requests.", Kind, Identifier);
@@ -87,7 +88,7 @@ namespace Dolittle.Events.Processing.Internal
                     catch (Exception ex)
                     {
                         while (ex.InnerException != null) ex = ex.InnerException;
-                        _logger.Error(ex, "Failed to register {Kind} {Id} with the Runtime.", Kind, Identifier);
+                        _logger.Warning(ex, "Failed to register {Kind} {Id} with the Runtime.", Kind, Identifier);
                         ExceptionDispatchInfo.Capture(ex).Throw();
                     }
                 },
@@ -96,9 +97,10 @@ namespace Dolittle.Events.Processing.Internal
         /// <inheritdoc/>
         public async Task RegisterAndHandleForeverWithPolicy(IAsyncPolicy policy, CancellationToken cancellationToken)
         {
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 await RegisterAndHandleWithPolicy(policy, cancellationToken).ConfigureAwait(false);
+                await Task.Delay(1000).ConfigureAwait(false);
                 _logger.Trace("Restaring {Kind} {Id}.", Kind, Identifier);
             }
         }
