@@ -1,6 +1,0 @@
-{
-   "name": "Query Template",
-   "type": "query",
-   "area": "read",
-   "description": "Creates a Query"
-}
