@@ -4,7 +4,7 @@ description: The home of the .NET Core SDK
 keywords: General
 author: einari
 weight: 3
-repository: https://github.com/dolittle-runtime/DotNET.SDK
+repository: https://github.com/dolittle/DotNET.SDK
 aliases: /runtime/dotnet.sdk/
 ---
 
