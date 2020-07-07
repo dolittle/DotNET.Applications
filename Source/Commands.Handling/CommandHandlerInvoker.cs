@@ -107,7 +107,7 @@ namespace Dolittle.Commands.Handling
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, "Failed invoking command handler {CommandHandlerType} for command of type {CommandType} with correlation {Correlation}", commandHandlerType.AssemblyQualifiedName, command.Type, command.CorrelationId);
+                    _logger.Warning(ex, "Failed invoking command handler {CommandHandlerType} for command of type {CommandType} with correlation {Correlation}", commandHandlerType.AssemblyQualifiedName, command.Type, command.CorrelationId);
                     return false;
                 }
 
