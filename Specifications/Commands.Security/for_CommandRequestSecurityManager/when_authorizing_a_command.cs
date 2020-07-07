@@ -4,8 +4,6 @@
 using System.Dynamic;
 using Dolittle.Artifacts;
 using Dolittle.Execution;
-using Dolittle.Runtime.Commands;
-using Dolittle.Runtime.Commands.Security;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
 

@@ -10,8 +10,6 @@ using Dolittle.Collections;
 using Dolittle.DependencyInversion;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
-using Dolittle.Runtime.Commands;
-using Dolittle.Runtime.Commands.Handling;
 using Dolittle.Types;
 
 namespace Dolittle.Commands.Handling
@@ -68,6 +66,7 @@ namespace Dolittle.Commands.Handling
         /// </remarks>
         public void Register(Type handlerType)
         {
+            _logger.Trace("Registering command handler {CommandHandler}", handlerType);
             var handleMethods = handlerType
                 .GetRuntimeMethods()
                 .Where(m => m.IsPublic || !m.IsStatic)
@@ -79,6 +78,7 @@ namespace Dolittle.Commands.Handling
             {
                 var commandType = method.GetParameters()[0].ParameterType;
                 var identifier = _artifactTypeMap.GetArtifactFor(commandType);
+                _logger.Trace("Registering handle method for command {CommandType} on command handler {CommandHandler}", identifier, handlerType);
                 _commandHandlers[identifier] = method;
             });
         }
@@ -88,26 +88,26 @@ namespace Dolittle.Commands.Handling
         {
             EnsureInitialized();
 
-            _logger.Information($"Trying to invoke command handlers for {command.Type}");
+            _logger.Debug("Trying to invoke command handlers for {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
 
             if (_commandHandlers.Count == 0) return false;
 
             if (_commandHandlers.ContainsKey(command.Type))
             {
                 var commandHandlerType = _commandHandlers[command.Type].DeclaringType;
-                _logger.Trace($"Trying command handler '{commandHandlerType.AssemblyQualifiedName}'");
+                _logger.Trace("Trying command handler '{CommandHandlerType}'", commandHandlerType.AssemblyQualifiedName);
                 var commandHandler = _container.Get(commandHandlerType);
                 var method = _commandHandlers[command.Type];
                 var commandInstance = _converter.Convert(command);
 
-                _logger.Trace($"Invoke");
+                _logger.Trace("Invoke");
                 try
                 {
                     method.Invoke(commandHandler, new[] { commandInstance });
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, $"Failed invoking command handler '{commandHandlerType.AssemblyQualifiedName}' for command of type '{command.Type}'");
+                    _logger.Warning(ex, "Failed invoking command handler {CommandHandlerType} for command of type {CommandType} with correlation {Correlation}", commandHandlerType.AssemblyQualifiedName, command.Type, command.CorrelationId);
                     return false;
                 }
 
@@ -115,7 +115,7 @@ namespace Dolittle.Commands.Handling
             }
             else
             {
-                _logger.Information("No command handlers to invoke");
+                _logger.Debug("No command handlers to invoke for {CommandType} with correlation {Correlation}", command.Type, command.CorrelationId);
             }
 
             return false;
@@ -134,6 +134,7 @@ namespace Dolittle.Commands.Handling
 
         void Initialize()
         {
+            _logger.Debug("Initializing command handlers");
             var handlers = _typeFinder.FindMultiple<ICanHandleCommands>();
             handlers.ForEach(Register);
         }

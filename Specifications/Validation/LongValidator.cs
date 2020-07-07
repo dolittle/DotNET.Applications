@@ -2,10 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Dolittle.Concepts;
-using Dolittle.Validation;
 using FluentValidation;
 
-namespace Dolittle.FluentValidation
+namespace Dolittle.Validation
 {
     public class LongValidator : BusinessValidator<ConceptAs<long>>
     {

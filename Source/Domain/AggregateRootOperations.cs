@@ -10,16 +10,16 @@ namespace Dolittle.Domain
     /// <summary>
     /// Represents an implementation of <see cref="IAggregateRootOperations{T}"/>.
     /// </summary>
-    /// <typeparam name="TAggregate"><see cref="IAggregateRoot"/> type.</typeparam>
+    /// <typeparam name="TAggregate"><see cref="AggregateRoot"/> type.</typeparam>
     public class AggregateRootOperations<TAggregate> : IAggregateRootOperations<TAggregate>
-        where TAggregate : class, IAggregateRoot
+        where TAggregate : AggregateRoot
     {
         readonly TAggregate _aggregateRoot;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateRootOperations{TAggregate}"/> class.
         /// </summary>
-        /// <param name="aggregateRoot"><see cref="IAggregateRoot"/> the operations are for.</param>
+        /// <param name="aggregateRoot"><see cref="AggregateRoot"/> the operations are for.</param>
         public AggregateRootOperations(TAggregate aggregateRoot)
         {
             _aggregateRoot = aggregateRoot;

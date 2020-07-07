@@ -1,12 +1,16 @@
 <Project>
+    <Import Project="versions.props"/>
+    
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <IsTestProject>true</IsTestProject>
+        <NoWarn>IDE0044;IDE0051;IDE0052;IDE0060</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Coverlet.MsBuild" Version="2.9.0"/>
         <PackageReference Include="Dolittle.Common.Specs" Version="2.*"/>
-        <PackageReference Include="Dolittle.Types.Testing" Version="4.*"/>
+        <PackageReference Include="Dolittle.Types.Testing" Version="$(FundamentalsVersion)"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
         <PackageReference Include="Machine.Specifications.Runner.VisualStudio" Version="2.9.0" />
     </ItemGroup>

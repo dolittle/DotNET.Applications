@@ -3,16 +3,16 @@
     <PropertyGroup>
         <AssemblyName>Dolittle.SDK.Domain</AssemblyName>
     </PropertyGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Applications\Applications.csproj" />
-        <ProjectReference Include="..\Events\Events.csproj" />
-    </ItemGroup>
     
     <ItemGroup>
-        <PackageReference Include="Dolittle.Runtime.Commands" Version="4.*" />
-        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="4.*" />
-        <PackageReference Include="Dolittle.Runtime.Events" Version="4.*" />
+        <PackageReference Include="Dolittle.Rules" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)" alias="contracts"/>
     </ItemGroup>
 
-   
+    <ItemGroup>
+        <ProjectReference Include="..\Applications\Applications.csproj" />
+        <ProjectReference Include="..\Commands.Coordination\Commands.Coordination.csproj" />
+        <ProjectReference Include="..\Events\Events.csproj" />
+        <ProjectReference Include="..\Transactions\Transactions.csproj" />
+    </ItemGroup>
 </Project>

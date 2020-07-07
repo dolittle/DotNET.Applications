@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Dolittle.Applications;
+using Dolittle.ApplicationModel;
 using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Build.Topology;

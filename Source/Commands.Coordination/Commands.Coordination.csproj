@@ -6,16 +6,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Applications" Version="4.*" />
-        <PackageReference Include="Dolittle.Reflection" Version="4.*" />
-        <PackageReference Include="Dolittle.Types" Version="4.*" />
-        <PackageReference Include="Dolittle.Serialization.Json" Version="4.*" />
-        <PackageReference Include="Dolittle.Runtime.Commands.Coordination" Version="4.*" />
+        <PackageReference Include="Dolittle.ApplicationModel" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Globalization" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Reflection" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Types" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Serialization.Json" Version="$(FundamentalsVersion)" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Artifacts\Artifacts.csproj" />
         <ProjectReference Include="..\Commands\Commands.csproj" />
+        <ProjectReference Include="..\Commands.Handling\Commands.Handling.csproj" />
+        <ProjectReference Include="..\Commands.Security\Commands.Security.csproj" />
+        <ProjectReference Include="..\Commands.Validation\Commands.Validation.csproj" />
+        <ProjectReference Include="..\Events\Events.csproj" />
+        <ProjectReference Include="..\Events.Handling\Events.Handling.csproj" />
     </ItemGroup>
 
 </Project>

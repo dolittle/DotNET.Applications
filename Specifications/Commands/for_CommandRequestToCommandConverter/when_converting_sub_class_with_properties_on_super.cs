@@ -4,14 +4,12 @@
 using System.Collections.Generic;
 using Dolittle.Artifacts;
 using Dolittle.Execution;
-using Dolittle.Runtime.Commands;
 using Machine.Specifications;
-using Moq;
 using It = Machine.Specifications.It;
 
 namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 {
-    public class when_converting_sub_class_with_properties_on_super : given.a_serializer
+    public class when_converting_sub_class_with_properties_on_super : given.a_converter
     {
         const int an_integer = 42;
 
@@ -25,10 +23,8 @@ namespace Dolittle.Commands.for_CommandRequestToCommandConverter
         }
 
         static CorrelationId correlation_id;
-        static Mock<IArtifactTypeMap> artifact_type_map;
         static Artifact identifier;
         static CommandRequest request;
-        static CommandRequestToCommandConverter converter;
 
         static IDictionary<string, object> content;
 
@@ -46,10 +42,7 @@ namespace Dolittle.Commands.for_CommandRequestToCommandConverter
 
             request = new CommandRequest(correlation_id, identifier.Id, identifier.Generation, content);
 
-            artifact_type_map = new Mock<IArtifactTypeMap>();
             artifact_type_map.Setup(_ => _.GetTypeFor(identifier)).Returns(typeof(sub));
-
-            converter = new CommandRequestToCommandConverter(artifact_type_map.Object, serializer);
         };
 
         Because of = () => result = converter.Convert(request) as sub;

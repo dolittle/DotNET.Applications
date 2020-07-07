@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Dolittle.Validation;
 using FluentValidation;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.for_BusinessValidator.given
+namespace Dolittle.Validation.for_BusinessValidator.given
 {
     public class a_complex_object_graph_and_validator
     {

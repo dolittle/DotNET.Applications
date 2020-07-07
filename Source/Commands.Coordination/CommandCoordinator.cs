@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Dolittle.Execution;
-using Dolittle.Runtime.Commands;
 
 namespace Dolittle.Commands.Coordination
 {
@@ -11,15 +10,15 @@ namespace Dolittle.Commands.Coordination
     /// </summary>
     public class CommandCoordinator : ICommandCoordinator
     {
-        readonly Runtime.Commands.Coordination.ICommandCoordinator _runtimeCommandCoordinator;
+        readonly Runtime.ICommandCoordinator _runtimeCommandCoordinator;
         readonly ICommandToCommandRequestConverter _converter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandCoordinator"/> class.
         /// </summary>
-        /// <param name="runtimeCommandCoordinator">Underlying <see cref="Runtime.Commands.Coordination.ICommandCoordinator"/>.</param>
+        /// <param name="runtimeCommandCoordinator">Underlying <see cref="Runtime.ICommandCoordinator"/>.</param>
         /// <param name="converter"><see cref="ICommandToCommandRequestConverter"/> for converting to a request.</param>
-        public CommandCoordinator(Runtime.Commands.Coordination.ICommandCoordinator runtimeCommandCoordinator, ICommandToCommandRequestConverter converter)
+        public CommandCoordinator(Runtime.ICommandCoordinator runtimeCommandCoordinator, ICommandToCommandRequestConverter converter)
         {
             _runtimeCommandCoordinator = runtimeCommandCoordinator;
             _converter = converter;

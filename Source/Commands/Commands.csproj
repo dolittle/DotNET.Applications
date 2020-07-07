@@ -5,10 +5,12 @@
         <AssemblyName>Dolittle.SDK.Commands</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Dolittle.Applications" Version="4.*" />
-        <PackageReference Include="Dolittle.Serialization.Json" Version="4.*" />
-        <PackageReference Include="Dolittle.Types" Version="4.*" />
-        <PackageReference Include="Dolittle.Runtime.Commands.Handling" Version="4.*" />
+        <PackageReference Include="Dolittle.ApplicationModel" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Execution" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Rules" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Serialization.Json" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Types" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Validation" Version="$(FundamentalsVersion)" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Artifacts\Artifacts.csproj" />

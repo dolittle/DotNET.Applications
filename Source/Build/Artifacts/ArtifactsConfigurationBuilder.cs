@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Dolittle.Applications;
+using Dolittle.ApplicationModel;
 using Dolittle.Artifacts;
 using Dolittle.Artifacts.Configuration;
 using Dolittle.Build.Topology;
 using Dolittle.Reflection;
 using MutableArtifactsByTypeDictionary = System.Collections.Generic.Dictionary<System.Reflection.PropertyInfo, System.Collections.Generic.Dictionary<Dolittle.Artifacts.ArtifactId, Dolittle.Artifacts.Configuration.ArtifactDefinition>>;
-using MutableArtifactsDictionary = System.Collections.Generic.Dictionary<Dolittle.Applications.Feature, System.Collections.Generic.Dictionary<System.Reflection.PropertyInfo, System.Collections.Generic.Dictionary<Dolittle.Artifacts.ArtifactId, Dolittle.Artifacts.Configuration.ArtifactDefinition>>>;
+using MutableArtifactsDictionary = System.Collections.Generic.Dictionary<Dolittle.ApplicationModel.Feature, System.Collections.Generic.Dictionary<System.Reflection.PropertyInfo, System.Collections.Generic.Dictionary<Dolittle.Artifacts.ArtifactId, Dolittle.Artifacts.Configuration.ArtifactDefinition>>>;
 
 namespace Dolittle.Build.Artifacts
 {
@@ -58,7 +58,7 @@ namespace Dolittle.Build.Artifacts
 
             foreach (var (feature, featureArtifactsByType) in _currentArtifactsConfiguration)
             {
-                var featureArtifacts = artifactsDictionary[feature] = new Dictionary<PropertyInfo, Dictionary<ArtifactId, ArtifactDefinition>>();
+                var featureArtifacts = artifactsDictionary[feature] = new MutableArtifactsByTypeDictionary();
                 foreach (var artifactType in featureArtifactsByType.GetType().GetProperties())
                 {
                     var existingArtifactsForFeatureType = artifactType.GetValue(featureArtifactsByType) as IReadOnlyDictionary<ArtifactId, ArtifactDefinition>;
@@ -102,7 +102,7 @@ namespace Dolittle.Build.Artifacts
             }
             else
             {
-                _buildMessages.Information($"No new artifacts added to the map.");
+                _buildMessages.Information("No new artifacts added to the map.");
             }
 
             return updatedArtifactsConfiguration;

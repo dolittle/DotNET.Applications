@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dolittle.Applications;
+using Dolittle.ApplicationModel;
 using Dolittle.Applications.Configuration;
 using Dolittle.Build.Topology;
 

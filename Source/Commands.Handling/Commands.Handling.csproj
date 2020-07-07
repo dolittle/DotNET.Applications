@@ -6,9 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Applications" Version="4.*" />
-        <PackageReference Include="Dolittle.Types" Version="4.*" />
-        <PackageReference Include="Dolittle.Runtime.Commands.Handling" Version="4.*" />
+        <PackageReference Include="Dolittle.ApplicationModel" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Types" Version="$(FundamentalsVersion)" />
     </ItemGroup>
 
     <ItemGroup>

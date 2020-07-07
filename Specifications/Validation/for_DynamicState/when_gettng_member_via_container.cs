@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Dolittle.Validation;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.for_DynamicState
+namespace Dolittle.Validation.for_DynamicState
 {
     public class when_gettng_member_via_container
     {

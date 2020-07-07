@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using Dolittle.Artifacts;
 using Dolittle.Execution;
-using Dolittle.Runtime.Commands;
 using Machine.Specifications;
 
 namespace Dolittle.Commands.Handling.for_CommandHandlerInvoker.given

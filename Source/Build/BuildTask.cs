@@ -10,10 +10,8 @@ using Dolittle.Build.Proxies;
 using Dolittle.Build.Topology;
 using Dolittle.Collections;
 using Dolittle.Concepts;
-using Dolittle.Events.Processing;
 using Dolittle.Immutability;
 using Dolittle.Reflection;
-using Dolittle.Runtime.Events.Processing;
 using Dolittle.Strings;
 
 namespace Dolittle.Build
@@ -33,7 +31,6 @@ namespace Dolittle.Build
         readonly ProxiesHandler _proxiesHandler;
         readonly BuildTarget _buildTarget;
         ArtifactsDiscoverer _artifactsDiscoverer;
-        EventProcessorDiscoverer _eventProcessorDiscoverer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BuildTask"/> class.
@@ -74,15 +71,12 @@ namespace Dolittle.Build
         {
             var boundedContextConfig = _boundedContextLoader.Load(_configuration.BoundedContextConfigPath);
             _artifactsDiscoverer = new ArtifactsDiscoverer(_buildTarget.AssemblyContext, _artifactTypes, _buildMessages);
-            _eventProcessorDiscoverer = new EventProcessorDiscoverer(_buildTarget.AssemblyContext, _buildMessages);
 
             var artifacts = _artifactsDiscoverer.Artifacts;
 
             var topology = _topologyConfigurationHandler.Build(artifacts, _configuration);
 
             var artifactsConfiguration = _artifactsConfigurationHandler.Build(artifacts, topology, _configuration);
-
-            ValidateEventProcessors(_eventProcessorDiscoverer.GetAllEventProcessors());
 
             var events = artifacts.Where(_ => _artifactTypes.Where(artifactType => artifactType.TypeName == "event").First().Type.IsAssignableFrom(_));
             ValidateEvents(events);
@@ -93,46 +87,6 @@ namespace Dolittle.Build
             if (_configuration.GenerateProxies)
             {
                 _proxiesHandler.CreateProxies(artifacts, _configuration, artifactsConfiguration);
-            }
-        }
-
-        void ValidateEventProcessors(IEnumerable<MethodInfo> eventProcessors)
-        {
-            ThrowIfMultipleEventProcessorsWithId(eventProcessors);
-        }
-
-        void ThrowIfMultipleEventProcessorsWithId(IEnumerable<MethodInfo> eventProcessors)
-        {
-            var idMap = new Dictionary<EventProcessorId, MethodInfo>();
-            var duplicateEventProcessors = new Dictionary<EventProcessorId, List<MethodInfo>>();
-            eventProcessors.ForEach(method =>
-            {
-                var eventProcessorId = method.EventProcessorId();
-                if (eventProcessorId.Value == default || eventProcessorId.Value.Equals(Guid.Empty))
-                    throw new EventProcessorWithEmptyIdNotAllowed(method);
-
-                if (idMap.ContainsKey(eventProcessorId))
-                {
-                    if (!duplicateEventProcessors.ContainsKey(eventProcessorId))
-                        duplicateEventProcessors.Add(eventProcessorId, new List<MethodInfo>() { idMap[eventProcessorId] });
-
-                    duplicateEventProcessors[eventProcessorId].Add(method);
-                }
-                else
-                {
-                    idMap.Add(eventProcessorId, method);
-                }
-            });
-            if (duplicateEventProcessors.Count > 0)
-            {
-                foreach (var entry in duplicateEventProcessors)
-                {
-                    _buildMessages.Error($"Found duplication of Event Processor Id '{entry.Key.Value.ToString()}'");
-                    foreach (var eventProcessor in entry.Value)
-                        _buildMessages.Error($"\tId: '{entry.Key.Value.ToString()}' Method Name: '{eventProcessor.Name}' Type FullName: '{eventProcessor.DeclaringType.FullName}'");
-                }
-
-                throw new DuplicateEventProcessor();
             }
         }
 

@@ -2,10 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Linq;
-using Dolittle.Validation;
 using Machine.Specifications;
 
-namespace Dolittle.FluentValidation.for_BusinessValidator
+namespace Dolittle.Validation.for_BusinessValidator
 {
     [Subject(typeof(BusinessValidator<>))]
     public class when_validating_a_complex_graph_with_model_rules_and_concepts : given.a_complex_object_graph_and_validator

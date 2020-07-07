@@ -8,4 +8,5 @@
     <ItemGroup>
         <ProjectReference Include="..\..\Source\Build\Build.csproj" />
     </ItemGroup>
+
 </Project>

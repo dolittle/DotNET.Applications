@@ -6,7 +6,7 @@ using Dolittle.Rules;
 namespace Dolittle.Domain
 {
     /// <summary>
-    /// Represents the result after a perform operation done on an <see cref="IAggregateRoot"/>.
+    /// Represents the result after a perform operation done on an <see cref="AggregateRoot"/>.
     /// </summary>
     public class AggregateRootPerformResult
     {

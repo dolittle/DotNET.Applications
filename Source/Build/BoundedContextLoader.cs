@@ -53,7 +53,7 @@ namespace Dolittle.Build
             var path = GetPath(relativePath);
             if (!File.Exists(path))
             {
-                _logger.Error($"Bounded context configuration expected at path {path} was not found");
+                _logger.Error("Bounded context configuration expected at path {Path} was not found", path);
                 throw new MissingBoundedContextConfiguration(path);
             }
 

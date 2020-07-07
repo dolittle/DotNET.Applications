@@ -4,10 +4,11 @@
         <AssemblyName>Dolittle.SDK.Queries</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Dolittle.Artifacts" Version="4.*" />
-        <PackageReference Include="Dolittle.Runtime.Queries" Version="4.*" />
+        <PackageReference Include="Dolittle.Artifacts" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Rules" Version="$(FundamentalsVersion)" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Artifacts\Artifacts.csproj" />
+        <ProjectReference Include="..\ReadModels\ReadModels.csproj" />
     </ItemGroup>
 </Project>

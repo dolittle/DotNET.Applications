@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Dolittle.Validation;
 using FluentValidation.Validators;
 
-namespace Dolittle.FluentValidation.for_PropertyValidatorWithDynamicState
+namespace Dolittle.Validation.for_PropertyValidatorWithDynamicState
 {
     public class MyValidator : PropertyValidatorWithDynamicState
     {
