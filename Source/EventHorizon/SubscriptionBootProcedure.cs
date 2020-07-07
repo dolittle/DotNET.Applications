@@ -41,7 +41,7 @@ namespace Dolittle.EventHorizon
         }
 
         /// <inheritdoc/>
-        public bool CanPerform() => Applications.Configuration.BootProcedure.HasPerformed;
+        public bool CanPerform() => Microservice.Configuration.BootProcedure.HasPerformed;
 
         /// <inheritdoc/>
         public void Perform()

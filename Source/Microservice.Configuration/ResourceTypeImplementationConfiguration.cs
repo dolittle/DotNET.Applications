@@ -3,10 +3,10 @@
 
 using Dolittle.ResourceTypes;
 
-namespace Dolittle.Applications.Configuration
+namespace Dolittle.Microservice.Configuration
 {
     /// <summary>
-    /// Represents a configuration that describes which <see cref="ResourceTypeImplementation"/> that's configured for a <see cref="ResourceType"/>. Used in <see cref="BoundedContextConfiguration"/> for serialization .
+    /// Represents a configuration that describes which <see cref="ResourceTypeImplementation"/> that's configured for a <see cref="ResourceType"/>. Used in <see cref="MicroserviceConfiguration"/> for serialization .
     /// </summary>
     public class ResourceTypeImplementationConfiguration
     {

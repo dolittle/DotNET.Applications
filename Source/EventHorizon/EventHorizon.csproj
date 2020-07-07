@@ -14,7 +14,7 @@
         <PackageReference Include="Dolittle.Services.Clients" Version="$(FundamentalsVersion)" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Applications.Configuration\Applications.Configuration.csproj" />
+        <ProjectReference Include="..\Microservice.Configuration\Microservice.Configuration.csproj" />
         <ProjectReference Include="..\Artifacts.Configuration\Artifacts.Configuration.csproj" />
         <ProjectReference Include="..\Events\Events.csproj" />
         <ProjectReference Include="..\Heads\Heads.csproj" />

@@ -1,12 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Dolittle.ApplicationModel;
-
-namespace Dolittle.Applications.Configuration
+namespace Dolittle.Microservice.Configuration
 {
     /// <summary>
-    /// Represents the configuration for an interaction layer of the <see cref="Microservice"/>.
+    /// Represents the configuration for an interaction layer of the <see cref="ApplicationModel.Microservice"/>.
     /// </summary>
     public class InteractionLayerConfiguration
     {

@@ -1,12 +1,10 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Dolittle.ApplicationModel;
-
-namespace Dolittle.Applications.Configuration
+namespace Dolittle.Microservice.Configuration
 {
     /// <summary>
-    /// Represents the configuration for the <see cref="Microservice"/> core.
+    /// Represents the configuration for the <see cref="ApplicationModel.Microservice"/> core.
     /// </summary>
     public class CoreConfiguration
     {
@@ -16,7 +14,7 @@ namespace Dolittle.Applications.Configuration
         public string Language { get; set; }
 
         /// <summary>
-        /// Gets or sets the entrypoint of the <see cref="Microservice"/>.
+        /// Gets or sets the entrypoint of the <see cref="ApplicationModel.Microservice"/>.
         /// </summary>
         public string EntryPoint { get; set; }
     }

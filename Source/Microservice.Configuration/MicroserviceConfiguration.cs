@@ -6,34 +6,34 @@ using Dolittle.ApplicationModel;
 using Dolittle.Configuration;
 using Dolittle.ResourceTypes;
 
-namespace Dolittle.Applications.Configuration
+namespace Dolittle.Microservice.Configuration
 {
     /// <summary>
-    /// Represents the definition of a <see cref="Microservice"/> for configuration.
+    /// Represents the definition of a <see cref="ApplicationModel.Microservice"/> for configuration.
     /// </summary>
-    [Name("bounded-context")]
-    public class BoundedContextConfiguration : IConfigurationObject
+    [Name("microservice")]
+    public class MicroserviceConfiguration : IConfigurationObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BoundedContextConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="MicroserviceConfiguration"/> class.
         /// </summary>
         /// <param name="application"><see cref="Application"/> this belongs to.</param>
-        /// <param name="boundedContext"><see cref="Microservice"/> running.</param>
-        /// <param name="boundedContextName"><see cref="MicroserviceName" /> of bounded context.</param>
+        /// <param name="microservice"><see cref="ApplicationModel.Microservice"/> running.</param>
+        /// <param name="microserviceName"><see cref="ApplicationModel.MicroserviceName" /> of bounded context.</param>
         /// <param name="core">The <see cref="CoreConfiguration"/>.</param>
         /// <param name="interaction">The <see cref="InteractionLayerConfiguration"/>.</param>
         /// <param name="resources">Resource configurations for different types.</param>
-        public BoundedContextConfiguration(
+        public MicroserviceConfiguration(
             Application application,
-            Microservice boundedContext,
-            MicroserviceName boundedContextName,
+            ApplicationModel.Microservice microservice,
+            MicroserviceName microserviceName,
             CoreConfiguration core,
             IEnumerable<InteractionLayerConfiguration> interaction,
             IDictionary<ResourceType, ResourceTypeImplementationConfiguration> resources)
         {
             Application = application;
-            BoundedContext = boundedContext;
-            BoundedContextName = boundedContextName;
+            Microservice = microservice;
+            MicroserviceName = microserviceName;
             Core = core;
             Interaction = interaction;
             Resources = resources;
@@ -45,14 +45,14 @@ namespace Dolittle.Applications.Configuration
         public Application Application { get; }
 
         /// <summary>
-        /// Gets the <see cref="Microservice"/>.
+        /// Gets the <see cref="ApplicationModel.Microservice"/>.
         /// </summary>
-        public Microservice BoundedContext { get; }
+        public ApplicationModel.Microservice Microservice { get; }
 
         /// <summary>
-        /// Gets the <see cref="MicroserviceName"/>.
+        /// Gets the <see cref="ApplicationModel.MicroserviceName"/>.
         /// </summary>
-        public MicroserviceName BoundedContextName { get; }
+        public MicroserviceName MicroserviceName { get; }
 
         /// <summary>
         /// Gets the <see cref="CoreConfiguration"/>.

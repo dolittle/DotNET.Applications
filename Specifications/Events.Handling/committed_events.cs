@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using Dolittle.ApplicationModel;
 using Dolittle.Execution;
 using Dolittle.Security;
 using Dolittle.Tenancy;
@@ -19,7 +18,7 @@ namespace Dolittle.Events.Handling
                 DateTimeOffset.UtcNow,
                 EventSourceId.New(),
                 new ExecutionContext(
-                    Microservice.New(),
+                    ApplicationModel.Microservice.New(),
                     TenantId.Unknown,
                     Version.NotSet,
                     Environment.Undetermined,

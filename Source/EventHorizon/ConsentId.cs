@@ -2,14 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using Dolittle.ApplicationModel;
 using Dolittle.Concepts;
 using Dolittle.Tenancy;
 
 namespace Dolittle.EventHorizon
 {
     /// <summary>
-    /// Represents an identifier for a consent given to share events between two <see cref="TenantId">tenants</see> in two <see cref="Microservice">microservices</see>.
+    /// Represents an identifier for a consent given to share events between two <see cref="TenantId">tenants</see> in two <see cref="ApplicationModel.Microservice">microservices</see>.
     /// </summary>
     public class ConsentId : ConceptAs<Guid>
     {
