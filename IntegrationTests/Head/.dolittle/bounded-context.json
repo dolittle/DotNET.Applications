@@ -1,0 +1,15 @@
+{
+    "application": "eda2751d-9dac-4f88-96bd-55e25bd6642c",
+    "boundedContext": "fa63cd90-45b1-4ba6-ac00-049b9e649d7a",
+    "boundedContextName": "[UNSET]",
+    "resources": {
+        "readModels": {
+          "production": "MongoDB",
+          "development": "MongoDB"
+        }
+      },
+        "core": {
+      "language": "csharp"
+    },
+    "interaction": []
+  }

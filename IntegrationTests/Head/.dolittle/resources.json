@@ -1,0 +1,10 @@
+{
+    "f79fcfc9-c855-4910-b445-1f167e814bfd": {
+        "readModels": {
+            "host": "mongodb://localhost:27017",
+            "database": "read_models",
+            "useSSL": false
+        }
+    }
+}
+

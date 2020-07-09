@@ -1,0 +1,27 @@
+{
+    "999923ff-659b-4598-a04f-cfb7b9a1c1f5": {
+        "commands": {},
+        "events": {
+            "0e984977-1686-4036-98ef-14dc9f55f705": {
+                "generation": 1,
+                "type": "Head.MyEvent, Head"
+            },
+            "4d5e9860-d80c-442a-803c-68b324f3c9fe": {
+                "generation": 1,
+                "type": "Head.MyAggregateEvent, Head"
+            },
+            "e317fb1a-40bd-4630-ba9c-f8f92b90b7f4": {
+                "generation": 1,
+                "type": "Head.MyPublicEvent, Head"
+            }
+        },
+        "eventSources": {
+            "e31271d9-3c0c-4df4-874f-468960e4fef0": {
+                "generation": 1,
+                "type": "Head.MyAggregate, Head"
+            }
+        },
+        "readModels": {},
+        "queries": {}
+    }
+}
