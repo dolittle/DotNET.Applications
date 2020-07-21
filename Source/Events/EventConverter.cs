@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Artifacts;
-using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.Serialization.Json;
 using Contracts = Dolittle.Runtime.Events.Contracts;
@@ -19,43 +18,29 @@ namespace Dolittle.Events
     {
         readonly IArtifactTypeMap _artifactTypeMap;
         readonly ISerializer _serializer;
-        readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventConverter"/> class.
         /// </summary>
         /// <param name="artifactTypeMap"><see cref="IArtifactTypeMap"/> for mapping types and artifacts.</param>
         /// <param name="serializer"><see cref="ISerializer"/> for serialization.</param>
-        /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public EventConverter(
             IArtifactTypeMap artifactTypeMap,
-            ISerializer serializer,
-            ILogger logger)
+            ISerializer serializer)
         {
             _artifactTypeMap = artifactTypeMap;
             _serializer = serializer;
-            _logger = logger;
         }
 
         /// <inheritdoc/>
         public Contracts.UncommittedEvent ToProtobuf(UncommittedEvent @event)
+            => new Contracts.UncommittedEvent
             {
-                try
-                {
-                    return new Contracts.UncommittedEvent
-                    {
-                        Artifact = ToProtobuf(@event.Event.GetType()),
-                        EventSourceId = @event.EventSource.ToProtobuf(),
-                        Public = IsPublicEvent(@event.Event),
-                        Content = _serializer.EventToJson(@event.Event),
-                    };
-                }
-                catch (UnableToInstantiateInstanceOfType ex)
-                {
-                    _logger.Warning(ex, "Couldn't serialize uncommitted event: {Type} to Json.", @event.Event.GetType());
-                    throw;
-                }
-            }
+                Artifact = ToProtobuf(@event.Event.GetType()),
+                EventSourceId = @event.EventSource.ToProtobuf(),
+                Public = IsPublicEvent(@event.Event),
+                Content = _serializer.EventToJson(@event.Event),
+            };
 
         /// <inheritdoc/>
         public IEnumerable<Contracts.UncommittedEvent> ToProtobuf(UncommittedEvents events)
@@ -74,20 +59,12 @@ namespace Dolittle.Events
 
             foreach (var @event in uncommittedEvents)
             {
-                try
+                events.Events.Add(new Contracts.UncommittedAggregateEvents.Types.UncommittedAggregateEvent
                 {
-                    events.Events.Add(new Contracts.UncommittedAggregateEvents.Types.UncommittedAggregateEvent
-                    {
-                        Artifact = ToProtobuf(@event.GetType()),
-                        Public = IsPublicEvent(@event),
-                        Content = _serializer.EventToJson(@event),
-                    });
-                }
-                catch (UnableToInstantiateInstanceOfType ex)
-                {
-                    _logger.Warning(ex, "Couldn't serialize uncommitted aggregate event: {Type} to Json.", @event.GetType());
-                    throw;
-                }
+                    Artifact = ToProtobuf(@event.GetType()),
+                    Public = IsPublicEvent(@event),
+                    Content = _serializer.EventToJson(@event),
+                });
             }
 
             return events;
@@ -96,36 +73,28 @@ namespace Dolittle.Events
         /// <inheritdoc/>
         public CommittedEvent ToSDK(Contracts.CommittedEvent source)
         {
-                var artifact = ToSDK(source.Type);
-                try
-                {
-                    var @event = _serializer.JsonToEvent(artifact, source.Content);
-                    if (source.External)
-                    {
-                        return new CommittedExternalEvent(
-                            source.EventLogSequenceNumber,
-                            source.Occurred.ToDateTimeOffset(),
-                            source.EventSourceId.To<EventSourceId>(),
-                            source.ExecutionContext.ToExecutionContext(),
-                            source.ExternalEventLogSequenceNumber,
-                            source.ExternalEventReceived.ToDateTimeOffset(),
-                            @event);
-                    }
-                    else
-                    {
-                        return new CommittedEvent(
-                            source.EventLogSequenceNumber,
-                            source.Occurred.ToDateTimeOffset(),
-                            source.EventSourceId.To<EventSourceId>(),
-                            source.ExecutionContext.ToExecutionContext(),
-                            @event);
-                    }
-                }
-                catch (UnableToInstantiateInstanceOfType ex)
-                {
-                    _logger.Warning(ex, "Couldn't deserialize artifact: {Artifact} to a committed event.", artifact);
-                    throw;
-                }
+            var eventType = ToSDK(source.Type);
+            var @event = _serializer.JsonToEvent(eventType, source.Content);
+            if (source.External)
+            {
+                return new CommittedExternalEvent(
+                    source.EventLogSequenceNumber,
+                    source.Occurred.ToDateTimeOffset(),
+                    source.EventSourceId.To<EventSourceId>(),
+                    source.ExecutionContext.ToExecutionContext(),
+                    source.ExternalEventLogSequenceNumber,
+                    source.ExternalEventReceived.ToDateTimeOffset(),
+                    @event);
+            }
+            else
+            {
+                return new CommittedEvent(
+                    source.EventLogSequenceNumber,
+                    source.Occurred.ToDateTimeOffset(),
+                    source.EventSourceId.To<EventSourceId>(),
+                    source.ExecutionContext.ToExecutionContext(),
+                    @event);
+            }
         }
 
         /// <inheritdoc/>
@@ -140,24 +109,16 @@ namespace Dolittle.Events
 
             var events = source.Events.Select(eventSource =>
             {
-                    var artifact = ToSDK(eventSource.Type);
-                    try
-                    {
-                        var @event = _serializer.JsonToEvent(artifact, eventSource.Content);
-                        return new CommittedAggregateEvent(
-                            eventSource.EventLogSequenceNumber,
-                            eventSource.Occurred.ToDateTimeOffset(),
-                            source.EventSourceId.To<EventSourceId>(),
-                            aggregateRoot,
-                            aggregateRootVersion++,
-                            eventSource.ExecutionContext.ToExecutionContext(),
-                            @event);
-                    }
-                    catch (UnableToInstantiateInstanceOfType ex)
-                    {
-                        _logger.Warning(ex, "Couldn't deserialize artifact {Artifact} to CommittedAggregateEvent.", artifact);
-                        throw;
-                    }
+                var eventType = ToSDK(eventSource.Type);
+                var @event = _serializer.JsonToEvent(eventType, eventSource.Content);
+                return new CommittedAggregateEvent(
+                    eventSource.EventLogSequenceNumber,
+                    eventSource.Occurred.ToDateTimeOffset(),
+                    source.EventSourceId.To<EventSourceId>(),
+                    aggregateRoot,
+                    aggregateRootVersion++,
+                    eventSource.ExecutionContext.ToExecutionContext(),
+                    @event);
             }).ToList();
 
             return new CommittedAggregateEvents(
