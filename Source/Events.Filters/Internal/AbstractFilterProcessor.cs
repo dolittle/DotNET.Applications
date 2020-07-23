@@ -1,10 +1,8 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Dolittle.Artifacts;
 using Dolittle.Events.Processing.Internal;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
@@ -70,19 +68,9 @@ namespace Dolittle.Events.Filters.Internal
 
                 throw new EventTypeIsIncorrectForFilter(typeof(TEventType), committed.Event.GetType());
             }
-            catch (EventTypeIsIncorrectForFilter)
+            catch (CouldNotDeserializeEvent ex)
             {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new CouldNotDeserializeEvent(
-                    request.Event.Type.Id.To<ArtifactId>(),
-                    typeof(TEventType),
-                    request.Event.Content,
-                    request.ScopeId,
-                    request.Event.EventLogSequenceNumber,
-                    ex);
+                throw new CouldNotDeserializeEventFromScope(request.ScopeId.ToGuid(), ex);
             }
         }
 

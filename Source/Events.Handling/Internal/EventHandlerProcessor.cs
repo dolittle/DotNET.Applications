@@ -160,15 +160,9 @@ namespace Dolittle.Events.Handling.Internal
                     }
                 }
             }
-            catch (Exception ex)
+            catch (CouldNotDeserializeEvent ex)
             {
-                throw new CouldNotDeserializeEvent(
-                    request.Event.Event.Type.Id.To<ArtifactId>(),
-                    typeof(TEventType),
-                    request.Event.Event.Content,
-                    request.Event.ScopeId,
-                    request.Event.Event.EventLogSequenceNumber,
-                    ex);
+                throw new CouldNotDeserializeEventFromScope(request.Event.ScopeId.ToGuid(), ex);
             }
         }
     }
