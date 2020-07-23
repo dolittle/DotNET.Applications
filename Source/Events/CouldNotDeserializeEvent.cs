@@ -25,7 +25,7 @@ namespace Dolittle.Events
             string content,
             ulong sequenceNumber,
             Exception ex)
-            : base($"Couldn't deserialize artifact '{artifact}' to event '{eventType}' with EventLogSequenceNumber '{sequenceNumber}' and content '{content}'.{Environment.NewLine}Original occurred exception: {ex}")
+            : base($"Couldn't deserialize artifact '{artifact}' to event '{eventType}' with EventLogSequenceNumber '{sequenceNumber}' and content '{content}'. Original occurred exception:{Environment.NewLine}{ex}")
         {
         }
     }

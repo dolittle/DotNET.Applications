@@ -18,7 +18,7 @@ namespace Dolittle.Events
         public CouldNotDeserializeEventFromScope(
             ScopeId scope,
             Exception ex)
-            : base($"Couldn't deserialize event in scope '{scope}'.{Environment.NewLine}Exception occurred during deserialization: {ex}")
+            : base($"Couldn't deserialize event in scope '{scope}'. Exception occurred during deserialization:{Environment.NewLine}{ex}")
         {
         }
     }
