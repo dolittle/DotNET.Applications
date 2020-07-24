@@ -70,7 +70,7 @@ namespace Dolittle.Events.Filters.Internal
             }
             catch (CouldNotDeserializeEvent ex)
             {
-                throw new CouldNotDeserializeEventFromScope(request.ScopeId.ToGuid(), ex);
+                throw new CouldNotDeserializeEventFromScope(request.ScopeId.To<ScopeId>(), ex);
             }
         }
 
