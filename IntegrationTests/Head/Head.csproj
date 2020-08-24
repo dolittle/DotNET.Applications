@@ -5,9 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dolittle.SDK" Version="5.0.0-rc.*"/>
-    <PackageReference Include="Dolittle.Fundamentals" Version="5.0.0-rc.*"/>
-    
+    <PackageReference Include="Dolittle.Fundamentals" Version="5.*"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../Source/AggregatedPackage/SDK.csproj" />
   </ItemGroup>
 
 </Project>
