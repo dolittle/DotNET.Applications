@@ -9,6 +9,7 @@
         <PackageReference Include="Dolittle.Lifecycle" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)"/>
         <PackageReference Include="Dolittle.SDK.Events" Version="$(SDKVersion)"/>
+        <PackageReference Include="Dolittle.SDK.Events.Handling" Version="$(SDKVersion)"/>
         <PackageReference Include="Dolittle.SDK.Events.Processing" Version="$(SDKVersion)"/>
     </ItemGroup>
 
