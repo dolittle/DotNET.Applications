@@ -16,13 +16,13 @@
   <ItemGroup>
     <PackageReference Include="Dolittle.ApplicationModel" Version="$(FundamentalsVersion)" />
     <PackageReference Include="Dolittle.Types" Version="$(FundamentalsVersion)" />
-    <PackageReference Include="Dolittle.SDK.Applications.Configuration" Version="$(SDKVersion)" />
-    <PackageReference Include="Dolittle.SDK.Artifacts.Configuration" Version="$(SDKVersion)" />
     <PackageReference Include="Dolittle.SDK.Events" Version="$(SDKVersion)" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="$(SwaggerVersion)" />
     <PackageReference Include="System.IO.Pipelines" Version="4.7.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="../Applications.Configuration/Applications.Configuration.csproj" />
+    <ProjectReference Include="../Artifacts.Configuration/Artifacts.Configuration.csproj" />
     <ProjectReference Include="../Commands/Commands.csproj" />
     <ProjectReference Include="../Commands.Coordination/Commands.Coordination.csproj" />
     <ProjectReference Include="../Queries.Coordination/Queries.Coordination.csproj" />
