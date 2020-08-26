@@ -16,8 +16,8 @@
         <ProjectReference Include="../AspNetCore*/*.csproj" Exclude="../AspNetCore/AspNetCore.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
+    <!-- <ItemGroup>
         <PackageReference Include="Dolittle.SDK.AspNetCore" Version="$(SDKVersion)" />
-    </ItemGroup>
+    </ItemGroup> -->
 </Project>
 
