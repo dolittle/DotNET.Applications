@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../default.props" />
+
+  <PropertyGroup>
+    <AssemblyName>Dolittle.Applications.ReadModels.MongoDB</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.10.2" />
+    <PackageReference Include="Dolittle.Concepts" Version="$(FundamentalsVersion)" />
+    <PackageReference Include="Dolittle.ResourceTypes.Configuration" Version="$(FundamentalsVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../ReadModels/ReadModels.csproj" />
+  </ItemGroup>
+</Project>

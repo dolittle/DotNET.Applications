@@ -9,7 +9,7 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_not_
 {
     public class a_configuration_without_topology_with_artifacts_where_one_artifact_does_not_match_topology : artifacts_where_one_artifact_does_not_match_topology
     {
-        protected static readonly BoundedContextTopology configuration = new BoundedContextTopology(
+        protected static readonly MicroserviceTopology configuration = new MicroserviceTopology(
             new Applications.Configuration.Topology(
                 new Dictionary<Module, ModuleDefinition>(),
                 new Dictionary<Feature, FeatureDefinition>()),

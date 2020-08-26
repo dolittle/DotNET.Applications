@@ -107,17 +107,17 @@ namespace Dolittle.Build.Artifacts
         /// Validates the <see cref="ArtifactsConfiguration"/> based on the bounded context's topology and the discoved artifact types in the assemblies of the bounded context.
         /// </summary>
         /// <param name="configuration">The <see cref="ArtifactsConfiguration"/> being extended.</param>
-        /// <param name="boundedContextTopology"><see cref="BoundedContextTopology"/> to validate against.</param>
+        /// <param name="microserviceTopology"><see cref="MicroserviceTopology"/> to validate against.</param>
         /// <param name="types">All <see cref="Type">types</see> to validate.</param>
         /// <param name="buildMessages"><see cref="IBuildMessages"/> for outputting build messages.</param>
         public static void ValidateArtifacts(
             this ArtifactsConfiguration configuration,
-            BoundedContextTopology boundedContextTopology,
+            MicroserviceTopology microserviceTopology,
             IEnumerable<Type> types,
             IBuildMessages buildMessages)
         {
             ThrowIfDuplicateArtifacts(configuration, buildMessages);
-            WarnIfFeatureMissingFromTopology(configuration, boundedContextTopology, buildMessages);
+            WarnIfFeatureMissingFromTopology(configuration, microserviceTopology, buildMessages);
             WarnIfArtifactNoLongerInStructure(configuration, types, buildMessages);
         }
 
@@ -144,9 +144,9 @@ namespace Dolittle.Build.Artifacts
             if (foundDuplicate) throw new DuplicateArtifact();
         }
 
-        static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifacts, BoundedContextTopology boundedContextTopology, IBuildMessages buildMessages)
+        static void WarnIfFeatureMissingFromTopology(ArtifactsConfiguration artifacts, MicroserviceTopology microserviceTopology, IBuildMessages buildMessages)
         {
-            Dictionary<Feature, FeatureName> featureMap = boundedContextTopology.RetrieveAllFeatureIds();
+            Dictionary<Feature, FeatureName> featureMap = microserviceTopology.RetrieveAllFeatureIds();
 
             foreach (var artifact in artifacts)
             {

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../default.props" />
+
+    <PropertyGroup>
+        <AssemblyName>Dolittle.Applications</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../**/*.csproj" Exclude="../AggregatedPackage/Applications.csproj;../Build/Build.csproj;../AspNetCore*/*.csproj;../Machine.Specifications*/*.csproj;../ReadModels.MongoDB/ReadModels.MongoDB.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dolittle.SDK" Version="$(SDKVersion)" />
+    </ItemGroup>
+</Project>
+

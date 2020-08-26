@@ -2,7 +2,7 @@
     <Import Project="../../default.props" />
 
     <PropertyGroup>
-        <AssemblyName>Dolittle.SDK.Commands</AssemblyName>
+        <AssemblyName>Dolittle.Applications.Commands</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Dolittle.ApplicationModel" Version="$(FundamentalsVersion)" />
@@ -11,8 +11,6 @@
         <PackageReference Include="Dolittle.Serialization.Json" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Types" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Validation" Version="$(FundamentalsVersion)" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Artifacts\Artifacts.csproj" />
+        <PackageReference Include="Dolittle.SDK.Artifacts" Version="$(SDKVersion)" />
     </ItemGroup>
 </Project>

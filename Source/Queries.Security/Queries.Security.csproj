@@ -2,7 +2,7 @@
   <Import Project="../../default.props"/>
 
   <PropertyGroup>
-    <AssemblyName>Dolittle.SDK.Queries.Security</AssemblyName>
+    <AssemblyName>Dolittle.Applications.Queries.Security</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

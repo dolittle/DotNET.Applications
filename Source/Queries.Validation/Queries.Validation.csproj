@@ -2,7 +2,7 @@
   <Import Project="../../default.props"/>
 
   <PropertyGroup>
-    <AssemblyName>Dolittle.SDK.Queries.Validation</AssemblyName>
+    <AssemblyName>Dolittle.Applications.Queries.Validation</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

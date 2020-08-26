@@ -18,12 +18,12 @@ namespace Dolittle.Build
 {
     /// <summary>
     /// Represents a <see cref="ICanPerformBuildTask"/> for doing the work that is needed for the
-    /// SDK post build.
+    /// Applications post build.
     /// </summary>
     public class BuildTask : ICanPerformBuildTask
     {
         readonly BuildTaskConfiguration _configuration;
-        readonly IBoundedContextLoader _boundedContextLoader;
+        readonly IMicroserviceLoader _microserviceLoader;
         readonly ArtifactTypes _artifactTypes;
         readonly IBuildMessages _buildMessages;
         readonly TopologyConfigurationHandler _topologyConfigurationHandler;
@@ -37,7 +37,7 @@ namespace Dolittle.Build
         /// </summary>
         /// <param name="buildTarget">Current <see cref="BuildTarget"/>.</param>
         /// <param name="configuration">Current <see cref="BuildTaskConfiguration"/>.</param>
-        /// <param name="boundedContextLoader"><see cref="IBoundedContextLoader"/> for loading bounded-context.json.</param>
+        /// <param name="microserviceLoader"><see cref="IMicroserviceLoader"/> for loading microservice.json.</param>
         /// <param name="artifactTypes">Known <see cref="ArtifactTypes"/>.</param>
         /// <param name="topologyConfigurationHandler"><see cref="TopologyConfigurationHandler"/> for handling topology configuration.</param>
         /// <param name="artifactsConfigurationHandler"><see cref="ArtifactsConfigurationHandler"/> for handling artifacts configuration.</param>
@@ -46,7 +46,7 @@ namespace Dolittle.Build
         public BuildTask(
             BuildTarget buildTarget,
             BuildTaskConfiguration configuration,
-            IBoundedContextLoader boundedContextLoader,
+            IMicroserviceLoader microserviceLoader,
             ArtifactTypes artifactTypes,
             TopologyConfigurationHandler topologyConfigurationHandler,
             ArtifactsConfigurationHandler artifactsConfigurationHandler,
@@ -54,7 +54,7 @@ namespace Dolittle.Build
             IBuildMessages buildMessages)
         {
             _configuration = configuration;
-            _boundedContextLoader = boundedContextLoader;
+            _microserviceLoader = microserviceLoader;
             _artifactTypes = artifactTypes;
             _buildMessages = buildMessages;
             _topologyConfigurationHandler = topologyConfigurationHandler;
@@ -69,7 +69,7 @@ namespace Dolittle.Build
         /// <inheritdoc/>
         public void Perform()
         {
-            var boundedContextConfig = _boundedContextLoader.Load(_configuration.BoundedContextConfigPath);
+            var microserviceConfig = _microserviceLoader.Load(_configuration.MicroserviceConfigPath);
             _artifactsDiscoverer = new ArtifactsDiscoverer(_buildTarget.AssemblyContext, _artifactTypes, _buildMessages);
 
             var artifacts = _artifactsDiscoverer.Artifacts;

@@ -1,6 +1,0 @@
-{
-   "name": "Command template",
-   "type": "command",
-   "area": "domain",
-   "description": "Creates a command"
-}

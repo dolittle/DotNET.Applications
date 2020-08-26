@@ -46,11 +46,11 @@ namespace Dolittle.Build.Artifacts
         }
 
         /// <summary>
-        /// Builds a valid <see cref="ArtifactsConfiguration"/> based on a <see cref="BoundedContextTopology"/> .
+        /// Builds a valid <see cref="ArtifactsConfiguration"/> based on a <see cref="MicroserviceTopology"/> .
         /// </summary>
-        /// <param name="boundedContextTopology">The <see cref="BoundedContextTopology"/>.</param>
+        /// <param name="microserviceTopology">The <see cref="MicroserviceTopology"/>.</param>
         /// <returns>The built <see cref="ArtifactsConfiguration"/>.</returns>
-        public ArtifactsConfiguration Build(BoundedContextTopology boundedContextTopology)
+        public ArtifactsConfiguration Build(MicroserviceTopology microserviceTopology)
         {
             var newArtifacts = 0;
 
@@ -71,7 +71,7 @@ namespace Dolittle.Build.Artifacts
             {
                 newArtifacts += HandleArtifactOfType(
                     artifactType,
-                    boundedContextTopology,
+                    microserviceTopology,
                     artifactsDictionary,
                     nonMatchingArtifacts);
             }
@@ -94,7 +94,7 @@ namespace Dolittle.Build.Artifacts
                     var artifacts = artifactsByTypeDefinitionConstructor.Invoke(arguments) as ArtifactsByTypeDefinition;
                     return new KeyValuePair<Feature, ArtifactsByTypeDefinition>(feature, artifacts);
                 }).ToDictionary(_ => _.Key, _ => _.Value)));
-            updatedArtifactsConfiguration.ValidateArtifacts(boundedContextTopology, _artifacts, _buildMessages);
+            updatedArtifactsConfiguration.ValidateArtifacts(microserviceTopology, _artifacts, _buildMessages);
 
             if (newArtifacts > 0)
             {
@@ -108,14 +108,14 @@ namespace Dolittle.Build.Artifacts
             return updatedArtifactsConfiguration;
         }
 
-        int HandleArtifactOfType(ArtifactType artifactType, BoundedContextTopology boundedContextConfiguration, MutableArtifactsDictionary artifactsDictionary, List<string> nonMatchingArtifacts)
+        int HandleArtifactOfType(ArtifactType artifactType, MicroserviceTopology microserviceConfiguration, MutableArtifactsDictionary artifactsDictionary, List<string> nonMatchingArtifacts)
         {
             var targetProperty = artifactType.TargetPropertyExpression.GetPropertyInfo();
 
             var newArtifacts = 0;
             foreach (var artifact in _artifacts.Where(_ => artifactType.Type.IsAssignableFrom(_)))
             {
-                var feature = boundedContextConfiguration.FindMatchingFeature(artifact.Namespace, nonMatchingArtifacts);
+                var feature = microserviceConfiguration.FindMatchingFeature(artifact.Namespace, nonMatchingArtifacts);
                 if (feature.Value != null)
                 {
                     if (!artifactsDictionary.TryGetValue(feature.Key, out MutableArtifactsByTypeDictionary artifactsByType))

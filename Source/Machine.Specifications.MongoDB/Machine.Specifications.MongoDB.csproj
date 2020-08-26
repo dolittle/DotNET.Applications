@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../default.props"/>
+
+  <PropertyGroup>
+    <AssemblyName>Dolittle.Applications.Machine.Specifications.MongoDB</AssemblyName>
+    <NoWarn>SA1201, SA1310, CA1823</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mongo2Go" Version="2.2.12" />
+    <PackageReference Include="MongoDB.Bson" Version="2.10.2"/>
+    <PackageReference Include="MongoDB.Driver" Version="2.10.2"/>
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.10.2"/>
+    <PackageReference Include="Machine.Specifications" Version="1.0.0" />
+    <PackageReference Include="Machine.Specifications.Should" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../ReadModels.MongoDB/ReadModels.MongoDB.csproj" />
+  </ItemGroup>
+</Project>
+

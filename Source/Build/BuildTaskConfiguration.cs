@@ -16,21 +16,21 @@ namespace Dolittle.Build
         /// <summary>
         /// Initializes a new instance of the <see cref="BuildTaskConfiguration"/> class.
         /// </summary>
-        /// <param name="boundedContextConfigPath">Path to the 'bounded-context.json' file.</param>
+        /// <param name="microserviceConfigPath">Path to the 'microservice.json' file.</param>
         /// <param name="useModules">Wether or not to use modules in topology.</param>
         /// <param name="namespaceSegmentsToStrip">Namespace segments to strip.</param>
         /// <param name="generateProxies">Wether or not to generate proxies.</param>
         /// <param name="proxiesBasePath">Base path for proxy output.</param>
         /// <param name="dolittleFolder">Path to the .dolittle folder.</param>
         public BuildTaskConfiguration(
-            string boundedContextConfigPath,
+            string microserviceConfigPath,
             bool useModules,
             string namespaceSegmentsToStrip,
             bool generateProxies,
             string proxiesBasePath,
             string dolittleFolder)
         {
-            BoundedContextConfigPath = boundedContextConfigPath;
+            MicroserviceConfigPath = microserviceConfigPath;
             UseModules = useModules;
             NamespaceSegmentsToStrip = GetNamespacesToStripForAreaFor(namespaceSegmentsToStrip);
             GenerateProxies = generateProxies;
@@ -39,9 +39,9 @@ namespace Dolittle.Build
         }
 
         /// <summary>
-        /// Gets the path to the 'bounded-context.json' file.
+        /// Gets the path to the 'microservice.json' file.
         /// </summary>
-        public string BoundedContextConfigPath { get; }
+        public string MicroserviceConfigPath { get; }
 
         /// <summary>
         /// Gets a value indicating whether or not to use modules as part of topology.

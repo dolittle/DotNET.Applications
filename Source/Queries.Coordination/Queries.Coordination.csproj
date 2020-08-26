@@ -2,7 +2,7 @@
   <Import Project="../../default.props"/>
 
   <PropertyGroup>
-    <AssemblyName>Dolittle.SDK.Queries.Coordination</AssemblyName>
+    <AssemblyName>Dolittle.Applications.Queries.Coordination</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

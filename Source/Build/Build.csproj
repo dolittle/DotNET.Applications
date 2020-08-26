@@ -3,7 +3,7 @@
     <Import Project="../../default.props" />
 
     <PropertyGroup>
-        <AssemblyName>Dolittle.SDK.Build</AssemblyName>
+        <AssemblyName>Dolittle.Applications.Build</AssemblyName>
 
         <NoPackageAnalysis>true</NoPackageAnalysis>
         <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
@@ -12,25 +12,26 @@
 
     <ItemGroup>
         <PackageReference Include="Dolittle.Build" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.SDK.Artifacts.Configuration" Version="$(SDKVersion)" />
+        <PackageReference Include="Dolittle.SDK.Events" Version="$(SDKVersion)" />
+        <PackageReference Include="Dolittle.SDK.Events.Processing" Version="$(SDKVersion)" />
+        <PackageReference Include="Dolittle.SDK.Microservice.Configuration" Version="$(SDKVersion)" />
         <PackageReference Include="Handlebars.Net" Version="1.9.5" />
         <!--<PackageReference Update="@(PackageReference)" PrivateAssets="All" />-->
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Applications.Configuration\Applications.Configuration.csproj" />
-        <ProjectReference Include="..\Artifacts.Configuration\Artifacts.Configuration.csproj" />
+        <ProjectReference Include="..\Configuration\Configuration.csproj" />
         <ProjectReference Include="..\Commands\Commands.csproj" />
         <ProjectReference Include="..\Commands.Handling\Commands.Handling.csproj" />
         <ProjectReference Include="..\Commands.Validation\Commands.Validation.csproj" />
-        <ProjectReference Include="..\Events\Events.csproj" />
-        <ProjectReference Include="..\Events.Processing\Events.Processing.csproj" />
         <ProjectReference Include="..\ReadModels\ReadModels.csproj" />
         <ProjectReference Include="..\Queries\Queries.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="Dolittle.SDK.Build.props" PackagePath="build\" />
-        <Content Include="Dolittle.SDK.Build.targets" PackagePath="build\" />
+        <Content Include="Dolittle.Applications.Build.props" PackagePath="build\" />
+        <Content Include="Dolittle.Applications.Build.targets" PackagePath="build\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../default.props" />
+
+  <PropertyGroup>
+    <AssemblyName>Dolittle.Applications.AspNetCore.Debugging</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Dolittle.ApplicationModel" Version="$(FundamentalsVersion)" />
+    <PackageReference Include="Dolittle.Types" Version="$(FundamentalsVersion)" />
+    <PackageReference Include="Dolittle.SDK.Applications.Configuration" Version="$(SDKVersion)" />
+    <PackageReference Include="Dolittle.SDK.Artifacts.Configuration" Version="$(SDKVersion)" />
+    <PackageReference Include="Dolittle.SDK.Events" Version="$(SDKVersion)" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="$(SwaggerVersion)" />
+    <PackageReference Include="System.IO.Pipelines" Version="4.7.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Commands/Commands.csproj" />
+    <ProjectReference Include="../Commands.Coordination/Commands.Coordination.csproj" />
+    <ProjectReference Include="../Queries.Coordination/Queries.Coordination.csproj" />
+  </ItemGroup>
+</Project>

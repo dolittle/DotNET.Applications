@@ -2,7 +2,7 @@
     <Import Project="../../specs.props"/>
 
     <PropertyGroup>
-        <AssemblyName>Dolittle.SDK.Commands.Specs</AssemblyName>
+        <AssemblyName>Dolittle.Applications.Commands.Specs</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
