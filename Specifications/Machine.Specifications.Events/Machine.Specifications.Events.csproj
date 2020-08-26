@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../specs.props"/>
+
+  <PropertyGroup>
+    <AssemblyName>Dolittle.Applications.Machine.Specifications.Events.Specs</AssemblyName>
+    <NoWarn>CA1823, SA1400, SA1310, CA1707, SA1101, SA1300, SA1600, CA2211, SA1401, SA1633, SA0001</NoWarn>
+    <RootNamespace>Dolittle.Machine.Specifications.Events</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../Source/Machine.Specifications.Events/Machine.Specifications.Events.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dolittle.SDK" Version="$(SDKVersion)" />
+  </ItemGroup>
+</Project>

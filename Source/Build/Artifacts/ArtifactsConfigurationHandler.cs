@@ -40,8 +40,8 @@ namespace Dolittle.Build.Artifacts
         public ArtifactsConfiguration Build(IEnumerable<Type> types, Applications.Configuration.Topology topology, BuildTaskConfiguration configuration)
         {
             var artifactsConfiguration = _configurationManager.Load();
-            var boundedContextTopology = new BoundedContextTopology(topology, configuration.UseModules, configuration.NamespaceSegmentsToStrip);
-            return new ArtifactsConfigurationBuilder(types, artifactsConfiguration, _artifactTypes, _buildMessages).Build(boundedContextTopology);
+            var microserviceTopology = new MicroserviceTopology(topology, configuration.UseModules, configuration.NamespaceSegmentsToStrip);
+            return new ArtifactsConfigurationBuilder(types, artifactsConfiguration, _artifactTypes, _buildMessages).Build(microserviceTopology);
         }
 
         /// <summary>

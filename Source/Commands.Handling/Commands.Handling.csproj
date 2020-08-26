@@ -2,7 +2,7 @@
     <Import Project="../../default.props" />
 
     <PropertyGroup>
-        <AssemblyName>Dolittle.SDK.Commands.Handling</AssemblyName>
+        <AssemblyName>Dolittle.Applications.Commands.Handling</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,7 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Artifacts\Artifacts.csproj" />
         <ProjectReference Include="..\Commands\Commands.csproj" />
     </ItemGroup>
 

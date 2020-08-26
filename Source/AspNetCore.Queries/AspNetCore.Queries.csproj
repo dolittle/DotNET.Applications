@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../default.props" />
+
+  <PropertyGroup>
+    <AssemblyName>Dolittle.Applications.AspNetCore.Queries</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dolittle.Dynamic" Version="$(FundamentalsVersion)" />
+    <PackageReference Include="Dolittle.Strings" Version="$(FundamentalsVersion)" />
+    <PackageReference Include="Dolittle.Serialization.Json" Version="$(FundamentalsVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../AspNetCore.Http/AspNetCore.Http.csproj" />
+    <ProjectReference Include="../Queries.Coordination/Queries.Coordination.csproj" />
+  </ItemGroup>
+</Project>

@@ -7,34 +7,35 @@ using System.Linq;
 using Dolittle.ApplicationModel;
 using Dolittle.Applications.Configuration;
 using Dolittle.Collections;
+using Dolittle.Microservice.Configuration;
 
 namespace Dolittle.Build.Topology
 {
     /// <summary>
-    /// Represents a class that can build a valid <see cref="BoundedContextConfiguration"/>.
+    /// Represents a class that can build a valid <see cref="MicroserviceConfiguration"/>.
     /// </summary>
     public class TopologyBuilder
     {
         readonly IEnumerable<Type> _artifactTypes;
         readonly IBuildMessages _buildMessages;
 
-        readonly BoundedContextTopology _configuration;
+        readonly MicroserviceTopology _configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TopologyBuilder"/> class.
         /// </summary>
         /// <param name="artifacts">The discovered types of artifacts in the Bounded Context's assemblies.</param>
-        /// <param name="boundedContextTopology">The <see cref="BoundedContextConfiguration"/> that will be modified, validated and returned from Build.</param>
+        /// <param name="microserviceTopology">The <see cref="MicroserviceConfiguration"/> that will be modified, validated and returned from Build.</param>
         /// <param name="buildMessages"><see cref="IBuildMessages"/> for outputting build messages.</param>
-        public TopologyBuilder(IEnumerable<Type> artifacts, BoundedContextTopology boundedContextTopology, IBuildMessages buildMessages)
+        public TopologyBuilder(IEnumerable<Type> artifacts, MicroserviceTopology microserviceTopology, IBuildMessages buildMessages)
         {
             _artifactTypes = artifacts;
             _buildMessages = buildMessages;
-            _configuration = boundedContextTopology;
+            _configuration = microserviceTopology;
         }
 
         /// <summary>
-        /// Builds a valid <see cref="BoundedContextConfiguration"/>.
+        /// Builds a valid <see cref="MicroserviceConfiguration"/>.
         /// </summary>
         /// <returns>The built <see cref="Applications.Configuration.Topology"/>.</returns>
         public Applications.Configuration.Topology Build()
@@ -53,7 +54,7 @@ namespace Dolittle.Build.Topology
 
             if (missingPaths.Length > 0)
             {
-                AddPathsToBoundedContextConfiguration(missingPaths);
+                AddPathsToMicroserviceConfiguration(missingPaths);
             }
 
             _configuration.Topology.ValidateTopology(_configuration.UseModules, _buildMessages);
@@ -104,7 +105,7 @@ namespace Dolittle.Build.Topology
             return existingArtifactPaths;
         }
 
-        void AddPathsToBoundedContextConfiguration(string[] typePaths)
+        void AddPathsToMicroserviceConfiguration(string[] typePaths)
         {
             if (_configuration.UseModules)
                 AddModulesAndFeatures(typePaths);
@@ -188,7 +189,7 @@ namespace Dolittle.Build.Topology
             foreach (var entry in _configuration.NamespaceSegmentsToStrip)
             {
                 if (!entry.Value.Any() || entry.Value.Any(@namespace => string.IsNullOrEmpty(@namespace)))
-                    throw new InvalidBoundedContextConfiguration($"A mapping of an excluded namespace cannot contain an empty namespace value.  Area '{entry.Key.Value}' has empty values.");
+                    throw new InvalidMicroserviceConfiguration($"A mapping of an excluded namespace cannot contain an empty namespace value.  Area '{entry.Key.Value}' has empty values.");
             }
         }
 

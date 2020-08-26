@@ -3,11 +3,12 @@
 
 using System;
 using Dolittle.Applications.Configuration;
+using Dolittle.Microservice.Configuration;
 
 namespace Dolittle.Build.Artifacts
 {
     /// <summary>
-    /// Exception that gets thrown when no <see cref="FeatureDefinition"/> matching the artifact's namespace is found in the <see cref="BoundedContextConfiguration"/> topology.
+    /// Exception that gets thrown when no <see cref="FeatureDefinition"/> matching the artifact's namespace is found in the <see cref="MicroserviceConfiguration"/> topology.
     /// </summary>
     public class NonMatchingArtifact : Exception
     {

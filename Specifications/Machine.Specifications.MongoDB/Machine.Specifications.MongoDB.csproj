@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../specs.props"/>
+  
+  <PropertyGroup>
+    <AssemblyName>Dolittle.Applications.Machine.Specifications.MongoDB.Specs</AssemblyName>
+    <RootNamespace>Dolittle.Machine.Specifications.MongoDB</RootNamespace>
+    <NoWarn>CA1823, SA1400, SA1310, CA1707, SA1101, SA1300, SA1600, CA2211, SA1401, SA1633, SA0001</NoWarn>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="../../Source/Machine.Specifications.MongoDB/Machine.Specifications.MongoDB.csproj" />
+  </ItemGroup>
+</Project>

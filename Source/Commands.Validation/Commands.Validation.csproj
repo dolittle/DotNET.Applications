@@ -1,10 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Import Project="../../default.props" />
     <PropertyGroup>
-        <AssemblyName>Dolittle.SDK.Commands.Validation</AssemblyName>
+        <AssemblyName>Dolittle.Applications.Commands.Validation</AssemblyName>
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dolittle.SDK.Validation" Version="$(SDKVersion)" />
+    </ItemGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\Commands\Commands.csproj" />
-        <ProjectReference Include="..\Validation\Validation.csproj" />
     </ItemGroup>
 </Project>

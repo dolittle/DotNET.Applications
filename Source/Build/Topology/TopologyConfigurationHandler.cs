@@ -3,12 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using Dolittle.Applications.Configuration;
+using Dolittle.Microservice.Configuration;
 
 namespace Dolittle.Build.Topology
 {
     /// <summary>
-    /// Represents a class that handles the interations with a <see cref="BoundedContextConfiguration"/>.
+    /// Represents a class that handles the interations with a <see cref="MicroserviceConfiguration"/>.
     /// </summary>
     public class TopologyConfigurationHandler
     {
@@ -27,7 +27,7 @@ namespace Dolittle.Build.Topology
         }
 
         /// <summary>
-        /// Loads the <see cref="BoundedContextConfiguration"/> from file and uses it to build the <see cref="BoundedContextConfiguration"/> using the <see cref="TopologyBuilder"/>.
+        /// Loads the <see cref="MicroserviceConfiguration"/> from file and uses it to build the <see cref="MicroserviceConfiguration"/> using the <see cref="TopologyBuilder"/>.
         /// </summary>
         /// <param name="types">The discovered artifact types from the bounded context's assemblies.</param>
         /// <param name="configuration">The <see cref="BuildTaskConfiguration"/>.</param>
@@ -35,8 +35,8 @@ namespace Dolittle.Build.Topology
         public Applications.Configuration.Topology Build(IEnumerable<Type> types, BuildTaskConfiguration configuration)
         {
             var topology = _configurationManager.Load();
-            var boundedContextTopology = new BoundedContextTopology(topology, configuration.UseModules, configuration.NamespaceSegmentsToStrip);
-            return new TopologyBuilder(types, boundedContextTopology, _buildMessages).Build();
+            var microserviceTopology = new MicroserviceTopology(topology, configuration.UseModules, configuration.NamespaceSegmentsToStrip);
+            return new TopologyBuilder(types, microserviceTopology, _buildMessages).Build();
         }
 
         /// <summary>

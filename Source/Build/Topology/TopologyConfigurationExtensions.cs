@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Dolittle.ApplicationModel;
 using Dolittle.Applications.Configuration;
+using Dolittle.Microservice.Configuration;
 
 namespace Dolittle.Build.Topology
 {
     /// <summary>
-    /// Extensions for the topology of a <see cref="BoundedContextConfiguration"/>.
+    /// Extensions for the topology of a <see cref="MicroserviceConfiguration"/>.
     /// </summary>
     public static class TopologyConfigurationExtensions
     {
@@ -83,7 +84,7 @@ namespace Dolittle.Build.Topology
                         var name = idMap[module.Key];
 
                         buildMessages.Error(
-                            $"Duplicate id found in bounded-context topology.\n" +
+                            $"Duplicate id found in microservice topology.\n" +
                             $"The id: '{module.Key.Value}' is already occupied by the Module/Feature: '{name}' ");
                     }
                     else

@@ -1,22 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Import Project="../../default.props" />
     <PropertyGroup>
-        <AssemblyName>Dolittle.SDK.EventHorizon</AssemblyName>
+        <AssemblyName>Dolittle.Applications.EventHorizon</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Dolittle.Booting" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Concepts" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Configuration" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.DependencyInversion" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Execution" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Protobuf" Version="$(FundamentalsVersion)" />
-        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)"/>
-        <PackageReference Include="Dolittle.Services.Clients" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Logging" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Resilience" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Tenancy" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.SDK.EventHorizon" Version="$(SDKVersion)" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Applications.Configuration\Applications.Configuration.csproj" />
-        <ProjectReference Include="..\Artifacts.Configuration\Artifacts.Configuration.csproj" />
-        <ProjectReference Include="..\Events\Events.csproj" />
-        <ProjectReference Include="..\Heads\Heads.csproj" />
+        <ProjectReference Include="..\Microservice.Configuration\Microservice.Configuration.csproj" />
     </ItemGroup>
 </Project>

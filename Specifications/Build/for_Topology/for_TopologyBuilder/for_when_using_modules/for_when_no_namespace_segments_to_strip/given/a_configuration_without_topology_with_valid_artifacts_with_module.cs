@@ -9,7 +9,7 @@ namespace Dolittle.Build.Topology.for_Topology.for_TopologyBuilder.for_when_usin
 {
     public class a_configuration_without_topology_with_valid_artifacts_with_module : valid_artifacts_with_module
     {
-        protected static readonly BoundedContextTopology configuration = new BoundedContextTopology(
+        protected static readonly MicroserviceTopology configuration = new MicroserviceTopology(
             new Applications.Configuration.Topology(
                 new Dictionary<Module, ModuleDefinition>(),
                 new Dictionary<Feature, FeatureDefinition>()),

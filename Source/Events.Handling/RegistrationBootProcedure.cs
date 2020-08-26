@@ -47,7 +47,7 @@ namespace Dolittle.Events.Handling
         }
 
         /// <inheritdoc/>
-        public bool CanPerform() => Applications.Configuration.BootProcedure.HasPerformed && Artifacts.Configuration.BootProcedure.HasPerformed;
+        public bool CanPerform() => Microservice.Configuration.BootProcedure.HasPerformed && Artifacts.Configuration.BootProcedure.HasPerformed;
 
         /// <inheritdoc/>
         public void Perform()

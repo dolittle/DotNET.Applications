@@ -1,14 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Import Project="../../default.props" />
     <PropertyGroup>
-        <AssemblyName>Dolittle.SDK.Queries</AssemblyName>
+        <AssemblyName>Dolittle.Applications.Queries</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Dolittle.Artifacts" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Rules" Version="$(FundamentalsVersion)" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Artifacts\Artifacts.csproj" />
         <ProjectReference Include="..\ReadModels\ReadModels.csproj" />
     </ItemGroup>
 </Project>

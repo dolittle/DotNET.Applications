@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../default.props" />
+
+    <PropertyGroup>
+        <AssemblyName>Dolittle.Applications.Machine.Specifications</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../Machine.Specifications*/*.csproj" Exclude="../Machine.Specifications/Machine.Specifications.csproj" />
+    </ItemGroup>
+</Project>
+

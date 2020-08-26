@@ -1,0 +1,10 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" TreatAsLocalProperty="TaskFolder;TaskAssembly">
+    <PropertyGroup>
+        <DolittleMicroserviceConfigPath>../microservice.json</DolittleMicroserviceConfigPath>
+        <DolittleUseModules>True</DolittleUseModules>
+        <DolittleNamespaceSegmentsToStrip></DolittleNamespaceSegmentsToStrip>
+        <DolittleGenerateProxies>False</DolittleGenerateProxies>
+        <DolittleProxiesBasePath></DolittleProxiesBasePath>
+        <DolittleFolder>./.dolittle</DolittleFolder>
+    </PropertyGroup>
+</Project>

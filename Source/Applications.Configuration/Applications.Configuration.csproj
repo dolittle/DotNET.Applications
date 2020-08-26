@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Import Project="../../default.props" />
     <PropertyGroup>
-        <AssemblyName>Dolittle.SDK.Applications.Configuration</AssemblyName>
+        <AssemblyName>Dolittle.Applications.Configuration</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,7 +12,6 @@
         <PackageReference Include="Dolittle.Concepts.Serialization.Json" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.Execution" Version="$(FundamentalsVersion)" />
         <PackageReference Include="Dolittle.ResourceTypes.Configuration" Version="$(FundamentalsVersion)" />
-
     </ItemGroup>
 </Project>
 

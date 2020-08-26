@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../default.props"/>
+
+  <PropertyGroup>
+    <AssemblyName>Dolittle.Applications.Machine.Specifications.Events</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dolittle.SDK.Events" Version="$(SDKVersion)" />
+    <PackageReference Include="Machine.Specifications" Version="1.0.0" />
+    <PackageReference Include="Machine.Specifications.Should" Version="1.0.0" />
+  </ItemGroup>
+</Project>
