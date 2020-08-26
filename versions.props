@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ContractsVersion>5.*</ContractsVersion>
         <FundamentalsVersion>5.*</FundamentalsVersion>
-        <SDKVersion>5.*</SDKVersion>
+        <SDKVersion>6.0.0-rc.*</SDKVersion>
         <ReadModelsMongo>5.*</ReadModelsMongo>
         <SwaggerVersion>5.0.0</SwaggerVersion>
     </PropertyGroup>
