@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../default.props" />
+    <PropertyGroup>
+        <AssemblyName>Dolittle.Applications.EventHorizon</AssemblyName>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Dolittle.Booting" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Configuration" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Logging" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Resilience" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Tenancy" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.SDK.EventHorizon" Version="$(SDKVersion)" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Microservice.Configuration\Microservice.Configuration.csproj" />
+    </ItemGroup>
+</Project>

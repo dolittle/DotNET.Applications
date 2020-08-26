@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../default.props" />
+    <PropertyGroup>
+        <AssemblyName>Dolittle.Applications.Events.Handling</AssemblyName>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Dolittle.Artifacts" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Booting" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Lifecycle" Version="$(FundamentalsVersion)" />
+        <PackageReference Include="Dolittle.Runtime.Contracts" Version="$(ContractsVersion)"/>
+        <PackageReference Include="Dolittle.SDK.Events" Version="$(SDKVersion)"/>
+        <PackageReference Include="Dolittle.SDK.Events.Processing" Version="$(SDKVersion)"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Artifacts.Configuration\Artifacts.Configuration.csproj" />
+        <ProjectReference Include="..\Microservice.Configuration\Microservice.Configuration.csproj" />
+    </ItemGroup>
+    
+</Project>
